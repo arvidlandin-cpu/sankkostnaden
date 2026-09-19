@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import Link from 'next/link';
 import { ArrowRight, Check, RotateCcw, Sparkles } from 'lucide-react';
 import styles from '../styles/SmartSelector.module.css';
 
@@ -30,12 +31,12 @@ export default function SmartSelector({ eyebrow, title, intro, questions, result
 
   return (
     <main className={styles.shell}>
-      <a className={styles.back} href='/'>← Sänk Kostnaden</a>
+      <Link className={styles.back} href='/'>← Sänk Kostnaden</Link>
       <section className={styles.hero}>
         <span><Sparkles size={15} /> {eyebrow}</span>
         <h1>{title}</h1>
         <p>{intro}</p>
-        <div className={styles.progress}><i style={{ width: `${(answered / questions.length) * 100}%` }} /></div>
+        <div className={styles.progress} role='progressbar' aria-label='Framsteg' aria-valuemin={0} aria-valuemax={questions.length} aria-valuenow={answered}><i style={{ width: `${(answered / questions.length) * 100}%` }} /></div>
         <small>{answered} av {questions.length} svar klara</small>
       </section>
 
@@ -60,7 +61,7 @@ export default function SmartSelector({ eyebrow, title, intro, questions, result
           <h2>{complete ? result.title : 'Svara på frågorna så gör vi jobbet.'}</h2>
           <p>{complete ? result.text : 'Du får en konkret behovsprofil och ett tydligt nästa steg – utan att behöva kunna marknaden själv.'}</p>
           {complete && <ul>{result.bullets.map(item => <li key={item}><Check size={15} />{item}</li>)}</ul>}
-          {complete && <a href={result.href}>{result.cta} <ArrowRight size={17} /></a>}
+          {complete && <Link href={result.href}>{result.cta} <ArrowRight size={17} /></Link>}
           <button className={styles.reset} onClick={reset}><RotateCcw size={14} /> Börja om</button>
           <small>{disclaimer}</small>
         </aside>
