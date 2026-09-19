@@ -5,6 +5,7 @@ import {
   Check,
   ChevronRight,
   PiggyBank,
+  CircleDollarSign,
   ShieldCheck,
   Smartphone,
   Wifi,
@@ -18,6 +19,7 @@ const categories = [
   { icon: Zap, title: 'Elavtal', text: 'Jämför avtalsform, påslag och fasta avgifter i stället för att bara titta på ett lockpris.', label: 'Jämför villkoren', href: '/elavtal/jamfor-elavtal/' },
   { icon: Smartphone, title: 'Mobil', text: 'Jämför surf, nät, familjeupplägg och vad abonnemanget faktiskt kostar över tid.', label: 'Se billigare alternativ', href: '/mobil/billigaste-mobilabonnemanget/' },
   { icon: ShieldCheck, title: 'Försäkring', text: 'Jämför premie, självrisk och omfattning på samma nivå innan du väljer bolag.', label: 'Jämför samma skydd', href: '/forsakring/jamfor-forsakring/' },
+  { icon: CircleDollarSign, title: 'Lån & ekonomi', text: 'Jämför effektiv ränta, avgifter och total kostnad – inte bara månadsbeloppet.', label: 'Jämför kostnaden', href: '/ekonomi/' },
 ];
 
 const intentLinks = [
@@ -45,7 +47,7 @@ const schema = {
   '@type': 'WebSite',
   name: 'Sänk Kostnaden',
   url: 'https://sankkostnaden.se/',
-  description: 'En samlad startpunkt för att sänka hushållets återkommande kostnader. Jämför el, bredband, mobil och försäkring på samma ställe.',
+  description: 'En samlad startpunkt för att sänka hushållets återkommande kostnader. Jämför el, bredband, mobil, försäkring och privatekonomi på samma ställe.',
 };
 
 export default function Home() {
@@ -74,6 +76,7 @@ export default function Home() {
           <a href='/elavtal/'>El</a>
           <a href='/mobil/'>Mobil</a>
           <a href='/forsakring/'>Försäkring</a>
+          <a href='/ekonomi/'>Ekonomi</a>
         </nav>
         <a className={styles.navCta} href='#partners'>Jämför priser</a>
       </header>
@@ -91,6 +94,7 @@ export default function Home() {
                 <a href='/bredband/bredband-pa-min-adress/'><Wifi size={20} /><span><strong>Bredband</strong><small>Se vad som finns på adressen</small></span><ArrowRight size={17} /></a>
                 <a href='/mobil/billigaste-mobilabonnemanget/'><Smartphone size={20} /><span><strong>Mobil</strong><small>Hitta billigare abonnemang</small></span><ArrowRight size={17} /></a>
                 <a href='/forsakring/jamfor-forsakring/'><ShieldCheck size={20} /><span><strong>Försäkring</strong><small>Jämför pris och skydd</small></span><ArrowRight size={17} /></a>
+                <a href='/ekonomi/'><CircleDollarSign size={20} /><span><strong>Lån & ekonomi</strong><small>Jämför total lånekostnad</small></span><ArrowRight size={17} /></a>
               </div>
               <div className={styles.trust}>
                 <span><Check size={15} /> Ingen inloggning</span>
@@ -122,7 +126,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className={styles.hubBand}><div><p>NÄSTA KOSTNAD?</p><h2>Fortsätt sänka hushållets utgifter.</h2><span>Bytt bredband? Ta elen, mobilen eller försäkringen härnäst. Du ska inte behöva leta upp en ny jämförelsesajt för varje avtal.</span></div><div className={styles.crossLinks}><a href='/elavtal/jamfor-elavtal/'>El <ArrowRight size={15} /></a><a href='/mobil/billigaste-mobilabonnemanget/'>Mobil <ArrowRight size={15} /></a><a href='/forsakring/jamfor-forsakring/'>Försäkring <ArrowRight size={15} /></a></div></section>
+        <section className={styles.hubBand}><div><p>NÄSTA KOSTNAD?</p><h2>Fortsätt sänka hushållets utgifter.</h2><span>Bytt bredband? Ta elen, mobilen, försäkringen eller ekonomin härnäst. Du ska inte behöva leta upp en ny jämförelsesajt för varje avtal.</span></div><div className={styles.crossLinks}><a href='/elavtal/jamfor-elavtal/'>El <ArrowRight size={15} /></a><a href='/mobil/billigaste-mobilabonnemanget/'>Mobil <ArrowRight size={15} /></a><a href='/forsakring/jamfor-forsakring/'>Försäkring <ArrowRight size={15} /></a><a href='/ekonomi/'>Ekonomi <ArrowRight size={15} /></a></div></section>
 
         <section className={styles.section}>
           <div className={styles.sectionHead}>
