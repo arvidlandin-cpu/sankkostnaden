@@ -34,7 +34,6 @@ export default function IntentGuide({ title, description, kicker, canonical, cat
         '@type': 'Article',
         headline: title,
         description,
-        dateModified: '2026-09-19',
         author: { '@type': 'Organization', name: 'Sänk Kostnaden', url: 'https://sankkostnaden.se/' },
         publisher: { '@type': 'Organization', name: 'Sänk Kostnaden', url: 'https://sankkostnaden.se/' },
         mainEntityOfPage: canonical,
