@@ -9,12 +9,9 @@ import {
   Smartphone,
   Wifi,
   Zap,
-  ArrowUpRight,
 } from 'lucide-react';
 import styles from '../styles/Home.module.css';
-import DecisionGateway from '../components/DecisionGateway';
 import SavingsNavigator from '../components/SavingsNavigator';
-import { getActivePartners } from '../lib/partners';
 
 const categories = [
   { icon: Wifi, title: 'Bredband', text: 'Börja med vad som finns på adressen och jämför sedan pris, hastighet och bindningstid.', label: 'Börja med adressen', href: './bredband/bredband-pa-min-adress/' },
@@ -52,7 +49,6 @@ const schema = {
 };
 
 export default function Home() {
-  const livePartners = [...getActivePartners('bredband'), ...getActivePartners('mobil'), ...getActivePartners('forsakring')];
   return (
     <>
       <Head>
@@ -87,7 +83,7 @@ export default function Home() {
           <div className={styles.heroGlow} />
           <div className={styles.heroGrid}>
             <div>
-              <div className={styles.eyebrow}><BadgeCheck size={16} /> Gratis · oberoende guider · jämför dina fasta kostnader</div>
+              <div className={styles.eyebrow}><BadgeCheck size={16} /> Gratis guider · tydliga partnerlänkar · jämför fasta kostnader</div>
               <h1>Sänk din<br /><span>månadskostnad.</span></h1>
               <p className={styles.lead}>Se över hushållets fasta kostnader och välj vad du vill betala mindre för. Vi tar dig direkt till rätt jämförelse.</p>
               <div className={styles.quickChoices}>
@@ -122,33 +118,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className={styles.section} style={{paddingTop:44,paddingBottom:24}}><SavingsNavigator /></section>
-
-        <section className='livePartnerDock'>
-          <div className='livePartnerDockHead'><div><span>LIVE NU</span><strong>Genvägar direkt till våra partners</strong></div><p>Vill du inte läsa guider först? Hoppa direkt till jämförelse eller pris.</p></div>
-          <div className='livePartnerDockGrid'>
-            {livePartners.map(p => <a key={p.name} className={'livePartnerPill '+(p.name==='Telia'?'brandTelia':p.name==='Vimla'?'brandVimla':p.name==='Bredbandsval.se'?'brandBredbandsval':p.name==='Lassie'?'brandLassie':'brandSveland')} href={p.trackingUrl!} target='_blank' rel='sponsored nofollow noopener'><span><small>{p.category==='bredband'?'BREDBAND':p.category==='mobil'?'MOBIL':'DJURFÖRSÄKRING'}</small><b>{p.name.replace(' Djurförsäkring','')}</b></span><ArrowUpRight size={19}/></a>)}
-          </div>
-          <small className='livePartnerDisclosure'>Kommersiella länkar. Vi kan få provision om du blir kund.</small>
-        </section>
-
-        <section className={styles.proofStrip}>
-          <span>El</span><i />
-          <span>Bredband</span><i />
-          <span>Mobil</span><i />
-          <span>Försäkring</span>
-        </section>
-
-        <section className={styles.section} id='partners'>
-          <div className={styles.sectionHead}>
-            <div><p>VÄLJ DIN VÄG</p><h2>Snabbt när du vill. Guidat när du behöver.</h2></div>
-            <p>Du kan gå direkt till pris, få hjälp att välja eller läsa mer först. Samma princip följer dig genom hela sajten.</p>
-          </div>
-          <div style={{marginTop:36}}><DecisionGateway category='bredband' /></div>
-          <DecisionGateway category='mobil' />
-          <DecisionGateway category='forsakring' intent='pet' />
-          <DecisionGateway category='el' />
-        </section>
+        <section className={styles.section} style={{paddingTop:54,paddingBottom:46}}><SavingsNavigator /></section>
 
         <section className={styles.section} id='jamfor'>
           <div className={styles.sectionHead}>
