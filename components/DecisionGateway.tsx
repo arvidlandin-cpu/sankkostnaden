@@ -17,12 +17,12 @@ const partnerClass=(name:string)=>name==='Telia'?'brandTelia':name==='Vimla'?'br
 export default function DecisionGateway({category,compact=false,intent}:Props){
  const cfg=config[category], active=getActivePartners(category,intent);
  const helpLabel=category==='forsakring'&&intent==='home'?'Gör skyddskollen':cfg.help;
- const helpHref=category==='forsakring'&&intent==='home'?'/forsakring/hemforsakring-skyddskoll/':cfg.helpHref;
+ const helpHref=category==='forsakring'&&intent==='home'?'/forsakring/hemforsakring-skyddskoll/':category==='forsakring'&&intent==='pet'?'/forsakring/jamfor-forsakring/':cfg.helpHref;
  const readLabel=category==='forsakring'&&intent==='pet'?'Jämför försäkring steg för steg':cfg.read;
- const readHref=category==='forsakring'&&intent==='pet'?'/forsakring/jamfor-forsakring/':cfg.readHref;
+ const readHref=category==='forsakring'&&intent==='pet'?'/forsakring/':cfg.readHref;
  const directPartner=active.length===1?active[0]:null;
  const directLabel=category==='forsakring'&&intent==='pet'?'Jämför djurförsäkring':category==='forsakring'&&intent==='home'?'Jämför hemförsäkring':cfg.direct;
- const fallbackHref=category==='ekonomi'?'/ekonomi/#jamfor-lan':category==='el'?'/elavtal/jamfor-elavtal/':category==='forsakring'?(intent==='pet'?'/forsakring/djurforsakring/':intent==='home'?'/forsakring/jamfor-hemforsakring/':'/forsakring/jamfor-forsakring/'):category==='mobil'?'/mobil/billigaste-mobilabonnemanget/':'/bredband/bredband-pa-min-adress/';
+ const fallbackHref=category==='ekonomi'?'/ekonomi/#jamfor-lan':category==='el'?'/elavtal/jamfor-elavtal/':category==='forsakring'?(intent==='pet'?'/forsakring/jamfor-forsakring/':intent==='home'?'/forsakring/jamfor-hemforsakring/':'/forsakring/jamfor-forsakring/'):category==='mobil'?'/mobil/billigaste-mobilabonnemanget/':'/bredband/bredband-pa-min-adress/';
  const noPartnerText=category==='forsakring'&&intent==='home'?'Vi har ingen aktiv hemförsäkringspartner ännu. Använd checklistan för att jämföra likvärdigt skydd.':category==='forsakring'?'Börja med vår försäkringsguide och välj sedan rätt typ av skydd.':category==='el'?'Partnerlänkar aktiveras först när samarbetet är godkänt. Förbered jämförelsen nu.':'Börja med vår jämförelseguide.';
  return <section className={`decisionGateway ${compact?'decisionGatewayCompact':''}`}>
   <div className='gatewayHead'><span><Sparkles size={14}/> HITTA DIN SNABBASTE VÄG</span><h2>{cfg.title}</h2><p>{cfg.intro}</p></div>

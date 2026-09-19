@@ -63,7 +63,7 @@ export default function IntentGuide({ title, description, kicker, canonical, cat
       </Head>
       <header className='topbar'>
         <Link className='brand' href='/'><span className='brandMark'><PiggyBank size={20} /></span><span>Sänk Kostnaden</span></Link>
-        <nav><Link href='/bredband/'>Bredband</Link><Link href='/elavtal/'>El</Link><Link href='/mobil/'>Mobil</Link><Link href='/forsakring/'>Försäkring</Link></nav>
+        <nav><Link href='/bredband/'>Bredband</Link><Link href='/elavtal/'>El</Link><Link href='/mobil/'>Mobil</Link><Link href='/forsakring/'>Försäkring</Link><Link href='/ekonomi/'>Ekonomi</Link></nav>
       </header>
       <main>
         <section className='guideHero'>

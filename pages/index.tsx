@@ -79,7 +79,7 @@ export default function Home() {
           <a href='/forsakring/'>Försäkring</a>
           <a href='/ekonomi/'>Ekonomi</a>
         </nav>
-        <a className={styles.navCta} href='#partners'>Jämför priser</a>
+        <a className={styles.navCta} href='#jamfor'>Jämför priser</a>
       </header>
 
       <main>
@@ -114,7 +114,7 @@ export default function Home() {
               <div><p>ETT STÄLLE FÖR HUSHÅLLET</p><h2>Börja med kostnaden som stör dig mest</h2></div>
               <p>Du behöver inte leta upp en ny jämförelsesajt för varje avtal. Sänk Kostnaden är startpunkten och varje område leder vidare till rätt beslutsunderlag.</p>
           </div>
-          <div className={styles.categoryGrid}>
+          <div className={`${styles.categoryGrid} ${styles.categoryGridFive}`}>
             {categories.map(({ icon: Icon, title, text, label, href }) => (
               <a className={styles.categoryCard} href={href} key={title}>
                 <div className={styles.icon}><Icon size={23} /></div>
