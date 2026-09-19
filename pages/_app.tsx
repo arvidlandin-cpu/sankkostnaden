@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import type { AppProps } from 'next/app';
 import '../styles/global.css';
+import MobileQuickBar from '../components/MobileQuickBar';
 
 export default function App({ Component, pageProps }: AppProps) {
 
@@ -17,6 +18,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <link rel='apple-touch-icon' href='/app-icon.svg' />
       </Head>
       <Component {...pageProps} />
+      <MobileQuickBar />
     </>
   );
 }
