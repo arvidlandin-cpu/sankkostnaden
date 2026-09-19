@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { useState } from 'react';
 import { ArrowRight, ArrowUpRight, RotateCcw, Wifi, Smartphone, ShieldCheck, Zap } from 'lucide-react';
 import { getActivePartners, type PartnerCategory, type PartnerIntent } from '../lib/partners';
@@ -20,9 +21,9 @@ export default function SavingsNavigator(){
  const partners=area?getActivePartners(area,choice?.intent):[];
  const reset=()=>{setArea(null);setChoice(null)};
  return <section className='savingsNav'>
-  <div className='savingsNavTop'><div><span>SNABBSTART · 2 KLICK</span><h2>Sänk en kostnad nu.</h2><p>Välj kostnaden du vill sänka. På två snabba val får du en tydlig väg vidare – utan formulär eller inloggning.</p></div><div className='stepDots'><b className='on'>1</b><i/><b className={area?'on':''}>2</b><i/><b className={choice?'on':''}>3</b></div></div>
+  <div className='savingsNavTop'><div><span>SNABBSTART · 2 VAL</span><h2>Sänk en kostnad nu.</h2><p>Välj kostnaden du vill sänka. På två snabba val får du en tydlig väg vidare – utan formulär eller inloggning.</p></div><div className='stepDots'><b className='on'>1</b><i/><b className={area?'on':''}>2</b><i/><b className={choice?'on':''}>3</b></div></div>
   {!area&&<div className='savingsAreaGrid'>{areas.map(({id,label,sub,icon:Icon})=><button key={id} onClick={()=>setArea(id)}><span><Icon size={22}/></span><strong>{label}</strong><small>{sub}</small><ArrowRight size={17}/></button>)}</div>}
   {area&&!choice&&<div className='savingsQuestion'><div><small>STEG 2</small><h3>{questions[area].q}</h3></div><div>{questions[area].opts.map(o=><button key={o.label} onClick={()=>setChoice(o)}>{o.label}<ArrowRight size={16}/></button>)}</div><button className='navReset' onClick={reset}><RotateCcw size={14}/> Börja om</button></div>}
-  {area&&choice&&<div className='savingsResult'><div><small>DIN SNABBA VÄG</small><h3>{choice.label}</h3><p>Börja med vår korta jämförelseguide eller gå direkt till en relevant partner.</p><a className='resultGuide' href={choice.href}>Se min rekommendation <ArrowRight size={17}/></a></div>{partners.length>0&&<div className='resultPartners'><span>JÄMFÖR DIREKT HOS PARTNER</span>{partners.map(p=><a href={p.trackingUrl!} target='_blank' rel='sponsored nofollow noopener' key={p.name}><b>{p.name.replace(' Djurförsäkring','')}</b><small>Se pris & villkor <ArrowUpRight size={14}/></small></a>)}</div>}<button className='navReset' onClick={reset}><RotateCcw size={14}/> Välj en annan kostnad</button></div>}
+  {area&&choice&&<div className='savingsResult'><div><small>DIN SNABBA VÄG</small><h3>{choice.label}</h3><p>Börja med vår korta jämförelseguide eller gå direkt till en relevant partner.</p><Link className='resultGuide' href={choice.href}>Se min väg vidare <ArrowRight size={17}/></Link></div>{partners.length>0&&<div className='resultPartners'><span>JÄMFÖR DIREKT HOS PARTNER</span>{partners.slice(0,4).map(p=><a href={p.trackingUrl!} target='_blank' rel='sponsored nofollow noopener' key={p.name}><b>{p.name.replace(' Djurförsäkring','')}</b><small>Se pris & villkor <ArrowUpRight size={14}/></small></a>)}</div>}<button className='navReset' onClick={reset}><RotateCcw size={14}/> Välj en annan kostnad</button></div>}
  </section>
 }
