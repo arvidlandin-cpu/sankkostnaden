@@ -7,6 +7,7 @@ export default function Page() {
     kicker='JÄMFÖR DJURFÖRSÄKRING'
     canonical='https://sankkostnaden.se/forsakring/djurforsakring/'
     category='forsakring'
+    intent='pet'
     bullets={[
       'Jämför årspremie och både fast och rörlig självrisk',
       'Kontrollera veterinärvårdsbelopp och viktiga ersättningstak',
