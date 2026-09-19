@@ -125,7 +125,7 @@ export default function Home() {
         <section className={styles.section} style={{paddingTop:44,paddingBottom:24}}><SavingsNavigator /></section>
 
         <section className='livePartnerDock'>
-          <div className='livePartnerDockHead'><div><span>LIVE NU</span><strong>Genvägar direkt till våra aktiva partners</strong></div><p>Vill du inte läsa guider först? Hoppa direkt till aktuell jämförelse eller pris.</p></div>
+          <div className='livePartnerDockHead'><div><span>LIVE NU</span><strong>Genvägar direkt till våra partners</strong></div><p>Vill du inte läsa guider först? Hoppa direkt till jämförelse eller pris.</p></div>
           <div className='livePartnerDockGrid'>
             {livePartners.map(p => <a key={p.name} className={'livePartnerPill '+(p.name==='Telia'?'brandTelia':p.name==='Vimla'?'brandVimla':p.name==='Bredbandsval.se'?'brandBredbandsval':p.name==='Lassie'?'brandLassie':'brandSveland')} href={p.trackingUrl!} target='_blank' rel='sponsored nofollow noopener'><span><small>{p.category==='bredband'?'BREDBAND':p.category==='mobil'?'MOBIL':'DJURFÖRSÄKRING'}</small><b>{p.name.replace(' Djurförsäkring','')}</b></span><ArrowUpRight size={19}/></a>)}
           </div>
