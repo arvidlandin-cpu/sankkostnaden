@@ -4,7 +4,7 @@ import { ArrowLeft, ArrowUpRight, Check, PiggyBank } from 'lucide-react';
 import PartnerOffers from './PartnerOffers';
 import DecisionGateway from './DecisionGateway';
 import { getPartners } from '../lib/partners';
-import type { PartnerCategory } from '../lib/partners';
+import type { PartnerCategory, PartnerIntent } from '../lib/partners';
 
 type Section = { heading: string; body: string };
 type Props = {
@@ -13,12 +13,13 @@ type Props = {
   kicker: string;
   canonical: string;
   category: PartnerCategory;
+  intent?: PartnerIntent;
   bullets: string[];
   sections: Section[];
   related: { href: string; label: string }[];
 };
 
-export default function IntentGuide({ title, description, kicker, canonical, category, bullets, sections, related }: Props) {
+export default function IntentGuide({ title, description, kicker, canonical, category, intent, bullets, sections, related }: Props) {
   const categoryLabels: Record<PartnerCategory, string> = { el: 'Elavtal', bredband: 'Bredband', mobil: 'Mobil', forsakring: 'Försäkring' };
   const categoryPaths: Record<PartnerCategory, string> = { el: '/elavtal/', bredband: '/bredband/', mobil: '/mobil/', forsakring: '/forsakring/' };
   const categoryLabel = categoryLabels[category];
@@ -83,7 +84,7 @@ export default function IntentGuide({ title, description, kicker, canonical, cat
             {bullets.map(item => <p key={item}><Check size={17} /> {item}</p>)}
           </div>
           {sections.map(section => <section key={section.heading}><h2>{section.heading}</h2><p>{section.body}</p></section>)}
-          <PartnerOffers category={category} heading='Redo att kontrollera aktuellt pris?' />
+          <PartnerOffers category={category} intent={intent} heading={intent === 'pet' ? 'Jämför ditt pris hos Lassie och Sveland' : 'Redo att kontrollera aktuellt pris?'} />
           <div className='relatedGuides'>
             <h2>Läs vidare</h2>
             {related.map(item => <Link href={item.href} key={item.href}>{item.label} →</Link>)}
