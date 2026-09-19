@@ -3,8 +3,8 @@ import IntentGuide from '../../components/IntentGuide';
 export default function Page() {
   return (
     <IntentGuide
-      title='Mobilabonnemang 55+ 2026 – så jämför du seniorrabatter'
-      description='Jämför mobilabonnemang för 55+ efter surf, nät, ordinarie pris, seniorrabatt, bindningstid och verklig årskostnad.'
+      title='Mobilabonnemang 55+ 2026 – jämför pris och seniorrabatt'
+      description='Mobilabonnemang 55+: jämför seniorrabatt med vanliga abonnemang utifrån pris, surf, nät, bindningstid och verklig årskostnad.'
       kicker='MOBIL 55+'
       canonical='https://sankkostnaden.se/mobil/mobilabonnemang-55-plus/'
       category='mobil'
