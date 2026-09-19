@@ -43,12 +43,14 @@ export const partners: Partner[] = [
   { name:'Jämförbanker.se', category:'ekonomi', note:'Jämförelsetjänst för privatlån.', trackingUrl:'https://addrevenue.io/t?a=985319&c=3469603', status:'active', intents:['compare','loan'], priority:7, cta:'Jämför lån' },
 ];
 
+export type ActivePartner = Partner & { trackingUrl: string };
+
 const score=(p:Partner,intent?:PartnerIntent)=>(p.priority||0)+(intent&&p.intents.includes(intent)?100:0)+(p.intents.includes('compare')?5:0);
 
 export function getPartners(category: PartnerCategory) { return partners.filter(p => p.category === category); }
-export function getActivePartners(category: PartnerCategory, intent?: PartnerIntent, limit = 4) {
+export function getActivePartners(category: PartnerCategory, intent?: PartnerIntent, limit = 4): ActivePartner[] {
   return partners
-    .filter(p => p.category === category && p.status === 'active' && p.trackingUrl && (!intent || p.intents.includes(intent)))
+    .filter((p): p is ActivePartner => p.category === category && p.status === 'active' && typeof p.trackingUrl === 'string' && p.trackingUrl.length > 0 && (!intent || p.intents.includes(intent)))
     .sort((a,b)=>score(b,intent)-score(a,intent) || a.name.localeCompare(b.name,'sv'))
     .slice(0,limit);
 }
