@@ -6,7 +6,7 @@ type Props = { category: PartnerCategory; compact?: boolean; intent?: PartnerInt
 
 const config = {
   bredband:{title:'Hur vill du gå vidare med bredbandet?',intro:'Se vad du kan beställa, välj rätt hastighet eller gå direkt till jämförelsen.',direct:'Jämför bredband på min adress',help:'Hjälp mig välja hastighet',helpHref:'/bredband/vilken-hastighet-behover-jag/',read:'Läs bredbandsguiden',readHref:'/bredband/'},
-  mobil:{title:'Hur vill du hitta rätt mobilabonnemang?',intro:'Gå direkt till en aktiv partner, eller ringa in surf och behov först.',direct:'Jämför mobilabonnemang',help:'Hjälp mig välja surf',helpHref:'/mobil/hur-mycket-surf-behover-jag/',read:'Jämför billiga abonnemang',readHref:'/mobil/billigaste-mobilabonnemanget/'},
+  mobil:{title:'Hur vill du hitta rätt mobilabonnemang?',intro:'Gå direkt till en aktiv partner eller ringa in surf och behov först.',direct:'Jämför mobilabonnemang',help:'Hjälp mig välja surf',helpHref:'/mobil/hur-mycket-surf-behover-jag/',read:'Jämför billiga abonnemang',readHref:'/mobil/billigaste-mobilabonnemanget/'},
   forsakring:{title:'Jämför försäkring på rätt nivå',intro:'Välj rätt skydd först och gå sedan vidare till pris när en relevant partner finns.',direct:'Jämför försäkring',help:'Jämför djurförsäkring',helpHref:'/forsakring/djurforsakring/',read:'Läs försäkringsguiden',readHref:'/forsakring/'},
   el:{title:'Hitta rätt väg till ett billigare elavtal',intro:'Elpartners aktiveras först när samarbetena är godkända. Under tiden hjälper vi dig jämföra rätt.',direct:'Jämför elavtal',help:'Hjälp mig välja avtalsform',helpHref:'/elavtal/vilket-elavtal-passar-mig/',read:'Se billigaste elavtalet',readHref:'/elavtal/billigaste-elavtalet/'}
 } as const;
