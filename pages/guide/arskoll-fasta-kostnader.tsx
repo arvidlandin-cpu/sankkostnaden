@@ -17,7 +17,7 @@ export default function ArskollFastaKostnader() {
       <Head>
         <title>Årskoll av fasta kostnader – checklista för hushållet 2026</title>
         <meta name='description' content='Gratis årskoll för hushållets fasta kostnader. Gå igenom el, bredband, mobil och försäkring steg för steg och hitta avtal som är värda att jämföra.'/>
-        <link rel='canonical' href='https://sankkostnaden.se/guide/arskoll-fasta-kostnader/'/>
+        <link rel='canonical' href='https://sankkostnaden.se/guide/arskoll-fasta-kostnader/'/><script type='application/ld+json' dangerouslySetInnerHTML={{__html: JSON.stringify({'@context':'https://schema.org','@type':'Article',headline:"Årskoll av fasta kostnader – checklista för hushållet 2026",description:"Gratis årskoll för hushållets fasta kostnader. Gå igenom el, bredband, mobil och försäkring steg för steg och hitta avtal som är värda att jämföra.",url:"https://sankkostnaden.se/guide/arskoll-fasta-kostnader/",dateModified:'2026-09-19',publisher:{'@type':'Organization',name:'Sänk Kostnaden',url:'https://sankkostnaden.se/'}})}} />
       </Head>
       <header className='topbar'><Link className='brand' href='/'><span className='brandMark'><PiggyBank size={22}/></span><span>Sänk Kostnaden</span></Link></header>
       <main>

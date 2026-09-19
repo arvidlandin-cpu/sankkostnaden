@@ -21,7 +21,7 @@ export default function FamilyMobileTool() {
     <Head>
       <title>Lönar sig familjeabonnemang? Kalkyl 2026 | Sänk Kostnaden</title>
       <meta name='description' content='Räkna om familjeabonnemang blir billigare än separata mobilabonnemang. Jämför total månadskostnad, årskostnad och brytpunkt per extra användare.' />
-      <link rel='canonical' href='https://sankkostnaden.se/mobil/lonar-sig-familjeabonnemang/' />
+      <link rel='canonical' href='https://sankkostnaden.se/mobil/lonar-sig-familjeabonnemang/' /><script type='application/ld+json' dangerouslySetInnerHTML={{__html: JSON.stringify({'@context':'https://schema.org','@type':'WebPage',name:"Lönar sig familjeabonnemang? Kalkyl 2026",description:"Räkna om familjeabonnemang blir billigare än separata mobilabonnemang. Jämför total månadskostnad, årskostnad och brytpunkt per extra användare.",url:"https://sankkostnaden.se/mobil/lonar-sig-familjeabonnemang/",isPartOf:{'@type':'WebSite',name:'Sänk Kostnaden',url:'https://sankkostnaden.se/'}})}} />
       <meta name='robots' content='index,follow' />
     </Head>
     <main className={styles.shell}>

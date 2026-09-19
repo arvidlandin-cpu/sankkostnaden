@@ -14,6 +14,11 @@ export type Partner = {
 };
 
 export const partners: Partner[] = [
+  { name:'Cheap Energy', category:'el', note:'Elavtal för privatkunder. Kontrollera aktuellt pris, avtalsform och villkor hos elbolaget.', trackingUrl:'https://addrevenue.io/t?a=985028&c=3469603', status:'active', intents:['compare','electricity'], priority:8, cta:'Se elavtal & villkor' },
+  { name:'Stockholms Elbolag', category:'el', note:'Elavtal med bland annat fast och rörligt pris. Kontrollera aktuellt pris och villkor hos elbolaget.', trackingUrl:'https://addrevenue.io/t?a=985027&c=3469603', status:'active', intents:['compare','electricity'], priority:8, cta:'Se elavtal & villkor' },
+  { name:'Svealands Elbolag', category:'el', note:'Elavtal för privatkunder. Kontrollera aktuellt pris, avtalsform och villkor hos elbolaget.', trackingUrl:'https://addrevenue.io/t?a=985029&c=3469603', status:'active', intents:['compare','electricity'], priority:8, cta:'Se elavtal & villkor' },
+  { name:'Motala Energi', category:'el', note:'Elavtal för privatkunder. Kontrollera aktuellt pris, avtalsform och villkor hos elbolaget.', trackingUrl:'https://addrevenue.io/t?a=986637&c=3469603', status:'active', intents:['compare','electricity'], priority:8, cta:'Se elavtal & villkor' },
+  { name:'Kärnfull Energi', category:'el', note:'Elavtal med fokus på kärnkraft. Kontrollera aktuellt pris och villkor hos elbolaget.', trackingUrl:'https://addrevenue.io/t?a=984789&c=3469603', status:'active', intents:['compare','electricity'], priority:8, cta:'Se elavtal & villkor' },
   { name:'Elskling', category:'el', note:'Jämförelsetjänst för elavtal.', trackingUrl:null, status:'pending', intents:['compare','electricity'] },
   { name:'Mölndal Energi', category:'el', note:'Elhandelsbolag med elavtal för privatkunder.', trackingUrl:null, status:'pending', intents:['electricity'] },
   { name:'Bredbandsval.se', category:'bredband', note:'Jämförelsetjänst för bredband och TV. Tillgänglighet och pris kontrolleras för din adress.', trackingUrl:'https://visit.bredbandsval.se/click?p=390345&a=3498422&url=https%3A%2F%2Fwww.bredbandsval.se%2F', status:'active', intents:['compare','fiber','mobile-broadband','no-binding'], priority:10, cta:'Se bredband & priser' },

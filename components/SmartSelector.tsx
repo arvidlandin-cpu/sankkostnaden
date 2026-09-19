@@ -14,9 +14,11 @@ type Props = {
   questions: SelectorQuestion[];
   results: SelectorResult[];
   disclaimer: string;
+  backHref?: string;
+  backLabel?: string;
 };
 
-export default function SmartSelector({ eyebrow, title, intro, questions, results, disclaimer }: Props) {
+export default function SmartSelector({ eyebrow, title, intro, questions, results, disclaimer, backHref='/', backLabel='Sänk Kostnaden' }: Props) {
   const [answers, setAnswers] = useState<number[]>(Array(questions.length).fill(-1));
   const answered = answers.filter(value => value >= 0).length;
   const score = answers.reduce((sum, answer, index) => sum + (answer >= 0 ? questions[index].options[answer].points : 0), 0);
@@ -31,7 +33,7 @@ export default function SmartSelector({ eyebrow, title, intro, questions, result
 
   return (
     <main className={styles.shell}>
-      <Link className={styles.back} href='/'>← Sänk Kostnaden</Link>
+      <Link className={styles.back} href={backHref}>← {backLabel}</Link>
       <section className={styles.hero}>
         <span><Sparkles size={15} /> {eyebrow}</span>
         <h1>{title}</h1>

@@ -44,6 +44,7 @@ export default function Hushallskostnadskoll() {
       <meta property='og:title' content='Hushållskostnadskollen 2026 – räkna dina fasta kostnader'/>
       <meta property='og:description' content='Fyll i hushållets verkliga månadskostnader och se totalen per månad och år.'/>
       <meta property='og:url' content='https://sankkostnaden.se/verktyg/hushallskostnadskollen/'/>
+      <script type='application/ld+json' dangerouslySetInnerHTML={{ __html: JSON.stringify({'@context':'https://schema.org','@type':'WebApplication',name:'Hushållskostnadskollen',description:'Gratis verktyg för att summera hushållets verkliga månadskostnader och se totalen per månad och år.',url:'https://sankkostnaden.se/verktyg/hushallskostnadskollen/',applicationCategory:'FinanceApplication',operatingSystem:'Web',isAccessibleForFree:true}) }} />
     </Head>
     <header className='topbar'><Link className='brand' href='/'><span className='brandMark'><PiggyBank size={22}/></span><span>Sänk Kostnaden</span></Link></header>
     <main>
