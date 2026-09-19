@@ -15,3 +15,11 @@
  .quickChoices a{border-radius:12px}
  .hubBand{padding-top:38px;padding-bottom:38px}
 }
+
+/* Design 2.0: one clear above-the-fold journey */
+.heroGrid{grid-template-columns:minmax(0,820px);justify-content:center}
+.heroGrid>div:first-of-type{width:100%}
+.hero h1{max-width:820px}
+.lead{max-width:720px}
+.quickChoices{max-width:760px}
+@media(max-width:600px){.heroGrid{display:block}.quickChoices{max-width:none}}
