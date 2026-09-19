@@ -90,7 +90,7 @@ export default function FiberOrMobileTool() {
       <Head>
         <title>Fiber eller 5G/mobilt bredband? Test 2026 | Sänk Kostnaden</title>
         <meta name='description' content='Gör testet: fiber eller 5G/mobilt bredband? Jämför hushåll, stabilitetskrav, användning och mobil signal och få en personlig uppkopplingsprofil.' />
-        <link rel='canonical' href='https://sankkostnaden.se/bredband/fiber-eller-mobilt-bredband/' />
+        <link rel='canonical' href='https://sankkostnaden.se/bredband/fiber-eller-mobilt-bredband/' /><script type='application/ld+json' dangerouslySetInnerHTML={{__html: JSON.stringify({'@context':'https://schema.org','@type':'WebPage',name:"Fiber eller 5G/mobilt bredband? Test 2026",description:"Gör testet: fiber eller 5G/mobilt bredband? Jämför hushåll, stabilitetskrav, användning och mobil signal och få en personlig uppkopplingsprofil.",url:"https://sankkostnaden.se/bredband/fiber-eller-mobilt-bredband/",isPartOf:{'@type':'WebSite',name:'Sänk Kostnaden',url:'https://sankkostnaden.se/'}})}} />
         <meta name='robots' content='index,follow' />
       </Head>
       <SmartSelector eyebrow='SMARTVAL · FIBER ELLER 5G' title='Fiber eller 5G – vad passar ditt hem?' intro='Det finns inget universellt rätt svar. Testet väger hushållets samtidighet, stabilitetskrav, användning och mobil signal och pekar ut vilket spår du bör undersöka först.' questions={questions} results={results} disclaimer='Resultatet är en behovsprofil. Mobil prestanda måste testas på den faktiska adressen och bredbandsutbud varierar mellan nät och fastigheter.' />
