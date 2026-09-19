@@ -4,17 +4,17 @@ import styles from '../../styles/Home.module.css';
 import PartnerOffers from '../../components/PartnerOffers';
 
 export default function Ekonomi(){
- const schema={'@context':'https://schema.org','@type':'WebPage',name:'Jämför lån och sänk dina finanskostnader',url:'https://sankkostnaden.se/ekonomi/',description:'Jämför privatlån och verktyg för privatekonomi. Se effektiv ränta, avgifter och villkor innan du väljer.'};
+ const schema={'@context':'https://schema.org','@graph':[{'@type':'WebPage',name:'Jämför privatlån och samlingslån',url:'https://sankkostnaden.se/ekonomi/',description:'Jämför privatlån och samlingslån. Se effektiv ränta, avgifter, löptid och total kostnad innan du väljer.'},{'@type':'BreadcrumbList',itemListElement:[{'@type':'ListItem',position:1,name:'Sänk Kostnaden',item:'https://sankkostnaden.se/'},{'@type':'ListItem',position:2,name:'Lån & ekonomi',item:'https://sankkostnaden.se/ekonomi/'}]}]};
  return <><Head>
-  <title>Jämför lån & privatekonomi 2026 | Sänk Kostnaden</title>
-  <meta name='description' content='Jämför privatlån och tjänster för privatekonomi. Kontrollera effektiv ränta, avgifter, löptid och total kostnad innan du väljer.' />
+  <title>Jämför privatlån & samlingslån 2026 | Sänk Kostnaden</title>
+  <meta name='description' content='Jämför privatlån och samlingslån. Kontrollera effektiv ränta, avgifter, löptid och total kostnad innan du väljer.' />
   <link rel='canonical' href='https://sankkostnaden.se/ekonomi/' />
   <meta name='robots' content='index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1' />
   <script type='application/ld+json' dangerouslySetInnerHTML={{__html:JSON.stringify(schema)}} />
  </Head>
  <header className={styles.nav}><a className={styles.brand} href='/'><span className={styles.brandMark}><PiggyBank size={21}/></span><span>Sänk Kostnaden</span></a><nav><a href='/bredband/'>Bredband</a><a href='/elavtal/'>El</a><a href='/mobil/'>Mobil</a><a href='/forsakring/'>Försäkring</a></nav></header>
  <main>
-  <section className={styles.hero}><div className={styles.heroGrid}><div><div className={styles.eyebrow}><BadgeCheck size={16}/> PRIVATEKONOMI · 2026</div><h1>Jämför lån.<br/><span>Sänk kostnaden.</span></h1><p className={styles.lead}>Har du redan lån eller behöver finansiering? Jämför inte bara månadsbeloppet. Effektiv ränta, avgifter och löptid avgör vad lånet faktiskt kostar.</p></div></div></section>
+  <section className={styles.hero}><div className={styles.heroGrid}><div><div className={styles.eyebrow}><BadgeCheck size={16}/> PRIVATEKONOMI · 2026</div><h1>Jämför privatlån.<br/><span>Sänk lånekostnaden.</span></h1><p className={styles.lead}>Har du redan lån eller behöver finansiering? Jämför inte bara månadsbeloppet. Effektiv ränta, avgifter och löptid avgör vad lånet faktiskt kostar.</p></div></div></section>
   <section className={styles.section}><div className={styles.sectionHead}><div><p>JÄMFÖR PRIVATLÅN</p><h2>Kontrollera total kostnad innan du ansöker</h2></div><p>En lägre månadskostnad kan bero på längre återbetalningstid och därmed högre total kostnad. Jämför erbjudanden på samma lånebelopp och löptid.</p></div>
    <PartnerOffers category='ekonomi' intent='loan' limit={4}/>
    <div className={styles.trafficMagnets}>
