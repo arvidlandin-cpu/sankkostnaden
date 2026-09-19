@@ -9,9 +9,11 @@ import {
   Smartphone,
   Wifi,
   Zap,
+  ArrowUpRight,
 } from 'lucide-react';
 import styles from '../styles/Home.module.css';
 import DecisionGateway from '../components/DecisionGateway';
+import { getActivePartners } from '../lib/partners';
 
 const categories = [
   { icon: Wifi, title: 'Bredband', text: 'Börja med vad som finns på adressen och jämför sedan pris, hastighet och bindningstid.', label: 'Börja med adressen', href: './bredband/bredband-pa-min-adress/' },
@@ -49,6 +51,7 @@ const schema = {
 };
 
 export default function Home() {
+  const livePartners = [...getActivePartners('bredband'), ...getActivePartners('mobil'), ...getActivePartners('forsakring')];
   return (
     <>
       <Head>
@@ -116,6 +119,14 @@ export default function Home() {
               </div>
             </aside>
           </div>
+        </section>
+
+        <section className='livePartnerDock'>
+          <div className='livePartnerDockHead'><div><span>LIVE NU</span><strong>Genvägar direkt till våra aktiva partners</strong></div><p>Vill du inte läsa guider först? Hoppa direkt till aktuell jämförelse eller pris.</p></div>
+          <div className='livePartnerDockGrid'>
+            {livePartners.map(p => <a key={p.name} className={'livePartnerPill '+(p.name==='Telia'?'brandTelia':p.name==='Vimla'?'brandVimla':p.name==='Bredbandsval.se'?'brandBredbandsval':p.name==='Lassie'?'brandLassie':'brandSveland')} href={p.trackingUrl!} target='_blank' rel='sponsored nofollow noopener'><span><small>{p.category==='bredband'?'BREDBAND':p.category==='mobil'?'MOBIL':'DJURFÖRSÄKRING'}</small><b>{p.name.replace(' Djurförsäkring','')}</b></span><ArrowUpRight size={19}/></a>)}
+          </div>
+          <small className='livePartnerDisclosure'>Kommersiella länkar. Vi kan få provision om du blir kund.</small>
         </section>
 
         <section className={styles.proofStrip}>
