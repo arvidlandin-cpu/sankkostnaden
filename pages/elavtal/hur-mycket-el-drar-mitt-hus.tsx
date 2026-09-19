@@ -23,8 +23,8 @@ export default function HouseElectricityTool() {
 
   return <>
     <Head>
-      <title>Hur mycket el drar mitt hus? Kalkyl 2026 | Sänk Kostnaden</title>
-      <meta name='description' content='Räkna ut en grov årsförbrukning för villa utifrån boyta, uppvärmning, hushåll, elbil och spa. Se uppskattad kWh per år och vad som driver elanvändningen.' />
+      <title>Hur mycket el drar ett hus? Räkna kWh per år 2026</title>
+      <meta name='description' content='Hur mycket el drar ett hus? Räkna uppskattad årsförbrukning i kWh utifrån boyta, uppvärmning, hushåll, elbil och spa. Se uppskattad kWh per år och vad som driver elanvändningen.' />
       <link rel='canonical' href='https://sankkostnaden.se/elavtal/hur-mycket-el-drar-mitt-hus/' />
       <meta name='robots' content='index,follow' />
     </Head>
