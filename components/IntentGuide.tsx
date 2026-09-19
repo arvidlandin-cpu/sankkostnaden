@@ -73,7 +73,7 @@ export default function IntentGuide({ title, description, kicker, canonical, cat
             <p className='kicker' style={{ marginTop: 32 }}>{kicker}</p>
             <h1>{title}</h1>
             <p className='lead'>{description}</p>
-            {heroPartners.length > 0 && <div className='heroPartnerActions'>{heroPartners.map(item => <a key={item.name} className='primary' href={item.trackingUrl!} target='_blank' rel='sponsored nofollow noopener'>{item.name === 'Bredbandsval.se' ? 'Jämför på min adress hos Bredbandsval.se' : `Se pris hos ${item.name}`} <ArrowUpRight size={17}/></a>)}</div>}
+            {heroPartners.length === 1 && <div className='heroPartnerActions'>{heroPartners.map(item => <a key={item.name} className='primary' href={item.trackingUrl!} target='_blank' rel='sponsored nofollow noopener'>{item.name === 'Bredbandsval.se' ? 'Jämför på min adress hos Bredbandsval.se' : `Se pris hos ${item.name}`} <ArrowUpRight size={17}/></a>)}</div>}
             <p className='fine'>Kommersiella länkar markeras tydligt</p>
           </div>
         </section>
