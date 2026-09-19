@@ -128,8 +128,11 @@ export default function SavingsApp() {
   return (
     <>
       <Head>
-        <title>Räkna på dina avtal – Sänk Kostnaden</title>
-        <meta name='description' content='Gratis verktyg för att se över hushållets fasta kostnader och prioritera vilka avtal för el, bredband, mobil och försäkring du bör jämföra först.' />
+        <title>Kostnadskollen – se vilka avtal du bör jämföra först | Sänk Kostnaden</title>
+        <meta name='description' content='Använd Kostnadskollen för att se vilka fasta kostnader som är mest värda att granska först: el, bredband, mobil eller försäkring.' />
+        <meta property='og:title' content='Kostnadskollen – se vilka avtal du bör jämföra först | Sänk Kostnaden' />
+        <meta property='og:description' content='Se vilka fasta kostnader som är mest värda att granska först och gå vidare till rätt jämförelse.' />
+        <meta property='og:url' content='https://sankkostnaden.se/app/' />
         <link rel='canonical' href='https://sankkostnaden.se/app/' />
         <meta name='robots' content='index,follow,max-image-preview:large,max-snippet:-1' />
       </Head>
