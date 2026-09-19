@@ -599,3 +599,23 @@ footer .brand {
   .partnerSectionStrong .partnerIntro h2 { font-size: 27px; }
   .partnerButtonStrong { width: 100%; }
 }
+
+/* Multi-path conversion experience */
+.decisionGateway{margin:0 0 34px;padding:30px;border-radius:24px;background:linear-gradient(145deg,#17201b,#26332b);color:#fff;box-shadow:0 18px 50px #17201b1c}
+.gatewayHead>span{display:inline-flex;align-items:center;gap:6px;color:#dff46a;font-size:11px;font-weight:900;letter-spacing:.12em}
+.gatewayHead h2{color:#fff!important;margin:9px 0 8px!important;font-size:32px!important;letter-spacing:-.04em}
+.gatewayHead p{margin:0;color:#c7d0c9;line-height:1.55}
+.gatewayPaths{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:22px}
+.gatewayPath{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:13px;padding:18px;background:#fff;color:#17201b!important;border-radius:15px;text-decoration:none!important;border:1px solid #ffffff18;transition:.16s ease}
+.gatewayPath:hover{transform:translateY(-2px)}
+.gatewayDirect{background:#dff46a}
+.gatewayRead{grid-column:1/-1;padding:13px 17px;background:#ffffff0b;color:#fff!important}
+.gatewayIcon{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:#17201b;color:#dff46a}
+.gatewayPath small{display:block;font-size:9px;letter-spacing:.1em;font-weight:900;opacity:.65;margin-bottom:3px}
+.gatewayPath strong{display:block;font-size:16px;line-height:1.25}
+.gatewayPath p{margin:5px 0 0;font-size:12px;line-height:1.4;color:#637067}
+.gatewayPartners{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:13px;padding-top:13px;border-top:1px solid #ffffff16}
+.gatewayPartners>span{font-size:11px;color:#aeb9b1}
+.gatewayPartners a{display:inline-flex;align-items:center;gap:4px;padding:8px 10px;border-radius:9px;background:#ffffff10;color:#fff!important;text-decoration:none;font-size:12px;font-weight:800}
+.gatewayFine{margin:13px 0 0;font-size:10px;color:#93a097}
+@media(max-width:600px){.decisionGateway{margin-left:-10px;margin-right:-10px;padding:21px 16px;border-radius:20px}.gatewayHead h2{font-size:27px!important}.gatewayPaths{grid-template-columns:1fr}.gatewayRead{grid-column:auto}.gatewayPath{padding:15px}.gatewayPath p{font-size:11px}}
