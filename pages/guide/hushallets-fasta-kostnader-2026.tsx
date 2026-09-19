@@ -26,7 +26,7 @@ export default function HushalletsFastaKostnader() {
       <Head>
         <title>Hushållets fasta kostnader 2026 – checklista & kostnadskoll</title>
         <meta name='description' content='Kostnadsfri checklista för hushållets fasta kostnader 2026. Kartlägg el, bredband, mobil, försäkring och andra återkommande avtal och prioritera rätt.'/>
-        <link rel='canonical' href='https://sankkostnaden.se/guide/hushallets-fasta-kostnader-2026/'/>
+        <link rel='canonical' href='https://sankkostnaden.se/guide/hushallets-fasta-kostnader-2026/'/><script type='application/ld+json' dangerouslySetInnerHTML={{__html: JSON.stringify({'@context':'https://schema.org','@type':'Article',headline:"Hushållets fasta kostnader 2026 – checklista & kostnadskoll",description:"Kostnadsfri checklista för hushållets fasta kostnader 2026. Kartlägg el, bredband, mobil, försäkring och andra återkommande avtal och prioritera rätt.",url:"https://sankkostnaden.se/guide/hushallets-fasta-kostnader-2026/",dateModified:'2026-09-19',publisher:{'@type':'Organization',name:'Sänk Kostnaden',url:'https://sankkostnaden.se/'}})}} />
         <meta name='robots' content='index,follow,max-image-preview:large'/>
       </Head>
       <header className='topbar'><Link className='brand' href='/'><span className='brandMark'><PiggyBank size={22}/></span><span>Sänk Kostnaden</span></Link></header>
