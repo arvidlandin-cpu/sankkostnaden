@@ -146,7 +146,7 @@ export default function Home() {
           </div>
           <div style={{marginTop:36}}><DecisionGateway category='bredband' /></div>
           <DecisionGateway category='mobil' />
-          <DecisionGateway category='forsakring' />
+          <DecisionGateway category='forsakring' intent='pet' />
           <DecisionGateway category='el' />
         </section>
 
