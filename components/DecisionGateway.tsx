@@ -17,6 +17,8 @@ export default function DecisionGateway({category,compact=false,intent}:Props){
  const cfg=config[category], active=getActivePartners(category,intent);
  const helpLabel=category==='forsakring'&&intent==='home'?'Gör skyddskollen':cfg.help;
  const helpHref=category==='forsakring'&&intent==='home'?'/forsakring/hemforsakring-skyddskoll/':cfg.helpHref;
+ const readLabel=category==='forsakring'&&intent==='pet'?'Jämför försäkring steg för steg':cfg.read;
+ const readHref=category==='forsakring'&&intent==='pet'?'/forsakring/jamfor-forsakring/':cfg.readHref;
  const directPartner=active.length===1?active[0]:null;
  const fallbackHref=category==='el'?'/elavtal/jamfor-elavtal/':category==='forsakring'?(intent==='pet'?'/forsakring/djurforsakring/':intent==='home'?'/forsakring/jamfor-hemforsakring/':'/forsakring/jamfor-forsakring/'):category==='mobil'?'/mobil/billigaste-mobilabonnemanget/':'/bredband/bredband-pa-min-adress/';
  const noPartnerText=category==='forsakring'&&intent==='home'?'Vi har ingen aktiv hemförsäkringspartner ännu. Använd checklistan för att jämföra likvärdigt skydd.':category==='forsakring'?'Börja med vår försäkringsguide och välj sedan rätt typ av skydd.':category==='el'?'Partnerlänkar aktiveras först när samarbetet är godkänt. Förbered jämförelsen nu.':'Börja med vår jämförelseguide.';
@@ -27,7 +29,7 @@ export default function DecisionGateway({category,compact=false,intent}:Props){
    {directPartner ? <a className='gatewayPath gatewayDirect' href={directPartner.trackingUrl!} target='_blank' rel='sponsored nofollow noopener'><span className='gatewayIcon'><Gauge size={20}/></span><div><small>SNABBASTE VÄGEN</small><strong>{cfg.direct}</strong><p>{`Fortsätt hos ${directPartner.name} för pris och villkor.`}</p></div><ArrowUpRight size={20}/></a>:
    <Link className='gatewayPath gatewayDirect' href={fallbackHref}><span className='gatewayIcon'><Gauge size={20}/></span><div><small>{active.length>1?'JÄMFÖR ALTERNATIVEN':'JÄMFÖR RÄTT'}</small><strong>{cfg.direct}</strong><p>{active.length>1?'Flera relevanta partners finns. Jämför alternativen i stället för att automatiskt skickas till den första.':noPartnerText}</p></div><ArrowRight size={20}/></Link>}
    <Link className='gatewayPath' href={helpHref}><span className='gatewayIcon'><Compass size={20}/></span><div><small>HJÄLP MIG VÄLJA</small><strong>{helpLabel}</strong><p>Några snabba val hjälper dig hitta rätt nivå innan du går vidare.</p></div><ArrowRight size={20}/></Link>
-   <Link className='gatewayPath gatewayRead' href={cfg.readHref}><div><small>JAG VILL LÄSA FÖRST</small><strong>{cfg.read}</strong></div><ArrowRight size={18}/></Link>
+   <Link className='gatewayPath gatewayRead' href={readHref}><div><small>JAG VILL LÄSA FÖRST</small><strong>{readLabel}</strong></div><ArrowRight size={18}/></Link>
   </div>
   <p className='gatewayFine'>Partnerlänkar är kommersiella. Vi kan få provision om du blir kund; urvalet omfattar inte hela marknaden.</p>
  </section>;
