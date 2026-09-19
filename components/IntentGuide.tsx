@@ -2,6 +2,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { ArrowLeft, ArrowUpRight, Check, PiggyBank } from 'lucide-react';
 import PartnerOffers from './PartnerOffers';
+import PartnerDirectory from './PartnerDirectory';
 import DecisionGateway from './DecisionGateway';
 import { getActivePartners } from '../lib/partners';
 import type { PartnerCategory, PartnerIntent } from '../lib/partners';
@@ -84,7 +85,7 @@ export default function IntentGuide({ title, description, kicker, canonical, cat
             {bullets.map(item => <p key={item}><Check size={17} /> {item}</p>)}
           </div>
           {sections.map(section => <section key={section.heading}><h2>{section.heading}</h2><p>{section.body}</p></section>)}
-          <PartnerOffers category={category} intent={intent} heading={intent === 'pet' ? 'Jämför ditt pris hos Lassie och Sveland' : 'Redo att kontrollera aktuellt pris?'} />
+          {intent === 'compare' ? <PartnerDirectory category={category} intent={intent} heading={`Aktiva ${categoryLabel.toLowerCase()}alternativ att jämföra`} /> : <PartnerOffers category={category} intent={intent} heading={intent === 'pet' ? 'Jämför ditt pris hos Lassie och Sveland' : 'Redo att kontrollera aktuellt pris?'} />}
           <div className='relatedGuides'>
             <h2>Läs vidare</h2>
             {related.map(item => <Link href={item.href} key={item.href}>{item.label} →</Link>)}
