@@ -40,6 +40,7 @@ const intentLinks = [
   ['/bredband/5g-bredband/', '5G-bredband 2026', 'När kan det ersätta fiber?'],
   ['/mobil/5g-abonnemang/', '5G-abonnemang 2026', 'Jämför nät, fart och kostnad'],
   ['/forsakring/hemforsakring-bostadsratt/', 'Hemförsäkring bostadsrätt', 'Jämför rätt skydd och självrisk'],
+  ['/ekonomi/', 'Jämför privatlån & samlingslån', 'Effektiv ränta, avgifter och total kostnad'],
 ];
 
 const schema = {
@@ -54,8 +55,8 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Sänk din månadskostnad – jämför el, bredband, mobil och försäkring | Sänk Kostnaden</title>
-        <meta name='description' content='Sänk din månadskostnad genom att se över fasta kostnader. Jämför bredband, elavtal, mobilabonnemang och försäkring med guider och gratis verktyg.' />
+        <title>Sänk din månadskostnad – jämför el, bredband, mobil, försäkring & lån | Sänk Kostnaden</title>
+        <meta name='description' content='Sänk din månadskostnad genom att se över fasta kostnader. Jämför bredband, elavtal, mobilabonnemang, försäkring och lånekostnader med guider och gratis verktyg.' />
         <link rel='canonical' href='https://sankkostnaden.se/' />
         <meta property='og:title' content='Sänk Kostnaden – hitta onödiga fasta utgifter' />
         <meta property='og:description' content='Gratis guider och verktyg för att jämföra hushållets återkommande kostnader.' />
