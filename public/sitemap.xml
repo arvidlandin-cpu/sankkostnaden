@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://sankkostnaden.se/</loc><lastmod>2026-09-19</lastmod><priority>1.0</priority></url>
   <url><loc>https://sankkostnaden.se/elavtal/</loc><lastmod>2026-09-13</lastmod><priority>0.9</priority></url>
-  <url><loc>https://sankkostnaden.se/elavtal/jamfor-elavtal/</loc><lastmod>2026-09-13</lastmod><priority>0.9</priority></url>
+  <url><loc>https://sankkostnaden.se/elavtal/jamfor-elavtal/</loc><lastmod>2026-09-19</lastmod><priority>0.9</priority></url>
   <url><loc>https://sankkostnaden.se/elavtal/billigaste-elavtalet/</loc><lastmod>2026-09-13</lastmod><priority>0.9</priority></url>
   <url><loc>https://sankkostnaden.se/elavtal/byta-elavtal/</loc><lastmod>2026-09-13</lastmod><priority>0.8</priority></url>
   <url><loc>https://sankkostnaden.se/elavtal/elavtal-utan-bindningstid/</loc><lastmod>2026-09-13</lastmod><priority>0.8</priority></url>
@@ -13,7 +13,7 @@
   <url><loc>https://sankkostnaden.se/bredband/</loc><lastmod>2026-09-13</lastmod><priority>0.9</priority></url>
   <url><loc>https://sankkostnaden.se/bredband/fiber/</loc><lastmod>2026-09-13</lastmod><priority>0.8</priority></url>
   <url><loc>https://sankkostnaden.se/bredband/5g-bredband/</loc><lastmod>2026-09-13</lastmod><priority>0.8</priority></url>
-  <url><loc>https://sankkostnaden.se/bredband/billigaste-bredbandet/</loc><lastmod>2026-09-13</lastmod><priority>0.9</priority></url>
+  <url><loc>https://sankkostnaden.se/bredband/billigaste-bredbandet/</loc><lastmod>2026-09-19</lastmod><priority>0.9</priority></url>
   <url><loc>https://sankkostnaden.se/bredband/basta-bredbandet/</loc><lastmod>2026-09-13</lastmod><priority>0.8</priority></url>
   <url><loc>https://sankkostnaden.se/bredband/bredband-pa-min-adress/</loc><lastmod>2026-09-13</lastmod><priority>0.9</priority></url>
   <url><loc>https://sankkostnaden.se/bredband/utan-bindningstid/</loc><lastmod>2026-09-13</lastmod><priority>0.8</priority></url>
@@ -26,7 +26,7 @@
   <url><loc>https://sankkostnaden.se/mobil/</loc><lastmod>2026-09-13</lastmod><priority>0.9</priority></url>
   <url><loc>https://sankkostnaden.se/mobil/5g-abonnemang/</loc><lastmod>2026-09-13</lastmod><priority>0.8</priority></url>
   <url><loc>https://sankkostnaden.se/mobil/mobilabonnemang-55-plus/</loc><lastmod>2026-09-13</lastmod><priority>0.8</priority></url>
-  <url><loc>https://sankkostnaden.se/mobil/billigaste-mobilabonnemanget/</loc><lastmod>2026-09-13</lastmod><priority>0.9</priority></url>
+  <url><loc>https://sankkostnaden.se/mobil/billigaste-mobilabonnemanget/</loc><lastmod>2026-09-19</lastmod><priority>0.9</priority></url>
   <url><loc>https://sankkostnaden.se/mobil/basta-mobilabonnemanget/</loc><lastmod>2026-09-13</lastmod><priority>0.8</priority></url>
   <url><loc>https://sankkostnaden.se/mobil/fri-surf/</loc><lastmod>2026-09-14</lastmod><priority>0.9</priority></url>
   <url><loc>https://sankkostnaden.se/mobil/familjeabonnemang/</loc><lastmod>2026-09-13</lastmod><priority>0.8</priority></url>
@@ -37,10 +37,10 @@
   <url><loc>https://sankkostnaden.se/forsakring/hemforsakring-bostadsratt/</loc><lastmod>2026-09-13</lastmod><priority>0.8</priority></url>
   <url><loc>https://sankkostnaden.se/forsakring/jamfor-hemforsakring/</loc><lastmod>2026-09-13</lastmod><priority>0.8</priority></url>
   <url><loc>https://sankkostnaden.se/forsakring/vad-kostar-hemforsakring/</loc><lastmod>2026-09-13</lastmod><priority>0.8</priority></url>
-  <url><loc>https://sankkostnaden.se/forsakring/jamfor-forsakring/</loc><lastmod>2026-09-13</lastmod><priority>0.8</priority></url>
+  <url><loc>https://sankkostnaden.se/forsakring/jamfor-forsakring/</loc><lastmod>2026-09-19</lastmod><priority>0.8</priority></url>
   <url><loc>https://sankkostnaden.se/guide/sank-fasta-kostnader/</loc><lastmod>2026-09-13</lastmod><priority>0.7</priority></url>
   <url><loc>https://sankkostnaden.se/app/</loc><lastmod>2026-09-14</lastmod><priority>0.9</priority></url>
-  <url><loc>https://sankkostnaden.se/guide/hushallets-fasta-kostnader-2026/</loc><lastmod>2026-09-14</lastmod><priority>0.8</priority></url>
+  <url><loc>https://sankkostnaden.se/guide/hushallets-fasta-kostnader-2026/</loc><lastmod>2026-09-19</lastmod><priority>0.8</priority></url>
   <url><loc>https://sankkostnaden.se/guide/arskoll-fasta-kostnader/</loc><lastmod>2026-09-14</lastmod><priority>0.8</priority></url>
   <url><loc>https://sankkostnaden.se/guide/sank-kostnader-automatiskt/</loc><lastmod>2026-09-13</lastmod><priority>0.7</priority></url>
   <url><loc>https://sankkostnaden.se/bredband/vilken-hastighet-behover-jag/</loc><lastmod>2026-09-19</lastmod><priority>0.9</priority></url>
