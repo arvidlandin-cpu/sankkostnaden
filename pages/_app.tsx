@@ -17,7 +17,6 @@ export default function App({ Component, pageProps }: AppProps) {
         <meta name='apple-mobile-web-app-capable' content='yes' />
         <meta name='apple-mobile-web-app-status-bar-style' content='default' />
         <meta name='apple-mobile-web-app-title' content='Sänk Kostnaden' />
-        <link rel='apple-touch-icon' href='/app-icon.svg?v=2' />
       </Head>
       <Component {...pageProps} />
       <MobileQuickBar />
