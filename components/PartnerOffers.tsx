@@ -16,7 +16,7 @@ export default function PartnerOffers({ category, heading = 'Jämför hos våra 
   return (
     <section className='partnerSection partnerSectionStrong' aria-label={heading}>
       <div className='partnerIntro'>
-        <p className='kicker'>AKTIVA PARTNERS • ÖPPNAS I NY FLIK</p>
+        <p className='kicker'>JÄMFÖR DIREKT • ÖPPNAS I NY FLIK</p>
         <h2>{heading}</h2>
         <p>Ta fram ditt pris direkt hos bolagen. Pris och villkor beror på dina uppgifter, så jämför gärna båda innan du väljer.</p>
       </div>
