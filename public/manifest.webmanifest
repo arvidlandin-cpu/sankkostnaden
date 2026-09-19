@@ -1,0 +1,19 @@
+{
+  "name": "Sänk Kostnaden",
+  "short_name": "Sänk Kostnaden",
+  "description": "Räkna på hushållets fasta kostnader och hitta vad som är värt att jämföra.",
+  "start_url": "/app/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f7f8f5",
+  "theme_color": "#17201b",
+  "lang": "sv-SE",
+  "icons": [
+    {
+      "src": "/app-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

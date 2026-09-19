@@ -1,0 +1,17 @@
+import Head from 'next/head';
+import SmartSelector, { SelectorQuestion, SelectorResult } from '../../components/SmartSelector';
+
+const questions: SelectorQuestion[] = [
+  { title: 'Hur mycket använder du mobilen utan wifi?', help: 'Tänk på pendling, resor, skola, jobb och annan tid utanför hemmet.', options: [{ label: 'Nästan alltid wifi', points: 0 }, { label: 'Lite varje dag', points: 1 }, { label: 'Mycket varje dag', points: 2 }, { label: 'Mobilen är mitt huvudinternet', points: 4 }] },
+  { title: 'Vad gör du mest på mobildata?', help: 'Video och hotspot drar betydligt mer data än meddelanden och musik.', options: [{ label: 'Meddelanden, kartor, bank', points: 0 }, { label: 'Sociala medier och musik', points: 1 }, { label: 'Mycket video och streaming', points: 3 }, { label: 'Hotspot/delar internet ofta', points: 4 }] },
+  { title: 'Hur ser abonnemangen ut hemma?', help: 'Flera separata abonnemang kan vara en större kostnadsfråga än själva surfmängden.', options: [{ label: 'Bara mitt abonnemang', points: 0 }, { label: '2 personer', points: 1 }, { label: '3–4 separata abonnemang', points: 2 }, { label: '5+ separata abonnemang', points: 3 }] },
+];
+const results: SelectorResult[] = [
+  { min: 0, label: 'SURFPROFIL · LÅG', title: 'Du behöver sannolikt inte fri surf', text: 'Din användning pekar mot en mindre datapott. Här är risken snarare att du betalar för surf du aldrig använder.', bullets: ['Börja jämförelsen på lägre surfmängder', 'Kontrollera sparad surf och EU-villkor', 'Jämför ordinarie månadspris'], cta: 'Jämför billigare mobil', href: '/mobil/billigaste-mobilabonnemanget/' },
+  { min: 4, label: 'SURFPROFIL · NORMAL', title: 'Mellansegmentet är troligen rätt', text: 'Du använder mobildata regelbundet men signalerna mot obegränsad surf är inte tillräckligt starka för att betala extra utan jämförelse.', bullets: ['Jämför datapott mot verklig användning', 'Se vad priset blir efter kampanj', 'Kontrollera nät och täckning där du använder mobilen'], cta: 'Jämför mobilabonnemang', href: '/mobil/billigaste-mobilabonnemanget/' },
+  { min: 8, label: 'SURFPROFIL · HÖG', title: 'Stor datapott eller fri surf kan passa', text: 'Video, hotspot eller mycket användning utan wifi gör att en stor datapott kan vara rationell. Jämför ändå totalpriset mot ett steg lägre.', bullets: ['Jämför stor datapott mot fri surf', 'Kontrollera eventuella hastighetsvillkor', 'Har ni flera abonnemang: jämför familjeupplägg'], cta: 'Jämför fri surf', href: '/mobil/fri-surf/' },
+];
+
+export default function MobileDataTool() {
+  return <><Head><title>Hur mycket surf behöver jag? Test 2026 | Sänk Kostnaden</title><meta name='description' content='Gör ett snabbt surftest och se om du behöver liten datapott, normal surf eller fri surf. Gratis och utan inloggning.' /><link rel='canonical' href='https://sankkostnaden.se/mobil/hur-mycket-surf-behover-jag/' /><meta name='robots' content='index,follow' /></Head><SmartSelector eyebrow='SMARTVAL · MOBIL' title='Hur mycket surf behöver du – på riktigt?' intro='Fri surf låter enkelt, men är bara värd priset om du använder den. Svara på tre frågor så får du en surfprofil och rätt nästa jämförelse.' questions={questions} results={results} disclaimer='Surfprofilen är generell och bygger på användningsmönstret du anger. Operatörernas priser och villkor kan ändras.' /></>;
+}

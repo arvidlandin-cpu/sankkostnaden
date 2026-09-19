@@ -1,0 +1,109 @@
+# Tests
+
+## Test 1 - Build a personalized cost priority [sanity]
+Viewport: desktop
+Covers: interactive diagnostic, live scoring, category ranking, direct comparison routing
+Description: Verifies that household answers change the diagnostic and produce an actionable ranked result.
+
+Steps:
+1. Open Kostnadskollen and choose El
+2. Enter 1500 kr, choose 2+ år / aldrig, Osäker and Kan flytta förbrukning
+3. Review the personal cost map and select Kontrollera nu for the highest ranked category
+
+Expected: El receives a visibly elevated score, appears at or near the top of the personal ranking, and its action opens the electricity comparison journey.
+
+## Test 2 - Household mobile signal changes priority
+Viewport: mobile
+Covers: household-size interaction, mobile contract diagnostic, responsive question flow
+Description: Verifies that the mobile experience responds to household composition and remains usable on a small screen.
+
+Steps:
+1. Increase household size to 4 people
+2. Open Mobil and choose Separata abonnemang and Mycket blir över
+3. Continue to the personal cost map
+
+Expected: Mobile shows clear improvement potential and the mobile ranking card provides a direct comparison action without horizontal overflow.
+
+## Test 3 - Reset clears the diagnostic
+Viewport: desktop
+Covers: reset guardrail, diagnostic state clearing
+Description: Verifies that a user can discard entered diagnostic data and start again cleanly.
+
+Steps:
+1. Enter a monthly broadband cost and choose 2+ år / aldrig
+2. Select Börja om
+3. Review the hero summary and broadband answers
+
+Expected: Entered cost and selections return to their initial state and the summary no longer reports completed areas.
+
+## Test 4 - Explain scoring without fabricated savings
+Viewport: mobile
+Covers: scoring transparency, no unsupported savings claim, methodology explanation
+Description: Verifies that the tool clearly distinguishes prioritization signals from promised monetary savings.
+
+Steps:
+1. Answer questions in at least two categories
+2. Scroll to the personal cost map
+3. Read the section explaining what the score means
+
+Expected: The page states that the score is a prioritization signal rather than a savings promise and explains which user-provided factors affect it.
+
+## Test 5 - Smart selectors create actionable need profiles
+Viewport: mobile
+Covers: broadband speed selector, free-surf value test, fiber-vs-5G selector, deeper electricity contract selector, insurance protection check, direct comparison routing
+Description: Verifies the search-oriented smart tools turn household answers into useful profiles without unsupported market-price or savings claims.
+
+Steps:
+1. Open the free-surf test, choose high data use, frequent streaming, regular hotspot, little wifi and maximum freedom; confirm a high-utility result
+2. Open the fiber-vs-5G test, choose several simultaneous users, high stability needs and weak mobile signal; confirm a fiber-oriented result and comparison action
+3. Open the electricity contract test, choose steerable loads and active/automatic control; confirm a dynamic-price-oriented profile and relevant next action
+
+Expected: Each tool produces a clearly differentiated result from the selected answers, explains the decision factors, and routes to a relevant comparison or deeper guide without promising a guaranteed saving.
+
+## Test 6 - Privacy and affiliate information remain accessible
+Viewport: desktop
+Covers: cookie policy, privacy disclosure, affiliate transparency, removed public personal email
+Description: Verifies transparency pages remain accessible while the personal contact email is no longer published.
+
+Steps:
+1. Open the homepage and scroll to the footer
+2. Confirm the personal Gmail address is not shown and open Cookiepolicy
+3. Review Cookiepolicy, Affiliateinformation and Integritet
+
+Expected: The homepage does not publish arvidlandin@gmail.com, and the dedicated cookie, affiliate and privacy pages remain accessible and describe analytics and affiliate/partner tracking.
+
+## Test 7 - Approved affiliate programs render and pending programs stay hidden
+Viewport: desktop
+Covers: approved affiliate links, pending affiliate guardrail, sponsored-link integrity, above-the-fold partner CTAs, broadband and mobile conversion routing
+Description: Verifies approved partners are clickable with sponsored tracking while unapproved programs remain non-clickable.
+
+Steps:
+1. Open the broadband address journey and confirm a direct Bredbandsval affiliate CTA is visible in the hero without scrolling
+2. Confirm Bredbandsval.se is available, then open the mobile comparison journey and confirm Telia and Vimla are available
+3. Open the insurance journey and confirm Sveland Djurförsäkring and Lassie are available; review electricity for pending programs
+
+Expected: Approved partners render near the start of relevant journeys as clearly marked commercial links with sponsored tracking and direct external CTAs, while pending Mölndal Energi and Elskling do not render as clickable offers.
+
+## Test 8 - Electricity and family calculators react to household inputs
+Viewport: mobile
+Covers: house electricity estimator, heating and household inputs, family mobile break-even calculator, commercial next-step routing
+Description: Verifies the new search-oriented tools produce useful calculations from user inputs and route to the relevant comparison journey.
+
+Steps:
+1. Open the house electricity tool, change boyta and heating type, then enable elbil
+2. Confirm the estimated annual kWh visibly changes and the electricity comparison action is available
+3. Open the family mobile tool, change people and prices, and review monthly totals, annual difference, and break-even extra-user price
+
+Expected: Both calculators update from the entered profile, explain that their output is decision support rather than a guaranteed saving, and provide a relevant comparison action.
+
+## Test 9 - High-intent SEO journeys are distinct and useful
+Viewport: mobile
+Covers: homepage SEO intent, category-card navigation, static-export internal routing, cheap broadband journey, pet insurance journey, mobile responsive layout
+Description: Verifies high-intent search journeys have clear distinct content and useful next steps without unsupported cheapest claims.
+
+Steps:
+1. Open the homepage and review the four category cards and main heading
+2. Open Billigaste bredbandet and confirm it explains address-dependent total cost rather than naming an unsupported winner
+3. Open Billig djurförsäkring and review the comparison checklist and commercial alternatives
+
+Expected: The homepage clearly targets lowering monthly/fixed costs, category navigation works without horizontal overflow, and the broadband and pet-insurance pages each address their own search intent with factual comparison guidance and relevant next actions.

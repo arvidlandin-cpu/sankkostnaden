@@ -1,0 +1,17 @@
+import Head from 'next/head';
+import SmartSelector, { SelectorQuestion, SelectorResult } from '../../components/SmartSelector';
+
+const questions: SelectorQuestion[] = [
+  { title: 'Hur bor du?', help: 'Boendeformen påverkar vilket skydd du behöver kontrollera när du jämför.', options: [{ label: 'Hyresrätt', points: 0 }, { label: 'Bostadsrätt', points: 2 }, { label: 'Villa/radhus', points: 3 }, { label: 'Annat boende', points: 1 }] },
+  { title: 'Hur ser hushållet ut?', help: 'Fler personer och barn gör det extra viktigt att kontrollera vem som faktiskt omfattas.', options: [{ label: '1 person', points: 0 }, { label: '2 personer', points: 1 }, { label: 'Familj med barn', points: 3 }, { label: 'Flera vuxna i hushållet', points: 2 }] },
+  { title: 'Finns något som kräver extra kontroll?', help: 'Det här avgör inte vilket bolag du ska välja – bara vad du inte bör missa i jämförelsen.', options: [{ label: 'Nej, ganska standard', points: 0 }, { label: 'Dyrare elektronik/cyklar', points: 2 }, { label: 'Reser ofta', points: 2 }, { label: 'Flera saker ovan', points: 4 }] },
+];
+const results: SelectorResult[] = [
+  { min: 0, label: 'SKYDDSKOLL · GRUND', title: 'Jämför samma grundskydd – inte bara premie', text: 'Din situation ser relativt standardiserad ut. Det viktigaste är därför att jämföra likvärdig omfattning och självrisk.', bullets: ['Kontrollera vem som omfattas', 'Jämför självrisk på samma skadehändelser', 'Se reseskydd och lösöresnivå'], cta: 'Öppna försäkringsjämförelsen', href: '/forsakring/jamfor-forsakring/' },
+  { min: 4, label: 'SKYDDSKOLL · FLER DETALJER', title: 'Du har fler villkor att kontrollera', text: 'Boendeform, hushåll eller egendom gör att en ren prisjämförelse riskerar att bli missvisande. Jämför först samma skyddsnivå.', bullets: ['Kontrollera boenderelaterade tillägg', 'Se beloppsgränser för värdefull egendom', 'Jämför självrisk och reseskydd'], cta: 'Jämför på samma skyddsnivå', href: '/forsakring/jamfor-forsakring/' },
+  { min: 8, label: 'SKYDDSKOLL · EXTRA KONTROLL', title: 'Pris är inte första filtret för dig', text: 'Flera delar av din situation kan påverkas av villkorsskillnader. Börja med omfattning och begränsningar, och jämför pris först därefter.', bullets: ['Kontrollera undantag och beloppsgränser', 'Säkerställ vilka personer som omfattas', 'Jämför premie först när skyddet är likvärdigt'], cta: 'Gör en likvärdig jämförelse', href: '/forsakring/jamfor-forsakring/' },
+];
+
+export default function InsuranceTool() {
+  return <><Head><title>Hemförsäkring skyddskoll 2026 | Sänk Kostnaden</title><meta name='description' content='Gör en snabb skyddskoll före du jämför hemförsäkring. Se vilka villkor du behöver kontrollera utifrån boende och hushåll.' /><link rel='canonical' href='https://sankkostnaden.se/forsakring/hemforsakring-skyddskoll/' /><meta name='robots' content='index,follow' /></Head><SmartSelector eyebrow='SMARTVAL · FÖRSÄKRING' title='Vad behöver du kontrollera i hemförsäkringen?' intro='Billigast är bara relevant om skyddet är jämförbart. Den här kontrollen hjälper dig se vilka villkor som förtjänar extra uppmärksamhet innan du tittar på pris.' questions={questions} results={results} disclaimer='Skyddskollen är generell information och rekommenderar inte ett visst försäkringsbolag eller en individuell försäkringsprodukt.' /></>;
+}

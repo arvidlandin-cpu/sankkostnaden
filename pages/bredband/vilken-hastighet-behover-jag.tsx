@@ -1,0 +1,17 @@
+import Head from 'next/head';
+import SmartSelector, { SelectorQuestion, SelectorResult } from '../../components/SmartSelector';
+
+const questions: SelectorQuestion[] = [
+  { title: 'Hur många använder nätet samtidigt?', help: 'Räkna personer som streamar, jobbar, spelar eller videosamtalar samtidigt.', options: [{ label: '1 person', points: 0 }, { label: '2 personer', points: 1 }, { label: '3–4 personer', points: 2 }, { label: '5+ personer', points: 3 }] },
+  { title: 'Vad är tyngsta användningen?', help: 'Välj det som bäst beskriver hushållets mest krävande vardag.', options: [{ label: 'Surf, mejl och vanlig streaming', points: 0 }, { label: 'Flera samtidiga HD/4K-streams', points: 2 }, { label: 'Gaming och stora nedladdningar', points: 2 }, { label: 'Hemarbete + video + många enheter', points: 3 }] },
+  { title: 'Hur viktigt är marginal?', help: 'Mer fart kan ge marginal, men onödigt hög hastighet kostar ofta mer.', options: [{ label: 'Jag vill betala för det jag behöver', points: 0 }, { label: 'Lite marginal är bra', points: 1 }, { label: 'Jag vill slippa tänka på kapacitet', points: 2 }, { label: 'Maxprestanda är viktigt', points: 3 }] },
+];
+const results: SelectorResult[] = [
+  { min: 0, label: 'BEHOVSPROFIL · BAS', title: 'Börja kring 100 Mbit/s', text: 'För ett mindre hushåll med normal användning är det ofta klokt att jämföra från 100 Mbit/s innan du betalar för mer.', bullets: ['Kontrollera vad som faktiskt finns på adressen', 'Jämför totalpris efter kampanj', 'Betala inte automatiskt för gigabithastighet'], cta: 'Jämför bredband på adressen', href: '/bredband/bredband-pa-min-adress/' },
+  { min: 4, label: 'BEHOVSPROFIL · MELLAN', title: '250–500 Mbit/s är din rimliga zon', text: 'Flera samtidiga användare eller tyngre användning gör att mellannivån ger bättre marginal utan att direkt gå till max.', bullets: ['Jämför 250 och 500 Mbit/s sida vid sida', 'Titta på ordinarie pris, inte bara kampanj', 'Kontrollera bindningstid och routerkostnad'], cta: 'Jämför rätt hastighet', href: '/bredband/billigaste-bredbandet/' },
+  { min: 7, label: 'BEHOVSPROFIL · HÖG', title: '500 Mbit/s eller mer kan vara motiverat', text: 'Ert hushåll har flera signaler för hög samtidighet och prestandabehov. Jämför högre nivåer, men låt prissteget avgöra om 1000 Mbit/s är värt det.', bullets: ['Jämför 500 mot 1000 Mbit/s', 'Prioritera stabilitet och utrustning', 'Se om prissteget faktiskt motsvarar nyttan'], cta: 'Se snabbare bredband', href: '/bredband/500-500/' },
+];
+
+export default function BroadbandSpeedTool() {
+  return <><Head><title>Vilken bredbandshastighet behöver jag? Test 2026 | Sänk Kostnaden</title><meta name='description' content='Svara på tre frågor och få en behovsprofil för 100, 250, 500 eller 1000 Mbit/s. Gratis bredbandstest utan inloggning.' /><link rel='canonical' href='https://sankkostnaden.se/bredband/vilken-hastighet-behover-jag/' /><meta name='robots' content='index,follow' /></Head><SmartSelector eyebrow='SMARTVAL · BREDBAND' title='Vilken bredbandshastighet behöver du egentligen?' intro='Tre frågor räcker för att sålla bort både för långsamt och onödigt dyrt bredband. Du får en behovszon – sedan kan du jämföra vad som finns på din adress.' questions={questions} results={results} disclaimer='Behovsprofilen är generell och bygger på dina svar, inte på livepriser eller garanterad prestanda.' /></>;
+}
