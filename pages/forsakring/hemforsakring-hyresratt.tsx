@@ -3,8 +3,8 @@ import IntentGuide from '../../components/IntentGuide';
 export default function Page() {
   return (
     <IntentGuide
-      title='Hemförsäkring för hyresrätt 2026 – vad ska du jämföra?'
-      description='Guide till hemförsäkring för hyresrätt: jämför premie, självrisk, lösöre, ansvarsskydd, rättsskydd, reseskydd och allrisk.'
+      title='Hemförsäkring hyresrätt 2026 – pris, självrisk och skydd'
+      description='Jämför hemförsäkring för hyresrätt: pris, självrisk, lösöre, ansvarsskydd, rättsskydd, reseskydd och allrisk.'
       kicker='HEMFÖRSÄKRING HYRESRÄTT'
       canonical='https://sankkostnaden.se/forsakring/hemforsakring-hyresratt/'
       category='forsakring' intent='home'
