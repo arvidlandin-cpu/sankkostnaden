@@ -59,6 +59,7 @@ export default function IntentGuide({ title, description, kicker, canonical, cat
         <meta property='og:description' content={description} />
         <meta property='og:url' content={canonical} />
         <link rel='canonical' href={canonical} />
+        <meta name='robots' content='index,follow,max-image-preview:large' />
         <script type='application/ld+json' dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       </Head>
       <header className='topbar'>
