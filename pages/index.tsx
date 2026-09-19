@@ -98,23 +98,7 @@ export default function Home() {
               </div>
             </div>
 
-            <aside className={styles.preview}>
-              <div className={styles.previewTop}>
-                <span>HUSHÅLLETS KOSTNADSKOLL</span>
-                <small>4 områden</small>
-              </div>
-              <h2>Vad vill du betala mindre för?</h2>
-              <div className={styles.previewRows}>
-                <a href='./bredband/bredband-pa-min-adress/'><span>Bredband</span><b>Adress & pris →</b></a>
-                <a href='./elavtal/jamfor-elavtal/'><span>Elavtal</span><b>Pris & villkor →</b></a>
-                <a href='./mobil/billigaste-mobilabonnemanget/'><span>Mobil</span><b>Surf & kostnad →</b></a>
-                <a href='./forsakring/jamfor-forsakring/'><span>Försäkring</span><b>Pris & skydd →</b></a>
-              </div>
-              <div className={styles.previewResult}>
-                <span>En startpunkt för hushållet</span>
-                <strong>Välj område</strong>
-              </div>
-            </aside>
+
           </div>
         </section>
 
