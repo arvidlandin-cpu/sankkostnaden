@@ -686,8 +686,8 @@ footer .brand {
 .mobileQuickBar{display:none}
 @media(max-width:700px){
  body{padding-bottom:74px}
- .mobileQuickBar{position:fixed;z-index:999;left:8px;right:8px;bottom:8px;display:flex;gap:6px;padding:7px;background:#17201bf2;backdrop-filter:blur(12px);border:1px solid #ffffff18;border-radius:17px;box-shadow:0 14px 40px #0004;overflow-x:auto}
- .mobileQuickBar a{flex:1 0 auto;min-width:70px;height:46px;padding:0 10px;border-radius:11px;background:#fff;color:#17201b;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:4px;font-size:11px;font-weight:850}
+ .mobileQuickBar{position:fixed;z-index:999;left:8px;right:8px;bottom:8px;display:flex;gap:5px;padding:7px;background:#17201bf2;backdrop-filter:blur(12px);border:1px solid #ffffff18;border-radius:17px;box-shadow:0 14px 40px #0004;overflow:hidden}
+ .mobileQuickBar a{flex:1 1 0;min-width:0;height:48px;padding:4px 2px;border-radius:11px;background:#fff;color:#17201b;text-decoration:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:10px;font-weight:850}
  .mobileQuickBar .mqHome{min-width:54px;max-width:58px;background:#dff46a;display:grid;place-items:center;gap:0}.mobileQuickBar .mqHome small{font-size:8px;font-weight:850}
  .mobileQuickBar::-webkit-scrollbar{display:none}
 }
@@ -695,7 +695,7 @@ footer .brand {
 
 /* Mobile dock: navigation first, commercial links stay contextual in page content */
 @media(max-width:700px){
- .mobileQuickBar a{min-width:74px;flex:1 0 auto;gap:5px}
+ .mobileQuickBar a{min-width:0;flex:1 1 0;gap:2px}
  .mobileQuickBar a:not(.mqHome){background:#fff}
- .mobileQuickBar a b{font-size:10px}
+ .mobileQuickBar a b{font-size:9px;line-height:1;white-space:nowrap}
 }

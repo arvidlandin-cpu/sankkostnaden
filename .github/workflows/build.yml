@@ -17,5 +17,7 @@ jobs:
           node-version: 22.16.0
       - name: Install dependencies
         run: npm install --progress=false
+      - name: Check internal routes
+        run: npm run check
       - name: Build
         run: npx next build

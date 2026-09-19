@@ -32,7 +32,7 @@ export const partners: Partner[] = [
   { name:'Lassie', category:'forsakring', note:'Djurförsäkring. Kontrollera aktuell premie, självrisk och omfattning innan du tecknar.', trackingUrl:'https://ion.lassie.co/t/t?a=1644319682&as=2111115937&t=2&tk=1', status:'active', intents:['pet'], priority:8 },
   { name:'Gofido', category:'forsakring', note:'Digital hemförsäkring. Jämför premie, självrisk, omfattning och villkor innan du tecknar.', trackingUrl:'https://addrevenue.io/t?a=984856&c=3469603', status:'active', intents:['home','compare'], priority:9, cta:'Se pris & villkor' },
   { name:'Happens', category:'forsakring', note:'Jämförelsetjänst för försäkringar.', trackingUrl:null, status:'pending', intents:['home','compare'] },
-  { name:'Svedea', category:'forsakring', note:'Försäkringsbolag med bland annat hem-, villa-, bil- och djurförsäkring.', trackingUrl:null, status:'pending', intents:['home'] },
+  { name:'Svedea', category:'forsakring', note:'Försäkringsbolag med bland annat hem-, villa-, bil- och djurförsäkring.', trackingUrl:null, status:'pending', intents:['home','pet','compare'] },
   { name:'Sejfa', category:'forsakring', note:'Digital hemförsäkring.', trackingUrl:null, status:'pending', intents:['home'] },
   { name:'ICA Försäkring', category:'forsakring', note:'Hem-, bil- och personförsäkringar.', trackingUrl:null, status:'closed', intents:['home'] },
   { name:'Samly', category:'ekonomi', note:'Jämförelsetjänst för privatlån och samlingslån. Kontrollera effektiv ränta, avgifter och villkor innan du ansöker.', trackingUrl:'https://addrevenue.io/t?a=985228&c=3469603', status:'active', intents:['compare','loan'], priority:9, cta:'Jämför lån' },
