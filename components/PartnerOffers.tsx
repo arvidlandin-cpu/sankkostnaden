@@ -28,7 +28,7 @@ export default function PartnerOffers({ category, heading = 'Jämför hos våra 
               <p>{item.note}</p>
             </div>
             <a className='partnerButton partnerButtonStrong' href={item.trackingUrl!} target='_blank' rel='sponsored nofollow noopener'>
-              {item.cta || (item.category === 'mobil' ? `Se abonnemang hos ${item.name}` : item.category === 'forsakring' ? `Hämta pris hos ${item.name.replace(' Djurförsäkring','')}` : `Se pris hos ${item.name}`)} <ArrowUpRight size={18} />
+              {item.cta || (item.category === 'mobil' ? `Se abonnemang hos ${item.name}` : item.category === 'forsakring' ? `Hämta pris hos ${item.name.replace(' Djurförsäkring','')}` : item.category === 'ekonomi' ? `Jämför hos ${item.name}` : `Se pris hos ${item.name}`)} <ArrowUpRight size={18} />
             </a>
           </article>
         ))}
