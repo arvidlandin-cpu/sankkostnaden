@@ -46,12 +46,86 @@ for (const file of pageFiles) {
   routeFiles.set(route, file);
 }
 
+const errors = [];
+const redirectSources = new Set();
+const redirectsPath = path.join(publicDir, '_redirects');
+
+if (fs.existsSync(redirectsPath)) {
+  for (const raw of fs.readFileSync(redirectsPath, 'utf8').split(/\r?\n/)) {
+    const line = raw.trim();
+    if (!line || line.startsWith('#')) continue;
+    const [from, to] = line.split(/\s+/);
+    const sourceRoute = normalizeRoute(from);
+    redirectSources.add(sourceRoute);
+    if (to?.startsWith('/') && !routes.has(normalizeRoute(to))) {
+      errors.push(`public/_redirects: target does not exist ${to}`);
+    }
+  }
+}
+
+const sourceFiles = scanDirs.flatMap(walk).filter(file => /\.(tsx|ts|jsx|js)$/.test(file));
+
+for (const file of sourceFiles) {
+  const source = fs.readFileSync(file, 'utf8');
+  const currentRoute = file.startsWith(pagesDir) ? pageRoute(file) : null;
+  const currentIds = idsIn(source);
+  const hrefRegex = /href\s*=\s*['"]([^'"]+)['"]/g;
+  let match;
+
+  while ((match = hrefRegex.exec(source))) {
+    const href = match[1];
+
+    if (/^\.\.?\//.test(href)) {
+      errors.push(`${path.relative(root, file)}: relative internal href ${href}`);
+      continue;
+    }
+
+    if (href.startsWith('#')) {
+      const fragment = href.slice(1);
+      if (currentRoute && fragment && !currentIds.has(fragment)) {
+        errors.push(`${path.relative(root, file)}: missing #${fragment}`);
+      }
+      continue;
+    }
+
+    if (!href.startsWith('/') || href.startsWith('//')) continue;
+
+    const pathname = normalizeRoute(href);
+    const publicPath = path.join(publicDir, pathname.replace(/^\//, ''));
+    if (fs.existsSync(publicPath)) continue;
+    if (/\.[a-z0-9]{2,16}$/i.test(pathname)) continue;
+
+    if (!routes.has(pathname)) {
+      errors.push(`${path.relative(root, file)}: missing route ${href}`);
+      continue;
+    }
+
+    if (redirectSources.has(pathname)) {
+      errors.push(`${path.relative(root, file)}: links to redirected alias ${href}`);
+      continue;
+    }
+
+    const hashIndex = href.indexOf('#');
+    if (hashIndex >= 0) {
+      const fragment = href.slice(hashIndex + 1).split('?')[0];
+      const targetFile = routeFiles.get(pathname);
+      if (fragment && targetFile) {
+        const targetSource = fs.readFileSync(targetFile, 'utf8');
+        if (!idsIn(targetSource).has(fragment)) {
+          errors.push(`${path.relative(root, file)}: missing target #${fragment} in ${pathname}`);
+        }
+      }
+    }
+  }
+}
+
 const sitemapPath = path.join(publicDir, 'sitemap.xml');
 if (fs.existsSync(sitemapPath)) {
   const sitemap = fs.readFileSync(sitemapPath, 'utf8');
   const seen = new Set();
   const locRegex = /<loc>https:\/\/sankkostnaden\.se([^<]*)<\/loc>/g;
   let match;
+
   while ((match = locRegex.exec(sitemap))) {
     const route = normalizeRoute(match[1] || '/');
     if (seen.has(route)) errors.push(`public/sitemap.xml: duplicate route ${route}`);
@@ -67,4 +141,4 @@ if (errors.length) {
   process.exit(1);
 }
 
-console.log(`Site validation passed: ${routes.size} routes checked, internal links and sitemap verified.`);
+console.log(`Site validation passed: ${routes.size} routes checked, internal links, anchors, redirects and sitemap verified.`);
