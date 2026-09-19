@@ -90,6 +90,7 @@ export default function SavingsApp() {
   const [answers, setAnswers] = useState<Answers>(initialAnswers);
   const [active, setActive] = useState<CostKey>('el');
   const [household, setHousehold] = useState(2);
+  const [touched, setTouched] = useState<Record<CostKey, boolean>>({ el: false, bredband: false, mobil: false, forsakring: false });
 
   const results = useMemo(() => categories.map(category => {
     const answer = answers[category.key];
@@ -109,16 +110,18 @@ export default function SavingsApp() {
   }).sort((a, b) => b.score - a.score), [answers, household]);
 
   const top = results[0];
-  const completed = Object.values(answers).filter(answer => answer.monthly > 0 || answer.reviewed > 0 || answer.friction > 0 || answer.fit > 0).length;
+  const completed = Object.values(touched).filter(Boolean).length;
   const totalMonthly = Object.values(answers).reduce((sum, answer) => sum + answer.monthly, 0);
 
   const update = (key: CostKey, field: keyof Answers[CostKey], value: number) => {
     setAnswers(previous => ({ ...previous, [key]: { ...previous[key], [field]: value } }));
+    setTouched(previous => ({ ...previous, [key]: true }));
   };
 
   const reset = () => {
     setAnswers(initialAnswers);
     setHousehold(2);
+    setTouched({ el: false, bredband: false, mobil: false, forsakring: false });
     setActive('el');
   };
 
