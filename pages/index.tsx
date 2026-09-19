@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import styles from '../styles/Home.module.css';
 import DecisionGateway from '../components/DecisionGateway';
+import SavingsNavigator from '../components/SavingsNavigator';
 import { getActivePartners } from '../lib/partners';
 
 const categories = [
@@ -120,6 +121,8 @@ export default function Home() {
             </aside>
           </div>
         </section>
+
+        <section className={styles.section} style={{paddingTop:44,paddingBottom:24}}><SavingsNavigator /></section>
 
         <section className='livePartnerDock'>
           <div className='livePartnerDockHead'><div><span>LIVE NU</span><strong>Genvägar direkt till våra aktiva partners</strong></div><p>Vill du inte läsa guider först? Hoppa direkt till aktuell jämförelse eller pris.</p></div>
