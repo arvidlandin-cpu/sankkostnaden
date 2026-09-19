@@ -14,10 +14,10 @@ import styles from '../styles/Home.module.css';
 import SavingsNavigator from '../components/SavingsNavigator';
 
 const categories = [
-  { icon: Wifi, title: 'Bredband', text: 'Börja med vad som finns på adressen och jämför sedan pris, hastighet och bindningstid.', label: 'Börja med adressen', href: './bredband/bredband-pa-min-adress/' },
-  { icon: Zap, title: 'Elavtal', text: 'Jämför avtalsform, påslag och fasta avgifter i stället för att bara titta på ett lockpris.', label: 'Jämför villkoren', href: './elavtal/jamfor-elavtal/' },
-  { icon: Smartphone, title: 'Mobil', text: 'Jämför surf, nät, familjeupplägg och vad abonnemanget faktiskt kostar över tid.', label: 'Se billigare alternativ', href: './mobil/billigaste-mobilabonnemanget/' },
-  { icon: ShieldCheck, title: 'Försäkring', text: 'Jämför premie, självrisk och omfattning på samma nivå innan du väljer bolag.', label: 'Jämför samma skydd', href: './forsakring/jamfor-forsakring/' },
+  { icon: Wifi, title: 'Bredband', text: 'Börja med vad som finns på adressen och jämför sedan pris, hastighet och bindningstid.', label: 'Börja med adressen', href: '/bredband/bredband-pa-min-adress/' },
+  { icon: Zap, title: 'Elavtal', text: 'Jämför avtalsform, påslag och fasta avgifter i stället för att bara titta på ett lockpris.', label: 'Jämför villkoren', href: '/elavtal/jamfor-elavtal/' },
+  { icon: Smartphone, title: 'Mobil', text: 'Jämför surf, nät, familjeupplägg och vad abonnemanget faktiskt kostar över tid.', label: 'Se billigare alternativ', href: '/mobil/billigaste-mobilabonnemanget/' },
+  { icon: ShieldCheck, title: 'Försäkring', text: 'Jämför premie, självrisk och omfattning på samma nivå innan du väljer bolag.', label: 'Jämför samma skydd', href: '/forsakring/jamfor-forsakring/' },
 ];
 
 const intentLinks = [
