@@ -25,7 +25,7 @@ export default function HouseElectricityTool() {
     <Head>
       <title>Hur mycket el drar ett hus? Räkna kWh per år 2026</title>
       <meta name='description' content='Hur mycket el drar ett hus? Räkna uppskattad årsförbrukning i kWh utifrån boyta, uppvärmning, hushåll, elbil och spa. Se uppskattad kWh per år och vad som driver elanvändningen.' />
-      <link rel='canonical' href='https://sankkostnaden.se/elavtal/hur-mycket-el-drar-mitt-hus/' />
+      <link rel='canonical' href='https://sankkostnaden.se/elavtal/hur-mycket-el-drar-mitt-hus/' /><script type='application/ld+json' dangerouslySetInnerHTML={{__html: JSON.stringify({'@context':'https://schema.org','@type':'WebPage',name:"Hur mycket el drar ett hus? Räkna kWh per år 2026",description:"Hur mycket el drar ett hus? Räkna uppskattad årsförbrukning i kWh utifrån boyta, uppvärmning, hushåll, elbil och spa. Se uppskattad kWh per år och vad som driver elanvändningen.",url:"https://sankkostnaden.se/elavtal/hur-mycket-el-drar-mitt-hus/",isPartOf:{'@type':'WebSite',name:'Sänk Kostnaden',url:'https://sankkostnaden.se/'}})}} />
       <meta name='robots' content='index,follow' />
     </Head>
     <main className={styles.shell}>
