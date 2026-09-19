@@ -641,3 +641,29 @@ footer .brand {
 .partnerCardBrand.isSveland .partnerButton{background:#087b4f}
 .partnerCardBrand .commercialTag{white-space:nowrap}
 @media(max-width:520px){.partnerCardTop{align-items:center}.partnerCardBrand{min-height:230px}.partnerLogo b{font-size:23px}.partnerLogoLassie b{font-size:28px}.partnerCardBrand .commercialTag{font-size:8px}}
+
+
+/* Fast conversion shortcuts */
+.partnerExpress{margin-top:22px;padding:16px;border:1px solid #ffffff18;border-radius:18px;background:#ffffff08}
+.partnerExpressLabel{font-size:9px;font-weight:900;letter-spacing:.13em;color:#b9c5bc;margin-bottom:10px}
+.partnerExpressGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:8px}
+.partnerExpressCard{min-width:0;display:flex;flex-direction:column;justify-content:space-between;gap:16px;padding:16px;border-radius:14px;background:#fff;color:#17201b!important;text-decoration:none!important;transition:.16s ease;border-top:4px solid #dff46a}
+.partnerExpressCard:hover{transform:translateY(-2px)}
+.expressBrand{font-size:20px;font-weight:900;letter-spacing:-.045em;overflow-wrap:anywhere}
+.expressAction{display:flex;align-items:center;justify-content:space-between;gap:5px;font-size:11px;font-weight:800;color:#566159}
+.brandTelia{border-top-color:#8c39d8!important}.brandTelia .expressBrand{color:#7d28c8}
+.brandVimla{border-top-color:#20b78c!important}.brandVimla .expressBrand{color:#087d62}
+.brandBredbandsval{border-top-color:#2476d8!important}.brandBredbandsval .expressBrand{color:#175ea9}
+.brandLassie{border-top-color:#6d5ce7!important}.brandLassie .expressBrand{color:#5948c9}
+.brandSveland{border-top-color:#087b4f!important}.brandSveland .expressBrand{color:#087b4f}
+.livePartnerDock{max-width:1120px;margin:34px auto 10px;padding:26px 28px}
+.livePartnerDockHead{display:flex;align-items:end;justify-content:space-between;gap:30px;margin-bottom:16px}
+.livePartnerDockHead>div{display:grid;gap:5px}.livePartnerDockHead span{font-size:10px;font-weight:900;letter-spacing:.13em;color:#687c35}.livePartnerDockHead strong{font-size:25px;letter-spacing:-.035em}
+.livePartnerDockHead p{max-width:390px;margin:0;color:#687269;font-size:13px;line-height:1.5}
+.livePartnerDockGrid{display:grid;grid-template-columns:repeat(5,1fr);gap:9px}
+.livePartnerPill{min-width:0;min-height:88px;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:15px;border-radius:15px;background:#fff;border:1px solid #dfe5dc;border-top:4px solid #dff46a;color:#17201b;text-decoration:none;box-shadow:0 7px 20px #17201b08;transition:.16s ease}
+.livePartnerPill:hover{transform:translateY(-2px);box-shadow:0 12px 28px #17201b12}
+.livePartnerPill span{min-width:0;display:grid;gap:2px}.livePartnerPill small{font-size:8px;letter-spacing:.1em;font-weight:900;color:#778178}.livePartnerPill b{font-size:16px;letter-spacing:-.025em;overflow-wrap:anywhere}.livePartnerPill svg{flex:0 0 auto}
+.livePartnerDisclosure{display:block;margin-top:10px;color:#7b857e;font-size:10px}
+@media(max-width:800px){.livePartnerDockGrid{grid-template-columns:repeat(2,1fr)}.livePartnerDockHead{align-items:start;flex-direction:column;gap:8px}}
+@media(max-width:520px){.livePartnerDock{padding:20px 18px;margin-top:18px}.livePartnerDockGrid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:5px}.livePartnerPill{flex:0 0 72%;scroll-snap-align:start}.livePartnerDockHead strong{font-size:22px}.partnerExpressGrid{grid-template-columns:1fr 1fr}.partnerExpressCard{padding:13px}.expressBrand{font-size:17px}}
