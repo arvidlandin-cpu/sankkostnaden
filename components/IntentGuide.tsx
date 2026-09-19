@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { ArrowLeft, ArrowUpRight, Check, PiggyBank } from 'lucide-react';
 import PartnerOffers from './PartnerOffers';
 import DecisionGateway from './DecisionGateway';
-import { getPartners } from '../lib/partners';
+import { getActivePartners } from '../lib/partners';
 import type { PartnerCategory, PartnerIntent } from '../lib/partners';
 
 type Section = { heading: string; body: string };
@@ -23,7 +23,7 @@ export default function IntentGuide({ title, description, kicker, canonical, cat
   const categoryLabels: Record<PartnerCategory, string> = { el: 'Elavtal', bredband: 'Bredband', mobil: 'Mobil', forsakring: 'Försäkring' };
   const categoryPaths: Record<PartnerCategory, string> = { el: '/elavtal/', bredband: '/bredband/', mobil: '/mobil/', forsakring: '/forsakring/' };
   const categoryLabel = categoryLabels[category];
-  const heroPartners = getPartners(category).filter(item => item.trackingUrl);
+  const heroPartners = getActivePartners(category, intent);
   const categoryPath = categoryPaths[category];
   const schema = {
     '@context': 'https://schema.org',
@@ -79,7 +79,7 @@ export default function IntentGuide({ title, description, kicker, canonical, cat
         <article className='article guideWrap'>
           {category === 'el' && <aside className='decisionPanel' aria-label='Sänk Kostnaden-kontrollen'><div><p className='partnerEyebrow'>SÄNK KOSTNADEN-KONTROLLEN</p><h2>Jämför hela kostnaden – inte bara öre/kWh</h2><p>Kontrollera pris/påslag, fast avgift, rabattens längd, ordinarie villkor samt bindnings- och uppsägningstid. Använd samma årsförbrukning för alla alternativ.</p></div><div className='decisionMetrics'><span><b>1</b> Årsförbrukning</span><span><b>2</b> Rörlig kostnad</span><span><b>3</b> Fasta avgifter</span><span><b>4</b> Villkor efter rabatt</span></div></aside>}
           {category === 'mobil' && <aside className='decisionPanel' aria-label='Sänk Kostnaden-kontrollen för mobil'><div><p className='partnerEyebrow'>SÄNK KOSTNADEN-KONTROLLEN</p><h2>Jämför abonnemanget du faktiskt kommer använda</h2><p>Utgå från rätt surfmängd och nät. Räkna sedan kampanjperiod och ordinarie pris tillsammans så att ett lågt introduktionspris inte döljer den verkliga kostnaden.</p></div><div className='decisionMetrics'><span><b>1</b> Surfmängd</span><span><b>2</b> Mobilnät</span><span><b>3</b> Första året</span><span><b>4</b> Bindning & villkor</span></div></aside>}
-          <DecisionGateway category={category} />
+          <DecisionGateway category={category} intent={intent} />
           <div className='checkList'>
             {bullets.map(item => <p key={item}><Check size={17} /> {item}</p>)}
           </div>
