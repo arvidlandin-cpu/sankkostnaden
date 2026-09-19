@@ -198,7 +198,7 @@ export default function Home() {
 
       <footer className={styles.footer}>
         <div><a className={styles.brand} href='/'><span className={styles.brandMark}><PiggyBank size={19} /></span><span>Sänk Kostnaden</span></a><p>Praktiska guider för lägre hushållskostnader.</p></div>
-        <div><a href='/sa-jamfor-vi/'>Så jämför vi</a><a href='/affiliate/'>Affiliateinformation</a><a href='/cookies/'>Cookiepolicy</a><a href='/integritet/'>Integritet</a><a href='/om/'>Om oss</a></div>
+        <div><a href='/sa-jamfor-vi/'>Så jämför vi</a><a href='/affiliate/'>Affiliateinformation</a><a href='/cookies/'>Cookiepolicy</a><a href='/integritet/'>Integritet</a><a href='/om/'>Om oss</a><a href='mailto:kontakt@sankkostnaden.se'>kontakt@sankkostnaden.se</a></div>
         <p>© 2026 Sänk Kostnaden. Informationen är generell och utgör inte individuell finansiell rådgivning.</p>
       </footer>
     </>
