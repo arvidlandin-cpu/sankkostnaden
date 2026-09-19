@@ -680,3 +680,14 @@ footer .brand {
 .savingsResult{position:relative;z-index:1;margin-top:24px;padding:22px;border-radius:18px;background:#17201b;color:#fff}.savingsResult h3{color:#fff}.savingsResult p{max-width:600px;color:#bdc7c0;line-height:1.5}.resultGuide{display:inline-flex;align-items:center;gap:7px;padding:12px 15px;border-radius:10px;background:#dff46a;color:#17201b;text-decoration:none;font-weight:850}.resultPartners{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px;padding-top:17px;border-top:1px solid #ffffff16}.resultPartners>span{width:100%;font-size:9px;letter-spacing:.12em;color:#aeb9b1;font-weight:900}.resultPartners a{min-width:150px;display:grid;gap:3px;padding:12px 14px;border-radius:11px;background:#fff;color:#17201b;text-decoration:none}.resultPartners b{font-size:16px}.resultPartners small{display:flex;align-items:center;gap:4px;color:#687269}.savingsResult .navReset{color:#aeb9b1}
 @media(max-width:800px){.savingsAreaGrid{grid-template-columns:1fr 1fr}}
 @media(max-width:520px){.savingsNav{padding:20px 15px;margin-left:-8px;margin-right:-8px}.savingsNavTop{align-items:flex-start}.savingsNavTop h2{font-size:29px!important}.stepDots{display:none}.savingsAreaGrid{grid-template-columns:1fr;margin-top:18px}.savingsAreaGrid button{min-height:70px}.savingsQuestion>div:nth-child(2){display:grid}.savingsQuestion>div:nth-child(2) button{justify-content:space-between;min-height:48px}.resultPartners{display:grid}.resultPartners a{width:100%}}
+
+
+/* Persistent mobile conversion bar */
+.mobileQuickBar{display:none}
+@media(max-width:700px){
+ body{padding-bottom:74px}
+ .mobileQuickBar{position:fixed;z-index:999;left:8px;right:8px;bottom:8px;display:flex;gap:6px;padding:7px;background:#17201bf2;backdrop-filter:blur(12px);border:1px solid #ffffff18;border-radius:17px;box-shadow:0 14px 40px #0004;overflow-x:auto}
+ .mobileQuickBar a{flex:1 0 auto;min-width:70px;height:46px;padding:0 10px;border-radius:11px;background:#fff;color:#17201b;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:4px;font-size:11px;font-weight:850}
+ .mobileQuickBar .mqHome{min-width:54px;max-width:58px;background:#dff46a;display:grid;place-items:center;gap:0}.mobileQuickBar .mqHome small{font-size:8px;font-weight:850}
+ .mobileQuickBar::-webkit-scrollbar{display:none}
+}
