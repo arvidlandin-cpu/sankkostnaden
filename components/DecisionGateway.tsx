@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import { ArrowRight, ArrowUpRight, Compass, Gauge, Sparkles } from 'lucide-react';
-import { getActivePartners, type PartnerCategory } from '../lib/partners';
+import { getActivePartners, type PartnerCategory, type PartnerIntent } from '../lib/partners';
 
-type Props = { category: PartnerCategory; compact?: boolean; };
+type Props = { category: PartnerCategory; compact?: boolean; intent?: PartnerIntent; };
 
 const config = {
   bredband:{title:'Hur vill du gå vidare med bredbandet?',intro:'Se vad du kan beställa, välj rätt hastighet eller gå direkt till jämförelsen.',direct:'Jämför bredband på min adress',help:'Hjälp mig välja hastighet',helpHref:'/bredband/vilken-hastighet-behover-jag/',read:'Läs bredbandsguiden',readHref:'/bredband/'},
@@ -13,8 +13,8 @@ const config = {
 
 const partnerClass=(name:string)=>name==='Telia'?'brandTelia':name==='Vimla'?'brandVimla':name==='Bredbandsval.se'?'brandBredbandsval':name==='Lassie'?'brandLassie':name.startsWith('Sveland')?'brandSveland':'';
 
-export default function DecisionGateway({category,compact=false}:Props){
- const cfg=config[category], active=getActivePartners(category);
+export default function DecisionGateway({category,compact=false,intent}:Props){
+ const cfg=config[category], active=getActivePartners(category,intent);
  return <section className={`decisionGateway ${compact?'decisionGatewayCompact':''}`}>
   <div className='gatewayHead'><span><Sparkles size={14}/> HITTA DIN SNABBASTE VÄG</span><h2>{cfg.title}</h2><p>{cfg.intro}</p></div>
   {active.length>0 && <div className='partnerExpress'><div className='partnerExpressLabel'>AKTIVA PARTNERS · GÅ DIREKT TILL PRIS</div><div className='partnerExpressGrid'>{active.map(p=><a className={`partnerExpressCard ${partnerClass(p.name)}`} key={p.name} href={p.trackingUrl!} target='_blank' rel='sponsored nofollow noopener'><span className='expressBrand'>{p.name.replace(' Djurförsäkring','')}</span><span className='expressAction'>{category==='bredband'?'Se vad du kan få':category==='mobil'?'Se abonnemang':'Hämta ditt pris'} <ArrowUpRight size={16}/></span></a>)}</div></div>}
