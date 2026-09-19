@@ -1,6 +1,6 @@
-export type PartnerCategory = 'el' | 'bredband' | 'mobil' | 'forsakring';
+export type PartnerCategory = 'el' | 'bredband' | 'mobil' | 'forsakring' | 'ekonomi';
 export type PartnerStatus = 'active' | 'pending' | 'closed';
-export type PartnerIntent = 'compare' | 'family' | 'data' | 'no-binding' | 'fiber' | 'mobile-broadband' | 'pet' | 'home' | 'electricity' | 'refurbished';
+export type PartnerIntent = 'compare' | 'family' | 'data' | 'no-binding' | 'fiber' | 'mobile-broadband' | 'pet' | 'home' | 'electricity' | 'refurbished' | 'loan' | 'saving';
 
 export type Partner = {
   name: string;
@@ -30,8 +30,17 @@ export const partners: Partner[] = [
   { name:'Tellus Mobil', category:'mobil', note:'Mobilabonnemang.', trackingUrl:null, status:'pending', intents:['compare','data'] },
   { name:'Sveland Djurförsäkring', category:'forsakring', note:'Djurförsäkring. Jämför premie, självrisk, omfattning och villkor för ditt djur.', trackingUrl:'https://in.sveland.se/t/t?a=1962700516&as=2111115937&t=2&tk=1', status:'active', intents:['pet'], priority:8 },
   { name:'Lassie', category:'forsakring', note:'Djurförsäkring. Kontrollera aktuell premie, självrisk och omfattning innan du tecknar.', trackingUrl:'https://ion.lassie.co/t/t?a=1644319682&as=2111115937&t=2&tk=1', status:'active', intents:['pet'], priority:8 },
+  { name:'Gofido', category:'forsakring', note:'Digital hemförsäkring. Jämför premie, självrisk, omfattning och villkor innan du tecknar.', trackingUrl:'https://addrevenue.io/t?a=984856&c=3469603', status:'active', intents:['home','compare'], priority:9, cta:'Se pris & villkor' },
+  { name:'Happens', category:'forsakring', note:'Jämförelsetjänst för försäkringar.', trackingUrl:null, status:'pending', intents:['home','compare'] },
+  { name:'Svea', category:'forsakring', note:'Försäkringsbolag med bland annat hem-, villa-, bil- och djurförsäkring.', trackingUrl:null, status:'pending', intents:['home'] },
   { name:'Sejfa', category:'forsakring', note:'Digital hemförsäkring.', trackingUrl:null, status:'pending', intents:['home'] },
   { name:'ICA Försäkring', category:'forsakring', note:'Hem-, bil- och personförsäkringar.', trackingUrl:null, status:'closed', intents:['home'] },
+  { name:'Samly', category:'ekonomi', note:'Jämförelsetjänst för privatlån och samlingslån. Kontrollera effektiv ränta, avgifter och villkor innan du ansöker.', trackingUrl:'https://addrevenue.io/t?a=985228&c=3469603', status:'active', intents:['compare','loan'], priority:9, cta:'Jämför lån' },
+  { name:'Lendella', category:'ekonomi', note:'Jämförelsetjänst för privatlån. Kontrollera effektiv ränta, avgifter och villkor innan du ansöker.', trackingUrl:'https://addrevenue.io/t?a=985100&c=3469603', status:'active', intents:['compare','loan'], priority:9, cta:'Jämför lån' },
+  { name:'Toborrow', category:'ekonomi', note:'Jämförelse och förmedling av privatlån. Kontrollera effektiv ränta, avgifter och villkor innan du ansöker.', trackingUrl:'https://addrevenue.io/t?a=985173&c=3469603', status:'active', intents:['compare','loan'], priority:8, cta:'Jämför lån' },
+  { name:'Alwy', category:'ekonomi', note:'Tjänst för privatekonomi, sparande och kostnadskontroll.', trackingUrl:'https://addrevenue.io/t?a=984927&c=3469603', status:'active', intents:['saving'], priority:8, cta:'Se tjänsten' },
+  { name:'Compari', category:'ekonomi', note:'Jämförelsetjänst för privatlån.', trackingUrl:'https://addrevenue.io/t?a=985235&c=3469603', status:'active', intents:['compare','loan'], priority:7, cta:'Jämför lån' },
+  { name:'Jämförbanker.se', category:'ekonomi', note:'Jämförelsetjänst för privatlån.', trackingUrl:'https://addrevenue.io/t?a=985319&c=3469603', status:'active', intents:['compare','loan'], priority:7, cta:'Jämför lån' },
 ];
 
 const score=(p:Partner,intent?:PartnerIntent)=>(p.priority||0)+(intent&&p.intents.includes(intent)?100:0)+(p.intents.includes('compare')?5:0);
