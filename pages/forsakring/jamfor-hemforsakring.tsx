@@ -1,7 +1,25 @@
-import Head from 'next/head';
-import Link from 'next/link';
-import { ArrowLeft, Check, PiggyBank, ShieldCheck } from 'lucide-react';
+import IntentGuide from '../../components/IntentGuide';
 
-export default function Hemforsakring() {
-  return <><Head><title>Jämför hemförsäkring – inte bara premien – Sänk Kostnaden</title><meta name='description' content='Checklista för att jämföra hemförsäkring: självrisk, omfattning, reseskydd, allrisk och verklig årskostnad.'/><link rel='canonical' href='https://sankkostnaden.se/forsakring/jamfor-hemforsakring/'/></Head><header className='topbar'><Link className='brand' href='/'><span className='brandMark'><PiggyBank size={22}/></span><span>Sänk Kostnaden</span></Link></header><main><section className='guideHero'><div className='guideWrap'><Link className='back' href='/forsakring/'><ArrowLeft size={16}/> Försäkring</Link><div className='guideIcon'><ShieldCheck size={25}/></div><p className='kicker'>FÖRSÄKRING • JÄMFÖRELSEGUIDE</p><h1>Jämför hemförsäkring – inte bara premien</h1><p className='lead'>En billigare premie är bara en besparing om skyddet fortfarande passar hushållet. Jämför därför pris, självrisk, omfattning och viktiga begränsningar sida vid sida.</p></div></section><article className='article guideWrap'><h2>Ta fram samma uppgifter för varje alternativ</h2><div className='checkList'>{['Årspremie efter eventuella rabatter','Grundsjälvrisk och särskilda självrisker','Vilka personer i hushållet som omfattas','Reseskyddets omfattning','Allrisk/drulle och andra tillägg du faktiskt behöver'].map(x=><p key={x}><Check size={18}/>{x}</p>)}</div><h2>Rabatter kan göra jämförelsen skev</h2><p>Samlingsrabatter kan vara värdefulla men bör räknas på hela försäkringspaketet. Om hemförsäkringen blir billigare samtidigt som en annan försäkring blir dyrare behöver du jämföra nettot för hushållet.</p><h2>Billigare är inte alltid lägre kostnad</h2><p>En högre självrisk kan sänka premien men ökar beloppet du själv behöver bära vid en skada. Bedöm därför både den säkra årskostnaden och vilken ekonomisk risk du accepterar.</p><div className='note'><strong>Årlig rutin:</strong> jämför när förnyelsebeskedet kommer och efter större förändringar i boende eller hushåll. Kontrollera villkoren innan du säger upp befintligt skydd.</div><p className='disclosure'>Informationen är generell och ersätter inte försäkringsvillkor. Sänk Kostnaden kan använda tydligt markerade affiliatelänkar. Alla försäkringsbolag behöver inte visas.</p></article></main></>;
+export default function Page(){
+ return <IntentGuide
+  title='Jämför hemförsäkring 2026 – pris, självrisk & skydd'
+  description='Jämför hemförsäkring 2026. Kontrollera pris, självrisk, allrisk, reseskydd och omfattning så att du jämför likvärdigt skydd.'
+  kicker='JÄMFÖR HEMFÖRSÄKRING'
+  canonical='https://sankkostnaden.se/forsakring/jamfor-hemforsakring/'
+  category='forsakring'
+  intent='home'
+  bullets={['Jämför årspremie efter eventuella rabatter','Kontrollera grundsjälvrisk och särskilda självrisker','Jämför reseskydd, allrisk och ersättningsgränser','Kontrollera vilka personer i hushållet som omfattas']}
+  sections={[
+   {heading:'Hur jämför man hemförsäkring?',body:'Börja med att bestämma vilket skydd hushållet behöver. Jämför sedan årspremie, självrisk, ersättningsgränser och viktiga undantag på samma nivå. Då undviker du att ett lägre pris egentligen beror på ett smalare skydd.'},
+   {heading:'Jämför pris och självrisk tillsammans',body:'En lägre premie kan kombineras med högre självrisk. Bedöm därför både den återkommande årskostnaden och hur mycket du själv behöver kunna betala om en skada inträffar.'},
+   {heading:'Kontrollera allrisk och reseskydd',body:'Allrisk, ibland kallad drulle, kan vara inkluderad eller ett tillval. Reseskyddets omfattning och tidsgränser kan också skilja sig. Kontrollera de delar som är relevanta för ditt hushåll i de aktuella villkoren.'},
+   {heading:'Räkna samlingsrabatter på hela paketet',body:'En rabatt på hemförsäkringen behöver inte ge lägst total kostnad om andra försäkringar samtidigt blir dyrare. Jämför nettot för hela försäkringspaketet om du samlar flera försäkringar hos samma bolag.'}
+  ]}
+  related={[
+   {href:'/forsakring/vad-kostar-hemforsakring/',label:'Vad kostar hemförsäkring?'},
+   {href:'/forsakring/hemforsakring-bostadsratt/',label:'Hemförsäkring bostadsrätt'},
+   {href:'/forsakring/hemforsakring-hyresratt/',label:'Hemförsäkring hyresrätt'},
+   {href:'/forsakring/hemforsakring-skyddskoll/',label:'Skyddskoll för hemförsäkring'}
+  ]}
+ />;
 }
