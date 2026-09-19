@@ -2,6 +2,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { ArrowLeft, ArrowUpRight, Check, PiggyBank } from 'lucide-react';
 import PartnerOffers from './PartnerOffers';
+import DecisionGateway from './DecisionGateway';
 import { getPartners } from '../lib/partners';
 import type { PartnerCategory } from '../lib/partners';
 
@@ -77,11 +78,12 @@ export default function IntentGuide({ title, description, kicker, canonical, cat
         <article className='article guideWrap'>
           {category === 'el' && <aside className='decisionPanel' aria-label='Sänk Kostnaden-kontrollen'><div><p className='partnerEyebrow'>SÄNK KOSTNADEN-KONTROLLEN</p><h2>Jämför hela kostnaden – inte bara öre/kWh</h2><p>Kontrollera pris/påslag, fast avgift, rabattens längd, ordinarie villkor samt bindnings- och uppsägningstid. Använd samma årsförbrukning för alla alternativ.</p></div><div className='decisionMetrics'><span><b>1</b> Årsförbrukning</span><span><b>2</b> Rörlig kostnad</span><span><b>3</b> Fasta avgifter</span><span><b>4</b> Villkor efter rabatt</span></div></aside>}
           {category === 'mobil' && <aside className='decisionPanel' aria-label='Sänk Kostnaden-kontrollen för mobil'><div><p className='partnerEyebrow'>SÄNK KOSTNADEN-KONTROLLEN</p><h2>Jämför abonnemanget du faktiskt kommer använda</h2><p>Utgå från rätt surfmängd och nät. Räkna sedan kampanjperiod och ordinarie pris tillsammans så att ett lågt introduktionspris inte döljer den verkliga kostnaden.</p></div><div className='decisionMetrics'><span><b>1</b> Surfmängd</span><span><b>2</b> Mobilnät</span><span><b>3</b> Första året</span><span><b>4</b> Bindning & villkor</span></div></aside>}
-          <PartnerOffers category={category} heading={category === 'bredband' ? 'Jämför bredband direkt' : category === 'mobil' ? 'Se aktuella mobilalternativ' : category === 'forsakring' ? 'Se aktuella försäkringsalternativ' : 'Jämför aktuella alternativ'} />
+          <DecisionGateway category={category} />
           <div className='checkList'>
             {bullets.map(item => <p key={item}><Check size={17} /> {item}</p>)}
           </div>
           {sections.map(section => <section key={section.heading}><h2>{section.heading}</h2><p>{section.body}</p></section>)}
+          <PartnerOffers category={category} heading='Redo att kontrollera aktuellt pris?' />
           <div className='relatedGuides'>
             <h2>Läs vidare</h2>
             {related.map(item => <Link href={item.href} key={item.href}>{item.label} →</Link>)}
