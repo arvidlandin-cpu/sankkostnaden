@@ -32,7 +32,7 @@ export default function HushalletsFastaKostnader() {
           <h2>Så prioriterar du på 15 minuter</h2>
           <p>Sortera posterna efter årskostnad. Markera sedan sådant som går att påverka utan att hushållets nytta försämras. Ett avtal som kostar 500 kronor mer per månad än ett likvärdigt alternativ är normalt viktigare att kontrollera än fem små tjänster på 49 kronor.</p>
           <div className='note'><strong>Räkna på år, inte bara månad.</strong> Multiplicera den verkliga månadskostnaden med tolv och lägg till startavgifter, hårdvara och andra obligatoriska kostnader. Då blir små prisskillnader lättare att värdera.</div>
-          <h2>Kontrollera nästa kostnad direkt</h2>
+          <h2>Gör en årlig kontroll av kostnaderna</h2><p>Vill du gå systematiskt igenom hushållet kan du använda vår <Link href='/guide/arskoll-fasta-kostnader/'>årskoll av fasta kostnader</Link>. Den samlar kontroll av fakturor, villkor, behov och årskostnad i en checklista.</p><h2>Kontrollera nästa kostnad direkt</h2>
           <div className='trafficLinks'><Link href='/elavtal/billigaste-elavtalet/'><strong>Elavtal</strong><span>Pris, påslag, fasta avgifter och villkor →</span></Link><Link href='/bredband/billigaste-bredbandet/'><strong>Bredband</strong><span>Tillgänglighet, hastighet och totalpris →</span></Link><Link href='/mobil/billigaste-mobilabonnemanget/'><strong>Mobil</strong><span>Surf, nät och förstaårskostnad →</span></Link></div>
           <p className='disclosure'>Sänk Kostnaden kan finansieras genom affiliatelänkar som markeras tydligt. Ersättning kan påverka vilka kommersiella alternativ som visas. Informationen här är generell och ersätter inte individuell ekonomisk rådgivning.</p>
         </article>
