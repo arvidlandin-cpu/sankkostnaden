@@ -40,6 +40,10 @@ export default function Hushallskostnadskoll() {
       <meta name='description' content='Gratis hushållskostnadskoll. Fyll i dina verkliga månadskostnader och se total årskostnad samt vilka återkommande avtal som är mest värda att kontrollera.'/>
       <link rel='canonical' href='https://sankkostnaden.se/verktyg/hushallskostnadskollen/'/>
       <meta name='robots' content='index,follow,max-image-preview:large'/>
+      <meta property='og:type' content='website'/>
+      <meta property='og:title' content='Hushållskostnadskollen 2026 – räkna dina fasta kostnader'/>
+      <meta property='og:description' content='Fyll i hushållets verkliga månadskostnader och se totalen per månad och år.'/>
+      <meta property='og:url' content='https://sankkostnaden.se/verktyg/hushallskostnadskollen/'/>
     </Head>
     <header className='topbar'><Link className='brand' href='/'><span className='brandMark'><PiggyBank size={22}/></span><span>Sänk Kostnaden</span></Link></header>
     <main>
@@ -49,10 +53,10 @@ export default function Hushallskostnadskoll() {
         <div style={{display:'grid',gap:12,margin:'28px 0'}}>
           {rows.map(([label,key,help]) => <label key={key} style={{display:'grid',gridTemplateColumns:'minmax(0,1fr) 150px',gap:14,alignItems:'center',padding:'14px 0',borderBottom:'1px solid #e1e5df'}}>
             <span><strong>{label}</strong><small style={{display:'block',color:'#68736c',marginTop:4}}>{help}</small></span>
-            <span style={{display:'flex',alignItems:'center',gap:7}}><input aria-label={label} inputMode='decimal' value={values[key]} onChange={e=>setValues({...values,[key]:e.target.value.replace(/[^0-9,.]/g,'')})} placeholder='0' style={{width:'100%',padding:'12px',border:'1px solid #cfd7ce',borderRadius:10,fontSize:16,textAlign:'right'}}/><b>kr</b></span>
+            <span style={{display:'flex',alignItems:'center',gap:7}}><input aria-label={`${label}, kronor per månad`} inputMode='decimal' value={values[key]} onChange={e=>setValues({...values,[key]:e.target.value.replace(/[^0-9,.]/g,'')})} placeholder='0' style={{width:'100%',padding:'12px',border:'1px solid #cfd7ce',borderRadius:10,fontSize:16,textAlign:'right'}}/><b>kr</b></span>
           </label>)}
         </div>
-        <div className='decisionPanel'><div><p className='partnerEyebrow'>DIN KOSTNADSBILD</p><h2>{total ? total.toLocaleString('sv-SE') : '0'} kr/mån</h2><p>Det motsvarar <strong>{annual.toLocaleString('sv-SE')} kr per år</strong>. Av detta ligger {controllable.toLocaleString('sv-SE')} kr/mån i poster som ofta går att kontrollera eller jämföra utan att ändra själva boendet eller transportbehovet.</p></div><div className='decisionMetrics'><span><b>{Math.round(annual/1000)}</b> tkr/år</span><span><b>{Math.round(controllable)}</b> kr kontrollerbart/mån</span></div></div>
+        <div className='decisionPanel' aria-live='polite'><div><p className='partnerEyebrow'>DIN KOSTNADSBILD</p><h2>{total ? total.toLocaleString('sv-SE') : '0'} kr/mån</h2><p>Det motsvarar <strong>{annual.toLocaleString('sv-SE')} kr per år</strong>. Av detta ligger {controllable.toLocaleString('sv-SE')} kr/mån i poster som ofta går att kontrollera eller jämföra utan att ändra själva boendet eller transportbehovet.</p></div><div className='decisionMetrics'><span><b>{Math.round(annual/1000)}</b> tkr/år</span><span><b>{Math.round(controllable)}</b> kr kontrollerbart/mån</span></div></div>
         {next && links[next] && <><h2>Börja med en stor jämförbar post</h2><p>Av de jämförbara poster du fyllt i är <strong>{rows.find(([,k])=>k===next)?.[0].toLowerCase()}</strong> störst. Det betyder inte automatiskt att den är för dyr, men den är en rimlig plats att kontrollera pris, innehåll och villkor först.</p><div className='intentActions'><Link className='primary' href={links[next]!.href}>{links[next]!.label} <ArrowRight size={16}/></Link><Link className='secondary' href='/guide/arskoll-fasta-kostnader/'>Öppna hela årskollen</Link></div></>}
         <h2>Så ska resultatet användas</h2><p>Konsumentverket beskriver sina hushållskostnader som ungefärliga referensvärden och rekommenderar att man utgår från egna kostnader när de finns. Myndighetens beräkningar omfattar ungefär 40 procent av hushållens totala utgifter och inkluderar bland annat internet/mobil, hemförsäkring och hushållsel, medan boende och transport inte ingår eftersom variationen är stor.</p>
         <p>Det är därför den här kollen inte försöker tala om vad ditt hushåll ”borde” kosta. Den hjälper i stället till att synliggöra din egen månadskostnad och omvandla den till årskostnad.</p>
