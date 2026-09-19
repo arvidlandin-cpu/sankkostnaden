@@ -11,7 +11,7 @@ import {
   Zap,
 } from 'lucide-react';
 import styles from '../styles/Home.module.css';
-import PartnerOffers from '../components/PartnerOffers';
+import DecisionGateway from '../components/DecisionGateway';
 
 const categories = [
   { icon: Wifi, title: 'Bredband', text: 'Börja med vad som finns på adressen och jämför sedan pris, hastighet och bindningstid.', label: 'Börja med adressen', href: './bredband/bredband-pa-min-adress/' },
@@ -127,12 +127,13 @@ export default function Home() {
 
         <section className={styles.section} id='partners'>
           <div className={styles.sectionHead}>
-            <div><p>JÄMFÖR DIREKT</p><h2>Redo att sänka kostnaden?</h2></div>
-            <p>Gå direkt till våra godkända partners för aktuella priser. Vill du läsa mer först finns guiderna längre ner.</p>
+            <div><p>VÄLJ DIN VÄG</p><h2>Snabbt när du vill. Guidat när du behöver.</h2></div>
+            <p>Du kan gå direkt till pris, få hjälp att välja eller läsa mer först. Samma princip följer dig genom hela sajten.</p>
           </div>
-          <PartnerOffers category='bredband' heading='Bredband – se vad som finns på din adress' />
-          <PartnerOffers category='mobil' heading='Mobil – jämför aktuella abonnemang' />
-          <PartnerOffers category='forsakring' heading='Djurförsäkring – jämför pris och skydd' />
+          <div style={{marginTop:36}}><DecisionGateway category='bredband' /></div>
+          <DecisionGateway category='mobil' />
+          <DecisionGateway category='forsakring' />
+          <DecisionGateway category='el' />
         </section>
 
         <section className={styles.section} id='jamfor'>
