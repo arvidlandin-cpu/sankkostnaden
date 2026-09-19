@@ -24,6 +24,7 @@ export default function IntentGuide({ title, description, kicker, canonical, cat
   const categoryLabels: Record<PartnerCategory, string> = { el: 'Elavtal', bredband: 'Bredband', mobil: 'Mobil', forsakring: 'Försäkring' };
   const categoryPaths: Record<PartnerCategory, string> = { el: '/elavtal/', bredband: '/bredband/', mobil: '/mobil/', forsakring: '/forsakring/' };
   const categoryLabel = categoryLabels[category];
+  const compareHeadings: Record<PartnerCategory, string> = { el: 'Aktiva elalternativ att jämföra', bredband: 'Aktiva bredbandsalternativ att jämföra', mobil: 'Aktiva mobilalternativ att jämföra', forsakring: 'Aktiva försäkringsalternativ att jämföra' };
   const heroPartners = getActivePartners(category, intent);
   const categoryPath = categoryPaths[category];
   const schema = {
@@ -85,7 +86,7 @@ export default function IntentGuide({ title, description, kicker, canonical, cat
             {bullets.map(item => <p key={item}><Check size={17} /> {item}</p>)}
           </div>
           {sections.map(section => <section key={section.heading}><h2>{section.heading}</h2><p>{section.body}</p></section>)}
-          {intent === 'compare' ? <PartnerDirectory category={category} intent={intent} heading={`Aktiva ${categoryLabel.toLowerCase()}alternativ att jämföra`} /> : <PartnerOffers category={category} intent={intent} heading={intent === 'pet' ? 'Jämför ditt pris hos Lassie och Sveland' : 'Redo att kontrollera aktuellt pris?'} />}
+          {intent === 'compare' ? <PartnerDirectory category={category} intent={intent} heading={compareHeadings[category]} /> : <PartnerOffers category={category} intent={intent} heading={intent === 'pet' ? 'Jämför ditt pris hos Lassie och Sveland' : 'Redo att kontrollera aktuellt pris?'} />}
           <div className='relatedGuides'>
             <h2>Läs vidare</h2>
             {related.map(item => <Link href={item.href} key={item.href}>{item.label} →</Link>)}
