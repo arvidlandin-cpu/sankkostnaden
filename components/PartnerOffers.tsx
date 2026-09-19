@@ -1,34 +1,39 @@
-import { ArrowUpRight, BadgeCheck } from 'lucide-react';
-import { getPartners, type PartnerCategory } from '../lib/partners';
+import { ArrowUpRight, BadgeCheck, Heart, PawPrint } from 'lucide-react';
+import { getActivePartners, type PartnerCategory, type PartnerIntent } from '../lib/partners';
 
-type Props = { category: PartnerCategory; heading?: string; };
+type Props = { category: PartnerCategory; heading?: string; intent?: PartnerIntent; };
 
-export default function PartnerOffers({ category, heading = 'Jämför hos våra partners' }: Props) {
-  const items = getPartners(category).filter(item => item.trackingUrl);
+function PartnerLogo({ name }: { name: string }) {
+  if (name === 'Lassie') return <div className='partnerLogo partnerLogoLassie' aria-label='Lassie'><span className='logoPaw'><PawPrint size={19}/></span><b>lassie</b></div>;
+  if (name === 'Sveland Djurförsäkring') return <div className='partnerLogo partnerLogoSveland' aria-label='Sveland Djurförsäkringar'><span className='logoHeart'><Heart size={19}/></span><span><b>SVELAND</b><small>DJURFÖRSÄKRINGAR</small></span></div>;
+  return <div className='partnerLogo partnerLogoText'><b>{name}</b></div>;
+}
+
+export default function PartnerOffers({ category, heading = 'Jämför hos våra partners', intent }: Props) {
+  const items = getActivePartners(category, intent);
   if (items.length === 0) return null;
 
   return (
     <section className='partnerSection partnerSectionStrong' aria-label={heading}>
       <div className='partnerIntro'>
-        <p className='kicker'>GÅ VIDARE & JÄMFÖR PRIS</p>
+        <p className='kicker'>AKTIVA PARTNERS • ÖPPNAS I NY FLIK</p>
         <h2>{heading}</h2>
-        <p>Öppna partnern och kontrollera aktuellt pris för just dig. Vi kan få provision om du blir kund via länken.</p>
+        <p>Ta fram ditt pris direkt hos bolagen. Pris och villkor beror på dina uppgifter, så jämför gärna båda innan du väljer.</p>
       </div>
       <div className='partnerGrid'>
         {items.map(item => (
-          <article className='partnerCard partnerCardStrong' key={item.name}>
+          <article className={'partnerCard partnerCardStrong partnerCardBrand ' + (item.name === 'Lassie' ? 'isLassie' : item.name.startsWith('Sveland') ? 'isSveland' : '')} key={item.name}>
             <div>
-              <span className='commercialTag'><BadgeCheck size={13}/> PARTNERLÄNK</span>
-              <h3>{item.name}</h3>
+              <div className='partnerCardTop'><PartnerLogo name={item.name}/><span className='commercialTag'><BadgeCheck size={13}/> PARTNERLÄNK</span></div>
               <p>{item.note}</p>
             </div>
             <a className='partnerButton partnerButtonStrong' href={item.trackingUrl!} target='_blank' rel='sponsored nofollow noopener'>
-              {item.name === 'Bredbandsval.se' ? 'Se bredband & priser' : item.category === 'mobil' ? `Se abonnemang hos ${item.name}` : `Se pris hos ${item.name}`} <ArrowUpRight size={18} />
+              {item.name === 'Bredbandsval.se' ? 'Se bredband & priser' : item.category === 'mobil' ? `Se abonnemang hos ${item.name}` : item.category === 'forsakring' ? `Hämta pris hos ${item.name.replace(' Djurförsäkring','')}` : `Se pris hos ${item.name}`} <ArrowUpRight size={18} />
             </a>
           </article>
         ))}
       </div>
-      <p className='partnerFine'>Kommersiella länkar. Alla aktörer på marknaden visas inte.</p>
+      <p className='partnerFine'>Kommersiella länkar – vi kan få provision om du blir kund. Det påverkar inte priset för dig. Urvalet omfattar inte hela marknaden.</p>
     </section>
   );
 }
