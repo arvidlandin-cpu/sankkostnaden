@@ -88,8 +88,8 @@ export default function ElectricityTool() {
   return (
     <>
       <Head>
-        <title>Fast, rörligt eller kvartspris? Elavtalstest 2026 | Sänk Kostnaden</title>
-        <meta name='description' content='Fast, rörligt eller kvartspris? Svara på fem frågor om risk, elanvändning och styrning och få en personlig elavtalsprofil.' />
+        <title>Fast, rörligt eller kvartspris 2026? Testa vilket elavtal som passar</title>
+        <meta name='description' content='Fast, rörligt eller kvartspris? Svara på fem frågor om förutsägbarhet, elanvändning och styrning och se vilken avtalsform som passar din profil.' />
         <link rel='canonical' href='https://sankkostnaden.se/elavtal/vilket-elavtal-passar-mig/' />
         <meta name='robots' content='index,follow' />
       </Head>
