@@ -138,6 +138,7 @@ export default function SavingsApp() {
         <meta property='og:url' content='https://sankkostnaden.se/app/' />
         <link rel='canonical' href='https://sankkostnaden.se/app/' />
         <meta name='robots' content='index,follow,max-image-preview:large,max-snippet:-1' />
+        <script type='application/ld+json' dangerouslySetInnerHTML={{ __html: JSON.stringify({'@context':'https://schema.org','@type':'WebApplication',name:'Kostnadskollen',description:'Ett gratis verktyg som hjälper hushåll prioritera vilka återkommande avtal som är mest värda att granska först.',url:'https://sankkostnaden.se/app/',applicationCategory:'FinanceApplication',operatingSystem:'Web',isAccessibleForFree:true}) }} />
       </Head>
       <header className='topbar'>
         <Link className='brand' href='/'><span className='brandMark'><PiggyBank size={22} /></span><span>Sänk Kostnaden</span></Link>
