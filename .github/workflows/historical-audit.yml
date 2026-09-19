@@ -1,0 +1,64 @@
+name: Full thread historical audit
+
+on:
+  push:
+    branches: [audit-full-thread-v2]
+
+jobs:
+  audit:
+    name: audit ${{ matrix.label }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - label: baseline-28857a8
+            sha: 28857a86f74e47c00ba4cd0a2945960a7ae6abeb
+          - label: prebreak-cda8095
+            sha: cda8095
+          - label: firstbreak-90a780d
+            sha: 90a780d
+          - label: prefinance-9b6d6ff
+            sha: 9b6d6ff
+          - label: finance-data-da3fea0
+            sha: da3fea0
+          - label: finance-seo-29f2048
+            sha: 29f2048
+          - label: gateway-fix-56f74d1
+            sha: 56f74d1
+          - label: intent-fix-2e7c843
+            sha: 2e7c843
+          - label: navigator-fix-5342d21
+            sha: 5342d21
+          - label: mobile-nav-8de6cba
+            sha: 8de6cba
+          - label: typing-fix-1edbc36
+            sha: 1edbc36
+          - label: current-8d874a6
+            sha: 8d874a6
+    steps:
+      - name: Checkout repository history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Checkout target
+        run: git checkout --detach ${{ matrix.sha }}
+      - name: Use Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.16.0
+      - name: Install dependencies
+        run: npm install --progress=false
+      - name: Build target and report
+        shell: bash
+        run: |
+          set +e
+          npx next build > /tmp/build.log 2>&1
+          code=$?
+          echo "TARGET=${{ matrix.label }} SHA=${{ matrix.sha }} BUILD_EXIT=$code"
+          if [ "$code" -ne 0 ]; then
+            grep -A8 -B3 -m1 -E "Type error:|Failed to compile|Error:" /tmp/build.log || tail -80 /tmp/build.log
+          else
+            tail -25 /tmp/build.log
+          fi
+          exit 0
