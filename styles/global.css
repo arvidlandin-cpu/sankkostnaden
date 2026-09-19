@@ -619,3 +619,25 @@ footer .brand {
 .gatewayPartners a{display:inline-flex;align-items:center;gap:4px;padding:8px 10px;border-radius:9px;background:#ffffff10;color:#fff!important;text-decoration:none;font-size:12px;font-weight:800}
 .gatewayFine{margin:13px 0 0;font-size:10px;color:#93a097}
 @media(max-width:600px){.decisionGateway{margin-left:-10px;margin-right:-10px;padding:21px 16px;border-radius:20px}.gatewayHead h2{font-size:27px!important}.gatewayPaths{grid-template-columns:1fr}.gatewayRead{grid-column:auto}.gatewayPath{padding:15px}.gatewayPath p{font-size:11px}}
+
+
+/* Livelier partner brand cards */
+.partnerCardBrand{position:relative;overflow:hidden;min-height:250px;transition:transform .18s ease,box-shadow .18s ease}
+.partnerCardBrand:hover{transform:translateY(-3px);box-shadow:0 16px 36px #17201b18}
+.partnerCardBrand:before{content:"";position:absolute;inset:0 0 auto;height:5px;background:#dff46a}
+.partnerCardBrand.isLassie:before{background:linear-gradient(90deg,#6d5ce7,#b09cff)}
+.partnerCardBrand.isSveland:before{background:linear-gradient(90deg,#087b4f,#68b342)}
+.partnerCardTop{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:18px}
+.partnerLogo{min-height:52px;display:flex;align-items:center;gap:10px;color:#17201b}
+.partnerLogo b{font-size:25px;letter-spacing:-.035em}
+.partnerLogoLassie b{font-size:30px;letter-spacing:-.055em}
+.logoPaw{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:#eeeaff;color:#5948c9}
+.partnerLogoSveland .logoHeart{width:42px;height:42px;border-radius:50% 50% 46% 46%;display:grid;place-items:center;background:#e3f3e7;color:#087b4f}
+.partnerLogoSveland>span:last-child{display:grid;line-height:1}
+.partnerLogoSveland b{font-size:20px;letter-spacing:.01em;color:#087b4f}
+.partnerLogoSveland small{font-size:8px;letter-spacing:.12em;font-weight:850;color:#526158;margin-top:5px}
+.partnerCardBrand .partnerButton{margin-top:6px}
+.partnerCardBrand.isLassie .partnerButton{background:#5948c9}
+.partnerCardBrand.isSveland .partnerButton{background:#087b4f}
+.partnerCardBrand .commercialTag{white-space:nowrap}
+@media(max-width:520px){.partnerCardTop{align-items:center}.partnerCardBrand{min-height:230px}.partnerLogo b{font-size:23px}.partnerLogoLassie b{font-size:28px}.partnerCardBrand .commercialTag{font-size:8px}}
