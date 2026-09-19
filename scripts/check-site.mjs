@@ -40,7 +40,9 @@ for (const file of sourceFiles) {
     const href = match[1];
     if (!href.startsWith('/') || href.startsWith('//')) continue;
     const pathname = normalizeRoute(href);
-    if (/\.[a-z0-9]{2,8}$/i.test(pathname)) continue;
+    const publicPath = path.join(root, 'public', pathname.replace(/^\//, ''));
+    if (fs.existsSync(publicPath)) continue;
+    if (/\.[a-z0-9]{2,16}$/i.test(pathname)) continue;
     if (!routes.has(pathname)) {
       missing.push({ file: path.relative(root, file), href });
     }
