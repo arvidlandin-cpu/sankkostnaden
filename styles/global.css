@@ -586,3 +586,16 @@ footer .brand {
     padding-bottom: 68px;
   }
 }
+
+/* Conversion-first partner blocks */
+.partnerSectionStrong { margin: 0 0 32px; padding: 30px; background: #eaf3d7; border: 2px solid #c8dc8c; box-shadow: 0 14px 40px #17201b12; }
+.partnerSectionStrong .partnerIntro h2 { font-size: 32px; letter-spacing: -.035em; margin: 4px 0 8px; color: #17201b; }
+.partnerCardStrong { border: 1px solid #cad5c4; box-shadow: 0 8px 24px #17201b0c; }
+.partnerCardStrong .commercialTag { display: inline-flex; align-items: center; gap: 5px; }
+.partnerButtonStrong { min-height: 54px; font-size: 15px; border-radius: 12px; box-shadow: 0 6px 18px #17201b20; }
+.partnerButtonStrong:hover { transform: translateY(-1px); }
+@media (max-width: 520px) {
+  .partnerSectionStrong { margin-left: -10px; margin-right: -10px; padding: 22px 16px; border-radius: 18px; }
+  .partnerSectionStrong .partnerIntro h2 { font-size: 27px; }
+  .partnerButtonStrong { width: 100%; }
+}
