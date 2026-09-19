@@ -11,6 +11,7 @@ import {
   Zap,
 } from 'lucide-react';
 import styles from '../styles/Home.module.css';
+import PartnerOffers from '../components/PartnerOffers';
 
 const categories = [
   { icon: Wifi, title: 'Bredband', text: 'Börja med vad som finns på adressen och jämför sedan pris, hastighet och bindningstid.', label: 'Börja med adressen', href: './bredband/bredband-pa-min-adress/' },
@@ -74,7 +75,7 @@ export default function Home() {
           <a href='./mobil/'>Mobil</a>
           <a href='./forsakring/'>Försäkring</a>
         </nav>
-        <a className={styles.navCta} href='#jamfor'>Börja jämföra</a>
+        <a className={styles.navCta} href='#partners'>Jämför priser</a>
       </header>
 
       <main>
@@ -122,6 +123,16 @@ export default function Home() {
           <span>Bredband</span><i />
           <span>Mobil</span><i />
           <span>Försäkring</span>
+        </section>
+
+        <section className={styles.section} id='partners'>
+          <div className={styles.sectionHead}>
+            <div><p>JÄMFÖR DIREKT</p><h2>Redo att sänka kostnaden?</h2></div>
+            <p>Gå direkt till våra godkända partners för aktuella priser. Vill du läsa mer först finns guiderna längre ner.</p>
+          </div>
+          <PartnerOffers category='bredband' heading='Bredband – se vad som finns på din adress' />
+          <PartnerOffers category='mobil' heading='Mobil – jämför aktuella abonnemang' />
+          <PartnerOffers category='forsakring' heading='Djurförsäkring – jämför pris och skydd' />
         </section>
 
         <section className={styles.section} id='jamfor'>
