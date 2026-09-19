@@ -21,10 +21,10 @@ type Props = {
 };
 
 export default function IntentGuide({ title, description, kicker, canonical, category, intent, bullets, sections, related }: Props) {
-  const categoryLabels: Record<PartnerCategory, string> = { el: 'Elavtal', bredband: 'Bredband', mobil: 'Mobil', forsakring: 'Försäkring' };
-  const categoryPaths: Record<PartnerCategory, string> = { el: '/elavtal/', bredband: '/bredband/', mobil: '/mobil/', forsakring: '/forsakring/' };
+  const categoryLabels: Record<PartnerCategory, string> = { el: 'Elavtal', bredband: 'Bredband', mobil: 'Mobil', forsakring: 'Försäkring', ekonomi: 'Lån & ekonomi' };
+  const categoryPaths: Record<PartnerCategory, string> = { el: '/elavtal/', bredband: '/bredband/', mobil: '/mobil/', forsakring: '/forsakring/', ekonomi: '/ekonomi/' };
   const categoryLabel = categoryLabels[category];
-  const compareHeadings: Record<PartnerCategory, string> = { el: 'Aktiva elalternativ att jämföra', bredband: 'Aktiva bredbandsalternativ att jämföra', mobil: 'Aktiva mobilalternativ att jämföra', forsakring: 'Aktiva försäkringsalternativ att jämföra' };
+  const compareHeadings: Record<PartnerCategory, string> = { el: 'Aktiva elalternativ att jämföra', bredband: 'Aktiva bredbandsalternativ att jämföra', mobil: 'Aktiva mobilalternativ att jämföra', forsakring: 'Aktiva försäkringsalternativ att jämföra', ekonomi: 'Aktiva lånealternativ att jämföra' };
   const heroPartners = getActivePartners(category, intent);
   const categoryPath = categoryPaths[category];
   const schema = {
