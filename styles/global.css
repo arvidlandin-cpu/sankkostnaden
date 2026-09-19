@@ -691,3 +691,11 @@ footer .brand {
  .mobileQuickBar .mqHome{min-width:54px;max-width:58px;background:#dff46a;display:grid;place-items:center;gap:0}.mobileQuickBar .mqHome small{font-size:8px;font-weight:850}
  .mobileQuickBar::-webkit-scrollbar{display:none}
 }
+
+
+/* Mobile dock: navigation first, commercial links stay contextual in page content */
+@media(max-width:700px){
+ .mobileQuickBar a{min-width:74px;flex:1 0 auto;gap:5px}
+ .mobileQuickBar a:not(.mqHome){background:#fff}
+ .mobileQuickBar a b{font-size:10px}
+}
