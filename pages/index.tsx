@@ -150,6 +150,7 @@ export default function Home() {
             <p>Räkna först om du vill se din egen skillnad, eller använd guiderna för att hitta vilken kostnad som är värd att ta först.</p>
           </div>
           <div className={styles.trafficMagnets}>
+            <a href='./verktyg/hushallskostnadskollen/'><span>NY · HUSHÅLLSKOLL</span><strong>Vad kostar ditt hushåll?</strong><p>Fyll i dina verkliga återkommande kostnader och se månad, år och vilken jämförbar post som är störst.</p><b>Starta kostnadskollen <ArrowRight size={16} /></b></a>
             <a href='./app/'><span>GRATIS KALKYL</span><strong>Vad kan du spara?</strong><p>Räkna på dina egna priser för el, bredband, mobil och försäkring och se skillnaden per år.</p><b>Starta kalkylen <ArrowRight size={16} /></b></a>
             <a href='./guide/hushallets-fasta-kostnader-2026/'><span>2026-GUIDE</span><strong>Hushållets fasta kostnader</strong><p>Karta över de stora återkommande posterna och hur du prioriterar dem.</p><b>Öppna guiden <ArrowRight size={16} /></b></a>
             <a href='./guide/arskoll-fasta-kostnader/'><span>CHECKLISTA</span><strong>Årskoll av fasta kostnader</strong><p>Gå igenom el, bredband, mobil och försäkring steg för steg.</p><b>Starta årskollen <ArrowRight size={16} /></b></a>
