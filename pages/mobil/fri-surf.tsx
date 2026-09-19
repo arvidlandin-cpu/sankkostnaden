@@ -93,7 +93,7 @@ export default function FreeDataTool() {
         <link rel='canonical' href='https://sankkostnaden.se/mobil/fri-surf/' /><script type='application/ld+json' dangerouslySetInnerHTML={{__html: JSON.stringify({'@context':'https://schema.org','@type':'WebPage',name:"Är fri surf värt det? Test 2026",description:"Är fri surf värt priset? Svara på fem frågor om data, streaming, hotspot och wifi och få en personlig fri-surf-profil.",url:"https://sankkostnaden.se/mobil/fri-surf/",isPartOf:{'@type':'WebSite',name:'Sänk Kostnaden',url:'https://sankkostnaden.se/'}})}} />
         <meta name='robots' content='index,follow' />
       </Head>
-      <SmartSelector eyebrow='SMARTVAL · FRI SURF' title='Är fri surf faktiskt värt det för dig?' intro='Obegränsad data är bekvämt – men bara prisvärt om du använder friheten. Fem frågor väger din verkliga användning mot risken att betala för kapacitet du aldrig behöver.' questions={questions} results={results} disclaimer='Testet bedömer behov, inte aktuella operatörspriser. Kontrollera alltid ordinarie pris, nät, roaming och villkor före byte.' />
+      <SmartSelector eyebrow='SMARTVAL · FRI SURF' title='Är fri surf faktiskt värt det för dig?' intro='Obegränsad data är bekvämt – men bara prisvärt om du använder friheten. Fem frågor väger din verkliga användning mot risken att betala för kapacitet du aldrig behöver.' questions={questions} results={results} disclaimer='Testet bedömer behov, inte aktuella operatörspriser. Kontrollera alltid ordinarie pris, nät, roaming och villkor före byte.' backHref='/mobil/' backLabel='Mobil' />
     </>
   );
 }
