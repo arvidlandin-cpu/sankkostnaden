@@ -27,6 +27,7 @@ export default function IntentGuide({ title, description, kicker, canonical, cat
   const compareHeadings: Record<PartnerCategory, string> = { el: 'Aktiva elalternativ att jämföra', bredband: 'Aktiva bredbandsalternativ att jämföra', mobil: 'Aktiva mobilalternativ att jämföra', forsakring: 'Aktiva försäkringsalternativ att jämföra', ekonomi: 'Aktiva lånealternativ att jämföra' };
   const heroPartners = getActivePartners(category, intent);
   const categoryPath = categoryPaths[category];
+  const heroCta = (name: string) => category === 'bredband' ? (name === 'Bredbandsval.se' ? 'Jämför på min adress hos Bredbandsval.se' : `Se bredband hos ${name}`) : category === 'mobil' ? `Se abonnemang hos ${name}` : category === 'el' ? `Se elavtal hos ${name}` : category === 'forsakring' ? `Se premie hos ${name.replace(' Djurförsäkring','')}` : intent === 'saving' ? `Se tjänsten hos ${name}` : `Jämför lån hos ${name}`;
   const schema = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -37,6 +38,8 @@ export default function IntentGuide({ title, description, kicker, canonical, cat
         author: { '@type': 'Organization', name: 'Sänk Kostnaden', url: 'https://sankkostnaden.se/' },
         publisher: { '@type': 'Organization', name: 'Sänk Kostnaden', url: 'https://sankkostnaden.se/' },
         mainEntityOfPage: canonical,
+        inLanguage: 'sv-SE',
+        isPartOf: { '@type': 'WebSite', name: 'Sänk Kostnaden', url: 'https://sankkostnaden.se/' },
       },
       {
         '@type': 'BreadcrumbList',
@@ -73,7 +76,7 @@ export default function IntentGuide({ title, description, kicker, canonical, cat
             <p className='kicker' style={{ marginTop: 32 }}>{kicker}</p>
             <h1>{title}</h1>
             <p className='lead'>{description}</p>
-            {heroPartners.length === 1 && <div className='heroPartnerActions'>{heroPartners.map(item => <a key={item.name} className='primary' href={item.trackingUrl!} target='_blank' rel='sponsored nofollow noopener'>{item.name === 'Bredbandsval.se' ? 'Jämför på min adress hos Bredbandsval.se' : `Se pris hos ${item.name}`} <ArrowUpRight size={17}/></a>)}</div>}
+            {heroPartners.length === 1 && <div className='heroPartnerActions'>{heroPartners.map(item => <a key={item.name} className='primary' href={item.trackingUrl} target='_blank' rel='sponsored nofollow noopener'>{heroCta(item.name)} <ArrowUpRight size={17}/></a>)}</div>}
             <p className='fine'>Kommersiella länkar markeras tydligt</p>
           </div>
         </section>
