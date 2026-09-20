@@ -24,7 +24,7 @@ export default function IntentGuide({ title, description, kicker, canonical, cat
   const categoryLabels: Record<PartnerCategory, string> = { el: 'Elavtal', bredband: 'Bredband', mobil: 'Mobil', forsakring: 'Försäkring', ekonomi: 'Lån & ekonomi' };
   const categoryPaths: Record<PartnerCategory, string> = { el: '/elavtal/', bredband: '/bredband/', mobil: '/mobil/', forsakring: '/forsakring/', ekonomi: '/ekonomi/' };
   const categoryLabel = categoryLabels[category];
-  const compareHeadings: Record<PartnerCategory, string> = { el: 'Aktiva elalternativ att jämföra', bredband: 'Aktiva bredbandsalternativ att jämföra', mobil: 'Aktiva mobilalternativ att jämföra', forsakring: 'Aktiva försäkringsalternativ att jämföra', ekonomi: 'Aktiva lånealternativ att jämföra' };
+  const compareHeadings: Record<PartnerCategory, string> = { el: 'Aktiva elalternativ att jämföra', bredband: 'Aktiva bredbandsalternativ att jämföra', mobil: 'Aktiva mobilalternativ att jämföra', forsakring: 'Aktiva försäkringsalternativ att jämföra', ekonomi: 'Tjänster för att jämföra privatlån' };
   const heroPartners = getActivePartners(category, intent);
   const categoryPath = categoryPaths[category];
   const heroCta = (name: string) => category === 'bredband' ? (name === 'Bredbandsval.se' ? 'Jämför på min adress hos Bredbandsval.se' : `Se bredband hos ${name}`) : category === 'mobil' ? `Se abonnemang hos ${name}` : category === 'el' ? `Se elavtal hos ${name}` : category === 'forsakring' ? `Se premie hos ${name.replace(' Djurförsäkring','')}` : intent === 'saving' ? `Se tjänsten hos ${name}` : `Jämför lån hos ${name}`;
@@ -33,6 +33,7 @@ export default function IntentGuide({ title, description, kicker, canonical, cat
     '@graph': [
       {
         '@type': 'Article',
+        url: canonical,
         headline: title,
         description,
         author: { '@type': 'Organization', name: 'Sänk Kostnaden', url: 'https://sankkostnaden.se/' },
@@ -57,10 +58,13 @@ export default function IntentGuide({ title, description, kicker, canonical, cat
         <title>{title} | Sänk Kostnaden</title>
         <meta name='description' content={description} />
         <meta name='robots' content='index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1' />
+        <meta name='author' content='Sänk Kostnaden' />
         <meta property='og:type' content='article' />
+        <meta property='og:locale' content='sv_SE' />
         <meta property='og:title' content={title} />
         <meta property='og:description' content={description} />
         <meta property='og:url' content={canonical} />
+        <meta name='twitter:card' content='summary' />
         <link rel='canonical' href={canonical} />
         <script type='application/ld+json' dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       </Head>
@@ -76,7 +80,7 @@ export default function IntentGuide({ title, description, kicker, canonical, cat
             <p className='kicker' style={{ marginTop: 32 }}>{kicker}</p>
             <h1>{title}</h1>
             <p className='lead'>{description}</p>
-            {heroPartners.length === 1 && <div className='heroPartnerActions'>{heroPartners.map(item => <a key={item.name} className='primary' href={item.trackingUrl} target='_blank' rel='sponsored nofollow noopener'>{heroCta(item.name)} <ArrowUpRight size={17}/></a>)}</div>}
+            {heroPartners.length === 1 && <div className='heroPartnerActions'>{heroPartners.map(item => <a key={item.name} className='primary' href={item.trackingUrl} data-partner={item.name} data-category={category} data-intent={intent || 'unspecified'} data-placement='intent_hero' target='_blank' rel='sponsored nofollow noopener'>{heroCta(item.name)} <ArrowUpRight size={17}/></a>)}</div>}
             <p className='fine'>Kommersiella länkar markeras tydligt</p>
           </div>
         </section>
