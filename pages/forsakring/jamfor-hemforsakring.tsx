@@ -2,8 +2,8 @@ import IntentGuide from '../../components/IntentGuide';
 
 export default function Page(){
  return <IntentGuide
-  title='Jämför hemförsäkring 2026 – pris, självrisk & skydd'
-  description='Jämför hemförsäkring 2026. Kontrollera pris, självrisk, allrisk, reseskydd och omfattning så att du jämför likvärdigt skydd.'
+  title='Jämför hemförsäkring 2026 – premie, självrisk och skydd'
+  description='Jämför hemförsäkring 2026 efter premie, självrisk och skydd. Kontrollera allrisk, reseskydd, ersättningsgränser och vilka personer som omfattas.'
   kicker='JÄMFÖR HEMFÖRSÄKRING'
   canonical='https://sankkostnaden.se/forsakring/jamfor-hemforsakring/'
   category='forsakring'
