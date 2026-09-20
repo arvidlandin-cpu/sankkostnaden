@@ -69,10 +69,10 @@ export default function AffiliateTracking() {
       const isSponsored = anchor.rel.split(/\s+/).includes('sponsored');
       if (!partner && !isSponsored) return;
 
-      const category = partner?.category || anchor.dataset.category || 'unknown';
-      const partnerName = partner?.name || anchor.dataset.partner || 'unknown';
-      const intent = anchor.dataset.intent || inferIntent(window.location.pathname, partner?.category, partner?.intents || []);
-      const placement = anchor.dataset.placement || inferPlacement(anchor);
+      const category = anchor.dataset.affiliateCategory || partner?.category || anchor.dataset.category || 'unknown';
+      const partnerName = anchor.dataset.affiliatePartner || partner?.name || anchor.dataset.partner || 'unknown';
+      const intent = anchor.dataset.affiliateIntent || anchor.dataset.intent || inferIntent(window.location.pathname, partner?.category, partner?.intents || []);
+      const placement = anchor.dataset.affiliatePlacement || anchor.dataset.placement || inferPlacement(anchor);
 
       const params = {
         partner: partnerName,
@@ -82,6 +82,7 @@ export default function AffiliateTracking() {
         page_path: window.location.pathname,
         page_title: document.title,
         link_url: anchor.href,
+        link_domain: (() => { try { return new URL(anchor.href).hostname; } catch { return ''; } })(),
       };
 
       if (typeof window.gtag === 'function') {
