@@ -57,7 +57,7 @@ export default function HushalletsFastaKostnader() {
 
           <h2>Gör en årlig kontroll av kostnaderna</h2><p>Vill du gå systematiskt igenom hushållet kan du använda vår <Link href='/guide/arskoll-fasta-kostnader/'>årskoll av fasta kostnader</Link>. Den samlar kontroll av fakturor, villkor, behov och årskostnad i en checklista.</p>
           <h2>Kontrollera nästa kostnad direkt</h2>
-          <div className='trafficLinks'><Link href='/elavtal/billigaste-elavtalet/'><strong>Elavtal</strong><span>Pris, påslag, fasta avgifter och villkor →</span></Link><Link href='/bredband/billigaste-bredbandet/'><strong>Bredband</strong><span>Tillgänglighet, hastighet och totalpris →</span></Link><Link href='/mobil/billigaste-mobilabonnemanget/'><strong>Mobil</strong><span>Surf, nät och förstaårskostnad →</span></Link></div>
+          <div className='trafficLinks'><Link href='/elavtal/billigaste-elavtalet/'><strong>Elavtal</strong><span>Pris, påslag, fasta avgifter och villkor →</span></Link><Link href='/bredband/billigaste-bredbandet/'><strong>Bredband</strong><span>Tillgänglighet, hastighet och totalpris →</span></Link><Link href='/mobil/billigaste-mobilabonnemanget/'><strong>Mobil</strong><span>Surf, nät och förstaårskostnad →</span></Link><Link href='/ekonomi/'><strong>Lån & ekonomi</strong><span>Effektiv ränta, avgifter och total återbetalning →</span></Link></div>
           <p className='disclosure'>Sänk Kostnaden kan finansieras genom affiliatelänkar som markeras tydligt. Ersättning kan påverka vilka kommersiella alternativ som visas. Informationen här är generell och ersätter inte individuell ekonomisk rådgivning.</p>
         </article>
       </main>
