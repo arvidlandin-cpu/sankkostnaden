@@ -28,6 +28,7 @@ export default function IntentGuide({ title, description, kicker, canonical, cat
   const heroPartners = getActivePartners(category, intent);
   const categoryPath = categoryPaths[category];
   const heroCta = (name: string) => category === 'bredband' ? (name === 'Bredbandsval.se' ? 'Jämför på min adress hos Bredbandsval.se' : `Se bredband hos ${name}`) : category === 'mobil' ? `Se abonnemang hos ${name}` : category === 'el' ? `Se elavtal hos ${name}` : category === 'forsakring' ? `Se premie hos ${name.replace(' Djurförsäkring','')}` : intent === 'saving' ? `Se tjänsten hos ${name}` : `Jämför lån hos ${name}`;
+  const offerHeading = category === 'forsakring' ? (intent === 'pet' ? 'Jämför djurförsäkring hos våra partners' : intent === 'home' ? 'Se aktuella hemförsäkringsalternativ' : 'Se aktuella försäkringsalternativ') : category === 'bredband' ? (intent === 'mobile-broadband' ? 'Se aktuella alternativ för mobilt bredband' : intent === 'fiber' ? 'Se aktuella fiberalternativ' : intent === 'no-binding' ? 'Se bredband utan bindningstid' : 'Se aktuella bredbandsalternativ') : category === 'mobil' ? (intent === 'family' ? 'Se aktuella familjeabonnemang' : intent === 'no-binding' ? 'Se abonnemang utan bindningstid' : 'Se aktuella mobilabonnemang') : category === 'el' ? 'Se aktuella elavtal' : intent === 'saving' ? 'Verktyg för bättre ekonomisk överblick' : 'Tjänster för att jämföra privatlån';
   const schema = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -92,7 +93,7 @@ export default function IntentGuide({ title, description, kicker, canonical, cat
             {bullets.map(item => <p key={item}><Check size={17} /> {item}</p>)}
           </div>
           {sections.map(section => <section key={section.heading}><h2>{section.heading}</h2><p>{section.body}</p></section>)}
-          {intent === 'compare' ? <PartnerDirectory category={category} intent={intent} heading={compareHeadings[category]} /> : <PartnerOffers category={category} intent={intent} heading={intent === 'pet' ? 'Jämför ditt pris hos Lassie och Sveland' : 'Redo att kontrollera aktuellt pris?'} />}
+          {intent === 'compare' ? <PartnerDirectory category={category} intent={intent} heading={compareHeadings[category]} /> : <PartnerOffers category={category} intent={intent} heading={offerHeading} />}
           <div className='relatedGuides'>
             <h2>Läs vidare</h2>
             {related.map(item => <Link href={item.href} key={item.href}>{item.label} →</Link>)}
