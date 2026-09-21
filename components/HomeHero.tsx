@@ -100,7 +100,7 @@ export default function HomeHero() {
     <section className={styles.shell} aria-label='Hitta rätt jämförelse'>
       <div className={styles.media} aria-hidden='true'>
         <img
-          src='https://images.pexels.com/photos/6994161/pexels-photo-6994161.jpeg?auto=compress&cs=tinysrgb&w=2200'
+          src='https://images.pexels.com/photos/6337116/pexels-photo-6337116.jpeg?auto=compress&cs=tinysrgb&w=2200'
           alt=''
           loading='eager'
           fetchPriority='high'
