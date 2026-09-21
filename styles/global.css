@@ -700,3 +700,202 @@ footer .brand {
  .mobileQuickBar a:not(.mqHome){background:#fff}
  .mobileQuickBar a b{font-size:9px;line-height:1;white-space:nowrap}
 }
+
+
+/* Premium visual system 2026-09-21 */
+body{
+  background:#f3f5f0;
+}
+.topbar{
+  position:relative;
+  top:auto;
+  z-index:30;
+  width:100%;
+  max-width:none;
+  height:72px;
+  margin:0;
+  padding-left:max(28px,calc((100vw - 1180px)/2));
+  padding-right:max(28px,calc((100vw - 1180px)/2));
+  background:#fff;
+  border-bottom:1px solid #edf0eb;
+  box-shadow:none;
+}
+.topbar .brandMark{
+  box-shadow:0 7px 20px rgba(80,98,55,.12),inset 0 1px 0 rgba(255,255,255,.7);
+}
+.topbar nav a{
+  color:#4b574f;
+  font-weight:750;
+  transition:color .18s ease;
+}
+.topbar nav a:hover{
+  color:#17201b;
+}
+.guideHero{
+  position:relative;
+  overflow:hidden;
+  padding:58px 28px 68px;
+  background:
+    radial-gradient(circle at 80% 20%,rgba(223,244,106,.16),transparent 29%),
+    radial-gradient(circle at 12% 110%,rgba(143,164,134,.17),transparent 32%),
+    linear-gradient(135deg,#18231d 0%,#213029 58%,#1a261f 100%);
+  color:#fff;
+  border-bottom:1px solid rgba(255,255,255,.05);
+}
+.guideHero:after{
+  content:'';
+  position:absolute;
+  width:520px;
+  height:520px;
+  right:-210px;
+  top:-320px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(223,244,106,.18),transparent 68%);
+  pointer-events:none;
+}
+.guideHero .guideWrap{
+  position:relative;
+  z-index:1;
+  max-width:940px;
+}
+.guideHero h1{
+  max-width:900px;
+  margin:18px 0 20px;
+  color:#fff;
+  font-size:clamp(44px,5.7vw,70px);
+  line-height:.98;
+  text-shadow:0 3px 26px rgba(0,0,0,.14);
+}
+.guideHero .lead{
+  max-width:780px;
+  color:#d8e1da;
+  font-size:18px;
+}
+.guideHero .kicker{
+  color:#dff46a;
+}
+.guideHero .back,
+.guideHero .breadcrumbs,
+.guideHero .breadcrumbs a{
+  color:#c8d2ca;
+}
+.guideHero .breadcrumbs span[aria-current='page']{
+  color:#9fad9f;
+}
+.guideHero .fine{
+  color:#9faea2;
+}
+.guideHero .primary{
+  background:#dff46a;
+  color:#17201b;
+  box-shadow:0 12px 30px rgba(189,220,69,.14),inset 0 1px 0 rgba(255,255,255,.5);
+}
+.guideIcon{
+  background:#dff46a;
+  box-shadow:0 12px 32px rgba(189,220,69,.18);
+}
+.article.guideWrap{
+  max-width:940px;
+  margin:30px auto 72px;
+  padding:40px 46px 64px;
+  border:1px solid #e1e6df;
+  border-radius:28px;
+  background:#fff;
+  box-shadow:0 22px 70px rgba(35,51,39,.07);
+}
+.article{
+  color:#4f5d54;
+}
+.article h2{
+  font-size:31px;
+  letter-spacing:-.035em;
+}
+.article h3{
+  color:#26332b;
+}
+.checkList{
+  border-radius:20px;
+  border-color:#e2e7df;
+  box-shadow:0 9px 28px rgba(35,51,39,.045);
+}
+.note{
+  border-left-color:#c9e746;
+  background:#f2f8dd;
+}
+.decisionPanel{
+  border-radius:24px;
+  background:
+    radial-gradient(circle at 95% 0%,rgba(223,244,106,.10),transparent 34%),
+    #17201b;
+  box-shadow:0 18px 50px rgba(23,32,27,.14);
+}
+.partnerSection{
+  padding:30px;
+  border-radius:24px;
+  border-color:#e0e6dd;
+  background:#f5f7f2;
+}
+.partnerCard{
+  border-radius:18px;
+  border-color:#e1e6df;
+  box-shadow:0 9px 30px rgba(35,51,39,.045);
+}
+.partnerButton{
+  border-radius:12px;
+}
+.relatedGuides a{
+  border-radius:14px;
+  box-shadow:0 7px 24px rgba(35,51,39,.035);
+  transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease;
+}
+.relatedGuides a:hover{
+  transform:translateY(-1px);
+  border-color:#cbd6c8;
+  box-shadow:0 11px 28px rgba(35,51,39,.07);
+}
+.trafficLinks a{
+  border-radius:20px;
+  box-shadow:0 10px 30px rgba(35,51,39,.045);
+  transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease;
+}
+.trafficLinks a:hover{
+  transform:translateY(-2px);
+  border-color:#cbd6c8;
+  box-shadow:0 16px 38px rgba(35,51,39,.08);
+}
+footer{
+  background:#f7f9f5;
+}
+@media(max-width:800px){
+  .guideHero{
+    padding-top:42px;
+    padding-bottom:50px;
+  }
+  .article.guideWrap{
+    margin:18px 18px 54px;
+    padding:28px 24px 48px;
+    border-radius:22px;
+  }
+}
+@media(max-width:520px){
+  .topbar{
+    height:66px;
+    padding-left:18px;
+    padding-right:18px;
+  }
+  .guideHero{
+    padding-left:18px;
+    padding-right:18px;
+  }
+  .guideHero h1{
+    font-size:42px;
+  }
+  .guideHero .lead{
+    font-size:16px;
+  }
+  .article.guideWrap{
+    margin:14px 12px 44px;
+    padding:24px 19px 42px;
+    border-radius:19px;
+  }
+}
