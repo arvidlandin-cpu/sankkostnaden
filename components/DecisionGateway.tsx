@@ -17,7 +17,7 @@ export default function DecisionGateway({category,compact=false,intent}:Props){
   const active=getActivePartners(category,intent,3);
   const onePartner=active.length===1?active[0]:null;
   const directLabel=category==='forsakring'&&intent==='pet'?'Jämför djurförsäkring':category==='forsakring'&&intent==='home'?'Jämför hemförsäkring':cfg.direct;
-  const directHref=onePartner?onePartner.trackingUrl:active.length>1?'#partners':cfg.fallback;
+  const directHref=onePartner?onePartner.trackingUrl:cfg.fallback;
 
   return <section className={`decisionGateway decisionGatewaySimple ${compact?'decisionGatewayCompact':''}`}>
     <div className='gatewayHead'><span><Sparkles size={14}/> NÄSTA STEG</span><h2>{cfg.title}</h2><p>{cfg.intro}</p></div>
@@ -27,7 +27,7 @@ export default function DecisionGateway({category,compact=false,intent}:Props){
           <span className='gatewayIcon'><Gauge size={20}/></span><div><small>JÄMFÖR NU</small><strong>{directLabel}</strong><p>Fortsätt hos {onePartner.name} för aktuella villkor.</p></div><ArrowUpRight size={20}/>
         </a>:
         <a className='gatewayPath gatewayDirect' href={directHref}>
-          <span className='gatewayIcon'><Gauge size={20}/></span><div><small>JÄMFÖR NU</small><strong>{directLabel}</strong><p>{active.length>1?`${active.length} relevanta partneralternativ visas längre ned på sidan.`:'Gå vidare till jämförelsen och se vad som är relevant för ditt behov.'}</p></div><ArrowRight size={20}/>
+          <span className='gatewayIcon'><Gauge size={20}/></span><div><small>JÄMFÖR NU</small><strong>{directLabel}</strong><p>{active.length>1?'Gå vidare till jämförelsesidan där de relevanta alternativen samlas tydligt.':'Gå vidare till jämförelsen och se vad som är relevant för ditt behov.'}</p></div><ArrowRight size={20}/>
         </a>}
       <Link className='gatewayPath' href={cfg.helpHref}><span className='gatewayIcon'><Compass size={20}/></span><div><small>HJÄLP MIG VÄLJA</small><strong>{cfg.help}</strong><p>Några snabba frågor hjälper dig att välja rätt nivå innan du jämför pris.</p></div><ArrowRight size={20}/></Link>
     </div>
