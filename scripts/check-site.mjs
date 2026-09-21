@@ -56,8 +56,11 @@ if (fs.existsSync(redirectsPath)) {
     if (!line || line.startsWith('#')) continue;
     const [from, to] = line.split(/\s+/);
     const sourceRoute = normalizeRoute(from);
-    redirectSources.add(sourceRoute);
-    if (to?.startsWith('/') && !routes.has(normalizeRoute(to))) {
+    const targetRoute = to?.startsWith('/') ? normalizeRoute(to) : null;
+    // A redirect that only canonicalizes the trailing slash points to the same route.
+    // Do not treat canonical internal links as links to a superseded alias.
+    if (targetRoute !== sourceRoute) redirectSources.add(sourceRoute);
+    if (targetRoute && !routes.has(targetRoute)) {
       errors.push(`public/_redirects: target does not exist ${to}`);
     }
   }
