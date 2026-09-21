@@ -1683,3 +1683,26 @@ footer{
   .allPartnersGrid>a:nth-last-child(-n+2){border-bottom:1px solid #e8ece6}
   .allPartnersGrid>a:last-child{border-bottom:0}
 }
+
+
+/* Cross-category guided matcher additions 2026-09-21 */
+.matchOptionsTwoByTwo{
+  grid-template-columns:1fr 1fr;
+}
+.matchQuestionsSingle{
+  grid-template-columns:minmax(0,560px);
+}
+.matchPartnerGridAdaptive{
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+}
+.mobileMatcher .partnerFine{
+  margin-top:16px;
+}
+@media(max-width:700px){
+  .matchOptionsTwoByTwo{
+    grid-template-columns:1fr;
+  }
+  .matchQuestionsSingle{
+    grid-template-columns:1fr;
+  }
+}
