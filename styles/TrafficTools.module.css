@@ -201,3 +201,40 @@
   .result { position: static; }
   .choices, .toggles, .compare { grid-template-columns: 1fr; }
 }
+
+
+/* Premium continuation theme */
+.shell{
+  background:#f3f5f0;
+}
+.hero{
+  padding:38px 42px 34px;
+  border-radius:28px;
+  background:
+    radial-gradient(circle at 86% 8%,rgba(223,244,106,.14),transparent 30%),
+    linear-gradient(135deg,#18231d,#213029);
+  color:#fff;
+  box-shadow:0 22px 64px rgba(25,38,29,.12);
+}
+.hero>span{color:#dff46a}
+.hero h1{color:#fff}
+.hero p{color:#d5dfd7}
+.panel{
+  border-radius:24px;
+  border-color:#e1e6df;
+  box-shadow:0 12px 36px rgba(35,51,39,.055);
+}
+.result{
+  border-radius:24px;
+  background:
+    radial-gradient(circle at 100% 0%,rgba(223,244,106,.09),transparent 30%),
+    #17201b;
+  box-shadow:0 26px 68px rgba(23,32,27,.18);
+}
+.result>a{
+  background:linear-gradient(135deg,#dff46a,#c7eb44);
+  box-shadow:0 10px 24px rgba(180,211,62,.16);
+}
+@media(max-width:760px){
+  .hero{padding:28px 22px 26px;border-radius:22px}
+}
