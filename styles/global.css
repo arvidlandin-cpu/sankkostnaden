@@ -961,3 +961,31 @@ footer{
 @media(max-width:800px){
   .trafficLinks a{min-height:190px}
 }
+
+
+/* Category-specific guide hero images */
+.guideHero-bredband{
+  background:
+    linear-gradient(90deg,rgba(18,28,21,.95),rgba(18,28,21,.86) 48%,rgba(18,28,21,.58) 100%),
+    url('https://images.pexels.com/photos/7019025/pexels-photo-7019025.jpeg?auto=compress&cs=tinysrgb&w=1800') center/cover no-repeat;
+}
+.guideHero-el{
+  background:
+    linear-gradient(90deg,rgba(18,28,21,.95),rgba(18,28,21,.84) 48%,rgba(18,28,21,.48) 100%),
+    url('https://images.pexels.com/photos/14408369/pexels-photo-14408369.jpeg?auto=compress&cs=tinysrgb&w=1800') center/cover no-repeat;
+}
+.guideHero-mobil{
+  background:
+    linear-gradient(90deg,rgba(18,28,21,.95),rgba(18,28,21,.85) 48%,rgba(18,28,21,.52) 100%),
+    url('https://images.pexels.com/photos/36665172/pexels-photo-36665172.jpeg?auto=compress&cs=tinysrgb&w=1800') center/cover no-repeat;
+}
+.guideHero-forsakring{
+  background:
+    linear-gradient(90deg,rgba(18,28,21,.95),rgba(18,28,21,.84) 48%,rgba(18,28,21,.50) 100%),
+    url('https://images.pexels.com/photos/20725528/pexels-photo-20725528.jpeg?auto=compress&cs=tinysrgb&w=1800') center/cover no-repeat;
+}
+.guideHero-ekonomi{
+  background:
+    linear-gradient(90deg,rgba(18,28,21,.95),rgba(18,28,21,.86) 48%,rgba(18,28,21,.54) 100%),
+    url('https://images.pexels.com/photos/7887849/pexels-photo-7887849.jpeg?auto=compress&cs=tinysrgb&w=1800') center/cover no-repeat;
+}
