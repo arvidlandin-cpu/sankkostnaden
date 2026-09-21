@@ -939,3 +939,23 @@
 @media(max-width:760px){
   .guideLibrarySection{padding-top:20px!important}
 }
+
+
+/* Less chrome and vertical travel 2026-09-22 */
+.nav{height:56px!important}
+.popularSection{padding-top:30px!important;padding-bottom:30px!important}
+.popularHeader h2{font-size:clamp(30px,3vw,40px)!important}
+.popularHeader span{font-size:12px!important}
+.popularGrid{margin-top:18px!important;gap:12px!important}
+.popularImageExact{aspect-ratio:3.05/1!important}
+.popularBody{min-height:50px!important;padding:8px 12px!important}
+.guideLibrarySection{padding-bottom:22px!important}
+.guideLibrary summary{min-height:46px!important}
+.trustBand{margin-bottom:22px;padding:14px 17px}
+.footer{padding-top:28px;padding-bottom:32px}
+@media(max-width:760px){
+  .nav{height:60px!important}
+  .popularSection{padding-top:26px!important;padding-bottom:28px!important}
+  .popularCard{flex-basis:72%!important}
+  .popularBody{min-height:48px!important}
+}
