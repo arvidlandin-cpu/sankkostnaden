@@ -36,6 +36,7 @@ export default function SmartSelector({ eyebrow, title, intro, questions, result
       <header className={styles.topbar}>
         <Link className={styles.brand} href='/'><span><PiggyBank size={20} /></span><strong>Sänk Kostnaden</strong></Link>
         <nav><Link href='/bredband/'>Bredband</Link><Link href='/elavtal/'>El</Link><Link href='/mobil/'>Mobil</Link><Link href='/forsakring/'>Försäkring</Link><Link href='/ekonomi/'>Ekonomi</Link></nav>
+        <Link className={styles.topbarCta} href='/#jamfor'>Jämför priser →</Link>
       </header>
       <main className={styles.shell}>
       <Link className={styles.back} href={backHref}>← {backLabel}</Link>
