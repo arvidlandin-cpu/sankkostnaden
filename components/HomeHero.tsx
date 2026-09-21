@@ -5,7 +5,6 @@ import {
   CircleDollarSign,
   Grid2X2,
   Info,
-  Lock,
   ShieldCheck,
   Smartphone,
   TrendingDown,
@@ -64,8 +63,7 @@ export default function HomeHero(){
       <div className={styles.copy}>
         <div className={styles.badge}><span/> Gratis · ingen inloggning · tydliga partnerlänkar</div>
         <h1>Sänk din<br/>månadskostnad.<br/><em>Inte din vardag.</em></h1>
-        <p>Bredband, el, mobil, försäkring och lån.<br/>Två snabba val leder dig till rätt jämförelse.</p>
-        <div className={styles.trust}><span>Enkelt att börja</span><span>Du väljer själv</span><span>Alltid kostnadsfritt</span></div>
+        <p>Välj kostnaden du vill sänka. Två snabba val leder dig vidare.</p>
       </div>
 
       <div className={styles.card}>
@@ -80,7 +78,7 @@ export default function HomeHero(){
               </button>;
             })}
           </div>
-          <p className={styles.cardHint}>Välj ett område. Inga kontaktuppgifter behövs.</p>
+          <p className={styles.cardHint}>Välj ett område.</p>
         </> : <>
           <button className={styles.back} type='button' onClick={()=>setArea(null)}><ArrowLeft size={14}/> Byt område</button>
           <div className={styles.areaChip}>{(()=>{const Icon=selected!.icon;return <Icon size={18}/>})()} {selected!.label}</div>
@@ -90,7 +88,7 @@ export default function HomeHero(){
               <div><strong>{choice.label}</strong><small>{choice.sub}</small></div><ArrowRight size={17}/>
             </a>)}
           </div>
-          <p className={styles.cardHint}>Du går vidare till en guide eller jämförelse – inte ett formulär.</p>
+          <p className={styles.cardHint}>Ingen inloggning eller formulär.</p>
         </>}
       </div>
     </div>
@@ -98,8 +96,7 @@ export default function HomeHero(){
       <div className={styles.proofInner}>
         <div><span><Grid2X2 size={21}/></span><p><strong>5 kostnadsområden</strong><small>Allt på ett ställe</small></p></div>
         <div><span><TrendingDown size={21}/></span><p><strong>2 val till rätt väg</strong><small>Snabbt och enkelt</small></p></div>
-        <div><span><Lock size={21}/></span><p><strong>Ingen inloggning</strong><small>Helt kostnadsfritt</small></p></div>
-        <div><span><Info size={21}/></span><p><strong>Tydlig affiliateinformation</strong><small>Kommersiella länkar märks tydligt</small></p></div>
+        <div><span><Info size={21}/></span><p><strong>Tydliga partnerlänkar</strong><small>Alltid markerade</small></p></div>
       </div>
     </div>
   </section>;
