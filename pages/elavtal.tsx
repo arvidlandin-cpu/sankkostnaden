@@ -12,7 +12,7 @@ export default function Elavtal(){
     lead='Använd samma årsförbrukning när du jämför. Kontrollera pris eller påslag, fasta avgifter, rabattens längd och villkoren efter kampanjen.'
     icon={Zap}
     compareHref='/elavtal/jamfor-elavtal/'
-    compareLabel='Jämför elavtal'
+    compareLabel='Hitta relevanta elavtal'
     helpHref='/elavtal/vilket-elavtal-passar-mig/'
     helpLabel='Hjälp mig välja avtalsform'
     partnerIntent='electricity'
