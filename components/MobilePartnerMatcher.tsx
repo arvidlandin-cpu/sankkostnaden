@@ -88,6 +88,10 @@ export default function MobilePartnerMatcher(){
       <h2>Vilka operatörer är mest relevanta för dig?</h2>
       <p>Vi har flera aktiva mobilpartners. I stället för att rada upp alla direkt hjälper vi dig att börja med tre alternativ som passar det du söker. Vi rankar inte aktuella priser – de kontrollerar du hos operatören.</p>
     </div>
+    <div className='visiblePartnerNames' aria-label='Aktiva mobilpartners i vårt urval'>
+      <span>Aktiva mobilpartners i vårt urval</span>
+      <div>{all.map(p=><strong key={p.name}>{p.name}</strong>)}</div>
+    </div>
 
     <div className='matchQuestions'>
       <div className='matchQuestion'>
