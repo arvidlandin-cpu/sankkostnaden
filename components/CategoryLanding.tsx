@@ -25,6 +25,7 @@ type Props={
   moreGuides?:Guide[];
   introTitle:string;
   introText:string;
+  showPartners?:boolean;
 };
 
 const labels:Record<PartnerCategory,string>={bredband:'Bredband',el:'El',mobil:'Mobil',forsakring:'Försäkring',ekonomi:'Ekonomi'};
@@ -32,7 +33,7 @@ const labels:Record<PartnerCategory,string>={bredband:'Bredband',el:'El',mobil:'
 export default function CategoryLanding({
   category,canonical,title,description,kicker,heading,lead,icon:Icon,
   compareHref,compareLabel,helpHref,helpLabel,partnerIntent,partnerHeading,
-  checks,guides,moreGuides=[],introTitle,introText,
+  checks,guides,moreGuides=[],introTitle,introText,showPartners=true,
 }:Props){
   const schema={'@context':'https://schema.org','@graph':[
     {'@type':'WebPage',name:title,description,url:canonical,isPartOf:{'@type':'WebSite',name:'Sänk Kostnaden',url:'https://sankkostnaden.se/'}},
@@ -89,7 +90,7 @@ export default function CategoryLanding({
           <div className='checkList compactChecks'>{checks.map(item=><p key={item}><Check size={17}/>{item}</p>)}</div>
         </section>
 
-        <PartnerOffers category={category} intent={partnerIntent} limit={3} heading={partnerHeading}/>
+        {showPartners&&<PartnerOffers category={category} intent={partnerIntent} limit={3} heading={partnerHeading}/>}
 
         <section className='categoryGuideSection'>
           <div className='categoryGuideHead'><div><p className='kicker'>GUIDER</p><h2>Vill du läsa först?</h2></div><p>Välj den guide som motsvarar din fråga. Du behöver inte läsa allt för att komma vidare.</p></div>
