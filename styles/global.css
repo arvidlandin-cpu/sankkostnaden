@@ -1819,3 +1819,58 @@ footer{
   .decisionGatewaySimple{padding:14px!important}
   .gatewayPathsSimple .gatewayPath{min-height:70px!important}
 }
+
+
+/* Single-priority compact layout 2026-09-22 */
+.topbar{height:56px!important}
+.categoryHero{min-height:300px!important;padding-top:30px!important;padding-bottom:32px!important}
+.categoryHeroIcon{width:36px;height:36px;margin:10px 0 8px}
+.categoryHero h1{font-size:clamp(36px,4.3vw,52px)!important;margin:5px 0 9px!important}
+.categoryHero .lead{max-width:720px!important;font-size:14px!important;line-height:1.45!important}
+.categoryHeroActions{margin-top:14px;align-items:center}
+.categoryHeroActions .primary{min-height:44px;padding:0 16px}
+.categoryHeroActions .secondaryLight{
+  min-height:auto;
+  padding:7px 2px;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  backdrop-filter:none;
+  -webkit-backdrop-filter:none;
+  box-shadow:none;
+  color:#eef3ee;
+  font-size:12px;
+}
+.categoryArticle{margin-top:12px!important;padding-top:16px!important;padding-bottom:24px!important}
+.categoryBasics{margin-bottom:12px!important}
+.categoryGuideCompact{margin-top:14px!important}
+.categoryMorePrimary summary{min-height:44px}
+.decisionGatewaySimple{margin-bottom:12px!important;padding:15px!important}
+.gatewayPathsSimple{grid-template-columns:minmax(0,1fr) auto!important;align-items:stretch}
+.gatewayPathsSimple .gatewayPath{min-height:66px!important}
+.gatewayPathsSimple .gatewayPath:not(.gatewayDirect){
+  min-width:190px;
+  grid-template-columns:1fr auto!important;
+  background:transparent!important;
+  border-color:#e3e8e1!important;
+  box-shadow:none!important;
+}
+.gatewayPathsSimple .gatewayPath:not(.gatewayDirect) .gatewayIcon{display:none!important}
+.gatewayPathsSimple .gatewayPath:not(.gatewayDirect) small,
+.gatewayPathsSimple .gatewayPath:not(.gatewayDirect) p{display:none!important}
+.partnerIntro{margin-bottom:12px!important}
+.partnerGrid{gap:10px!important}
+.partnerCard{min-height:190px!important;padding:15px!important}
+.partnerCard p{font-size:11px!important;line-height:1.4!important}
+.partnerButton{min-height:42px!important}
+.disclosure{margin-top:16px!important}
+@media(max-width:700px){
+  .topbar{height:60px!important}
+  .categoryHero{padding-top:24px!important;padding-bottom:26px!important}
+  .categoryHero h1{font-size:34px!important}
+  .categoryHeroActions{display:flex!important;align-items:center}
+  .categoryHeroActions .primary{width:auto!important}
+  .categoryHeroActions .secondaryLight{width:auto!important}
+  .gatewayPathsSimple{grid-template-columns:1fr!important}
+  .gatewayPathsSimple .gatewayPath:not(.gatewayDirect){min-width:0}
+}
