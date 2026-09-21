@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "check": "node scripts/check-site.mjs"
+    "check": "node scripts/check-site.mjs",
+    "check:export": "node scripts/check-export.mjs"
   },
   "dependencies": {
     "lucide-react": "^0.469.0",
