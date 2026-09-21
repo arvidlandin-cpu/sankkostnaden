@@ -100,7 +100,7 @@ export default function HomeHero() {
     <section className={styles.shell} aria-label='Hitta rätt jämförelse'>
       <div className={styles.media} aria-hidden='true'>
         <img
-          src='https://images.pexels.com/photos/6337116/pexels-photo-6337116.jpeg?auto=compress&cs=tinysrgb&w=2200'
+          src='https://images.pexels.com/photos/8188697/pexels-photo-8188697.jpeg?auto=compress&cs=tinysrgb&w=2200'
           alt=''
           loading='eager'
           fetchPriority='high'
@@ -115,11 +115,13 @@ export default function HomeHero() {
           <h1>Sänk din<br />månadskostnad.<br /><em>Inte din vardag.</em></h1>
           <p>Bredband, el, mobil, försäkring och lån.<br />Två snabba val leder dig till rätt jämförelse.</p>
           <div className={styles.copyTrust}>
-            <span>Enkelt att börja</span>
-            <span>Du väljer själv</span>
-            <span>Inga kontaktuppgifter</span>
+            <span>Hundratals leverantörer</span>
+            <span>Opartiska guider</span>
+            <span>Alltid kostnadsfritt</span>
           </div>
         </div>
+
+        <div className={styles.heroNote}>Mer pengar<br/>till det som<br/>är viktigt <b>↙</b></div>
 
         <div className={styles.selector}>
           <div className={styles.progressRow}>
