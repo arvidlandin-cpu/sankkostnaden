@@ -3,3 +3,8 @@
 /bredband/hur-snabbt-bredband-behover-du /bredband/vilken-hastighet-behover-jag/ 301
 /mobil/hur-mycket-surf-behover-du/ /mobil/hur-mycket-surf-behover-jag/ 301
 /mobil/hur-mycket-surf-behover-du /mobil/hur-mycket-surf-behover-jag/ 301
+
+# Consolidate no-trailing-slash variants observed in Google Search Console.
+/bredband/mobilt-bredband /bredband/mobilt-bredband/ 301
+/forsakring/hemforsakring-bostadsratt /forsakring/hemforsakring-bostadsratt/ 301
+/mobil/5g-abonnemang /mobil/5g-abonnemang/ 301
