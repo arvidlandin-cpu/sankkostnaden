@@ -54,7 +54,7 @@ export default function HomeHero(){
     <div className={styles.overlay}/>
     <div className={styles.inner}>
       <div className={styles.copy}>
-        <div className={styles.badge}><span/> Gratis · ingen inloggning · tydliga partnerlänkar</div>
+        <div className={styles.badge}><span/> Gratis · ingen inloggning</div>
         <h1>Sänk din<br/>månadskostnad.<br/><em>Inte din vardag.</em></h1>
         <p>Välj kostnaden du vill sänka. Två snabba val leder dig vidare.</p>
       </div>
@@ -71,7 +71,7 @@ export default function HomeHero(){
               </button>;
             })}
           </div>
-          <p className={styles.cardHint}>Välj ett område.</p>
+          
         </> : <>
           <button className={styles.back} type='button' onClick={()=>setArea(null)}><ArrowLeft size={14}/> Byt område</button>
           <div className={styles.areaChip}>{(()=>{const Icon=selected!.icon;return <Icon size={18}/>})()} {selected!.label}</div>
@@ -81,7 +81,7 @@ export default function HomeHero(){
               <div><strong>{choice.label}</strong><small>{choice.sub}</small></div><ArrowRight size={17}/>
             </a>)}
           </div>
-          <p className={styles.cardHint}>Ingen inloggning eller formulär.</p>
+          
         </>}
       </div>
     </div>
