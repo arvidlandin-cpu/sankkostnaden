@@ -2,8 +2,6 @@ import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import {
   ArrowRight,
-  BadgeCheck,
-  Check,
   ChevronRight,
   PiggyBank,
   CircleDollarSign,
@@ -13,7 +11,7 @@ import {
   Zap,
 } from 'lucide-react';
 import styles from '../styles/Home.module.css';
-import SavingsNavigator from '../components/SavingsNavigator';
+import HomeHero from '../components/HomeHero';
 
 const categories = [
   { icon: Wifi, title: 'Bredband', text: 'Börja med vad som finns på adressen och jämför sedan pris, hastighet och bindningstid.', label: 'Börja med adressen', href: '/bredband/bredband-pa-min-adress/' },
@@ -70,6 +68,7 @@ export default function Home() {
         <title>Sänk din månadskostnad – jämför el, bredband, mobil, försäkring & lån | Sänk Kostnaden</title>
         <meta name='description' content='Sänk din månadskostnad genom att se över fasta kostnader. Jämför bredband, elavtal, mobilabonnemang, försäkring och lånekostnader med guider och gratis verktyg.' />
         <link rel='canonical' href='https://sankkostnaden.se/' />
+        <link rel='preconnect' href='https://images.pexels.com' crossOrigin='' />
         <meta property='og:title' content='Sänk Kostnaden – hitta onödiga fasta utgifter' />
         <meta property='og:description' content='Gratis guider och verktyg för att jämföra hushållets återkommande kostnader.' />
         <meta property='og:type' content='website' />
@@ -95,31 +94,7 @@ export default function Home() {
       </header>
 
       <main>
-        <section className={styles.hero}>
-          <div className={styles.heroGlow} />
-          <div className={styles.heroGrid}>
-            <div>
-              <div className={styles.eyebrow}><BadgeCheck size={16} /> Gratis guider · tydliga partnerlänkar · jämför fasta kostnader</div>
-              <h1>Sänk din<br /><span>månadskostnad.</span></h1>
-              <p className={styles.lead}>Se över hushållets fasta kostnader och välj vad du vill betala mindre för. Vi tar dig direkt till rätt jämförelse.</p><div className={styles.heroCtaRow}><a className={styles.heroCta} href='/app/'>Gör Kostnadskollen gratis <ArrowRight size={16} /></a></div>
-              <div className={styles.quickChoices}>
-                <a href='/elavtal/jamfor-elavtal/'><Zap size={20} /><span><strong>El</strong><small>Jämför elavtal</small></span><ArrowRight size={17} /></a>
-                <a href='/bredband/bredband-pa-min-adress/'><Wifi size={20} /><span><strong>Bredband</strong><small>Se vad som finns på adressen</small></span><ArrowRight size={17} /></a>
-                <a href='/mobil/billigaste-mobilabonnemanget/'><Smartphone size={20} /><span><strong>Mobil</strong><small>Hitta billigare abonnemang</small></span><ArrowRight size={17} /></a>
-                <a href='/forsakring/jamfor-forsakring/'><ShieldCheck size={20} /><span><strong>Försäkring</strong><small>Jämför pris och skydd</small></span><ArrowRight size={17} /></a>
-                <a href='/ekonomi/'><CircleDollarSign size={20} /><span><strong>Lån & ekonomi</strong><small>Jämför total lånekostnad</small></span><ArrowRight size={17} /></a>
-              </div>
-              <div className={styles.trust}>
-                <span><Check size={15} /> Ingen inloggning</span>
-                <span><Check size={15} /> Kommersiella länkar märks tydligt</span>
-              </div>
-            </div>
-
-
-          </div>
-        </section>
-
-        <section className={styles.section} style={{paddingTop:54,paddingBottom:46}}><SavingsNavigator /></section>
+        <HomeHero />
 
         <section className={styles.section} id='jamfor'>
           <div className={styles.sectionHead}>
