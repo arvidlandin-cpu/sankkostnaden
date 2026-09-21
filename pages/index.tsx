@@ -4,14 +4,6 @@ import { ArrowRight, PiggyBank } from 'lucide-react';
 import styles from '../styles/Home.module.css';
 import HomeHero from '../components/HomeHero';
 
-const categories=[
-  {title:'Bredband',subtitle:'Pris, fart & adress',href:'/bredband/bredband-pa-min-adress/',image:'/design/card-bredband.webp'},
-  {title:'El',subtitle:'Avtal & elpriser',href:'/elavtal/jamfor-elavtal/',image:'/design/card-el.webp'},
-  {title:'Mobil',subtitle:'Surf & abonnemang',href:'/mobil/billigaste-mobilabonnemanget/',image:'/design/card-mobil.webp'},
-  {title:'Försäkring',subtitle:'Djur, hem & person',href:'/forsakring/jamfor-forsakring/',image:'/design/card-forsakring.webp'},
-  {title:'Lån & ekonomi',subtitle:'Ränta & totalkostnad',href:'/ekonomi/',image:'/design/card-ekonomi.webp'},
-];
-
 const guideGroups=[
   {title:'Snabbhjälp',links:[
     ['/bredband/vilken-hastighet-behover-jag/','Vilken bredbandsfart behöver du?'],
@@ -80,18 +72,6 @@ export default function Home(){
 
     <main>
       <HomeHero/>
-
-      <section className={`${styles.section} ${styles.popularSection}`} id='jamfor'>
-        <div className={styles.popularHeader}>
-          <div><p>POPULÄRA JÄMFÖRELSER</p><h2>Börja med en kostnad.</h2><span>Välj området du vill se över först. Du kan alltid byta senare.</span></div>
-        </div>
-        <div className={styles.popularGrid}>
-          {categories.map(({title,subtitle,href,image})=><a className={styles.popularCard} href={href} key={title}>
-            <img className={styles.popularImageExact} src={image} alt='' loading='lazy'/>
-            <div className={styles.popularBody}><small>{subtitle}</small><ArrowRight size={17}/></div>
-          </a>)}
-        </div>
-      </section>
 
       <section className={styles.guideLibrarySection}>
         <details className={styles.guideLibrary}>
