@@ -275,3 +275,119 @@
     grid-template-columns: 1fr;
   }
 }
+
+
+/* Premium continuation theme */
+.topbar{
+  width:100%;
+  min-height:72px;
+  padding-left:max(28px,calc((100vw - 1180px)/2));
+  padding-right:max(28px,calc((100vw - 1180px)/2));
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:28px;
+  background:#fff;
+  border-bottom:1px solid #edf0eb;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  color:#17201b;
+  text-decoration:none;
+}
+.brand>span{
+  width:38px;
+  height:38px;
+  display:grid;
+  place-items:center;
+  border-radius:12px;
+  background:#dff46a;
+  box-shadow:0 7px 20px rgba(80,98,55,.12);
+}
+.brand strong{
+  font-size:15px;
+  letter-spacing:-.02em;
+}
+.topbar nav{
+  display:flex;
+  gap:26px;
+}
+.topbar nav a{
+  color:#4b574f;
+  text-decoration:none;
+  font-size:14px;
+  font-weight:750;
+}
+.shell{
+  max-width:1180px;
+  padding-top:34px;
+}
+.hero{
+  max-width:none;
+  margin-bottom:28px;
+  padding:42px 44px 38px;
+  border-radius:28px;
+  background:
+    radial-gradient(circle at 86% 10%,rgba(223,244,106,.14),transparent 30%),
+    linear-gradient(135deg,#18231d,#213029);
+  color:#fff;
+  box-shadow:0 22px 64px rgba(25,38,29,.12);
+}
+.hero>span{
+  color:#dff46a;
+}
+.hero h1{
+  max-width:850px;
+  color:#fff;
+  font-size:clamp(46px,6vw,70px);
+}
+.hero p{
+  color:#d6e0d8;
+}
+.progress{
+  background:#ffffff18;
+}
+.progress i{
+  background:#dff46a;
+}
+.hero small{
+  color:#aebbb1;
+}
+.question{
+  border-radius:22px;
+  border-color:#e1e6df;
+  box-shadow:0 10px 34px rgba(35,51,39,.05);
+}
+.options button{
+  transition:transform .16s ease,border-color .16s ease,background .16s ease;
+}
+.options button:hover{
+  transform:translateY(-1px);
+}
+.result{
+  border-radius:24px;
+  background:
+    radial-gradient(circle at 100% 0%,rgba(223,244,106,.09),transparent 30%),
+    #17201b;
+  box-shadow:0 26px 68px rgba(23,32,27,.18);
+}
+.result>a{
+  background:linear-gradient(135deg,#dff46a,#c7eb44);
+  box-shadow:0 10px 24px rgba(180,211,62,.16);
+}
+@media(max-width:850px){
+  .topbar nav{display:none}
+}
+@media(max-width:560px){
+  .topbar{
+    min-height:66px;
+    padding-left:18px;
+    padding-right:18px;
+  }
+  .hero{
+    padding:28px 22px 26px;
+    border-radius:22px;
+  }
+}
