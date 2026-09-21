@@ -1740,3 +1740,36 @@ footer{
   line-height:1;
   font-weight:850;
 }
+
+
+/* Compact content hierarchy 2026-09-21: keep SEO depth without forcing scroll */
+.categoryArticle{margin-top:24px!important;padding-top:30px!important;padding-bottom:34px!important}
+.categoryIntro>p:not(.kicker){max-width:780px}
+.categoryIntro .compactChecks{margin-top:18px!important}
+.categoryGuideCompact{margin-top:22px!important}
+.categoryMorePrimary{margin-top:0!important;background:#f8faf6}
+.categoryMorePrimary summary{min-height:48px}
+.decisionGatewaySimple{margin-bottom:18px!important;padding:22px!important}
+.gatewayPathsSimple .gatewayPath{min-height:94px!important;padding-top:14px!important;padding-bottom:14px!important}
+.article>.checkList{margin-top:16px!important;margin-bottom:18px!important}
+.compactLearn{margin:14px 0;border:1px solid #e0e5df;border-radius:14px;background:#f8faf6;overflow:hidden}
+.compactLearn summary{min-height:48px;padding:0 16px;display:flex;align-items:center;justify-content:space-between;color:#17201b;font-size:12px;font-weight:850;cursor:pointer;list-style:none}
+.compactLearn summary::-webkit-details-marker{display:none}
+.compactLearn summary:after{content:'+';color:#718078;font-size:18px;font-weight:600}
+.compactLearn[open] summary{border-bottom:1px solid #e2e7df}
+.compactLearn[open] summary:after{content:'−'}
+.compactLearnBody{padding:16px 18px 18px;color:#657169}
+.compactLearnBody>h2,.compactLearnBody>section:first-child h2{margin-top:0!important}
+.compactLearnBody section{margin:0!important;padding:0!important}
+.compactLearnBody section+section{margin-top:18px!important;padding-top:18px!important;border-top:1px solid #e4e8e2}
+.compactLearnBody h2{font-size:20px!important;line-height:1.15!important}
+.compactLearnBody p{font-size:13px!important;line-height:1.55!important}
+.compactRelated{margin-top:20px}
+.relatedGuidesCompact{margin:0!important;padding:14px 16px!important;display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px 18px}
+.relatedGuidesCompact a{font-size:11px!important}
+.partnerSection{margin-top:24px!important}
+.partnerIntro{margin-bottom:16px!important}
+.mobileMatcher{margin-bottom:24px!important;padding:24px!important}
+.matchQuestions{margin-top:18px!important}
+.matchPartnerGrid{margin-top:12px!important}
+@media(max-width:650px){.categoryArticle{margin-top:14px!important;padding-top:22px!important;padding-bottom:28px!important}.decisionGatewaySimple{padding:17px!important}.gatewayPathsSimple .gatewayPath{min-height:82px!important}.relatedGuidesCompact{grid-template-columns:1fr}.compactLearnBody{padding:14px}.mobileMatcher{padding:18px 14px!important}}
