@@ -1773,3 +1773,49 @@ footer{
 .matchQuestions{margin-top:18px!important}
 .matchPartnerGrid{margin-top:12px!important}
 @media(max-width:650px){.categoryArticle{margin-top:14px!important;padding-top:22px!important;padding-bottom:28px!important}.decisionGatewaySimple{padding:17px!important}.gatewayPathsSimple .gatewayPath{min-height:82px!important}.relatedGuidesCompact{grid-template-columns:1fr}.compactLearnBody{padding:14px}.mobileMatcher{padding:18px 14px!important}}
+
+
+/* Ultra-compact journey 2026-09-22: fewer simultaneous choices, less scrolling */
+.categoryHero{min-height:340px!important;padding-top:38px!important;padding-bottom:42px!important}
+.categoryHeroIcon{width:40px;height:40px;margin:14px 0 10px;border-radius:12px}
+.categoryHero h1{margin:7px 0 12px!important;font-size:clamp(40px,4.7vw,58px)!important}
+.categoryHero .lead{font-size:16px!important;line-height:1.5!important}
+.categoryHeroActions{margin-top:18px}
+.categoryHero .fine{display:none}
+.categoryArticle{margin-top:16px!important;padding-top:20px!important}
+.categoryBasics{margin:0 0 16px!important}
+.categoryBasics .compactLearnBody h2{font-size:18px!important}
+.categoryBasics .compactChecks{margin-top:12px!important}
+.categoryArticle .partnerSection{margin-top:18px!important;margin-bottom:22px!important}
+
+.decisionGatewaySimple{padding:18px!important}
+.decisionGatewaySimple .gatewayHead{margin-bottom:12px!important}
+.decisionGatewaySimple .gatewayHead>span{font-size:9px!important}
+.decisionGatewaySimple .gatewayHead h2{margin:4px 0 3px!important;font-size:24px!important}
+.decisionGatewaySimple .gatewayHead p{margin:0!important;font-size:12px!important;line-height:1.4!important}
+.gatewayPathsSimple{gap:9px!important}
+.gatewayPathsSimple .gatewayPath{min-height:76px!important;padding:11px 12px!important}
+.gatewayPathsSimple .gatewayIcon{width:34px!important;height:34px!important}
+.gatewayPathsSimple .gatewayPath small{font-size:8px!important}
+.gatewayPathsSimple .gatewayPath strong{font-size:13px!important}
+.gatewayPathsSimple .gatewayPath p{display:none!important}
+.gatewayPathsSimple .gatewayPath>svg{width:16px!important;height:16px!important}
+.gatewayFine{margin-top:9px!important;font-size:9px!important}
+.compactChecklist{margin-top:10px!important}
+.compactChecklist .compactLearnBody{padding:10px 14px!important}
+.compactChecklist .checkList{margin:0!important}
+.compactChecklist .checkList p{min-height:36px!important;padding-top:8px!important;padding-bottom:8px!important;font-size:11px!important}
+.compactLearn{margin:10px 0!important}
+.compactLearn summary{min-height:44px!important}
+.partnerSection{margin-top:18px!important}
+.partnerIntro h2{margin-top:3px!important;font-size:28px!important}
+.partnerIntro>p:last-child{font-size:12px!important;line-height:1.45!important}
+
+@media(max-width:650px){
+  .categoryHero{padding-top:28px!important;padding-bottom:32px!important}
+  .categoryHero h1{font-size:36px!important}
+  .categoryHeroActions{gap:8px}
+  .categoryHeroActions .primary,.categoryHeroActions .secondaryLight{min-height:44px}
+  .decisionGatewaySimple{padding:14px!important}
+  .gatewayPathsSimple .gatewayPath{min-height:70px!important}
+}
