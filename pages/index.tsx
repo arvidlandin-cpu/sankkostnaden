@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import { useEffect, useState } from 'react';
 import {
   ArrowRight,
   BadgeCheck,
@@ -51,6 +52,17 @@ const schema = {
   description: 'En samlad startpunkt för att sänka hushållets återkommande kostnader. Jämför el, bredband, mobil, försäkring och privatekonomi på samma ställe.',
 };
 
+function ProtectedEmailLink() {
+  const [href, setHref] = useState<string | undefined>();
+
+  useEffect(() => {
+    const encoded = 'a29udGFrdEBzYW5ra29zdG5hZGVuLnNl';
+    setHref(`mailto:${window.atob(encoded)}`);
+  }, []);
+
+  return <a href={href ?? '#'} onClick={(event) => { if (!href) event.preventDefault(); }}>Kontakta oss</a>;
+}
+
 export default function Home() {
   return (
     <>
@@ -89,7 +101,7 @@ export default function Home() {
             <div>
               <div className={styles.eyebrow}><BadgeCheck size={16} /> Gratis guider · tydliga partnerlänkar · jämför fasta kostnader</div>
               <h1>Sänk din<br /><span>månadskostnad.</span></h1>
-              <p className={styles.lead}>Se över hushållets fasta kostnader och välj vad du vill betala mindre för. Vi tar dig direkt till rätt jämförelse.</p><p><a className={styles.navCta} href='/app/'>Gör Kostnadskollen gratis <ArrowRight size={16} /></a></p>
+              <p className={styles.lead}>Se över hushållets fasta kostnader och välj vad du vill betala mindre för. Vi tar dig direkt till rätt jämförelse.</p><div className={styles.heroCtaRow}><a className={styles.heroCta} href='/app/'>Gör Kostnadskollen gratis <ArrowRight size={16} /></a></div>
               <div className={styles.quickChoices}>
                 <a href='/elavtal/jamfor-elavtal/'><Zap size={20} /><span><strong>El</strong><small>Jämför elavtal</small></span><ArrowRight size={17} /></a>
                 <a href='/bredband/bredband-pa-min-adress/'><Wifi size={20} /><span><strong>Bredband</strong><small>Se vad som finns på adressen</small></span><ArrowRight size={17} /></a>
@@ -203,7 +215,7 @@ export default function Home() {
 
       <footer className={styles.footer}>
         <div><a className={styles.brand} href='/'><span className={styles.brandMark}><PiggyBank size={19} /></span><span>Sänk Kostnaden</span></a><p>Praktiska guider för lägre hushållskostnader.</p></div>
-        <div><a href='/sa-jamfor-vi/'>Så jämför vi</a><a href='/affiliate/'>Affiliateinformation</a><a href='/cookies/'>Cookiepolicy</a><a href='/integritet/'>Integritet</a><a href='/om/'>Om oss</a><a href='mailto:kontakt@sankkostnaden.se'>kontakt@sankkostnaden.se</a></div>
+        <div><a href='/sa-jamfor-vi/'>Så jämför vi</a><a href='/affiliate/'>Affiliateinformation</a><a href='/cookies/'>Cookiepolicy</a><a href='/integritet/'>Integritet</a><a href='/om/'>Om oss</a><ProtectedEmailLink /></div>
         <p>© 2026 Sänk Kostnaden. Informationen är generell och utgör inte individuell finansiell rådgivning.</p>
       </footer>
     </>
