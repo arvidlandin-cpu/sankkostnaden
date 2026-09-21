@@ -40,8 +40,8 @@ const areas:Record<AreaKey,Area>={
     {label:'Kontrollera ditt skydd',sub:'3 frågor innan du jämför pris',href:'/forsakring/hemforsakring-skyddskoll/'},
   ]},
   ekonomi:{label:'Lån & ekonomi',icon:CircleDollarSign,choices:[
-    {label:'Jämför privatlån',sub:'Effektiv ränta och total kostnad',href:'/ekonomi/#jamfor-lan'},
-    {label:'Se om samlingslån passar',sub:'Jämför total kostnad, inte bara månad',href:'/ekonomi/#samlingslan'},
+    {label:'Jämför privatlån',sub:'Effektiv ränta och total kostnad',href:'/ekonomi/jamfor-privatlan/'},
+    {label:'Se om samlingslån passar',sub:'Jämför total kostnad, inte bara månad',href:'/ekonomi/samlingslan/'},
     {label:'Få bättre ekonomisk överblick',sub:'Börja med hushållets återkommande kostnader',href:'/verktyg/hushallskostnadskollen/'},
   ]},
 };
