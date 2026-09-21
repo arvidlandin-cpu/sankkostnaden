@@ -84,9 +84,10 @@ export default function IntentGuide({ title, description, kicker, canonical, cat
         </section>
         <article className='article guideWrap'>
           <DecisionGateway category={category} intent={intent} currentPath={new URL(canonical).pathname} />
-          <div className='checkList'>
-            {bullets.map(item => <p key={item}><Check size={17} /> {item}</p>)}
-          </div>
+          {bullets.length>0&&<details className='compactLearn compactChecklist'>
+            <summary>Snabb checklista</summary>
+            <div className='compactLearnBody'><div className='checkList'>{bullets.map(item => <p key={item}><Check size={17} /> {item}</p>)}</div></div>
+          </details>}
           {(category === 'el' || category === 'mobil') && <details className='compactLearn'>
             <summary>Vad ska jag jämföra?</summary>
             {category === 'el'
