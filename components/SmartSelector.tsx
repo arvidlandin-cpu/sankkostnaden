@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
-import { ArrowRight, Check, RotateCcw, Sparkles } from 'lucide-react';
+import { ArrowRight, Check, PiggyBank, RotateCcw, Sparkles } from 'lucide-react';
 import styles from '../styles/SmartSelector.module.css';
 
 export type SelectorOption = { label: string; points: number };
@@ -32,7 +32,12 @@ export default function SmartSelector({ eyebrow, title, intro, questions, result
   const reset = () => setAnswers(Array(questions.length).fill(-1));
 
   return (
-    <main className={styles.shell}>
+    <>
+      <header className={styles.topbar}>
+        <Link className={styles.brand} href='/'><span><PiggyBank size={20} /></span><strong>Sänk Kostnaden</strong></Link>
+        <nav><Link href='/bredband/'>Bredband</Link><Link href='/elavtal/'>El</Link><Link href='/mobil/'>Mobil</Link><Link href='/forsakring/'>Försäkring</Link><Link href='/ekonomi/'>Ekonomi</Link></nav>
+      </header>
+      <main className={styles.shell}>
       <Link className={styles.back} href={backHref}>← {backLabel}</Link>
       <section className={styles.hero}>
         <span><Sparkles size={15} /> {eyebrow}</span>
@@ -68,6 +73,7 @@ export default function SmartSelector({ eyebrow, title, intro, questions, result
           <small>{disclaimer}</small>
         </aside>
       </section>
-    </main>
+      </main>
+    </>
   );
 }
