@@ -12,7 +12,7 @@ export default function Mobil(){
     lead='Börja med faktisk surfmängd och rätt nät. Jämför sedan kampanjpris, ordinarie pris och villkor över ett helt år.'
     icon={Smartphone}
     compareHref='/mobil/billigaste-mobilabonnemanget/'
-    compareLabel='Jämför mobilabonnemang'
+    compareLabel='Hitta relevanta abonnemang'
     helpHref='/mobil/hur-mycket-surf-behover-jag/'
     helpLabel='Hjälp mig välja surf'
     partnerHeading='Aktuella mobilalternativ'
