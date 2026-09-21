@@ -14,7 +14,7 @@
   width:100%;
   height:100%;
   object-fit:cover;
-  object-position:center 42%;
+  object-position:center 44%;
   transform:scale(1.01);
 }
 .shade{
@@ -447,7 +447,7 @@
   background:#d9d7ce;
 }
 .media{
-  inset:0 38% 108px 0;
+  inset:0 0 108px 0;
   overflow:hidden;
   background:#1b211c;
 }
@@ -456,7 +456,7 @@
   position:absolute;
   inset:0;
   background:
-    linear-gradient(90deg,rgba(12,18,14,.70) 0%,rgba(12,18,14,.56) 32%,rgba(12,18,14,.14) 72%,rgba(12,18,14,.02) 100%);
+    linear-gradient(90deg,rgba(12,18,14,.72) 0%,rgba(12,18,14,.58) 30%,rgba(12,18,14,.20) 58%,rgba(12,18,14,.04) 82%,rgba(12,18,14,.02) 100%);
 }
 .media img{
   width:100%;
