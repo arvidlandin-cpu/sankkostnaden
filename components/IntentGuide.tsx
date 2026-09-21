@@ -74,7 +74,7 @@ export default function IntentGuide({ title, description, kicker, canonical, cat
         <nav><Link href='/bredband/'>Bredband</Link><Link href='/elavtal/'>El</Link><Link href='/mobil/'>Mobil</Link><Link href='/forsakring/'>Försäkring</Link><Link href='/ekonomi/'>Ekonomi</Link></nav>
       </header>
       <main>
-        <section className='guideHero'>
+        <section className={`guideHero guideHero-${category}`}>
           <div className='guideWrap'>
             <nav className='breadcrumbs' aria-label='Brödsmulor'><Link href='/'>Start</Link><span>›</span><Link href={categoryPath}>{categoryLabel}</Link><span>›</span><span aria-current='page'>{kicker}</span></nav>
             <Link className='back' href={categoryPath}><ArrowLeft size={16} /> Till {categoryLabel.toLowerCase()}</Link>
