@@ -919,3 +919,15 @@
     padding-right:max(34px,calc((100vw - 1500px)/2));
   }
 }
+
+
+/* Compact journey: less scrolling and fewer competing actions */
+.popularSection{padding-top:40px!important;padding-bottom:42px!important}
+.popularGrid{margin-top:22px!important}
+.guideLibrarySection{padding-top:0!important;padding-bottom:34px!important}
+.trustBand{width:min(1180px,calc(100% - 56px));margin:0 auto 34px;padding:18px 20px;display:flex;align-items:center;justify-content:space-between;gap:24px;border:1px solid #e1e6df;border-radius:16px;background:#f8faf6}
+.trustBand>div{display:grid;gap:3px}.trustBand strong{font-size:13px;color:#17201b}.trustBand span{font-size:11px;color:#6b776f;line-height:1.35}.trustBand>a{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;color:#17201b;text-decoration:none;font-size:11px;font-weight:850}
+.guideLibrary summary{min-height:52px}
+.guideGroups{padding:18px;gap:20px}
+.footer{padding-top:34px;padding-bottom:42px}
+@media(max-width:760px){.popularSection{padding-top:34px!important;padding-bottom:36px!important}.guideLibrarySection{padding-bottom:24px}.trustBand{width:calc(100% - 36px);margin-bottom:24px;padding:15px 16px;align-items:flex-start;flex-direction:column;gap:10px}.guideGroups{grid-template-columns:1fr}.footer{padding-top:30px;padding-bottom:34px}}
