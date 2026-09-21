@@ -491,3 +491,187 @@
   }
   .popularImage{height:132px}
 }
+
+
+/* Exact approved desktop mockup pass */
+.nav{
+  position:relative!important;
+  top:auto!important;
+  width:100%;
+  max-width:none!important;
+  height:60px!important;
+  margin:0!important;
+  padding-left:max(24px,calc((100vw - 1316px)/2))!important;
+  padding-right:max(24px,calc((100vw - 1316px)/2))!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:32px!important;
+  background:#fff!important;
+  border:0!important;
+  box-shadow:none!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+}
+.brand{
+  gap:10px!important;
+  font-size:16px!important;
+  font-weight:850!important;
+  letter-spacing:-.025em!important;
+}
+.nav .brandMark{
+  width:43px!important;
+  height:43px!important;
+  border-radius:12px!important;
+  background:#dff46a!important;
+  box-shadow:none!important;
+}
+.nav nav{
+  display:flex!important;
+  gap:34px!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+}
+.nav nav a{
+  color:#17201b!important;
+  font-size:13px!important;
+  font-weight:750!important;
+}
+.navCta{
+  min-height:43px!important;
+  padding:0 19px!important;
+  border-radius:999px!important;
+  background:#17201b!important;
+  color:#fff!important;
+  font-size:12px!important;
+  font-weight:850!important;
+  box-shadow:none!important;
+}
+
+.popularSection{
+  width:100%!important;
+  max-width:none!important;
+  margin:0!important;
+  padding:48px max(24px,calc((100vw - 1316px)/2)) 72px!important;
+  background:#fff!important;
+}
+.popularHeader{
+  width:100%!important;
+  max-width:1316px!important;
+  margin:0 auto!important;
+  display:flex!important;
+  align-items:flex-end!important;
+  justify-content:space-between!important;
+  gap:32px!important;
+}
+.popularHeader p{
+  margin:0 0 9px!important;
+  color:#718246!important;
+  font-size:10px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  letter-spacing:.14em!important;
+}
+.popularHeader h2{
+  margin:0!important;
+  color:#17201b!important;
+  font-size:36px!important;
+  line-height:1.02!important;
+  letter-spacing:-.045em!important;
+}
+.popularHeader span{
+  margin-top:8px!important;
+  color:#69746d!important;
+  font-size:14px!important;
+}
+.popularHeader>a{
+  min-height:45px!important;
+  padding:0 20px!important;
+  border:1px solid #d9dfd8!important;
+  border-radius:999px!important;
+  background:#fff!important;
+  color:#17201b!important;
+  font-size:12px!important;
+  font-weight:850!important;
+  box-shadow:none!important;
+}
+.popularGrid{
+  width:100%!important;
+  max-width:1316px!important;
+  margin:28px auto 0!important;
+  display:grid!important;
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  gap:16px!important;
+}
+.popularCard{
+  overflow:hidden!important;
+  border:1px solid #dfe4dd!important;
+  border-radius:17px!important;
+  background:#fff!important;
+  box-shadow:0 7px 22px rgba(28,42,31,.045)!important;
+  transform:none!important;
+}
+.popularCard:hover{
+  transform:translateY(-2px)!important;
+  border-color:#cdd6cb!important;
+  box-shadow:0 14px 32px rgba(28,42,31,.08)!important;
+}
+.popularImageExact{
+  display:block!important;
+  width:100%!important;
+  aspect-ratio:2.47/1!important;
+  object-fit:cover!important;
+}
+.popularBody{
+  min-height:55px!important;
+  padding:9px 15px 11px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:10px!important;
+}
+.popularBody small{
+  color:#737e76!important;
+  font-size:11px!important;
+  line-height:1.2!important;
+}
+.popularBody svg{
+  flex:0 0 auto!important;
+  color:#17201b!important;
+}
+
+@media(min-width:761px){
+  .popularImage,.popularImage>span{display:none!important}
+}
+@media(max-width:900px){
+  .nav nav{display:none!important}
+}
+@media(max-width:760px){
+  .nav{
+    height:66px!important;
+    padding:0 18px!important;
+  }
+  .nav .brandMark{width:38px!important;height:38px!important}
+  .brand{font-size:14px!important}
+  .navCta{min-height:38px!important;padding:0 13px!important;font-size:10px!important}
+  .popularSection{
+    padding:42px 18px 52px!important;
+  }
+  .popularHeader{
+    align-items:flex-start!important;
+    flex-direction:column!important;
+    gap:20px!important;
+  }
+  .popularHeader h2{font-size:32px!important}
+  .popularGrid{
+    display:flex!important;
+    overflow-x:auto!important;
+    scroll-snap-type:x mandatory!important;
+    gap:12px!important;
+    padding-bottom:4px!important;
+  }
+  .popularCard{
+    flex:0 0 78%!important;
+    scroll-snap-align:start!important;
+  }
+}
