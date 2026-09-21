@@ -89,7 +89,7 @@ export default function Home() {
             <div>
               <div className={styles.eyebrow}><BadgeCheck size={16} /> Gratis guider · tydliga partnerlänkar · jämför fasta kostnader</div>
               <h1>Sänk din<br /><span>månadskostnad.</span></h1>
-              <p className={styles.lead}>Se över hushållets fasta kostnader och välj vad du vill betala mindre för. Vi tar dig direkt till rätt jämförelse.</p>
+              <p className={styles.lead}>Se över hushållets fasta kostnader och välj vad du vill betala mindre för. Vi tar dig direkt till rätt jämförelse.</p><p><a className={styles.navCta} href='/app/'>Gör Kostnadskollen gratis <ArrowRight size={16} /></a></p>
               <div className={styles.quickChoices}>
                 <a href='/elavtal/jamfor-elavtal/'><Zap size={20} /><span><strong>El</strong><small>Jämför elavtal</small></span><ArrowRight size={17} /></a>
                 <a href='/bredband/bredband-pa-min-adress/'><Wifi size={20} /><span><strong>Bredband</strong><small>Se vad som finns på adressen</small></span><ArrowRight size={17} /></a>
