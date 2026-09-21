@@ -143,6 +143,7 @@ export default function SavingsApp() {
       <header className='topbar'>
         <Link className='brand' href='/'><span className='brandMark'><PiggyBank size={22} /></span><span>Sänk Kostnaden</span></Link>
         <nav><Link href='/bredband/'>Bredband</Link><Link href='/elavtal/'>El</Link><Link href='/mobil/'>Mobil</Link><Link href='/forsakring/'>Försäkring</Link><Link href='/ekonomi/'>Ekonomi</Link></nav>
+        <Link className='topbarCta' href='/#jamfor'>Jämför priser →</Link>
       </header>
 
       <main className={styles.appShell}>
