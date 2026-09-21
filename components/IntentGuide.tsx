@@ -87,14 +87,21 @@ export default function IntentGuide({ title, description, kicker, canonical, cat
           <div className='checkList'>
             {bullets.map(item => <p key={item}><Check size={17} /> {item}</p>)}
           </div>
-          {category === 'el' && <aside className='decisionPanel decisionPanelLower' aria-label='Sänk Kostnaden-kontrollen'><div><p className='partnerEyebrow'>SÄNK KOSTNADEN-KONTROLLEN</p><h2>Jämför hela kostnaden – inte bara öre/kWh</h2><p>Kontrollera pris/påslag, fast avgift, rabattens längd, ordinarie villkor samt bindnings- och uppsägningstid. Använd samma årsförbrukning för alla alternativ.</p></div><div className='decisionMetrics'><span><b>1</b> Årsförbrukning</span><span><b>2</b> Rörlig kostnad</span><span><b>3</b> Fasta avgifter</span><span><b>4</b> Villkor efter rabatt</span></div></aside>}
-          {category === 'mobil' && <aside className='decisionPanel decisionPanelLower' aria-label='Sänk Kostnaden-kontrollen för mobil'><div><p className='partnerEyebrow'>SÄNK KOSTNADEN-KONTROLLEN</p><h2>Jämför abonnemanget du faktiskt kommer använda</h2><p>Utgå från rätt surfmängd och nät. Räkna sedan kampanjperiod och ordinarie pris tillsammans så att ett lågt introduktionspris inte döljer den verkliga kostnaden.</p></div><div className='decisionMetrics'><span><b>1</b> Surfmängd</span><span><b>2</b> Mobilnät</span><span><b>3</b> Första året</span><span><b>4</b> Bindning & villkor</span></div></aside>}
-          {sections.map(section => <section key={section.heading}><h2>{section.heading}</h2><p>{section.body}</p></section>)}
+          {(category === 'el' || category === 'mobil') && <details className='compactLearn'>
+            <summary>Vad ska jag jämföra?</summary>
+            {category === 'el'
+              ? <div className='compactLearnBody'><h2>Jämför hela kostnaden – inte bara öre/kWh</h2><p>Kontrollera pris/påslag, fast avgift, rabattens längd, ordinarie villkor samt bindnings- och uppsägningstid. Använd samma årsförbrukning för alla alternativ.</p></div>
+              : <div className='compactLearnBody'><h2>Jämför abonnemanget du faktiskt kommer använda</h2><p>Utgå från rätt surfmängd och nät. Räkna kampanjperiod och ordinarie pris tillsammans så att ett lågt introduktionspris inte döljer den verkliga kostnaden.</p></div>}
+          </details>}
+          {sections.length>0&&<details className='compactLearn'>
+            <summary>Läs guiden</summary>
+            <div className='compactLearnBody'>{sections.map(section => <section key={section.heading}><h2>{section.heading}</h2><p>{section.body}</p></section>)}</div>
+          </details>}
           {(intent === 'compare' || (category === 'forsakring' && (intent === 'home' || intent === 'pet')) || (category === 'ekonomi' && intent === 'loan')) ? <PartnerDirectory category={category} intent={intent} heading={compareHeadings[category]} /> : <PartnerOffers category={category} intent={intent} heading={offerHeading} />}
-          <div className='relatedGuides'>
-            <h2>Läs vidare</h2>
-            {related.map(item => <Link href={item.href} key={item.href}>{item.label} →</Link>)}
-          </div>
+          {related.length>0&&<details className='compactLearn compactRelated'>
+            <summary>Relaterade guider</summary>
+            <div className='relatedGuides relatedGuidesCompact'>{related.map(item => <Link href={item.href} key={item.href}>{item.label} →</Link>)}</div>
+          </details>}
           <p className='disclosure'>Informationen är generell. Kommersiella länkar markeras tydligt och urvalet behöver inte omfatta hela marknaden.</p>
         </article>
       </main>
