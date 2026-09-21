@@ -76,12 +76,6 @@ export default function CategoryLanding({
         </div>
       </section>
 
-      <section className='categorySteps' aria-label='Så fungerar det'>
-        <div><b>1</b><span><strong>Välj ditt behov</strong><small>Börja med det du faktiskt vill lösa.</small></span></div>
-        <div><b>2</b><span><strong>Jämför rätt saker</strong><small>Pris, villkor och nivå på samma grund.</small></span></div>
-        <div><b>3</b><span><strong>Gå vidare när du är redo</strong><small>Partnerlänkar märks tydligt.</small></span></div>
-      </section>
-
       <article className='article guideWrap categoryArticle'>
         <section className='categoryIntro'>
           <p className='kicker'>BÖRJA HÄR</p>
@@ -92,12 +86,13 @@ export default function CategoryLanding({
 
         {showPartners&&<PartnerDirectory category={category} intent={partnerIntent} heading={partnerHeading}/>} 
 
-        <section className='categoryGuideSection'>
-          <div className='categoryGuideHead'><div><p className='kicker'>GUIDER</p><h2>Vill du läsa först?</h2></div><p>Välj den guide som motsvarar din fråga. Du behöver inte läsa allt för att komma vidare.</p></div>
-          <div className='categoryGuideGrid'>
-            {guides.map(item=><Link href={item.href} key={item.href}><strong>{item.title}</strong><span>{item.text}</span><b>Läs guiden <ArrowRight size={15}/></b></Link>)}
-          </div>
-          {moreGuides.length>0&&<details className='categoryMore'><summary>Fler guider <ArrowRight size={15}/></summary><div>{moreGuides.map(item=><Link href={item.href} key={item.href}><span><strong>{item.title}</strong><small>{item.text}</small></span><ArrowRight size={14}/></Link>)}</div></details>}
+        <section className='categoryGuideSection categoryGuideCompact'>
+          <details className='categoryMore categoryMorePrimary'>
+            <summary>Guider och fördjupning <ArrowRight size={15}/></summary>
+            <div>
+              {[...guides,...moreGuides].map(item=><Link href={item.href} key={item.href}><span><strong>{item.title}</strong><small>{item.text}</small></span><ArrowRight size={14}/></Link>)}
+            </div>
+          </details>
         </section>
 
         <p className='disclosure'>Kommersiella länkar markeras tydligt. Urvalet behöver inte omfatta hela marknaden.</p>
