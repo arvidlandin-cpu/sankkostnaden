@@ -1,3 +1,4 @@
+import MobilePartnerMatcher from './MobilePartnerMatcher';
 import { ArrowUpRight, BadgeCheck } from 'lucide-react';
 import { getActivePartners, type PartnerCategory, type PartnerIntent } from '../lib/partners';
 
@@ -13,6 +14,7 @@ function directoryIntro(category:PartnerCategory,intent?:PartnerIntent){
 }
 
 export default function PartnerDirectory({category,intent,heading='Aktiva alternativ att jämföra'}:Props){
+ if(category==='mobil'&&(!intent||intent==='compare')) return <MobilePartnerMatcher/>;
  const items=getActivePartners(category,intent,6);
  if(!items.length) return null;
  return <section id='partners' className='partnerSection' aria-label={heading}>
