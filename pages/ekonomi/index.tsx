@@ -1,34 +1,35 @@
-import Head from 'next/head';
-import Link from 'next/link';
-import { PiggyBank, ArrowLeft, ArrowRight, CircleDollarSign } from 'lucide-react';
-import styles from '../../styles/Home.module.css';
-import PartnerOffers from '../../components/PartnerOffers';
+import { CircleDollarSign } from 'lucide-react';
+import CategoryLanding from '../../components/CategoryLanding';
 
 export default function Ekonomi(){
- const schema={'@context':'https://schema.org','@graph':[{'@type':'WebPage',name:'Jämför privatlån och samlingslån',url:'https://sankkostnaden.se/ekonomi/',description:'Jämför privatlån och samlingslån. Se effektiv ränta, avgifter, löptid och total kostnad innan du väljer.'},{'@type':'BreadcrumbList',itemListElement:[{'@type':'ListItem',position:1,name:'Sänk Kostnaden',item:'https://sankkostnaden.se/'},{'@type':'ListItem',position:2,name:'Lån & ekonomi',item:'https://sankkostnaden.se/ekonomi/'}]}]};
- return <><Head>
-  <title>Jämför privatlån & samlingslån 2026 | Sänk Kostnaden</title>
-  <meta name='description' content='Jämför privatlån och samlingslån. Kontrollera effektiv ränta, avgifter, löptid och total kostnad innan du väljer.' />
-  <link rel='canonical' href='https://sankkostnaden.se/ekonomi/' />
-  <meta name='robots' content='index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1' />
-  <meta property='og:type' content='website' />
-  <meta property='og:locale' content='sv_SE' />
-  <meta property='og:title' content='Jämför privatlån & samlingslån 2026 | Sänk Kostnaden' />
-  <meta property='og:description' content='Jämför privatlån och samlingslån efter effektiv ränta, avgifter, löptid och total återbetalning.' />
-  <meta property='og:url' content='https://sankkostnaden.se/ekonomi/' />
-  <meta name='twitter:card' content='summary' />
-  <script type='application/ld+json' dangerouslySetInnerHTML={{__html:JSON.stringify(schema)}} />
- </Head>
- <header className='topbar'><Link className='brand' href='/'><span className='brandMark'><PiggyBank size={22}/></span><span>Sänk Kostnaden</span></Link><nav><Link href='/bredband/'>Bredband</Link><Link href='/elavtal/'>El</Link><Link href='/mobil/'>Mobil</Link><Link href='/forsakring/'>Försäkring</Link><Link href='/ekonomi/'>Ekonomi</Link></nav><Link className='topbarCta' href='/#jamfor'>Jämför priser →</Link></header>
- <main>
-  <section className='guideHero guideHero-ekonomi'><div className='guideWrap'><Link className='back' href='/'><ArrowLeft size={16}/> Till startsidan</Link><div className='guideIcon'><CircleDollarSign size={25}/></div><p className='kicker'>PRIVATEKONOMI · 2026</p><h1>Jämför privatlån. Se hela kostnaden.</h1><p className='lead'>Behöver du ett privatlån eller vill du samla befintliga lån? Jämför inte bara månadsbeloppet. Räntan du erbjuds är individuell, och effektiv ränta, avgifter och löptid avgör den totala kostnaden.</p></div></section>
-  <section className={styles.section}><div className={styles.sectionHead}><div><p>JÄMFÖR PRIVATLÅN</p><h2>Jämför villkoren innan du ansöker</h2></div><p>En lägre månadskostnad kan bero på längre återbetalningstid och därmed högre total kostnad. När du får erbjudanden, jämför effektiv ränta, avgifter, löptid och total återbetalning.</p></div>
-   <PartnerOffers category='ekonomi' intent='loan' limit={6} heading='Tjänster för att jämföra privatlån'/>
-   <div className={styles.trafficMagnets}>
-    <a href='#jamfor-lan'><span>CHECKLISTA</span><strong>Fyra saker att jämföra</strong><p>Effektiv ränta, uppläggnings- och aviavgifter, löptid och total återbetalning.</p><b>Jämför på samma villkor <ArrowRight size={16}/></b></a>
-    <a href='#samlingslan'><span>VIKTIGT</span><strong>Samlingslån är inte automatiskt billigare</strong><p>Räkna på den nya totalkostnaden och undvik att förlängd löptid äter upp en lägre ränta.</p><b>Se hela kostnaden <ArrowRight size={16}/></b></a>
-   </div>
-  </section>
-  <section className={styles.section} id='jamfor-lan'><div className={styles.sectionHead}><div><p>SÅ JÄMFÖR DU</p><h2>Fyra uppgifter som avgör vad lånet kostar</h2></div><p>Utgå från samma lånebelopp och samma återbetalningstid när du jämför. Då blir skillnader mellan erbjudandena lättare att se.</p></div><div className={styles.trafficMagnets}><div><span>1</span><strong>Effektiv ränta</strong><p>Inkluderar ränta och obligatoriska avgifter och är därför bättre för jämförelser än nominell ränta.</p></div><div><span>2</span><strong>Total återbetalning</strong><p>Visar hur mycket du sammanlagt betalar tillbaka under hela löptiden.</p></div><div><span>3</span><strong>Löptid</strong><p>Längre löptid kan sänka månadsbeloppet men samtidigt höja den sammanlagda kostnaden.</p></div><div><span>4</span><strong>Avgifter</strong><p>Kontrollera bland annat uppläggningsavgift och aviavgift innan du jämför erbjudanden.</p></div></div></section><section className={styles.section} id='samlingslan'><div className={styles.sectionHead}><div><p>SAMLINGSLÅN</p><h2>När kan det sänka kostnaden?</h2></div><p>Att samla lån kan minska kostnaden om den nya effektiva räntan och den totala återbetalningen faktiskt blir lägre. Jämför inte enbart den nya månadskostnaden och ta hänsyn till eventuell längre löptid.</p></div></section><section className={styles.section}><div className={styles.sectionHead}><div><p>VANLIGA FRÅGOR</p><h2>Privatlån och samlingslån – det här är lätt att missa</h2></div><p>Små skillnader i ränta, avgifter och löptid kan ge stor effekt på den totala kostnaden.</p></div><div className={styles.trafficMagnets}><div><strong>Är lägre månadsbelopp alltid billigare?</strong><p>Nej. En längre löptid kan sänka månadsbeloppet men samtidigt öka den totala ränta och de avgifter du betalar.</p></div><div><strong>När kan ett samlingslån sänka kostnaden?</strong><p>När den nya effektiva räntan, avgifterna och den totala återbetalningen blir lägre än för lånen som ersätts, utan att en längre löptid äter upp skillnaden.</p></div><div><strong>Varför jämföra effektiv ränta?</strong><p>Effektiv ränta tar hänsyn till ränta och obligatoriska avgifter och gör därför erbjudanden lättare att jämföra än nominell ränta ensam.</p></div><div><strong>Behöver jag jämföra samma löptid?</strong><p>Ja, om du vill förstå kostnadsskillnaden. Jämför samma lånebelopp och så lik löptid som möjligt, och kontrollera alltid total återbetalning.</p></div></div></section><section className={styles.section}><div className={styles.sectionHead}><div><p>PRIVATEKONOMI</p><h2>Få bättre överblick innan du ändrar dina lån</h2></div><p>Ett budget- eller översiktsverktyg kan hjälpa dig att se helheten innan du tar ett nytt lån, samlar lån eller ändrar andra återkommande kostnader.</p></div><PartnerOffers category='ekonomi' intent='saving' limit={2} heading='Verktyg för bättre ekonomisk överblick'/></section><section className={styles.section}><div className={styles.principle}><div><p>PRIVATEKONOMI</p><h2>Betala mindre.<br/>Inte bara per månad.</h2></div><div><p>Sänk Kostnaden visar kommersiella alternativ, men ett nytt lån sänker inte kostnaden i sig. Bedöm alltid den effektiva räntan, avgifterna, löptiden och den totala återbetalningen.</p><p>Partnerlänkar märks tydligt och alla aktörer på marknaden behöver inte finnas med. Läs också <a href='/sa-jamfor-vi/'>hur vi jämför och presenterar partners</a>.</p></div></div></section>
- </main></>;
+  return <CategoryLanding
+    category='ekonomi'
+    canonical='https://sankkostnaden.se/ekonomi/'
+    title='Jämför privatlån & samlingslån 2026'
+    description='Jämför privatlån och samlingslån. Kontrollera effektiv ränta, avgifter, löptid och total kostnad innan du väljer.'
+    kicker='LÅN & EKONOMI'
+    heading='Jämför hela lånekostnaden – inte bara månadsbeloppet.'
+    lead='En lägre månadsbetalning kan bero på längre löptid. Jämför därför effektiv ränta, avgifter, löptid och total återbetalning.'
+    icon={CircleDollarSign}
+    compareHref='/ekonomi/#jamfor-lan'
+    compareLabel='Jämför privatlån'
+    helpHref='/verktyg/hushallskostnadskollen/'
+    helpLabel='Börja med hushållskostnaderna'
+    partnerIntent='loan'
+    partnerHeading='Tjänster för att jämföra privatlån'
+    checks={[
+      'Samma lånebelopp i jämförelsen',
+      'Effektiv ränta inklusive obligatoriska avgifter',
+      'Så lik återbetalningstid som möjligt',
+      'Total återbetalning under hela löptiden',
+    ]}
+    introTitle='Fyra uppgifter gör låneerbjudanden jämförbara'
+    introText='Räntan sätts individuellt. Därför är det de faktiska erbjudandenas effektiva ränta, avgifter, löptid och total återbetalning som behöver jämföras.'
+    guides={[
+      {href:'/ekonomi/#jamfor-lan',title:'Så jämför du privatlån',text:'Fyra uppgifter som avgör kostnaden.'},
+      {href:'/ekonomi/#samlingslan',title:'Samlingslån',text:'När kan det faktiskt sänka kostnaden?'},
+      {href:'/verktyg/hushallskostnadskollen/',title:'Hushållskostnadskollen',text:'Se helheten innan du ändrar lån.'},
+      {href:'/guide/arskoll-fasta-kostnader/',title:'Årskoll av fasta kostnader',text:'Gå igenom hushållets återkommande avtal.'},
+    ]}
+  />;
 }
