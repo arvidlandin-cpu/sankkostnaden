@@ -77,12 +77,14 @@ export default function CategoryLanding({
       </section>
 
       <article className='article guideWrap categoryArticle'>
-        <section className='categoryIntro'>
-          <p className='kicker'>BÖRJA HÄR</p>
-          <h2>{introTitle}</h2>
-          <p>{introText}</p>
-          <div className='checkList compactChecks'>{checks.map(item=><p key={item}><Check size={17}/>{item}</p>)}</div>
-        </section>
+        <details className='compactLearn categoryBasics'>
+          <summary>Så jämför du {labels[category].toLowerCase()}</summary>
+          <div className='compactLearnBody'>
+            <h2>{introTitle}</h2>
+            <p>{introText}</p>
+            <div className='checkList compactChecks'>{checks.map(item=><p key={item}><Check size={17}/>{item}</p>)}</div>
+          </div>
+        </details>
 
         {showPartners&&<PartnerDirectory category={category} intent={partnerIntent} heading={partnerHeading}/>} 
 
