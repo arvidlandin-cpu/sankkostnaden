@@ -9,7 +9,7 @@ const config={
   mobil:{title:'Vad vill du göra nu?',intro:'Jämför abonnemang direkt eller ringa in rätt surfmängd först.',direct:'Jämför mobilabonnemang',help:'Hjälp mig välja surf',helpHref:'/mobil/hur-mycket-surf-behover-jag/',fallback:'/mobil/billigaste-mobilabonnemanget/'},
   forsakring:{title:'Vad vill du göra nu?',intro:'Jämför rätt typ av försäkring eller kontrollera skyddet först.',direct:'Jämför försäkring',help:'Kontrollera mitt skydd',helpHref:'/forsakring/hemforsakring-skyddskoll/',fallback:'/forsakring/jamfor-forsakring/'},
   el:{title:'Vad vill du göra nu?',intro:'Jämför elalternativ direkt eller välj avtalsform först.',direct:'Jämför elavtal',help:'Hjälp mig välja avtalsform',helpHref:'/elavtal/vilket-elavtal-passar-mig/',fallback:'/elavtal/jamfor-elavtal/'},
-  ekonomi:{title:'Vad vill du göra nu?',intro:'Jämför låneerbjudanden eller börja med att se hushållets helhet.',direct:'Jämför privatlån',help:'Se hushållets kostnader',helpHref:'/verktyg/hushallskostnadskollen/',fallback:'/ekonomi/#jamfor-lan'},
+  ekonomi:{title:'Vad vill du göra nu?',intro:'Jämför låneerbjudanden eller börja med att se hushållets helhet.',direct:'Jämför privatlån',help:'Se hushållets kostnader',helpHref:'/verktyg/hushallskostnadskollen/',fallback:'/ekonomi/'},
 } as const;
 
 export default function DecisionGateway({category,compact=false,intent}:Props){
