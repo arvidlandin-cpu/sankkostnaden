@@ -54,7 +54,8 @@ const schema={
 function ProtectedEmailLink(){
   const [href,setHref]=useState<string|undefined>();
   useEffect(()=>{setHref(`mailto:${window.atob('a29udGFrdEBzYW5ra29zdG5hZGVuLnNl')}`)},[]);
-  return <a href={href??'#'} onClick={e=>{if(!href)e.preventDefault()}}>Kontakta oss</a>;
+  if(!href) return <span>Kontakta oss</span>;
+  return <a href={href}>Kontakta oss</a>;
 }
 
 export default function Home(){
