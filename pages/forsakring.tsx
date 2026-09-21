@@ -11,11 +11,12 @@ export default function Forsakring(){
     heading='Jämför rätt skydd först. Priset kommer sedan.'
     lead='Två försäkringar med olika självrisk eller omfattning är inte direkt jämförbara. Börja därför med rätt skyddsnivå.'
     icon={ShieldCheck}
-    compareHref='/forsakring/jamfor-forsakring/'
-    compareLabel='Jämför försäkring'
-    helpHref='/forsakring/hemforsakring-skyddskoll/'
-    helpLabel='Kontrollera mitt skydd'
+    compareHref='/forsakring/jamfor-hemforsakring/'
+    compareLabel='Jämför hemförsäkring'
+    helpHref='/forsakring/djurforsakring/'
+    helpLabel='Jämför djurförsäkring'
     partnerHeading='Aktuella försäkringsalternativ'
+    showPartners={false}
     checks={[
       'Årspremie efter eventuella rabatter',
       'Grundsjälvrisk och särskilda självrisker',
