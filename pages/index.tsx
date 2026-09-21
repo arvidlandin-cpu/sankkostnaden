@@ -67,7 +67,6 @@ export default function Home(){
     <header className={styles.nav}>
       <a className={styles.brand} href='/'><span className={styles.brandMark}><PiggyBank size={21}/></span><span>Sänk Kostnaden</span></a>
       <nav><a href='/bredband/'>Bredband</a><a href='/elavtal/'>El</a><a href='/mobil/'>Mobil</a><a href='/forsakring/'>Försäkring</a><a href='/ekonomi/'>Ekonomi</a></nav>
-      <a className={styles.navCta} href='#jamfor'>Jämför priser <ArrowRight size={15}/></a>
     </header>
 
     <main>
