@@ -1,5 +1,6 @@
 import Head from 'next/head';
-import { PiggyBank, ArrowRight, BadgeCheck } from 'lucide-react';
+import Link from 'next/link';
+import { PiggyBank, ArrowLeft, ArrowRight, CircleDollarSign } from 'lucide-react';
 import styles from '../../styles/Home.module.css';
 import PartnerOffers from '../../components/PartnerOffers';
 
@@ -18,9 +19,9 @@ export default function Ekonomi(){
   <meta name='twitter:card' content='summary' />
   <script type='application/ld+json' dangerouslySetInnerHTML={{__html:JSON.stringify(schema)}} />
  </Head>
- <header className={styles.nav}><a className={styles.brand} href='/'><span className={styles.brandMark}><PiggyBank size={21}/></span><span>Sänk Kostnaden</span></a><nav><a href='/bredband/'>Bredband</a><a href='/elavtal/'>El</a><a href='/mobil/'>Mobil</a><a href='/forsakring/'>Försäkring</a><a href='/ekonomi/'>Ekonomi</a></nav></header>
+ <header className='topbar'><Link className='brand' href='/'><span className='brandMark'><PiggyBank size={22}/></span><span>Sänk Kostnaden</span></Link><nav><Link href='/bredband/'>Bredband</Link><Link href='/elavtal/'>El</Link><Link href='/mobil/'>Mobil</Link><Link href='/forsakring/'>Försäkring</Link><Link href='/ekonomi/'>Ekonomi</Link></nav></header>
  <main>
-  <section className={styles.hero}><div className={styles.heroGrid}><div><div className={styles.eyebrow}><BadgeCheck size={16}/> PRIVATEKONOMI · 2026</div><h1>Jämför privatlån.<br/><span>Se hela kostnaden.</span></h1><p className={styles.lead}>Behöver du ett privatlån eller vill du samla befintliga lån? Jämför inte bara månadsbeloppet. Räntan du erbjuds är individuell, och effektiv ränta, avgifter och löptid avgör den totala kostnaden.</p></div></div></section>
+  <section className='guideHero'><div className='guideWrap'><Link className='back' href='/'><ArrowLeft size={16}/> Till startsidan</Link><div className='guideIcon'><CircleDollarSign size={25}/></div><p className='kicker'>PRIVATEKONOMI · 2026</p><h1>Jämför privatlån. Se hela kostnaden.</h1><p className='lead'>Behöver du ett privatlån eller vill du samla befintliga lån? Jämför inte bara månadsbeloppet. Räntan du erbjuds är individuell, och effektiv ränta, avgifter och löptid avgör den totala kostnaden.</p></div></section>
   <section className={styles.section}><div className={styles.sectionHead}><div><p>JÄMFÖR PRIVATLÅN</p><h2>Jämför villkoren innan du ansöker</h2></div><p>En lägre månadskostnad kan bero på längre återbetalningstid och därmed högre total kostnad. När du får erbjudanden, jämför effektiv ränta, avgifter, löptid och total återbetalning.</p></div>
    <PartnerOffers category='ekonomi' intent='loan' limit={6} heading='Tjänster för att jämföra privatlån'/>
    <div className={styles.trafficMagnets}>
