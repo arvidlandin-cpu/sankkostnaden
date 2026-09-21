@@ -90,16 +90,16 @@ export default function Home() {
           <a href='/forsakring/'>Försäkring</a>
           <a href='/ekonomi/'>Ekonomi</a>
         </nav>
-        <a className={styles.navCta} href='#jamfor'>Jämför priser</a>
+        <a className={styles.navCta} href='#jamfor'>Jämför priser <ArrowRight size={15} /></a>
       </header>
 
       <main>
         <HomeHero />
 
-        <section className={styles.section} id='jamfor'>
+        <section className={`${styles.section} ${styles.popularSection}`} id='jamfor'>
           <div className={styles.sectionHead}>
-              <div><p>ETT STÄLLE FÖR HUSHÅLLET</p><h2>Börja med kostnaden som stör dig mest</h2></div>
-              <p>Du behöver inte leta upp en ny jämförelsesajt för varje avtal. Sänk Kostnaden är startpunkten och varje område leder vidare till rätt beslutsunderlag.</p>
+              <div><p>POPULÄRA JÄMFÖRELSER</p><h2>Börja sänka dina kostnader idag.</h2></div>
+              <p>Välj ett område och gå direkt till rätt jämförelse, guide eller test. Du behöver inte lämna kontaktuppgifter för att börja.</p>
           </div>
           <div className={`${styles.categoryGrid} ${styles.categoryGridFive}`}>
             {categories.map(({ icon: Icon, title, text, label, href }) => (
