@@ -914,3 +914,50 @@ footer{
   background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(0,0,0,.12));
   pointer-events:none;
 }
+
+
+/* Image-card continuity on subpages */
+.trafficLinks a{
+  position:relative;
+  overflow:hidden;
+  padding:0 18px 18px;
+  min-height:205px;
+  align-content:start;
+  background:#fff;
+}
+.trafficLinks a::before{
+  content:'';
+  display:block;
+  height:104px;
+  margin:0 -18px 14px;
+  background:
+    linear-gradient(180deg,transparent 56%,rgba(255,255,255,.86) 100%),
+    var(--traffic-image,linear-gradient(135deg,#eef4df,#f7f9f5));
+  background-size:cover;
+  background-position:center;
+}
+.trafficLinks a[href*='/bredband/']{
+  --traffic-image:url('https://images.pexels.com/photos/7019025/pexels-photo-7019025.jpeg?auto=compress&cs=tinysrgb&w=800');
+}
+.trafficLinks a[href*='/elavtal/']{
+  --traffic-image:url('https://images.pexels.com/photos/14408369/pexels-photo-14408369.jpeg?auto=compress&cs=tinysrgb&w=800');
+}
+.trafficLinks a[href*='/mobil/']{
+  --traffic-image:url('https://images.pexels.com/photos/36665172/pexels-photo-36665172.jpeg?auto=compress&cs=tinysrgb&w=800');
+}
+.trafficLinks a[href*='/forsakring/']{
+  --traffic-image:url('https://images.pexels.com/photos/20725528/pexels-photo-20725528.jpeg?auto=compress&cs=tinysrgb&w=800');
+}
+.trafficLinks a[href*='/ekonomi/']{
+  --traffic-image:url('https://images.pexels.com/photos/7887849/pexels-photo-7887849.jpeg?auto=compress&cs=tinysrgb&w=800');
+}
+.trafficLinks strong{
+  font-size:18px;
+  line-height:1.15;
+}
+.trafficLinks span{
+  line-height:1.45;
+}
+@media(max-width:800px){
+  .trafficLinks a{min-height:190px}
+}
