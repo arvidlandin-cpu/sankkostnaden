@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import { ArrowLeft, ArrowRight, Check, PiggyBank } from 'lucide-react';
-import PartnerOffers from './PartnerOffers';
+import PartnerDirectory from './PartnerDirectory';
 import type { PartnerCategory, PartnerIntent } from '../lib/partners';
 
 type Guide={href:string;title:string;text:string};
@@ -90,7 +90,7 @@ export default function CategoryLanding({
           <div className='checkList compactChecks'>{checks.map(item=><p key={item}><Check size={17}/>{item}</p>)}</div>
         </section>
 
-        {showPartners&&<PartnerOffers category={category} intent={partnerIntent} limit={3} heading={partnerHeading}/>}
+        {showPartners&&<PartnerDirectory category={category} intent={partnerIntent} heading={partnerHeading}/>} 
 
         <section className='categoryGuideSection'>
           <div className='categoryGuideHead'><div><p className='kicker'>GUIDER</p><h2>Vill du läsa först?</h2></div><p>Välj den guide som motsvarar din fråga. Du behöver inte läsa allt för att komma vidare.</p></div>
