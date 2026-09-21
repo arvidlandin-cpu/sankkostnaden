@@ -1,4 +1,5 @@
 import MobilePartnerMatcher from './MobilePartnerMatcher';
+import { BroadbandPartnerMatcher, ElectricityPartnerMatcher, InsurancePartnerMatcher, LoanPartnerMatcher } from './GuidedPartnerMatchers';
 import { ArrowUpRight, BadgeCheck } from 'lucide-react';
 import { getActivePartners, type PartnerCategory, type PartnerIntent } from '../lib/partners';
 
@@ -15,6 +16,10 @@ function directoryIntro(category:PartnerCategory,intent?:PartnerIntent){
 
 export default function PartnerDirectory({category,intent,heading='Aktiva alternativ att jämföra'}:Props){
  if(category==='mobil'&&(!intent||intent==='compare')) return <MobilePartnerMatcher/>;
+ if(category==='bredband'&&(!intent||intent==='compare')) return <BroadbandPartnerMatcher/>;
+ if(category==='el'&&(!intent||intent==='compare'||intent==='electricity')) return <ElectricityPartnerMatcher/>;
+ if(category==='forsakring'&&(intent==='home'||intent==='pet')) return <InsurancePartnerMatcher preset={intent}/>;
+ if(category==='ekonomi'&&intent==='loan') return <LoanPartnerMatcher/>;
  const items=getActivePartners(category,intent,6);
  if(!items.length) return null;
  return <section id='partners' className='partnerSection' aria-label={heading}>
