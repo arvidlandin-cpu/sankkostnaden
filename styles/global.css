@@ -989,3 +989,23 @@ footer{
     linear-gradient(90deg,rgba(18,28,21,.95),rgba(18,28,21,.86) 48%,rgba(18,28,21,.54) 100%),
     url('https://images.pexels.com/photos/7887849/pexels-photo-7887849.jpeg?auto=compress&cs=tinysrgb&w=1800') center/cover no-repeat;
 }
+
+
+.topbarCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0 18px;
+  border-radius: 999px;
+  background: #17201b;
+  color: #fff;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 850;
+  box-shadow: 0 8px 22px rgba(23,32,27,.11);
+  white-space: nowrap;
+}
+@media (max-width: 800px) {
+  .topbarCta { display: none; }
+}
