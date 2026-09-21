@@ -381,3 +381,34 @@
   .copy h1{font-size:40px}
   .card{padding:16px 14px 14px}
 }
+
+
+/* Compact first-screen journey 2026-09-22 */
+.inner{
+  min-height:clamp(455px,max(29vw,52vh),610px);
+  padding-top:30px;
+  padding-bottom:32px;
+}
+.copy h1{font-size:clamp(50px,4.35vw,66px)}
+.copy>p{margin-top:14px;font-size:16px}
+.badge{margin-bottom:14px;padding:6px 10px}
+.card{max-width:410px;padding:21px}
+.progress{margin-bottom:15px}
+.card h2{margin-bottom:12px;font-size:25px}
+.areaList,.choiceList{gap:6px}
+.areaList button,.choiceList a{min-height:48px;padding-top:7px;padding-bottom:7px}
+.areaList button>span{width:31px;height:31px}
+.choiceList a{padding:9px 11px}
+@media(max-width:860px){
+  .inner{padding-top:28px;padding-bottom:26px}
+}
+@media(max-width:600px){
+  .inner{padding-top:22px;padding-bottom:20px;gap:20px}
+  .copy h1{font-size:39px}
+  .copy>p{margin-top:11px;font-size:14px}
+  .badge{margin-bottom:11px}
+  .card{padding:16px 14px}
+  .progress{margin-bottom:12px}
+  .card h2{font-size:21px}
+  .areaList button,.choiceList a{min-height:45px}
+}
