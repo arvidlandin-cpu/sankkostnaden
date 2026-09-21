@@ -899,3 +899,18 @@ footer{
     border-radius:19px;
   }
 }
+
+
+/* Image-backed subpage continuity */
+.guideHero{
+  background:
+    linear-gradient(90deg,rgba(18,28,21,.94) 0%,rgba(18,28,21,.88) 48%,rgba(18,28,21,.64) 72%,rgba(18,28,21,.52) 100%),
+    url('https://images.pexels.com/photos/7019025/pexels-photo-7019025.jpeg?auto=compress&cs=tinysrgb&w=1800') center/cover no-repeat;
+}
+.guideHero:before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(0,0,0,.12));
+  pointer-events:none;
+}
