@@ -85,6 +85,8 @@ for (const file of sourceFiles) {
       return;
     }
 
+    if (/^#[0-9a-f]{3,8}$/i.test(value)) return;
+
     if (value.startsWith('#')) {
       const fragment = value.slice(1);
       if (fragment && !currentIds.has(fragment)) {
