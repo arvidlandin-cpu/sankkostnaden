@@ -69,7 +69,6 @@ export default function IntentGuide({ title, description, kicker, canonical, cat
       <header className='topbar'>
         <Link className='brand' href='/'><span className='brandMark'><PiggyBank size={20} /></span><span>Sänk Kostnaden</span></Link>
         <nav><Link href='/bredband/'>Bredband</Link><Link href='/elavtal/'>El</Link><Link href='/mobil/'>Mobil</Link><Link href='/forsakring/'>Försäkring</Link><Link href='/ekonomi/'>Ekonomi</Link></nav>
-        <Link className='topbarCta' href='/#jamfor'>Jämför priser →</Link>
       </header>
       <main>
         <section className={`guideHero guideHero-${category}`}>
@@ -79,7 +78,7 @@ export default function IntentGuide({ title, description, kicker, canonical, cat
             <p className='kicker' style={{ marginTop: 32 }}>{kicker}</p>
             <h1>{title}</h1>
             <p className='lead'>{description}</p>
-            <p className='fine'>Du kan läsa först och jämföra när du är redo.</p>
+            
           </div>
         </section>
         <article className='article guideWrap'>
