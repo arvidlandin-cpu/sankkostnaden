@@ -36,13 +36,13 @@ function sectionCopy(category: PartnerCategory, intent?: PartnerIntent) {
   };
 }
 
-export default function PartnerOffers({ category, heading = 'Jämför hos våra partners', intent, limit = 4 }: Props) {
+export default function PartnerOffers({ category, heading = 'Jämför hos våra partners', intent, limit = 3 }: Props) {
   const items = getActivePartners(category, intent, limit);
   if (items.length === 0) return null;
   const copy = sectionCopy(category, intent);
 
   return (
-    <section className='partnerSection partnerSectionStrong' aria-label={heading}>
+    <section id='partners' className='partnerSection partnerSectionStrong' aria-label={heading}>
       <div className='partnerIntro'>
         <p className='kicker'>{copy.kicker}</p>
         <h2>{heading}</h2>
