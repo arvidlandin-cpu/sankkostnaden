@@ -12,7 +12,7 @@ export default function Bredband(){
     lead='Börja med vad som finns på din adress. Jämför sedan samma hastighet, verklig årskostnad och bindningstid.'
     icon={Wifi}
     compareHref='/bredband/bredband-pa-min-adress/'
-    compareLabel='Se bredband på min adress'
+    compareLabel='Hitta relevanta bredbandsalternativ'
     helpHref='/bredband/vilken-hastighet-behover-jag/'
     helpLabel='Hjälp mig välja hastighet'
     partnerHeading='Aktuella bredbandsalternativ'
