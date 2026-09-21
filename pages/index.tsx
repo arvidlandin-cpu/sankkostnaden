@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
-import { ArrowRight, ChevronRight, PiggyBank, ShieldCheck, Smartphone, Wifi, Zap } from 'lucide-react';
+import { ArrowRight, PiggyBank } from 'lucide-react';
 import styles from '../styles/Home.module.css';
 import HomeHero from '../components/HomeHero';
 
@@ -12,14 +12,13 @@ const categories=[
   {title:'Lån & ekonomi',subtitle:'Ränta & totalkostnad',href:'/ekonomi/',image:'/design/card-ekonomi.webp'},
 ];
 
-const helpers=[
-  {icon:Wifi,kicker:'3 FRÅGOR',title:'Vilken bredbandsfart behöver du?',text:'Se om 100, 250, 500 eller 1000 Mbit/s matchar hushållet.',href:'/bredband/vilken-hastighet-behover-jag/'},
-  {icon:Smartphone,kicker:'3 FRÅGOR',title:'Hur mycket surf behöver du?',text:'Matcha abonnemanget mot din faktiska användning.',href:'/mobil/hur-mycket-surf-behover-jag/'},
-  {icon:Zap,kicker:'3 FRÅGOR',title:'Vilket elavtal passar dig?',text:'Väg risk och styrbar förbrukning mot fast, rörligt eller kvartspris.',href:'/elavtal/vilket-elavtal-passar-mig/'},
-  {icon:ShieldCheck,kicker:'3 FRÅGOR',title:'Vilket skydd behöver du?',text:'Kontrollera hemförsäkringens viktigaste villkor innan pris.',href:'/forsakring/hemforsakring-skyddskoll/'},
-];
-
 const guideGroups=[
+  {title:'Snabbhjälp',links:[
+    ['/bredband/vilken-hastighet-behover-jag/','Vilken bredbandsfart behöver du?'],
+    ['/mobil/hur-mycket-surf-behover-jag/','Hur mycket surf behöver du?'],
+    ['/elavtal/vilket-elavtal-passar-mig/','Vilket elavtal passar dig?'],
+    ['/forsakring/hemforsakring-skyddskoll/','Vilket försäkringsskydd behöver du?'],
+  ]},
   {title:'Bredband',links:[
     ['/bredband/billigaste-bredbandet/','Billigaste bredbandet 2026'],
     ['/bredband/utan-bindningstid/','Bredband utan bindningstid'],
@@ -94,44 +93,18 @@ export default function Home(){
         </div>
       </section>
 
-      <section className={`${styles.section} ${styles.helpSection}`}>
-        <div className={styles.sectionHead}>
-          <div><p>OSÄKER PÅ VAD DU SKA VÄLJA?</p><h2>Få hjälp på tre frågor.</h2></div>
-          <p>Välj ett snabbtest om du först vill veta vilken nivå eller typ som passar dig. Resultatet leder sedan vidare till rätt jämförelse.</p>
-        </div>
-        <div className={styles.helperGrid}>
-          {helpers.map(({icon:Icon,kicker,title,text,href})=><a className={styles.helperCard} href={href} key={href}>
-            <div className={styles.icon}><Icon size={22}/></div><span>{kicker}</span><h3>{title}</h3><p>{text}</p><b>Gör testet <ChevronRight size={16}/></b>
-          </a>)}
-        </div>
-      </section>
-
-      <section className={`${styles.section} ${styles.toolsSection}`}>
-        <div className={styles.sectionHead}>
-          <div><p>GRATIS VERKTYG</p><h2>Vill du börja med hela hushållet?</h2></div>
-          <p>Räkna på dina egna kostnader och se vilken post som är mest värd att ta först.</p>
-        </div>
-        <div className={styles.toolGrid}>
-          <a href='/verktyg/hushallskostnadskollen/'><span>HUSHÅLLSKOLL</span><strong>Vad kostar ditt hushåll?</strong><p>Se månad, år och vilken jämförbar kostnad som är störst.</p><b>Starta kostnadskollen <ArrowRight size={16}/></b></a>
-          <a href='/app/'><span>BESPARINGSKALKYL</span><strong>Vad kan du spara?</strong><p>Räkna på dina egna priser och se skillnaden per år.</p><b>Starta kalkylen <ArrowRight size={16}/></b></a>
-          <a href='/guide/arskoll-fasta-kostnader/'><span>CHECKLISTA</span><strong>Årskoll av fasta kostnader</strong><p>Gå igenom hushållets återkommande avtal steg för steg.</p><b>Starta årskollen <ArrowRight size={16}/></b></a>
-        </div>
-      </section>
-
       <section className={styles.guideLibrarySection}>
         <details className={styles.guideLibrary}>
-          <summary>Fler guider och jämförelser <ArrowRight size={16}/></summary>
+          <summary>Behöver du hjälp eller vill läsa mer? <ArrowRight size={16}/></summary>
           <div className={styles.guideGroups}>
             {guideGroups.map(group=><div key={group.title}><strong>{group.title}</strong>{group.links.map(([href,label])=><a href={href} key={href}>{label}<ArrowRight size={14}/></a>)}</div>)}
           </div>
         </details>
       </section>
 
-      <section className={styles.section}>
-        <div className={styles.principle}>
-          <div><p>VÅR PRINCIP</p><h2>Besparing först.<br/>Provision sedan.</h2></div>
-          <div><p>Sänk Kostnaden ska vara användbar även om du aldrig klickar på en partnerlänk. Vi hjälper dig förstå behov, total kostnad och villkor innan kommersiella alternativ visas.</p><p>När en länk är kommersiell märks den tydligt. Alla aktörer på marknaden behöver inte finnas med.</p><a href='/sa-jamfor-vi/'>Läs hur vi jämför →</a></div>
-        </div>
+      <section className={styles.trustBand}>
+        <div><strong>Oberoende vägledning före partnerlänkar.</strong><span>Kommersiella länkar märks tydligt och urvalet omfattar inte hela marknaden.</span></div>
+        <a href='/sa-jamfor-vi/'>Så jämför vi <ArrowRight size={15}/></a>
       </section>
     </main>
 
