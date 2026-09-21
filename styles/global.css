@@ -1706,3 +1706,37 @@ footer{
     grid-template-columns:1fr;
   }
 }
+
+
+/* Visible partner entity strip for SEO + trust 2026-09-21 */
+.visiblePartnerNames{
+  margin-top:16px;
+  padding:13px 14px;
+  border:1px solid #dce4d8;
+  border-radius:13px;
+  background:rgba(255,255,255,.72);
+}
+.visiblePartnerNames>span{
+  display:block;
+  margin-bottom:8px;
+  color:#748078;
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+}
+.visiblePartnerNames>div{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+}
+.visiblePartnerNames strong{
+  padding:6px 9px;
+  border:1px solid #dfe6db;
+  border-radius:999px;
+  background:#fff;
+  color:#344138;
+  font-size:10px;
+  line-height:1;
+  font-weight:850;
+}
