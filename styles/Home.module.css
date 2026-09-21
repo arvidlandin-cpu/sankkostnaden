@@ -895,3 +895,27 @@
   .guideLibrarySection{padding:0 18px 48px}
   .guideGroups{grid-template-columns:1fr;padding:18px}
 }
+
+
+/* Ultrawide composition correction 2026-09-21 */
+@media(min-width:1500px){
+  .nav{
+    padding-left:max(34px,calc((100vw - 1500px)/2))!important;
+    padding-right:max(34px,calc((100vw - 1500px)/2))!important;
+  }
+  .section{
+    max-width:1500px;
+  }
+  .popularSection{
+    padding-left:max(34px,calc((100vw - 1500px)/2))!important;
+    padding-right:max(34px,calc((100vw - 1500px)/2))!important;
+  }
+  .popularHeader,
+  .popularGrid{
+    max-width:1500px!important;
+  }
+  .guideLibrarySection{
+    padding-left:max(34px,calc((100vw - 1500px)/2));
+    padding-right:max(34px,calc((100vw - 1500px)/2));
+  }
+}
