@@ -10,6 +10,8 @@ export default function App({ Component, pageProps }: AppProps) {
     <>
       <Head>
         <link rel='manifest' href='/manifest.webmanifest' />
+        <link rel='preconnect' href='https://images.pexels.com' crossOrigin='' />
+        <link rel='dns-prefetch' href='https://images.pexels.com' />
         <link rel='icon' href='/app-icon.svg?v=2' type='image/svg+xml' />
         <link rel='shortcut icon' href='/app-icon.svg?v=2' />
         <meta name='theme-color' content='#17201b' />
