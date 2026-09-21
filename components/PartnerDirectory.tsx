@@ -15,7 +15,7 @@ function directoryIntro(category:PartnerCategory,intent?:PartnerIntent){
 export default function PartnerDirectory({category,intent,heading='Aktiva alternativ att jämföra'}:Props){
  const items=getActivePartners(category,intent,6);
  if(!items.length) return null;
- return <section className='partnerSection' aria-label={heading}>
+ return <section id='partners' className='partnerSection' aria-label={heading}>
   <div className='partnerIntro'><p className='kicker'>JÄMFÖRELSEÖVERSIKT</p><h2>{heading}</h2><p>{directoryIntro(category,intent)}</p></div>
   <div className='partnerGrid'>
    {items.map(item=><article className='partnerCard partnerCardStrong' key={item.name}>
