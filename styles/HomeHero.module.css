@@ -30,7 +30,7 @@
   width:min(1500px,calc(100% - 56px));
   /* Scale the visual stage on large/maximized windows so the photo keeps
      roughly the same crop instead of getting progressively flatter. */
-  min-height:clamp(610px,max(38vw,70vh),980px);
+  min-height:clamp(540px,max(34vw,62vh),760px);
   margin:0 auto;
   padding:48px 0 50px;
   display:grid;
@@ -255,14 +255,14 @@
 }
 .proofInner{
   width:min(1500px,calc(100% - 48px));
-  min-height:100px;
+  min-height:82px;
   margin:0 auto;
   display:grid;
-  grid-template-columns:repeat(4,1fr);
+  grid-template-columns:repeat(3,1fr);
   align-items:center;
 }
 .proofInner>div{
-  min-height:62px;
+  min-height:54px;
   padding:0 28px;
   display:flex;
   align-items:center;
