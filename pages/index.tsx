@@ -14,11 +14,11 @@ import styles from '../styles/Home.module.css';
 import HomeHero from '../components/HomeHero';
 
 const categories = [
-  { icon: Wifi, title: 'Bredband', subtitle: 'Pris, fart & adress', href: '/bredband/bredband-pa-min-adress/', image: 'https://images.pexels.com/photos/7019025/pexels-photo-7019025.jpeg?auto=compress&cs=tinysrgb&w=900' },
-  { icon: Zap, title: 'El', subtitle: 'Avtal & elpriser', href: '/elavtal/jamfor-elavtal/', image: 'https://images.pexels.com/photos/14408369/pexels-photo-14408369.jpeg?auto=compress&cs=tinysrgb&w=900' },
-  { icon: Smartphone, title: 'Mobil', subtitle: 'Surf & abonnemang', href: '/mobil/billigaste-mobilabonnemanget/', image: 'https://images.pexels.com/photos/36665172/pexels-photo-36665172.jpeg?auto=compress&cs=tinysrgb&w=900' },
-  { icon: ShieldCheck, title: 'Försäkring', subtitle: 'Djur, hem & person', href: '/forsakring/jamfor-forsakring/', image: 'https://images.pexels.com/photos/20725528/pexels-photo-20725528.jpeg?auto=compress&cs=tinysrgb&w=900' },
-  { icon: CircleDollarSign, title: 'Lån & ekonomi', subtitle: 'Ränta & totalkostnad', href: '/ekonomi/', image: 'https://images.pexels.com/photos/7887849/pexels-photo-7887849.jpeg?auto=compress&cs=tinysrgb&w=900' },
+  { title: 'Bredband', subtitle: 'Pris, fart & adress', href: '/bredband/bredband-pa-min-adress/', image: '/design/card-bredband.webp' },
+  { title: 'El', subtitle: 'Avtal & elpriser', href: '/elavtal/jamfor-elavtal/', image: '/design/card-el.webp' },
+  { title: 'Mobil', subtitle: 'Surf & abonnemang', href: '/mobil/billigaste-mobilabonnemanget/', image: '/design/card-mobil.webp' },
+  { title: 'Försäkring', subtitle: 'Djur, hem & person', href: '/forsakring/jamfor-forsakring/', image: '/design/card-forsakring.webp' },
+  { title: 'Lån & ekonomi', subtitle: 'Ränta & totalkostnad', href: '/ekonomi/', image: '/design/card-ekonomi.webp' },
 ];
 
 const intentLinks = [
@@ -106,21 +106,17 @@ export default function Home() {
             <a href='/guide/hushallets-fasta-kostnader-2026/'>Se alla guider <ArrowRight size={16} /></a>
           </div>
           <div className={styles.popularGrid}>
-            {categories.map(({ icon: Icon, title, subtitle, href, image }) => (
+            {categories.map(({ title, subtitle, href, image }) => (
               <a className={styles.popularCard} href={href} key={title}>
-                <div className={styles.popularImage} style={{ backgroundImage: `url("${image}")` }}>
-                  <span><Icon size={22} /></span>
-                </div>
+                <img className={styles.popularImageExact} src={image} alt='' loading='lazy' />
                 <div className={styles.popularBody}>
-                  <div><strong>{title}</strong><small>{subtitle}</small></div>
+                  <small>{subtitle}</small>
                   <ArrowRight size={17} />
                 </div>
               </a>
             ))}
           </div>
         </section>
-
-        <section className={styles.hubBand}><div><p>NÄSTA KOSTNAD?</p><h2>Fortsätt sänka hushållets utgifter.</h2><span>Bytt bredband? Ta elen, mobilen, försäkringen eller ekonomin härnäst. Du ska inte behöva leta upp en ny jämförelsesajt för varje avtal.</span></div><div className={styles.crossLinks}><a href='/elavtal/jamfor-elavtal/'>El <ArrowRight size={15} /></a><a href='/mobil/billigaste-mobilabonnemanget/'>Mobil <ArrowRight size={15} /></a><a href='/forsakring/jamfor-forsakring/'>Försäkring <ArrowRight size={15} /></a><a href='/ekonomi/'>Ekonomi <ArrowRight size={15} /></a></div></section>
 
         <section className={styles.section}>
           <div className={styles.sectionHead}>
