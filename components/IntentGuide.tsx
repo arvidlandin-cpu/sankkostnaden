@@ -1,10 +1,9 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import { ArrowLeft, ArrowUpRight, Check, PiggyBank } from 'lucide-react';
+import { ArrowLeft, Check, PiggyBank } from 'lucide-react';
 import PartnerOffers from './PartnerOffers';
 import PartnerDirectory from './PartnerDirectory';
 import DecisionGateway from './DecisionGateway';
-import { getActivePartners } from '../lib/partners';
 import type { PartnerCategory, PartnerIntent } from '../lib/partners';
 
 type Section = { heading: string; body: string };
@@ -25,9 +24,7 @@ export default function IntentGuide({ title, description, kicker, canonical, cat
   const categoryPaths: Record<PartnerCategory, string> = { el: '/elavtal/', bredband: '/bredband/', mobil: '/mobil/', forsakring: '/forsakring/', ekonomi: '/ekonomi/' };
   const categoryLabel = categoryLabels[category];
   const compareHeadings: Record<PartnerCategory, string> = { el: 'Aktiva elalternativ att jämföra', bredband: 'Aktiva bredbandsalternativ att jämföra', mobil: 'Aktiva mobilalternativ att jämföra', forsakring: 'Aktiva försäkringsalternativ att jämföra', ekonomi: 'Tjänster för att jämföra privatlån' };
-  const heroPartners = getActivePartners(category, intent);
   const categoryPath = categoryPaths[category];
-  const heroCta = (name: string) => category === 'bredband' ? (name === 'Bredbandsval.se' ? 'Jämför på min adress hos Bredbandsval.se' : `Se bredband hos ${name}`) : category === 'mobil' ? `Se abonnemang hos ${name}` : category === 'el' ? `Se elavtal hos ${name}` : category === 'forsakring' ? `Se premie hos ${name.replace(' Djurförsäkring','')}` : intent === 'saving' ? `Se tjänsten hos ${name}` : `Jämför lån hos ${name}`;
   const offerHeading = category === 'forsakring' ? (intent === 'pet' ? 'Jämför djurförsäkring hos våra partners' : intent === 'home' ? 'Se aktuella hemförsäkringsalternativ' : 'Se aktuella försäkringsalternativ') : category === 'bredband' ? (intent === 'mobile-broadband' ? 'Se aktuella alternativ för mobilt bredband' : intent === 'fiber' ? 'Se aktuella fiberalternativ' : intent === 'no-binding' ? 'Se bredband utan bindningstid' : 'Se aktuella bredbandsalternativ') : category === 'mobil' ? (intent === 'family' ? 'Se aktuella familjeabonnemang' : intent === 'no-binding' ? 'Se abonnemang utan bindningstid' : 'Se aktuella mobilabonnemang') : category === 'el' ? 'Se aktuella elavtal' : intent === 'saving' ? 'Verktyg för bättre ekonomisk överblick' : 'Tjänster för att jämföra privatlån';
   const schema = {
     '@context': 'https://schema.org',
@@ -82,17 +79,16 @@ export default function IntentGuide({ title, description, kicker, canonical, cat
             <p className='kicker' style={{ marginTop: 32 }}>{kicker}</p>
             <h1>{title}</h1>
             <p className='lead'>{description}</p>
-            {heroPartners.length === 1 && <div className='heroPartnerActions'>{heroPartners.map(item => <a key={item.name} className='primary' href={item.trackingUrl} data-partner={item.name} data-category={category} data-intent={intent || 'unspecified'} data-placement='intent_hero' target='_blank' rel='sponsored nofollow noopener'>{heroCta(item.name)} <ArrowUpRight size={17}/></a>)}</div>}
-            <p className='fine'>Kommersiella länkar markeras tydligt</p>
+            <p className='fine'>Du kan läsa först och jämföra när du är redo.</p>
           </div>
         </section>
         <article className='article guideWrap'>
-          {category === 'el' && <aside className='decisionPanel' aria-label='Sänk Kostnaden-kontrollen'><div><p className='partnerEyebrow'>SÄNK KOSTNADEN-KONTROLLEN</p><h2>Jämför hela kostnaden – inte bara öre/kWh</h2><p>Kontrollera pris/påslag, fast avgift, rabattens längd, ordinarie villkor samt bindnings- och uppsägningstid. Använd samma årsförbrukning för alla alternativ.</p></div><div className='decisionMetrics'><span><b>1</b> Årsförbrukning</span><span><b>2</b> Rörlig kostnad</span><span><b>3</b> Fasta avgifter</span><span><b>4</b> Villkor efter rabatt</span></div></aside>}
-          {category === 'mobil' && <aside className='decisionPanel' aria-label='Sänk Kostnaden-kontrollen för mobil'><div><p className='partnerEyebrow'>SÄNK KOSTNADEN-KONTROLLEN</p><h2>Jämför abonnemanget du faktiskt kommer använda</h2><p>Utgå från rätt surfmängd och nät. Räkna sedan kampanjperiod och ordinarie pris tillsammans så att ett lågt introduktionspris inte döljer den verkliga kostnaden.</p></div><div className='decisionMetrics'><span><b>1</b> Surfmängd</span><span><b>2</b> Mobilnät</span><span><b>3</b> Första året</span><span><b>4</b> Bindning & villkor</span></div></aside>}
           <DecisionGateway category={category} intent={intent} />
           <div className='checkList'>
             {bullets.map(item => <p key={item}><Check size={17} /> {item}</p>)}
           </div>
+          {category === 'el' && <aside className='decisionPanel decisionPanelLower' aria-label='Sänk Kostnaden-kontrollen'><div><p className='partnerEyebrow'>SÄNK KOSTNADEN-KONTROLLEN</p><h2>Jämför hela kostnaden – inte bara öre/kWh</h2><p>Kontrollera pris/påslag, fast avgift, rabattens längd, ordinarie villkor samt bindnings- och uppsägningstid. Använd samma årsförbrukning för alla alternativ.</p></div><div className='decisionMetrics'><span><b>1</b> Årsförbrukning</span><span><b>2</b> Rörlig kostnad</span><span><b>3</b> Fasta avgifter</span><span><b>4</b> Villkor efter rabatt</span></div></aside>}
+          {category === 'mobil' && <aside className='decisionPanel decisionPanelLower' aria-label='Sänk Kostnaden-kontrollen för mobil'><div><p className='partnerEyebrow'>SÄNK KOSTNADEN-KONTROLLEN</p><h2>Jämför abonnemanget du faktiskt kommer använda</h2><p>Utgå från rätt surfmängd och nät. Räkna sedan kampanjperiod och ordinarie pris tillsammans så att ett lågt introduktionspris inte döljer den verkliga kostnaden.</p></div><div className='decisionMetrics'><span><b>1</b> Surfmängd</span><span><b>2</b> Mobilnät</span><span><b>3</b> Första året</span><span><b>4</b> Bindning & villkor</span></div></aside>}
           {sections.map(section => <section key={section.heading}><h2>{section.heading}</h2><p>{section.body}</p></section>)}
           {intent === 'compare' ? <PartnerDirectory category={category} intent={intent} heading={compareHeadings[category]} /> : <PartnerOffers category={category} intent={intent} heading={offerHeading} />}
           <div className='relatedGuides'>
