@@ -14,11 +14,11 @@ import styles from '../styles/Home.module.css';
 import HomeHero from '../components/HomeHero';
 
 const categories = [
-  { icon: Wifi, title: 'Bredband', text: 'Börja med vad som finns på adressen och jämför sedan pris, hastighet och bindningstid.', label: 'Börja med adressen', href: '/bredband/bredband-pa-min-adress/' },
-  { icon: Zap, title: 'Elavtal', text: 'Jämför avtalsform, påslag och fasta avgifter i stället för att bara titta på ett lockpris.', label: 'Jämför villkoren', href: '/elavtal/jamfor-elavtal/' },
-  { icon: Smartphone, title: 'Mobil', text: 'Jämför surf, nät, familjeupplägg och vad abonnemanget faktiskt kostar över tid.', label: 'Se billigare alternativ', href: '/mobil/billigaste-mobilabonnemanget/' },
-  { icon: ShieldCheck, title: 'Försäkring', text: 'Jämför premie, självrisk och omfattning på samma nivå innan du väljer bolag.', label: 'Jämför samma skydd', href: '/forsakring/jamfor-forsakring/' },
-  { icon: CircleDollarSign, title: 'Lån & ekonomi', text: 'Jämför effektiv ränta, avgifter och total kostnad – inte bara månadsbeloppet.', label: 'Jämför kostnaden', href: '/ekonomi/' },
+  { icon: Wifi, title: 'Bredband', subtitle: 'Pris, fart & adress', href: '/bredband/bredband-pa-min-adress/', image: 'https://images.pexels.com/photos/7019025/pexels-photo-7019025.jpeg?auto=compress&cs=tinysrgb&w=900' },
+  { icon: Zap, title: 'El', subtitle: 'Avtal & elpriser', href: '/elavtal/jamfor-elavtal/', image: 'https://images.pexels.com/photos/14408369/pexels-photo-14408369.jpeg?auto=compress&cs=tinysrgb&w=900' },
+  { icon: Smartphone, title: 'Mobil', subtitle: 'Surf & abonnemang', href: '/mobil/billigaste-mobilabonnemanget/', image: 'https://images.pexels.com/photos/36665172/pexels-photo-36665172.jpeg?auto=compress&cs=tinysrgb&w=900' },
+  { icon: ShieldCheck, title: 'Försäkring', subtitle: 'Djur, hem & person', href: '/forsakring/jamfor-forsakring/', image: 'https://images.pexels.com/photos/20725528/pexels-photo-20725528.jpeg?auto=compress&cs=tinysrgb&w=900' },
+  { icon: CircleDollarSign, title: 'Lån & ekonomi', subtitle: 'Ränta & totalkostnad', href: '/ekonomi/', image: 'https://images.pexels.com/photos/7887849/pexels-photo-7887849.jpeg?auto=compress&cs=tinysrgb&w=900' },
 ];
 
 const intentLinks = [
@@ -97,18 +97,24 @@ export default function Home() {
         <HomeHero />
 
         <section className={`${styles.section} ${styles.popularSection}`} id='jamfor'>
-          <div className={styles.sectionHead}>
-              <div><p>POPULÄRA JÄMFÖRELSER</p><h2>Börja sänka dina kostnader idag.</h2></div>
-              <p>Välj ett område och gå direkt till rätt jämförelse, guide eller test. Du behöver inte lämna kontaktuppgifter för att börja.</p>
+          <div className={styles.popularHeader}>
+            <div>
+              <p>POPULÄRA JÄMFÖRELSER</p>
+              <h2>Börja sänka dina kostnader idag.</h2>
+              <span>Välj ett område och se aktuella erbjudanden, guider och tips.</span>
+            </div>
+            <a href='/guide/hushallets-fasta-kostnader-2026/'>Se alla guider <ArrowRight size={16} /></a>
           </div>
-          <div className={`${styles.categoryGrid} ${styles.categoryGridFive}`}>
-            {categories.map(({ icon: Icon, title, text, label, href }) => (
-              <a className={styles.categoryCard} href={href} key={title}>
-                <div className={styles.icon}><Icon size={23} /></div>
-                <span>{label}</span>
-                <h3>{title}</h3>
-                <p>{text}</p>
-                <b>Jämför nu <ChevronRight size={16} /></b>
+          <div className={styles.popularGrid}>
+            {categories.map(({ icon: Icon, title, subtitle, href, image }) => (
+              <a className={styles.popularCard} href={href} key={title}>
+                <div className={styles.popularImage} style={{ backgroundImage: `url("${image}")` }}>
+                  <span><Icon size={22} /></span>
+                </div>
+                <div className={styles.popularBody}>
+                  <div><strong>{title}</strong><small>{subtitle}</small></div>
+                  <ArrowRight size={17} />
+                </div>
               </a>
             ))}
           </div>
