@@ -11,7 +11,7 @@ export default function Ekonomi(){
     heading='Jämför hela lånekostnaden – inte bara månadsbeloppet.'
     lead='En lägre månadsbetalning kan bero på längre löptid. Jämför därför effektiv ränta, avgifter, löptid och total återbetalning.'
     icon={CircleDollarSign}
-    compareHref='/ekonomi/#jamfor-lan'
+    compareHref='/ekonomi/jamfor-privatlan/'
     compareLabel='Jämför privatlån'
     helpHref='/verktyg/hushallskostnadskollen/'
     helpLabel='Börja med hushållskostnaderna'
@@ -26,8 +26,8 @@ export default function Ekonomi(){
     introTitle='Fyra uppgifter gör låneerbjudanden jämförbara'
     introText='Räntan sätts individuellt. Därför är det de faktiska erbjudandenas effektiva ränta, avgifter, löptid och total återbetalning som behöver jämföras.'
     guides={[
-      {href:'/ekonomi/#jamfor-lan',title:'Så jämför du privatlån',text:'Fyra uppgifter som avgör kostnaden.'},
-      {href:'/ekonomi/#samlingslan',title:'Samlingslån',text:'När kan det faktiskt sänka kostnaden?'},
+      {href:'/ekonomi/jamfor-privatlan/',title:'Så jämför du privatlån',text:'Fyra uppgifter som avgör kostnaden.'},
+      {href:'/ekonomi/samlingslan/',title:'Samlingslån',text:'När kan det faktiskt sänka kostnaden?'},
       {href:'/verktyg/hushallskostnadskollen/',title:'Hushållskostnadskollen',text:'Se helheten innan du ändrar lån.'},
       {href:'/guide/arskoll-fasta-kostnader/',title:'Årskoll av fasta kostnader',text:'Gå igenom hushållets återkommande avtal.'},
     ]}
