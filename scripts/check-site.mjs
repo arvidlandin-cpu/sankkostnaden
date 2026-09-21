@@ -72,45 +72,47 @@ for (const file of sourceFiles) {
   const source = fs.readFileSync(file, 'utf8');
   const currentRoute = file.startsWith(pagesDir) ? pageRoute(file) : null;
   const currentIds = idsIn(source);
-  const hrefRegex = /href\s*=\s*['"]([^'"]+)['"]/g;
-  let match;
+  const checked = new Set();
 
-  while ((match = hrefRegex.exec(source))) {
-    const href = match[1];
+  function validateInternal(value, origin = 'link') {
+    if (!value || checked.has(`${origin}:${value}`)) return;
+    checked.add(`${origin}:${value}`);
 
-    if (/^\.\.?\//.test(href)) {
-      errors.push(`${path.relative(root, file)}: relative internal href ${href}`);
-      continue;
+    if (value.includes('${')) return;
+
+    if (/^\.\.?\//.test(value)) {
+      errors.push(`${path.relative(root, file)}: relative internal ${origin} ${value}`);
+      return;
     }
 
-    if (href.startsWith('#')) {
-      const fragment = href.slice(1);
-      if (currentRoute && fragment && !currentIds.has(fragment)) {
-        errors.push(`${path.relative(root, file)}: missing #${fragment}`);
+    if (value.startsWith('#')) {
+      const fragment = value.slice(1);
+      if (fragment && !currentIds.has(fragment)) {
+        errors.push(`${path.relative(root, file)}: fragile or missing local target #${fragment}`);
       }
-      continue;
+      return;
     }
 
-    if (!href.startsWith('/') || href.startsWith('//')) continue;
+    if (!value.startsWith('/') || value.startsWith('//')) return;
 
-    const pathname = normalizeRoute(href);
+    const pathname = normalizeRoute(value);
     const publicPath = path.join(publicDir, pathname.replace(/^\//, ''));
-    if (fs.existsSync(publicPath)) continue;
-    if (/\.[a-z0-9]{2,16}$/i.test(pathname)) continue;
+    if (fs.existsSync(publicPath)) return;
+    if (/\.[a-z0-9]{2,16}$/i.test(pathname)) return;
 
     if (!routes.has(pathname)) {
-      errors.push(`${path.relative(root, file)}: missing route ${href}`);
-      continue;
+      errors.push(`${path.relative(root, file)}: missing route ${value}`);
+      return;
     }
 
     if (redirectSources.has(pathname)) {
-      errors.push(`${path.relative(root, file)}: links to redirected alias ${href}`);
-      continue;
+      errors.push(`${path.relative(root, file)}: links to redirected alias ${value}`);
+      return;
     }
 
-    const hashIndex = href.indexOf('#');
+    const hashIndex = value.indexOf('#');
     if (hashIndex >= 0) {
-      const fragment = href.slice(hashIndex + 1).split('?')[0];
+      const fragment = value.slice(hashIndex + 1).split('?')[0];
       const targetFile = routeFiles.get(pathname);
       if (fragment && targetFile) {
         const targetSource = fs.readFileSync(targetFile, 'utf8');
@@ -119,6 +121,21 @@ for (const file of sourceFiles) {
         }
       }
     }
+  }
+
+  // Explicit hrefs.
+  const hrefRegex = /href\s*=\s*['"]([^'"]+)['"]/g;
+  let match;
+  while ((match = hrefRegex.exec(source))) validateInternal(match[1], 'href');
+
+  // Catch route values hidden in config objects, ternaries and component props.
+  // This specifically prevents clickable UI from silently pointing at a missing
+  // route or fragment even when the final href is assembled indirectly.
+  const routeLiteralRegex = /['"]((?:\/|#)[^'"\s<>]*)['"]/g;
+  while ((match = routeLiteralRegex.exec(source))) {
+    const value = match[1];
+    if (value.startsWith('/http')) continue;
+    validateInternal(value, 'route literal');
   }
 }
 
