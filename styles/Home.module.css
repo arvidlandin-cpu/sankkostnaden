@@ -931,3 +931,11 @@
 .guideGroups{padding:18px;gap:20px}
 .footer{padding-top:34px;padding-bottom:42px}
 @media(max-width:760px){.popularSection{padding-top:34px!important;padding-bottom:36px!important}.guideLibrarySection{padding-bottom:24px}.trustBand{width:calc(100% - 36px);margin-bottom:24px;padding:15px 16px;align-items:flex-start;flex-direction:column;gap:10px}.guideGroups{grid-template-columns:1fr}.footer{padding-top:30px;padding-bottom:34px}}
+
+
+/* Minimal homepage after hero 2026-09-22 */
+.guideLibrarySection{padding-top:26px!important}
+.trustBand{margin-bottom:26px}
+@media(max-width:760px){
+  .guideLibrarySection{padding-top:20px!important}
+}
