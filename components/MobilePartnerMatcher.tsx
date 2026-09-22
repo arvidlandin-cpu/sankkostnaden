@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { ArrowRight, ArrowUpRight, BadgeCheck, Check, RotateCcw, Users, UserRound, Waves, Unplug } from 'lucide-react';
-import { getActivePartners, type ActivePartner } from '../lib/partners';
+import { getActivePartners, partnerRankScore, type ActivePartner } from '../lib/partners';
 
 type Household='one'|'family';
 type Priority='flex'|'data'|'open';
@@ -13,7 +13,7 @@ function track(event:string,params:Record<string,string|number>){
 }
 
 function scorePartner(p:ActivePartner,household:Household,priority:Priority){
-  let score=p.priority||0;
+  let score=partnerRankScore(p);
   if(household==='family'&&p.intents.includes('family')) score+=45;
   if(household==='one'&&!p.intents.includes('family')) score+=4;
   if(priority==='flex'&&p.intents.includes('no-binding')) score+=40;
