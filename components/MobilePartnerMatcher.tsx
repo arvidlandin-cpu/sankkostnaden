@@ -91,7 +91,7 @@ export default function MobilePartnerMatcher(){
     <div className='directPartnerBlock'>
       <div className='directPartnerHead'><div><small>REDO ATT JÄMFÖRA?</small><strong>Se mobilabonnemang direkt</strong></div><span>Partnerlänkar</span></div>
       <div className='directPartnerGrid'>{all.slice(0,4).map((p,i)=><a key={p.name} href={p.trackingUrl} target='_blank' rel='sponsored nofollow noopener' data-partner={p.name} data-category='mobil' data-intent='direct' data-placement='mobile_direct' onClick={()=>track('mobile_match_partner_click',{partner:p.name,household:'direct',priority:'open',position:i+1})}>
-        <span className='partnerWordmark'>{p.name}</span><b>{p.cta||'Se abonnemang'}<ArrowUpRight size={14}/></b>
+        <span className='partnerBrand'>{p.domain&&<img src={`https://www.google.com/s2/favicons?domain=${p.domain}&sz=128`} alt='' loading='lazy'/>}<span className='partnerWordmark'>{p.name}</span></span><b>{p.cta||'Se abonnemang'}<ArrowUpRight size={14}/></b>
       </a>)}</div>
       <p>Osäker? Svara på två frågor nedan så kortlistar vi relevanta operatörer åt dig.</p>
     </div>
