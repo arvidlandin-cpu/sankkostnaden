@@ -88,20 +88,12 @@ export default function MobilePartnerMatcher(){
       <h2>Vilka operatörer är mest relevanta för dig?</h2>
       <p>Vi har flera aktiva mobilpartners. I stället för att rada upp alla direkt hjälper vi dig att börja med tre alternativ som passar det du söker. Vi rankar inte aktuella priser – de kontrollerar du hos operatören.</p>
     </div>
-    <div className='visiblePartnerNames' aria-label='Aktiva mobilpartners i vårt urval'>
-      <span>Aktiva mobilpartners i vårt urval</span>
-      <div>{all.map((p,i)=><a
-        key={p.name}
-        href={p.trackingUrl}
-        data-partner={p.name}
-        data-category='mobil'
-        data-intent='partner-chip'
-        data-placement='visible_partner_names'
-        target='_blank'
-        rel='sponsored nofollow noopener'
-        aria-label={`Besök ${p.name}`}
-        onClick={()=>track('mobile_match_partner_click',{partner:p.name,household:'chip',priority:'open',position:i+1})}
-      ><strong>{p.name}</strong></a>)}</div>
+    <div className='directPartnerBlock'>
+      <div className='directPartnerHead'><div><small>REDO ATT JÄMFÖRA?</small><strong>Se mobilabonnemang direkt</strong></div><span>Partnerlänkar</span></div>
+      <div className='directPartnerGrid'>{all.slice(0,4).map((p,i)=><a key={p.name} href={p.trackingUrl} target='_blank' rel='sponsored nofollow noopener' data-partner={p.name} data-category='mobil' data-intent='direct' data-placement='mobile_direct' onClick={()=>track('mobile_match_partner_click',{partner:p.name,household:'direct',priority:'open',position:i+1})}>
+        <span className='partnerWordmark'>{p.name}</span><b>{p.cta||'Se abonnemang'}<ArrowUpRight size={14}/></b>
+      </a>)}</div>
+      <p>Osäker? Svara på två frågor nedan så kortlistar vi relevanta operatörer åt dig.</p>
     </div>
 
     <div className='matchQuestions'>
