@@ -118,35 +118,12 @@
   backdrop-filter:blur(18px) saturate(125%);
   -webkit-backdrop-filter:blur(18px) saturate(125%);
 }
-.progress{
-  display:grid;
-  grid-template-columns:1fr auto;
-  gap:14px;
-  align-items:center;
-  margin-bottom:22px;
-}
-.progress::before{
-  content:'';
-  grid-column:1;
-  grid-row:1;
-  height:6px;
-  border-radius:999px;
-  background:#e7eae4;
-}
-.progress i{
-  grid-column:1;
-  grid-row:1;
-  width:42%;
-  height:6px;
-  border-radius:999px;
-  background:#dff46a;
-  transition:width .2s ease;
-}
-.progress i.progressTwo{width:100%}
-.progress small{
-  color:#59655d;
+.cardEyebrow{
+  margin-bottom:10px;
+  color:#647067;
   font-size:10px;
-  font-weight:850;
+  font-weight:900;
+  letter-spacing:.12em;
 }
 .card h2{
   margin:0 0 17px;
@@ -358,5 +335,5 @@
   .proofInner small{font-size:8.8px}
 }
 @media(prefers-reduced-motion:reduce){
-  .progress i,.areaList button,.choiceList a{transition:none}
+  .areaList button,.choiceList a{transition:none}
 }
