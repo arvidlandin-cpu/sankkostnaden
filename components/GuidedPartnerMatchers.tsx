@@ -3,7 +3,7 @@ import {
   ArrowRight, ArrowUpRight, BadgeCheck, Check, CircleDollarSign, GitCompareArrows,
   Home, HousePlug, PawPrint, RotateCcw, Search, ShieldCheck, Sparkles, Unplug, Wifi, Zap
 } from 'lucide-react';
-import { getActivePartners, partners, type ActivePartner, type PartnerIntent } from '../lib/partners';
+import { getActivePartners, partnerRankScore, partners, type ActivePartner, type PartnerIntent } from '../lib/partners';
 
 function track(event:string,params:Record<string,string|number>){
   if(typeof window==='undefined') return;
@@ -105,11 +105,11 @@ export function BroadbandPartnerMatcher(){
     if(!access||!start) return [];
     return [...all].sort((a,b)=>{
       const score=(p:ActivePartner)=>{
-        let s=p.priority||0;
+        let s=partnerRankScore(p);
         if(p.name==='Bredbandsval.se'&&(access==='unknown'||start==='compare')) s+=80;
         if(access==='fiber'&&p.intents.includes('fiber')) s+=35;
         if(access==='mobile'&&p.intents.includes('mobile-broadband')) s+=50;
-        if(start==='direct'&&p.name==='Ownit') s+=45;
+        if(start==='direct'&&p.name!=='Bredbandsval.se') s+=20;
         if(start==='direct'&&p.name==='Tre'&&access==='mobile') s+=45;
         return s;
       };
@@ -163,11 +163,11 @@ export function ElectricityPartnerMatcher(){
   const matches=useMemo(()=>{
     if(!consumption||!pathChoice) return [];
     const score=(p:ActivePartner)=>{
-      let s=p.priority||0;
+      let s=partnerRankScore(p);
       if(pathChoice==='compare'&&p.name==='Elskling') s+=90;
-      if(pathChoice==='provider'&&p.name==='Vattenfall') s+=65;
+      if(pathChoice==='provider'&&p.name!=='Elskling') s+=24;
       if(pathChoice==='source'&&p.name==='Kärnfull Energi') s+=95;
-      if(pathChoice==='provider'&&p.name!=='Elskling') s+=12;
+      
       return s;
     };
     return [...all].sort((a,b)=>score(b)-score(a)||a.name.localeCompare(b.name,'sv')).slice(0,3);
@@ -251,7 +251,7 @@ export function LoanPartnerMatcher(){
   const matches=useMemo(()=>{
     if(!purpose||!focus) return [];
     const score=(p:ActivePartner)=>{
-      let s=p.priority||0;
+      let s=partnerRankScore(p);
       if(purpose==='consolidate'&&p.name==='Samly') s+=80;
       if(purpose==='new'&&p.name==='Zmarta') s+=45;
       if(purpose==='new'&&p.name==='Lendella') s+=25;
