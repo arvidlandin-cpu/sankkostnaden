@@ -67,10 +67,10 @@ const categories: Category[] = [
 ];
 
 const initialAnswers: Answers = {
-  el: { monthly: 0, reviewed: 0, friction: 0, fit: 0 },
-  bredband: { monthly: 0, reviewed: 0, friction: 0, fit: 0 },
-  mobil: { monthly: 0, reviewed: 0, friction: 0, fit: 0 },
-  forsakring: { monthly: 0, reviewed: 0, friction: 0, fit: 0 },
+  el: { monthly: 0, reviewed: -1, friction: -1, fit: -1 },
+  bredband: { monthly: 0, reviewed: -1, friction: -1, fit: -1 },
+  mobil: { monthly: 0, reviewed: -1, friction: -1, fit: -1 },
+  forsakring: { monthly: 0, reviewed: -1, friction: -1, fit: -1 },
 };
 
 const reviewOptions = [
@@ -90,13 +90,12 @@ export default function SavingsApp() {
   const [answers, setAnswers] = useState<Answers>(initialAnswers);
   const [active, setActive] = useState<CostKey>('el');
   const [household, setHousehold] = useState(2);
-  const [touched, setTouched] = useState<Record<CostKey, boolean>>({ el: false, bredband: false, mobil: false, forsakring: false });
 
   const results = useMemo(() => categories.map(category => {
     const answer = answers[category.key];
-    const ageScore = answer.reviewed * 18;
-    const frictionScore = answer.friction * 13;
-    const fitScore = answer.fit * 10;
+    const ageScore = Math.max(0, answer.reviewed) * 18;
+    const frictionScore = Math.max(0, answer.friction) * 13;
+    const fitScore = Math.max(0, answer.fit) * 10;
     const spendSignal = answer.monthly >= 1000 ? 12 : answer.monthly >= 500 ? 8 : answer.monthly > 0 ? 4 : 0;
     const householdSignal = category.key === 'mobil' && household >= 3 ? 8 : 0;
     const score = Math.min(100, ageScore + frictionScore + fitScore + spendSignal + householdSignal);
@@ -110,18 +109,16 @@ export default function SavingsApp() {
   }).sort((a, b) => b.score - a.score), [answers, household]);
 
   const top = results[0];
-  const completed = Object.values(touched).filter(Boolean).length;
+  const completed = categories.filter(category => { const a=answers[category.key]; return a.reviewed >= 0 && a.friction >= 0 && a.fit >= 0; }).length;
   const totalMonthly = Object.values(answers).reduce((sum, answer) => sum + answer.monthly, 0);
 
   const update = (key: CostKey, field: keyof Answers[CostKey], value: number) => {
     setAnswers(previous => ({ ...previous, [key]: { ...previous[key], [field]: value } }));
-    setTouched(previous => ({ ...previous, [key]: true }));
   };
 
   const reset = () => {
     setAnswers(initialAnswers);
     setHousehold(2);
-    setTouched({ el: false, bredband: false, mobil: false, forsakring: false });
     setActive('el');
   };
 
