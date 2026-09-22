@@ -19,6 +19,8 @@ jobs:
         run: npm install --progress=false
       - name: Check internal routes
         run: npm run check
+      - name: Check metadata and tracking integrity
+        run: npm run check:integrity
       - name: Build
         run: npx next build
       - name: Check generated links and anchors
