@@ -42,7 +42,18 @@ function VisiblePartnerNames({items,label='Aktiva partners i vårt urval'}:{item
   if(!items.length) return null;
   return <div className='visiblePartnerNames' aria-label={label}>
     <span>{label}</span>
-    <div>{items.map(p=><strong key={p.name}>{p.name}</strong>)}</div>
+    <div>{items.map((p,i)=><a
+      key={p.name}
+      href={p.trackingUrl}
+      data-partner={p.name}
+      data-category={p.category}
+      data-intent='partner-chip'
+      data-placement='visible_partner_names'
+      target='_blank'
+      rel='sponsored nofollow noopener'
+      aria-label={`Besök ${p.name}`}
+      onClick={()=>track('guided_partner_click',{partner:p.name,category:p.category,intent:'partner-chip',placement:'visible_partner_names',position:i+1})}
+    ><strong>{p.name}</strong></a>)}</div>
   </div>;
 }
 
