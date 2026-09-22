@@ -28,6 +28,7 @@ export default function Mobil(){
       {href:'/mobil/billigaste-mobilabonnemanget/',title:'Billigaste mobilabonnemanget',text:'Jämför verklig förstaårskostnad.'},
       {href:'/mobil/hur-mycket-surf-behover-jag/',title:'Hur mycket surf behöver jag?',text:'Tre frågor om din användning.'},
       {href:'/mobil/familjeabonnemang/',title:'Familjeabonnemang',text:'Räkna hela familjens kostnad.'},
+      {href:'/mobil/refurbished-mobil/',title:'Refurbished mobil',text:'Sänk inköpspriset på telefonen – jämför skick, batteri och garanti.'},
       {href:'/mobil/utan-bindningstid/',title:'Utan bindningstid',text:'Jämför flexibilitet och pris.'},
     ]}
     moreGuides={[
