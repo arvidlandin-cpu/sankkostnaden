@@ -90,7 +90,18 @@ export default function MobilePartnerMatcher(){
     </div>
     <div className='visiblePartnerNames' aria-label='Aktiva mobilpartners i vårt urval'>
       <span>Aktiva mobilpartners i vårt urval</span>
-      <div>{all.map(p=><strong key={p.name}>{p.name}</strong>)}</div>
+      <div>{all.map((p,i)=><a
+        key={p.name}
+        href={p.trackingUrl}
+        data-partner={p.name}
+        data-category='mobil'
+        data-intent='partner-chip'
+        data-placement='visible_partner_names'
+        target='_blank'
+        rel='sponsored nofollow noopener'
+        aria-label={`Besök ${p.name}`}
+        onClick={()=>track('mobile_match_partner_click',{partner:p.name,household:'chip',priority:'open',position:i+1})}
+      ><strong>{p.name}</strong></a>)}</div>
     </div>
 
     <div className='matchQuestions'>
