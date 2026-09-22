@@ -1,7 +1,28 @@
-import { Smartphone } from 'lucide-react';
+import Link from 'next/link';
+import { ArrowRight, ArrowUpRight, Smartphone } from 'lucide-react';
 import CategoryLanding from '../components/CategoryLanding';
+import { getActivePartners } from '../lib/partners';
 
 export default function Mobil(){
+  const refurbished=getActivePartners('mobil','refurbished',1)[0];
+  const refurbishedBlock=refurbished?<section className='refurbishedSpotlight' aria-label='Refurbished mobil'>
+    <div className='refurbishedSpotlightCopy'>
+      <p className='kicker'>SPARA ÄVEN PÅ TELEFONEN</p>
+      <h2>Ska du byta mobil också?</h2>
+      <p>Abonnemanget är bara en del av mobilkostnaden. En refurbished iPhone kan sänka inköpspriset rejält jämfört med nytt – kontrollera modell, skick, batteri och garanti innan köp.</p>
+      <div className='refurbishedSpotlightActions'>
+        <a href={refurbished.trackingUrl} data-partner={refurbished.name} data-category='mobil' data-intent='refurbished' data-placement='mobile_hub_refurbished' target='_blank' rel='sponsored nofollow noopener'>Se refurbished Apple hos {refurbished.name} <ArrowUpRight size={16}/></a>
+        <Link href='/mobil/refurbished-mobil/'>Läs guiden först <ArrowRight size={16}/></Link>
+      </div>
+      <small>Partnerlänk · vi kan få provision om du köper. Det påverkar inte priset för dig.</small>
+    </div>
+    <div className='refurbishedSpotlightBrand'>
+      <img src={`https://www.google.com/s2/favicons?domain=${refurbished.domain}&sz=128`} alt='' loading='lazy'/>
+      <strong>{refurbished.name}</strong>
+      <span>Refurbished Apple</span>
+    </div>
+  </section>:null;
+
   return <CategoryLanding
     category='mobil'
     canonical='https://sankkostnaden.se/mobil/'
@@ -16,6 +37,7 @@ export default function Mobil(){
     helpHref='/mobil/hur-mycket-surf-behover-jag/'
     helpLabel='Hjälp mig välja surf'
     partnerHeading='Aktuella mobilalternativ'
+    afterPartners={refurbishedBlock}
     checks={[
       'Faktisk surfmängd per månad',
       'Täckning där du oftast använder mobilen',
