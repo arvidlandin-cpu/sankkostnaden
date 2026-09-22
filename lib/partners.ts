@@ -1,6 +1,6 @@
 export type PartnerCategory = 'el' | 'bredband' | 'mobil' | 'forsakring' | 'ekonomi';
 export type PartnerStatus = 'active' | 'pending' | 'closed';
-export type PartnerIntent = 'compare' | 'family' | 'data' | 'no-binding' | 'fiber' | 'mobile-broadband' | 'pet' | 'home' | 'travel' | 'health' | 'electricity' | 'refurbished' | 'loan' | 'saving';
+export type PartnerIntent = 'compare' | 'family' | 'data' | 'no-binding' | 'fiber' | 'mobile-broadband' | 'pet' | 'home' | 'travel' | 'health' | 'claims' | 'electricity' | 'refurbished' | 'loan' | 'saving';
 
 export type Partner = {
   name: string;
@@ -41,6 +41,7 @@ export const partners: Partner[] = [
   { name:'Lassie', domain:'lassie.co', category:'forsakring', note:'Djurförsäkring. Kontrollera aktuell premie, självrisk och omfattning innan du tecknar.', trackingUrl:'https://ion.lassie.co/t/t?a=1644319682&as=2111115937&t=2&tk=1', status:'active', intents:['pet'], priority:8, monetizationWeight:9.5 },
   { name:'Gofido', domain:'gofido.se', category:'forsakring', note:'Digital hemförsäkring. Jämför premie, självrisk, omfattning och villkor innan du tecknar.', trackingUrl:'https://addrevenue.io/t?a=984856&c=3469603', status:'active', intents:['home','compare'], priority:9, cta:'Se pris & villkor' },
   { name:'ERGO Försäkring', domain:'erv.se', category:'forsakring', note:'ERGO Försäkring erbjuder reseförsäkringar via Europeiska ERV och vårdförsäkringar via DKV Hälsa. Kontrollera aktuell omfattning, självrisk, undantag och villkor för den försäkring du behöver.', trackingUrl:'https://on.erv.se/t/t?a=297967547&as=2111115937&t=2&tk=1', status:'active', intents:['travel','health'], priority:8, monetizationWeight:0.5, cta:'Se försäkringar hos ERGO' },
+  { name:'Insurello', domain:'insurello.se', category:'forsakring', note:'Tjänst som hjälper privatpersoner att hitta möjliga försäkringsersättningar och driva skadeärenden. Kontrollera avgiftsmodell, fullmakt och villkor innan du startar ett ärende.', trackingUrl:'https://go.adt256.com/t/t?a=1616939388&as=2111115937&t=2&tk=1', status:'active', intents:['claims'], priority:9, cta:'Se om du kan ha rätt till ersättning' },
   { name:'Happens', category:'forsakring', note:'Jämförelsetjänst för försäkringar.', trackingUrl:null, status:'pending', intents:['home','compare'] },
   { name:'Svedea', domain:'svedea.se', category:'forsakring', note:'Försäkringsbolag med bland annat hem-, villa-, bil-, båt-, MC-, hund- och kattförsäkring. Kontrollera aktuell premie, självrisk, omfattning och villkor för den försäkring du behöver.', trackingUrl:'https://addrevenue.io/t?a=987546&c=3469603', status:'active', intents:['home','pet','compare'], priority:9, monetizationWeight:2.5, cta:'Se försäkringar hos Svedea' },
   { name:'Sejfa', category:'forsakring', note:'Digital hemförsäkring.', trackingUrl:null, status:'pending', intents:['home'] },
