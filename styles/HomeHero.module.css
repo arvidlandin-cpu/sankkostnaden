@@ -30,7 +30,7 @@
   width:min(1500px,calc(100% - 56px));
   /* Scale the visual stage on large/maximized windows so the photo keeps
      roughly the same crop instead of getting progressively flatter. */
-  min-height:clamp(540px,max(34vw,62vh),760px);
+  min-height:clamp(610px,max(38vw,70vh),980px);
   margin:0 auto;
   padding:48px 0 50px;
   display:grid;
@@ -255,14 +255,14 @@
 }
 .proofInner{
   width:min(1500px,calc(100% - 48px));
-  min-height:82px;
+  min-height:100px;
   margin:0 auto;
   display:grid;
-  grid-template-columns:repeat(3,1fr);
+  grid-template-columns:repeat(4,1fr);
   align-items:center;
 }
 .proofInner>div{
-  min-height:54px;
+  min-height:62px;
   padding:0 28px;
   display:flex;
   align-items:center;
@@ -361,54 +361,4 @@
 }
 @media(prefers-reduced-motion:reduce){
   .progress i,.areaList button,.choiceList a{transition:none}
-}
-
-
-/* Compact hero 2026-09-22 */
-.inner{
-  min-height:clamp(470px,max(30vw,54vh),640px);
-  padding-top:34px;
-  padding-bottom:34px;
-}
-.card{padding:22px}
-.progress{margin-bottom:16px}
-.card h2{margin-bottom:13px;font-size:25px}
-.areaList,.choiceList{gap:7px}
-.areaList button,.choiceList a{min-height:49px}
-.copy>p{margin-top:15px}
-@media(max-width:600px){
-  .inner{padding-top:24px;padding-bottom:20px;gap:20px}
-  .copy h1{font-size:40px}
-  .card{padding:16px 14px 14px}
-}
-
-
-/* Compact first-screen journey 2026-09-22 */
-.inner{
-  min-height:clamp(455px,max(29vw,52vh),610px);
-  padding-top:30px;
-  padding-bottom:32px;
-}
-.copy h1{font-size:clamp(50px,4.35vw,66px)}
-.copy>p{margin-top:14px;font-size:16px}
-.badge{margin-bottom:14px;padding:6px 10px}
-.card{max-width:410px;padding:21px}
-.progress{margin-bottom:15px}
-.card h2{margin-bottom:12px;font-size:25px}
-.areaList,.choiceList{gap:6px}
-.areaList button,.choiceList a{min-height:48px;padding-top:7px;padding-bottom:7px}
-.areaList button>span{width:31px;height:31px}
-.choiceList a{padding:9px 11px}
-@media(max-width:860px){
-  .inner{padding-top:28px;padding-bottom:26px}
-}
-@media(max-width:600px){
-  .inner{padding-top:22px;padding-bottom:20px;gap:20px}
-  .copy h1{font-size:39px}
-  .copy>p{margin-top:11px;font-size:14px}
-  .badge{margin-bottom:11px}
-  .card{padding:16px 14px}
-  .progress{margin-bottom:12px}
-  .card h2{font-size:21px}
-  .areaList button,.choiceList a{min-height:45px}
 }
