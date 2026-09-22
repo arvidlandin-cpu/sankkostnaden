@@ -17,7 +17,8 @@ function walk(dir){
 function routeFor(file){
   const rel=path.relative(pagesDir,file).replace(/\\/g,'/');
   if(rel.startsWith('_')) return null;
-  let route='/'+rel.replace(/\.(tsx|ts|jsx|js)$/,'').replace(/\/index$/,'');
+  let route='/'+rel.replace(/\.(tsx|ts|jsx|js)$/,'');
+  route=route.replace(/\/index$/,'') || '/';
   return route==='/'?'/':route.replace(/\/$/,'');
 }
 function canonicalFor(route){
