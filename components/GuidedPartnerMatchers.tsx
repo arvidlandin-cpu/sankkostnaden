@@ -44,7 +44,7 @@ function DirectPartnerStrip({items,label='Gå direkt till partner',placement}:{i
   return <div className='directPartnerBlock'>
     <div className='directPartnerHead'><div><small>REDO ATT JÄMFÖRA?</small><strong>{label}</strong></div><span>Partnerlänkar</span></div>
     <div className='directPartnerGrid'>{featured.map((p,i)=><a key={p.name} href={p.trackingUrl} target='_blank' rel='sponsored nofollow noopener' data-partner={p.name} data-category={p.category} data-intent='direct' data-placement={placement} onClick={()=>track('guided_partner_click',{partner:p.name,category:p.category,intent:'direct',placement,position:i+1})}>
-      <span className='partnerWordmark'>{p.name}</span><b>{p.cta||`Se aktuella alternativ`}<ArrowUpRight size={14}/></b>
+      <span className='partnerBrand'>{p.domain&&<img src={`https://www.google.com/s2/favicons?domain=${p.domain}&sz=128`} alt='' loading='lazy'/>}<span className='partnerWordmark'>{p.name}</span></span><b>{p.cta||`Se aktuella alternativ`}<ArrowUpRight size={14}/></b>
     </a>)}</div>
     <p>Osäker? Använd hjälpen nedan så kortlistar vi relevanta alternativ åt dig.</p>
   </div>;
