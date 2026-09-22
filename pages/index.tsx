@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { ArrowRight, ChevronRight, PiggyBank, ShieldCheck, Smartphone, Wifi, Zap } from 'lucide-react';
 import styles from '../styles/Home.module.css';
 import HomeHero from '../components/HomeHero';
+import { getActivePartners } from '../lib/partners';
 
 const categories=[
   {title:'Bredband',subtitle:'Pris, fart & adress',href:'/bredband/bredband-pa-min-adress/',image:'/design/card-bredband.webp'},
@@ -59,6 +60,13 @@ function ProtectedEmailLink(){
 }
 
 export default function Home(){
+  const featuredPartners=[
+    getActivePartners('bredband',undefined,1)[0],
+    getActivePartners('el',undefined,1)[0],
+    getActivePartners('mobil',undefined,1)[0],
+    getActivePartners('forsakring',undefined,1)[0],
+    getActivePartners('ekonomi','loan',1)[0],
+  ].filter(Boolean);
   return <>
     <Head>
       <title>Sänk din månadskostnad – jämför el, bredband, mobil, försäkring & lån | Sänk Kostnaden</title>
@@ -92,6 +100,12 @@ export default function Home(){
             <div className={styles.popularBody}><small>{subtitle}</small><ArrowRight size={17}/></div>
           </a>)}
         </div>
+      </section>
+
+      <section className='homePartnerJump' aria-label='Populära partners'>
+        <div className='homePartnerJumpHead'><div><p>REDO ATT GÅ VIDARE?</p><h2>Gå direkt till en partner.</h2></div><span>Vill du ha hjälp först? Välj en jämförelse ovan eller ett snabbtest nedan.</span></div>
+        <div className='homePartnerJumpGrid'>{featuredPartners.map((p:any)=><a key={p.name} href={p.trackingUrl} target='_blank' rel='sponsored nofollow noopener' data-partner={p.name} data-category={p.category} data-intent='direct' data-placement='homepage_partner_jump'><strong>{p.name}</strong><span>{p.cta||'Se aktuella alternativ'} <ArrowRight size={14}/></span></a>)}</div>
+        <small>Kommersiella länkar – vi kan få provision om du blir kund. Urvalet omfattar inte hela marknaden.</small>
       </section>
 
       <section className={`${styles.section} ${styles.helpSection}`}>
