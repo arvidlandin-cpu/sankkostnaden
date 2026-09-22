@@ -2,6 +2,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { ArrowLeft, ArrowRight, Check, PiggyBank } from 'lucide-react';
 import PartnerDirectory from './PartnerDirectory';
+import type { ReactNode } from 'react';
 import type { PartnerCategory, PartnerIntent } from '../lib/partners';
 
 type Guide={href:string;title:string;text:string};
@@ -26,6 +27,7 @@ type Props={
   introTitle:string;
   introText:string;
   showPartners?:boolean;
+  afterPartners?:ReactNode;
 };
 
 const labels:Record<PartnerCategory,string>={bredband:'Bredband',el:'El',mobil:'Mobil',forsakring:'Försäkring',ekonomi:'Ekonomi'};
@@ -33,7 +35,7 @@ const labels:Record<PartnerCategory,string>={bredband:'Bredband',el:'El',mobil:'
 export default function CategoryLanding({
   category,canonical,title,description,kicker,heading,lead,icon:Icon,
   compareHref,compareLabel,helpHref,helpLabel,partnerIntent,partnerHeading,
-  checks,guides,moreGuides=[],introTitle,introText,showPartners=true,
+  checks,guides,moreGuides=[],introTitle,introText,showPartners=true,afterPartners,
 }:Props){
   const schema={'@context':'https://schema.org','@graph':[
     {'@type':'WebPage',name:title,description,url:canonical,isPartOf:{'@type':'WebSite',name:'Sänk Kostnaden',url:'https://sankkostnaden.se/'}},
@@ -91,6 +93,7 @@ export default function CategoryLanding({
         </section>
 
         {showPartners&&<PartnerDirectory category={category} intent={partnerIntent} heading={partnerHeading}/>} 
+        {afterPartners}
 
         <section className='categoryGuideSection'>
           <div className='categoryGuideHead'><div><p className='kicker'>GUIDER</p><h2>Vill du läsa först?</h2></div><p>Välj den guide som motsvarar din fråga. Du behöver inte läsa allt för att komma vidare.</p></div>
