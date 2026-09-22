@@ -26,6 +26,10 @@ function sectionCopy(category: PartnerCategory, intent?: PartnerIntent) {
     kicker: 'JÄMFÖR BREDBAND · ÖPPNAS I NY FLIK',
     intro: 'Pris och tillgänglighet beror på adress och nät. Kontrollera vad som går att beställa hos dig och jämför samma hastighet, ordinarie pris, kampanj och bindningstid.',
   };
+  if (category === 'mobil' && intent === 'refurbished') return {
+    kicker: 'REFURBISHED MOBIL · ÖPPNAS I NY FLIK',
+    intro: 'Här visas aktiva partners för refurbished mobiler. Jämför modell, lagring, skick, batteri, garanti och totalpris innan du köper.',
+  };
   if (category === 'mobil') return {
     kicker: 'JÄMFÖR MOBIL · ÖPPNAS I NY FLIK',
     intro: 'Jämför samma surfbehov och kontrollera kampanjpris, ordinarie pris, nät, bindningstid och övriga villkor innan du väljer.',
