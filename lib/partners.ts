@@ -1,6 +1,6 @@
 export type PartnerCategory = 'el' | 'bredband' | 'mobil' | 'forsakring' | 'ekonomi';
 export type PartnerStatus = 'active' | 'pending' | 'closed';
-export type PartnerIntent = 'compare' | 'family' | 'data' | 'no-binding' | 'fiber' | 'mobile-broadband' | 'pet' | 'home' | 'electricity' | 'refurbished' | 'loan' | 'saving';
+export type PartnerIntent = 'compare' | 'family' | 'data' | 'no-binding' | 'fiber' | 'mobile-broadband' | 'pet' | 'home' | 'travel' | 'health' | 'electricity' | 'refurbished' | 'loan' | 'saving';
 
 export type Partner = {
   name: string;
@@ -25,6 +25,7 @@ export const partners: Partner[] = [
   { name:'Mölndal Energi', category:'el', note:'Elhandelsbolag med elavtal för privatkunder.', trackingUrl:null, status:'pending', intents:['electricity'] },
   { name:'Bredbandsval.se', domain:'bredbandsval.se', category:'bredband', note:'Jämförelsetjänst för bredband och TV. Tillgänglighet och pris kontrolleras för din adress.', trackingUrl:'https://visit.bredbandsval.se/click?p=390345&a=3498422&url=https%3A%2F%2Fwww.bredbandsval.se%2F', status:'active', intents:['compare','fiber','mobile-broadband','no-binding'], priority:10, cta:'Se bredband & priser' },
   { name:'Ownit', domain:'ownit.se', category:'bredband', note:'Bredband via fiber. Kontrollera tillgänglighet på adressen, aktuell hastighet, pris, utrustning och villkor hos Ownit.', trackingUrl:'https://go.adt242.com/t/t?a=1211102606&as=2111115937&t=2&tk=1', status:'active', intents:['compare','fiber'], priority:9, cta:'Se bredband hos Ownit' },
+  { name:'Internetport', domain:'internetport.se', category:'bredband', note:'Svensk bredbandsleverantör med fiber via stadsnät och mobilt 4G/5G-bredband. Kontrollera tillgänglighet, hastighet, pris och bindningstid på din adress.', trackingUrl:'https://in.internetport.se/t/t?a=2075749856&as=2111115937&t=2&tk=1', status:'active', intents:['compare','fiber','mobile-broadband','no-binding'], priority:9, cta:'Se bredband hos Internetport' },
   { name:'Telenor', category:'bredband', note:'Bredband och TV.', trackingUrl:null, status:'pending', intents:['fiber','mobile-broadband'] },
   { name:'mResell', category:'mobil', note:'Refurbished Apple-produkter som kan sänka kostnaden jämfört med att köpa nytt.', trackingUrl:null, status:'pending', intents:['refurbished'] },
   { name:'Telia', domain:'telia.se', category:'mobil', note:'Mobilabonnemang och familjealternativ.', trackingUrl:'https://go.telia.se/t/t?a=1960510145&as=2111115937&t=2&tk=1', status:'active', intents:['compare','family','data'], priority:8 },
@@ -37,6 +38,7 @@ export const partners: Partner[] = [
   { name:'Sveland Djurförsäkring', domain:'sveland.se', category:'forsakring', note:'Djurförsäkring. Jämför premie, självrisk, omfattning och villkor för ditt djur.', trackingUrl:'https://in.sveland.se/t/t?a=1962700516&as=2111115937&t=2&tk=1', status:'active', intents:['pet'], priority:8 },
   { name:'Lassie', domain:'lassie.co', category:'forsakring', note:'Djurförsäkring. Kontrollera aktuell premie, självrisk och omfattning innan du tecknar.', trackingUrl:'https://ion.lassie.co/t/t?a=1644319682&as=2111115937&t=2&tk=1', status:'active', intents:['pet'], priority:8 },
   { name:'Gofido', domain:'gofido.se', category:'forsakring', note:'Digital hemförsäkring. Jämför premie, självrisk, omfattning och villkor innan du tecknar.', trackingUrl:'https://addrevenue.io/t?a=984856&c=3469603', status:'active', intents:['home','compare'], priority:9, cta:'Se pris & villkor' },
+  { name:'ERGO Försäkring', domain:'erv.se', category:'forsakring', note:'ERGO Försäkring erbjuder reseförsäkringar via Europeiska ERV och vårdförsäkringar via DKV Hälsa. Kontrollera aktuell omfattning, självrisk, undantag och villkor för den försäkring du behöver.', trackingUrl:'https://on.erv.se/t/t?a=297967547&as=2111115937&t=2&tk=1', status:'active', intents:['travel','health'], priority:8, cta:'Se försäkringar hos ERGO' },
   { name:'Happens', category:'forsakring', note:'Jämförelsetjänst för försäkringar.', trackingUrl:null, status:'pending', intents:['home','compare'] },
   { name:'Svedea', category:'forsakring', note:'Försäkringsbolag med bland annat hem-, villa-, bil- och djurförsäkring.', trackingUrl:null, status:'pending', intents:['home','pet','compare'] },
   { name:'Sejfa', category:'forsakring', note:'Digital hemförsäkring.', trackingUrl:null, status:'pending', intents:['home'] },
