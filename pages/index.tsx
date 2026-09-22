@@ -8,7 +8,7 @@ const categories=[
   {title:'Bredband',subtitle:'Pris, fart & adress',href:'/bredband/',image:'/design/card-bredband.webp'},
   {title:'El',subtitle:'Avtal & elpriser',href:'/elavtal/',image:'/design/card-el.webp'},
   {title:'Mobil',subtitle:'Surf & abonnemang',href:'/mobil/',image:'/design/card-mobil.webp'},
-  {title:'Försäkring',subtitle:'Djur, hem & person',href:'/forsakring/',image:'/design/card-forsakring.webp'},
+  {title:'Försäkring',subtitle:'Hem, djur & resa',href:'/forsakring/',image:'/design/card-forsakring.webp'},
   {title:'Lån & ekonomi',subtitle:'Ränta & totalkostnad',href:'/ekonomi/',image:'/design/card-ekonomi.webp'},
 ];
 
@@ -76,7 +76,7 @@ export default function Home(){
     <header className={styles.nav}>
       <a className={styles.brand} href='/'><span className={styles.brandMark}><PiggyBank size={21}/></span><span>Sänk Kostnaden</span></a>
       <nav><a href='/bredband/'>Bredband</a><a href='/elavtal/'>El</a><a href='/mobil/'>Mobil</a><a href='/forsakring/'>Försäkring</a><a href='/ekonomi/'>Ekonomi</a></nav>
-      <a className={styles.navCta} href='#jamfor'>Jämför priser <ArrowRight size={15}/></a>
+      <a className={styles.navCta} href='#jamfor'>Börja jämföra <ArrowRight size={15}/></a>
     </header>
 
     <main>
@@ -84,7 +84,7 @@ export default function Home(){
 
       <section className={`${styles.section} ${styles.popularSection}`} id='jamfor'>
         <div className={styles.popularHeader}>
-          <div><p>POPULÄRA JÄMFÖRELSER</p><h2>Börja med en kostnad.</h2><span>Välj området du vill se över först. Du kan alltid byta senare.</span></div>
+          <div><p>POPULÄRA JÄMFÖRELSER</p><h2>Börja med en kostnad.</h2><span>Välj det område du vill se över först. Du kan alltid byta senare.</span></div>
         </div>
         <div className={styles.popularGrid}>
           {categories.map(({title,subtitle,href,image})=><a className={styles.popularCard} href={href} key={title}>
@@ -113,7 +113,7 @@ export default function Home(){
         </div>
         <div className={styles.toolGrid}>
           <a href='/verktyg/hushallskostnadskollen/'><span>HUSHÅLLSKOLL</span><strong>Vad kostar ditt hushåll?</strong><p>Se månad, år och vilken jämförbar kostnad som är störst.</p><b>Starta kostnadskollen <ArrowRight size={16}/></b></a>
-          <a href='/app/'><span>BESPARINGSKALKYL</span><strong>Vad kan du spara?</strong><p>Räkna på dina egna priser och se skillnaden per år.</p><b>Starta kalkylen <ArrowRight size={16}/></b></a>
+          <a href='/app/'><span>KOSTNADSKOLLEN</span><strong>Vilket avtal bör du se över först?</strong><p>Svara på några frågor och få en prioritering mellan el, bredband, mobil och försäkring.</p><b>Starta Kostnadskollen <ArrowRight size={16}/></b></a>
           <a href='/guide/arskoll-fasta-kostnader/'><span>CHECKLISTA</span><strong>Årskoll av fasta kostnader</strong><p>Gå igenom hushållets återkommande avtal steg för steg.</p><b>Starta årskollen <ArrowRight size={16}/></b></a>
         </div>
       </section>
@@ -130,7 +130,7 @@ export default function Home(){
       <section className={styles.section}>
         <div className={styles.principle}>
           <div><p>VÅR PRINCIP</p><h2>Besparing först.<br/>Provision sedan.</h2></div>
-          <div><p>Sänk Kostnaden ska vara användbar även om du aldrig klickar på en partnerlänk. Vi hjälper dig förstå behov, total kostnad och villkor innan kommersiella alternativ visas.</p><p>När en länk är kommersiell märks den tydligt. Alla aktörer på marknaden behöver inte finnas med.</p><a href='/sa-jamfor-vi/'>Läs hur vi jämför →</a></div>
+          <div><p>Sänk Kostnaden ska vara användbar även om du aldrig klickar på en partnerlänk. Vi hjälper dig förstå behov, total kostnad och villkor – men du kan också gå direkt till en partner om du redan vet vad du söker.</p><p>När en länk är kommersiell märks den tydligt. Alla aktörer på marknaden behöver inte finnas med.</p><a href='/sa-jamfor-vi/'>Läs hur vi jämför →</a></div>
         </div>
       </section>
     </main>
