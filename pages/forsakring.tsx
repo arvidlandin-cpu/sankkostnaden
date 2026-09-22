@@ -16,7 +16,7 @@ export default function Forsakring(){
     helpHref='/forsakring/djurforsakring/'
     helpLabel='Jämför djurförsäkring'
     partnerHeading='Aktuella försäkringsalternativ'
-    showPartners={false}
+    showPartners={true}
     checks={[
       'Årspremie efter eventuella rabatter',
       'Grundsjälvrisk och särskilda självrisker',
