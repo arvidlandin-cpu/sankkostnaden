@@ -40,11 +40,11 @@ export default function HomeHero(){
         <div className={styles.badge}><span/> Gratis · ingen inloggning · tydliga partnerlänkar</div>
         <h1>Sänk din<br/>månadskostnad.<br/><em>Inte din vardag.</em></h1>
         <p>Bredband, el, mobil, försäkring och lån.<br/>Välj ett område och gå direkt till jämförelsen.</p>
-        <div className={styles.trust}><span>Enkelt att börja</span><span>Du väljer själv</span><span>Alltid kostnadsfritt</span></div>
+        <div className={styles.trust}><span>Enkelt att börja</span><span>Du väljer själv</span><span>Gratis att använda</span></div>
       </div>
 
       <div className={styles.card}>
-        <div className={styles.progress}><i className={styles.progressTwo}/><small>1 steg</small></div>
+        <div className={styles.cardEyebrow}>VÄLJ OMRÅDE</div>
         <h2>Vad vill du betala mindre för?</h2>
         <div className={styles.areaList}>
           {order.map(key=>{
@@ -60,7 +60,7 @@ export default function HomeHero(){
     <div className={styles.proof}>
       <div className={styles.proofInner}>
         <div><span><Grid2X2 size={21}/></span><p><strong>5 kostnadsområden</strong><small>Allt på ett ställe</small></p></div>
-        <div><span><TrendingDown size={21}/></span><p><strong>1 val till rätt område</strong><small>Partner eller hjälp direkt</small></p></div>
+        <div><span><TrendingDown size={21}/></span><p><strong>Direkt till rätt område</strong><small>Partner eller hjälp direkt</small></p></div>
         <div><span><Lock size={21}/></span><p><strong>Ingen inloggning</strong><small>Helt kostnadsfritt</small></p></div>
         <div><span><Info size={21}/></span><p><strong>Tydlig affiliateinformation</strong><small>Kommersiella länkar märks tydligt</small></p></div>
       </div>
