@@ -105,9 +105,9 @@ export default function SavingsApp() {
     const reasons: string[] = [];
     if (answer.fit >= 1) {
       if(category.key==='el') reasons.push(answer.fit===2?'Pris eller kampanj kan ha ändrats':'Avgifter eller villkor är inte helt tydliga');
-      if(category.key==='bredband') reasons.push(answer.fit===2?'Priset har höjts eller känns högt':'Du är osäker på om hastighet och nivå passar behovet');
-      if(category.key==='mobil') reasons.push(answer.fit===2?'Abonnemangsupplägget kan vara värt att samla eller uppdatera':'Surfmängden matchar inte användningen särskilt bra');
-      if(category.key==='forsakring') reasons.push(answer.fit===2?'Du saknar koll på vad skyddet faktiskt omfattar':'Självrisk eller omfattning är inte helt tydlig');
+      if(category.key==='bredband') reasons.push(answer.fit===2?'Priset har höjts eller känns högt':'Du är osäker på pris, nivå eller när avtalet senast jämfördes');
+      if(category.key==='mobil') reasons.push(answer.fit===2?'Priset har höjts eller upplägget känns gammalt':'Du är osäker på surf, pris eller när abonnemanget senast jämfördes');
+      if(category.key==='forsakring') reasons.push(answer.fit===2?'Du saknar koll på vad skyddet faktiskt omfattar':'Du är osäker på skydd, självrisk eller när försäkringen senast jämfördes');
     }
     if (answer.monthly > 0) reasons.push(`Angiven kostnad: cirka ${answer.monthly.toLocaleString('sv-SE')} kr/mån`);
     if (!reasons.length) reasons.push('Dina svar visar ingen tydlig brist just nu');
@@ -123,7 +123,7 @@ export default function SavingsApp() {
   useEffect(() => {
     if(completed===4&&!completedTracked.current){
       completedTracked.current=true;
-      track('cost_check_complete',{top_category:top.key,monthly_total:totalMonthly});
+      track('cost_check_complete',{top_category:completed===4&&evaluatedResults.every(result=>result.score===0)?'none':top.key,monthly_total:totalMonthly});
     }
   },[completed,top.key,totalMonthly]);
 
@@ -147,7 +147,8 @@ export default function SavingsApp() {
   const activeIndex=categories.findIndex(category=>category.key===active);
   const activeComplete=isComplete(active);
   const remainingQuestions=activeAnswer.fit<0?1:0;
-  const topTied=completed===4&&evaluatedResults.length>1&&evaluatedResults[0].score===evaluatedResults[1].score&&evaluatedResults[0].monthly===evaluatedResults[1].monthly;
+  const noClearIssue=completed===4&&evaluatedResults.every(result=>result.score===0);
+  const topTied=completed===4&&!noClearIssue&&evaluatedResults.length>1&&evaluatedResults[0].score===evaluatedResults[1].score&&evaluatedResults[0].monthly===evaluatedResults[1].monthly;
   const goNext=()=>{
     if(!activeComplete||activeIndex>=categories.length-1) return;
     setActive(categories[activeIndex+1].key);
@@ -181,7 +182,7 @@ export default function SavingsApp() {
           <div className={styles.heroStats}>
             <div><strong>{completed}/4</strong><span>områden analyserade</span></div>
             <div><strong>{totalMonthly ? `${totalMonthly.toLocaleString('sv-SE')} kr` : '—'}</strong><span>angiven kostnad / mån</span></div>
-            <div><strong>{completed===4?top.short:`${4-completed} kvar`}</strong><span>{completed===4?'bör kontrolleras först':'tills prioriteringen är klar'}</span></div>
+            <div><strong>{completed===4?(noClearIssue?'Ingen tydlig brist':topTied?'Likvärdigt':top.short):`${4-completed} kvar`}</strong><span>{completed===4?(noClearIssue?'i dina svar':topTied?'flera områden':'bör kontrolleras först'):'tills prioriteringen är klar'}</span></div>
           </div>
         </section>
 
@@ -222,7 +223,7 @@ export default function SavingsApp() {
 
         <section id='resultat' className={styles.results}>
           <div className={styles.resultIntro}>
-            <div><span>DIN PERSONLIGA KOSTNADSKARTA</span><h2>{completed===4 ? (topTied?'Flera områden är likvärdiga att kontrollera':`${top.label} bör kontrolleras först`) : `Slutför ${4-completed} område${4-completed===1?'':'n'} till`}</h2></div>
+            <div><span>DIN PERSONLIGA KOSTNADSKARTA</span><h2>{completed===4 ? (noClearIssue?'Ingen tydlig brist identifierad':topTied?'Flera områden är likvärdiga att kontrollera':`${top.label} bör kontrolleras först`) : `Slutför ${4-completed} område${4-completed===1?'':'n'} till`}</h2></div>
             <p>När alla fyra områden är klara får du en ordning baserad på faktiska varningssignaler i dina svar. Angiven månadskostnad används bara för att skilja annars likvärdiga områden. Partnerlänkarna är relevanta startpunkter, inte personligt prisrankade.</p>
           </div>
 
@@ -232,7 +233,7 @@ export default function SavingsApp() {
               const partners=resultPartners(result.key).slice(0,2);
               const nextResult=evaluatedResults[index+1];
               return <article id={`result-${result.key}`} key={result.key} className={index === 0 ? styles.topResult : ''}>
-                <div className={styles.rank}><span>{evaluatedResults.some((other,j)=>j!==index&&other.score===result.score&&other.monthly===result.monthly)?'LIKVÄRDIG ATT KONTROLLERA':rankLabels[index]}</span></div>
+                <div className={styles.rank}><span>{noClearIssue?'INGEN TYDLIG BRIST':evaluatedResults.some((other,j)=>j!==index&&other.score===result.score&&other.monthly===result.monthly)?'LIKVÄRDIG ATT KONTROLLERA':rankLabels[index]}</span></div>
                 <div className={styles.resultBody}>
                   <div><h3>{result.label}</h3></div>
                   <ul>{result.reasons.slice(0, 2).map(reason => <li key={reason}><Check size={14} /> {reason}</li>)}</ul>
