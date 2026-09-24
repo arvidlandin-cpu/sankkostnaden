@@ -1,0 +1,42 @@
+name: Mobile visual QA
+
+on:
+  workflow_dispatch:
+    inputs:
+      base_url:
+        description: 'URL to test'
+        required: false
+        default: 'https://sankkostnaden.se'
+
+jobs:
+  mobile-visual-qa:
+    runs-on: ubuntu-latest
+    env:
+      QA_BASE_URL: ${{ inputs.base_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.16.0
+
+      - name: Install dependencies
+        run: npm install --progress=false
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium webkit
+
+      - name: Run mobile visual QA
+        run: npm run qa:mobile
+
+      - name: Upload screenshots and report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mobile-visual-qa
+          path: |
+            test-results/
+            playwright-report/
+          retention-days: 14
