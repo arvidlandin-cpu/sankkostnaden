@@ -38,8 +38,7 @@ export default function Mobil(){
     helpHref='/mobil/hur-mycket-surf-behover-jag/'
     helpLabel='Hjälp mig välja surf'
     partnerHeading='Aktuella mobilalternativ'
-    beforePartners={<CostRealityCheck mode='subscription' label='Mobilabonnemang' />}
-    afterPartners={refurbishedBlock}
+    afterPartners={<><CostRealityCheck mode='subscription' label='Mobilabonnemang' />{refurbishedBlock}</>}
     checks={[
       'Faktisk surfmängd per månad',
       'Täckning där du oftast använder mobilen',
