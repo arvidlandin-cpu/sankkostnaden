@@ -47,8 +47,28 @@ const guideGroups=[
 ];
 
 const schema={
-  '@context':'https://schema.org','@type':'WebSite',name:'Sänk Kostnaden',url:'https://sankkostnaden.se/',
-  description:'En samlad startpunkt för att sänka hushållets återkommande kostnader. Jämför el, bredband, mobil, försäkring och privatekonomi på samma ställe.',
+  '@context':'https://schema.org',
+  '@graph':[
+    {
+      '@type':'Organization',
+      '@id':'https://sankkostnaden.se/#organization',
+      name:'Sänk Kostnaden',
+      alternateName:'sankkostnaden.se',
+      url:'https://sankkostnaden.se/',
+      logo:'https://sankkostnaden.se/app-icon.svg',
+      description:'Svensk guidesajt för att jämföra och sänka hushållets återkommande kostnader inom bredband, el, mobil, försäkring och privatekonomi.',
+    },
+    {
+      '@type':'WebSite',
+      '@id':'https://sankkostnaden.se/#website',
+      name:'Sänk Kostnaden',
+      alternateName:'sankkostnaden.se',
+      url:'https://sankkostnaden.se/',
+      inLanguage:'sv-SE',
+      publisher:{'@id':'https://sankkostnaden.se/#organization'},
+      description:'En samlad startpunkt för att sänka hushållets återkommande kostnader. Jämför el, bredband, mobil, försäkring och privatekonomi på samma ställe.',
+    },
+  ],
 };
 
 function ProtectedEmailLink(){
@@ -63,6 +83,9 @@ export default function Home(){
     <Head>
       <title>Sänk din månadskostnad – jämför el, bredband, mobil, försäkring & lån | Sänk Kostnaden</title>
       <meta name='description' content='Sänk din månadskostnad genom att se över fasta kostnader. Jämför bredband, elavtal, mobilabonnemang, försäkring och lånekostnader med guider och gratis verktyg.'/>
+      <meta name='application-name' content='Sänk Kostnaden'/>
+      <meta name='publisher' content='Sänk Kostnaden'/>
+      <meta name='author' content='Sänk Kostnaden'/>
       <link rel='canonical' href='https://sankkostnaden.se/'/>
       <link rel='preconnect' href='https://images.pexels.com' crossOrigin=''/>
       <meta property='og:title' content='Sänk Kostnaden – hitta onödiga fasta utgifter'/>
@@ -136,7 +159,7 @@ export default function Home(){
     </main>
 
     <footer className={styles.footer}>
-      <div><a className={styles.brand} href='/'><span className={styles.brandMark}><PiggyBank size={19}/></span><span>Sänk Kostnaden</span></a><p>Praktiska guider för lägre hushållskostnader.</p></div>
+      <div><a className={styles.brand} href='/'><span className={styles.brandMark}><PiggyBank size={19}/></span><span>Sänk Kostnaden</span></a><p><strong>sankkostnaden.se</strong> – praktiska guider för lägre hushållskostnader.</p></div>
       <div><a href='/sa-jamfor-vi/'>Så jämför vi</a><a href='/affiliate/'>Affiliateinformation</a><a href='/cookies/'>Cookiepolicy</a><a href='/integritet/'>Integritet</a><a href='/om/'>Om oss</a><ProtectedEmailLink/></div>
       <p>© 2026 Sänk Kostnaden. Informationen är generell och utgör inte individuell finansiell rådgivning.</p>
     </footer>
