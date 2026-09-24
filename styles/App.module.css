@@ -339,7 +339,7 @@
 
 .ranking article {
   display: grid;
-  grid-template-columns: 110px 1fr 150px;
+  grid-template-columns: 110px 1fr 250px;
   gap: 22px;
   align-items: center;
   padding: 22px;
@@ -429,12 +429,33 @@
   color: #7d8880;
 }
 
-.resultScore a {
-  margin-top: 8px;
-  color: #17201b;
-  font-size: 12px;
-  font-weight: 850;
-  text-decoration: none;
+.resultActions{
+  display:grid;
+  gap:6px;
+  width:100%;
+  margin-top:8px;
+}
+.resultActions a{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:5px;
+  color:#17201b;
+  font-size:11px;
+  font-weight:850;
+  text-decoration:none;
+}
+.resultActions a:first-child{
+  padding:9px 10px;
+  border-radius:9px;
+  background:#17201b;
+  color:#fff;
+}
+.resultActions a:nth-child(2){
+  padding:8px 10px;
+  border:1px solid #d9dfd8;
+  border-radius:9px;
+  background:#fff;
 }
 
 .explain {
@@ -533,9 +554,11 @@
     gap: 3px;
   }
 
-  .resultScore a {
-    justify-self: end;
+  .resultActions{
+    grid-column:1 / -1;
+    margin-top:5px;
   }
+  .resultActions a{justify-content:flex-start}
 
   .resultBody > div {
     align-items: flex-start;
