@@ -27,7 +27,7 @@ export default function RefurbishedMobil(){
     <header className='topbar'>
       <Link className='brand' href='/'><span className='brandMark'><PiggyBank size={22}/></span><span>Sänk Kostnaden</span></Link>
       <nav><Link href='/bredband/'>Bredband</Link><Link href='/elavtal/'>El</Link><Link href='/mobil/'>Mobil</Link><Link href='/forsakring/'>Försäkring</Link><Link href='/ekonomi/'>Ekonomi</Link></nav>
-      <Link className='topbarCta' href='/#jamfor'>Börja jämföra →</Link>
+      <Link className='topbarCta' href='#partners'>Gå till alternativ →</Link>
     </header>
     <main>
       <section className='guideHero guideHero-mobil'>
