@@ -185,7 +185,7 @@ export function ElectricityPartnerMatcher(){
   const ready=Boolean(pathChoice);
 
   return <section id='partners' className='mobileMatcher' aria-label='Hitta relevanta elavtal'>
-    <div className='mobileMatcherIntro'><p className='kicker'>ELKOLL · 1 FRÅGA</p><h2>Välj hur du vill jämföra el.</h2><p>Årsförbrukningen påverkar din verkliga kostnad, men utan livepriser ska den inte låtsas styra partnerordningen. Ta i stället med samma årsförbrukning när du jämför de faktiska avtalen.</p></div>
+    <div className='mobileMatcherIntro'><p className='kicker'>ELKOLL · 1 FRÅGA</p><h2>Välj hur du vill jämföra el.</h2><p>Årsförbrukningen påverkar vad avtalet kostar. Välj hur du vill jämföra här och använd sedan samma årsförbrukning hos alternativen för en rättvis jämförelse.</p></div>
     <DirectPartnerStrip items={all} label='Se elavtal direkt' placement='electricity_direct'/>
     <div className='matchQuestions matchQuestionsSingle'>
       <div className='matchQuestion'><div><small>1 AV 1</small><strong>Hur vill du jämföra?</strong></div><div className='matchOptions matchOptionsThree'>
@@ -219,7 +219,7 @@ export function InsurancePartnerMatcher({preset}:{preset?:InsuranceType}){
   };
 
   return <section id='partners' className='mobileMatcher' aria-label='Hitta relevant försäkring'>
-    <div className='mobileMatcherIntro'><p className='kicker'>{preset?'RELEVANTA FÖRSÄKRINGSPARTNERS':'FÖRSÄKRINGSKOLL · 1 VAL'}</p><h2>{preset==='pet'?'Jämför djurförsäkring utan dubbla partnerlistor.':preset==='home'?'Jämför hemförsäkring på samma grund.':'Börja med rätt typ av skydd.'}</h2><p>{preset==='pet'?'Här visas varje relevant djurförsäkringspartner en gång. Hämta pris för just ditt djur och jämför samma typ av skydd.':preset==='home'?'Här visas varje relevant hemförsäkringspartner en gång. Jämför likvärdig omfattning innan du bedömer premien.':'Vi blandar inte hem- och djurförsäkring i samma lista. Välj först vad du vill försäkra, så visas bara relevanta aktiva partners.'}</p></div>
+    <div className='mobileMatcherIntro'><p className='kicker'>{preset?'RELEVANTA FÖRSÄKRINGSPARTNERS':'FÖRSÄKRINGSKOLL · 1 VAL'}</p><h2>{preset==='pet'?'Jämför djurförsäkring för ditt djur.':preset==='home'?'Jämför hemförsäkring på samma grund.':'Börja med rätt typ av skydd.'}</h2><p>{preset==='pet'?'Hämta pris för just ditt djur och jämför premie, självrisk, veterinärvårdsbelopp och villkor på samma grund.':preset==='home'?'Här visas varje relevant hemförsäkringspartner en gång. Jämför likvärdig omfattning innan du bedömer premien.':'Vi blandar inte hem- och djurförsäkring i samma lista. Välj först vad du vill försäkra, så visas bara relevanta aktiva partners.'}</p></div>
     {!preset&&<div className='matchQuestions matchQuestionsSingle'><div className='matchQuestion'><div><small>1 AV 1</small><strong>Vad vill du försäkra?</strong></div><div className='matchOptions'>
       <button type='button' className={type==='home'?'selected':''} onClick={()=>{setType('home');track('insurance_match_answer',{question:'type',answer:'home'})}}><ShieldCheck size={18}/><span>Hem</span></button>
       <button type='button' className={type==='pet'?'selected':''} onClick={()=>{setType('pet');track('insurance_match_answer',{question:'type',answer:'pet'})}}><PawPrint size={18}/><span>Hund / katt</span></button>
