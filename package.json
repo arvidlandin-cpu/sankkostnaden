@@ -8,7 +8,8 @@
     "start": "next start",
     "check": "node scripts/check-site.mjs",
     "check:export": "node scripts/check-export.mjs",
-    "check:integrity": "node scripts/check-integrity.mjs"
+    "check:integrity": "node scripts/check-integrity.mjs",
+    "qa:mobile": "playwright test tests/mobile-visual.spec.ts"
   },
   "dependencies": {
     "lucide-react": "^0.469.0",
@@ -23,6 +24,7 @@
     "autoprefixer": "^10.4.0",
     "postcss": "^8.4.0",
     "tailwindcss": "^3.4.0",
-    "typescript": "^5.7.0"
+    "typescript": "^5.7.0",
+    "@playwright/test": "^1.55.0"
   }
 }
