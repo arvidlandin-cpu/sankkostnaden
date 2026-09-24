@@ -231,14 +231,11 @@ export function InsurancePartnerMatcher({preset}:{preset?:InsuranceType}){
 }
 
 type LoanPurpose='new'|'consolidate';
-type LoanFocus='total'|'monthly';
-
 export function LoanPartnerMatcher(){
   const all=getActivePartners('ekonomi','loan',20);
   const [purpose,setPurpose]=useState<LoanPurpose|null>(null);
-  const [focus,setFocus]=useState<LoanFocus|null>(null);
   const matches=useMemo(()=>{
-    if(!purpose||!focus) return [];
+    if(!purpose) return [];
     const score=(p:ActivePartner)=>{
       let s=partnerRankScore(p);
       if(purpose==='consolidate'&&p.name==='Samly') s+=80;
@@ -247,33 +244,29 @@ export function LoanPartnerMatcher(){
       return s;
     };
     return [...all].sort((a,b)=>score(b)-score(a)||a.name.localeCompare(b.name,'sv')).slice(0,3);
-  },[all,purpose,focus]);
+  },[all,purpose]);
 
   const reasons=(p:ActivePartner)=>{
     const out:string[]=[];
     if(purpose==='consolidate'&&p.name==='Samly') out.push('Partnerinformationen omfattar uttryckligen privatlån och samlingslån');
     else if(purpose==='new') out.push('Relevant aktiv tjänst för att jämföra privatlån');
     else out.push('Relevant aktiv lånejämförelsetjänst');
-    out.push(focus==='total'?'Jämför effektiv ränta, avgifter och total återbetalning':'Kontrollera att en lägre månadskostnad inte beror på längre löptid');
+    out.push('Jämför effektiv ränta, avgifter, löptid och total återbetalning');
     return out;
   };
-  const ready=Boolean(purpose&&focus);
+  const ready=Boolean(purpose);
 
   return <section id='partners' className='mobileMatcher' aria-label='Hitta relevant lånejämförelse'>
-    <div className='mobileMatcherIntro'><p className='kicker'>LÅNEKOLL · 2 FRÅGOR</p><h2>Jämför rätt erbjudanden – inte bara en låg månadssiffra.</h2><p>Räntan sätts individuellt. Därför hjälper vi dig först välja rätt jämförelseväg och skickar dig sedan till tjänster där du kan se faktiska erbjudanden.</p></div>
+    <div className='mobileMatcherIntro'><p className='kicker'>LÅNEKOLL · 1 FRÅGA</p><h2>Jämför rätt erbjudanden – inte bara en låg månadssiffra.</h2><p>Räntan sätts individuellt. Därför hjälper vi dig först välja rätt jämförelseväg och skickar dig sedan till tjänster där du kan se faktiska erbjudanden.</p></div>
     <DirectPartnerStrip items={all} label='Jämför lån direkt' placement='loan_direct'/>
     <div className='matchQuestions'>
-      <div className='matchQuestion'><div><small>1 AV 2</small><strong>Vad vill du göra?</strong></div><div className='matchOptions'>
+      <div className='matchQuestion'><div><small>1 AV 1</small><strong>Vad vill du göra?</strong></div><div className='matchOptions'>
         <button type='button' className={purpose==='new'?'selected':''} onClick={()=>{setPurpose('new');track('loan_match_answer',{question:'purpose',answer:'new'})}}><CircleDollarSign size={18}/><span>Nytt privatlån</span></button>
         <button type='button' className={purpose==='consolidate'?'selected':''} onClick={()=>{setPurpose('consolidate');track('loan_match_answer',{question:'purpose',answer:'consolidate'})}}><GitCompareArrows size={18}/><span>Samla lån</span></button>
       </div></div>
-      <div className='matchQuestion'><div><small>2 AV 2</small><strong>Vad vill du hålla ögonen på?</strong></div><div className='matchOptions'>
-        <button type='button' className={focus==='total'?'selected':''} onClick={()=>{setFocus('total');track('loan_match_answer',{question:'focus',answer:'total'})}}><Search size={18}/><span>Total kostnad</span></button>
-        <button type='button' className={focus==='monthly'?'selected':''} onClick={()=>{setFocus('monthly');track('loan_match_answer',{question:'focus',answer:'monthly'})}}><CircleDollarSign size={18}/><span>Månadskostnad</span></button>
-      </div></div>
     </div>
-    {!ready&&<div className='matchPrompt'><span>Två svar gör nästa steg mer relevant.</span></div>}
-    {ready&&<><div className='matchResultHead'><div><small>DIN KORTLISTA</small><h3>Börja med de här tre tjänsterna.</h3><p>Det här är en relevant startordning – inte ett löfte om vilken långivare som ger lägst ränta. Jämför de faktiska erbjudandena du får.</p></div><button type='button' onClick={()=>{setPurpose(null);setFocus(null)}}><RotateCcw size={14}/> Börja om</button></div><div className='matchPartnerGrid'>
+    {!ready&&<div className='matchPrompt'><span>Välj vad du vill göra så får du en relevant startpunkt.</span></div>}
+    {ready&&<><div className='matchResultHead'><div><small>DIN KORTLISTA</small><h3>Börja med de här tre tjänsterna.</h3><p>Det här är en relevant startordning – inte ett löfte om vilken långivare som ger lägst ränta. Jämför de faktiska erbjudandena du får.</p></div><button type='button' onClick={()=>setPurpose(null)}><RotateCcw size={14}/> Börja om</button></div><div className='matchPartnerGrid'>
       {matches.map((p,i)=><PartnerCard key={p.name} partner={p} reasons={reasons(p)} placement='loan_matcher' intent='loan' position={i+1} cta={p.cta||'Jämför låneerbjudanden'}/>)}
     </div></>}
     <AllPartners items={all} label={`Vill du se alla ${all.length} aktiva lånejämförelsetjänster?`} placement='loan_matcher_all' intent='loan'/>
