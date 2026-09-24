@@ -27,7 +27,9 @@ export default function SmartSelector({ eyebrow, title, intro, questions, result
   const score = answers.reduce((sum, answer, index) => sum + (answer >= 0 ? questions[index].options[answer].points : 0), 0);
   const result = useMemo(() => [...results].reverse().find(item => score >= item.min) || results[0], [results, score]);
   const complete = answered === questions.length;
-  const directPartner = partnerCategory ? getActivePartners(partnerCategory,partnerIntent,1)[0] : undefined;
+  const firstPartner = partnerCategory ? getActivePartners(partnerCategory,partnerIntent,1)[0] : undefined;
+  const directPartner = partnerCategory==='bredband'||partnerCategory==='el' ? firstPartner : undefined;
+  const compareHref:Partial<Record<PartnerCategory,string>>={bredband:'/bredband/#category-partners',el:'/elavtal/#category-partners',mobil:'/mobil/#category-partners',forsakring:'/forsakring/#category-partners',ekonomi:'/ekonomi/#category-partners'};
 
   const choose = (questionIndex: number, optionIndex: number) => {
     setAnswers(current => current.map((value, index) => index === questionIndex ? optionIndex : value));
@@ -40,7 +42,7 @@ export default function SmartSelector({ eyebrow, title, intro, questions, result
       <header className={styles.topbar}>
         <Link className={styles.brand} href='/'><span><PiggyBank size={20} /></span><strong>Sänk Kostnaden</strong></Link>
         <nav><Link href='/bredband/'>Bredband</Link><Link href='/elavtal/'>El</Link><Link href='/mobil/'>Mobil</Link><Link href='/forsakring/'>Försäkring</Link><Link href='/ekonomi/'>Ekonomi</Link></nav>
-        <Link className={styles.topbarCta} href='/#jamfor'>Jämför priser →</Link>
+        <Link className={styles.topbarCta} href={partnerCategory?compareHref[partnerCategory]||'/#jamfor':'/#jamfor'}>Jämför direkt →</Link>
       </header>
       <main className={styles.shell}>
       <Link className={styles.back} href={backHref}>← {backLabel}</Link>
@@ -73,8 +75,8 @@ export default function SmartSelector({ eyebrow, title, intro, questions, result
           <h2>{complete ? result.title : 'Svara på frågorna så gör vi jobbet.'}</h2>
           <p>{complete ? result.text : 'Du får en konkret behovsprofil och ett tydligt nästa steg – utan att behöva kunna marknaden själv.'}</p>
           {complete && <ul>{result.bullets.map(item => <li key={item}><Check size={15} />{item}</li>)}</ul>}
-          {complete && directPartner && <a href={directPartner.trackingUrl} data-partner={directPartner.name} data-category={directPartner.category} data-intent={partnerIntent||'compare'} data-placement='smart_selector_result' target='_blank' rel='sponsored nofollow noopener'>Jämför nu hos {directPartner.name} <ArrowUpRight size={17} /></a>}
-          {complete && <Link href={result.href}>{directPartner?'Se jämförelseguiden först':result.cta} <ArrowRight size={17} /></Link>}
+          {complete && directPartner && <a href={directPartner.trackingUrl} data-partner={directPartner.name} data-category={directPartner.category} data-intent={partnerIntent||'compare'} data-placement='smart_selector_result' data-partner-position='1' target='_blank' rel='sponsored nofollow noopener'>Jämför nu hos {directPartner.name} <ArrowUpRight size={17} /></a>}
+          {complete && <Link href={result.href}>{result.cta} <ArrowRight size={17} /></Link>}
           <button className={styles.reset} onClick={reset}><RotateCcw size={14} /> Börja om</button>
           <small>{disclaimer}</small>
         </aside>
