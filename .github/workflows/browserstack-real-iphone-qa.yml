@@ -1,6 +1,10 @@
 name: BrowserStack real iPhone QA
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/browserstack-real-iphone-qa.yml'
   workflow_dispatch:
     inputs:
       base_url:
@@ -14,7 +18,7 @@ jobs:
     env:
       BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
       BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
-      QA_BASE_URL: ${{ inputs.base_url || 'https://sankkostnaden.se' }}
+      QA_BASE_URL: ${{ github.event.inputs.base_url || 'https://sankkostnaden.se' }}
 
     steps:
       - name: Checkout
