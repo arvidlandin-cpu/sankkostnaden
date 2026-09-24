@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import {
   ArrowRight, ArrowUpRight, BadgeCheck, Check, CircleDollarSign, GitCompareArrows,
-  Home, HousePlug, PawPrint, RotateCcw, Search, ShieldCheck, Sparkles, Unplug, Wifi, Zap
+  HousePlug, PawPrint, RotateCcw, Search, ShieldCheck, Sparkles, Unplug, Wifi
 } from 'lucide-react';
 import { getActivePartners, partnerRankScore, partners, type ActivePartner, type PartnerIntent } from '../lib/partners';
 
@@ -153,56 +153,46 @@ export function BroadbandPartnerMatcher(){
   </section>;
 }
 
-type ElConsumption='low'|'mid'|'high'|'unknown';
 type ElPath='compare'|'provider'|'source';
 
 export function ElectricityPartnerMatcher(){
   const all=getActivePartners('el',undefined,20);
-  const [consumption,setConsumption]=useState<ElConsumption|null>(null);
   const [pathChoice,setPathChoice]=useState<ElPath|null>(null);
   const matches=useMemo(()=>{
-    if(!consumption||!pathChoice) return [];
+    if(!pathChoice) return [];
     const score=(p:ActivePartner)=>{
       let s=partnerRankScore(p);
       if(pathChoice==='compare'&&p.name==='Elskling') s+=90;
       if(pathChoice==='provider'&&p.name!=='Elskling') s+=24;
       if(pathChoice==='source'&&p.name==='Kärnfull Energi') s+=95;
-      
       return s;
     };
     return [...all].sort((a,b)=>score(b)-score(a)||a.name.localeCompare(b.name,'sv')).slice(0,3);
-  },[all,consumption,pathChoice]);
+  },[all,pathChoice]);
 
-  const consumptionText=consumption==='low'?'under 5 000 kWh/år':consumption==='mid'?'5 000–15 000 kWh/år':consumption==='high'?'över 15 000 kWh/år':'okänd årsförbrukning';
   const reasons=(p:ActivePartner)=>{
     const out:string[]=[];
     if(pathChoice==='compare'&&p.name==='Elskling') out.push('Matchar att du vill jämföra flera elavtal på ett ställe');
     if(pathChoice==='provider'&&p.name==='Vattenfall') out.push('Direkt väg till en aktiv elhandelspartner');
     if(pathChoice==='source'&&p.name==='Kärnfull Energi') out.push('Relevant när elens ursprung är en viktig del av valet');
     if(!out.length) out.push(pathChoice==='provider'?'Du valde direkt till bolag – aktiva elhandelsbolag prioriteras':'Aktiv elpartner som matchar den jämförelseväg du valde');
-    out.push(`Använd ${consumptionText} som utgångspunkt när du jämför`);
+    out.push('Använd samma årsförbrukning när du jämför pris, påslag och fasta avgifter');
     return out;
   };
-  const ready=Boolean(consumption&&pathChoice);
+  const ready=Boolean(pathChoice);
 
   return <section id='partners' className='mobileMatcher' aria-label='Hitta relevanta elavtal'>
-    <div className='mobileMatcherIntro'><p className='kicker'>ELKOLL · 2 FRÅGOR</p><h2>Jämför el utifrån ditt hushåll – inte bara ett kampanjpris.</h2><p>Årsförbrukningen avgör hur mycket påslag och fasta avgifter betyder. Välj sedan om du vill jämföra brett eller gå direkt till ett elbolag.</p></div>
+    <div className='mobileMatcherIntro'><p className='kicker'>ELKOLL · 1 FRÅGA</p><h2>Välj hur du vill jämföra el.</h2><p>Årsförbrukningen påverkar din verkliga kostnad, men utan livepriser ska den inte låtsas styra partnerordningen. Ta i stället med samma årsförbrukning när du jämför de faktiska avtalen.</p></div>
     <DirectPartnerStrip items={all} label='Se elavtal direkt' placement='electricity_direct'/>
-    <div className='matchQuestions'>
-      <div className='matchQuestion'><div><small>1 AV 2</small><strong>Ungefärlig årsförbrukning?</strong></div><div className='matchOptions matchOptionsTwoByTwo'>
-        <button type='button' className={consumption==='low'?'selected':''} onClick={()=>{setConsumption('low');track('electricity_match_answer',{question:'consumption',answer:'low'})}}><Home size={18}/><span>Under 5 000 kWh</span></button>
-        <button type='button' className={consumption==='mid'?'selected':''} onClick={()=>{setConsumption('mid');track('electricity_match_answer',{question:'consumption',answer:'mid'})}}><Zap size={18}/><span>5 000–15 000</span></button>
-        <button type='button' className={consumption==='high'?'selected':''} onClick={()=>{setConsumption('high');track('electricity_match_answer',{question:'consumption',answer:'high'})}}><Zap size={18}/><span>Över 15 000</span></button>
-        <button type='button' className={consumption==='unknown'?'selected':''} onClick={()=>{setConsumption('unknown');track('electricity_match_answer',{question:'consumption',answer:'unknown'})}}><Search size={18}/><span>Vet inte</span></button>
-      </div></div>
-      <div className='matchQuestion'><div><small>2 AV 2</small><strong>Hur vill du jämföra?</strong></div><div className='matchOptions matchOptionsThree'>
+    <div className='matchQuestions matchQuestionsSingle'>
+      <div className='matchQuestion'><div><small>1 AV 1</small><strong>Hur vill du jämföra?</strong></div><div className='matchOptions matchOptionsThree'>
         <button type='button' className={pathChoice==='compare'?'selected':''} onClick={()=>{setPathChoice('compare');track('electricity_match_answer',{question:'path',answer:'compare'})}}><GitCompareArrows size={18}/><span>Flera avtal</span></button>
         <button type='button' className={pathChoice==='provider'?'selected':''} onClick={()=>{setPathChoice('provider');track('electricity_match_answer',{question:'path',answer:'provider'})}}><ArrowRight size={18}/><span>Direkt till bolag</span></button>
         <button type='button' className={pathChoice==='source'?'selected':''} onClick={()=>{setPathChoice('source');track('electricity_match_answer',{question:'path',answer:'source'})}}><Sparkles size={18}/><span>Ursprung viktigt</span></button>
       </div></div>
     </div>
-    {!ready&&<div className='matchPrompt'><span>Välj förbrukning och hur du vill jämföra.</span></div>}
-    {ready&&<><div className='matchResultHead'><div><small>DIN KORTLISTA</small><h3>Börja med de här tre.</h3><p>Urvalet matchar din jämförelseväg. Aktuellt pris, påslag och avtalsvillkor kontrolleras hos partnern.</p></div><button type='button' onClick={()=>{setConsumption(null);setPathChoice(null)}}><RotateCcw size={14}/> Börja om</button></div><div className='matchPartnerGrid'>
+    {!ready&&<div className='matchPrompt'><span>Välj hur du vill jämföra så får du en relevant startpunkt.</span></div>}
+    {ready&&<><div className='matchResultHead'><div><small>DIN KORTLISTA</small><h3>Börja med de här tre.</h3><p>Urvalet matchar den jämförelseväg du valde. Aktuellt pris, påslag och avtalsvillkor kontrolleras hos partnern med samma årsförbrukning som grund.</p></div><button type='button' onClick={()=>setPathChoice(null)}><RotateCcw size={14}/> Börja om</button></div><div className='matchPartnerGrid'>
       {matches.map((p,i)=><PartnerCard key={p.name} partner={p} reasons={reasons(p)} placement='electricity_matcher' intent='electricity' position={i+1}/>)}
     </div></>}
     <AllPartners items={all} label={`Vill du se alla ${all.length} aktiva elpartners?`} placement='electricity_matcher_all' intent='electricity'/>
@@ -226,8 +216,7 @@ export function InsurancePartnerMatcher({preset}:{preset?:InsuranceType}){
   };
 
   return <section id='partners' className='mobileMatcher' aria-label='Hitta relevant försäkring'>
-    <div className='mobileMatcherIntro'><p className='kicker'>FÖRSÄKRINGSKOLL · 1 VAL</p><h2>Börja med rätt typ av skydd.</h2><p>Vi blandar inte hem- och djurförsäkring i samma lista. Välj först vad du vill försäkra, så visas bara relevanta aktiva partners.</p></div>
-    <DirectPartnerStrip items={preset==='home'?allHome:preset==='pet'?allPet:Array.from(new Map([...allHome,...allPet].map(p=>[p.name,p])).values())} label='Se försäkringsalternativ direkt' placement='insurance_direct'/>
+    <div className='mobileMatcherIntro'><p className='kicker'>{preset?'RELEVANTA FÖRSÄKRINGSPARTNERS':'FÖRSÄKRINGSKOLL · 1 VAL'}</p><h2>{preset==='pet'?'Jämför djurförsäkring utan dubbla partnerlistor.':preset==='home'?'Jämför hemförsäkring på samma grund.':'Börja med rätt typ av skydd.'}</h2><p>{preset==='pet'?'Här visas varje relevant djurförsäkringspartner en gång. Hämta pris för just ditt djur och jämför samma typ av skydd.':preset==='home'?'Här visas varje relevant hemförsäkringspartner en gång. Jämför likvärdig omfattning innan du bedömer premien.':'Vi blandar inte hem- och djurförsäkring i samma lista. Välj först vad du vill försäkra, så visas bara relevanta aktiva partners.'}</p></div>
     {!preset&&<div className='matchQuestions matchQuestionsSingle'><div className='matchQuestion'><div><small>1 AV 1</small><strong>Vad vill du försäkra?</strong></div><div className='matchOptions'>
       <button type='button' className={type==='home'?'selected':''} onClick={()=>{setType('home');track('insurance_match_answer',{question:'type',answer:'home'})}}><ShieldCheck size={18}/><span>Hem</span></button>
       <button type='button' className={type==='pet'?'selected':''} onClick={()=>{setType('pet');track('insurance_match_answer',{question:'type',answer:'pet'})}}><PawPrint size={18}/><span>Hund / katt</span></button>
@@ -236,7 +225,6 @@ export function InsurancePartnerMatcher({preset}:{preset?:InsuranceType}){
     {type&&<><div className='matchResultHead'><div><small>RELEVANTA PARTNERS</small><h3>{type==='home'?'Hemförsäkring':'Djurförsäkring'}.</h3><p>{type==='home'?'Jämför likvärdig omfattning innan du bedömer premien.':'Hämta pris för just ditt djur och jämför samma typ av skydd.'}</p></div>{!preset&&<button type='button' onClick={()=>setType(null)}><RotateCcw size={14}/> Byt typ</button>}</div><div className='matchPartnerGrid matchPartnerGridAdaptive'>
       {relevant.map((p,i)=><PartnerCard key={p.name} partner={p} reasons={reasons(p)} placement='insurance_matcher' intent={type} position={i+1} cta={type==='home'?'Se pris & villkor':'Hämta pris för mitt djur'}/>)}
     </div></>}
-    {type&&<AllPartners items={relevant} label={`Visa alla ${relevant.length} aktiva ${type==='home'?'hemförsäkrings':'djurförsäkrings'}partners`} placement='insurance_matcher_all' intent={type}/>}
     <p className='partnerFine'>Kommersiella länkar – vi kan få provision om du blir kund. Det påverkar inte priset för dig. Vi utser inte en försäkring åt dig.</p>
   </section>;
 }
@@ -253,9 +241,8 @@ export function LoanPartnerMatcher(){
     const score=(p:ActivePartner)=>{
       let s=partnerRankScore(p);
       if(purpose==='consolidate'&&p.name==='Samly') s+=80;
-      if(purpose==='new'&&p.name==='Zmarta') s+=45;
-      if(purpose==='new'&&p.name==='Lendella') s+=25;
-      if(purpose==='new'&&p.name==='Toborrow') s+=15;
+      if(purpose==='new'&&p.name==='Lendella') s+=35;
+      if(purpose==='new'&&p.name==='Jämförbanker.se') s+=15;
       return s;
     };
     return [...all].sort((a,b)=>score(b)-score(a)||a.name.localeCompare(b.name,'sv')).slice(0,3);
