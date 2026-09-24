@@ -71,7 +71,7 @@ export default function CategoryLanding({
           <h1>{heading}</h1>
           <p className='lead'>{lead}</p>
           <div className='categoryHeroActions'>
-            <Link className='primary' href={compareHref}>{compareLabel} <ArrowRight size={17}/></Link>
+            <a className='primary' href='#partners'>{compareLabel} <ArrowRight size={17}/></a>
             <Link className='secondaryLight' href={helpHref}>{helpLabel} <ArrowRight size={17}/></Link>
           </div>
           <p className='fine'>Inga kontaktuppgifter behövs för att börja.</p>
