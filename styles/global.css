@@ -2278,3 +2278,13 @@ footer{
   .electricityCompareGrid{grid-template-columns:1fr}
   .costRealityUsage{max-width:none}
 }
+
+
+/* Defensive 360–430 px QA hardening 2026-09-24 */
+.partnerBrand,.matchPartnerTop>div,.matchPartnerTop .partnerBrand{min-width:0}
+.partnerWordmark,.matchPartnerTop h3{overflow-wrap:anywhere;word-break:normal}
+@media(max-width:430px){
+  .matchPartnerTop{gap:7px}
+  .matchPartnerTop>span{font-size:7px;white-space:nowrap}
+  .directPartnerGrid>a{min-width:0}
+}
