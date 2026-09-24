@@ -38,7 +38,7 @@ export default function HomeHero(){
     <div className={styles.inner}>
       <div className={styles.copy}>
         <div className={styles.badge}><span/> Gratis · ingen inloggning · tydliga partnerlänkar</div>
-        <h1>Sänk din<br/>månadskostnad.<br/><em>Inte din vardag.</em></h1>
+        <h1>Sänk Kostnaden.<br/>Sänk din månadskostnad.<br/><em>Inte din vardag.</em></h1>
         <p>Bredband, el, mobil, försäkring och lån.<br/>Välj ett område och gå direkt till jämförelsen.</p>
         <div className={styles.trust}><span>Enkelt att börja</span><span>Du väljer själv</span><span>Gratis att använda</span></div>
       </div>
