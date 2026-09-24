@@ -82,8 +82,8 @@ function track(event:string,params:Record<string,string|number>){
 }
 
 function level(score: number) {
-  if (score >= 72) return 'Kontrollera först';
-  if (score >= 42) return 'Värt att kontrollera';
+  if (score >= 72) return 'Prioritera';
+  if (score >= 42) return 'Kontrollera';
   return 'Lägre prioritet';
 }
 
@@ -217,7 +217,7 @@ export default function SavingsApp() {
           <div ref={questionCardRef} className={styles.questionCard}>
             <div className={styles.questionTop}>
               <div><span>ANALYS {categories.findIndex(category => category.key === active) + 1} / 4</span><h2>{activeCategory.label}</h2></div>
-              <div className={styles.scoreOrb}><strong>{activeComplete?results.find(item => item.key === active)!.potential:'2'}</strong><small>{activeComplete?'kontrollbehov':'frågor kvar'}</small></div>
+              <div className={styles.scoreOrb}><strong>{activeComplete?'Klar':'2'}</strong><small>{activeComplete?'område klart':'frågor kvar'}</small></div>
             </div>
 
             {active==='mobil'&&<div className={styles.householdRow}>
