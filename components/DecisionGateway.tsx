@@ -23,7 +23,7 @@ export default function DecisionGateway({category,compact=false,intent,currentPa
   const resolvedFallback=category==='forsakring'&&intent==='home'?'/forsakring/jamfor-hemforsakring/':category==='forsakring'&&intent==='pet'?'/forsakring/djurforsakring/':cfg.fallback;
   const fallbackPath=resolvedFallback.split('#')[0];
   const samePage=Boolean(currentPath&&fallbackPath===currentPath.split('#')[0]);
-  const guideCanShowPartners=Boolean(currentPath&&active.length>1&&((category==='forsakring'&&(intent==='home'||intent==='pet'))));
+  const guideCanShowPartners=Boolean(currentPath&&active.length>1&&((category==='forsakring'&&(intent==='home'||intent==='pet'))||(category==='el'&&intent==='compare')||(category==='bredband'&&intent==='compare')));
   const directHref=onePartner?onePartner.trackingUrl:(guideCanShowPartners?`${currentPath}#guide-partners`:(active.length>1&&samePage?`${currentPath}#partners`:resolvedFallback));
 
   return <section className={`decisionGateway decisionGatewaySimple ${compact?'decisionGatewayCompact':''}`}>
