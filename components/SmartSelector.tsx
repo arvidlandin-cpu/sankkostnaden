@@ -29,7 +29,7 @@ export default function SmartSelector({ eyebrow, title, intro, questions, result
   const complete = answered === questions.length;
   const firstPartner = partnerCategory ? getActivePartners(partnerCategory,partnerIntent,1)[0] : undefined;
   const directPartner = partnerCategory==='bredband'||partnerCategory==='el' ? firstPartner : undefined;
-  const compareHref:Partial<Record<PartnerCategory,string>>={bredband:'/bredband/#category-partners',el:'/elavtal/#category-partners',mobil:'/mobil/#category-partners',forsakring:'/forsakring/#category-partners',ekonomi:'/ekonomi/#category-partners'};
+  const compareHref:Partial<Record<PartnerCategory,string>>={bredband:'/bredband/',el:'/elavtal/',mobil:'/mobil/',forsakring:'/forsakring/',ekonomi:'/ekonomi/'};
 
   const choose = (questionIndex: number, optionIndex: number) => {
     setAnswers(current => current.map((value, index) => index === questionIndex ? optionIndex : value));
