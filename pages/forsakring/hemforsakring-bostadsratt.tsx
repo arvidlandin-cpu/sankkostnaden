@@ -3,8 +3,8 @@ import IntentGuide from '../../components/IntentGuide';
 export default function Page() {
   return (
     <IntentGuide
-      title='Hemförsäkring bostadsrätt 2026 – pris, självrisk och skydd'
-      description='Jämför hemförsäkring för bostadsrätt: pris, självrisk, bostadsrättstillägg, lösöre, allrisk och andra viktiga villkor.'
+      title='Hemförsäkring bostadsrätt 2026 – pris, skydd och självrisk'
+      description='Hemförsäkring bostadsrätt 2026: se vad som påverkar priset och jämför självrisk, bostadsrättstillägg, lösöre, allrisk och andra viktiga villkor.'
       kicker='HEMFÖRSÄKRING BOSTADSRÄTT'
       canonical='https://sankkostnaden.se/forsakring/hemforsakring-bostadsratt/'
       category='forsakring' intent='home'
