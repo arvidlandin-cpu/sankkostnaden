@@ -5,6 +5,7 @@ import { getActivePartners } from '../lib/partners';
 
 export default function Forsakring(){
   const claims=getActivePartners('forsakring','claims',1)[0];
+  const travel=getActivePartners('forsakring','travel',1)[0];
   const claimsBlock=claims?<section className='claimsSpotlight' aria-label='Försäkringsersättning'>
     <div>
       <p className='kicker'>HAR DU REDAN RÅKAT UT FÖR NÅGOT?</p>
@@ -23,6 +24,24 @@ export default function Forsakring(){
     </div>
   </section>:null;
 
+  const travelBlock=travel?<section className='claimsSpotlight' aria-label='Reseförsäkring'>
+    <div>
+      <p className='kicker'>RESER DU SNART?</p>
+      <h2>Kontrollera reseskyddet innan du köper mer.</h2>
+      <p>Börja med att se vad som redan ingår i hemförsäkring och kort. Om du behöver ett separat eller utökat reseskydd kan du jämföra omfattning, självrisk, avbeställning och viktiga undantag.</p>
+      <div className='claimsSpotlightActions'>
+        <a href={travel.trackingUrl} data-partner={travel.name} data-category='forsakring' data-intent='travel' data-placement='insurance_hub_travel' target='_blank' rel='sponsored nofollow noopener'>Se reseförsäkring hos {travel.name} <ArrowUpRight size={16}/></a>
+        <Link href='/forsakring/reseforsakring/'>Läs guiden först <ArrowRight size={16}/></Link>
+      </div>
+      <small>Partnerlänk · kontrollera aktuell omfattning, självrisk och villkor innan du tecknar.</small>
+    </div>
+    <div className='claimsSpotlightBrand'>
+      <img src={`https://www.google.com/s2/favicons?domain=${travel.domain}&sz=128`} alt='' loading='lazy'/>
+      <strong>{travel.name}</strong>
+      <span>Reseförsäkring</span>
+    </div>
+  </section>:null;
+
   return <CategoryLanding
     category='forsakring'
     canonical='https://sankkostnaden.se/forsakring/'
@@ -38,7 +57,7 @@ export default function Forsakring(){
     helpLabel='Jämför djurförsäkring'
     partnerHeading='Aktuella försäkringsalternativ'
     showPartners={true}
-    afterPartners={claimsBlock}
+    afterPartners={<>{claimsBlock}{travelBlock}</>}
     checks={[
       'Årspremie efter eventuella rabatter',
       'Grundsjälvrisk och särskilda självrisker',
@@ -53,6 +72,7 @@ export default function Forsakring(){
       {href:'/forsakring/hemforsakring-skyddskoll/',title:'Skyddskoll',text:'Kontrollera vilket skydd du behöver.'},
       {href:'/forsakring/vad-kostar-hemforsakring/',title:'Vad kostar hemförsäkring?',text:'Se vad som påverkar premien.'},
       {href:'/forsakring/forsakringsersattning/',title:'Försäkringsersättning',text:'Kontrollera om en skada eller olycka kan ge ersättning.'},
+      {href:'/forsakring/reseforsakring/',title:'Reseförsäkring',text:'Kontrollera befintligt reseskydd innan du köper mer.'},
     ]}
     moreGuides={[
       {href:'/forsakring/hemforsakring-hyresratt/',title:'Hemförsäkring hyresrätt',text:'Relevant skydd för hyresrätt.'},
