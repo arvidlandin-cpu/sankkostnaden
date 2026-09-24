@@ -138,8 +138,10 @@ export default function SavingsApp() {
     return { ...category, score, reasons, potential: level(score) };
   }).sort((a, b) => b.score - a.score), [answers, household]);
 
-  const top = results[0];
-  const completed = categories.filter(category => { const a=answers[category.key]; return a.reviewed >= 0 && a.friction >= 0 && a.fit >= 0; }).length;
+  const isComplete=(key:CostKey)=>{ const a=answers[key]; return a.reviewed >= 0 && a.friction >= 0 && a.fit >= 0; };
+  const evaluatedResults=results.filter(result=>isComplete(result.key));
+  const top = evaluatedResults[0] || results[0];
+  const completed = evaluatedResults.length;
   const totalMonthly = Object.values(answers).reduce((sum, answer) => sum + answer.monthly, 0);
 
   useEffect(() => {
@@ -205,7 +207,7 @@ export default function SavingsApp() {
               const result = results.find(item => item.key === category.key)!;
               return (
                 <button key={category.key} className={active === category.key ? styles.activeTab : ''} onClick={() => setActive(category.key)}>
-                  <span>{category.short}</span><b>{result.score}</b>
+                  <span>{category.short}</span><b>{isComplete(category.key)?result.score:'—'}</b>
                 </button>
               );
             })}
@@ -214,7 +216,7 @@ export default function SavingsApp() {
           <div className={styles.questionCard}>
             <div className={styles.questionTop}>
               <div><span>ANALYS {categories.findIndex(category => category.key === active) + 1} / 4</span><h2>{activeCategory.label}</h2></div>
-              <div className={styles.scoreOrb}><strong>{results.find(item => item.key === active)!.score}</strong><small>/100</small></div>
+              <div className={styles.scoreOrb}><strong>{isComplete(active)?results.find(item => item.key === active)!.score:'—'}</strong><small>{isComplete(active)?'/100':'svara först'}</small></div>
             </div>
 
             <div className={styles.householdRow}>
@@ -244,9 +246,10 @@ export default function SavingsApp() {
             <p>Poängen är en prioriteringssignal – inte ett löfte om en viss besparing. Den väger ihop dina egna svar så att du slipper gissa vilket avtal som är mest värt att börja med.</p>
           </div>
 
+          {completed===0 ? <div className={styles.ranking}><article><div className={styles.resultBody}><div><h3>Inget område bedömt ännu</h3></div><p>Svara klart på frågorna för ett område så visas det här. Vi rangordnar inget och visar inga partnerförslag innan det finns underlag.</p></div></article></div> :
           <div className={styles.ranking}>
-            {results.map((result, index) => (
-              <article key={result.key} className={index === 0 && completed ? styles.topResult : ''}>
+            {evaluatedResults.map((result, index) => (
+              <article key={result.key} className={index === 0 ? styles.topResult : ''}>
                 <div className={styles.rank}><span>#{index + 1}</span><div className={styles.meter}><i style={{ width: `${Math.max(4, result.score)}%` }} /></div></div>
                 <div className={styles.resultBody}>
                   <div><h3>{result.label}</h3><span className={styles.potential}>{result.potential} potential</span></div>
@@ -261,7 +264,7 @@ export default function SavingsApp() {
                 </div>
               </article>
             ))}
-          </div>
+          </div>}
         </section>
 
         <section className={styles.explain}>
