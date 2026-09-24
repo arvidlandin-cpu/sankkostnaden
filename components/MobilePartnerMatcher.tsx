@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { ArrowRight, ArrowUpRight, BadgeCheck, Check, RotateCcw, Users, UserRound, Waves, Unplug } from 'lucide-react';
-import { getActivePartners, partnerRankScore, PARTNER_LINK_CHECKED_LABEL, partnerSourceLabel, type ActivePartner } from '../lib/partners';
+import { getActivePartners, partnerRankScore, partnerGroupCheckedLabel, partnerLinkCheckedLabel, partnerSourceLabel, type ActivePartner } from '../lib/partners';
 
 type Household='one'|'family';
 type Priority='flex'|'data'|'open';
@@ -42,7 +42,7 @@ function PartnerCard({partner,household,priority,position}:{partner:ActivePartne
       <span><BadgeCheck size={13}/> PARTNERLÄNK</span>
     </div>
     <ul>{why.map(item=><li key={item}><Check size={14}/>{item}</li>)}</ul>
-    <div className='partnerVerification compact'><span>Länk kontrollerad {PARTNER_LINK_CHECKED_LABEL}</span><span>Källa: {partnerSourceLabel(partner)}</span></div>
+    <div className='partnerVerification compact'><span>Länk kontrollerad {partnerLinkCheckedLabel(partner)}</span><span>Källa: {partnerSourceLabel(partner)}</span></div>
     <a
       href={partner.trackingUrl}
       data-partner={partner.name}
@@ -96,7 +96,7 @@ export default function MobilePartnerMatcher(){
       <div className='directPartnerGrid'>{all.slice(0,2).map((p,i)=><a key={p.name} href={p.trackingUrl} target='_blank' rel='sponsored nofollow noopener' data-partner={p.name} data-category='mobil' data-intent='direct' data-placement='mobile_direct' data-partner-position={i+1}>
         <span className='partnerBrand'>{p.domain&&<img src={`https://www.google.com/s2/favicons?domain=${p.domain}&sz=128`} alt='' loading='lazy'/>}<span className='partnerWordmark'>{p.name}</span></span><b>{p.cta||'Se abonnemang'}<ArrowUpRight size={14}/></b>
       </a>)}</div>
-      <p>Vill du ha hjälp att välja? Svara på två frågor nedan så kortlistar vi relevanta operatörer.</p><small className='directPartnerVerified'>Partnerlänkar kontrollerade {PARTNER_LINK_CHECKED_LABEL}</small>
+      <p>Vill du ha hjälp att välja? Svara på två frågor nedan så kortlistar vi relevanta operatörer.</p><small className='directPartnerVerified'>Partnerlänkar kontrollerade {partnerGroupCheckedLabel(all.slice(0,2))}</small>
     </div>
 
     <div className='matchQuestions'>
