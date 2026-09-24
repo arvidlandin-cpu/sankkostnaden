@@ -1,6 +1,12 @@
 name: Mobile visual QA
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/mobile-visual-qa.yml'
+      - 'tests/mobile-visual.spec.ts'
+      - 'playwright.config.ts'
   workflow_dispatch:
     inputs:
       base_url:
@@ -12,7 +18,7 @@ jobs:
   mobile-visual-qa:
     runs-on: ubuntu-latest
     env:
-      QA_BASE_URL: ${{ inputs.base_url }}
+      QA_BASE_URL: ${{ inputs.base_url || 'https://sankkostnaden.se' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
