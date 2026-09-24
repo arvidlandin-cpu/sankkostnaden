@@ -3,7 +3,7 @@ import {
   ArrowRight, ArrowUpRight, BadgeCheck, Check, CircleDollarSign, GitCompareArrows,
   HousePlug, PawPrint, RotateCcw, Search, ShieldCheck, Sparkles, Unplug, Wifi
 } from 'lucide-react';
-import { getActivePartners, partnerRankScore, partners, type ActivePartner, type PartnerIntent } from '../lib/partners';
+import { getActivePartners, partnerRankScore, partners, PARTNER_LINK_CHECKED_LABEL, partnerSourceLabel, type ActivePartner, type PartnerIntent } from '../lib/partners';
 
 function track(event:string,params:Record<string,string|number>){
   if(typeof window==='undefined') return;
@@ -23,12 +23,14 @@ function PartnerCard({
       <span><BadgeCheck size={13}/> PARTNERLÄNK</span>
     </div>
     <ul>{reasons.slice(0,2).map(item=><li key={item}><Check size={14}/>{item}</li>)}</ul>
+    <div className='partnerVerification compact'><span>Länk kontrollerad {PARTNER_LINK_CHECKED_LABEL}</span><span>Källa: {partnerSourceLabel(partner)}</span></div>
     <a
       href={partner.trackingUrl}
       data-partner={partner.name}
       data-category={partner.category}
       data-intent={intent}
       data-placement={placement}
+      data-partner-position={position}
       target='_blank'
       rel='sponsored nofollow noopener'
       onClick={()=>track('guided_partner_click',{partner:partner.name,category:partner.category,intent,placement,position})}
@@ -43,7 +45,7 @@ function DirectPartnerStrip({items,label='Gå direkt till partner',placement}:{i
   if(!featured.length) return null;
   return <div className='directPartnerBlock'>
     <div className='directPartnerHead'><div><small>REDO ATT JÄMFÖRA?</small><strong>{label}</strong></div><span>Partnerlänkar</span></div>
-    <div className='directPartnerGrid'>{featured.map((p,i)=><a key={p.name} href={p.trackingUrl} target='_blank' rel='sponsored nofollow noopener' data-partner={p.name} data-category={p.category} data-intent='direct' data-placement={placement} onClick={()=>track('guided_partner_click',{partner:p.name,category:p.category,intent:'direct',placement,position:i+1})}>
+    <div className='directPartnerGrid'>{featured.map((p,i)=><a key={p.name} href={p.trackingUrl} target='_blank' rel='sponsored nofollow noopener' data-partner={p.name} data-category={p.category} data-intent='direct' data-placement={placement} data-partner-position={i+1} onClick={()=>track('guided_partner_click',{partner:p.name,category:p.category,intent:'direct',placement,position:i+1})}>
       <span className='partnerBrand'>{p.domain&&<img src={`https://www.google.com/s2/favicons?domain=${p.domain}&sz=128`} alt='' loading='lazy'/>}<span className='partnerWordmark'>{p.name}</span></span><b>{p.cta||`Se aktuella alternativ`}<ArrowUpRight size={14}/></b>
     </a>)}</div>
     <p>Vill du ha hjälp att välja? Svara på frågan nedan så kortlistar vi relevanta alternativ.</p>
@@ -77,13 +79,14 @@ function AllPartners({
   return <details className='allPartnersDetails'>
     <summary>{label}<ArrowRight size={15}/></summary>
     <div className='allPartnersGrid'>
-      {items.map(partner=><a
+      {items.map((partner,i)=><a
         key={partner.name}
         href={partner.trackingUrl}
         data-partner={partner.name}
         data-category={partner.category}
         data-intent={intent}
         data-placement={placement}
+        data-partner-position={i+1}
         target='_blank'
         rel='sponsored nofollow noopener'
       ><span><strong>{partner.name}</strong><small>Partnerlänk · kontrollera aktuellt pris och villkor</small></span><ArrowUpRight size={16}/></a>)}
