@@ -3,7 +3,7 @@ import {
   ArrowRight, ArrowUpRight, BadgeCheck, Check, CircleDollarSign, GitCompareArrows,
   HousePlug, PawPrint, RotateCcw, Search, ShieldCheck, Sparkles, Unplug, Wifi
 } from 'lucide-react';
-import { getActivePartners, partnerRankScore, partners, PARTNER_LINK_CHECKED_LABEL, partnerSourceLabel, type ActivePartner, type PartnerIntent } from '../lib/partners';
+import { getActivePartners, partnerRankScore, partners, partnerGroupCheckedLabel, partnerLinkCheckedLabel, partnerSourceLabel, type ActivePartner, type PartnerIntent } from '../lib/partners';
 
 function track(event:string,params:Record<string,string|number>){
   if(typeof window==='undefined') return;
@@ -23,7 +23,7 @@ function PartnerCard({
       <span><BadgeCheck size={13}/> PARTNERLÄNK</span>
     </div>
     <ul>{reasons.slice(0,2).map(item=><li key={item}><Check size={14}/>{item}</li>)}</ul>
-    <div className='partnerVerification compact'><span>Länk kontrollerad {PARTNER_LINK_CHECKED_LABEL}</span><span>Källa: {partnerSourceLabel(partner)}</span></div>
+    <div className='partnerVerification compact'><span>Länk kontrollerad {partnerLinkCheckedLabel(partner)}</span><span>Källa: {partnerSourceLabel(partner)}</span></div>
     <a
       href={partner.trackingUrl}
       data-partner={partner.name}
@@ -47,7 +47,7 @@ function DirectPartnerStrip({items,label='Gå direkt till partner',placement}:{i
     <div className='directPartnerGrid'>{featured.map((p,i)=><a key={p.name} href={p.trackingUrl} target='_blank' rel='sponsored nofollow noopener' data-partner={p.name} data-category={p.category} data-intent='direct' data-placement={placement} data-partner-position={i+1}>
       <span className='partnerBrand'>{p.domain&&<img src={`https://www.google.com/s2/favicons?domain=${p.domain}&sz=128`} alt='' loading='lazy'/>}<span className='partnerWordmark'>{p.name}</span></span><b>{p.cta||`Se aktuella alternativ`}<ArrowUpRight size={14}/></b>
     </a>)}</div>
-    <p>Vill du ha hjälp att välja? Svara på frågan nedan så kortlistar vi relevanta alternativ.</p><small className='directPartnerVerified'>Partnerlänkar kontrollerade {PARTNER_LINK_CHECKED_LABEL}</small>
+    <p>Vill du ha hjälp att välja? Svara på frågan nedan så kortlistar vi relevanta alternativ.</p><small className='directPartnerVerified'>Partnerlänkar kontrollerade {partnerGroupCheckedLabel(featured)}</small>
   </div>;
 }
 
