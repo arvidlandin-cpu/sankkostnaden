@@ -53,13 +53,13 @@ export default function PartnerOffers({ category, heading = 'Jämför hos våra 
         <p>{copy.intro}</p>
       </div>
       <div className='partnerGrid'>
-        {items.map(item => (
+        {items.map((item,index) => (
           <article className={'partnerCard partnerCardStrong partnerCardBrand ' + (item.name === 'Lassie' ? 'isLassie' : item.name.startsWith('Sveland') ? 'isSveland' : '')} key={item.name}>
             <div>
               <div className='partnerCardTop'><PartnerLogo name={item.name}/><span className='commercialTag'><BadgeCheck size={13}/> PARTNERLÄNK</span></div>
               <p>{item.note}</p><div className='partnerVerification'><span>Länk kontrollerad {partnerLinkCheckedLabel(item)}</span><span>Källa: {partnerSourceLabel(item)}</span></div>
             </div>
-            <a className='partnerButton partnerButtonStrong' href={item.trackingUrl} data-partner={item.name} data-category={item.category} data-intent={intent || 'unspecified'} data-placement='partner_offers' data-partner-position='offer' target='_blank' rel='sponsored nofollow noopener'>
+            <a className='partnerButton partnerButtonStrong' href={item.trackingUrl} data-partner={item.name} data-category={item.category} data-intent={intent || 'unspecified'} data-placement='partner_offers' data-partner-position={index+1} target='_blank' rel='sponsored nofollow noopener'>
               {item.cta || (item.category === 'mobil' ? `Se abonnemang hos ${item.name}` : item.category === 'forsakring' ? `Hämta pris hos ${item.name.replace(' Djurförsäkring','')}` : item.category === 'ekonomi' ? `Se tjänsten hos ${item.name}` : `Se pris hos ${item.name}`)} <ArrowUpRight size={18} />
             </a>
           </article>
