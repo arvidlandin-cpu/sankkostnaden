@@ -724,3 +724,42 @@
   .cardActions{gap:8px}
   .reset,.next{width:100%;min-height:50px}
 }
+
+
+.optionalCost{
+  border-top:1px solid #edf0eb;
+}
+.optionalCost summary{
+  min-height:54px;
+  padding:0 30px;
+  display:flex;
+  align-items:center;
+  color:#5f6b63;
+  font-size:12px;
+  font-weight:800;
+  cursor:pointer;
+  list-style:none;
+}
+.optionalCost summary::-webkit-details-marker{display:none}
+.optionalCost summary::after{
+  content:'+';
+  margin-left:auto;
+  font-size:19px;
+  line-height:1;
+  color:#748077;
+}
+.optionalCost[open] summary::after{content:'−'}
+.optionalCostBody{
+  padding:0 30px 24px;
+}
+.optionalCostBody p{
+  max-width:590px;
+  margin:0 0 12px;
+  color:#7a857e;
+  font-size:11px;
+  line-height:1.5;
+}
+@media(max-width:760px){
+  .optionalCost summary{padding:0 18px}
+  .optionalCostBody{padding:0 18px 20px}
+}
