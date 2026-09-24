@@ -1948,3 +1948,81 @@ footer{
   .claimsSpotlightActions{display:grid}
   .claimsSpotlightActions a{width:100%}
 }
+
+
+/* Deep mobile QA fixes 2026-09-24 */
+.article .partnerButton,
+.article .partnerButtonStrong,
+.article .matchPartnerCard>a{
+  color:#fff!important;
+  text-decoration:none!important;
+}
+.directPartnerGrid{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+}
+.matchPartnerTop .partnerBrand{
+  min-height:36px;
+}
+.matchPartnerTop .partnerBrand img{
+  width:34px;
+  height:34px;
+  border-radius:9px;
+}
+.matchPartnerTop .partnerBrand h3{
+  margin:0;
+}
+@media(max-width:700px){
+  html{
+    scroll-padding-bottom:calc(104px + env(safe-area-inset-bottom));
+  }
+  body{
+    padding-bottom:calc(96px + env(safe-area-inset-bottom));
+  }
+  .mobileQuickBar{
+    left:10px;
+    right:10px;
+    bottom:max(8px,env(safe-area-inset-bottom));
+    gap:4px;
+    padding:5px;
+    border-radius:15px;
+  }
+  .mobileQuickBar a{
+    height:44px;
+    border-radius:10px;
+    gap:2px;
+  }
+  .mobileQuickBar a svg{
+    width:15px;
+    height:15px;
+  }
+  .mobileQuickBar a b{
+    font-size:8.5px;
+  }
+  #partners,#resultat{
+    scroll-margin-bottom:110px;
+  }
+}
+@media(max-width:520px){
+  .directPartnerBlock{
+    padding:14px;
+    margin-top:14px;
+  }
+  .directPartnerGrid{
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+  }
+  .directPartnerGrid>a{
+    min-height:76px;
+    padding:11px;
+  }
+  .partnerBrand img{
+    width:30px;
+    height:30px;
+  }
+  .partnerWordmark{
+    font-size:14px;
+  }
+  .matchPartnerCard{
+    min-height:0;
+  }
+}
