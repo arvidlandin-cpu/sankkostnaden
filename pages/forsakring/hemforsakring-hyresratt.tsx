@@ -3,8 +3,8 @@ import IntentGuide from '../../components/IntentGuide';
 export default function Page() {
   return (
     <IntentGuide
-      title='Vad kostar hemförsäkring för hyresrätt 2026? Pris & skydd'
-      description='Vad kostar hemförsäkring för hyresrätt? Jämför pris per månad, självrisk, lösöre, reseskydd och allrisk – och se vad som påverkar kostnaden.'
+      title='Vad kostar hemförsäkring hyresrätt 2026? Pris per månad & skydd'
+      description='Vad kostar hemförsäkring för hyresrätt 2026? Se vad som påverkar pris per månad och jämför självrisk, lösöre, reseskydd och allrisk.'
       kicker='HEMFÖRSÄKRING HYRESRÄTT'
       canonical='https://sankkostnaden.se/forsakring/hemforsakring-hyresratt/'
       category='forsakring' intent='home'
