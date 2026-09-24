@@ -44,8 +44,12 @@ export default function HomeHero(){
       </div>
 
       <div className={styles.card}>
-        <div className={styles.cardEyebrow}>VÄLJ OMRÅDE</div>
-        <h2>Vad vill du betala mindre för?</h2>
+        <div className={styles.cardEyebrow}>BÖRJA HÄR</div>
+        <h2>Var kan ditt hushåll spara mest?</h2>
+        <div className={styles.choiceList}>
+          <a href='/app/'><div><strong>Starta Kostnadskollen</strong><small>Fyra områden · personlig prioritering · gratis</small></div><ArrowRight size={17}/></a>
+        </div>
+        <div className={styles.cardDivider}><span>eller välj område direkt</span></div>
         <div className={styles.areaList}>
           {order.map(key=>{
             const item=areas[key],Icon=item.icon;
@@ -54,7 +58,7 @@ export default function HomeHero(){
             </a>;
           })}
         </div>
-        <p className={styles.cardHint}>Ett val räcker. På nästa sida kan du gå direkt till partner eller få hjälp att välja.</p>
+        <p className={styles.cardHint}>Vet du redan vad du vill jämföra? Välj område direkt. Annars börjar Kostnadskollen med den största möjligheten.</p>
       </div>
     </div>
     <div className={styles.proof}>
