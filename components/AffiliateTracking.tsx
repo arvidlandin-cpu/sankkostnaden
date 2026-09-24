@@ -105,7 +105,7 @@ export default function AffiliateTracking() {
         if (!params) return;
         seen.add(anchor);
         emit('partner_impression', params);
-        observer.unobserve(anchor);
+        observer?.unobserve(anchor);
       });
     }, { threshold: [0.35] }) : null;
 
