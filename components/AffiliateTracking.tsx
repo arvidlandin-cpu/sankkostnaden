@@ -107,6 +107,15 @@ export default function AffiliateTracking() {
 
     const observed = new WeakSet<HTMLAnchorElement>();
     const seen = new WeakSet<HTMLAnchorElement>();
+    const seenImpressionKeys = new Set<string>();
+    const impressionKey = (params: Record<string, unknown>) => [
+      params.page_path,
+      params.partner,
+      params.placement,
+      params.partner_position,
+      params.link_url,
+    ].join('|');
+
     const observer = 'IntersectionObserver' in window ? new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (!entry.isIntersecting || entry.intersectionRatio < 0.35) return;
@@ -114,9 +123,12 @@ export default function AffiliateTracking() {
         if (seen.has(anchor)) return;
         const params = resolve(anchor);
         if (!params) return;
+        const key = impressionKey(params);
         seen.add(anchor);
-        emit('partner_impression', params);
         observer?.unobserve(anchor);
+        if (seenImpressionKeys.has(key)) return;
+        seenImpressionKeys.add(key);
+        emit('partner_impression', params);
       });
     }, { threshold: [0.35] }) : null;
 
