@@ -5,6 +5,9 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/browserstack-real-iphone-qa.yml'
+      - 'playwright.browserstack.config.ts'
+      - 'tests/browserstack-real-ios.spec.ts'
+      - 'browserstack.yml'
   workflow_dispatch:
     inputs:
       base_url:
