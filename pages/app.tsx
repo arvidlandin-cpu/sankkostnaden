@@ -191,8 +191,8 @@ export default function SavingsApp() {
         <section className={styles.hero}>
           <Link className='back' href='/'><ArrowLeft size={16} /> Startsidan</Link>
           <div className={styles.badge}><Sparkles size={17} /> Kostnadskollen 2026</div>
-          <h1>Var läcker ditt hushåll pengar?</h1>
-          <p>Svara på två frågor per område. Kostnadskollen använder svaren för att visa vilket avtal som är mest värt att kontrollera först – utan ett svårtolkat poängbetyg.</p>
+          <h1>Vilket avtal bör du kontrollera först?</h1>
+          <p>Svara på två frågor per område. Kostnadskollen använder svaren för att prioritera vilket avtal som verkar mest rimligt att kontrollera först – utan ett svårtolkat poängbetyg.</p>
           <div className={styles.heroStats}>
             <div><strong>{completed}/4</strong><span>områden analyserade</span></div>
             <div><strong>{totalMonthly ? `${totalMonthly.toLocaleString('sv-SE')} kr` : '—'}</strong><span>angiven kostnad / mån</span></div>
