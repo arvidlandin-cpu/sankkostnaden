@@ -58,10 +58,12 @@ export const partners: Partner[] = [
 
 export type ActivePartner = Partner & { trackingUrl: string };
 
-export const partnerRankScore=(p:Partner,intent?:PartnerIntent)=>(p.priority||0)+(p.monetizationWeight||0)+(intent&&p.intents.includes(intent)?100:0)+(p.intents.includes('compare')?5:0);
+export const partnerRankScore=(p:Partner,intent?:PartnerIntent)=>(p.priority||0)+(intent&&p.intents.includes(intent)?100:0)+(p.intents.includes('compare')?5:0);
+export const partnerCommercialWeight=(p:Partner)=>(p.monetizationWeight||0);
 
-// Relevans är alltid huvudsignal. monetizationWeight används bara som en sekundär
-// affärssignal mellan partners som redan är relevanta för samma kategori/intention.
+// Relevans och kommersiell ersättning hålls isär. partnerRankScore styr användarens
+// relevansordning. monetizationWeight får bara användas i separat, tydligt märkt
+// kommersiell exponering eller efterföljande intäktsanalys.
 
 export function getPartners(category: PartnerCategory) { return partners.filter(p => p.category === category); }
 export function getActivePartners(category: PartnerCategory, intent?: PartnerIntent, limit = 4): ActivePartner[] {
