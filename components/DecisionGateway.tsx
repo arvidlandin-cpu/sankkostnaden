@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { ArrowRight, ArrowUpRight, Compass, Gauge, Sparkles } from 'lucide-react';
 import { getActivePartners, type PartnerCategory, type PartnerIntent } from '../lib/partners';
 
-type Props={category:PartnerCategory;compact?:boolean;intent?:PartnerIntent;currentPath?:string};
+type Props={category:PartnerCategory;compact?:boolean;intent?:PartnerIntent;currentPath?:string;onPagePartners?:boolean};
 
 const config={
   bredband:{title:'Vad vill du göra nu?',intro:'Få en relevant startpunkt utifrån adress och teknik eller välj rätt hastighet först.',direct:'Hitta relevanta bredbandsalternativ',help:'Hjälp mig välja hastighet',helpHref:'/bredband/vilken-hastighet-behover-jag/',fallback:'/bredband/billigaste-bredbandet/'},
@@ -12,7 +12,7 @@ const config={
   ekonomi:{title:'Vad vill du göra nu?',intro:'Få en relevant väg till lånejämförelser eller börja med hushållets helhet.',direct:'Hitta relevanta lånejämförelser',help:'Se hushållets kostnader',helpHref:'/verktyg/hushallskostnadskollen/',fallback:'/ekonomi/jamfor-privatlan/'},
 } as const;
 
-export default function DecisionGateway({category,compact=false,intent,currentPath}:Props){
+export default function DecisionGateway({category,compact=false,intent,currentPath,onPagePartners=false}:Props){
   const cfg=config[category];
   const active=getActivePartners(category,intent,3);
   const onePartner=active.length===1?active[0]:null;
@@ -23,7 +23,7 @@ export default function DecisionGateway({category,compact=false,intent,currentPa
   const resolvedFallback=category==='forsakring'&&intent==='home'?'/forsakring/jamfor-hemforsakring/':category==='forsakring'&&intent==='pet'?'/forsakring/djurforsakring/':cfg.fallback;
   const fallbackPath=resolvedFallback.split('#')[0];
   const samePage=Boolean(currentPath&&fallbackPath===currentPath.split('#')[0]);
-  const guideCanShowPartners=Boolean(currentPath&&active.length>1&&((category==='forsakring'&&(intent==='home'||intent==='pet'))||(category==='el'&&intent==='compare')||(category==='bredband'&&intent==='compare')));
+  const guideCanShowPartners=Boolean(currentPath&&active.length>1&&(onPagePartners||(category==='forsakring'&&(intent==='home'||intent==='pet'))));
   const directHref=onePartner?onePartner.trackingUrl:(guideCanShowPartners?`${currentPath}#guide-partners`:(active.length>1&&samePage?`${currentPath}#partners`:resolvedFallback));
 
   return <section className={`decisionGateway decisionGatewaySimple ${compact?'decisionGatewayCompact':''}`}>
