@@ -19,7 +19,7 @@ function PartnerCard({
 }){
   return <article className='matchPartnerCard'>
     <div className='matchPartnerTop'>
-      <div><small>FÖRSLAG {position}</small><h3>{partner.name}</h3></div>
+      <div><small>FÖRSLAG {position}</small><div className='partnerBrand'>{partner.domain&&<img src={`https://www.google.com/s2/favicons?domain=${partner.domain}&sz=128`} alt='' loading='lazy'/>}<h3>{partner.name}</h3></div></div>
       <span><BadgeCheck size={13}/> PARTNERLÄNK</span>
     </div>
     <ul>{reasons.slice(0,2).map(item=><li key={item}><Check size={14}/>{item}</li>)}</ul>
