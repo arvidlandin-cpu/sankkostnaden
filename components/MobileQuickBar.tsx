@@ -1,11 +1,23 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { Wifi, Smartphone, ShieldCheck, Zap, CircleDollarSign } from 'lucide-react';
+
+const items=[
+  {href:'/bredband/',match:'/bredband',label:'Bredband',Icon:Wifi},
+  {href:'/mobil/',match:'/mobil',label:'Mobil',Icon:Smartphone},
+  {href:'/elavtal/',match:'/elavtal',label:'El',Icon:Zap},
+  {href:'/forsakring/',match:'/forsakring',label:'Försäkring',Icon:ShieldCheck},
+  {href:'/ekonomi/',match:'/ekonomi',label:'Ekonomi',Icon:CircleDollarSign},
+];
+
 export default function MobileQuickBar(){
- return <nav className='mobileQuickBar' aria-label='Snabbnavigering'>
-  <Link href='/bredband/'><Wifi size={16}/><b>Bredband</b></Link>
-  <Link href='/mobil/'><Smartphone size={16}/><b>Mobil</b></Link>
-  <Link href='/elavtal/'><Zap size={16}/><b>El</b></Link>
-  <Link href='/forsakring/'><ShieldCheck size={16}/><b>Försäkring</b></Link>
-  <Link href='/ekonomi/'><CircleDollarSign size={16}/><b>Ekonomi</b></Link>
- </nav>
+  const router=useRouter();
+  return <nav className='mobileQuickBar' aria-label='Snabbnavigering'>
+    {items.map(({href,match,label,Icon})=>{
+      const active=router.pathname.startsWith(match);
+      return <Link key={href} href={href} className={active?'active':''} aria-current={active?'page':undefined}>
+        <Icon size={16}/><b>{label}</b>
+      </Link>;
+    })}
+  </nav>;
 }
