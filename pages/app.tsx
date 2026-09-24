@@ -6,7 +6,7 @@ import styles from '../styles/App.module.css';
 import { getActivePartners, type PartnerIntent } from '../lib/partners';
 
 type CostKey = 'el' | 'bredband' | 'mobil' | 'forsakring';
-type Answers = Record<CostKey, { monthly: number; reviewed: number; friction: number; fit: number }>;
+type Answers = Record<CostKey, { monthly: number; reviewed: number; fit: number }>;
 
 type Category = {
   key: CostKey;
@@ -14,9 +14,7 @@ type Category = {
   short: string;
   href: string;
   reviewQuestion: string;
-  frictionQuestion: string;
   fitQuestion: string;
-  frictionOptions: Array<{ label: string; value: number }>;
   fitOptions: Array<{ label: string; value: number }>;
 };
 
@@ -27,9 +25,7 @@ const categories: Category[] = [
     short: 'El',
     href: '/elavtal/jamfor-elavtal/',
     reviewQuestion: 'När jämförde du elavtalet senast?',
-    frictionQuestion: 'Hur ser avtalet ut idag?',
     fitQuestion: 'Hur aktiv vill du vara med elpriset?',
-    frictionOptions: [{ label: 'Ingen bindning', value: 0 }, { label: 'Osäker', value: 1 }, { label: 'Bundet', value: 2 }],
     fitOptions: [{ label: 'Vill ha enkelt', value: 0 }, { label: 'Kan styra lite', value: 1 }, { label: 'Kan flytta förbrukning', value: 2 }],
   },
   {
@@ -38,9 +34,7 @@ const categories: Category[] = [
     short: 'Bredband',
     href: '/bredband/bredband-pa-min-adress/',
     reviewQuestion: 'När jämförde du bredbandet senast?',
-    frictionQuestion: 'Hur säker är du på bindningstiden?',
     fitQuestion: 'Hur används uppkopplingen?',
-    frictionOptions: [{ label: 'Ingen bindning', value: 0 }, { label: 'Osäker', value: 2 }, { label: 'Bundet', value: 1 }],
     fitOptions: [{ label: 'Lätt användning', value: 0 }, { label: 'Streaming / familj', value: 1 }, { label: 'Gaming / tungt', value: 2 }],
   },
   {
@@ -49,9 +43,7 @@ const categories: Category[] = [
     short: 'Mobil',
     href: '/mobil/billigaste-mobilabonnemanget/',
     reviewQuestion: 'När jämförde du mobilabonnemangen senast?',
-    frictionQuestion: 'Hur köper hushållet mobil idag?',
     fitQuestion: 'Hur mycket av surfen brukar faktiskt användas?',
-    frictionOptions: [{ label: 'Familjelösning', value: 0 }, { label: 'Separata abonnemang', value: 2 }, { label: 'Blandat / osäker', value: 1 }],
     fitOptions: [{ label: 'Nästan allt', value: 0 }, { label: 'Ungefär hälften', value: 1 }, { label: 'Mycket blir över', value: 2 }],
   },
   {
@@ -60,18 +52,16 @@ const categories: Category[] = [
     short: 'Försäkring',
     href: '/forsakring/jamfor-forsakring/',
     reviewQuestion: 'När jämförde du försäkringarna senast?',
-    frictionQuestion: 'Hur är försäkringarna samlade?',
     fitQuestion: 'Har du koll på självrisk och omfattning?',
-    frictionOptions: [{ label: 'Samlade', value: 0 }, { label: 'Flera bolag', value: 1 }, { label: 'Ingen koll', value: 2 }],
     fitOptions: [{ label: 'Ja', value: 0 }, { label: 'Delvis', value: 1 }, { label: 'Nej', value: 2 }],
   },
 ];
 
 const initialAnswers: Answers = {
-  el: { monthly: 0, reviewed: -1, friction: -1, fit: -1 },
-  bredband: { monthly: 0, reviewed: -1, friction: -1, fit: -1 },
-  mobil: { monthly: 0, reviewed: -1, friction: -1, fit: -1 },
-  forsakring: { monthly: 0, reviewed: -1, friction: -1, fit: -1 },
+  el: { monthly: 0, reviewed: -1, fit: -1 },
+  bredband: { monthly: 0, reviewed: -1, fit: -1 },
+  mobil: { monthly: 0, reviewed: -1, fit: -1 },
+  forsakring: { monthly: 0, reviewed: -1, fit: -1 },
 };
 
 const reviewOptions = [
@@ -81,7 +71,7 @@ const reviewOptions = [
   { label: '2+ år / aldrig', value: 3 },
 ];
 
-const storageKey='sankkostnaden-cost-check-v1';
+const storageKey='sankkostnaden-cost-check-v2';
 const partnerIntent:Record<CostKey,PartnerIntent>={el:'electricity',bredband:'compare',mobil:'compare',forsakring:'home'};
 
 function track(event:string,params:Record<string,string|number>){
@@ -92,9 +82,9 @@ function track(event:string,params:Record<string,string|number>){
 }
 
 function level(score: number) {
-  if (score >= 72) return 'Hög';
-  if (score >= 42) return 'Medel';
-  return 'Låg';
+  if (score >= 72) return 'Kontrollera först';
+  if (score >= 42) return 'Värt att kontrollera';
+  return 'Lägre prioritet';
 }
 
 export default function SavingsApp() {
@@ -103,13 +93,19 @@ export default function SavingsApp() {
   const [household, setHousehold] = useState(2);
   const [hydrated,setHydrated] = useState(false);
   const completedTracked = useRef(false);
+  const questionCardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     try {
       const saved=window.localStorage.getItem(storageKey);
       if(saved){
         const parsed=JSON.parse(saved);
-        if(parsed?.answers) setAnswers(parsed.answers);
+        if(parsed?.answers) setAnswers({
+          el:{...initialAnswers.el,...parsed.answers.el},
+          bredband:{...initialAnswers.bredband,...parsed.answers.bredband},
+          mobil:{...initialAnswers.mobil,...parsed.answers.mobil},
+          forsakring:{...initialAnswers.forsakring,...parsed.answers.forsakring},
+        });
         if(typeof parsed?.household==='number') setHousehold(Math.min(8,Math.max(1,parsed.household)));
       }
     } catch {}
@@ -167,6 +163,13 @@ export default function SavingsApp() {
 
   const activeCategory = categories.find(category => category.key === active)!;
   const activeAnswer = answers[active];
+  const activeIndex=categories.findIndex(category=>category.key===active);
+  const activeComplete=isComplete(active);
+  const goNext=()=>{
+    if(!activeComplete||activeIndex>=categories.length-1) return;
+    setActive(categories[activeIndex+1].key);
+    window.requestAnimationFrame(()=>questionCardRef.current?.scrollIntoView({behavior:'smooth',block:'start'}));
+  };
 
   return (
     <>
@@ -195,7 +198,7 @@ export default function SavingsApp() {
           <div className={styles.heroStats}>
             <div><strong>{completed}/4</strong><span>områden analyserade</span></div>
             <div><strong>{totalMonthly ? `${totalMonthly.toLocaleString('sv-SE')} kr` : '—'}</strong><span>angiven kostnad / mån</span></div>
-            <div><strong>{completed ? top.potential : '—'}</strong><span>högsta förbättringspotential</span></div>
+            <div><strong>{completed ? top.potential : '—'}</strong><span>högsta kontrollbehov</span></div>
           </div>
         </section>
 
@@ -204,17 +207,17 @@ export default function SavingsApp() {
             {categories.map(category => {
               const result = results.find(item => item.key === category.key)!;
               return (
-                <button key={category.key} className={active === category.key ? styles.activeTab : ''} onClick={() => setActive(category.key)}>
+                <button key={category.key} className={active === category.key ? styles.activeTab : ''} onClick={() => {setActive(category.key);window.requestAnimationFrame(()=>questionCardRef.current?.scrollIntoView({behavior:'smooth',block:'start'}));}} aria-current={active===category.key?'step':undefined}>
                   <span>{category.short}</span><b>{isComplete(category.key)?'✓':'—'}</b>
                 </button>
               );
             })}
           </div>
 
-          <div className={styles.questionCard}>
+          <div ref={questionCardRef} className={styles.questionCard}>
             <div className={styles.questionTop}>
               <div><span>ANALYS {categories.findIndex(category => category.key === active) + 1} / 4</span><h2>{activeCategory.label}</h2></div>
-              <div className={styles.scoreOrb}><strong>{isComplete(active)?results.find(item => item.key === active)!.potential:'—'}</strong><small>{isComplete(active)?'kontrollbehov':'2 frågor kvar'}</small></div>
+              <div className={styles.scoreOrb}><strong>{activeComplete?results.find(item => item.key === active)!.potential:'2'}</strong><small>{activeComplete?'kontrollbehov':'frågor kvar'}</small></div>
             </div>
 
             {active==='mobil'&&<div className={styles.householdRow}>
@@ -232,7 +235,7 @@ export default function SavingsApp() {
 
             <div className={styles.cardActions}>
               <button className={styles.reset} onClick={reset}><RotateCcw size={15} /> Börja om</button>
-              {active !== 'forsakring' ? <button className={styles.next} onClick={() => setActive(categories[categories.findIndex(category => category.key === active) + 1].key)}>Klart – nästa område <ArrowRight size={17} /></button> : <a className={styles.next} href='#resultat'>Se min prioritering <Target size={17} /></a>}
+              {activeIndex<categories.length-1 ? <button className={styles.next} disabled={!activeComplete} onClick={goNext}>{activeComplete?`Klart – till ${categories[activeIndex+1].short}`:'Svara på båda frågorna'} <ArrowRight size={17} /></button> : activeComplete ? <a className={styles.next} href='#resultat'>Visa min prioritering <Target size={17} /></a> : <button className={styles.next} disabled>Svara på båda frågorna <Target size={17} /></button>}
             </div>
           </div>
         </section>
@@ -247,17 +250,14 @@ export default function SavingsApp() {
           <div className={styles.ranking}>
             {evaluatedResults.map((result, index) => (
               <article key={result.key} className={index === 0 ? styles.topResult : ''}>
-                <div className={styles.rank}><span>#{index + 1}</span><div className={styles.meter}><i style={{ width: `${Math.max(4, result.score)}%` }} /></div></div>
+                <div className={styles.rank}><span>PRIORITET {index + 1}</span></div>
                 <div className={styles.resultBody}>
-                  <div><h3>{result.label}</h3><span className={styles.potential}>{result.potential} potential</span></div>
-                  <ul>{result.reasons.slice(0, 3).map(reason => <li key={reason}><Check size={14} /> {reason}</li>)}</ul>
+                  <div><h3>{result.label}</h3><span className={styles.potential}>{result.potential}</span></div>
+                  <ul>{result.reasons.slice(0, 2).map(reason => <li key={reason}><Check size={14} /> {reason}</li>)}</ul>
                 </div>
-                <div className={styles.resultScore}>
-                  <strong>{result.potential}</strong><small>kontrollbehov</small>
-                  <div className={styles.resultActions}>
-                    {resultPartners(result.key).map((partner,partnerIndex)=><a key={partner.name} href={partner.trackingUrl} data-partner={partner.name} data-category={partner.category} data-intent={partnerIntent[result.key]} data-placement='cost_check_result' target='_blank' rel='sponsored nofollow noopener'>{partnerIndex===0?'Jämför nu hos ':'Se även '}{partner.name} <ArrowUpRight size={14}/></a>)}
-                    <Link href={result.href}>Läs guiden först <ArrowRight size={14}/></Link>
-                  </div>
+                <div className={styles.resultActions}>
+                  {resultPartners(result.key).slice(0,2).map((partner,partnerIndex)=><a key={partner.name} href={partner.trackingUrl} data-partner={partner.name} data-category={partner.category} data-intent={partnerIntent[result.key]} data-placement='cost_check_result' target='_blank' rel='sponsored nofollow noopener'>{partnerIndex===0?'Jämför hos ':'Alternativ: '}{partner.name} <ArrowUpRight size={14}/></a>)}
+                  <Link href={result.href}>Jämför fler i guiden <ArrowRight size={14}/></Link>
                 </div>
               </article>
             ))}
@@ -266,7 +266,7 @@ export default function SavingsApp() {
 
         <section className={styles.explain}>
           <Gauge size={25} />
-          <div><strong>Vad betyder kontrollbehovet?</strong><p>Det är ingen prisjämförelse och inget betyg på ditt avtal. Högre kontrollbehov betyder bara att dina svar visar fler skäl att se över avtalet först.</p></div>
+          <div><strong>Hur prioriteras områdena?</strong><p>Det är inget betyg och ingen prisranking. Vi använder bara dina svar för att sortera vilken kostnad som verkar mest rimlig att kontrollera först.</p></div>
           <Zap size={25} />
           <div><strong>Vad händer sedan?</strong><p>Du går direkt till rätt jämförelseguide. Där kontrollerar du pris, innehåll, bindningstid och avgifter innan du fattar ett beslut.</p></div>
         </section>
