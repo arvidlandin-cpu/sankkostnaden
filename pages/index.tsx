@@ -135,8 +135,8 @@ export default function Home(){
           <p>Räkna på dina egna kostnader och se vilken post som är mest värd att ta först.</p>
         </div>
         <div className={styles.toolGrid}>
-          <a href='/verktyg/hushallskostnadskollen/'><span>HUSHÅLLSKOLL</span><strong>Vad kostar ditt hushåll?</strong><p>Se månad, år och vilken jämförbar kostnad som är störst.</p><b>Starta kostnadskollen <ArrowRight size={16}/></b></a>
-          <a href='/app/'><span>KOSTNADSKOLLEN</span><strong>Vilket avtal bör du se över först?</strong><p>Svara på några frågor och få en prioritering mellan el, bredband, mobil och försäkring.</p><b>Starta Kostnadskollen <ArrowRight size={16}/></b></a>
+          <a href='/verktyg/hushallskostnadskollen/'><span>HUSHÅLLSKOLL</span><strong>Vad kostar ditt hushåll?</strong><p>Se månad, år och vilken jämförbar kostnad som är störst.</p><b>Räkna hushållets kostnader <ArrowRight size={16}/></b></a>
+          <a href='/app/'><span>KOSTNADSKOLLEN</span><strong>Vilket avtal bör du se över först?</strong><p>Svara på några frågor och få en prioritering mellan el, bredband, mobil och försäkring.</p><b>Prioritera dina avtal <ArrowRight size={16}/></b></a>
           <a href='/guide/arskoll-fasta-kostnader/'><span>CHECKLISTA</span><strong>Årskoll av fasta kostnader</strong><p>Gå igenom hushållets återkommande avtal steg för steg.</p><b>Starta årskollen <ArrowRight size={16}/></b></a>
         </div>
       </section>
