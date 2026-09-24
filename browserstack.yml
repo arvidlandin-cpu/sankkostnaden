@@ -1,0 +1,20 @@
+framework: playwright
+
+projectName: Sank Kostnaden
+buildName: Real iPhone QA
+
+platforms:
+  - browserName: safari
+    osVersion: 15
+    deviceName: iPhone SE 2022
+  - browserName: safari
+    osVersion: 17
+    deviceName: iPhone 15 Pro
+  - browserName: safari
+    osVersion: 17
+    deviceName: iPhone 15 Pro Max
+
+parallelsPerPlatform: 1
+browserstackLocal: false
+debug: true
+video: true
