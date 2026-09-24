@@ -809,3 +809,13 @@
     padding-right:0!important;
   }
 }
+
+
+/* Defensive 360–430 px QA hardening 2026-09-24 */
+.questionTop>div:first-child{min-width:0}
+.questionTop h2{overflow-wrap:anywhere}
+@media(max-width:390px){
+  .questionTop{flex-direction:column}
+  .scoreOrb{min-width:0;width:100%;align-items:flex-start;text-align:left}
+  .scoreOrb strong{max-width:none}
+}
