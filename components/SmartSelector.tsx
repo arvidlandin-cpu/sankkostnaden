@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
-import { ArrowRight, Check, PiggyBank, RotateCcw, Sparkles } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Check, PiggyBank, RotateCcw, Sparkles } from 'lucide-react';
+import { getActivePartners, type PartnerCategory, type PartnerIntent } from '../lib/partners';
 import styles from '../styles/SmartSelector.module.css';
 
 export type SelectorOption = { label: string; points: number };
@@ -16,14 +17,17 @@ type Props = {
   disclaimer: string;
   backHref?: string;
   backLabel?: string;
+  partnerCategory?: PartnerCategory;
+  partnerIntent?: PartnerIntent;
 };
 
-export default function SmartSelector({ eyebrow, title, intro, questions, results, disclaimer, backHref='/', backLabel='Sänk Kostnaden' }: Props) {
+export default function SmartSelector({ eyebrow, title, intro, questions, results, disclaimer, backHref='/', backLabel='Sänk Kostnaden', partnerCategory, partnerIntent }: Props) {
   const [answers, setAnswers] = useState<number[]>(Array(questions.length).fill(-1));
   const answered = answers.filter(value => value >= 0).length;
   const score = answers.reduce((sum, answer, index) => sum + (answer >= 0 ? questions[index].options[answer].points : 0), 0);
   const result = useMemo(() => [...results].reverse().find(item => score >= item.min) || results[0], [results, score]);
   const complete = answered === questions.length;
+  const directPartner = partnerCategory ? getActivePartners(partnerCategory,partnerIntent,1)[0] : undefined;
 
   const choose = (questionIndex: number, optionIndex: number) => {
     setAnswers(current => current.map((value, index) => index === questionIndex ? optionIndex : value));
@@ -69,7 +73,8 @@ export default function SmartSelector({ eyebrow, title, intro, questions, result
           <h2>{complete ? result.title : 'Svara på frågorna så gör vi jobbet.'}</h2>
           <p>{complete ? result.text : 'Du får en konkret behovsprofil och ett tydligt nästa steg – utan att behöva kunna marknaden själv.'}</p>
           {complete && <ul>{result.bullets.map(item => <li key={item}><Check size={15} />{item}</li>)}</ul>}
-          {complete && <Link href={result.href}>{result.cta} <ArrowRight size={17} /></Link>}
+          {complete && directPartner && <a href={directPartner.trackingUrl} data-partner={directPartner.name} data-category={directPartner.category} data-intent={partnerIntent||'compare'} data-placement='smart_selector_result' target='_blank' rel='sponsored nofollow noopener'>Jämför nu hos {directPartner.name} <ArrowUpRight size={17} /></a>}
+          {complete && <Link href={result.href}>{directPartner?'Se jämförelseguiden först':result.cta} <ArrowRight size={17} /></Link>}
           <button className={styles.reset} onClick={reset}><RotateCcw size={14} /> Börja om</button>
           <small>{disclaimer}</small>
         </aside>
