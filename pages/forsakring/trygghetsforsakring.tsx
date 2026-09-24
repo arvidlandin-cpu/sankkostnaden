@@ -59,6 +59,7 @@ export default function Trygghetsforsakring(){
             <p>Enligt Hedvigs partnerinformation den 24 september 2026 är provisionen 500 kr per tecknad Trygghetsförsäkring. Det påverkar inte priset för dig. Kontrollera alltid aktuella kvalificeringskrav, premie, karens, ersättningsnivåer och undantag hos Hedvig innan du tecknar.</p>
             <div className='claimsSpotlightActions'>
               <a href={hedvig.trackingUrl} data-partner={hedvig.name} data-category='forsakring' data-intent='income-protection' data-placement='income_protection_guide' data-partner-position='1' target='_blank' rel='sponsored nofollow noopener'>Gå till Hedvig och välj Trygghetsförsäkring <ArrowUpRight size={16}/></a>
+              <a href='https://www.hedvig.com/se/forsakringar/trygghetsforsakring' target='_blank' rel='noopener'>Läs produktinfo hos Hedvig <ArrowUpRight size={16}/></a>
               <Link href='/forsakring/'>Jämför andra försäkringsbehov</Link>
             </div>
             <small>Partnerlänk · länken går till Hedvig. Välj Trygghetsförsäkring där och kontrollera aktuella villkor före köp.</small>
