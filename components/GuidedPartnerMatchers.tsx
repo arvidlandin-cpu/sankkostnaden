@@ -33,7 +33,6 @@ function PartnerCard({
       data-partner-position={position}
       target='_blank'
       rel='sponsored nofollow noopener'
-      onClick={()=>track('guided_partner_click',{partner:partner.name,category:partner.category,intent,placement,position})}
     >
       {cta||partner.cta||`Se aktuella alternativ hos ${partner.name}`}<ArrowUpRight size={17}/>
     </a>
@@ -45,7 +44,7 @@ function DirectPartnerStrip({items,label='Gå direkt till partner',placement}:{i
   if(!featured.length) return null;
   return <div className='directPartnerBlock'>
     <div className='directPartnerHead'><div><small>REDO ATT JÄMFÖRA?</small><strong>{label}</strong></div><span>Partnerlänkar</span></div>
-    <div className='directPartnerGrid'>{featured.map((p,i)=><a key={p.name} href={p.trackingUrl} target='_blank' rel='sponsored nofollow noopener' data-partner={p.name} data-category={p.category} data-intent='direct' data-placement={placement} data-partner-position={i+1} onClick={()=>track('guided_partner_click',{partner:p.name,category:p.category,intent:'direct',placement,position:i+1})}>
+    <div className='directPartnerGrid'>{featured.map((p,i)=><a key={p.name} href={p.trackingUrl} target='_blank' rel='sponsored nofollow noopener' data-partner={p.name} data-category={p.category} data-intent='direct' data-placement={placement} data-partner-position={i+1}>
       <span className='partnerBrand'>{p.domain&&<img src={`https://www.google.com/s2/favicons?domain=${p.domain}&sz=128`} alt='' loading='lazy'/>}<span className='partnerWordmark'>{p.name}</span></span><b>{p.cta||`Se aktuella alternativ`}<ArrowUpRight size={14}/></b>
     </a>)}</div>
     <p>Vill du ha hjälp att välja? Svara på frågan nedan så kortlistar vi relevanta alternativ.</p><small className='directPartnerVerified'>Partnerlänkar kontrollerade {PARTNER_LINK_CHECKED_LABEL}</small>
@@ -66,7 +65,6 @@ function VisiblePartnerNames({items,label='Aktiva partners i vårt urval'}:{item
       target='_blank'
       rel='sponsored nofollow noopener'
       aria-label={`Besök ${p.name}`}
-      onClick={()=>track('guided_partner_click',{partner:p.name,category:p.category,intent:'partner-chip',placement:'visible_partner_names',position:i+1})}
     ><strong>{p.name}</strong></a>)}</div>
   </div>;
 }
