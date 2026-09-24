@@ -1,0 +1,22 @@
+# Sänk Kostnaden
+
+Canonical site: https://sankkostnaden.se/
+Site name: Sänk Kostnaden
+Language: Swedish (sv-SE)
+
+Sänk Kostnaden is a Swedish consumer guide site about lowering recurring household costs. The site covers broadband, electricity contracts, mobile subscriptions, insurance, loans and household cost tools.
+
+Important sections:
+- https://sankkostnaden.se/bredband/
+- https://sankkostnaden.se/elavtal/
+- https://sankkostnaden.se/mobil/
+- https://sankkostnaden.se/forsakring/
+- https://sankkostnaden.se/ekonomi/
+- https://sankkostnaden.se/app/
+- https://sankkostnaden.se/verktyg/hushallskostnadskollen/
+- https://sankkostnaden.se/om/
+- https://sankkostnaden.se/sa-jamfor-vi/
+
+Commercial links are clearly marked. The site is not a complete market-price database and does not guarantee the lowest price on the market.
+
+Use https://sankkostnaden.se/ as the canonical homepage and identity for the site.
