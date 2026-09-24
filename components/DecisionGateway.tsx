@@ -23,7 +23,8 @@ export default function DecisionGateway({category,compact=false,intent,currentPa
   const resolvedFallback=category==='forsakring'&&intent==='home'?'/forsakring/jamfor-hemforsakring/':category==='forsakring'&&intent==='pet'?'/forsakring/djurforsakring/':cfg.fallback;
   const fallbackPath=resolvedFallback.split('#')[0];
   const samePage=Boolean(currentPath&&fallbackPath===currentPath.split('#')[0]);
-  const directHref=onePartner?onePartner.trackingUrl:(active.length>1&&samePage?`${currentPath}#partners`:resolvedFallback);
+  const guideCanShowPartners=Boolean(currentPath&&active.length>1&&((category==='forsakring'&&(intent==='home'||intent==='pet'))));
+  const directHref=onePartner?onePartner.trackingUrl:(guideCanShowPartners?`${currentPath}#guide-partners`:(active.length>1&&samePage?`${currentPath}#partners`:resolvedFallback));
 
   return <section className={`decisionGateway decisionGatewaySimple ${compact?'decisionGatewayCompact':''}`}>
     <div className='gatewayHead'><span><Sparkles size={14}/> NÄSTA STEG</span><h2>{cfg.title}</h2><p>{cfg.intro}</p></div>
@@ -33,7 +34,7 @@ export default function DecisionGateway({category,compact=false,intent,currentPa
           <span className='gatewayIcon'><Gauge size={20}/></span><div><small>JÄMFÖR NU</small><strong>{directLabel}</strong><p>Fortsätt hos {onePartner.name} för aktuella villkor.</p></div><ArrowUpRight size={20}/>
         </a>:
         <a className='gatewayPath gatewayDirect' href={directHref}>
-          <span className='gatewayIcon'><Gauge size={20}/></span><div><small>JÄMFÖR NU</small><strong>{directLabel}</strong><p>{active.length>1?(samePage?(category==='mobil'?'Svara på två frågor och få tre relevanta partneralternativ.':category==='bredband'?'Svara på två frågor om adress och teknik och få en bättre startpunkt.':category==='el'?'Välj jämförelseväg och få en relevant kortlista.':category==='ekonomi'?'Välj om du vill ta nytt privatlån eller samla lån och få en relevant kortlista.':'Se bara partners som matchar rätt typ av skydd.'):'Gå vidare till jämförelsesidan där de relevanta alternativen samlas tydligt.'):'Gå vidare till jämförelsen och se vad som är relevant för ditt behov.'}</p></div><ArrowRight size={20}/>
+          <span className='gatewayIcon'><Gauge size={20}/></span><div><small>JÄMFÖR NU</small><strong>{directLabel}</strong><p>{active.length>1?(guideCanShowPartners?'Se relevanta partneralternativ direkt längre ner på den här sidan.':samePage?(category==='mobil'?'Svara på två frågor och få tre relevanta partneralternativ.':category==='bredband'?'Svara på två frågor om adress och teknik och få en bättre startpunkt.':category==='el'?'Välj jämförelseväg och få en relevant kortlista.':category==='ekonomi'?'Välj om du vill ta nytt privatlån eller samla lån och få en relevant kortlista.':'Se bara partners som matchar rätt typ av skydd.'):'Gå vidare till jämförelsesidan där de relevanta alternativen samlas tydligt.'):'Gå vidare till jämförelsen och se vad som är relevant för ditt behov.'}</p></div><ArrowRight size={20}/>
         </a>}
       <Link className='gatewayPath' href={helpHref}><span className='gatewayIcon'><Compass size={20}/></span><div><small>HJÄLP MIG VÄLJA</small><strong>{helpLabel}</strong><p>{helpText}</p></div><ArrowRight size={20}/></Link>
     </div>
