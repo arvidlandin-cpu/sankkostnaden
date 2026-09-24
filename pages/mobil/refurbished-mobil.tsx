@@ -27,7 +27,7 @@ export default function RefurbishedMobil(){
     <header className='topbar'>
       <Link className='brand' href='/'><span className='brandMark'><PiggyBank size={22}/></span><span>Sänk Kostnaden</span></Link>
       <nav><Link href='/bredband/'>Bredband</Link><Link href='/elavtal/'>El</Link><Link href='/mobil/'>Mobil</Link><Link href='/forsakring/'>Försäkring</Link><Link href='/ekonomi/'>Ekonomi</Link></nav>
-      <Link className='topbarCta' href='#partners'>Gå till alternativ →</Link>
+      <Link className='topbarCta' href='#refurbished-alternativ'>Gå till alternativ →</Link>
     </header>
     <main>
       <section className='guideHero guideHero-mobil'>
@@ -53,7 +53,7 @@ export default function RefurbishedMobil(){
         <section><h2>Vad ska du kontrollera före köp?</h2><p>Jämför inte bara modellnamnet. Titta på lagringsstorlek, kosmetiskt skick, batteri, garanti, returvillkor och om laddare eller andra tillbehör ingår. Då blir totalpriset mer jämförbart.</p></section>
         <section><h2>Abonnemang och telefon är två olika kostnader</h2><p>Ett billigt abonnemang kan kombineras med en dyr telefon och tvärtom. Se därför telefonköpet som en separat kostnad och jämför mobilabonnemanget utifrån surf, nät och bindningstid.</p></section>
 
-        <PartnerOffers category='mobil' intent='refurbished' heading='Aktuella refurbished-alternativ'/>
+        <div id='refurbished-alternativ'><PartnerOffers category='mobil' intent='refurbished' heading='Aktuella refurbished-alternativ'/></div>
 
         <div className='relatedGuides'>
           <h2>Läs vidare</h2>
