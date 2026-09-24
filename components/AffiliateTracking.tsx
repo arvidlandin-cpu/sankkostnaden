@@ -25,6 +25,8 @@ function inferIntent(pathname: string, category?: PartnerCategory, partnerIntent
   }
   if (category === 'forsakring') {
     if (/djur/i.test(pathname)) return 'pet';
+    if (/reseforsakring/i.test(pathname)) return 'travel';
+    if (/vardforsakring/i.test(pathname)) return 'health';
     if (/hemforsakring/i.test(pathname)) return 'home';
     return partnerIntents.includes('home') ? 'home' : partnerIntents.includes('pet') ? 'pet' : 'compare';
   }
@@ -58,23 +60,15 @@ export default function AffiliateTracking() {
     const activePartners = partners.filter(partner => partner.status === 'active' && partner.trackingUrl);
     const byUrl = new Map(activePartners.map(partner => [normalizeUrl(partner.trackingUrl as string), partner]));
 
-    const handleClick = (event: MouseEvent) => {
-      const target = event.target;
-      if (!(target instanceof Element)) return;
-
-      const anchor = target.closest('a[href]') as HTMLAnchorElement | null;
-      if (!anchor) return;
-
+    const resolve = (anchor: HTMLAnchorElement) => {
       const partner = byUrl.get(normalizeUrl(anchor.href));
       const isSponsored = anchor.rel.split(/\s+/).includes('sponsored');
-      if (!partner && !isSponsored) return;
-
+      if (!partner && !isSponsored) return null;
       const category = anchor.dataset.affiliateCategory || partner?.category || anchor.dataset.category || 'unknown';
       const partnerName = anchor.dataset.affiliatePartner || partner?.name || anchor.dataset.partner || 'unknown';
       const intent = anchor.dataset.affiliateIntent || anchor.dataset.intent || inferIntent(window.location.pathname, partner?.category, partner?.intents || []);
       const placement = anchor.dataset.affiliatePlacement || anchor.dataset.placement || inferPlacement(anchor);
-
-      const params = {
+      return {
         partner: partnerName,
         category,
         intent,
@@ -84,16 +78,56 @@ export default function AffiliateTracking() {
         link_url: anchor.href,
         link_domain: (() => { try { return new URL(anchor.href).hostname; } catch { return ''; } })(),
       };
+    };
 
-      if (typeof window.gtag === 'function') {
-        window.gtag('event', 'affiliate_click', params);
-      } else if (Array.isArray(window.dataLayer)) {
-        window.dataLayer.push({ event: 'affiliate_click', ...params });
-      }
+    const emit = (eventName: string, params: Record<string, unknown>) => {
+      if (typeof window.gtag === 'function') window.gtag('event', eventName, params);
+      else if (Array.isArray(window.dataLayer)) window.dataLayer.push({ event: eventName, ...params });
+    };
+
+    const handleClick = (event: MouseEvent) => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+      const anchor = target.closest('a[href]') as HTMLAnchorElement | null;
+      if (!anchor) return;
+      const params = resolve(anchor);
+      if (params) emit('affiliate_click', params);
+    };
+
+    const observed = new WeakSet<HTMLAnchorElement>();
+    const seen = new WeakSet<HTMLAnchorElement>();
+    const observer = 'IntersectionObserver' in window ? new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting || entry.intersectionRatio < 0.35) return;
+        const anchor = entry.target as HTMLAnchorElement;
+        if (seen.has(anchor)) return;
+        const params = resolve(anchor);
+        if (!params) return;
+        seen.add(anchor);
+        emit('partner_impression', params);
+        observer.unobserve(anchor);
+      });
+    }, { threshold: [0.35] }) : null;
+
+    const scan = () => {
+      if (!observer) return;
+      document.querySelectorAll<HTMLAnchorElement>('a[href]').forEach(anchor => {
+        if (observed.has(anchor) || !resolve(anchor)) return;
+        observed.add(anchor);
+        observer.observe(anchor);
+      });
     };
 
     document.addEventListener('click', handleClick, true);
-    return () => document.removeEventListener('click', handleClick, true);
+    scan();
+    const mutation = new MutationObserver(scan);
+    mutation.observe(document.body, { childList: true, subtree: true });
+
+    return () => {
+      document.removeEventListener('click', handleClick, true);
+      mutation.disconnect();
+      observer?.disconnect();
+    };
   }, []);
 
   return null;
