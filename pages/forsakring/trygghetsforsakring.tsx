@@ -56,12 +56,12 @@ export default function Trygghetsforsakring(){
           <div>
             <p className='kicker'>PARTNER · HEDVIG</p>
             <h2>Se aktuella villkor hos Hedvig</h2>
-            <p>Vi får 500 kr i provision om en Trygghetsförsäkring tecknas via vårt affiliateprogram. Det påverkar inte priset för dig. Kontrollera alltid aktuella kvalificeringskrav, premie, karens, ersättningsnivåer och undantag hos Hedvig innan du tecknar.</p>
+            <p>Enligt Hedvigs partnerinformation den 24 september 2026 är provisionen 500 kr per tecknad Trygghetsförsäkring. Det påverkar inte priset för dig. Kontrollera alltid aktuella kvalificeringskrav, premie, karens, ersättningsnivåer och undantag hos Hedvig innan du tecknar.</p>
             <div className='claimsSpotlightActions'>
-              <a href={hedvig.trackingUrl} data-partner={hedvig.name} data-category='forsakring' data-intent='income-protection' data-placement='income_protection_guide' data-partner-position='1' target='_blank' rel='sponsored nofollow noopener'>Se Trygghetsförsäkring hos Hedvig <ArrowUpRight size={16}/></a>
+              <a href={hedvig.trackingUrl} data-partner={hedvig.name} data-category='forsakring' data-intent='income-protection' data-placement='income_protection_guide' data-partner-position='1' target='_blank' rel='sponsored nofollow noopener'>Gå till Hedvig och välj Trygghetsförsäkring <ArrowUpRight size={16}/></a>
               <Link href='/forsakring/'>Jämför andra försäkringsbehov</Link>
             </div>
-            <small>Partnerlänk · den nuvarande affiliatelänken går till Hedvig. Byt till produktspecifik deeplink när Addrevenue-länken för Trygghetsförsäkring är verifierad.</small>
+            <small>Partnerlänk · länken går till Hedvig. Välj Trygghetsförsäkring där och kontrollera aktuella villkor före köp.</small>
           </div>
           <div className='claimsSpotlightBrand'>
             <img src='https://www.google.com/s2/favicons?domain=hedvig.com&sz=128' alt='' loading='lazy'/>
@@ -73,7 +73,7 @@ export default function Trygghetsforsakring(){
         <h2>När kan den vara relevant?</h2>
         <p>Den här typen av skydd kan vara relevant om en stor del av hushållets budget går till fasta kostnader och ett längre inkomstbortfall skulle vara svårt att bära med sparande och befintliga trygghetssystem. Det betyder inte att försäkringen är rätt för alla – jämför kostnaden för premien mot den risk du faktiskt vill försäkra.</p>
 
-        <p className='disclosure'>Kommersiell information: Sänk Kostnaden kan få ersättning från Hedvig om du tecknar via partnerlänken. Informationen ovan bygger på produktinformationen vi fått från Hedvig/Addrevenue och ska kontrolleras mot aktuella fullständiga villkor före köp.</p>
+        <p className='disclosure'>Kommersiell information: Sänk Kostnaden kan få ersättning från Hedvig om du tecknar via partnerlänken. Produkt- och provisionsuppgifterna ovan bygger på Hedvig/Addrevenue-information mottagen 24 september 2026. Kontrollera alltid aktuella fullständiga villkor hos Hedvig före köp.</p>
       </article>
     </main>
   </>;
