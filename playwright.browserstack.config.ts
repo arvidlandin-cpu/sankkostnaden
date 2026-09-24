@@ -9,7 +9,6 @@ export default defineConfig({
   use: {
     baseURL: process.env.QA_BASE_URL || 'https://sankkostnaden.se',
     trace: 'retain-on-failure',
-    reducedMotion: null,
   },
   projects: [
     {
