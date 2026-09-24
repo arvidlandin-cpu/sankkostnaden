@@ -17,16 +17,17 @@ type Props = {
   bullets: string[];
   sections: Section[];
   related: { href: string; label: string }[];
+  elevatePartners?: boolean;
 };
 
-export default function IntentGuide({ title, description, kicker, canonical, category, intent, bullets, sections, related }: Props) {
+export default function IntentGuide({ title, description, kicker, canonical, category, intent, bullets, sections, related, elevatePartners = false }: Props) {
   const categoryLabels: Record<PartnerCategory, string> = { el: 'Elavtal', bredband: 'Bredband', mobil: 'Mobil', forsakring: 'Försäkring', ekonomi: 'Lån & ekonomi' };
   const categoryPaths: Record<PartnerCategory, string> = { el: '/elavtal/', bredband: '/bredband/', mobil: '/mobil/', forsakring: '/forsakring/', ekonomi: '/ekonomi/' };
   const categoryLabel = categoryLabels[category];
   const compareHeadings: Record<PartnerCategory, string> = { el: 'Aktiva elalternativ att jämföra', bredband: 'Aktiva bredbandsalternativ att jämföra', mobil: 'Aktiva mobilalternativ att jämföra', forsakring: 'Aktiva försäkringsalternativ att jämföra', ekonomi: 'Tjänster för att jämföra privatlån' };
   const categoryPath = categoryPaths[category];
   const hasPartnerOutput = getActivePartners(category,intent,1).length>0;
-  const elevatePartnerBlock = category === 'forsakring' && intent === 'home';
+  const elevatePartnerBlock = elevatePartners || (category === 'forsakring' && intent === 'home');
   const offerHeading = category === 'forsakring' ? (intent === 'pet' ? 'Jämför djurförsäkring hos våra partners' : intent === 'home' ? 'Jämför hemförsäkring hos våra partners' : 'Se aktuella försäkringsalternativ') : category === 'bredband' ? (intent === 'mobile-broadband' ? 'Se aktuella alternativ för mobilt bredband' : intent === 'fiber' ? 'Se aktuella fiberalternativ' : intent === 'no-binding' ? 'Se bredband utan bindningstid' : 'Se aktuella bredbandsalternativ') : category === 'mobil' ? (intent === 'family' ? 'Se aktuella familjeabonnemang' : intent === 'no-binding' ? 'Se abonnemang utan bindningstid' : 'Se aktuella mobilabonnemang') : category === 'el' ? 'Se aktuella elavtal' : intent === 'saving' ? 'Verktyg för bättre ekonomisk överblick' : 'Tjänster för att jämföra privatlån';
   const schema = {
     '@context': 'https://schema.org',
@@ -89,7 +90,7 @@ export default function IntentGuide({ title, description, kicker, canonical, cat
           <div className='checkList'>
             {bullets.map(item => <p key={item}><Check size={17} /> {item}</p>)}
           </div>
-          {elevatePartnerBlock && <div id='guide-partners'><PartnerDirectory category={category} intent={intent} heading='Jämför hemförsäkring hos våra partners' /></div>}
+          {elevatePartnerBlock && <div id='guide-partners'><PartnerDirectory category={category} intent={intent} heading={category==='forsakring'&&intent==='home'?'Jämför hemförsäkring hos våra partners':compareHeadings[category]} /></div>}
           {category === 'el' && <aside className='decisionPanel decisionPanelLower' aria-label='Sänk Kostnaden-kontrollen'><div><p className='partnerEyebrow'>SÄNK KOSTNADEN-KONTROLLEN</p><h2>Jämför hela kostnaden – inte bara öre/kWh</h2><p>Kontrollera pris/påslag, fast avgift, rabattens längd, ordinarie villkor samt bindnings- och uppsägningstid. Använd samma årsförbrukning för alla alternativ.</p></div><div className='decisionMetrics'><span><b>1</b> Årsförbrukning</span><span><b>2</b> Rörlig kostnad</span><span><b>3</b> Fasta avgifter</span><span><b>4</b> Villkor efter rabatt</span></div></aside>}
           {category === 'mobil' && <aside className='decisionPanel decisionPanelLower' aria-label='Sänk Kostnaden-kontrollen för mobil'><div><p className='partnerEyebrow'>SÄNK KOSTNADEN-KONTROLLEN</p><h2>Jämför abonnemanget du faktiskt kommer använda</h2><p>Utgå från rätt surfmängd och nät. Räkna sedan kampanjperiod och ordinarie pris tillsammans så att ett lågt introduktionspris inte döljer den verkliga kostnaden.</p></div><div className='decisionMetrics'><span><b>1</b> Surfmängd</span><span><b>2</b> Mobilnät</span><span><b>3</b> Första året</span><span><b>4</b> Bindning & villkor</span></div></aside>}
           {sections.map(section => <section key={section.heading}><h2>{section.heading}</h2><p>{section.body}</p></section>)}
