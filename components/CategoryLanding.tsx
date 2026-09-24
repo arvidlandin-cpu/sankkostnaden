@@ -27,6 +27,7 @@ type Props={
   introTitle:string;
   introText:string;
   showPartners?:boolean;
+  beforePartners?:ReactNode;
   afterPartners?:ReactNode;
 };
 
@@ -35,7 +36,7 @@ const labels:Record<PartnerCategory,string>={bredband:'Bredband',el:'El',mobil:'
 export default function CategoryLanding({
   category,canonical,title,description,kicker,heading,lead,icon:Icon,
   compareHref,compareLabel,helpHref,helpLabel,partnerIntent,partnerHeading,
-  checks,guides,moreGuides=[],introTitle,introText,showPartners=true,afterPartners,
+  checks,guides,moreGuides=[],introTitle,introText,showPartners=true,beforePartners,afterPartners,
 }:Props){
   const schema={'@context':'https://schema.org','@graph':[
     {'@type':'WebPage',name:title,description,url:canonical,isPartOf:{'@type':'WebSite',name:'Sänk Kostnaden',url:'https://sankkostnaden.se/'}},
@@ -91,6 +92,8 @@ export default function CategoryLanding({
           <p>{introText}</p>
           <div className='checkList compactChecks'>{checks.map(item=><p key={item}><Check size={17}/>{item}</p>)}</div>
         </section>
+
+        {beforePartners}
 
         <div id='category-partners'>
           {showPartners&&<PartnerDirectory category={category} intent={partnerIntent} heading={partnerHeading}/>}
