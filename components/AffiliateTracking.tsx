@@ -58,7 +58,12 @@ function inferPlacement(anchor: HTMLAnchorElement) {
 export default function AffiliateTracking() {
   useEffect(() => {
     const activePartners = partners.filter(partner => partner.status === 'active' && partner.trackingUrl);
-    const byUrl = new Map(activePartners.map(partner => [normalizeUrl(partner.trackingUrl as string), partner]));
+    const byUrl = new Map<string, (typeof partners)[number]>();
+    activePartners.forEach(partner => {
+      [partner.trackingUrl, ...Object.values(partner.intentTrackingUrls || {})].forEach(url => {
+        if (url) byUrl.set(normalizeUrl(url), partner);
+      });
+    });
 
     const resolve = (anchor: HTMLAnchorElement) => {
       const partner = byUrl.get(normalizeUrl(anchor.href));
