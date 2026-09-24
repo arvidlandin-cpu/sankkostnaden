@@ -25,8 +25,8 @@ const categories: Category[] = [
     short: 'El',
     href: '/elavtal/jamfor-elavtal/',
     reviewQuestion: 'När jämförde du elavtalet senast?',
-    fitQuestion: 'Hur aktiv vill du vara med elpriset?',
-    fitOptions: [{ label: 'Vill ha enkelt', value: 0 }, { label: 'Kan styra lite', value: 1 }, { label: 'Kan flytta förbrukning', value: 2 }],
+    fitQuestion: 'Vad stämmer bäst om ditt elavtal?',
+    fitOptions: [{ label: 'Jag har koll på pris och avgifter', value: 0 }, { label: 'Osäker på avgifter eller villkor', value: 1 }, { label: 'Pris eller kampanj kan ha ändrats', value: 2 }],
   },
   {
     key: 'bredband',
@@ -34,8 +34,8 @@ const categories: Category[] = [
     short: 'Bredband',
     href: '/bredband/bredband-pa-min-adress/',
     reviewQuestion: 'När jämförde du bredbandet senast?',
-    fitQuestion: 'Hur används uppkopplingen?',
-    fitOptions: [{ label: 'Lätt användning', value: 0 }, { label: 'Streaming / familj', value: 1 }, { label: 'Gaming / tungt', value: 2 }],
+    fitQuestion: 'Vad stämmer bäst om bredbandet?',
+    fitOptions: [{ label: 'Fart och pris känns rätt', value: 0 }, { label: 'Osäker på om nivån är rätt', value: 1 }, { label: 'Priset har höjts eller känns högt', value: 2 }],
   },
   {
     key: 'mobil',
@@ -43,8 +43,8 @@ const categories: Category[] = [
     short: 'Mobil',
     href: '/mobil/billigaste-mobilabonnemanget/',
     reviewQuestion: 'När jämförde du mobilabonnemangen senast?',
-    fitQuestion: 'Hur mycket av surfen brukar faktiskt användas?',
-    fitOptions: [{ label: 'Nästan allt', value: 0 }, { label: 'Ungefär hälften', value: 1 }, { label: 'Mycket blir över', value: 2 }],
+    fitQuestion: 'Vad stämmer bäst om mobilabonnemanget?',
+    fitOptions: [{ label: 'Surf och pris passar bra', value: 0 }, { label: 'Surfmängden passar dåligt', value: 1 }, { label: 'Upplägget är gammalt eller splittrat', value: 2 }],
   },
   {
     key: 'forsakring',
@@ -52,8 +52,8 @@ const categories: Category[] = [
     short: 'Försäkring',
     href: '/forsakring/jamfor-forsakring/',
     reviewQuestion: 'När jämförde du försäkringarna senast?',
-    fitQuestion: 'Har du koll på självrisk och omfattning?',
-    fitOptions: [{ label: 'Ja', value: 0 }, { label: 'Delvis', value: 1 }, { label: 'Nej', value: 2 }],
+    fitQuestion: 'Hur bra koll har du på skyddet?',
+    fitOptions: [{ label: 'Bra koll på skydd och självrisk', value: 0 }, { label: 'Delvis osäker', value: 1 }, { label: 'Vet inte vad som faktiskt ingår', value: 2 }],
   },
 ];
 
@@ -71,7 +71,7 @@ const reviewOptions = [
   { label: '2+ år / aldrig', value: 3 },
 ];
 
-const storageKey='sankkostnaden-cost-check-v2';
+const storageKey='sankkostnaden-cost-check-v3';
 const partnerIntent:Record<CostKey,PartnerIntent>={el:'electricity',bredband:'compare',mobil:'compare',forsakring:'home'};
 
 function track(event:string,params:Record<string,string|number>){
@@ -86,7 +86,6 @@ const rankLabels=['KONTROLLERA FÖRST','DÄREFTER','SEDAN','SIST'];
 export default function SavingsApp() {
   const [answers, setAnswers] = useState<Answers>(initialAnswers);
   const [active, setActive] = useState<CostKey>('el');
-  const [household, setHousehold] = useState(2);
   const [hydrated,setHydrated] = useState(false);
   const completedTracked = useRef(false);
   const questionCardRef = useRef<HTMLDivElement>(null);
@@ -102,7 +101,6 @@ export default function SavingsApp() {
           mobil:{...initialAnswers.mobil,...parsed.answers.mobil},
           forsakring:{...initialAnswers.forsakring,...parsed.answers.forsakring},
         });
-        if(typeof parsed?.household==='number') setHousehold(Math.min(8,Math.max(1,parsed.household)));
       }
     } catch {}
     setHydrated(true);
@@ -110,23 +108,26 @@ export default function SavingsApp() {
 
   useEffect(() => {
     if(!hydrated) return;
-    try { window.localStorage.setItem(storageKey,JSON.stringify({answers,household,updatedAt:Date.now()})); } catch {}
-  }, [answers,household,hydrated]);
+    try { window.localStorage.setItem(storageKey,JSON.stringify({answers,updatedAt:Date.now()})); } catch {}
+  }, [answers,hydrated]);
 
   const results = useMemo(() => categories.map(category => {
     const answer = answers[category.key];
-    const ageScore = Math.max(0, answer.reviewed) * 18;
-    const fitScore = Math.max(0, answer.fit) * 16;
-    const spendSignal = answer.monthly >= 1000 ? 12 : answer.monthly >= 500 ? 8 : answer.monthly > 0 ? 4 : 0;
-    const householdSignal = category.key === 'mobil' && household >= 3 ? 8 : 0;
-    const score = Math.min(100, ageScore + fitScore + spendSignal + householdSignal);
+    const reviewSignal = Math.max(0, answer.reviewed) * 12;
+    const problemSignal = Math.max(0, answer.fit) * 25;
+    const score = reviewSignal + problemSignal;
     const reasons: string[] = [];
-    if (answer.reviewed >= 2) reasons.push('Avtalet har inte jämförts på länge');
-    if (answer.fit >= 1) reasons.push(category.key === 'bredband' ? 'Behov och hastighet bör matchas bättre' : category.key === 'el' ? 'Din prisstrategi kan matchas bättre mot hur aktiv du vill vara' : 'Innehåll och faktisk användning bör matchas bättre');
-    if (answer.monthly > 0) reasons.push(`Du betalar cirka ${answer.monthly.toLocaleString('sv-SE')} kr/mån här`);
-    if (!reasons.length) reasons.push('Inga tydliga varningssignaler i dina svar');
-    return { ...category, score, reasons };
-  }).sort((a, b) => b.score - a.score), [answers, household]);
+    if (answer.reviewed >= 2) reasons.push('Det var länge sedan avtalet jämfördes');
+    if (answer.fit >= 1) {
+      if(category.key==='el') reasons.push(answer.fit===2?'Pris eller kampanj kan ha ändrats':'Avgifter eller villkor är inte helt tydliga');
+      if(category.key==='bredband') reasons.push(answer.fit===2?'Priset har höjts eller känns högt':'Du är osäker på om hastighet och nivå passar behovet');
+      if(category.key==='mobil') reasons.push(answer.fit===2?'Abonnemangsupplägget kan vara värt att samla eller uppdatera':'Surfmängden matchar inte användningen särskilt bra');
+      if(category.key==='forsakring') reasons.push(answer.fit===2?'Du saknar koll på vad skyddet faktiskt omfattar':'Självrisk eller omfattning är inte helt tydlig');
+    }
+    if (answer.monthly > 0) reasons.push(`Angiven kostnad: cirka ${answer.monthly.toLocaleString('sv-SE')} kr/mån`);
+    if (!reasons.length) reasons.push('Dina svar visar ingen tydlig brist just nu');
+    return { ...category, score, monthly:answer.monthly, reasons };
+  }).sort((a, b) => b.score-a.score || b.monthly-a.monthly), [answers]);
 
   const isComplete=(key:CostKey)=>{ const a=answers[key]; return a.reviewed >= 0 && a.fit >= 0; };
   const evaluatedResults=results.filter(result=>isComplete(result.key));
@@ -137,9 +138,9 @@ export default function SavingsApp() {
   useEffect(() => {
     if(completed===4&&!completedTracked.current){
       completedTracked.current=true;
-      track('cost_check_complete',{top_category:top.key,top_score:top.score,monthly_total:totalMonthly});
+      track('cost_check_complete',{top_category:top.key,monthly_total:totalMonthly});
     }
-  },[completed,top.key,top.score,totalMonthly]);
+  },[completed,top.key,totalMonthly]);
 
   const resultPartners=(key:CostKey)=>key==='forsakring'?[]:getActivePartners(key,partnerIntent[key],2);
 
@@ -150,7 +151,6 @@ export default function SavingsApp() {
 
   const reset = () => {
     setAnswers(initialAnswers);
-    setHousehold(2);
     setActive('el');
     completedTracked.current=false;
     try { window.localStorage.removeItem(storageKey); } catch {}
@@ -161,6 +161,8 @@ export default function SavingsApp() {
   const activeAnswer = answers[active];
   const activeIndex=categories.findIndex(category=>category.key===active);
   const activeComplete=isComplete(active);
+  const remainingQuestions=(activeAnswer.reviewed<0?1:0)+(activeAnswer.fit<0?1:0);
+  const topTied=completed===4&&evaluatedResults.length>1&&evaluatedResults[0].score===evaluatedResults[1].score&&evaluatedResults[0].monthly===evaluatedResults[1].monthly;
   const goNext=()=>{
     if(!activeComplete||activeIndex>=categories.length-1) return;
     setActive(categories[activeIndex+1].key);
@@ -182,7 +184,7 @@ export default function SavingsApp() {
       <header className='topbar'>
         <Link className='brand' href='/'><span className='brandMark'><PiggyBank size={22} /></span><span>Sänk Kostnaden</span></Link>
         <nav><Link href='/bredband/'>Bredband</Link><Link href='/elavtal/'>El</Link><Link href='/mobil/'>Mobil</Link><Link href='/forsakring/'>Försäkring</Link><Link href='/ekonomi/'>Ekonomi</Link></nav>
-        <Link className='topbarCta' href='/#jamfor'>Jämför priser →</Link>
+        <a className='topbarCta' href={completed===4?'#resultat':'#fragor'}>{completed===4?'Se min prioritering →':'Starta kollen →'}</a>
       </header>
 
       <main className={styles.appShell}>
@@ -198,7 +200,7 @@ export default function SavingsApp() {
           </div>
         </section>
 
-        <section className={styles.diagnostic}>
+        <section id='fragor' className={styles.diagnostic}>
           <div className={styles.progressRail}>
             {categories.map(category => {
               const result = results.find(item => item.key === category.key)!;
@@ -213,13 +215,8 @@ export default function SavingsApp() {
           <div ref={questionCardRef} className={styles.questionCard}>
             <div className={styles.questionTop}>
               <div><span>ANALYS {categories.findIndex(category => category.key === active) + 1} / 4</span><h2>{activeCategory.label}</h2></div>
-              <div className={styles.scoreOrb}><strong>{activeComplete?'Klar':'2'}</strong><small>{activeComplete?'område klart':'frågor kvar'}</small></div>
+              <div className={styles.scoreOrb}><strong>{activeComplete?'Klar':remainingQuestions}</strong><small>{activeComplete?'område klart':remainingQuestions===1?'fråga kvar':'frågor kvar'}</small></div>
             </div>
-
-            {active==='mobil'&&<div className={styles.householdRow}>
-              <div><strong>Hur många i hushållet?</strong><span>Används bara för att bedöma mobilupplägget.</span></div>
-              <div className={styles.stepper}><button onClick={() => setHousehold(Math.max(1, household - 1))}>−</button><strong>{household} pers</strong><button onClick={() => setHousehold(Math.min(8, household + 1))}>+</button></div>
-            </div>}
 
             <ChoiceQuestion title={activeCategory.reviewQuestion} value={activeAnswer.reviewed} options={reviewOptions} onChange={value => update(active, 'reviewed', value)} />
             <ChoiceQuestion title={activeCategory.fitQuestion} value={activeAnswer.fit} options={activeCategory.fitOptions} onChange={value => update(active, 'fit', value)} />
@@ -241,8 +238,8 @@ export default function SavingsApp() {
 
         <section id='resultat' className={styles.results}>
           <div className={styles.resultIntro}>
-            <div><span>DIN PERSONLIGA KOSTNADSKARTA</span><h2>{completed===4 ? `${top.label} bör kontrolleras först` : `Slutför ${4-completed} område${4-completed===1?'':'n'} till`}</h2></div>
-            <p>När alla fyra områden är klara får du en tydlig ordning. Vi visar inga poäng och ingen partnerlista förrän underlaget är komplett.</p>
+            <div><span>DIN PERSONLIGA KOSTNADSKARTA</span><h2>{completed===4 ? (topTied?'Flera områden är likvärdiga att kontrollera':`${top.label} bör kontrolleras först`) : `Slutför ${4-completed} område${4-completed===1?'':'n'} till`}</h2></div>
+            <p>När alla fyra områden är klara får du en ordning baserad på faktiska varningssignaler i dina svar. Angiven månadskostnad används bara för att skilja annars likvärdiga områden. Partnerlänkarna är relevanta startpunkter, inte personligt prisrankade.</p>
           </div>
 
           {completed<4 ? <div className={styles.ranking}><article className={styles.incompleteResult}><div className={styles.resultBody}><div><h3>{completed}/4 områden klara</h3></div><p>Slutför alla fyra områden innan vi prioriterar eller visar partnerförslag. Då riskerar inte ett tidigt delresultat att styra dig fel.</p></div></article></div> :
@@ -251,7 +248,7 @@ export default function SavingsApp() {
               const partners=resultPartners(result.key).slice(0,2);
               const nextResult=evaluatedResults[index+1];
               return <article id={`result-${result.key}`} key={result.key} className={index === 0 ? styles.topResult : ''}>
-                <div className={styles.rank}><span>{rankLabels[index]}</span></div>
+                <div className={styles.rank}><span>{evaluatedResults.some((other,j)=>j!==index&&other.score===result.score&&other.monthly===result.monthly)?'LIKVÄRDIG ATT KONTROLLERA':rankLabels[index]}</span></div>
                 <div className={styles.resultBody}>
                   <div><h3>{result.label}</h3></div>
                   <ul>{result.reasons.slice(0, 2).map(reason => <li key={reason}><Check size={14} /> {reason}</li>)}</ul>
@@ -271,7 +268,7 @@ export default function SavingsApp() {
           <Gauge size={25} />
           <div><strong>Hur prioriteras områdena?</strong><p>Det är inget betyg och ingen prisranking. Vi använder bara dina svar för att sortera vilken kostnad som verkar mest rimlig att kontrollera först.</p></div>
           <Zap size={25} />
-          <div><strong>Vad händer sedan?</strong><p>Du går direkt till rätt jämförelseguide. Där kontrollerar du pris, innehåll, bindningstid och avgifter innan du fattar ett beslut.</p></div>
+          <div><strong>Vad händer sedan?</strong><p>Du kan gå direkt till en relevant partner eller öppna guiden för området. För försäkring väljer du först vilken typ av skydd du vill jämföra.</p></div>
         </section>
       </main>
     </>
