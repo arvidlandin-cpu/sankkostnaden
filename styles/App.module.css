@@ -632,3 +632,95 @@
 @media(max-width:760px){
   .hero{padding:28px 22px 26px;border-radius:22px}
 }
+
+
+/* Mobile QA cleanup 2026-09-24 */
+.questionCard{scroll-margin-top:12px}
+.scoreOrb{
+  min-width:132px;
+  flex-direction:column;
+  align-items:center;
+  gap:2px;
+  text-align:center;
+}
+.scoreOrb strong{
+  max-width:120px;
+  font-size:16px;
+  line-height:1.08;
+  letter-spacing:-.02em;
+}
+.scoreOrb small{
+  font-size:9px;
+  line-height:1.2;
+}
+.next:disabled{
+  opacity:.45;
+  cursor:not-allowed;
+  box-shadow:none;
+}
+.ranking article{
+  grid-template-columns:92px minmax(0,1fr) 250px;
+}
+.rank>span{
+  display:inline-flex;
+  width:max-content;
+  padding:6px 8px;
+  border-radius:999px;
+  background:#eef2ea;
+  color:#59665d;
+  font-size:9px;
+  letter-spacing:.08em;
+}
+.topResult .rank>span{
+  background:#dff46a;
+  color:#17201b;
+}
+.resultActions{
+  align-self:center;
+}
+@media(max-width:760px){
+  .appShell{padding-bottom:118px}
+  .hero{margin-bottom:24px}
+  .questionTop{align-items:flex-start;gap:12px}
+  .questionTop h2{font-size:31px}
+  .scoreOrb{min-width:116px;padding:11px 9px}
+  .scoreOrb strong{font-size:14px}
+  .results{padding-top:58px}
+  .ranking article{
+    grid-template-columns:1fr;
+    gap:13px;
+    padding:20px 18px;
+  }
+  .rank{display:block}
+  .resultBody>div{
+    flex-direction:row;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  .resultBody ul{margin-top:9px}
+  .resultActions{
+    grid-column:auto;
+    margin-top:0;
+  }
+  .resultActions a{
+    justify-content:space-between;
+    min-height:44px;
+    padding:10px 12px;
+    border-radius:10px;
+    border:1px solid #d9dfd8;
+    background:#fff;
+  }
+  .resultActions a:first-child{
+    background:#17201b;
+    color:#fff;
+    border-color:#17201b;
+  }
+  .resultActions a:nth-child(2){
+    background:#f8faf7;
+  }
+}
+@media(max-width:430px){
+  .cardActions{gap:8px}
+  .reset,.next{width:100%;min-height:50px}
+}
