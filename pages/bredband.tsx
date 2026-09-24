@@ -1,5 +1,6 @@
 import { Wifi } from 'lucide-react';
 import CategoryLanding from '../components/CategoryLanding';
+import CostRealityCheck from '../components/CostRealityCheck';
 
 export default function Bredband(){
   return <CategoryLanding
@@ -16,6 +17,7 @@ export default function Bredband(){
     helpHref='/bredband/vilken-hastighet-behover-jag/'
     helpLabel='Hjälp mig välja hastighet'
     partnerHeading='Aktuella bredbandsalternativ'
+    beforePartners={<CostRealityCheck mode='subscription' label='Bredband' />}
     checks={[
       'Vad som faktiskt går att beställa på adressen',
       'Samma hastighet när priser jämförs',
