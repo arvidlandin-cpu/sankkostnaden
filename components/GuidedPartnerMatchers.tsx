@@ -39,12 +39,12 @@ function PartnerCard({
   </article>;
 }
 
-function DirectPartnerStrip({items,label='Gå direkt till partner',placement,helperText='Vill du ha hjälp att välja? Svara på frågan nedan så kortlistar vi relevanta alternativ.'}:{items:ActivePartner[];label?:string;placement:string;helperText?:string}){
+function DirectPartnerStrip({items,label='Gå direkt till partner',placement,intent,helperText='Vill du ha hjälp att välja? Svara på frågan nedan så kortlistar vi relevanta alternativ.'}:{items:ActivePartner[];label?:string;placement:string;intent:PartnerIntent;helperText?:string}){
   const featured=items.slice(0,2);
   if(!featured.length) return null;
   return <div className='directPartnerBlock'>
     <div className='directPartnerHead'><div><small>REDO ATT JÄMFÖRA?</small><strong>{label}</strong></div><span>Partnerlänkar</span></div>
-    <div className='directPartnerGrid'>{featured.map((p,i)=><a key={p.name} href={p.trackingUrl} target='_blank' rel='sponsored nofollow noopener' data-partner={p.name} data-category={p.category} data-intent='direct' data-placement={placement} data-partner-position={i+1}>
+    <div className='directPartnerGrid'>{featured.map((p,i)=><a key={p.name} href={p.trackingUrl} target='_blank' rel='sponsored nofollow noopener' data-partner={p.name} data-category={p.category} data-intent={intent} data-placement={placement} data-partner-position={i+1}>
       <span className='partnerBrand'>{p.domain&&<img src={`https://www.google.com/s2/favicons?domain=${p.domain}&sz=128`} alt='' loading='lazy'/>}<span className='partnerWordmark'>{p.name}</span></span><b>{p.cta||`Se aktuella alternativ`}<ArrowUpRight size={14}/></b>
     </a>)}</div>
     <p>{helperText}</p><small className='directPartnerVerified'>Partnerlänkar kontrollerade {partnerGroupCheckedLabel(featured)}</small>
@@ -133,7 +133,7 @@ export function BroadbandPartnerMatcher(){
   const intent:PartnerIntent=access==='mobile'?'mobile-broadband':access==='fiber'?'fiber':'compare';
   return <section id='partners' className='mobileMatcher' aria-label='Hitta relevant bredband'>
     <div className='mobileMatcherIntro'><p className='kicker'>BREDBANDSKOLL · 2 FRÅGOR</p><h2>Börja med adressen – inte med logotypen.</h2><p>Vilka operatörer och priser som är relevanta beror på vad som faktiskt går att beställa där du bor. Vi använder därför dina svar för att välja en bättre startpunkt.</p></div>
-    <DirectPartnerStrip items={all} label='Jämför direkt hos en partner' placement='broadband_direct'/>
+    <DirectPartnerStrip items={all} label='Jämför direkt hos en partner' placement='broadband_direct' intent='compare'/>
     <div className='matchQuestions'>
       <div className='matchQuestion'><div><small>1 AV 2</small><strong>Vad vet du om anslutningen?</strong></div><div className='matchOptions matchOptionsThree'>
         <button type='button' className={access==='unknown'?'selected':''} onClick={()=>{setAccess('unknown');track('broadband_match_answer',{question:'access',answer:'unknown'})}}><Search size={18}/><span>Vet inte</span></button>
@@ -184,7 +184,7 @@ export function ElectricityPartnerMatcher(){
 
   return <section id='partners' className='mobileMatcher' aria-label='Hitta relevanta elavtal'>
     <div className='mobileMatcherIntro'><p className='kicker'>ELKOLL · 1 FRÅGA</p><h2>Välj hur du vill jämföra el.</h2><p>Årsförbrukningen påverkar vad avtalet kostar. Välj hur du vill jämföra här och använd sedan samma årsförbrukning hos alternativen för en rättvis jämförelse.</p></div>
-    <DirectPartnerStrip items={all} label='Se elavtal direkt' placement='electricity_direct'/>
+    <DirectPartnerStrip items={all} label='Se elavtal direkt' placement='electricity_direct' intent='electricity'/>
     <div className='matchQuestions matchQuestionsSingle'>
       <div className='matchQuestion'><div><small>1 AV 1</small><strong>Hur vill du jämföra?</strong></div><div className='matchOptions matchOptionsThree'>
         <button type='button' className={pathChoice==='compare'?'selected':''} onClick={()=>{setPathChoice('compare');track('electricity_match_answer',{question:'path',answer:'compare'})}}><GitCompareArrows size={18}/><span>Flera avtal</span></button>
@@ -242,6 +242,7 @@ export function InsurancePartnerMatcher({preset}:{preset?:InsuranceType}){
         items={relevant}
         label={type==='home'?'Jämför hemförsäkring direkt':'Jämför djurförsäkring direkt'}
         placement={type==='home'?'insurance_home_direct':'insurance_pet_direct'}
+        intent={type}
         helperText={preset?'Se fler aktiva alternativ nedan.':'Välj ett alternativ direkt eller öppna hela partnerlistan nedan.'}
       />
 
@@ -285,7 +286,7 @@ export function LoanPartnerMatcher(){
 
   return <section id='partners' className='mobileMatcher' aria-label='Hitta relevant lånejämförelse'>
     <div className='mobileMatcherIntro'><p className='kicker'>LÅNEKOLL · 1 FRÅGA</p><h2>Jämför rätt erbjudanden – inte bara en låg månadssiffra.</h2><p>Räntan sätts individuellt. Därför hjälper vi dig först välja rätt jämförelseväg och skickar dig sedan till tjänster där du kan se faktiska erbjudanden.</p></div>
-    <DirectPartnerStrip items={all} label='Jämför lån direkt' placement='loan_direct'/>
+    <DirectPartnerStrip items={all} label='Jämför lån direkt' placement='loan_direct' intent='loan'/>
     <div className='matchQuestions'>
       <div className='matchQuestion'><div><small>1 AV 1</small><strong>Vad vill du göra?</strong></div><div className='matchOptions'>
         <button type='button' className={purpose==='new'?'selected':''} onClick={()=>{setPurpose('new');track('loan_match_answer',{question:'purpose',answer:'new'})}}><CircleDollarSign size={18}/><span>Nytt privatlån</span></button>
