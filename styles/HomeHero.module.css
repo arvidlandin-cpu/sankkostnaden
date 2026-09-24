@@ -337,3 +337,16 @@
 @media(prefers-reduced-motion:reduce){
   .areaList button,.choiceList a{transition:none}
 }
+
+.cardDivider{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin:14px 0 10px;
+  color:#7a847d;
+  font-size:9px;
+  font-weight:850;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.cardDivider::before,.cardDivider::after{content:'';height:1px;flex:1;background:#e2e6e1}
