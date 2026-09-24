@@ -18,7 +18,7 @@ export default function Elavtal(){
     helpLabel='Hjälp mig välja avtalsform'
     partnerIntent='electricity'
     partnerHeading='Aktuella elalternativ'
-    beforePartners={<CostRealityCheck mode='electricity' label='Elavtal' />}
+    afterPartners={<CostRealityCheck mode='electricity' label='Elavtal' />}
     checks={[
       'Samma årsförbrukning i alla jämförelser',
       'Påslag eller energipris plus fasta avgifter',
