@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { ArrowLeft, ArrowRight, ArrowUpRight, Check, Gauge, PiggyBank, RotateCcw, Sparkles, Target, Zap } from 'lucide-react';
 import styles from '../styles/App.module.css';
-import { getActivePartners, type PartnerIntent } from '../lib/partners';
+import { getActivePartners, PARTNER_LINK_CHECKED_LABEL, type PartnerIntent } from '../lib/partners';
 
 type CostKey = 'el' | 'bredband' | 'mobil' | 'forsakring';
 type Answers = Record<CostKey, { monthly: number; reviewed: number; fit: number }>;
@@ -81,11 +81,7 @@ function track(event:string,params:Record<string,string|number>){
   else if(Array.isArray(w.dataLayer)) w.dataLayer.push({event,...params});
 }
 
-function level(score: number) {
-  if (score >= 72) return 'Prioritera';
-  if (score >= 42) return 'Kontrollera';
-  return 'Lägre prioritet';
-}
+const rankLabels=['KONTROLLERA FÖRST','DÄREFTER','SEDAN','SIST'];
 
 export default function SavingsApp() {
   const [answers, setAnswers] = useState<Answers>(initialAnswers);
@@ -129,7 +125,7 @@ export default function SavingsApp() {
     if (answer.fit >= 1) reasons.push(category.key === 'bredband' ? 'Behov och hastighet bör matchas bättre' : category.key === 'el' ? 'Din prisstrategi kan matchas bättre mot hur aktiv du vill vara' : 'Innehåll och faktisk användning bör matchas bättre');
     if (answer.monthly > 0) reasons.push(`Du betalar cirka ${answer.monthly.toLocaleString('sv-SE')} kr/mån här`);
     if (!reasons.length) reasons.push('Inga tydliga varningssignaler i dina svar');
-    return { ...category, score, reasons, potential: level(score) };
+    return { ...category, score, reasons };
   }).sort((a, b) => b.score - a.score), [answers, household]);
 
   const isComplete=(key:CostKey)=>{ const a=answers[key]; return a.reviewed >= 0 && a.fit >= 0; };
@@ -145,7 +141,7 @@ export default function SavingsApp() {
     }
   },[completed,top.key,top.score,totalMonthly]);
 
-  const resultPartners=(key:CostKey)=>getActivePartners(key,partnerIntent[key],2);
+  const resultPartners=(key:CostKey)=>key==='forsakring'?[]:getActivePartners(key,partnerIntent[key],2);
 
   const update = (key: CostKey, field: keyof Answers[CostKey], value: number) => {
     setAnswers(previous => ({ ...previous, [key]: { ...previous[key], [field]: value } }));
@@ -198,7 +194,7 @@ export default function SavingsApp() {
           <div className={styles.heroStats}>
             <div><strong>{completed}/4</strong><span>områden analyserade</span></div>
             <div><strong>{totalMonthly ? `${totalMonthly.toLocaleString('sv-SE')} kr` : '—'}</strong><span>angiven kostnad / mån</span></div>
-            <div><strong>{completed ? top.potential : '—'}</strong><span>högsta kontrollbehov</span></div>
+            <div><strong>{completed===4?top.short:`${4-completed} kvar`}</strong><span>{completed===4?'bör kontrolleras först':'tills prioriteringen är klar'}</span></div>
           </div>
         </section>
 
@@ -245,25 +241,29 @@ export default function SavingsApp() {
 
         <section id='resultat' className={styles.results}>
           <div className={styles.resultIntro}>
-            <div><span>DIN PERSONLIGA KOSTNADSKARTA</span><h2>{completed ? `${top.label} bör kontrolleras först` : 'Din prioritering byggs medan du svarar'}</h2></div>
-            <p>Prioriteringen bygger på dina egna svar: hur länge sedan du jämförde, hur väl avtalet verkar passa behovet och – om du fyller i den – ungefärlig månadskostnad.</p>
+            <div><span>DIN PERSONLIGA KOSTNADSKARTA</span><h2>{completed===4 ? `${top.label} bör kontrolleras först` : `Slutför ${4-completed} område${4-completed===1?'':'n'} till`}</h2></div>
+            <p>När alla fyra områden är klara får du en tydlig ordning. Vi visar inga poäng och ingen partnerlista förrän underlaget är komplett.</p>
           </div>
 
-          {completed===0 ? <div className={styles.ranking}><article><div className={styles.resultBody}><div><h3>Inget område bedömt ännu</h3></div><p>Svara klart på frågorna för ett område så visas det här. Vi rangordnar inget och visar inga partnerförslag innan det finns underlag.</p></div></article></div> :
+          {completed<4 ? <div className={styles.ranking}><article className={styles.incompleteResult}><div className={styles.resultBody}><div><h3>{completed}/4 områden klara</h3></div><p>Slutför alla fyra områden innan vi prioriterar eller visar partnerförslag. Då riskerar inte ett tidigt delresultat att styra dig fel.</p></div></article></div> :
           <div className={styles.ranking}>
-            {evaluatedResults.map((result, index) => (
-              <article key={result.key} className={index === 0 ? styles.topResult : ''}>
-                <div className={styles.rank}><span>PRIORITET {index + 1}</span></div>
+            {evaluatedResults.map((result, index) => {
+              const partners=resultPartners(result.key).slice(0,2);
+              const nextResult=evaluatedResults[index+1];
+              return <article id={`result-${result.key}`} key={result.key} className={index === 0 ? styles.topResult : ''}>
+                <div className={styles.rank}><span>{rankLabels[index]}</span></div>
                 <div className={styles.resultBody}>
-                  <div><h3>{result.label}</h3><span className={styles.potential}>{result.potential}</span></div>
+                  <div><h3>{result.label}</h3></div>
                   <ul>{result.reasons.slice(0, 2).map(reason => <li key={reason}><Check size={14} /> {reason}</li>)}</ul>
                 </div>
                 <div className={styles.resultActions}>
-                  {resultPartners(result.key).slice(0,2).map((partner,partnerIndex)=><a key={partner.name} href={partner.trackingUrl} data-partner={partner.name} data-category={partner.category} data-intent={partnerIntent[result.key]} data-placement='cost_check_result' target='_blank' rel='sponsored nofollow noopener'>{partnerIndex===0?'Jämför hos ':'Alternativ: '}{partner.name} <ArrowUpRight size={14}/></a>)}
-                  <Link href={result.href}>Jämför fler i guiden <ArrowRight size={14}/></Link>
+                  {partners.length>0&&<small className={styles.verifiedLine}>Partnerlänkar kontrollerade {PARTNER_LINK_CHECKED_LABEL}</small>}
+                  {partners.map((partner,partnerIndex)=><a key={partner.name} href={partner.trackingUrl} data-partner={partner.name} data-category={partner.category} data-intent={partnerIntent[result.key]} data-placement='cost_check_result' data-partner-position={partnerIndex+1} data-result-rank={index+1} target='_blank' rel='sponsored nofollow noopener'>{partnerIndex===0?'Jämför hos ':'Alternativ: '}{partner.name} <ArrowUpRight size={14}/></a>)}
+                  <Link href={result.href}>{result.key==='forsakring'?'Välj försäkringstyp':'Jämför fler i guiden'} <ArrowRight size={14}/></Link>
+                  {nextResult&&<a className={styles.nextCategory} href={`#result-${nextResult.key}`} onClick={()=>track('cost_check_next_category',{from:result.key,to:nextResult.key,rank:index+1})}>När du är klar: {nextResult.short} <ArrowRight size={14}/></a>}
                 </div>
-              </article>
-            ))}
+              </article>;
+            })}
           </div>}
         </section>
 
