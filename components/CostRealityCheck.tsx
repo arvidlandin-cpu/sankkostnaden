@@ -33,15 +33,16 @@ export default function CostRealityCheck(props:Props){
     const r=numberValue(regular);
     const start=numberValue(startFee) ?? 0;
     const addon=numberValue(mandatoryMonthly) ?? 0;
-    if(r===null) return null;
 
     let base=0;
     if(hasPromo){
       const p=numberValue(promo);
       const m=numberValue(months);
       if(p===null||m===null||m<=0||m>12) return null;
-      base=p*m+r*(12-m);
+      if(m<12&&r===null) return null;
+      base=p*m+(r??0)*(12-m);
     }else{
+      if(r===null) return null;
       base=r*12;
     }
     const total=base+start+addon*12;
@@ -50,10 +51,10 @@ export default function CostRealityCheck(props:Props){
 
   const subscriptionHint=useMemo(()=>{
     if(props.mode!=='subscription') return '';
-    if(numberValue(regular)===null) return 'Ange ordinarie månadspris.';
     if(hasPromo&&numberValue(months)===null) return 'Ange hur många månader kampanjen gäller.';
     if(hasPromo&&((numberValue(months)??0)<=0||(numberValue(months)??0)>12)) return 'Kampanjlängden måste vara 1–12 månader.';
     if(hasPromo&&numberValue(promo)===null) return 'Ange kampanjpriset. Skriv 0 om kampanjmånaderna faktiskt är gratis.';
+    if((!hasPromo||(numberValue(months)??0)<12)&&numberValue(regular)===null) return 'Ange ordinarie månadspris.';
     return '';
   },[props.mode,hasPromo,promo,months,regular]);
 
@@ -87,7 +88,7 @@ export default function CostRealityCheck(props:Props){
       <div className='costRealityInputs'>
         {hasPromo&&<label><span>Kampanjpris</span><div><input inputMode='decimal' value={promo} onChange={e=>setPromo(e.target.value.replace(/[^0-9,.]/g,''))} placeholder='99'/><b>kr/mån</b></div></label>}
         {hasPromo&&<label><span>Kampanjlängd</span><div><input inputMode='numeric' value={months} onChange={e=>setMonths(e.target.value.replace(/\D/g,''))} placeholder='3'/><b>mån</b></div></label>}
-        <label><span>Ordinarie pris</span><div><input inputMode='decimal' value={regular} onChange={e=>setRegular(e.target.value.replace(/[^0-9,.]/g,''))} placeholder='299'/><b>kr/mån</b></div></label>
+        <label><span>Ordinarie pris {hasPromo&&numberValue(months)===12&&<small>behövs inte för första året</small>}</span><div><input inputMode='decimal' value={regular} onChange={e=>setRegular(e.target.value.replace(/[^0-9,.]/g,''))} placeholder='299'/><b>kr/mån</b></div></label>
         <label><span>Startavgift <small>valfritt</small></span><div><input inputMode='decimal' value={startFee} onChange={e=>setStartFee(e.target.value.replace(/[^0-9,.]/g,''))} placeholder='0'/><b>kr</b></div></label>
         <label><span>Obligatoriskt tillägg <small>valfritt</small></span><div><input inputMode='decimal' value={mandatoryMonthly} onChange={e=>setMandatoryMonthly(e.target.value.replace(/[^0-9,.]/g,''))} placeholder='0'/><b>kr/mån</b></div></label>
       </div>
