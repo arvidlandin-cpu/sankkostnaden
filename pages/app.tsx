@@ -1,8 +1,9 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import { useMemo, useState } from 'react';
-import { ArrowLeft, ArrowRight, Check, Gauge, PiggyBank, RotateCcw, Sparkles, Target, Zap } from 'lucide-react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { ArrowLeft, ArrowRight, ArrowUpRight, Check, Gauge, PiggyBank, RotateCcw, Sparkles, Target, Zap } from 'lucide-react';
 import styles from '../styles/App.module.css';
+import { getActivePartners, type PartnerIntent } from '../lib/partners';
 
 type CostKey = 'el' | 'bredband' | 'mobil' | 'forsakring';
 type Answers = Record<CostKey, { monthly: number; reviewed: number; friction: number; fit: number }>;
@@ -80,6 +81,16 @@ const reviewOptions = [
   { label: '2+ år / aldrig', value: 3 },
 ];
 
+const storageKey='sankkostnaden-cost-check-v1';
+const partnerIntent:Record<CostKey,PartnerIntent>={el:'electricity',bredband:'compare',mobil:'compare',forsakring:'home'};
+
+function track(event:string,params:Record<string,string|number>){
+  if(typeof window==='undefined') return;
+  const w=window as any;
+  if(typeof w.gtag==='function') w.gtag('event',event,params);
+  else if(Array.isArray(w.dataLayer)) w.dataLayer.push({event,...params});
+}
+
 function level(score: number) {
   if (score >= 72) return 'Hög';
   if (score >= 42) return 'Medel';
@@ -90,6 +101,25 @@ export default function SavingsApp() {
   const [answers, setAnswers] = useState<Answers>(initialAnswers);
   const [active, setActive] = useState<CostKey>('el');
   const [household, setHousehold] = useState(2);
+  const loaded = useRef(false);
+  const completedTracked = useRef(false);
+
+  useEffect(() => {
+    try {
+      const saved=window.localStorage.getItem(storageKey);
+      if(saved){
+        const parsed=JSON.parse(saved);
+        if(parsed?.answers) setAnswers(parsed.answers);
+        if(typeof parsed?.household==='number') setHousehold(Math.min(8,Math.max(1,parsed.household)));
+      }
+    } catch {}
+    loaded.current=true;
+  }, []);
+
+  useEffect(() => {
+    if(!loaded.current) return;
+    try { window.localStorage.setItem(storageKey,JSON.stringify({answers,household,updatedAt:Date.now()})); } catch {}
+  }, [answers,household]);
 
   const results = useMemo(() => categories.map(category => {
     const answer = answers[category.key];
@@ -112,14 +142,27 @@ export default function SavingsApp() {
   const completed = categories.filter(category => { const a=answers[category.key]; return a.reviewed >= 0 && a.friction >= 0 && a.fit >= 0; }).length;
   const totalMonthly = Object.values(answers).reduce((sum, answer) => sum + answer.monthly, 0);
 
+  useEffect(() => {
+    if(completed===4&&!completedTracked.current){
+      completedTracked.current=true;
+      track('cost_check_complete',{top_category:top.key,top_score:top.score,monthly_total:totalMonthly});
+    }
+  },[completed,top.key,top.score,totalMonthly]);
+
+  const resultPartners=(key:CostKey)=>getActivePartners(key,partnerIntent[key],2);
+
   const update = (key: CostKey, field: keyof Answers[CostKey], value: number) => {
     setAnswers(previous => ({ ...previous, [key]: { ...previous[key], [field]: value } }));
+    track('cost_check_answer',{category:key,field,value});
   };
 
   const reset = () => {
     setAnswers(initialAnswers);
     setHousehold(2);
     setActive('el');
+    completedTracked.current=false;
+    try { window.localStorage.removeItem(storageKey); } catch {}
+    track('cost_check_reset',{source:'app'});
   };
 
   const activeCategory = categories.find(category => category.key === active)!;
@@ -209,7 +252,13 @@ export default function SavingsApp() {
                   <div><h3>{result.label}</h3><span className={styles.potential}>{result.potential} potential</span></div>
                   <ul>{result.reasons.slice(0, 3).map(reason => <li key={reason}><Check size={14} /> {reason}</li>)}</ul>
                 </div>
-                <div className={styles.resultScore}><strong>{result.score}</strong><small>/100</small><Link href={result.href}>Kontrollera nu <ArrowRight size={15} /></Link></div>
+                <div className={styles.resultScore}>
+                  <strong>{result.score}</strong><small>/100</small>
+                  <div className={styles.resultActions}>
+                    {resultPartners(result.key).map((partner,partnerIndex)=><a key={partner.name} href={partner.trackingUrl} data-partner={partner.name} data-category={partner.category} data-intent={partnerIntent[result.key]} data-placement='cost_check_result' target='_blank' rel='sponsored nofollow noopener'>{partnerIndex===0?'Jämför nu hos ':'Se även '}{partner.name} <ArrowUpRight size={14}/></a>)}
+                    <Link href={result.href}>Läs guiden först <ArrowRight size={14}/></Link>
+                  </div>
+                </div>
               </article>
             ))}
           </div>
