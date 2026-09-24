@@ -11,10 +11,10 @@ const routes = [
   { slug: 'trygghetsforsakring', path: '/forsakring/trygghetsforsakring/' },
 ];
 
-for (const route of routes) {
-  test(`${route.slug} renders without horizontal overflow`, async ({ page }) => {
+test('full real-iPhone QA', async ({ page }) => {
+  for (const route of routes) {
     await page.goto(route.path, { waitUntil: 'domcontentloaded' });
-    await page.waitForTimeout(700);
+    await page.waitForTimeout(450);
 
     const metrics = await page.evaluate(() => ({
       docScrollWidth: document.documentElement.scrollWidth,
@@ -40,27 +40,20 @@ for (const route of routes) {
 
     const bodyText = await page.locator('body').innerText();
     expect(bodyText.length).toBeGreaterThan(100);
-  });
-}
+  }
 
-test('Kostnadskollen can answer and advance', async ({ page }) => {
   await page.goto('/app/', { waitUntil: 'domcontentloaded' });
-  await page.waitForTimeout(500);
-
+  await page.waitForTimeout(350);
   const question = page.locator('[class*="question"]').filter({ has: page.locator('button') }).first();
   const options = question.locator('button');
   await expect(options.first()).toBeVisible();
   await options.first().click();
-
   const next = page.getByRole('button', { name: /Klart – till/i });
   await expect(next).toBeEnabled();
   await next.click();
-});
 
-test('Försäkring can reveal home partners', async ({ page }) => {
   await page.goto('/forsakring/', { waitUntil: 'domcontentloaded' });
-  await page.waitForTimeout(500);
-
+  await page.waitForTimeout(350);
   const home = page.getByRole('button', { name: /^Hem$/i });
   if (await home.count()) {
     await home.click();
