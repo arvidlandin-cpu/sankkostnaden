@@ -45,7 +45,7 @@ export default function HomeHero(){
 
       <div className={styles.card}>
         <div className={styles.cardEyebrow}>BÖRJA HÄR</div>
-        <h2>Var kan ditt hushåll spara mest?</h2>
+        <h2>Vilket avtal bör du kontrollera först?</h2>
         <div className={styles.choiceList}>
           <a href='/app/'><div><strong>Starta Kostnadskollen</strong><small>Fyra områden · personlig prioritering · gratis</small></div><ArrowRight size={17}/></a>
         </div>
@@ -58,7 +58,7 @@ export default function HomeHero(){
             </a>;
           })}
         </div>
-        <p className={styles.cardHint}>Vet du redan vad du vill jämföra? Välj område direkt. Annars börjar Kostnadskollen med den största möjligheten.</p>
+        <p className={styles.cardHint}>Vet du redan vad du vill jämföra? Välj område direkt. Annars hjälper Kostnadskollen dig att prioritera vad som är mest rimligt att kontrollera först.</p>
       </div>
     </div>
     <div className={styles.proof}>
