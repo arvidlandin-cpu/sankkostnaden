@@ -2171,3 +2171,110 @@ footer{
   .partnerVerification span+span::before{display:none}
   .partnerVerification{display:grid;gap:2px}
 }
+
+
+/* Cost calculator correctness UI 2026-09-24 */
+.costRealityToggle{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin:0 0 14px;
+}
+.costRealityToggle button{
+  min-height:40px;
+  padding:0 13px;
+  border:1px solid #d9e0d8;
+  border-radius:10px;
+  background:#f8faf7;
+  color:#526057;
+  font:inherit;
+  font-size:10px;
+  font-weight:850;
+  cursor:pointer;
+}
+.costRealityToggle button.selected{
+  border-color:#17201b;
+  background:#17201b;
+  color:#fff;
+}
+.costRealityInputs label small,
+.electricityOffer label small{
+  color:#8a958d;
+  font-size:8px;
+  font-weight:650;
+}
+.costRealityUsage{
+  max-width:330px;
+  display:grid;
+  gap:7px;
+  margin-bottom:13px;
+  color:#4f5b54;
+  font-size:10px;
+  font-weight:850;
+}
+.costRealityUsage>div,
+.electricityOffer label>div{
+  min-height:47px;
+  display:flex;
+  align-items:center;
+  border:1px solid #d9e0d8;
+  border-radius:11px;
+  background:#f9faf8;
+  overflow:hidden;
+}
+.costRealityUsage input,
+.electricityOffer input{
+  width:100%;
+  min-width:0;
+  padding:12px;
+  border:0;
+  outline:0;
+  background:transparent;
+  color:#17201b;
+  font:inherit;
+  font-size:15px;
+  font-weight:850;
+}
+.costRealityUsage b,
+.electricityOffer b{
+  padding-right:11px;
+  color:#748078;
+  font-size:9px;
+  white-space:nowrap;
+}
+.electricityCompareGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.electricityOffer{
+  padding:15px;
+  display:grid;
+  gap:11px;
+  border:1px solid #dfe5dd;
+  border-radius:14px;
+  background:#f8faf7;
+}
+.electricityOffer>strong{
+  font-size:14px;
+  letter-spacing:-.02em;
+}
+.electricityOffer label{
+  display:grid;
+  gap:6px;
+  color:#4f5b54;
+  font-size:10px;
+  font-weight:850;
+}
+.directPartnerVerified{
+  display:block;
+  margin-top:6px;
+  color:#8a958d;
+  font-size:8.5px;
+  font-weight:700;
+}
+@media(max-width:650px){
+  .costRealityToggle{display:grid;grid-template-columns:1fr 1fr}
+  .electricityCompareGrid{grid-template-columns:1fr}
+  .costRealityUsage{max-width:none}
+}
