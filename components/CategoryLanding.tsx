@@ -71,7 +71,7 @@ export default function CategoryLanding({
           <h1>{heading}</h1>
           <p className='lead'>{lead}</p>
           <div className='categoryHeroActions'>
-            <a className='primary' href='#partners'>{compareLabel} <ArrowRight size={17}/></a>
+            <a className='primary' href='#category-partners'>{compareLabel} <ArrowRight size={17}/></a>
             <Link className='secondaryLight' href={helpHref}>{helpLabel} <ArrowRight size={17}/></Link>
           </div>
           <p className='fine'>Inga kontaktuppgifter behövs för att börja.</p>
@@ -92,8 +92,10 @@ export default function CategoryLanding({
           <div className='checkList compactChecks'>{checks.map(item=><p key={item}><Check size={17}/>{item}</p>)}</div>
         </section>
 
-        {showPartners&&<PartnerDirectory category={category} intent={partnerIntent} heading={partnerHeading}/>} 
-        {afterPartners}
+        <div id='category-partners'>
+          {showPartners&&<PartnerDirectory category={category} intent={partnerIntent} heading={partnerHeading}/>}
+          {afterPartners}
+        </div>
 
         <section className='categoryGuideSection'>
           <div className='categoryGuideHead'><div><p className='kicker'>GUIDER</p><h2>Vill du läsa först?</h2></div><p>Välj den guide som motsvarar din fråga. Du behöver inte läsa allt för att komma vidare.</p></div>
