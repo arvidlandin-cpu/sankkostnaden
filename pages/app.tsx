@@ -216,7 +216,7 @@ export default function SavingsApp() {
           <div className={styles.questionCard}>
             <div className={styles.questionTop}>
               <div><span>ANALYS {categories.findIndex(category => category.key === active) + 1} / 4</span><h2>{activeCategory.label}</h2></div>
-              <div className={styles.scoreOrb}><strong>{isComplete(active)?results.find(item => item.key === active)!.score:'—'}</strong><small>{isComplete(active)?'/100':'svara först'}</small></div>
+              <div className={styles.scoreOrb}><strong>{isComplete(active)?results.find(item => item.key === active)!.score:'—'}</strong><small>{isComplete(active)?<>/100</>:'svara först'}</small></div>
             </div>
 
             <div className={styles.householdRow}>
