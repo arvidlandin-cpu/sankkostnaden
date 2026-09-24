@@ -18,7 +18,7 @@ export default function PartnerDirectory({category,intent,heading='Aktiva altern
  if(category==='mobil'&&(!intent||intent==='compare')) return <MobilePartnerMatcher/>;
  if(category==='bredband'&&(!intent||intent==='compare')) return <BroadbandPartnerMatcher/>;
  if(category==='el'&&(!intent||intent==='compare'||intent==='electricity')) return <ElectricityPartnerMatcher/>;
- if(category==='forsakring'&&(intent==='home'||intent==='pet')) return <InsurancePartnerMatcher preset={intent}/>;
+ if(category==='forsakring'&&(!intent||intent==='compare'||intent==='home'||intent==='pet')) return <InsurancePartnerMatcher preset={intent==='home'||intent==='pet'?intent:undefined}/>;
  if(category==='ekonomi'&&intent==='loan') return <LoanPartnerMatcher/>;
  const items=getActivePartners(category,intent,6);
  if(!items.length) return null;
