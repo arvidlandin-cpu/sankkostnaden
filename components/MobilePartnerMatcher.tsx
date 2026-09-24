@@ -27,7 +27,9 @@ function reasons(p:ActivePartner,household:Household,priority:Priority){
   if(household==='family'&&p.intents.includes('family')) out.push('Relevant för familj eller flera abonnemang');
   if(priority==='flex'&&p.intents.includes('no-binding')) out.push('Matchar ditt önskemål om flexibilitet');
   if(priority==='data'&&p.intents.includes('data')) out.push('Relevant när surfmängden är viktig');
-  if(!out.length) out.push('Relevant aktiv partner för din valda profil');
+  if(household==='one'&&!p.intents.includes('family')) out.push('Passar ditt val av ett enskilt abonnemang');
+  if(priority==='open'&&p.intents.includes('compare')) out.push('Matchar ditt val att se breda mobilalternativ utan extra filter');
+  if(!out.length) out.push('Finns i vårt aktiva mobilurval och matchar den valda jämförelsevägen');
   out.push('Aktuellt pris och exakta villkor kontrolleras hos operatören');
   return out.slice(0,2);
 }
