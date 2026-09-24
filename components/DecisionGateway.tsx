@@ -17,6 +17,9 @@ export default function DecisionGateway({category,compact=false,intent,currentPa
   const active=getActivePartners(category,intent,3);
   const onePartner=active.length===1?active[0]:null;
   const directLabel=category==='forsakring'&&intent==='pet'?'Hitta relevanta djurförsäkringar':category==='forsakring'&&intent==='home'?'Hitta relevant hemförsäkring':cfg.direct;
+  const helpLabel=category==='forsakring'&&intent==='pet'?'Så jämför du djurskyddet':cfg.help;
+  const helpHref=category==='forsakring'&&intent==='pet'?'/forsakring/jamfor-forsakring/':cfg.helpHref;
+  const helpText=category==='forsakring'&&intent==='pet'?'Se vilka delar av skyddet du bör jämföra innan du tar in pris för ditt djur.':'Några snabba frågor hjälper dig att välja rätt nivå innan du jämför pris.';
   const resolvedFallback=category==='forsakring'&&intent==='home'?'/forsakring/jamfor-hemforsakring/':category==='forsakring'&&intent==='pet'?'/forsakring/djurforsakring/':cfg.fallback;
   const fallbackPath=resolvedFallback.split('#')[0];
   const samePage=Boolean(currentPath&&fallbackPath===currentPath.split('#')[0]);
@@ -32,7 +35,7 @@ export default function DecisionGateway({category,compact=false,intent,currentPa
         <a className='gatewayPath gatewayDirect' href={directHref}>
           <span className='gatewayIcon'><Gauge size={20}/></span><div><small>JÄMFÖR NU</small><strong>{directLabel}</strong><p>{active.length>1?(samePage?(category==='mobil'?'Svara på två frågor och få tre relevanta partneralternativ.':category==='bredband'?'Svara på två frågor om adress och teknik och få en bättre startpunkt.':category==='el'?'Svara på två frågor och få en relevant kortlista.':category==='ekonomi'?'Svara på två frågor och få en relevant kortlista av jämförelsetjänster.':'Se bara partners som matchar rätt typ av skydd.'):'Gå vidare till jämförelsesidan där de relevanta alternativen samlas tydligt.'):'Gå vidare till jämförelsen och se vad som är relevant för ditt behov.'}</p></div><ArrowRight size={20}/>
         </a>}
-      <Link className='gatewayPath' href={cfg.helpHref}><span className='gatewayIcon'><Compass size={20}/></span><div><small>HJÄLP MIG VÄLJA</small><strong>{cfg.help}</strong><p>Några snabba frågor hjälper dig att välja rätt nivå innan du jämför pris.</p></div><ArrowRight size={20}/></Link>
+      <Link className='gatewayPath' href={helpHref}><span className='gatewayIcon'><Compass size={20}/></span><div><small>HJÄLP MIG VÄLJA</small><strong>{helpLabel}</strong><p>{helpText}</p></div><ArrowRight size={20}/></Link>
     </div>
     <p className='gatewayFine'>Kommersiella länkar märks tydligt. Urvalet omfattar inte hela marknaden.</p>
   </section>;
