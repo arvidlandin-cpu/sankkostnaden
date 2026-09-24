@@ -1,5 +1,6 @@
 import { Zap } from 'lucide-react';
 import CategoryLanding from '../components/CategoryLanding';
+import CostRealityCheck from '../components/CostRealityCheck';
 
 export default function Elavtal(){
   return <CategoryLanding
@@ -17,6 +18,7 @@ export default function Elavtal(){
     helpLabel='Hjälp mig välja avtalsform'
     partnerIntent='electricity'
     partnerHeading='Aktuella elalternativ'
+    beforePartners={<CostRealityCheck mode='electricity' label='Elavtal' />}
     checks={[
       'Samma årsförbrukning i alla jämförelser',
       'Påslag eller energipris plus fasta avgifter',
