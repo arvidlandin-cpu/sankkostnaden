@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { ArrowRight, ArrowUpRight, Smartphone } from 'lucide-react';
 import CategoryLanding from '../components/CategoryLanding';
+import CostRealityCheck from '../components/CostRealityCheck';
 import { getActivePartners } from '../lib/partners';
 
 export default function Mobil(){
@@ -37,6 +38,7 @@ export default function Mobil(){
     helpHref='/mobil/hur-mycket-surf-behover-jag/'
     helpLabel='Hjälp mig välja surf'
     partnerHeading='Aktuella mobilalternativ'
+    beforePartners={<CostRealityCheck mode='subscription' label='Mobilabonnemang' />}
     afterPartners={refurbishedBlock}
     checks={[
       'Faktisk surfmängd per månad',
