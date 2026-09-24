@@ -2349,3 +2349,65 @@ footer{
     margin-top:0;
   }
 }
+
+
+/* Unify insurance spotlight cards with the site-wide light card system */
+.claimsSpotlight{
+  margin:18px 0 28px;
+  padding:20px;
+  grid-template-columns:minmax(0,1fr) 190px;
+  gap:20px;
+  border:1px solid #d8e1d5;
+  border-radius:18px;
+  background:#fff;
+  color:#17201b;
+  box-shadow:0 8px 24px rgba(23,32,27,.045);
+}
+.claimsSpotlight h2{
+  color:#17201b!important;
+  font-size:24px!important;
+}
+.claimsSpotlight>div:first-child>p:not(.kicker){
+  color:#68746c;
+  font-size:12px;
+}
+.claimsSpotlight .kicker{
+  color:#718044;
+}
+.claimsSpotlightActions a:first-child{
+  background:#17201b;
+  color:#fff!important;
+}
+.claimsSpotlightActions a:last-child{
+  border:1px solid #d9e0d7;
+  background:#f8faf7;
+  color:#17201b!important;
+}
+.claimsSpotlight>div:first-child>small{
+  color:#7b867e;
+}
+.claimsSpotlightBrand{
+  min-height:120px;
+  padding:16px;
+  border:1px solid #e1e6df;
+  background:#f8faf7;
+}
+.claimsSpotlightBrand strong{
+  font-size:20px;
+}
+@media(max-width:760px){
+  .claimsSpotlight{
+    grid-template-columns:1fr;
+  }
+  .claimsSpotlightBrand{
+    display:none;
+  }
+}
+@media(max-width:520px){
+  .claimsSpotlight{
+    padding:16px;
+  }
+  .claimsSpotlight h2{
+    font-size:22px!important;
+  }
+}
