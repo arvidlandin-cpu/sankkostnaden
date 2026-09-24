@@ -33,10 +33,10 @@ const guideGroups=[
     ['/mobil/utan-bindningstid/','Mobil utan bindningstid'],
   ]},
   {title:'El & försäkring',links:[
-    ['/elavtal/billigaste-elavtalet/','Billigaste elavtalet 2026'],
     ['/elavtal/byta-elavtal/','Byta elavtal'],
-    ['/elavtal/kvartspris/','Kvartspris på el'],
-    ['/forsakring/jamfor-hemforsakring/','Jämför hemförsäkring'],
+    ['/forsakring/vad-kostar-hemforsakring/','Vad kostar hemförsäkring?'],
+    ['/forsakring/hemforsakring-bostadsratt/','Hemförsäkring bostadsrätt – pris & skydd'],
+    ['/forsakring/hemforsakring-hyresratt/','Hemförsäkring hyresrätt – pris & skydd'],
   ]},
   {title:'Ekonomi',links:[
     ['/ekonomi/','Jämför privatlån & samlingslån'],
@@ -81,14 +81,14 @@ function ProtectedEmailLink(){
 export default function Home(){
   return <>
     <Head>
-      <title>Sänk din månadskostnad – jämför el, bredband, mobil, försäkring & lån | Sänk Kostnaden</title>
-      <meta name='description' content='Sänk din månadskostnad genom att se över fasta kostnader. Jämför bredband, elavtal, mobilabonnemang, försäkring och lånekostnader med guider och gratis verktyg.'/>
+      <title>Sänk Kostnaden – jämför och sänk fasta kostnader för hushållet</title>
+      <meta name='description' content='Sänk Kostnaden hjälper dig jämföra och sänka hushållets fasta kostnader. Guider och gratis verktyg för bredband, el, mobil, försäkring och lån.'/>
       <meta name='application-name' content='Sänk Kostnaden'/>
       <meta name='publisher' content='Sänk Kostnaden'/>
       <meta name='author' content='Sänk Kostnaden'/>
       <link rel='canonical' href='https://sankkostnaden.se/'/>
       <link rel='preconnect' href='https://images.pexels.com' crossOrigin=''/>
-      <meta property='og:title' content='Sänk Kostnaden – hitta onödiga fasta utgifter'/>
+      <meta property='og:title' content='Sänk Kostnaden – jämför hushållets fasta kostnader'/>
       <meta property='og:description' content='Gratis guider och verktyg för att jämföra hushållets återkommande kostnader.'/>
       <meta property='og:type' content='website'/><meta property='og:url' content='https://sankkostnaden.se/'/>
       <meta name='robots' content='index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1'/>
