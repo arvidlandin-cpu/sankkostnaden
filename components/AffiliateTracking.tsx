@@ -70,9 +70,13 @@ export default function AffiliateTracking() {
       const placement = anchor.dataset.affiliatePlacement || anchor.dataset.placement || inferPlacement(anchor);
       return {
         partner: partnerName,
+        merchant_domain: partner?.domain || '',
         category,
         intent,
         placement,
+        partner_position: anchor.dataset.partnerPosition || '',
+        result_rank: anchor.dataset.resultRank || '',
+        cta_text: (anchor.textContent || '').replace(/\s+/g,' ').trim().slice(0,120),
         page_path: window.location.pathname,
         page_title: document.title,
         link_url: anchor.href,
