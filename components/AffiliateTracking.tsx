@@ -69,13 +69,15 @@ export default function AffiliateTracking() {
       const partner = byUrl.get(normalizeUrl(anchor.href));
       const isSponsored = anchor.rel.split(/\s+/).includes('sponsored');
       if (!partner && !isSponsored) return null;
-      const category = anchor.dataset.affiliateCategory || partner?.category || anchor.dataset.category || 'unknown';
+      const category = anchor.dataset.affiliateCategory || anchor.dataset.category || partner?.category || 'unknown';
       const partnerName = anchor.dataset.affiliatePartner || partner?.name || anchor.dataset.partner || 'unknown';
-      const intent = anchor.dataset.affiliateIntent || anchor.dataset.intent || inferIntent(window.location.pathname, partner?.category, partner?.intents || []);
+      const resolvedCategory = ['el','bredband','mobil','forsakring','ekonomi'].includes(category) ? category as PartnerCategory : partner?.category;
+      const intent = anchor.dataset.affiliateIntent || anchor.dataset.intent || inferIntent(window.location.pathname, resolvedCategory, partner?.intents || []);
       const placement = anchor.dataset.affiliatePlacement || anchor.dataset.placement || inferPlacement(anchor);
       return {
         partner: partnerName,
         merchant_domain: partner?.domain || '',
+        merchant_category: partner?.category || '',
         category,
         intent,
         placement,
