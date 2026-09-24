@@ -124,21 +124,19 @@ export default function SavingsApp() {
   const results = useMemo(() => categories.map(category => {
     const answer = answers[category.key];
     const ageScore = Math.max(0, answer.reviewed) * 18;
-    const frictionScore = Math.max(0, answer.friction) * 13;
-    const fitScore = Math.max(0, answer.fit) * 10;
+    const fitScore = Math.max(0, answer.fit) * 16;
     const spendSignal = answer.monthly >= 1000 ? 12 : answer.monthly >= 500 ? 8 : answer.monthly > 0 ? 4 : 0;
     const householdSignal = category.key === 'mobil' && household >= 3 ? 8 : 0;
-    const score = Math.min(100, ageScore + frictionScore + fitScore + spendSignal + householdSignal);
+    const score = Math.min(100, ageScore + fitScore + spendSignal + householdSignal);
     const reasons: string[] = [];
     if (answer.reviewed >= 2) reasons.push('Avtalet har inte jämförts på länge');
-    if (answer.friction >= 1) reasons.push(category.key === 'mobil' ? 'Upplägget kan vara värt att samla eller förenkla' : 'Villkor eller bindning bör kontrolleras');
     if (answer.fit >= 1) reasons.push(category.key === 'bredband' ? 'Behov och hastighet bör matchas bättre' : category.key === 'el' ? 'Din prisstrategi kan matchas bättre mot hur aktiv du vill vara' : 'Innehåll och faktisk användning bör matchas bättre');
     if (answer.monthly > 0) reasons.push(`Du betalar cirka ${answer.monthly.toLocaleString('sv-SE')} kr/mån här`);
     if (!reasons.length) reasons.push('Inga tydliga varningssignaler i dina svar');
     return { ...category, score, reasons, potential: level(score) };
   }).sort((a, b) => b.score - a.score), [answers, household]);
 
-  const isComplete=(key:CostKey)=>{ const a=answers[key]; return a.reviewed >= 0 && a.friction >= 0 && a.fit >= 0; };
+  const isComplete=(key:CostKey)=>{ const a=answers[key]; return a.reviewed >= 0 && a.fit >= 0; };
   const evaluatedResults=results.filter(result=>isComplete(result.key));
   const top = evaluatedResults[0] || results[0];
   const completed = evaluatedResults.length;
@@ -193,7 +191,7 @@ export default function SavingsApp() {
           <Link className='back' href='/'><ArrowLeft size={16} /> Startsidan</Link>
           <div className={styles.badge}><Sparkles size={17} /> Kostnadskollen 2026</div>
           <h1>Var läcker ditt hushåll pengar?</h1>
-          <p>Svara på några snabba frågor om dina avtal. I stället för att be dig räkna själv analyserar Kostnadskollen ålder, villkor, användning och hushållets upplägg – och bygger en personlig åtgärdsordning.</p>
+          <p>Svara på två frågor per område. Kostnadskollen använder svaren för att visa vilket avtal som är mest värt att kontrollera först – utan ett svårtolkat poängbetyg.</p>
           <div className={styles.heroStats}>
             <div><strong>{completed}/4</strong><span>områden analyserade</span></div>
             <div><strong>{totalMonthly ? `${totalMonthly.toLocaleString('sv-SE')} kr` : '—'}</strong><span>angiven kostnad / mån</span></div>
@@ -207,7 +205,7 @@ export default function SavingsApp() {
               const result = results.find(item => item.key === category.key)!;
               return (
                 <button key={category.key} className={active === category.key ? styles.activeTab : ''} onClick={() => setActive(category.key)}>
-                  <span>{category.short}</span><b>{isComplete(category.key)?result.score:'—'}</b>
+                  <span>{category.short}</span><b>{isComplete(category.key)?'✓':'—'}</b>
                 </button>
               );
             })}
@@ -216,26 +214,25 @@ export default function SavingsApp() {
           <div className={styles.questionCard}>
             <div className={styles.questionTop}>
               <div><span>ANALYS {categories.findIndex(category => category.key === active) + 1} / 4</span><h2>{activeCategory.label}</h2></div>
-              <div className={styles.scoreOrb}><strong>{isComplete(active)?results.find(item => item.key === active)!.score:'—'}</strong><small>{isComplete(active)?<>/100</>:'svara först'}</small></div>
+              <div className={styles.scoreOrb}><strong>{isComplete(active)?results.find(item => item.key === active)!.potential:'—'}</strong><small>{isComplete(active)?'kontrollbehov':'2 frågor kvar'}</small></div>
             </div>
 
-            <div className={styles.householdRow}>
-              <div><strong>Hushåll</strong><span>Påverkar främst hur vi bedömer mobilupplägg.</span></div>
+            {active==='mobil'&&<div className={styles.householdRow}>
+              <div><strong>Hur många i hushållet?</strong><span>Används bara för att bedöma mobilupplägget.</span></div>
               <div className={styles.stepper}><button onClick={() => setHousehold(Math.max(1, household - 1))}>−</button><strong>{household} pers</strong><button onClick={() => setHousehold(Math.min(8, household + 1))}>+</button></div>
-            </div>
+            </div>}
 
             <div className={styles.question}>
-              <label>Ungefärlig kostnad per månad <small>frivilligt</small></label>
+              <label>Ungefärlig kostnad per månad <small>valfritt – hjälper prioriteringen</small></label>
               <div className={styles.moneyInput}><input type='number' min='0' inputMode='numeric' value={activeAnswer.monthly || ''} onChange={event => update(active, 'monthly', Math.max(0, Number(event.target.value) || 0))} placeholder='t.ex. 499' /><span>kr/mån</span></div>
             </div>
 
             <ChoiceQuestion title={activeCategory.reviewQuestion} value={activeAnswer.reviewed} options={reviewOptions} onChange={value => update(active, 'reviewed', value)} />
-            <ChoiceQuestion title={activeCategory.frictionQuestion} value={activeAnswer.friction} options={activeCategory.frictionOptions} onChange={value => update(active, 'friction', value)} />
             <ChoiceQuestion title={activeCategory.fitQuestion} value={activeAnswer.fit} options={activeCategory.fitOptions} onChange={value => update(active, 'fit', value)} />
 
             <div className={styles.cardActions}>
               <button className={styles.reset} onClick={reset}><RotateCcw size={15} /> Börja om</button>
-              {active !== 'forsakring' ? <button className={styles.next} onClick={() => setActive(categories[categories.findIndex(category => category.key === active) + 1].key)}>Nästa område <ArrowRight size={17} /></button> : <a className={styles.next} href='#resultat'>Se min prioritering <Target size={17} /></a>}
+              {active !== 'forsakring' ? <button className={styles.next} onClick={() => setActive(categories[categories.findIndex(category => category.key === active) + 1].key)}>Klart – nästa område <ArrowRight size={17} /></button> : <a className={styles.next} href='#resultat'>Se min prioritering <Target size={17} /></a>}
             </div>
           </div>
         </section>
@@ -243,7 +240,7 @@ export default function SavingsApp() {
         <section id='resultat' className={styles.results}>
           <div className={styles.resultIntro}>
             <div><span>DIN PERSONLIGA KOSTNADSKARTA</span><h2>{completed ? `${top.label} bör kontrolleras först` : 'Din prioritering byggs medan du svarar'}</h2></div>
-            <p>Poängen är en prioriteringssignal – inte ett löfte om en viss besparing. Den väger ihop dina egna svar så att du slipper gissa vilket avtal som är mest värt att börja med.</p>
+            <p>Prioriteringen bygger på dina egna svar: hur länge sedan du jämförde, hur väl avtalet verkar passa behovet och – om du fyller i den – ungefärlig månadskostnad.</p>
           </div>
 
           {completed===0 ? <div className={styles.ranking}><article><div className={styles.resultBody}><div><h3>Inget område bedömt ännu</h3></div><p>Svara klart på frågorna för ett område så visas det här. Vi rangordnar inget och visar inga partnerförslag innan det finns underlag.</p></div></article></div> :
@@ -256,7 +253,7 @@ export default function SavingsApp() {
                   <ul>{result.reasons.slice(0, 3).map(reason => <li key={reason}><Check size={14} /> {reason}</li>)}</ul>
                 </div>
                 <div className={styles.resultScore}>
-                  <strong>{result.score}</strong><small>/100</small>
+                  <strong>{result.potential}</strong><small>kontrollbehov</small>
                   <div className={styles.resultActions}>
                     {resultPartners(result.key).map((partner,partnerIndex)=><a key={partner.name} href={partner.trackingUrl} data-partner={partner.name} data-category={partner.category} data-intent={partnerIntent[result.key]} data-placement='cost_check_result' target='_blank' rel='sponsored nofollow noopener'>{partnerIndex===0?'Jämför nu hos ':'Se även '}{partner.name} <ArrowUpRight size={14}/></a>)}
                     <Link href={result.href}>Läs guiden först <ArrowRight size={14}/></Link>
@@ -269,7 +266,7 @@ export default function SavingsApp() {
 
         <section className={styles.explain}>
           <Gauge size={25} />
-          <div><strong>Vad betyder poängen?</strong><p>Den jämför inte ditt pris mot en dold eller påhittad marknadsdatabas. Högre poäng betyder att dina svar visar fler skäl att granska avtalet: lång tid sedan senaste jämförelsen, osäkra villkor, dålig matchning mot användningen eller ett upplägg som kan förenklas.</p></div>
+          <div><strong>Vad betyder kontrollbehovet?</strong><p>Det är ingen prisjämförelse och inget betyg på ditt avtal. Högre kontrollbehov betyder bara att dina svar visar fler skäl att se över avtalet först.</p></div>
           <Zap size={25} />
           <div><strong>Vad händer sedan?</strong><p>Du går direkt till rätt jämförelseguide. Där kontrollerar du pris, innehåll, bindningstid och avgifter innan du fattar ett beslut.</p></div>
         </section>
