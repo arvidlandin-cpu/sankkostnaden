@@ -86,7 +86,7 @@ export default function IntentGuide({ title, description, kicker, canonical, cat
           </div>
         </section>
         <article className='article guideWrap'>
-          <DecisionGateway category={category} intent={intent} currentPath={new URL(canonical).pathname} />
+          <DecisionGateway category={category} intent={intent} currentPath={new URL(canonical).pathname} onPagePartners={elevatePartnerBlock} />
           <div className='checkList'>
             {bullets.map(item => <p key={item}><Check size={17} /> {item}</p>)}
           </div>
