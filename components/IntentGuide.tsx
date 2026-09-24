@@ -4,7 +4,7 @@ import { ArrowLeft, Check, PiggyBank } from 'lucide-react';
 import PartnerOffers from './PartnerOffers';
 import PartnerDirectory from './PartnerDirectory';
 import DecisionGateway from './DecisionGateway';
-import type { PartnerCategory, PartnerIntent } from '../lib/partners';
+import { getActivePartners, type PartnerCategory, type PartnerIntent } from '../lib/partners';
 
 type Section = { heading: string; body: string };
 type Props = {
@@ -25,6 +25,7 @@ export default function IntentGuide({ title, description, kicker, canonical, cat
   const categoryLabel = categoryLabels[category];
   const compareHeadings: Record<PartnerCategory, string> = { el: 'Aktiva elalternativ att jämföra', bredband: 'Aktiva bredbandsalternativ att jämföra', mobil: 'Aktiva mobilalternativ att jämföra', forsakring: 'Aktiva försäkringsalternativ att jämföra', ekonomi: 'Tjänster för att jämföra privatlån' };
   const categoryPath = categoryPaths[category];
+  const hasPartnerOutput = getActivePartners(category,intent,1).length>0;
   const offerHeading = category === 'forsakring' ? (intent === 'pet' ? 'Jämför djurförsäkring hos våra partners' : intent === 'home' ? 'Se aktuella hemförsäkringsalternativ' : 'Se aktuella försäkringsalternativ') : category === 'bredband' ? (intent === 'mobile-broadband' ? 'Se aktuella alternativ för mobilt bredband' : intent === 'fiber' ? 'Se aktuella fiberalternativ' : intent === 'no-binding' ? 'Se bredband utan bindningstid' : 'Se aktuella bredbandsalternativ') : category === 'mobil' ? (intent === 'family' ? 'Se aktuella familjeabonnemang' : intent === 'no-binding' ? 'Se abonnemang utan bindningstid' : 'Se aktuella mobilabonnemang') : category === 'el' ? 'Se aktuella elavtal' : intent === 'saving' ? 'Verktyg för bättre ekonomisk överblick' : 'Tjänster för att jämföra privatlån';
   const schema = {
     '@context': 'https://schema.org',
@@ -69,7 +70,7 @@ export default function IntentGuide({ title, description, kicker, canonical, cat
       <header className='topbar'>
         <Link className='brand' href='/'><span className='brandMark'><PiggyBank size={20} /></span><span>Sänk Kostnaden</span></Link>
         <nav><Link href='/bredband/'>Bredband</Link><Link href='/elavtal/'>El</Link><Link href='/mobil/'>Mobil</Link><Link href='/forsakring/'>Försäkring</Link><Link href='/ekonomi/'>Ekonomi</Link></nav>
-        <Link className='topbarCta' href='/#jamfor'>Jämför priser →</Link>
+        {hasPartnerOutput?<a className='topbarCta' href='#partners'>Jämför här →</a>:<Link className='topbarCta' href={categoryPath}>Till översikten →</Link>}
       </header>
       <main>
         <section className={`guideHero guideHero-${category}`}>
