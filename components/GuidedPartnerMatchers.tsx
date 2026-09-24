@@ -208,24 +208,50 @@ export function InsurancePartnerMatcher({preset}:{preset?:InsuranceType}){
   const allHome=getActivePartners('forsakring','home',12);
   const allPet=getActivePartners('forsakring','pet',12);
   const relevant=type==='home'?allHome:type==='pet'?allPet:[];
-  const reasons=(p:ActivePartner)=>{
-    const out:string[]=[];
-    if(type==='home') out.push('Aktiv partner för hemförsäkring');
-    if(type==='pet') out.push('Aktiv partner för djurförsäkring');
-    out.push(type==='home'?'Jämför premie, självrisk och likvärdigt skydd':'Jämför premie, självrisk, veterinärvårdsbelopp och villkor');
-    return out;
-  };
 
   return <section id='partners' className='mobileMatcher' aria-label='Hitta relevant försäkring'>
-    <div className='mobileMatcherIntro'><p className='kicker'>{preset?'RELEVANTA FÖRSÄKRINGSPARTNERS':'FÖRSÄKRINGSKOLL · 1 VAL'}</p><h2>{preset==='pet'?'Jämför djurförsäkring för ditt djur.':preset==='home'?'Jämför hemförsäkring på samma grund.':'Börja med rätt typ av skydd.'}</h2><p>{preset==='pet'?'Hämta pris för just ditt djur och jämför premie, självrisk, veterinärvårdsbelopp och villkor på samma grund.':preset==='home'?'Här visas varje relevant hemförsäkringspartner en gång. Jämför likvärdig omfattning innan du bedömer premien.':'Vi blandar inte hem- och djurförsäkring i samma lista. Välj först vad du vill försäkra, så visas bara relevanta aktiva partners.'}</p></div>
-    {!preset&&<div className='matchQuestions matchQuestionsSingle'><div className='matchQuestion'><div><small>1 AV 1</small><strong>Vad vill du försäkra?</strong></div><div className='matchOptions'>
-      <button type='button' className={type==='home'?'selected':''} onClick={()=>{setType('home');track('insurance_match_answer',{question:'type',answer:'home'})}}><ShieldCheck size={18}/><span>Hem</span></button>
-      <button type='button' className={type==='pet'?'selected':''} onClick={()=>{setType('pet');track('insurance_match_answer',{question:'type',answer:'pet'})}}><PawPrint size={18}/><span>Hund / katt</span></button>
-    </div></div></div>}
+    <div className='mobileMatcherIntro'>
+      <p className='kicker'>{preset?'RELEVANTA FÖRSÄKRINGSPARTNERS':'FÖRSÄKRINGSKOLL · 1 VAL'}</p>
+      <h2>{preset==='pet'?'Jämför djurförsäkring för ditt djur.':preset==='home'?'Jämför hemförsäkring på samma grund.':'Börja med rätt typ av skydd.'}</h2>
+      <p>{preset==='pet'
+        ?'Hämta pris för just ditt djur och jämför premie, självrisk, veterinärvårdsbelopp och villkor på samma grund.'
+        :preset==='home'
+          ?'Jämför likvärdig omfattning innan du bedömer premien.'
+          :'Vi blandar inte hem- och djurförsäkring i samma lista. Välj först vad du vill försäkra, så visas bara relevanta aktiva partners.'}</p>
+    </div>
+
+    {!preset&&<div className='matchQuestions matchQuestionsSingle'>
+      <div className='matchQuestion'>
+        <div><small>1 AV 1</small><strong>Vad vill du försäkra?</strong></div>
+        <div className='matchOptions'>
+          <button type='button' className={type==='home'?'selected':''} onClick={()=>{setType('home');track('insurance_match_answer',{question:'type',answer:'home'})}}><ShieldCheck size={18}/><span>Hem</span></button>
+          <button type='button' className={type==='pet'?'selected':''} onClick={()=>{setType('pet');track('insurance_match_answer',{question:'type',answer:'pet'})}}><PawPrint size={18}/><span>Hund / katt</span></button>
+        </div>
+      </div>
+    </div>}
+
     {!type&&<div className='matchPrompt'><span>Välj försäkringstyp så slipper du irrelevanta alternativ.</span></div>}
-    {type&&<><div className='matchResultHead'><div><small>RELEVANTA PARTNERS</small><h3>{type==='home'?'Hemförsäkring':'Djurförsäkring'}.</h3><p>{type==='home'?'Jämför likvärdig omfattning innan du bedömer premien.':'Hämta pris för just ditt djur och jämför samma typ av skydd.'}</p></div>{!preset&&<button type='button' onClick={()=>setType(null)}><RotateCcw size={14}/> Byt typ</button>}</div><div className='matchPartnerGrid matchPartnerGridAdaptive'>
-      {relevant.map((p,i)=><PartnerCard key={p.name} partner={p} reasons={reasons(p)} placement='insurance_matcher' intent={type} position={i+1} cta={type==='home'?'Se pris & villkor':'Hämta pris för mitt djur'}/>)}
-    </div></>}
+
+    {type&&<>
+      {!preset&&<div className='matchResultHead'>
+        <div><small>DIN JÄMFÖRELSE</small><h3>{type==='home'?'Hemförsäkring':'Djurförsäkring'}.</h3><p>{type==='home'?'Jämför likvärdig omfattning innan du bedömer premien.':'Hämta pris för just ditt djur och jämför samma typ av skydd.'}</p></div>
+        <button type='button' onClick={()=>setType(null)}><RotateCcw size={14}/> Byt typ</button>
+      </div>}
+
+      <DirectPartnerStrip
+        items={relevant}
+        label={type==='home'?'Jämför hemförsäkring direkt':'Jämför djurförsäkring direkt'}
+        placement={type==='home'?'insurance_home_direct':'insurance_pet_direct'}
+      />
+
+      <AllPartners
+        items={relevant}
+        label={`Visa alla ${relevant.length} aktiva ${type==='home'?'hemförsäkrings':'djurförsäkrings'}partners`}
+        placement='insurance_matcher_all'
+        intent={type}
+      />
+    </>}
+
     <p className='partnerFine'>Kommersiella länkar – vi kan få provision om du blir kund. Det påverkar inte priset för dig. Vi utser inte en försäkring åt dig.</p>
   </section>;
 }
