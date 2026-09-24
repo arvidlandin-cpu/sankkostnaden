@@ -27,7 +27,7 @@ export default function Forsakringsersattning(){
     <header className='topbar'>
       <Link className='brand' href='/'><span className='brandMark'><PiggyBank size={22}/></span><span>Sänk Kostnaden</span></Link>
       <nav><Link href='/bredband/'>Bredband</Link><Link href='/elavtal/'>El</Link><Link href='/mobil/'>Mobil</Link><Link href='/forsakring/'>Försäkring</Link><Link href='/ekonomi/'>Ekonomi</Link></nav>
-      <Link className='topbarCta' href='#partners'>Gå till alternativ →</Link>
+      <Link className='topbarCta' href='#ersattningsalternativ'>Gå till alternativ →</Link>
     </header>
     <main>
       <section className='guideHero guideHero-forsakring'>
@@ -53,7 +53,7 @@ export default function Forsakringsersattning(){
         <section><h2>När kan en ersättningstjänst vara relevant?</h2><p>Om du är osäker på vilka ersättningar som kan vara aktuella eller inte vill driva ärendet själv kan en extern tjänst hjälpa till att identifiera och hantera möjliga krav. Läs alltid hur tjänsten tar betalt och vilka fullmakter du lämnar.</p></section>
         <section><h2>Jämför hjälp mot att göra det själv</h2><p>En tjänst kan spara tid, men en procentuell avgift minskar ersättningen du själv behåller. Väg därför tidsbesparingen och hjälpen mot kostnaden innan du går vidare.</p></section>
 
-        <PartnerOffers category='forsakring' intent='claims' heading='Hjälp med försäkringsersättning'/>
+        <div id='ersattningsalternativ'><PartnerOffers category='forsakring' intent='claims' heading='Hjälp med försäkringsersättning'/></div>
 
         <div className='relatedGuides'>
           <h2>Läs vidare</h2>
