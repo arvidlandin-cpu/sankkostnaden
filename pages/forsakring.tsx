@@ -73,6 +73,7 @@ export default function Forsakring(){
       {href:'/forsakring/vad-kostar-hemforsakring/',title:'Vad kostar hemförsäkring?',text:'Se vad som påverkar premien.'},
       {href:'/forsakring/forsakringsersattning/',title:'Försäkringsersättning',text:'Kontrollera om en skada eller olycka kan ge ersättning.'},
       {href:'/forsakring/reseforsakring/',title:'Reseförsäkring',text:'Kontrollera befintligt reseskydd innan du köper mer.'},
+      {href:'/forsakring/trygghetsforsakring/',title:'Trygghetsförsäkring',text:'Skydd för fasta kostnader vid arbetslöshet eller sjukskrivning.'},
     ]}
     moreGuides={[
       {href:'/forsakring/hemforsakring-hyresratt/',title:'Hemförsäkring hyresrätt',text:'Relevant skydd för hyresrätt.'},
