@@ -763,3 +763,49 @@
   .optionalCost summary{padding:0 18px}
   .optionalCostBody{padding:0 18px 20px}
 }
+
+
+/* Cost Check 2.0 funnel */
+.incompleteResult{
+  grid-template-columns:1fr!important;
+  min-height:150px;
+}
+.verifiedLine{
+  display:block;
+  margin-bottom:2px;
+  color:#77837a;
+  font-size:9px;
+  font-weight:750;
+}
+.resultActions a[data-partner-position="1"]{
+  padding:9px 10px;
+  border:1px solid #17201b!important;
+  border-radius:9px;
+  background:#17201b!important;
+  color:#fff!important;
+}
+.resultActions a[data-partner-position="2"]{
+  padding:8px 10px;
+  border:1px solid #d9dfd8!important;
+  border-radius:9px;
+  background:#fff!important;
+  color:#17201b!important;
+}
+.resultActions .nextCategory{
+  margin-top:5px;
+  padding-top:9px!important;
+  border:0!important;
+  border-top:1px solid #e3e8e1!important;
+  border-radius:0!important;
+  background:transparent!important;
+  color:#526039!important;
+  font-size:10px;
+}
+@media(max-width:760px){
+  .verifiedLine{margin-bottom:4px}
+  .resultActions .nextCategory{
+    min-height:38px;
+    padding-left:0!important;
+    padding-right:0!important;
+  }
+}
