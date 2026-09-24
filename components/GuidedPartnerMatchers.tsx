@@ -123,7 +123,7 @@ export function BroadbandPartnerMatcher(){
     if(access==='fiber'&&p.intents.includes('fiber')) out.push('Relevant när fiber finns eller är det du vill jämföra');
     if(access==='mobile'&&p.intents.includes('mobile-broadband')) out.push('Relevant när mobilt eller 5G-bredband är aktuellt');
     if(start==='direct'&&p.name==='Ownit') out.push('Direkt väg till en aktiv fiberpartner');
-    if(!out.length) out.push('Relevant aktiv partner för ditt val');
+    if(!out.length) out.push(start==='direct'?'Du valde direktväg – aktiva operatörer med matchande teknik prioriteras':'Du valde att jämföra flera – jämförelseväg och teknikmatchning prioriteras');
     out.push('Jämför samma hastighet, ordinarie pris och bindningstid');
     return out;
   };
@@ -179,7 +179,7 @@ export function ElectricityPartnerMatcher(){
     if(pathChoice==='compare'&&p.name==='Elskling') out.push('Matchar att du vill jämföra flera elavtal på ett ställe');
     if(pathChoice==='provider'&&p.name==='Vattenfall') out.push('Direkt väg till en aktiv elhandelspartner');
     if(pathChoice==='source'&&p.name==='Kärnfull Energi') out.push('Relevant när elens ursprung är en viktig del av valet');
-    if(!out.length) out.push('Relevant aktiv elpartner för din valda väg');
+    if(!out.length) out.push(pathChoice==='provider'?'Du valde direkt till bolag – aktiva elhandelsbolag prioriteras':'Aktiv elpartner som matchar den jämförelseväg du valde');
     out.push(`Använd ${consumptionText} som utgångspunkt när du jämför`);
     return out;
   };
