@@ -59,7 +59,7 @@ export default function CategoryLanding({
     <header className='topbar'>
       <Link className='brand' href='/'><span className='brandMark'><PiggyBank size={22}/></span><span>Sänk Kostnaden</span></Link>
       <nav><Link href='/bredband/'>Bredband</Link><Link href='/elavtal/'>El</Link><Link href='/mobil/'>Mobil</Link><Link href='/forsakring/'>Försäkring</Link><Link href='/ekonomi/'>Ekonomi</Link></nav>
-      <Link className='topbarCta' href='/#jamfor'>Jämför priser →</Link>
+      <a className='topbarCta' href='#category-partners'>Jämför {labels[category].toLowerCase()} →</a>
     </header>
 
     <main>
