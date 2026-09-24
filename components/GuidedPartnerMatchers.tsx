@@ -97,7 +97,7 @@ type BroadbandStart='compare'|'direct';
 
 export function BroadbandPartnerMatcher(){
   const base=getActivePartners('bredband',undefined,12);
-  const cross=partners.filter((p):p is ActivePartner=>p.status==='active'&&!!p.trackingUrl&&p.intents.includes('mobile-broadband')).map(p=>({...p,trackingUrl:p.intentTrackingUrls?.['mobile-broadband']||p.trackingUrl,cta:p.category==='mobil'?`Se mobilt bredband hos ${p.name}`:p.cta}));
+  const cross=partners.filter((p):p is ActivePartner=>p.status==='active'&&!!p.trackingUrl&&p.intents.includes('mobile-broadband')).map(p=>({...p,category:'bredband' as const,trackingUrl:p.intentTrackingUrls?.['mobile-broadband']||p.trackingUrl,cta:p.category==='mobil'?`Se mobilt bredband hos ${p.name}`:p.cta}));
   const all=Array.from(new Map([...base,...cross].map(p=>[p.name,p])).values());
   const [access,setAccess]=useState<BroadbandAccess|null>(null);
   const [start,setStart]=useState<BroadbandStart|null>(null);
