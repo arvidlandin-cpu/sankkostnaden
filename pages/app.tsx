@@ -101,7 +101,7 @@ export default function SavingsApp() {
   const [answers, setAnswers] = useState<Answers>(initialAnswers);
   const [active, setActive] = useState<CostKey>('el');
   const [household, setHousehold] = useState(2);
-  const loaded = useRef(false);
+  const [hydrated,setHydrated] = useState(false);
   const completedTracked = useRef(false);
 
   useEffect(() => {
@@ -113,13 +113,13 @@ export default function SavingsApp() {
         if(typeof parsed?.household==='number') setHousehold(Math.min(8,Math.max(1,parsed.household)));
       }
     } catch {}
-    loaded.current=true;
+    setHydrated(true);
   }, []);
 
   useEffect(() => {
-    if(!loaded.current) return;
+    if(!hydrated) return;
     try { window.localStorage.setItem(storageKey,JSON.stringify({answers,household,updatedAt:Date.now()})); } catch {}
-  }, [answers,household]);
+  }, [answers,household,hydrated]);
 
   const results = useMemo(() => categories.map(category => {
     const answer = answers[category.key];
