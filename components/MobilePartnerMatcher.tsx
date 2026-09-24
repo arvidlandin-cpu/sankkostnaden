@@ -1,9 +1,9 @@
 import { useMemo, useState } from 'react';
-import { ArrowRight, ArrowUpRight, BadgeCheck, Check, RotateCcw, Users, UserRound, Waves, Unplug } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, BadgeCheck, Check, RotateCcw, Users, UserRound, Unplug } from 'lucide-react';
 import { getActivePartners, partnerRankScore, partnerGroupCheckedLabel, partnerLinkCheckedLabel, partnerSourceLabel, type ActivePartner } from '../lib/partners';
 
 type Household='one'|'family';
-type Priority='flex'|'data'|'open';
+type Priority='flex'|'open';
 
 function track(event:string,params:Record<string,string|number>){
   if(typeof window==='undefined') return;
@@ -17,7 +17,6 @@ function scorePartner(p:ActivePartner,household:Household,priority:Priority){
   if(household==='family'&&p.intents.includes('family')) score+=45;
   if(household==='one'&&!p.intents.includes('family')) score+=4;
   if(priority==='flex'&&p.intents.includes('no-binding')) score+=40;
-  if(priority==='data'&&p.intents.includes('data')) score+=24;
   if(priority==='open') score+=p.intents.includes('compare')?8:0;
   return score;
 }
@@ -26,7 +25,6 @@ function reasons(p:ActivePartner,household:Household,priority:Priority){
   const out:string[]=[];
   if(household==='family'&&p.intents.includes('family')) out.push('Relevant för familj eller flera abonnemang');
   if(priority==='flex'&&p.intents.includes('no-binding')) out.push('Matchar ditt önskemål om flexibilitet');
-  if(priority==='data'&&p.intents.includes('data')) out.push('Relevant när surfmängden är viktig');
   if(household==='one'&&!p.intents.includes('family')) out.push('Passar ditt val av ett enskilt abonnemang');
   if(priority==='open'&&p.intents.includes('compare')) out.push('Matchar ditt val att se breda mobilalternativ utan extra filter');
   if(!out.length) out.push('Finns i vårt aktiva mobilurval och matchar den valda jämförelsevägen');
@@ -47,7 +45,7 @@ function PartnerCard({partner,household,priority,position}:{partner:ActivePartne
       href={partner.trackingUrl}
       data-partner={partner.name}
       data-category='mobil'
-      data-intent={priority==='flex'?'no-binding':priority==='data'?'data':household==='family'?'family':'compare'}
+      data-intent={priority==='flex'?'no-binding':household==='family'?'family':'compare'}
       data-placement='mobile_matcher'
       data-partner-position={position}
       target='_blank'
@@ -89,7 +87,7 @@ export default function MobilePartnerMatcher(){
     <div className='mobileMatcherIntro'>
       <p className='kicker'>DIN SNABBLISTA · 2 FRÅGOR</p>
       <h2>Vilka operatörer är mest relevanta för dig?</h2>
-      <p>Vi har flera aktiva mobilpartners. I stället för att rada upp alla direkt hjälper vi dig att börja med tre alternativ som passar det du söker. Vi rankar inte aktuella priser – de kontrollerar du hos operatören.</p>
+      <p>Vi har flera aktiva mobilpartners. I stället för att rada upp alla direkt hjälper vi dig att börja med tre alternativ utifrån hushåll och om flexibilitet utan bindningstid är viktig. Vi rankar inte aktuella priser – de kontrollerar du hos operatören.</p>
     </div>
     <div className='directPartnerBlock'>
       <div className='directPartnerHead'><div><small>REDO ATT JÄMFÖRA?</small><strong>Se mobilabonnemang direkt</strong></div><span>Partnerlänkar</span></div>
@@ -108,11 +106,10 @@ export default function MobilePartnerMatcher(){
         </div>
       </div>
       <div className='matchQuestion'>
-        <div><small>2 AV 2</small><strong>Vad är viktigast?</strong></div>
+        <div><small>2 AV 2</small><strong>Är abonnemang utan bindningstid viktigt?</strong></div>
         <div className='matchOptions matchOptionsThree'>
-          <button type='button' className={priority==='flex'?'selected':''} onClick={()=>choosePriority('flex')}><Unplug size={18}/><span>Flexibilitet</span></button>
-          <button type='button' className={priority==='data'?'selected':''} onClick={()=>choosePriority('data')}><Waves size={18}/><span>Mycket surf</span></button>
-          <button type='button' className={priority==='open'?'selected':''} onClick={()=>choosePriority('open')}><ArrowRight size={18}/><span>Visa relevanta</span></button>
+          <button type='button' className={priority==='flex'?'selected':''} onClick={()=>choosePriority('flex')}><Unplug size={18}/><span>Utan bindningstid viktigt</span></button>
+          <button type='button' className={priority==='open'?'selected':''} onClick={()=>choosePriority('open')}><ArrowRight size={18}/><span>Inte viktigt</span></button>
         </div>
       </div>
     </div>
