@@ -53,6 +53,7 @@ export default function Ekonomi(){
       {href:'/ekonomi/kostnadskontroll-och-sparande/',title:'Kostnadskontroll & sparande',text:'Få överblick och prioritera nästa kostnad.'},
       {href:'/verktyg/hushallskostnadskollen/',title:'Hushållskostnadskollen',text:'Se helheten innan du ändrar lån.'},
       {href:'/guide/arskoll-fasta-kostnader/',title:'Årskoll av fasta kostnader',text:'Gå igenom hushållets återkommande avtal.'},
+      {href:'/forsakring/trygghetsforsakring/',title:'Skydda fasta kostnader vid inkomstbortfall',text:'Guide till Trygghetsförsäkring vid arbetslöshet eller sjukskrivning.'},
     ]}
   />;
 }
