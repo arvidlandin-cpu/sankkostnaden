@@ -225,13 +225,16 @@ export default function SavingsApp() {
               <div className={styles.stepper}><button onClick={() => setHousehold(Math.max(1, household - 1))}>−</button><strong>{household} pers</strong><button onClick={() => setHousehold(Math.min(8, household + 1))}>+</button></div>
             </div>}
 
-            <div className={styles.question}>
-              <label>Ungefärlig kostnad per månad <small>valfritt – hjälper prioriteringen</small></label>
-              <div className={styles.moneyInput}><input type='number' min='0' inputMode='numeric' value={activeAnswer.monthly || ''} onChange={event => update(active, 'monthly', Math.max(0, Number(event.target.value) || 0))} placeholder='t.ex. 499' /><span>kr/mån</span></div>
-            </div>
-
             <ChoiceQuestion title={activeCategory.reviewQuestion} value={activeAnswer.reviewed} options={reviewOptions} onChange={value => update(active, 'reviewed', value)} />
             <ChoiceQuestion title={activeCategory.fitQuestion} value={activeAnswer.fit} options={activeCategory.fitOptions} onChange={value => update(active, 'fit', value)} />
+
+            <details className={styles.optionalCost} open={activeAnswer.monthly>0}>
+              <summary>{activeAnswer.monthly>0?`${activeAnswer.monthly.toLocaleString('sv-SE')} kr/mån angivet`:'Lägg till månadskostnad (valfritt)'}</summary>
+              <div className={styles.optionalCostBody}>
+                <p>Beloppet kan hjälpa oss skilja två annars likvärdiga områden åt. Det behövs inte för att slutföra kollen.</p>
+                <div className={styles.moneyInput}><input type='number' min='0' inputMode='numeric' value={activeAnswer.monthly || ''} onChange={event => update(active, 'monthly', Math.max(0, Number(event.target.value) || 0))} placeholder='t.ex. 499' /><span>kr/mån</span></div>
+              </div>
+            </details>
 
             <div className={styles.cardActions}>
               <button className={styles.reset} onClick={reset}><RotateCcw size={15} /> Börja om</button>
