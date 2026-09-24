@@ -39,7 +39,7 @@ function PartnerCard({
   </article>;
 }
 
-function DirectPartnerStrip({items,label='Gå direkt till partner',placement}:{items:ActivePartner[];label?:string;placement:string}){
+function DirectPartnerStrip({items,label='Gå direkt till partner',placement,helperText='Vill du ha hjälp att välja? Svara på frågan nedan så kortlistar vi relevanta alternativ.'}:{items:ActivePartner[];label?:string;placement:string;helperText?:string}){
   const featured=items.slice(0,2);
   if(!featured.length) return null;
   return <div className='directPartnerBlock'>
@@ -47,7 +47,7 @@ function DirectPartnerStrip({items,label='Gå direkt till partner',placement}:{i
     <div className='directPartnerGrid'>{featured.map((p,i)=><a key={p.name} href={p.trackingUrl} target='_blank' rel='sponsored nofollow noopener' data-partner={p.name} data-category={p.category} data-intent='direct' data-placement={placement} data-partner-position={i+1}>
       <span className='partnerBrand'>{p.domain&&<img src={`https://www.google.com/s2/favicons?domain=${p.domain}&sz=128`} alt='' loading='lazy'/>}<span className='partnerWordmark'>{p.name}</span></span><b>{p.cta||`Se aktuella alternativ`}<ArrowUpRight size={14}/></b>
     </a>)}</div>
-    <p>Vill du ha hjälp att välja? Svara på frågan nedan så kortlistar vi relevanta alternativ.</p><small className='directPartnerVerified'>Partnerlänkar kontrollerade {partnerGroupCheckedLabel(featured)}</small>
+    <p>{helperText}</p><small className='directPartnerVerified'>Partnerlänkar kontrollerade {partnerGroupCheckedLabel(featured)}</small>
   </div>;
 }
 
@@ -242,6 +242,7 @@ export function InsurancePartnerMatcher({preset}:{preset?:InsuranceType}){
         items={relevant}
         label={type==='home'?'Jämför hemförsäkring direkt':'Jämför djurförsäkring direkt'}
         placement={type==='home'?'insurance_home_direct':'insurance_pet_direct'}
+        helperText={preset?'Se fler aktiva alternativ nedan.':'Välj ett alternativ direkt eller öppna hela partnerlistan nedan.'}
       />
 
       <AllPartners
