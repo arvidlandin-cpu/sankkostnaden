@@ -38,7 +38,7 @@ function PartnerCard({partner,household,priority,position}:{partner:ActivePartne
   const why=reasons(partner,household,priority);
   return <article className='matchPartnerCard'>
     <div className='matchPartnerTop'>
-      <div><small>FÖRSLAG {position}</small><h3>{partner.name}</h3></div>
+      <div><small>FÖRSLAG {position}</small><div className='partnerBrand'>{partner.domain&&<img src={`https://www.google.com/s2/favicons?domain=${partner.domain}&sz=128`} alt='' loading='lazy'/>}<h3>{partner.name}</h3></div></div>
       <span><BadgeCheck size={13}/> PARTNERLÄNK</span>
     </div>
     <ul>{why.map(item=><li key={item}><Check size={14}/>{item}</li>)}</ul>
@@ -92,10 +92,10 @@ export default function MobilePartnerMatcher(){
     </div>
     <div className='directPartnerBlock'>
       <div className='directPartnerHead'><div><small>REDO ATT JÄMFÖRA?</small><strong>Se mobilabonnemang direkt</strong></div><span>Partnerlänkar</span></div>
-      <div className='directPartnerGrid'>{all.slice(0,4).map((p,i)=><a key={p.name} href={p.trackingUrl} target='_blank' rel='sponsored nofollow noopener' data-partner={p.name} data-category='mobil' data-intent='direct' data-placement='mobile_direct' onClick={()=>track('mobile_match_partner_click',{partner:p.name,household:'direct',priority:'open',position:i+1})}>
+      <div className='directPartnerGrid'>{all.slice(0,2).map((p,i)=><a key={p.name} href={p.trackingUrl} target='_blank' rel='sponsored nofollow noopener' data-partner={p.name} data-category='mobil' data-intent='direct' data-placement='mobile_direct' onClick={()=>track('mobile_match_partner_click',{partner:p.name,household:'direct',priority:'open',position:i+1})}>
         <span className='partnerBrand'>{p.domain&&<img src={`https://www.google.com/s2/favicons?domain=${p.domain}&sz=128`} alt='' loading='lazy'/>}<span className='partnerWordmark'>{p.name}</span></span><b>{p.cta||'Se abonnemang'}<ArrowUpRight size={14}/></b>
       </a>)}</div>
-      <p>Osäker? Svara på två frågor nedan så kortlistar vi relevanta operatörer åt dig.</p>
+      <p>Vill du ha hjälp att välja? Svara på två frågor nedan så kortlistar vi relevanta operatörer.</p>
     </div>
 
     <div className='matchQuestions'>
