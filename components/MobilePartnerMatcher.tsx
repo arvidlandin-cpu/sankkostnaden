@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { ArrowRight, ArrowUpRight, BadgeCheck, Check, RotateCcw, Users, UserRound, Unplug } from 'lucide-react';
-import { getActivePartners, partnerRankScore, partnerGroupCheckedLabel, partnerLinkCheckedLabel, partnerSourceLabel, type ActivePartner } from '../lib/partners';
+import { getActivePartners, partnerRankScore, type ActivePartner } from '../lib/partners';
 
 type Household='one'|'family';
 type Priority='flex'|'open';
@@ -40,7 +40,6 @@ function PartnerCard({partner,household,priority,position}:{partner:ActivePartne
       <span><BadgeCheck size={13}/> PARTNERLÄNK</span>
     </div>
     <ul>{why.map(item=><li key={item}><Check size={14}/>{item}</li>)}</ul>
-    <div className='partnerVerification compact'><span>Länk kontrollerad {partnerLinkCheckedLabel(partner)}</span><span>Källa: {partnerSourceLabel(partner)}</span></div>
     <a
       href={partner.trackingUrl}
       data-partner={partner.name}
@@ -87,14 +86,14 @@ export default function MobilePartnerMatcher(){
     <div className='mobileMatcherIntro'>
       <p className='kicker'>DIN SNABBLISTA · 2 FRÅGOR</p>
       <h2>Vilka operatörer är mest relevanta för dig?</h2>
-      <p>Vi har flera aktiva mobilpartners. I stället för att rada upp alla direkt hjälper vi dig att börja med tre alternativ utifrån hushåll och om flexibilitet utan bindningstid är viktig. Vi rankar inte aktuella priser – de kontrollerar du hos operatören.</p>
+      <p>Svara på två frågor så visar vi tre relevanta alternativ utifrån hushåll och behov av bindningstid. Aktuella priser kontrollerar du hos operatören.</p>
     </div>
     <div className='directPartnerBlock'>
       <div className='directPartnerHead'><div><small>REDO ATT JÄMFÖRA?</small><strong>Se mobilabonnemang direkt</strong></div><span>Partnerlänkar</span></div>
       <div className='directPartnerGrid'>{all.slice(0,2).map((p,i)=><a key={p.name} href={p.trackingUrl} target='_blank' rel='sponsored nofollow noopener' data-partner={p.name} data-category='mobil' data-intent='direct' data-placement='mobile_direct' data-partner-position={i+1}>
         <span className='partnerBrand'>{p.domain&&<img src={`https://www.google.com/s2/favicons?domain=${p.domain}&sz=128`} alt='' loading='lazy'/>}<span className='partnerWordmark'>{p.name}</span></span><b>{p.cta||'Se abonnemang'}<ArrowUpRight size={14}/></b>
       </a>)}</div>
-      <p>Vill du ha hjälp att välja? Svara på två frågor nedan så kortlistar vi relevanta operatörer.</p><small className='directPartnerVerified'>Partnerlänkar kontrollerade {partnerGroupCheckedLabel(all.slice(0,2))}</small>
+      <p>Vill du ha hjälp att välja? Svara på två frågor nedan.</p>
     </div>
 
     <div className='matchQuestions'>
@@ -139,7 +138,7 @@ export default function MobilePartnerMatcher(){
           data-partner-position={i+1}
           target='_blank'
           rel='sponsored nofollow noopener'
-        ><span><strong>{partner.name}</strong><small>Partnerlänk · kontrollera aktuellt pris och villkor</small></span><ArrowUpRight size={16}/></a>)}
+        ><span><strong>{partner.name}</strong><small>Kontrollera aktuellt pris och villkor</small></span><ArrowUpRight size={16}/></a>)}
       </div>
     </details>
     <p className='partnerFine'>Kommersiella länkar – vi kan få provision om du blir kund. Det påverkar inte priset för dig. Urvalet omfattar inte hela marknaden.</p>
