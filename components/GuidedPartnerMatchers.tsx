@@ -3,7 +3,7 @@ import {
   ArrowRight, ArrowUpRight, BadgeCheck, Check, CircleDollarSign, GitCompareArrows,
   HousePlug, PawPrint, RotateCcw, Search, ShieldCheck, Sparkles, Unplug, Wifi
 } from 'lucide-react';
-import { getActivePartners, partnerRankScore, partners, partnerGroupCheckedLabel, partnerLinkCheckedLabel, partnerSourceLabel, type ActivePartner, type PartnerIntent } from '../lib/partners';
+import { getActivePartners, partnerRankScore, partners, type ActivePartner, type PartnerIntent } from '../lib/partners';
 
 function track(event:string,params:Record<string,string|number>){
   if(typeof window==='undefined') return;
@@ -23,7 +23,6 @@ function PartnerCard({
       <span><BadgeCheck size={13}/> PARTNERLÄNK</span>
     </div>
     <ul>{reasons.slice(0,2).map(item=><li key={item}><Check size={14}/>{item}</li>)}</ul>
-    <div className='partnerVerification compact'><span>Länk kontrollerad {partnerLinkCheckedLabel(partner)}</span><span>Källa: {partnerSourceLabel(partner)}</span></div>
     <a
       href={partner.trackingUrl}
       data-partner={partner.name}
@@ -47,7 +46,7 @@ function DirectPartnerStrip({items,label='Gå direkt till partner',placement,int
     <div className='directPartnerGrid'>{featured.map((p,i)=><a key={p.name} href={p.trackingUrl} target='_blank' rel='sponsored nofollow noopener' data-partner={p.name} data-category={p.category} data-intent={intent} data-placement={placement} data-partner-position={i+1}>
       <span className='partnerBrand'>{p.domain&&<img src={`https://www.google.com/s2/favicons?domain=${p.domain}&sz=128`} alt='' loading='lazy'/>}<span className='partnerWordmark'>{p.name}</span></span><b>{p.cta||`Se aktuella alternativ`}<ArrowUpRight size={14}/></b>
     </a>)}</div>
-    <p>{helperText}</p><small className='directPartnerVerified'>Partnerlänkar kontrollerade {partnerGroupCheckedLabel(featured)}</small>
+    <p>{helperText}</p>
   </div>;
 }
 
@@ -87,7 +86,7 @@ function AllPartners({
         data-partner-position={i+1}
         target='_blank'
         rel='sponsored nofollow noopener'
-      ><span><strong>{partner.name}</strong><small>Partnerlänk · kontrollera aktuellt pris och villkor</small></span><ArrowUpRight size={16}/></a>)}
+      ><span><strong>{partner.name}</strong><small>Kontrollera aktuellt pris och villkor</small></span><ArrowUpRight size={16}/></a>)}
     </div>
   </details>;
 }
@@ -211,7 +210,7 @@ export function InsurancePartnerMatcher({preset}:{preset?:InsuranceType}){
 
   return <section id='partners' className='mobileMatcher' aria-label='Hitta relevant försäkring'>
     <div className='mobileMatcherIntro'>
-      <p className='kicker'>{preset?'JÄMFÖR FÖRSÄKRING':'JÄMFÖR FÖRSÄKRING'}</p>
+      <p className='kicker'>JÄMFÖR FÖRSÄKRING</p>
       <h2>{preset==='pet'?'Jämför djurförsäkring för ditt djur.':preset==='home'?'Jämför hemförsäkring på samma grund.':'Börja med rätt typ av skydd.'}</h2>
       <p>{preset==='pet'
         ?'Hämta pris för just ditt djur och jämför premie, självrisk, veterinärvårdsbelopp och villkor på samma grund.'
