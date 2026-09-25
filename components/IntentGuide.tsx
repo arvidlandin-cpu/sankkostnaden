@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import { ArrowLeft, Check, PiggyBank } from 'lucide-react';
+import { Check, PiggyBank } from 'lucide-react';
 import PartnerOffers from './PartnerOffers';
 import PartnerDirectory from './PartnerDirectory';
 import DecisionGateway from './DecisionGateway';
@@ -78,11 +78,9 @@ export default function IntentGuide({ title, description, kicker, canonical, cat
         <section className={`guideHero guideHero-${category}`}>
           <div className='guideWrap'>
             <nav className='breadcrumbs' aria-label='Brödsmulor'><Link href='/'>Start</Link><span>›</span><Link href={categoryPath}>{categoryLabel}</Link><span>›</span><span aria-current='page'>{kicker}</span></nav>
-            <Link className='back' href={categoryPath}><ArrowLeft size={16} /> Till {categoryLabel.toLowerCase()}</Link>
             <p className='kicker' style={{ marginTop: 32 }}>{kicker}</p>
             <h1>{title}</h1>
             <p className='lead'>{description}</p>
-            <p className='fine'>Du kan läsa först och jämföra när du är redo.</p>
           </div>
         </section>
         <article className='article guideWrap'>
@@ -99,7 +97,6 @@ export default function IntentGuide({ title, description, kicker, canonical, cat
             <h2>Läs vidare</h2>
             {related.map(item => <Link href={item.href} key={item.href}>{item.label} →</Link>)}
           </div>
-          <p className='disclosure'>Informationen är generell. Kommersiella länkar markeras tydligt och urvalet behöver inte omfatta hela marknaden.</p>
         </article>
       </main>
     </>
