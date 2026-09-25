@@ -1,7 +1,7 @@
 import MobilePartnerMatcher from './MobilePartnerMatcher';
 import { BroadbandPartnerMatcher, ElectricityPartnerMatcher, InsurancePartnerMatcher, LoanPartnerMatcher } from './GuidedPartnerMatchers';
 import { ArrowUpRight, BadgeCheck } from 'lucide-react';
-import { getActivePartners, partnerLinkCheckedLabel, partnerSourceLabel, type PartnerCategory, type PartnerIntent } from '../lib/partners';
+import { getActivePartners, type PartnerCategory, type PartnerIntent } from '../lib/partners';
 
 type Props={category:PartnerCategory; intent?:PartnerIntent; heading?:string};
 
@@ -26,7 +26,7 @@ export default function PartnerDirectory({category,intent,heading='Aktiva altern
   <div className='partnerIntro'><p className='kicker'>JÄMFÖRELSEÖVERSIKT</p><h2>{heading}</h2><p>{directoryIntro(category,intent)}</p></div>
   <div className='partnerGrid'>
    {items.map((item,index)=><article className='partnerCard partnerCardStrong' key={item.name}>
-    <div><div className='partnerCardTop'><div className='partnerBrand'>{item.domain&&<img src={`https://www.google.com/s2/favicons?domain=${item.domain}&sz=128`} alt='' loading='lazy'/>}<span className='partnerWordmark'>{item.name}</span></div><span className='commercialTag'><BadgeCheck size={13}/> PARTNERLÄNK</span></div><p>{item.note}</p><div className='partnerVerification'><span>Länk kontrollerad {partnerLinkCheckedLabel(item)}</span><span>Källa: {partnerSourceLabel(item)}</span></div></div>
+    <div><div className='partnerCardTop'><div className='partnerBrand'>{item.domain&&<img src={`https://www.google.com/s2/favicons?domain=${item.domain}&sz=128`} alt='' loading='lazy'/>}<span className='partnerWordmark'>{item.name}</span></div><span className='commercialTag'><BadgeCheck size={13}/> PARTNERLÄNK</span></div><p>{item.note}</p></div>
     <a className='partnerButton partnerButtonStrong' href={item.trackingUrl} data-partner={item.name} data-category={item.category} data-intent={intent || 'unspecified'} data-placement='partner_directory' data-partner-position={index+1} target='_blank' rel='sponsored nofollow noopener'>{item.cta || (item.category==='mobil' ? `Se abonnemang hos ${item.name}` : item.category==='bredband' ? `Se bredband hos ${item.name}` : item.category==='el' ? `Se elavtal hos ${item.name}` : item.category==='ekonomi' ? `Jämför lån hos ${item.name}` : `Se premie hos ${item.name.replace(' Djurförsäkring','')}`)} <ArrowUpRight size={18}/></a>
    </article>)}
   </div>
