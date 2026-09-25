@@ -132,7 +132,7 @@ export function BroadbandPartnerMatcher(){
   const ready=Boolean(access&&start);
   const intent:PartnerIntent=access==='mobile'?'mobile-broadband':access==='fiber'?'fiber':'compare';
   return <section id='partners' className='mobileMatcher' aria-label='Hitta relevant bredband'>
-    <div className='mobileMatcherIntro'><p className='kicker'>BREDBANDSKOLL · 2 FRÅGOR</p><h2>Börja med adressen – inte med logotypen.</h2><p>Vilka operatörer och priser som är relevanta beror på vad som faktiskt går att beställa där du bor. Vi använder därför dina svar för att välja en bättre startpunkt.</p></div>
+    <div className='mobileMatcherIntro'><p className='kicker'>JÄMFÖR BREDBAND</p><h2>Börja med adressen – inte med logotypen.</h2><p>Vilka operatörer och priser som är relevanta beror på vad som faktiskt går att beställa där du bor. Vi använder därför dina svar för att välja en bättre startpunkt.</p></div>
     <DirectPartnerStrip items={all} label='Jämför direkt hos en partner' placement='broadband_direct' intent='compare'/>
     <div className='matchQuestions'>
       <div className='matchQuestion'><div><small>1 AV 2</small><strong>Vad vet du om anslutningen?</strong></div><div className='matchOptions matchOptionsThree'>
@@ -183,10 +183,10 @@ export function ElectricityPartnerMatcher(){
   const ready=Boolean(pathChoice);
 
   return <section id='partners' className='mobileMatcher' aria-label='Hitta relevanta elavtal'>
-    <div className='mobileMatcherIntro'><p className='kicker'>ELKOLL · 1 FRÅGA</p><h2>Välj hur du vill jämföra el.</h2><p>Årsförbrukningen påverkar vad avtalet kostar. Välj hur du vill jämföra här och använd sedan samma årsförbrukning hos alternativen för en rättvis jämförelse.</p></div>
+    <div className='mobileMatcherIntro'><p className='kicker'>JÄMFÖR ELAVTAL</p><h2>Hitta rätt väg till ett elavtal.</h2><p>Välj om du vill jämföra flera avtal, gå direkt till ett elbolag eller prioritera elens ursprung. Jämför sedan aktuellt pris, påslag, fasta avgifter och villkor på samma grund.</p></div>
     <DirectPartnerStrip items={all} label='Se elavtal direkt' placement='electricity_direct' intent='electricity'/>
     <div className='matchQuestions matchQuestionsSingle'>
-      <div className='matchQuestion'><div><small>1 AV 1</small><strong>Hur vill du jämföra?</strong></div><div className='matchOptions matchOptionsThree'>
+      <div className='matchQuestion'><div><strong>Hur vill du jämföra?</strong></div><div className='matchOptions matchOptionsThree'>
         <button type='button' className={pathChoice==='compare'?'selected':''} onClick={()=>{setPathChoice('compare');track('electricity_match_answer',{question:'path',answer:'compare'})}}><GitCompareArrows size={18}/><span>Flera avtal</span></button>
         <button type='button' className={pathChoice==='provider'?'selected':''} onClick={()=>{setPathChoice('provider');track('electricity_match_answer',{question:'path',answer:'provider'})}}><ArrowRight size={18}/><span>Direkt till bolag</span></button>
         <button type='button' className={pathChoice==='source'?'selected':''} onClick={()=>{setPathChoice('source');track('electricity_match_answer',{question:'path',answer:'source'})}}><Sparkles size={18}/><span>Ursprung viktigt</span></button>
@@ -211,7 +211,7 @@ export function InsurancePartnerMatcher({preset}:{preset?:InsuranceType}){
 
   return <section id='partners' className='mobileMatcher' aria-label='Hitta relevant försäkring'>
     <div className='mobileMatcherIntro'>
-      <p className='kicker'>{preset?'RELEVANTA FÖRSÄKRINGSPARTNERS':'FÖRSÄKRINGSKOLL · 1 VAL'}</p>
+      <p className='kicker'>{preset?'JÄMFÖR FÖRSÄKRING':'JÄMFÖR FÖRSÄKRING'}</p>
       <h2>{preset==='pet'?'Jämför djurförsäkring för ditt djur.':preset==='home'?'Jämför hemförsäkring på samma grund.':'Börja med rätt typ av skydd.'}</h2>
       <p>{preset==='pet'
         ?'Hämta pris för just ditt djur och jämför premie, självrisk, veterinärvårdsbelopp och villkor på samma grund.'
@@ -222,7 +222,7 @@ export function InsurancePartnerMatcher({preset}:{preset?:InsuranceType}){
 
     {!preset&&<div className='matchQuestions matchQuestionsSingle'>
       <div className='matchQuestion'>
-        <div><small>1 AV 1</small><strong>Vad vill du försäkra?</strong></div>
+        <div><strong>Vad vill du försäkra?</strong></div>
         <div className='matchOptions'>
           <button type='button' className={type==='home'?'selected':''} onClick={()=>{setType('home');track('insurance_match_answer',{question:'type',answer:'home'})}}><ShieldCheck size={18}/><span>Hem</span></button>
           <button type='button' className={type==='pet'?'selected':''} onClick={()=>{setType('pet');track('insurance_match_answer',{question:'type',answer:'pet'})}}><PawPrint size={18}/><span>Hund / katt</span></button>
@@ -285,10 +285,10 @@ export function LoanPartnerMatcher(){
   const ready=Boolean(purpose);
 
   return <section id='partners' className='mobileMatcher' aria-label='Hitta relevant lånejämförelse'>
-    <div className='mobileMatcherIntro'><p className='kicker'>LÅNEKOLL · 1 FRÅGA</p><h2>Jämför rätt erbjudanden – inte bara en låg månadssiffra.</h2><p>Räntan sätts individuellt. Därför hjälper vi dig först välja rätt jämförelseväg och skickar dig sedan till tjänster där du kan se faktiska erbjudanden.</p></div>
+    <div className='mobileMatcherIntro'><p className='kicker'>JÄMFÖR PRIVATLÅN</p><h2>Jämför rätt erbjudanden – inte bara en låg månadssiffra.</h2><p>Räntan sätts individuellt. Därför hjälper vi dig först välja rätt jämförelseväg och skickar dig sedan till tjänster där du kan se faktiska erbjudanden.</p></div>
     <DirectPartnerStrip items={all} label='Jämför lån direkt' placement='loan_direct' intent='loan'/>
     <div className='matchQuestions'>
-      <div className='matchQuestion'><div><small>1 AV 1</small><strong>Vad vill du göra?</strong></div><div className='matchOptions'>
+      <div className='matchQuestion'><div><strong>Vad vill du göra?</strong></div><div className='matchOptions'>
         <button type='button' className={purpose==='new'?'selected':''} onClick={()=>{setPurpose('new');track('loan_match_answer',{question:'purpose',answer:'new'})}}><CircleDollarSign size={18}/><span>Nytt privatlån</span></button>
         <button type='button' className={purpose==='consolidate'?'selected':''} onClick={()=>{setPurpose('consolidate');track('loan_match_answer',{question:'purpose',answer:'consolidate'})}}><GitCompareArrows size={18}/><span>Samla lån</span></button>
       </div></div>
