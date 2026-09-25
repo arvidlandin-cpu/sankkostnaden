@@ -81,14 +81,14 @@ function ProtectedEmailLink(){
 export default function Home(){
   return <>
     <Head>
-      <title>Sänk Kostnaden – jämför och sänk fasta kostnader för hushållet</title>
-      <meta name='description' content='Sänk Kostnaden hjälper dig jämföra och sänka hushållets fasta kostnader. Guider och gratis verktyg för bredband, el, mobil, försäkring och lån.'/>
+      <title>Sänk dina fasta kostnader 2026 | Jämför avtal – Sänk Kostnaden</title>
+      <meta name='description' content='Sänk dina fasta kostnader. Jämför bredband, el, mobil, försäkring och lån med gratis guider och verktyg som hjälper dig hitta kostnader att se över.'/>
       <meta name='application-name' content='Sänk Kostnaden'/>
       <meta name='publisher' content='Sänk Kostnaden'/>
       <meta name='author' content='Sänk Kostnaden'/>
       <link rel='canonical' href='https://sankkostnaden.se/'/>
       <link rel='preconnect' href='https://images.pexels.com' crossOrigin=''/>
-      <meta property='og:title' content='Sänk Kostnaden – jämför hushållets fasta kostnader'/>
+      <meta property='og:title' content='Sänk dina fasta kostnader – jämför avtal | Sänk Kostnaden'/>
       <meta property='og:description' content='Gratis guider och verktyg för att jämföra hushållets återkommande kostnader.'/>
       <meta property='og:type' content='website'/><meta property='og:url' content='https://sankkostnaden.se/'/>
       <meta name='robots' content='index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1'/>
