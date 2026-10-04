@@ -13,7 +13,7 @@ const routes = [
 
 test('full real-iPhone QA', async ({ page }) => {
   for (const route of routes) {
-    await page.goto(route.path, { waitUntil: 'domcontentloaded' });
+    await page.goto(`${route.path}?qa=1`, { waitUntil: 'domcontentloaded' });
     await page.waitForTimeout(450);
 
     const metrics = await page.evaluate(() => ({
@@ -42,7 +42,7 @@ test('full real-iPhone QA', async ({ page }) => {
     expect(bodyText.length).toBeGreaterThan(100);
   }
 
-  await page.goto('/app/', { waitUntil: 'domcontentloaded' });
+  await page.goto('/app/?qa=1', { waitUntil: 'domcontentloaded' });
   await page.waitForTimeout(350);
   const question = page.locator('[class*="question"]').filter({ has: page.locator('button') }).first();
   const options = question.locator('button');
@@ -52,7 +52,7 @@ test('full real-iPhone QA', async ({ page }) => {
   await expect(next).toBeEnabled();
   await next.click();
 
-  await page.goto('/forsakring/', { waitUntil: 'domcontentloaded' });
+  await page.goto('/forsakring/?qa=1', { waitUntil: 'domcontentloaded' });
   await page.waitForTimeout(350);
   const home = page.getByRole('button', { name: /^Hem$/i });
   if (await home.count()) {
