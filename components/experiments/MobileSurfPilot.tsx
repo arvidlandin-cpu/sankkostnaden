@@ -216,7 +216,7 @@ export default function MobileSurfPilot() {
     <>
       <header className={selectorStyles.topbar}>
         <Link className={selectorStyles.brand} href='/'><span><PiggyBank size={20} /></span><strong>Sänk Kostnaden</strong></Link>
-        <div className={pilotStyles.testBanner}>Privat pilot · ej kommersiell</div>
+        <div className={pilotStyles.testBanner}>Privat pilot · testläge</div>
       </header>
 
       <main className={selectorStyles.shell}>
