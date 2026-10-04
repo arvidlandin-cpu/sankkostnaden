@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
-import { ArrowRight, Check, LockKeyhole, PiggyBank, RotateCcw, Sparkles } from 'lucide-react';
+import { ArrowRight, Check, ExternalLink, PiggyBank, RotateCcw, Sparkles } from 'lucide-react';
 import { getActivePartners } from '../../lib/partners';
 import selectorStyles from '../../styles/SmartSelector.module.css';
 import pilotStyles from '../../styles/MobileSurfPilot.module.css';
@@ -19,9 +19,19 @@ type PilotEvent = {
   [key: string]: string | number | boolean;
 };
 
+type PilotClickRecord = {
+  click_id: string;
+  participant_id: string;
+  variant: PilotVariant;
+  partner: string;
+  placement: string;
+  created_at: string;
+};
+
 declare global {
   interface Window {
     __SK_MOBILE_SURF_PILOT_EVENTS__?: PilotEvent[];
+    __SK_MOBILE_SURF_PILOT_CLICKS__?: PilotClickRecord[];
   }
 }
 
@@ -48,6 +58,21 @@ function createParticipantId() {
   return `pilot-${Date.now()}-${Math.random().toString(36).slice(2)}`;
 }
 
+function createLocalClickId() {
+  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') return crypto.randomUUID().replace(/-/g, '');
+  return `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 14)}`;
+}
+
+function withAdtractionEpi(trackingUrl: string, clickId: string, variant: PilotVariant, placement: string) {
+  const url = new URL(trackingUrl);
+  url.searchParams.set('epi', clickId);
+  url.searchParams.set('epi2', `v${variant.toLowerCase()}`);
+  url.searchParams.set('epi3', 'surf_low_own');
+  url.searchParams.set('epi4', placement);
+  url.searchParams.set('epi5', 'msv1');
+  return url.toString();
+}
+
 function emitPilotEvent(participantId: string, variant: PilotVariant, event: string, extra: Record<string, string | number | boolean> = {}) {
   if (typeof window === 'undefined') return;
   const payload: PilotEvent = {
@@ -68,7 +93,9 @@ export default function MobileSurfPilot() {
   const [participantId, setParticipantId] = useState('');
   const [comparisonOpen, setComparisonOpen] = useState(false);
   const [forceNoPartner, setForceNoPartner] = useState(false);
+  const [clickId, setClickId] = useState('');
   const lastResultKey = useRef('');
+  const lastClickContext = useRef('');
 
   const answered = answers.filter(value => value >= 0).length;
   const score = answers.reduce((sum, answer, index) => sum + (answer >= 0 ? questions[index].options[answer].points : 0), 0);
@@ -81,9 +108,6 @@ export default function MobileSurfPilot() {
   const selectedPartner = forceNoPartner ? undefined : getActivePartners('mobil', 'data', 1)[0];
   const partnerRelevant = Boolean(selectedPartner && selectedPartner.category === 'mobil' && selectedPartner.intents.includes('data'));
 
-  // Hard block until relation, commercial terms, destination and click-reference roundtrip
-  // have all been verified in the affiliate account.
-  const commercialReady = false;
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -104,7 +128,6 @@ export default function MobileSurfPilot() {
     setVariant(assigned);
     emitPilotEvent(id, assigned, 'pilot_assignment', {
       assignment_source: forcedVariant ? 'query' : storedAssignment ? 'storage' : 'random_50_50',
-      commercial_ready: commercialReady,
       partner_simulated_none: simulateNoPartner,
     });
   }, []);
@@ -120,7 +143,6 @@ export default function MobileSurfPilot() {
       own_subscription: ownSubscription,
       pilot_branch_matched: pilotBranchMatched,
       partner_available_in_registry: partnerRelevant,
-      commercial_ready: commercialReady,
     });
   }, [answers, complete, ownSubscription, participantId, partnerRelevant, pilotBranchMatched, result.label, score, variant]);
 
@@ -141,24 +163,54 @@ export default function MobileSurfPilot() {
     if (variant && participantId) emitPilotEvent(participantId, variant, 'pilot_compare_open', { profile: result.label });
   };
 
-  const recordLockedPartnerIntent = () => {
-    if (variant && participantId) {
-      emitPilotEvent(participantId, variant, 'pilot_partner_intent_blocked', {
-        partner: selectedPartner?.name || 'none',
-        reason: 'commercial_start_gates_not_verified',
-      });
-    }
+  const recordAffiliateClick = () => {
+    if (!variant || !participantId || !selectedPartner || !clickId) return;
+    const record: PilotClickRecord = {
+      click_id: clickId,
+      participant_id: participantId,
+      variant,
+      partner: selectedPartner.name,
+      placement,
+      created_at: new Date().toISOString(),
+    };
+    window.__SK_MOBILE_SURF_PILOT_CLICKS__ = [...(window.__SK_MOBILE_SURF_PILOT_CLICKS__ || []), record];
+    const stored = JSON.parse(window.localStorage.getItem('sk-mobile-surf-pilot-v1-clicks') || '[]') as PilotClickRecord[];
+    window.localStorage.setItem('sk-mobile-surf-pilot-v1-clicks', JSON.stringify([...stored, record].slice(-100)));
+    emitPilotEvent(participantId, variant, 'pilot_affiliate_click', {
+      click_id: clickId,
+      partner: selectedPartner.name,
+      placement,
+    });
   };
 
   const reset = () => {
     setAnswers(Array(questions.length).fill(-1));
     setComparisonOpen(false);
+    setClickId('');
+    lastClickContext.current = '';
     lastResultKey.current = '';
     if (variant && participantId) emitPilotEvent(participantId, variant, 'pilot_reset');
   };
 
   const showPartnerCard = pilotBranchMatched && partnerRelevant && (variant === 'B' || comparisonOpen);
   const showNoMatch = pilotBranchMatched && !partnerRelevant && (variant === 'B' || comparisonOpen);
+  const placement = comparisonOpen ? 'pilot_compare_result' : 'pilot_result_direct';
+
+  useEffect(() => {
+    if (!showPartnerCard || !variant || !selectedPartner?.trackingUrl) {
+      setClickId('');
+      lastClickContext.current = '';
+      return;
+    }
+    const context = `${variant}|${selectedPartner.name}|${placement}`;
+    if (lastClickContext.current === context) return;
+    lastClickContext.current = context;
+    setClickId(createLocalClickId());
+  }, [placement, selectedPartner?.name, selectedPartner?.trackingUrl, showPartnerCard, variant]);
+
+  const affiliateHref = selectedPartner?.trackingUrl && clickId && variant
+    ? withAdtractionEpi(selectedPartner.trackingUrl, clickId, variant, placement)
+    : '';
 
   return (
     <>
@@ -221,10 +273,29 @@ export default function MobileSurfPilot() {
                 <span>RELEVANT ALTERNATIV · TESTLÄGE</span>
                 <h3>{selectedPartner.name}</h3>
                 <p>{selectedPartner.note}</p>
-                <button type='button' className={pilotStyles.lockedAction} aria-disabled='true' onClick={recordLockedPartnerIntent} data-testid='pilot-commercial-locked'>
-                  <LockKeyhole size={16} /> Partnerutgång låst
-                </button>
-                <small>Ingen affiliatelänk öppnas. Relation, aktuella villkor, rätt destination och återrapporterbar klickreferens måste verifieras före kommersiell teststart.</small>
+                {affiliateHref ? (
+                  <a
+                    href={affiliateHref}
+                    target='_blank'
+                    rel='sponsored noopener noreferrer'
+                    className={pilotStyles.affiliateAction}
+                    onClick={recordAffiliateClick}
+                    data-testid='pilot-affiliate-link'
+                    data-affiliate-partner={selectedPartner.name}
+                    data-affiliate-category='mobil'
+                    data-affiliate-intent='data'
+                    data-affiliate-placement={placement}
+                    data-affiliate-click-id={clickId}
+                    data-experiment-id={experimentId}
+                    data-experiment-variant={variant}
+                    data-partner-position='1'
+                  >
+                    {selectedPartner.cta || `Se abonnemang hos ${selectedPartner.name}`} <ExternalLink size={16} />
+                  </a>
+                ) : (
+                  <span className={pilotStyles.lockedAction}>Förbereder spårning…</span>
+                )}
+                <small>Annonslänk. Aktuellt pris, surfmängd och villkor kontrolleras hos operatören. Klicket märks med ett slumpmässigt EPI-ID för senare avstämning mot Adtraction.</small>
               </section>
             )}
 
@@ -243,7 +314,7 @@ export default function MobileSurfPilot() {
             )}
 
             <button className={selectorStyles.reset} onClick={reset}><RotateCcw size={14} /> Börja om</button>
-            <small>Prototypen skickar inga GA4-händelser och inga partnerklick. Pilotdata sparas bara i webbläsarens minne för QA. Ingen personlig besparing beräknas.</small>
+            <small>Piloten använder befintlig GA4 affiliate_click-spårning för utgående partnerklick och sparar samtidigt slumpmässigt click-ID lokalt för QA/avstämning. Ingen personlig besparing beräknas.</small>
           </aside>
         </section>
       </main>
