@@ -24,7 +24,7 @@ jobs:
     env:
       BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
       BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
-      QA_BASE_URL: ${{ github.ref_name == 'pilot/mobile-surf-prototype-2026-10-04' && 'http://bs-local.com:3000' || github.event.inputs.base_url || 'https://sankkostnaden.se' }}
+      QA_BASE_URL: ${{ github.ref_name == 'pilot/mobile-surf-prototype-2026-10-04' && 'https://pilot-mobile-surf-prototype.sankkostnaden.pages.dev' || github.event.inputs.base_url || 'https://sankkostnaden.se' }}
       ENABLE_MOBILE_SURF_PILOT: ${{ github.ref_name == 'pilot/mobile-surf-prototype-2026-10-04' && 'true' || 'false' }}
 
     steps:
@@ -46,21 +46,16 @@ jobs:
       - name: Install dependencies
         run: npm install --progress=false
 
-      - name: Build pilot preview when testing pilot branch
-        if: github.ref_name == 'pilot/mobile-surf-prototype-2026-10-04'
-        run: npx next build
-
-      - name: Start local pilot preview
+      - name: Wait for Cloudflare Pages pilot preview
         if: github.ref_name == 'pilot/mobile-surf-prototype-2026-10-04'
         run: |
-          python3 -m http.server 3000 --directory out > /tmp/pilot-preview.log 2>&1 &
-          for i in {1..30}; do
-            if curl -fsS http://127.0.0.1:3000/experiments/mobile-surf-pilot/ >/dev/null; then
+          for i in {1..60}; do
+            if curl -fsS "$QA_BASE_URL/experiments/mobile-surf-pilot/" | grep -q "Hur mycket surf"; then
               exit 0
             fi
-            sleep 1
+            sleep 2
           done
-          cat /tmp/pilot-preview.log
+          echo "Cloudflare pilot preview did not become ready in time."
           exit 1
 
       - name: Run real iPhone Safari QA
