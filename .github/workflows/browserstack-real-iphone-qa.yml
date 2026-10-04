@@ -10,6 +10,7 @@ on:
       - 'browserstack.yml'
       - 'tests/browserstack-mobile-surf-pilot.spec.ts'
       - 'components/experiments/MobileSurfPilot.tsx'
+      - 'pages/experiments/mobile-surf-pilot.tsx'
       - 'styles/MobileSurfPilot.module.css'
   workflow_dispatch:
     inputs:
