@@ -10,7 +10,7 @@ async function answerLowProfile(page: Page) {
 }
 
 async function verifyVariant(page: Page, variant: 'a' | 'b') {
-  await page.goto(`${route}?variant=${variant}`, { waitUntil: 'domcontentloaded' });
+  await page.goto(`${route}?variant=${variant}&qa=1`, { waitUntil: 'domcontentloaded' });
   await expect(page.getByRole('heading', { name: /Hur mycket surf behöver du/i })).toBeVisible();
 
   const robots = await page.evaluate(() => document.querySelector('meta[name="robots"]')?.getAttribute('content') || '');
