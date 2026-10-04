@@ -11,10 +11,17 @@ export default function App({ Component, pageProps }: AppProps) {
     <>
       <Script src='https://www.googletagmanager.com/gtag/js?id=G-E2XTJVY5EX' strategy='afterInteractive' />
       <Script id='google-analytics' strategy='afterInteractive'>{`
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-E2XTJVY5EX');
+        const analyticsHost = window.location.hostname;
+        const analyticsEnabled = (analyticsHost === 'sankkostnaden.se' || analyticsHost === 'www.sankkostnaden.se') && !new URLSearchParams(window.location.search).has('qa');
+        if (analyticsEnabled) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          window.gtag = gtag;
+          gtag('js', new Date());
+          gtag('config', 'G-E2XTJVY5EX');
+        } else {
+          window['ga-disable-G-E2XTJVY5EX'] = true;
+        }
       `}</Script>
       <Head>
         <link rel='manifest' href='/manifest.webmanifest' />
