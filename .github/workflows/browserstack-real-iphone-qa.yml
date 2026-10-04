@@ -24,7 +24,7 @@ jobs:
     env:
       BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
       BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
-      QA_BASE_URL: ${{ github.ref_name == 'pilot/mobile-surf-prototype-2026-10-04' && 'http://127.0.0.1:3000' || github.event.inputs.base_url || 'https://sankkostnaden.se' }}
+      QA_BASE_URL: ${{ github.ref_name == 'pilot/mobile-surf-prototype-2026-10-04' && 'http://bs-local.com:3000' || github.event.inputs.base_url || 'https://sankkostnaden.se' }}
       ENABLE_MOBILE_SURF_PILOT: ${{ github.ref_name == 'pilot/mobile-surf-prototype-2026-10-04' && 'true' || 'false' }}
 
     steps:
