@@ -2,12 +2,15 @@ name: BrowserStack real iPhone QA
 
 on:
   push:
-    branches: [main]
+    branches: [main, pilot/mobile-surf-prototype-2026-10-04]
     paths:
       - '.github/workflows/browserstack-real-iphone-qa.yml'
       - 'playwright.browserstack.config.ts'
       - 'tests/browserstack-real-ios.spec.ts'
       - 'browserstack.yml'
+      - 'tests/browserstack-mobile-surf-pilot.spec.ts'
+      - 'components/experiments/MobileSurfPilot.tsx'
+      - 'styles/MobileSurfPilot.module.css'
   workflow_dispatch:
     inputs:
       base_url:
@@ -21,7 +24,8 @@ jobs:
     env:
       BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
       BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
-      QA_BASE_URL: ${{ github.event.inputs.base_url || 'https://sankkostnaden.se' }}
+      QA_BASE_URL: ${{ github.ref_name == 'pilot/mobile-surf-prototype-2026-10-04' && 'http://127.0.0.1:3000' || github.event.inputs.base_url || 'https://sankkostnaden.se' }}
+      ENABLE_MOBILE_SURF_PILOT: ${{ github.ref_name == 'pilot/mobile-surf-prototype-2026-10-04' && 'true' || 'false' }}
 
     steps:
       - name: Checkout
@@ -42,5 +46,27 @@ jobs:
       - name: Install dependencies
         run: npm install --progress=false
 
+      - name: Build pilot preview when testing pilot branch
+        if: github.ref_name == 'pilot/mobile-surf-prototype-2026-10-04'
+        run: npx next build
+
+      - name: Start local pilot preview
+        if: github.ref_name == 'pilot/mobile-surf-prototype-2026-10-04'
+        run: |
+          python3 -m http.server 3000 --directory out > /tmp/pilot-preview.log 2>&1 &
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:3000/experiments/mobile-surf-pilot/ >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/pilot-preview.log
+          exit 1
+
       - name: Run real iPhone Safari QA
-        run: npm run qa:browserstack
+        run: |
+          if [ "${GITHUB_REF_NAME}" = "pilot/mobile-surf-prototype-2026-10-04" ]; then
+            npx browserstack-node-sdk playwright test tests/browserstack-mobile-surf-pilot.spec.ts --config=playwright.browserstack.config.ts
+          else
+            npm run qa:browserstack
+          fi
