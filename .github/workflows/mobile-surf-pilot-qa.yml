@@ -11,6 +11,7 @@ on:
       - 'styles/MobileSurfPilot.module.css'
       - 'tests/mobile-surf-pilot.spec.ts'
       - 'experiments/mobile-surf-pilot/README.md'
+      - 'scripts/check-integrity.mjs'
   workflow_dispatch:
 
 jobs:
