@@ -26,7 +26,7 @@ function canonicalFor(route){
 }
 function isIsolatedExperiment(route,src){
   return route.startsWith('/experiments/')
-    && src.includes('ENABLE_MOBILE_SURF_PILOT')
+    && src.includes("name='robots'")
     && src.includes('noindex,nofollow,noarchive');
 }
 
