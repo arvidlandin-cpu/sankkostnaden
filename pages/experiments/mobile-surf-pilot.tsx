@@ -1,17 +1,12 @@
-import type { GetStaticProps } from 'next';
 import Head from 'next/head';
 import MobileSurfPilot from '../../components/experiments/MobileSurfPilot';
 
-type Props = { enabled: boolean };
-
-export default function MobileSurfPilotPage({ enabled }: Props) {
-  if (!enabled) return null;
-
+export default function MobileSurfPilotPage() {
   return (
     <>
       <Head>
         <title>Privat pilot – mobil surfprofil | Sänk Kostnaden</title>
-        <meta name='description' content='Privat, icke-kommersiell prototyp för intern QA av mobilens surfprofil.' />
+        <meta name='description' content='Privat noindex-pilot för verifiering av mobilens surfprofil och partneröverlämning.' />
         <meta name='robots' content='noindex,nofollow,noarchive' />
       </Head>
       <MobileSurfPilot />
@@ -21,11 +16,3 @@ export default function MobileSurfPilotPage({ enabled }: Props) {
     </>
   );
 }
-
-export const getStaticProps: GetStaticProps<Props> = async () => {
-  const enabled = process.env.ENABLE_MOBILE_SURF_PILOT === 'true'
-    || process.env.CF_PAGES_BRANCH === 'pilot/mobile-surf-prototype-2026-10-04';
-
-  if (!enabled) return { notFound: true };
-  return { props: { enabled: true } };
-};
