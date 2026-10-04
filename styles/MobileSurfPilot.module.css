@@ -1,0 +1,163 @@
+.testBanner {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 14px;
+  border: 1px solid #dce2da;
+  border-radius: 999px;
+  background: #f7f8f5;
+  color: #566159;
+  font-size: 12px;
+  font-weight: 850;
+}
+
+.variantRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0 0 16px;
+  padding: 12px 14px;
+  border: 1px dashed #cbd4c7;
+  border-radius: 14px;
+  background: #fbfcfa;
+  color: #667168;
+  font-size: 12px;
+}
+
+.variantRow strong {
+  color: #17201b;
+}
+
+.primaryAction,
+.secondaryAction,
+.lockedAction,
+.affiliateAction {
+  width: 100%;
+  min-height: 48px;
+  margin-top: 16px;
+  padding: 12px 15px;
+  border-radius: 12px;
+  font: inherit;
+  font-weight: 900;
+}
+
+.primaryAction {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 0;
+  background: #dff46a;
+  color: #17201b;
+  cursor: pointer;
+}
+
+.secondaryAction {
+  border: 1px solid #68766d;
+  background: transparent;
+  color: #eef3ef;
+  cursor: pointer;
+}
+
+.partnerCard {
+  margin-top: 16px;
+  padding: 18px;
+  border: 1px solid #536158;
+  border-radius: 16px;
+  background: #202e26;
+}
+
+.partnerCard > span {
+  color: #dff46a;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: .11em;
+}
+
+.partnerCard h3 {
+  margin: 8px 0 6px;
+  font-size: 20px;
+}
+
+.partnerCard p,
+.noMatch p,
+.neutralContinuation p {
+  margin: 0;
+  color: #c1cbc4;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.partnerCard small {
+  display: block;
+  margin-top: 10px;
+  color: #9daaa1;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.lockedAction {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border: 1px solid #657269;
+  background: #334038;
+  color: #b9c4bc;
+}
+
+.affiliateAction {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border: 0;
+  background: #dff46a;
+  color: #17201b;
+  text-decoration: none;
+}
+
+.noMatch,
+.neutralContinuation {
+  margin-top: 16px;
+  padding: 16px;
+  border: 1px solid #536158;
+  border-radius: 14px;
+  background: #202e26;
+}
+
+.noMatch strong {
+  display: block;
+  margin-bottom: 7px;
+  color: #f0f4f1;
+  font-size: 13px;
+}
+
+.neutralContinuation a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+  padding: 12px 13px;
+  border-radius: 10px;
+  background: #dff46a;
+  color: #17201b;
+  font-size: 13px;
+  font-weight: 900;
+  text-decoration: none;
+}
+
+@media (max-width: 560px) {
+  .testBanner {
+    max-width: 155px;
+    min-height: 32px;
+    padding: 0 10px;
+    font-size: 10px;
+    text-align: center;
+  }
+
+  .variantRow {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
+}
