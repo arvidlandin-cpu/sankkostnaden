@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - pilot/mobile-surf-prototype-2026-10-04
+      - pilot/mobile-usability-invite-v1
     paths:
       - '.github/workflows/mobile-surf-pilot-qa.yml'
       - 'components/experiments/MobileSurfPilot.tsx'
