@@ -87,6 +87,16 @@ function emitPilotEvent(participantId: string, variant: PilotVariant, event: str
   window.dispatchEvent(new CustomEvent('sk:mobile-surf-pilot', { detail: payload }));
 }
 
+function emitGa4Event(eventName: string, params: Record<string, string | number | boolean> = {}) {
+  if (typeof window === 'undefined') return;
+  const payload = { experiment_id: experimentId, ...params };
+  if (typeof window.gtag === 'function') window.gtag('event', eventName, payload);
+  else {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: eventName, ...payload });
+  }
+}
+
 export default function MobileSurfPilot() {
   const [answers, setAnswers] = useState<number[]>(Array(questions.length).fill(-1));
   const [variant, setVariant] = useState<PilotVariant | null>(null);
@@ -96,6 +106,10 @@ export default function MobileSurfPilot() {
   const [clickId, setClickId] = useState('');
   const lastResultKey = useRef('');
   const lastClickContext = useRef('');
+  const lastPartnerImpressionContext = useRef('');
+  const flowStarted = useRef(false);
+  const completionTracked = useRef(false);
+  const recruitmentSource = useRef('direct');
 
   const answered = answers.filter(value => value >= 0).length;
   const score = answers.reduce((sum, answer, index) => sum + (answer >= 0 ? questions[index].options[answer].points : 0), 0);
@@ -114,6 +128,8 @@ export default function MobileSurfPilot() {
     const forced = params.get('variant')?.toLowerCase();
     const forcedVariant: PilotVariant | null = forced === 'a' ? 'A' : forced === 'b' ? 'B' : null;
     const simulateNoPartner = params.get('partner') === 'none';
+    const source = (params.get('src') || 'direct').toLowerCase().replace(/[^a-z0-9_-]/g, '').slice(0, 32) || 'direct';
+    recruitmentSource.current = source;
     setForceNoPartner(simulateNoPartner);
 
     const storedParticipant = window.localStorage.getItem(participantKey);
@@ -126,10 +142,14 @@ export default function MobileSurfPilot() {
 
     setParticipantId(id);
     setVariant(assigned);
+    const assignmentSource = forcedVariant ? 'query' : storedAssignment ? 'storage' : 'random_50_50';
     emitPilotEvent(id, assigned, 'pilot_assignment', {
-      assignment_source: forcedVariant ? 'query' : storedAssignment ? 'storage' : 'random_50_50',
+      assignment_source: assignmentSource,
       partner_simulated_none: simulateNoPartner,
+      recruitment_source: source,
     });
+    emitGa4Event('pilot_assignment', { variant: assigned, assignment_source: assignmentSource, recruitment_source: source });
+    emitGa4Event(`pilot_assignment_${assigned.toLowerCase()}`, { recruitment_source: source });
   }, []);
 
   useEffect(() => {
@@ -143,13 +163,31 @@ export default function MobileSurfPilot() {
       own_subscription: ownSubscription,
       pilot_branch_matched: pilotBranchMatched,
       partner_available_in_registry: partnerRelevant,
+      recruitment_source: recruitmentSource.current,
     });
+    emitGa4Event('pilot_result_view', {
+      variant,
+      profile: result.label,
+      own_subscription: ownSubscription,
+      pilot_branch_matched: pilotBranchMatched,
+      recruitment_source: recruitmentSource.current,
+    });
+    if (!completionTracked.current) {
+      completionTracked.current = true;
+      emitGa4Event('pilot_flow_completion', { variant, pilot_branch_matched: pilotBranchMatched, recruitment_source: recruitmentSource.current });
+      emitGa4Event(`pilot_flow_completion_${variant.toLowerCase()}`, { pilot_branch_matched: pilotBranchMatched, recruitment_source: recruitmentSource.current });
+    }
   }, [answers, complete, ownSubscription, participantId, partnerRelevant, pilotBranchMatched, result.label, score, variant]);
 
   const choose = (questionIndex: number, optionIndex: number) => {
     setAnswers(current => current.map((value, index) => index === questionIndex ? optionIndex : value));
     setComparisonOpen(false);
     if (variant && participantId) {
+      if (!flowStarted.current) {
+        flowStarted.current = true;
+        emitGa4Event('pilot_flow_start', { variant, recruitment_source: recruitmentSource.current });
+        emitGa4Event(`pilot_flow_start_${variant.toLowerCase()}`, { recruitment_source: recruitmentSource.current });
+      }
       emitPilotEvent(participantId, variant, 'pilot_answer', {
         question_index: questionIndex + 1,
         option_index: optionIndex + 1,
@@ -160,7 +198,11 @@ export default function MobileSurfPilot() {
 
   const openComparison = () => {
     setComparisonOpen(true);
-    if (variant && participantId) emitPilotEvent(participantId, variant, 'pilot_compare_open', { profile: result.label });
+    if (variant && participantId) {
+      emitPilotEvent(participantId, variant, 'pilot_compare_open', { profile: result.label, recruitment_source: recruitmentSource.current });
+      emitGa4Event('pilot_compare_open', { variant, profile: result.label, recruitment_source: recruitmentSource.current });
+      emitGa4Event(`pilot_compare_open_${variant.toLowerCase()}`, { recruitment_source: recruitmentSource.current });
+    }
   };
 
   const recordAffiliateClick = () => {
@@ -180,6 +222,20 @@ export default function MobileSurfPilot() {
       click_id: clickId,
       partner: selectedPartner.name,
       placement,
+      recruitment_source: recruitmentSource.current,
+    });
+    emitGa4Event('pilot_affiliate_click', {
+      variant,
+      partner: selectedPartner.name,
+      placement,
+      click_id: clickId,
+      link_url: affiliateHref,
+      recruitment_source: recruitmentSource.current,
+    });
+    emitGa4Event(`pilot_affiliate_click_${variant.toLowerCase()}`, {
+      partner: selectedPartner.name,
+      placement,
+      recruitment_source: recruitmentSource.current,
     });
   };
 
@@ -188,8 +244,14 @@ export default function MobileSurfPilot() {
     setComparisonOpen(false);
     setClickId('');
     lastClickContext.current = '';
+    lastPartnerImpressionContext.current = '';
     lastResultKey.current = '';
-    if (variant && participantId) emitPilotEvent(participantId, variant, 'pilot_reset');
+    flowStarted.current = false;
+    completionTracked.current = false;
+    if (variant && participantId) {
+      emitPilotEvent(participantId, variant, 'pilot_reset', { recruitment_source: recruitmentSource.current });
+      emitGa4Event('pilot_reset', { variant, recruitment_source: recruitmentSource.current });
+    }
   };
 
   const showPartnerCard = pilotBranchMatched && partnerRelevant && (variant === 'B' || comparisonOpen);
@@ -207,6 +269,24 @@ export default function MobileSurfPilot() {
     lastClickContext.current = context;
     setClickId(createLocalClickId());
   }, [placement, selectedPartner?.name, selectedPartner?.trackingUrl, showPartnerCard, variant]);
+
+  useEffect(() => {
+    if (!showPartnerCard || !variant || !selectedPartner) return;
+    const context = `${variant}|${selectedPartner.name}|${placement}`;
+    if (lastPartnerImpressionContext.current === context) return;
+    lastPartnerImpressionContext.current = context;
+    emitGa4Event('pilot_partner_impression', {
+      variant,
+      partner: selectedPartner.name,
+      placement,
+      recruitment_source: recruitmentSource.current,
+    });
+    emitGa4Event(`pilot_partner_impression_${variant.toLowerCase()}`, {
+      partner: selectedPartner.name,
+      placement,
+      recruitment_source: recruitmentSource.current,
+    });
+  }, [placement, selectedPartner, showPartnerCard, variant]);
 
   const affiliateHref = selectedPartner?.trackingUrl && clickId && variant
     ? withAdtractionEpi(selectedPartner.trackingUrl, clickId, variant, placement)
