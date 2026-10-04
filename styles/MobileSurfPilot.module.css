@@ -30,7 +30,8 @@
 
 .primaryAction,
 .secondaryAction,
-.lockedAction {
+.lockedAction,
+.affiliateAction {
   width: 100%;
   min-height: 48px;
   margin-top: 16px;
@@ -102,7 +103,17 @@
   border: 1px solid #657269;
   background: #334038;
   color: #b9c4bc;
-  cursor: not-allowed;
+}
+
+.affiliateAction {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border: 0;
+  background: #dff46a;
+  color: #17201b;
+  text-decoration: none;
 }
 
 .noMatch,
