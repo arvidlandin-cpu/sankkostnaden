@@ -16,5 +16,7 @@ platforms:
 
 parallelsPerPlatform: 1
 browserstackLocal: true
+browserStackLocalOptions:
+  forcelocal: true
 debug: true
 video: true
