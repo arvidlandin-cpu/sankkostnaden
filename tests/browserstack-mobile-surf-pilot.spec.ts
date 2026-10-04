@@ -12,7 +12,9 @@ async function answerLowProfile(page: Page) {
 for (const variant of ['a', 'b'] as const) {
   test(`real iPhone pilot variant ${variant.toUpperCase()}`, async ({ page }) => {
     await page.goto(`${route}?variant=${variant}`, { waitUntil: 'domcontentloaded' });
-    await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex,nofollow,noarchive');
+    await expect(page.getByRole('heading', { name: /Hur mycket surf behöver du/i })).toBeVisible();
+    const robots = await page.evaluate(() => document.querySelector('meta[name="robots"]')?.getAttribute('content') || '');
+    expect(robots).toBe('noindex,nofollow,noarchive');
 
     await answerLowProfile(page);
 
