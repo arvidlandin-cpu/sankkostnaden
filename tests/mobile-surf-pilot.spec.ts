@@ -112,3 +112,34 @@ test('affiliate click stores local click id and emits pilot click event without 
   expect(state.clicks[0].click_id).toBe(state.stored[0].click_id);
   expect(state.events.some(event => event.event === 'pilot_affiliate_click')).toBeTruthy();
 });
+
+
+test('participant invite hides experiment internals and records feedback', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto(`${route}?src=invite_v1`);
+
+  await expect(page.getByText('Testversion', { exact: true })).toBeVisible();
+  await expect(page.getByTestId('pilot-variant')).toHaveCount(0);
+  await expect(page.getByText(/Experiment:/)).toHaveCount(0);
+  await expect(page.getByText(/Fryst prototyp/)).toHaveCount(0);
+
+  await answerLowProfile(page);
+
+  const storedVariant = await page.evaluate(() => window.localStorage.getItem('sk-mobile-surf-pilot-v1-assignment'));
+  if (storedVariant === 'A') {
+    await page.getByTestId('pilot-control-continue').click();
+  }
+
+  await expect(page.getByTestId('pilot-feedback')).toBeVisible();
+  await page.getByRole('button', { name: 'Tydligt och rimligt' }).click();
+  await expect(page.getByTestId('pilot-feedback-thanks')).toBeVisible();
+
+  const feedbackEvents = await page.evaluate(() =>
+    (window.__SK_MOBILE_SURF_PILOT_EVENTS__ || []).filter(event => event.event === 'pilot_feedback')
+  );
+  expect(feedbackEvents).toHaveLength(1);
+  expect(feedbackEvents[0].feedback).toBe('clear');
+
+  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+  expect(overflow).toBeLessThanOrEqual(1);
+});

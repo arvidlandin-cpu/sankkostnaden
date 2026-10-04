@@ -161,3 +161,60 @@
     gap: 4px;
   }
 }
+
+
+.feedbackCard {
+  margin-top: 16px;
+  padding: 16px;
+  border: 1px solid #536158;
+  border-radius: 14px;
+  background: #202e26;
+}
+
+.feedbackCard > strong {
+  display: block;
+  margin-bottom: 6px;
+  color: #f0f4f1;
+  font-size: 13px;
+}
+
+.feedbackCard > p {
+  margin: 0;
+  color: #c1cbc4;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.feedbackActions {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.feedbackActions button {
+  min-height: 42px;
+  padding: 10px 12px;
+  border: 1px solid #68766d;
+  border-radius: 10px;
+  background: transparent;
+  color: #eef3ef;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 800;
+  text-align: left;
+  cursor: pointer;
+}
+
+.feedbackActions button:hover,
+.feedbackSelected {
+  border-color: #dff46a !important;
+  background: #334038 !important;
+  color: #f4f8f5 !important;
+}
+
+.feedbackCard small {
+  display: block;
+  margin-top: 10px;
+  color: #b9c4bc;
+  font-size: 10px;
+}
