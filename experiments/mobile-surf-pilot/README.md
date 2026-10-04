@@ -1,41 +1,69 @@
 # Mobile surf pilot
 
-Status: private technical prototype only. No production launch is authorized.
+Status: private, build-gated experiment branch. No production merge/deploy is authorized by this file.
 
-The route is generated only when ENABLE_MOBILE_SURF_PILOT=true. It is noindex/nofollow, is not in the sitemap, and no SEO-protected page links to it.
+The route is generated only when `ENABLE_MOBILE_SURF_PILOT=true`. It is `noindex,nofollow,noarchive`, is not in the sitemap, and no SEO-protected page links to it.
 
-Frozen baseline:
-- main commit: 0204778f9b3a75026771dbacee5828abb4224dfd
-- production surf guide blob: 006b96b7435d678232a4f3c4f3225f03743be569
-- the production surf guide itself is unchanged
+## Frozen baseline
 
-Experiment:
-- A: low surf + own subscription -> internal frozen comparison view -> partner candidate
-- B: low surf + own subscription -> same partner candidate directly in result; comparison remains available
-- other profiles behave the same in A and B
+- main commit: `0204778f9b3a75026771dbacee5828abb4224dfd`
+- production surf guide blob: `006b96b7435d678232a4f3c4f3225f03743be569`
+- production surf guide and `/app/` remain unchanged
+
+## Experiment
+
+- A: low surf + own subscription -> internal comparison step -> Hallon partner card
+- B: low surf + own subscription -> same Hallon partner card directly in result
+- other profiles behave identically in A and B
 - assignment is 50/50 before answers and is persisted locally
 
-Commercial status:
-The code registry currently resolves Hallon as the highest-relevance active mobil/data candidate. The prototype does not render an active partner URL. Commercial output stays locked until the exact product relationship, commercial terms, final destination and transaction attribution are verified.
+Hallon is selected from the existing active `mobil + data` registry. The pilot does not claim Hallon is the economically best mobile partner; it is one controlled, already-configured path for the first handoff test.
 
-QA telemetry:
-The prototype sends no GA4 events. Test events are kept only in window.__SK_MOBILE_SURF_PILOT_EVENTS__ and a browser CustomEvent.
+## Attribution without Adtraction API access
 
-Automated QA covers:
-- existing route/integrity/build/export checks
+The pilot uses the existing Hallon tracking URL and appends only Adtraction's documented EPI fields:
+
+- `epi` = random local click id
+- `epi2` = experiment variant
+- `epi3` = `surf_low_own`
+- `epi4` = result placement
+- `epi5` = `msv1`
+
+The same random click id is saved locally before outbound navigation. The existing global affiliate tracker is extended on this branch to retain explicit partner identity when EPI query parameters are present and to include `local_click_id`, experiment id and experiment variant in the GA4 `affiliate_click` event.
+
+No purchase or conversion is fabricated. Until direct API access is available, Adtraction transaction/approval/provision is reconciled manually against EPI in the network interface/export.
+
+## Safety
+
+- no price promise is hard-coded in the CTA
+- CTA disclosure says it is an ad link and that current terms must be checked with the operator
+- no-match never fabricates a partner
+- changing answers away from the pilot segment removes the partner card
+- experiment remains outside sitemap and index
+- rollback is simply not to merge/deploy the branch
+
+## Automated QA
+
+`.github/workflows/mobile-surf-pilot-qa.yml` checks:
+
+- existing route, integrity, build and export checks
 - A and B at 360, 390 and 430 CSS px
-- changed answers
-- no-match behavior
-- confirmation that there is no active sponsored CTA
+- EPI parameters and explicit partner metadata
+- changed-answer regression
+- no-match state
+- local click-id persistence
 - screenshots
 
-Still required before any live test:
-- real iPhone/Safari
-- current product/destination verification
-- end-to-end click-to-transaction reference verification
-- clean separation of QA traffic
-- explicit recruitment and measurement plan
-- a later, separate approval to start a commercial test
+Real iPhone/Safari remains a pre-live QA item.
 
-Rollback:
-Do not enable or deploy the pilot. If a later test is authorized, the experiment flag must be the first kill switch. Protected production pages remain unchanged.
+## Measurement
+
+Primary future KPI:
+
+**approved net affiliate revenue / assigned relevant measurable participant**
+
+Diagnostics:
+
+assignment -> answers -> profile -> partner shown -> unique outbound click -> Adtraction transaction -> approved/rejected/pending -> net commission
+
+The API integration is optional for launch of a small exploratory pilot because EPI can be reconciled manually. API automation can be added later without changing the experiment definition.
