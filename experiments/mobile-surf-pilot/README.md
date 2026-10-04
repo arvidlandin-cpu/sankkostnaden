@@ -1,14 +1,14 @@
 # Mobile surf pilot
 
-Status: private, build-gated experiment branch. No production merge/deploy is authorized by this file.
+Status: live as an isolated smoke-test route on production after explicit approval on 2026-10-04.
 
-The route is generated only when `ENABLE_MOBILE_SURF_PILOT=true`. It is `noindex,nofollow,noarchive`, is not in the sitemap, and no SEO-protected page links to it.
+The route is available at `/experiments/mobile-surf-pilot/`, is `noindex,nofollow,noarchive`, is not in the sitemap, and no SEO-protected page links to it. The pilot is intentionally discoverable only by direct URL during the smoke-test phase.
 
 ## Frozen baseline
 
-- main commit: `0204778f9b3a75026771dbacee5828abb4224dfd`
-- production surf guide blob: `006b96b7435d678232a4f3c4f3225f03743be569`
-- production surf guide and `/app/` remain unchanged
+- pre-pilot main commit: `0204778f9b3a75026771dbacee5828abb4224dfd`
+- production surf guide blob at pilot design time: `006b96b7435d678232a4f3c4f3225f03743be569`
+- production surf guide and `/app/` were not changed by the pilot launch
 
 ## Experiment
 
@@ -21,7 +21,7 @@ Hallon is selected from the existing active `mobil + data` registry. The pilot d
 
 ## Attribution without Adtraction API access
 
-The pilot uses the existing Hallon tracking URL and appends only Adtraction's documented EPI fields:
+The pilot uses the existing Hallon tracking URL and appends Adtraction EPI fields:
 
 - `epi` = random local click id
 - `epi2` = experiment variant
@@ -29,7 +29,7 @@ The pilot uses the existing Hallon tracking URL and appends only Adtraction's do
 - `epi4` = result placement
 - `epi5` = `msv1`
 
-The same random click id is saved locally before outbound navigation. The existing global affiliate tracker is extended on this branch to retain explicit partner identity when EPI query parameters are present and to include `local_click_id`, experiment id and experiment variant in the GA4 `affiliate_click` event.
+The same random click id is saved locally before outbound navigation. The global affiliate tracker retains explicit partner identity when EPI query parameters are present and includes `local_click_id`, experiment id and experiment variant in the GA4 `affiliate_click` event.
 
 No purchase or conversion is fabricated. Until direct API access is available, Adtraction transaction/approval/provision is reconciled manually against EPI in the network interface/export.
 
@@ -39,8 +39,9 @@ No purchase or conversion is fabricated. Until direct API access is available, A
 - CTA disclosure says it is an ad link and that current terms must be checked with the operator
 - no-match never fabricates a partner
 - changing answers away from the pilot segment removes the partner card
-- experiment remains outside sitemap and index
-- rollback is simply not to merge/deploy the branch
+- experiment remains outside sitemap and is explicitly noindex
+- global mobile quick bar is hidden only on the pilot route so it cannot cover the first question
+- rollback is to revert/remove the isolated experiment route and pilot-specific tracking changes
 
 ## Automated QA
 
@@ -54,7 +55,12 @@ No purchase or conversion is fabricated. Until direct API access is available, A
 - local click-id persistence
 - screenshots
 
-Real iPhone/Safari remains a pre-live QA item.
+Real iPhone/Safari QA is also green through BrowserStack for the pilot preview on:
+- iPhone SE 2022 / iOS 15
+- iPhone 15 Pro / iOS 17
+- iPhone 15 Pro Max / iOS 17
+
+The main production build, Cloudflare Pages deploy and real-iPhone QA were green after merge. The separate legacy Workers build can fail independently and is not the production publishing path; production is GitHub -> Cloudflare Pages.
 
 ## Measurement
 
@@ -66,4 +72,4 @@ Diagnostics:
 
 assignment -> answers -> profile -> partner shown -> unique outbound click -> Adtraction transaction -> approved/rejected/pending -> net commission
 
-The API integration is optional for launch of a small exploratory pilot because EPI can be reconciled manually. API automation can be added later without changing the experiment definition.
+During the one-person smoke test, the purpose is only to validate the chain end-to-end. No A/B conclusion is drawn from one participant. API automation can be added later without changing the experiment definition.
