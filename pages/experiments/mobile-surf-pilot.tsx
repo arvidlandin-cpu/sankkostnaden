@@ -15,6 +15,9 @@ export default function MobileSurfPilotPage({ enabled }: Props) {
         <meta name='robots' content='noindex,nofollow,noarchive' />
       </Head>
       <MobileSurfPilot />
+      <style jsx global>{`
+        .mobileQuickBar { display: none !important; }
+      `}</style>
     </>
   );
 }
