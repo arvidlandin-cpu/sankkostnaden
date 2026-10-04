@@ -104,6 +104,8 @@ export default function MobileSurfPilot() {
   const [comparisonOpen, setComparisonOpen] = useState(false);
   const [forceNoPartner, setForceNoPartner] = useState(false);
   const [clickId, setClickId] = useState('');
+  const [showDebugMeta, setShowDebugMeta] = useState(false);
+  const [feedback, setFeedback] = useState<'clear' | 'unclear' | 'wrong' | null>(null);
   const lastResultKey = useRef('');
   const lastClickContext = useRef('');
   const lastPartnerImpressionContext = useRef('');
@@ -128,6 +130,8 @@ export default function MobileSurfPilot() {
     const forced = params.get('variant')?.toLowerCase();
     const forcedVariant: PilotVariant | null = forced === 'a' ? 'A' : forced === 'b' ? 'B' : null;
     const simulateNoPartner = params.get('partner') === 'none';
+    const debugMeta = Boolean(forcedVariant || params.has('qa'));
+    setShowDebugMeta(debugMeta);
     const source = (params.get('src') || 'direct').toLowerCase().replace(/[^a-z0-9_-]/g, '').slice(0, 32) || 'direct';
     recruitmentSource.current = source;
     setForceNoPartner(simulateNoPartner);
@@ -182,6 +186,7 @@ export default function MobileSurfPilot() {
   const choose = (questionIndex: number, optionIndex: number) => {
     setAnswers(current => current.map((value, index) => index === questionIndex ? optionIndex : value));
     setComparisonOpen(false);
+    setFeedback(null);
     if (variant && participantId) {
       if (!flowStarted.current) {
         flowStarted.current = true;
@@ -239,9 +244,32 @@ export default function MobileSurfPilot() {
     });
   };
 
+  const recordFeedback = (value: 'clear' | 'unclear' | 'wrong') => {
+    if (!variant || !participantId || !complete) return;
+    setFeedback(value);
+    emitPilotEvent(participantId, variant, 'pilot_feedback', {
+      feedback: value,
+      profile: result.label,
+      pilot_branch_matched: pilotBranchMatched,
+      recruitment_source: recruitmentSource.current,
+    });
+    emitGa4Event(`pilot_feedback_${value}`, {
+      variant,
+      profile: result.label,
+      pilot_branch_matched: pilotBranchMatched,
+      recruitment_source: recruitmentSource.current,
+    });
+    emitGa4Event(`pilot_feedback_${value}_${variant.toLowerCase()}`, {
+      profile: result.label,
+      pilot_branch_matched: pilotBranchMatched,
+      recruitment_source: recruitmentSource.current,
+    });
+  };
+
   const reset = () => {
     setAnswers(Array(questions.length).fill(-1));
     setComparisonOpen(false);
+    setFeedback(null);
     setClickId('');
     lastClickContext.current = '';
     lastPartnerImpressionContext.current = '';
@@ -296,19 +324,21 @@ export default function MobileSurfPilot() {
     <>
       <header className={selectorStyles.topbar}>
         <Link className={selectorStyles.brand} href='/'><span><PiggyBank size={20} /></span><strong>Sänk Kostnaden</strong></Link>
-        <div className={pilotStyles.testBanner}>Privat pilot · testläge</div>
+        <div className={pilotStyles.testBanner}>{showDebugMeta ? 'Privat pilot · testläge' : 'Testversion'}</div>
       </header>
 
       <main className={selectorStyles.shell}>
-        <div className={pilotStyles.variantRow}>
-          <span>Experiment: {experimentId}</span>
-          <strong data-testid='pilot-variant'>Variant {variant || '…'}</strong>
-        </div>
+        {showDebugMeta && (
+          <div className={pilotStyles.variantRow}>
+            <span>Experiment: {experimentId}</span>
+            <strong data-testid='pilot-variant'>Variant {variant || '…'}</strong>
+          </div>
+        )}
 
         <section className={selectorStyles.hero}>
           <span><Sparkles size={15} /> PILOT · MOBIL</span>
           <h1>Hur mycket surf behöver du – på riktigt?</h1>
-          <p>Fryst prototyp av samma tre frågor som den befintliga surfguiden. Endast överlämningen efter låg surfprofil testas.</p>
+          <p>{showDebugMeta ? 'Fryst prototyp av samma tre frågor som den befintliga surfguiden. Endast överlämningen efter låg surfprofil testas.' : 'Svara på tre korta frågor så får du en enkel surfprofil och ett relevant nästa steg.'}</p>
           <div className={selectorStyles.progress} role='progressbar' aria-label='Framsteg' aria-valuemin={0} aria-valuemax={questions.length} aria-valuenow={answered}><i style={{ width: `${(answered / questions.length) * 100}%` }} /></div>
           <small>{answered} av {questions.length} svar klara</small>
         </section>
@@ -388,13 +418,26 @@ export default function MobileSurfPilot() {
 
             {complete && !pilotBranchMatched && (
               <div className={pilotStyles.neutralContinuation} data-testid='pilot-neutral-continuation'>
-                <p>Den här profilen ingår inte i första pilotgrenen. A och B fortsätter därför identiskt.</p>
+                <p>{showDebugMeta ? 'Den här profilen ingår inte i första pilotgrenen. A och B fortsätter därför identiskt.' : 'Din profil pekar mot att du bör jämföra flera alternativ innan du väljer.'}</p>
                 <Link href={result.href}>{result.cta} <ArrowRight size={17} /></Link>
               </div>
             )}
 
+            {complete && !showDebugMeta && (
+              <section className={pilotStyles.feedbackCard} data-testid='pilot-feedback'>
+                <strong>Hur kändes resultatet?</strong>
+                <p>Välj det som stämmer bäst. Inga personuppgifter sparas här.</p>
+                <div className={pilotStyles.feedbackActions}>
+                  <button type='button' className={feedback === 'clear' ? pilotStyles.feedbackSelected : ''} onClick={() => recordFeedback('clear')}>Tydligt och rimligt</button>
+                  <button type='button' className={feedback === 'unclear' ? pilotStyles.feedbackSelected : ''} onClick={() => recordFeedback('unclear')}>Otydligt</button>
+                  <button type='button' className={feedback === 'wrong' ? pilotStyles.feedbackSelected : ''} onClick={() => recordFeedback('wrong')}>Resultatet kändes fel</button>
+                </div>
+                {feedback && <small data-testid='pilot-feedback-thanks'>Tack – ditt svar är registrerat.</small>}
+              </section>
+            )}
+
             <button className={selectorStyles.reset} onClick={reset}><RotateCcw size={14} /> Börja om</button>
-            <small>Piloten använder befintlig GA4 affiliate_click-spårning för utgående partnerklick och sparar samtidigt slumpmässigt click-ID lokalt för QA/avstämning. Ingen personlig besparing beräknas.</small>
+            <small>{showDebugMeta ? 'Piloten använder befintlig GA4 affiliate_click-spårning för utgående partnerklick och sparar samtidigt slumpmässigt click-ID lokalt för QA/avstämning. Ingen personlig besparing beräknas.' : 'Det här är en testversion. Ingen personlig besparing garanteras och aktuella villkor kontrolleras alltid hos operatören.'}</small>
           </aside>
         </section>
       </main>
