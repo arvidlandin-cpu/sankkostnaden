@@ -15,6 +15,6 @@ platforms:
     deviceName: iPhone 15 Pro Max
 
 parallelsPerPlatform: 1
-browserstackLocal: false
+browserstackLocal: true
 debug: true
 video: true
