@@ -24,22 +24,38 @@ function routeFor(file){
 function canonicalFor(route){
   return 'https://sankkostnaden.se'+(route==='/'?'/':route+'/');
 }
+function isIsolatedExperiment(route,src){
+  return route.startsWith('/experiments/')
+    && src.includes('ENABLE_MOBILE_SURF_PILOT')
+    && src.includes('noindex,nofollow,noarchive');
+}
 
 const errors=[];
 const pageFiles=walk(pagesDir).filter(f=>/\.(tsx|ts|jsx|js)$/.test(f)&&!path.basename(f).startsWith('_'));
 const routes=[];
+const indexableRoutes=[];
+const experimentRoutes=[];
 
 for(const file of pageFiles){
   const route=routeFor(file);
   if(!route) continue;
   routes.push(route);
   const src=fs.readFileSync(file,'utf8');
-  const canonical=canonicalFor(route);
-  if(!src.includes(canonical)) errors.push(`${path.relative(root,file)}: expected canonical URL ${canonical} not found in source`);
+  const isolatedExperiment=isIsolatedExperiment(route,src);
+
   const hasTitle=/<title>[\s\S]*?<\/title>/.test(src)||/\btitle\s*=\s*['"]/.test(src)||/\btitle\s*:\s*['"]/.test(src);
   const hasDescription=/name=['"]description['"]/.test(src)||/\bdescription\s*=\s*['"]/.test(src)||/\bdescription\s*:\s*['"]/.test(src);
   if(!hasTitle) errors.push(`${path.relative(root,file)}: no title metadata found`);
   if(!hasDescription) errors.push(`${path.relative(root,file)}: no meta description found`);
+
+  if(isolatedExperiment){
+    experimentRoutes.push(route);
+    continue;
+  }
+
+  indexableRoutes.push(route);
+  const canonical=canonicalFor(route);
+  if(!src.includes(canonical)) errors.push(`${path.relative(root,file)}: expected canonical URL ${canonical} not found in source`);
 }
 
 const sitemap=fs.readFileSync(sitemapPath,'utf8');
@@ -47,8 +63,9 @@ const sitemapRoutes=[...sitemap.matchAll(/<loc>https:\/\/sankkostnaden\.se([^<]*
   const raw=m[1]||'/';
   return raw==='/'?'/':raw.replace(/\/$/,'');
 });
-for(const route of routes) if(!sitemapRoutes.includes(route)) errors.push(`sitemap missing route ${route}`);
-for(const route of sitemapRoutes) if(!routes.includes(route)) errors.push(`sitemap contains non-page route ${route}`);
+for(const route of indexableRoutes) if(!sitemapRoutes.includes(route)) errors.push(`sitemap missing route ${route}`);
+for(const route of sitemapRoutes) if(!indexableRoutes.includes(route)) errors.push(`sitemap contains non-indexable/non-page route ${route}`);
+for(const route of experimentRoutes) if(sitemapRoutes.includes(route)) errors.push(`isolated experiment must not be in sitemap: ${route}`);
 if(new Set(sitemapRoutes).size!==sitemapRoutes.length) errors.push('sitemap contains duplicate routes');
 
 const robots=fs.readFileSync(robotsPath,'utf8');
@@ -81,4 +98,4 @@ if(errors.length){
   for(const e of errors) console.error('- '+e);
   process.exit(1);
 }
-console.log(`Integrity validation passed: ${routes.length} pages, metadata/canonicals, sitemap, robots, GA4 and ${entries.filter(p=>p.status==='active').length} active partners checked.`);
+console.log(`Integrity validation passed: ${indexableRoutes.length} indexable pages, ${experimentRoutes.length} isolated experiment(s), metadata/canonicals, sitemap, robots, GA4 and ${entries.filter(p=>p.status==='active').length} active partners checked.`);
