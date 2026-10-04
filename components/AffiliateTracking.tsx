@@ -59,14 +59,17 @@ export default function AffiliateTracking() {
   useEffect(() => {
     const activePartners = partners.filter(partner => partner.status === 'active' && partner.trackingUrl);
     const byUrl = new Map<string, (typeof partners)[number]>();
+    const byName = new Map<string, (typeof partners)[number]>();
     activePartners.forEach(partner => {
+      byName.set(partner.name.toLowerCase(), partner);
       [partner.trackingUrl, ...Object.values(partner.intentTrackingUrls || {})].forEach(url => {
         if (url) byUrl.set(normalizeUrl(url), partner);
       });
     });
 
     const resolve = (anchor: HTMLAnchorElement) => {
-      const partner = byUrl.get(normalizeUrl(anchor.href));
+      const explicitPartnerName = anchor.dataset.affiliatePartner || anchor.dataset.partner || '';
+      const partner = byUrl.get(normalizeUrl(anchor.href)) || (explicitPartnerName ? byName.get(explicitPartnerName.toLowerCase()) : undefined);
       const isSponsored = anchor.rel.split(/\s+/).includes('sponsored');
       if (!partner && !isSponsored) return null;
       const category = anchor.dataset.affiliateCategory || anchor.dataset.category || partner?.category || 'unknown';
@@ -86,6 +89,9 @@ export default function AffiliateTracking() {
         cta_text: (anchor.textContent || '').replace(/\s+/g,' ').trim().slice(0,120),
         page_path: window.location.pathname,
         page_title: document.title,
+        local_click_id: anchor.dataset.affiliateClickId || '',
+        experiment_id: anchor.dataset.experimentId || '',
+        experiment_variant: anchor.dataset.experimentVariant || '',
         link_url: anchor.href,
         link_domain: (() => { try { return new URL(anchor.href).hostname; } catch { return ''; } })(),
       };
