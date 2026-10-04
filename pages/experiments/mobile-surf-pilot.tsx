@@ -20,8 +20,9 @@ export default function MobileSurfPilotPage({ enabled }: Props) {
 }
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
-  if (process.env.ENABLE_MOBILE_SURF_PILOT !== 'true') {
-    return { notFound: true };
-  }
+  const enabled = process.env.ENABLE_MOBILE_SURF_PILOT === 'true'
+    || process.env.CF_PAGES_BRANCH === 'pilot/mobile-surf-prototype-2026-10-04';
+
+  if (!enabled) return { notFound: true };
   return { props: { enabled: true } };
 };
