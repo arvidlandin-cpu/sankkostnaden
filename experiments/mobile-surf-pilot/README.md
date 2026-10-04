@@ -64,6 +64,21 @@ The main production build, Cloudflare Pages deploy and real-iPhone QA were green
 
 ## Measurement
 
+GA4 now records the pilot funnel with both generic and arm-specific events so A/B counts can be read without depending on unregistered custom dimensions:
+
+- `pilot_assignment` + `pilot_assignment_a|b`
+- `pilot_flow_start` + `pilot_flow_start_a|b`
+- `pilot_flow_completion` + `pilot_flow_completion_a|b`
+- `pilot_result_view`
+- `pilot_compare_open` + `pilot_compare_open_a|b`
+- `pilot_partner_impression` + `pilot_partner_impression_a|b`
+- `pilot_affiliate_click` + `pilot_affiliate_click_a|b`
+- `pilot_reset`
+
+The standard global `affiliate_click` remains the canonical outbound click event and includes the full `link_url`; for the pilot that URL contains the EPI click id.
+
+Production GA4 is now enabled only on `sankkostnaden.se` / `www.sankkostnaden.se`. Cloudflare preview hosts, localhost/BrowserStack Local and any URL carrying `?qa=1` are excluded. This was added after discovering that automated preview/BrowserStack runs had polluted the 2026-10-04 pilot-path GA4 counts. Those historical QA sessions must never be treated as participants or commercial traffic.
+
 Primary future KPI:
 
 **approved net affiliate revenue / assigned relevant measurable participant**
