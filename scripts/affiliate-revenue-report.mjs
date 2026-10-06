@@ -46,25 +46,27 @@ async function fetchAddrevenue(){
     return;
   }
   try{
-    let page=1;
-    let pages=1;
+    const first=new URL('https://addrevenue.io/api/v2/transactions');
+    first.searchParams.set('fromDate',period.from);
+    first.searchParams.set('toDate',period.to);
+    first.searchParams.set('limit','250');
+    first.searchParams.set('offset','0');
+    first.searchParams.set('orderBy','created DESC');
+
+    let next=first.toString();
+    let requests=0;
     let count=0;
-    do{
-      const url=new URL('https://addrevenue.io/api/v2/transactions');
-      url.searchParams.set('fromDate',period.from);
-      url.searchParams.set('toDate',period.to);
-      url.searchParams.set('limit','250');
-      url.searchParams.set('page',String(page));
-      url.searchParams.set('orderBy','created DESC');
-      const data=await fetchJson(url.toString(),{
+    while(next&&requests<100){
+      const data=await fetchJson(next,{
         headers:{'Authorization':`Bearer ${token}`,'accept':'application/json'},
       });
       const items=Array.isArray(data?.results)?data.results:[];
       normalized.push(...items.map(normalizeAddrevenue));
       count+=items.length;
-      pages=Math.max(1,Number(data?.meta?.totalPages)||1);
-      page+=1;
-    }while(page<=pages&&page<=100);
+      requests+=1;
+      const nextLink=typeof data?.links?.next==='string'&&data.links.next.length?data.links.next:null;
+      next=nextLink?new URL(nextLink,'https://addrevenue.io').toString():'';
+    }
     networks.push({network:'addrevenue',configured:true,records:count});
   }catch(error){
     networks.push({network:'addrevenue',configured:true,error:error instanceof Error?error.message:String(error)});
