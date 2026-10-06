@@ -39,6 +39,13 @@ on:
       - 'pages/elavtal/jamfor-elavtal.tsx'
       - 'pages/elavtal/billigaste-elavtalet.tsx'
       - 'pages/elavtal/rorligt-elpris.tsx'
+      - 'components/SiteFooter.tsx'
+      - 'pages/_app.tsx'
+      - 'styles/global.css'
+      - 'pages/forsakring/hemforsakring-bostadsratt.tsx'
+      - 'pages/forsakring/hemforsakring-hyresratt.tsx'
+      - 'pages/forsakring/vad-kostar-hemforsakring.tsx'
+      - 'pages/forsakring/jamfor-hemforsakring.tsx'
   workflow_dispatch:
     inputs:
       base_url:
@@ -94,7 +101,8 @@ jobs:
                curl -fsS "$QA_BASE_URL/mobil/lonar-sig-familjeabonnemang/" | grep -q "2–5 separata abonnemang" && \
                curl -fsS "$QA_BASE_URL/app/" | grep -q "Exakta belopp skickas inte" && \
                curl -fsS "$QA_BASE_URL/verktyg/forstaarskostnad-bredband/" | grep -q "KOSTNADSKALKYL" && \
-               curl -fsS "$QA_BASE_URL/verktyg/elavtalskostnad/" | grep -q "Jämför två elavtal"; then
+               curl -fsS "$QA_BASE_URL/verktyg/elavtalskostnad/" | grep -q "Jämför två elavtal" && \
+               curl -fsS "$QA_BASE_URL/forsakring/hemforsakring-bostadsratt/" | grep -q "Behöver du bostadsrättstillägg"; then
               exit 0
             fi
             sleep 2
