@@ -33,6 +33,12 @@ on:
       - 'pages/verktyg/hushallskostnadskollen.tsx'
       - 'styles/App.module.css'
       - 'lib/costPrioritizer.ts'
+      - 'components/tools/ElectricityCostCalculator.tsx'
+      - 'styles/ElectricityCostCalculator.module.css'
+      - 'pages/verktyg/elavtalskostnad.tsx'
+      - 'pages/elavtal/jamfor-elavtal.tsx'
+      - 'pages/elavtal/billigaste-elavtalet.tsx'
+      - 'pages/elavtal/rorligt-elpris.tsx'
   workflow_dispatch:
     inputs:
       base_url:
@@ -87,7 +93,8 @@ jobs:
             if curl -fsS "$QA_BASE_URL/verktyg/byteskalender/" | grep -q "När behöver du agera" && \
                curl -fsS "$QA_BASE_URL/mobil/lonar-sig-familjeabonnemang/" | grep -q "2–5 separata abonnemang" && \
                curl -fsS "$QA_BASE_URL/app/" | grep -q "Exakta belopp skickas inte" && \
-               curl -fsS "$QA_BASE_URL/verktyg/forstaarskostnad-bredband/" | grep -q "KOSTNADSKALKYL"; then
+               curl -fsS "$QA_BASE_URL/verktyg/forstaarskostnad-bredband/" | grep -q "KOSTNADSKALKYL" && \
+               curl -fsS "$QA_BASE_URL/verktyg/elavtalskostnad/" | grep -q "Jämför två elavtal"; then
               exit 0
             fi
             sleep 2
