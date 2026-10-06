@@ -15,6 +15,7 @@ on:
       - 'styles/FirstYearCostCalculator.module.css'
       - 'tests/first-year-cost.spec.ts'
       - 'experiments/first-year-cost/README.md'
+      - 'scripts/check-integrity.mjs'
   workflow_dispatch:
 
 jobs:
