@@ -7,6 +7,8 @@ const routes = [
   { slug: 'mobil-billigaste', path: '/mobil/billigaste-mobilabonnemanget/' },
   { slug: 'forstaarskostnad', path: '/verktyg/forstaarskostnad/' },
   { slug: 'el', path: '/elavtal/' },
+  { slug: 'byta-elavtal', path: '/elavtal/byta-elavtal/' },
+  { slug: 'byteskalender', path: '/verktyg/byteskalender/' },
   { slug: 'forsakring', path: '/forsakring/' },
   { slug: 'ekonomi', path: '/ekonomi/' },
   { slug: 'kostnadskollen', path: '/app/' },
