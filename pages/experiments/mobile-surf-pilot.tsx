@@ -5,8 +5,8 @@ export default function MobileSurfPilotPage() {
   return (
     <>
       <Head>
-        <title>Privat pilot – mobil surfprofil | Sänk Kostnaden</title>
-        <meta name='description' content='Privat noindex-pilot för verifiering av mobilens surfprofil och partneröverlämning.' />
+        <title>Din surfprofil – mobil | Sänk Kostnaden</title>
+        <meta name='description' content='Svara på tre korta frågor och hitta en surfprofil med ett relevant nästa steg.' />
         <meta name='robots' content='noindex,nofollow,noarchive' />
       </Head>
       <MobileSurfPilot />
