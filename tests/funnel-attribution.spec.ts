@@ -111,14 +111,14 @@ test('pre-existing EPI is preserved instead of overwritten',async({page})=>{
   expect(click.network_click_tagged).toBe(0);
 });
 
-test('Addrevenue click receives clickRef equal to the local click id',async({page})=>{
+test('Addrevenue click receives r subid equal to the local click id',async({page})=>{
   await page.addInitScript(()=>{(window as any).dataLayer=[];});
   await page.goto('/forsakring/jamfor-hemforsakring/?qa=1');
 
   const link=page.locator('a[data-partner="Hedvig"]').first();
   await expect(link).toHaveCount(1);
   const before=await link.getAttribute('href');
-  expect(before).not.toContain('clickRef=');
+  expect(before).not.toContain('&r=');
 
   await preventNavigation(link);
   await link.evaluate((element:any)=>element.click());
@@ -127,20 +127,22 @@ test('Addrevenue click receives clickRef equal to the local click id',async({pag
   const tagged=new URL(after!);
   const click=await page.evaluate(()=>(window as any).dataLayer.find((item:any)=>item.event==='affiliate_click'&&item.partner==='Hedvig'));
 
+  expect(click).toBeTruthy();
   expect(click.affiliate_network).toBe('addrevenue');
   expect(click.network_click_tagged).toBe(1);
   expect(click.network_tag_reason).toBe('tagged');
-  expect(tagged.searchParams.get('clickRef')).toBe(click.local_click_id);
+  expect(tagged.searchParams.get('r')).toBe(click.local_click_id);
 });
 
-test('pre-existing Addrevenue clickRef is preserved',async({page})=>{
+test('pre-existing Addrevenue r click reference is preserved',async({page})=>{
   await page.addInitScript(()=>{(window as any).dataLayer=[];});
   await page.goto('/forsakring/jamfor-hemforsakring/?qa=1');
 
   const link=page.locator('a[data-partner="Hedvig"]').first();
+  await expect(link).toHaveCount(1);
   await link.evaluate((element:any)=>{
     const url=new URL(element.href);
-    url.searchParams.set('clickRef','existing_reference');
+    url.searchParams.set('r','existing_reference');
     element.href=url.toString();
     element.addEventListener('click',(event:Event)=>event.preventDefault());
   });
@@ -148,12 +150,33 @@ test('pre-existing Addrevenue clickRef is preserved',async({page})=>{
   await link.evaluate((element:any)=>element.click());
   const href=await link.getAttribute('href');
   const url=new URL(href!);
-  expect(url.searchParams.get('clickRef')).toBe('existing_reference');
+  expect(url.searchParams.get('r')).toBe('existing_reference');
 
   const click=await page.evaluate(()=>(window as any).dataLayer.find((item:any)=>item.event==='affiliate_click'&&item.partner==='Hedvig'));
   expect(click.affiliate_network).toBe('addrevenue');
   expect(click.network_click_tagged).toBe(0);
   expect(click.network_tag_reason).toBe('existing_clickref');
+});
+
+test('unsupported affiliate network link is not modified',async({page})=>{
+  await page.addInitScript(()=>{(window as any).dataLayer=[];});
+  await page.goto('/bredband/billigaste-bredbandet/?qa=1');
+
+  const link=page.locator('a[data-partner="Bredbandsval.se"]').first();
+  await expect(link).toHaveCount(1);
+  const before=await link.getAttribute('href');
+
+  await preventNavigation(link);
+  await link.evaluate((element:any)=>element.click());
+
+  const after=await link.getAttribute('href');
+  expect(after).toBe(before);
+
+  const click=await page.evaluate(()=>(window as any).dataLayer.find((item:any)=>item.event==='affiliate_click'&&item.partner==='Bredbandsval.se'));
+  expect(click).toBeTruthy();
+  expect(click.affiliate_network).toBe('unknown');
+  expect(click.network_click_tagged).toBe(0);
+  expect(click.network_tag_reason).toBe('unsupported');
 });
 
 test('last click context is session-only and contains no raw calculator values',async({page})=>{
