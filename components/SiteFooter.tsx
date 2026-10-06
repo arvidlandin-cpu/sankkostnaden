@@ -12,6 +12,8 @@ export default function SiteFooter(){
         <Link href='/sa-jamfor-vi/'>Så jämför vi</Link>
         <Link href='/affiliate/'>Affiliateinformation</Link>
         <Link href='/om/'>Om sajten</Link>
+        <Link href='/integritet/'>Integritet</Link>
+        <Link href='/cookies/'>Cookies</Link>
         <a href='mailto:kontakt@sankkostnaden.se'>Kontakt</a>
       </nav>
     </div>
