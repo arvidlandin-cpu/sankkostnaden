@@ -3,6 +3,7 @@ name: Partner health audit
 on:
   push:
     branches:
+      - main
       - ops/commercial-health-v2
     paths:
       - '.github/workflows/partner-health-audit.yml'
