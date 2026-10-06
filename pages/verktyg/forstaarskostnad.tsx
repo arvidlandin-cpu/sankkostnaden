@@ -13,9 +13,9 @@ export default function FirstYearCostCommercialPage() {
       <FirstYearCostCalculator
         commercial
         source='mobile_first_year_cost'
-        commercialHref='#partners'
+        commercialHref='#commercial-mobile-options'
         commercialLabel='Se aktiva mobilalternativ'
-        after={<PartnerDirectory category='mobil' intent='compare' heading='Aktiva mobilalternativ att jämföra' />}
+        after={<div id='commercial-mobile-options'><PartnerDirectory category='mobil' intent='compare' heading='Aktiva mobilalternativ att jämföra' /></div>}
       />
     </>
   );
