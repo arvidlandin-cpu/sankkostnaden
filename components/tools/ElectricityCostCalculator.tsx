@@ -65,8 +65,7 @@ export default function ElectricityCostCalculator(){
       tracked.current=true;
       emitGa4('electricity_cost_ready',{
         source,
-        source,
-      consumption_band:consumptionBand(annualKwh),
+        consumption_band:consumptionBand(annualKwh),
         winner,
         difference_band:differenceBand(difference),
       });
@@ -75,6 +74,7 @@ export default function ElectricityCostCalculator(){
 
   const continueToPartners=()=>{
     emitGa4('electricity_cost_continue',{
+      source,
       consumption_band:consumptionBand(annualKwh),
       winner,
       difference_band:differenceBand(difference),
