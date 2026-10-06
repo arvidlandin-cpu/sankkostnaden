@@ -1,0 +1,53 @@
+name: Affiliate revenue report
+
+on:
+  workflow_dispatch:
+    inputs:
+      days:
+        description: 'Number of inclusive days to report'
+        required: false
+        default: '30'
+  schedule:
+    - cron: '17 5 * * *'
+
+permissions:
+  contents: read
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    env:
+      ADTRACTION_API_TOKEN: ${{ secrets.ADTRACTION_API_TOKEN }}
+      ADDREVENUE_API_TOKEN: ${{ secrets.ADDREVENUE_API_TOKEN }}
+      REPORT_DAYS: ${{ github.event.inputs.days || '30' }}
+      REPORT_OUT_DIR: affiliate-report
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.16.0
+
+      - name: Validate report logic
+        run: node --test tests/affiliate-revenue-report.test.mjs
+
+      - name: Generate aggregate affiliate report
+        run: node scripts/affiliate-revenue-report.mjs
+
+      - name: Publish summary
+        if: always()
+        run: |
+          if [ -f affiliate-report/affiliate-revenue.md ]; then
+            cat affiliate-report/affiliate-revenue.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload aggregate report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: affiliate-revenue-report
+          path: affiliate-report/
+          retention-days: 30
+          if-no-files-found: ignore
