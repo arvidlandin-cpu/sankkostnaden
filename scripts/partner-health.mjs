@@ -20,6 +20,10 @@ function classify(url){
     const u=new URL(url);
     if(u.hostname==='addrevenue.io'||u.hostname==='www.addrevenue.io') return 'addrevenue';
     if(u.pathname==='/t/t'&&u.searchParams.has('a')&&u.searchParams.has('as')&&u.searchParams.get('t')==='2'&&u.searchParams.get('tk')==='1') return 'adtraction';
+    if(
+      (u.hostname==='visit.bredbandsval.se'&&u.pathname==='/click'&&u.searchParams.has('p')&&u.searchParams.has('a')) ||
+      (u.hostname==='clk.tradedoubler.com'&&u.pathname==='/click'&&u.searchParams.has('p')&&u.searchParams.has('a'))
+    ) return 'tradedoubler';
     return 'other';
   }catch{
     return 'invalid';
@@ -88,11 +92,25 @@ for(const partner of active){
   networkCounts[network]=(networkCounts[network]||0)+1;
 }
 
+const attributionCoverage={
+  adtraction:{join:'verified',reference:'epi / epi2'},
+  addrevenue:{join:'verified',reference:'r -> clickRef'},
+  tradedoubler:{join:'network_only',reference:'no verified Sänk Kostnaden sub-ID join'},
+  other:{join:'unknown',reference:'unknown'},
+  missing:{join:'none',reference:'missing tracking URL'},
+};
+const attributionCounts=Object.entries(networkCounts).map(([network,count])=>({
+  network,
+  count,
+  ...(attributionCoverage[network]||{join:'unknown',reference:'unknown'}),
+}));
+
 const report={
   generatedAt:new Date().toISOString(),
   checkedOn:today,
   activePartners:active.length,
   networkCounts,
+  attributionCounts,
   findings,
   dnsChecks,
 };
@@ -106,6 +124,10 @@ const lines=[
   '## Tracking networks',
   '',
   ...Object.entries(networkCounts).sort().map(([network,count])=>`- ${network}: **${count}**`),
+  '',
+  '## Attribution coverage',
+  '',
+  ...attributionCounts.sort((a,b)=>a.network.localeCompare(b.network)).map(item=>`- ${item.network}: **${item.count}** partner(s) · ${item.join} · ${item.reference}`),
   '',
 ];
 
