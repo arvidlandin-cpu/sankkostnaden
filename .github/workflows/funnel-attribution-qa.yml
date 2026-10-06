@@ -5,6 +5,7 @@ on:
     branches:
       - commercial/funnel-attribution-v1
       - commercial/adtraction-epi-v1
+      - commercial/addrevenue-clickref-v1
     paths:
       - '.github/workflows/funnel-attribution-qa.yml'
       - 'lib/clientAttribution.ts'
@@ -16,6 +17,9 @@ on:
       - 'pages/app.tsx'
       - 'pages/verktyg/hushallskostnadskollen.tsx'
       - 'tests/funnel-attribution.spec.ts'
+      - 'pages/cookies.tsx'
+      - 'pages/integritet.tsx'
+      - 'experiments/funnel-attribution/README.md'
       - 'scripts/check-integrity.mjs'
   workflow_dispatch:
 

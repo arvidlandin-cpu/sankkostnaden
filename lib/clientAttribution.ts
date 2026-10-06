@@ -51,33 +51,50 @@ export function rememberAffiliateClick(data:{localClickId:string;partner:string;
 
 export type NetworkDecoration={
   url:string;
-  network:'adtraction'|'unknown';
+  network:'adtraction'|'addrevenue'|'unknown';
   tagged:boolean;
-  reason:'tagged'|'existing_epi'|'unsupported';
+  reason:'tagged'|'existing_epi'|'existing_clickref'|'unsupported';
 };
 
-export function decorateAdtractionTrackingUrl(value:string,localClickId:string,funnelSessionId:string):NetworkDecoration{
+export function decorateAffiliateTrackingUrl(value:string,localClickId:string,funnelSessionId:string):NetworkDecoration{
   try{
     const url=new URL(value);
+
     const isAdtraction=url.pathname==='/t/t'
       && url.searchParams.has('a')
       && url.searchParams.has('as')
       && url.searchParams.get('t')==='2'
       && url.searchParams.get('tk')==='1';
 
-    if(!isAdtraction) return {url:value,network:'unknown',tagged:false,reason:'unsupported'};
-    if(url.searchParams.has('epi')) return {url:value,network:'adtraction',tagged:false,reason:'existing_epi'};
+    if(isAdtraction){
+      if(url.searchParams.has('epi')) return {url:value,network:'adtraction',tagged:false,reason:'existing_epi'};
 
-    const deeplink=url.searchParams.get('url');
-    if(deeplink!==null) url.searchParams.delete('url');
+      const deeplink=url.searchParams.get('url');
+      if(deeplink!==null) url.searchParams.delete('url');
 
-    url.searchParams.set('epi',localClickId);
-    url.searchParams.set('epi2',funnelSessionId);
+      url.searchParams.set('epi',localClickId);
+      url.searchParams.set('epi2',funnelSessionId);
 
-    // Adtraction documents that the deeplink URL parameter must be last.
-    if(deeplink!==null) url.searchParams.set('url',deeplink);
+      // Adtraction documents that the deeplink URL parameter must be last.
+      if(deeplink!==null) url.searchParams.set('url',deeplink);
 
-    return {url:url.toString(),network:'adtraction',tagged:true,reason:'tagged'};
+      return {url:url.toString(),network:'adtraction',tagged:true,reason:'tagged'};
+    }
+
+    const isAddrevenue=(url.hostname==='addrevenue.io'||url.hostname==='www.addrevenue.io')
+      && url.pathname==='/t'
+      && url.searchParams.has('a')
+      && url.searchParams.has('c');
+
+    if(isAddrevenue){
+      // Addrevenue publisher links use r as the outbound sub-ID/click reference.
+      // It is exposed as clickRef in Addrevenue reporting.
+      if(url.searchParams.has('r')) return {url:value,network:'addrevenue',tagged:false,reason:'existing_clickref'};
+      url.searchParams.set('r',localClickId);
+      return {url:url.toString(),network:'addrevenue',tagged:true,reason:'tagged'};
+    }
+
+    return {url:value,network:'unknown',tagged:false,reason:'unsupported'};
   }catch{
     return {url:value,network:'unknown',tagged:false,reason:'unsupported'};
   }
