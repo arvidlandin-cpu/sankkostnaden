@@ -3,9 +3,17 @@ name: Commercial regression smoke
 on:
   push:
     branches:
+      - main
       - ops/commercial-smoke-v1
+      - ops/commercial-regression-main-v2
     paths:
       - '.github/workflows/commercial-regression-smoke.yml'
+      - 'components/**'
+      - 'lib/**'
+      - 'pages/**'
+      - 'styles/**'
+      - 'scripts/**'
+      - 'tests/**'
   schedule:
     - cron: '23 4 * * *'
   workflow_dispatch:
@@ -49,9 +57,22 @@ jobs:
           cat /tmp/commercial-smoke-http.log
           exit 1
 
+      - name: Run non-browser commercial checks
+        run: |
+          node --test tests/partner-health.test.mjs tests/affiliate-revenue-report.test.mjs
+
       - name: Run commercial regression suite
         run: |
-          npx playwright test             tests/funnel-attribution.spec.ts             tests/first-year-cost.spec.ts             tests/switch-calendar.spec.ts             tests/family-mobile-cost.spec.ts             tests/cost-prioritizer.spec.ts             tests/electricity-cost.spec.ts             tests/priority-seo-flow.spec.ts             tests/trust-footer-insurance.spec.ts             --project=chromium
+          npx playwright test \
+            tests/funnel-attribution.spec.ts \
+            tests/first-year-cost.spec.ts \
+            tests/switch-calendar.spec.ts \
+            tests/family-mobile-cost.spec.ts \
+            tests/cost-prioritizer.spec.ts \
+            tests/electricity-cost.spec.ts \
+            tests/priority-seo-flow.spec.ts \
+            tests/trust-footer-insurance.spec.ts \
+            --project=chromium
 
       - name: Upload Playwright report
         if: always()
