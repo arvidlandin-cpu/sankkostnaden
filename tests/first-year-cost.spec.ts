@@ -54,10 +54,10 @@ test('commercial tool hands off to active mobile comparison only after both offe
 
   const cta = page.getByTestId('first-year-commercial-cta');
   await expect(cta).toBeVisible();
-  await expect(cta).toHaveAttribute('href', '#partners');
+  await expect(cta).toHaveAttribute('href', '#commercial-mobile-options');
   await cta.click();
 
-  await expect(page).toHaveURL(/#partners$/);
+  await expect(page).toHaveURL(/#commercial-mobile-options$/);
   await expect(page.getByText('Vilka operatörer är mest relevanta för dig?')).toBeVisible();
   await expect(page.locator('a[rel~="sponsored"]')).not.toHaveCount(0);
 });
