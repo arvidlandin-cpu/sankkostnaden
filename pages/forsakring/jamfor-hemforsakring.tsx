@@ -9,6 +9,7 @@ export default function Page(){
   category='forsakring'
   intent='home'
   bullets={['Jämför årspremie efter eventuella rabatter','Kontrollera grundsjälvrisk och särskilda självrisker','Jämför reseskydd, allrisk och ersättningsgränser','Kontrollera vilka personer i hushållet som omfattas']}
+  utility={{href:'/forsakring/hemforsakring-skyddskoll/',eyebrow:'VERKTYG · SKYDDSKOLL',title:'Kontrollera skyddet innan du jämför partnerpris',body:'Tre snabba frågor hjälper dig identifiera vilka delar av villkoren som förtjänar extra uppmärksamhet.',cta:'Gör skyddskollen'}}
   sections={[
    {heading:'Hur jämför man hemförsäkring?',body:'Börja med att bestämma vilket skydd hushållet behöver. Jämför sedan årspremie, självrisk, ersättningsgränser och viktiga undantag på samma nivå. Då undviker du att ett lägre pris egentligen beror på ett smalare skydd.'},
    {heading:'Jämför pris och självrisk tillsammans',body:'En lägre premie kan kombineras med högre självrisk. Bedöm därför både den återkommande årskostnaden och hur mycket du själv behöver kunna betala om en skada inträffar.'},
