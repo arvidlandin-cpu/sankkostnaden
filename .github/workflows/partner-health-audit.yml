@@ -1,0 +1,49 @@
+name: Partner health audit
+
+on:
+  push:
+    branches:
+      - ops/commercial-health-v2
+    paths:
+      - '.github/workflows/partner-health-audit.yml'
+      - 'scripts/partner-health.mjs'
+      - 'tests/partner-health.test.mjs'
+      - 'lib/partners.ts'
+  schedule:
+    - cron: '41 4 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    env:
+      PARTNER_HEALTH_OUT_DIR: partner-health
+      PARTNER_HEALTH_STALE_DAYS: '45'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Use Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.16.0
+      - name: Test parser
+        run: node --test tests/partner-health.test.mjs
+      - name: Run non-clicking partner health audit
+        run: node scripts/partner-health.mjs
+      - name: Publish summary
+        if: always()
+        run: |
+          if [ -f partner-health/partner-health.md ]; then
+            cat partner-health/partner-health.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: partner-health
+          path: partner-health/
+          retention-days: 30
+          if-no-files-found: ignore
