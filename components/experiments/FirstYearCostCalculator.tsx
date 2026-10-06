@@ -12,6 +12,9 @@ type Props = {
   commercialLabel?: string;
   source?: string;
   after?: ReactNode;
+  category?: 'mobil' | 'bredband';
+  backHref?: string;
+  backLabel?: string;
 };
 
 const emptyOffer = (name: string): Offer => ({
@@ -139,7 +142,20 @@ export default function FirstYearCostCalculator({
   commercialLabel = 'Se aktuella alternativ',
   source = commercial ? 'commercial' : 'prototype',
   after,
+  category = 'mobil',
+  backHref,
+  backLabel,
 }: Props) {
+  const categoryLabel = category === 'bredband' ? 'BREDBAND' : 'MOBIL';
+  const defaultBackHref = category === 'bredband' ? '/bredband/billigaste-bredbandet/' : '/mobil/billigaste-mobilabonnemanget/';
+  const defaultBackLabel = category === 'bredband' ? 'Till bredbandsjämförelsen' : 'Till mobiljämförelsen';
+  const qualityText = category === 'bredband'
+    ? 'Jämför därefter hastighet, adress, router, bindningstid och övriga villkor.'
+    : 'Jämför därefter bindningstid, nät, surfmängd och övriga villkor.';
+  const noteText = category === 'bredband'
+    ? 'Kampanjperiod, ordinarie månadspris, återkommande tillägg och engångsavgifter. Hastighet, tillgänglighet på adressen, router och bindningstid måste fortfarande jämföras separat.'
+    : 'Kampanjperiod, ordinarie månadspris, återkommande tillägg och engångsavgifter. Bindningstid, nät, surfmängd och andra kvalitetsfaktorer måste fortfarande jämföras separat.';
+
   const [a, setA] = useState<Offer>(emptyOffer('Alternativ A'));
   const [b, setB] = useState<Offer>(emptyOffer('Alternativ B'));
   const readyTracked = useRef(false);
@@ -157,15 +173,17 @@ export default function FirstYearCostCalculator({
     readyTracked.current = true;
     emitGa4('first_year_cost_ready', {
       source,
+      category,
       first_year_cost_a: Math.round(resultA.total),
       first_year_cost_b: Math.round(resultB.total),
       first_year_difference: Math.round(difference),
     });
-  }, [difference, readyToCompare, resultA.total, resultB.total, source]);
+  }, [category, difference, readyToCompare, resultA.total, resultB.total, source]);
 
   const continueToCommercial = () => {
     emitGa4('first_year_cost_continue', {
       source,
+      category,
       first_year_cost_a: Math.round(resultA.total),
       first_year_cost_b: Math.round(resultB.total),
       first_year_difference: Math.round(difference),
@@ -180,11 +198,11 @@ export default function FirstYearCostCalculator({
       </header>
 
       <main className={styles.shell}>
-        <Link href={commercial ? '/mobil/billigaste-mobilabonnemanget/' : '/'} className={styles.back}><ArrowLeft size={16} /> {commercial ? 'Till mobiljämförelsen' : 'Till startsidan'}</Link>
+        <Link href={commercial ? (backHref || defaultBackHref) : '/'} className={styles.back}><ArrowLeft size={16} /> {commercial ? (backLabel || defaultBackLabel) : 'Till startsidan'}</Link>
 
         <section className={styles.hero}>
           <div className={styles.icon}><Calculator size={24} /></div>
-          <p className={styles.kicker}>{commercial ? 'KOSTNADSKALKYL · MOBIL' : 'PROTOTYP · ABONNEMANG'}</p>
+          <p className={styles.kicker}>{commercial ? 'KOSTNADSKALKYL · ' + categoryLabel : 'PROTOTYP · ABONNEMANG'}</p>
           <h1>Jämför vad två erbjudanden faktiskt kostar första året</h1>
           <p>Fyll i kampanjpris, ordinarie pris och avgifter. Kalkylen räknar om båda alternativen till samma 12-månadersperiod.</p>
         </section>
@@ -211,7 +229,7 @@ export default function FirstYearCostCalculator({
             <>
               <span>JÄMFÖRELSE</span>
               <h2>Alternativen kostar lika mycket första året.</h2>
-              <p>Jämför därefter sådant som bindningstid, nät, surfmängd och övriga villkor.</p>
+              <p>{qualityText}</p>
             </>
           ) : (
             <>
@@ -230,7 +248,7 @@ export default function FirstYearCostCalculator({
 
         <aside className={styles.note}>
           <strong>Vad räknas med?</strong>
-          <p>Kampanjperiod, ordinarie månadspris, återkommande tillägg och engångsavgifter. Bindningstid, nät, surfmängd och andra kvalitetsfaktorer måste fortfarande jämföras separat.</p>
+          <p>{noteText}</p>
         </aside>
 
         {after && <section className={styles.after}>{after}</section>}

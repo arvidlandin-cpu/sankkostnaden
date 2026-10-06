@@ -5,12 +5,16 @@ on:
     branches:
       - feature/first-year-cost-v1
       - commercial/first-year-cost-mobile-v1
+      - commercial/broadband-utilities-v1
     paths:
       - '.github/workflows/first-year-cost-qa.yml'
       - 'lib/firstYearCost.ts'
       - 'components/experiments/FirstYearCostCalculator.tsx'
       - 'pages/experiments/forstaarskostnad.tsx'
       - 'pages/verktyg/forstaarskostnad.tsx'
+      - 'pages/verktyg/forstaarskostnad-bredband.tsx'
+      - 'pages/bredband/billigaste-bredbandet.tsx'
+      - 'pages/bredband/utan-bindningstid.tsx'
       - 'pages/mobil/billigaste-mobilabonnemanget.tsx'
       - 'styles/FirstYearCostCalculator.module.css'
       - 'tests/first-year-cost.spec.ts'
@@ -54,7 +58,7 @@ jobs:
         run: |
           python3 -m http.server 3000 --directory out > /tmp/first-year-cost-http.log 2>&1 &
           for i in {1..30}; do
-            if curl -fsS http://127.0.0.1:3000/verktyg/forstaarskostnad/ >/dev/null; then
+            if curl -fsS http://127.0.0.1:3000/verktyg/forstaarskostnad/ >/dev/null && curl -fsS http://127.0.0.1:3000/verktyg/forstaarskostnad-bredband/ >/dev/null; then
               exit 0
             fi
             sleep 1
