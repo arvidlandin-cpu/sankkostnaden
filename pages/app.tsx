@@ -211,7 +211,7 @@ export default function SavingsApp(){
                 {partners.length>0&&<small className={styles.verifiedLine}>Partnerlänkar kontrollerade {partnerGroupCheckedLabel(partners)}</small>}
                 {partners.map((partner,partnerIndex)=><a key={partner.name} href={partner.trackingUrl} data-partner={partner.name} data-category={partner.category} data-intent={partnerIntent[result.key]} data-placement='cost_check_result' data-partner-position={partnerIndex+1} data-result-rank={index+1} target='_blank' rel='sponsored nofollow noopener'>{partnerIndex===0?'Jämför hos ':'Alternativ: '}{partner.name} <ArrowUpRight size={14}/></a>)}
                 <Link href={result.href}>{result.key==='forsakring'?'Välj försäkringstyp':'Jämför fler i guiden'} <ArrowRight size={14}/></Link>
-                {nextResult&&<a className={styles.nextCategory} href={'#result-'+nextResult.key} onClick={()=>track('cost_check_next_category',{from:result.key,to:nextResult.key,rank:index+1})}>När du är klar: {nextResult.short} <ArrowRight size={14}/></a>}
+                {nextResult&&<a className={styles.nextCategory} href={`#result-${nextResult.key}`} onClick={()=>track('cost_check_next_category',{from:result.key,to:nextResult.key,rank:index+1})}>När du är klar: {nextResult.short} <ArrowRight size={14}/></a>}
               </div>
             </article>;
           })}
