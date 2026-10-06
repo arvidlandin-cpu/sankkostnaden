@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { ArrowLeft, ArrowRight, CalendarDays, Check, PiggyBank, RotateCcw } from 'lucide-react';
 import PartnerDirectory from '../PartnerDirectory';
 import { calculateSwitchPlan, daysBetween, type ContractMode, type NoticeUnit, type SwitchCategory } from '../../lib/switchCalendar';
+import { emitAnalyticsEvent } from '../../lib/clientAttribution';
 import styles from '../../styles/SwitchCalendar.module.css';
 
 type ResultState = ReturnType<typeof calculateSwitchPlan> & { daysUntilAction: number; state: 'passed' | 'soon' | 'open' };
@@ -19,13 +20,6 @@ function formatDate(value: string) {
 
 function todayIso() {
   return new Date().toISOString().slice(0, 10);
-}
-
-function emitGa4(eventName: string, params: Record<string, string | number | boolean> = {}) {
-  if (typeof window === 'undefined') return;
-  const w = window as Window & { gtag?: (...args: unknown[]) => void; dataLayer?: Record<string, unknown>[] };
-  if (typeof w.gtag === 'function') w.gtag('event', eventName, params);
-  else if (Array.isArray(w.dataLayer)) w.dataLayer.push({ event: eventName, ...params });
 }
 
 export default function SwitchCalendar() {
@@ -58,7 +52,7 @@ export default function SwitchCalendar() {
     const state: ResultState['state'] = daysUntilAction < 0 ? 'passed' : daysUntilAction <= 14 ? 'soon' : 'open';
     const next = { ...plan, daysUntilAction, state };
     setResult(next);
-    emitGa4('switch_calendar_ready', {
+    emitAnalyticsEvent('switch_calendar_ready', {
       source,
       category,
       contract_mode: mode,
@@ -71,7 +65,7 @@ export default function SwitchCalendar() {
 
   const continueToPartners = () => {
     if (!result) return;
-    emitGa4('switch_calendar_continue', {
+    emitAnalyticsEvent('switch_calendar_continue', {
       source,
       category,
       contract_mode: mode,

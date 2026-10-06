@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, ArrowRight, Calculator, PiggyBank } from 'lucide-react';
 import { calculateFirstYearCost, type FirstYearCostInput } from '../../lib/firstYearCost';
+import { emitAnalyticsEvent } from '../../lib/clientAttribution';
 import styles from '../../styles/FirstYearCostCalculator.module.css';
 
 type Offer = FirstYearCostInput & { name: string };
@@ -39,13 +40,6 @@ function toNumber(value: string) {
 
 function hasOfferData(offer: Offer) {
   return offer.campaignPrice > 0 || offer.regularPrice > 0 || offer.monthlyExtras > 0 || offer.oneTimeFees > 0;
-}
-
-function emitGa4(eventName: string, params: Record<string, string | number | boolean> = {}) {
-  if (typeof window === 'undefined') return;
-  const w = window as Window & { gtag?: (...args: unknown[]) => void; dataLayer?: Record<string, unknown>[] };
-  if (typeof w.gtag === 'function') w.gtag('event', eventName, params);
-  else if (Array.isArray(w.dataLayer)) w.dataLayer.push({ event: eventName, ...params });
 }
 
 function Field({
@@ -171,7 +165,7 @@ export default function FirstYearCostCalculator({
   useEffect(() => {
     if (!readyToCompare || readyTracked.current) return;
     readyTracked.current = true;
-    emitGa4('first_year_cost_ready', {
+    emitAnalyticsEvent('first_year_cost_ready', {
       source,
       category,
       first_year_cost_a: Math.round(resultA.total),
@@ -181,7 +175,7 @@ export default function FirstYearCostCalculator({
   }, [category, difference, readyToCompare, resultA.total, resultB.total, source]);
 
   const continueToCommercial = () => {
-    emitGa4('first_year_cost_continue', {
+    emitAnalyticsEvent('first_year_cost_continue', {
       source,
       category,
       first_year_cost_a: Math.round(resultA.total),
