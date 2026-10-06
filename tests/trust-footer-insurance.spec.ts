@@ -7,6 +7,8 @@ test('site-wide trust footer exposes method and commercial transparency',async({
   await expect(footer.getByRole('link',{name:'Så jämför vi'})).toHaveAttribute('href','/sa-jamfor-vi/');
   await expect(footer.getByRole('link',{name:'Affiliateinformation'})).toHaveAttribute('href','/affiliate/');
   await expect(footer.getByRole('link',{name:'Om sajten'})).toHaveAttribute('href','/om/');
+  await expect(footer.getByRole('link',{name:'Integritet'})).toHaveAttribute('href','/integritet/');
+  await expect(footer.getByRole('link',{name:'Cookies'})).toHaveAttribute('href','/cookies/');
   await expect(footer.getByRole('link',{name:'Kontakt'})).toHaveAttribute('href','mailto:kontakt@sankkostnaden.se');
 });
 
