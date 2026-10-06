@@ -6,7 +6,7 @@ test('bostadsrätt insurance keeps SEO metadata and adds focused decision suppor
   await expect(page.getByRole('heading',{level:1,name:'Hemförsäkring bostadsrätt 2026 – pris, skydd och självrisk'})).toBeVisible();
   await expect(page.getByRole('heading',{level:2,name:'Behöver jag bostadsrättstillägg?'})).toBeVisible();
   await expect(page.getByRole('heading',{level:2,name:'Har föreningen kollektivt bostadsrättstillägg?'})).toBeVisible();
-  await expect(page.getByRole('link',{name:/Gör skyddskollen/i})).toHaveAttribute('href','/forsakring/hemforsakring-skyddskoll/');
+  await expect(page.getByRole('link',{name:'Gör skyddskollen',exact:true})).toHaveAttribute('href','/forsakring/hemforsakring-skyddskoll/');
 });
 
 test('100/100 keeps SEO metadata and links to broadband first-year calculator',async({page})=>{
