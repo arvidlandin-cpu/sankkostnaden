@@ -1,0 +1,66 @@
+name: Family mobile cost QA
+
+on:
+  push:
+    branches:
+      - commercial/family-mobile-cost-v2
+    paths:
+      - '.github/workflows/family-mobile-cost-qa.yml'
+      - 'lib/familyMobileCost.ts'
+      - 'components/tools/FamilyMobileCost.tsx'
+      - 'styles/FamilyMobileCost.module.css'
+      - 'styles/TrafficTools.module.css'
+      - 'pages/mobil/lonar-sig-familjeabonnemang.tsx'
+      - 'pages/mobil/familjeabonnemang.tsx'
+      - 'components/IntentGuide.tsx'
+      - 'styles/global.css'
+      - 'tests/family-mobile-cost.spec.ts'
+  workflow_dispatch:
+
+jobs:
+  family-mobile-cost-qa:
+    runs-on: ubuntu-latest
+    env:
+      QA_BASE_URL: 'http://127.0.0.1:3000'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Use Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.16.0
+      - name: Install dependencies
+        run: npm install --progress=false
+      - name: Existing checks
+        run: |
+          npm run check
+          npm run check:integrity
+      - name: Build static export
+        run: npx next build
+      - name: Check exported links
+        run: npm run check:export
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Start local static server
+        run: |
+          python3 -m http.server 3000 --directory out > /tmp/family-mobile-http.log 2>&1 &
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:3000/mobil/lonar-sig-familjeabonnemang/ >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/family-mobile-http.log
+          exit 1
+      - name: Run family mobile QA
+        run: npx playwright test tests/family-mobile-cost.spec.ts --project=chromium
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: family-mobile-cost-qa
+          path: |
+            test-results/
+            playwright-report/
+          retention-days: 14
