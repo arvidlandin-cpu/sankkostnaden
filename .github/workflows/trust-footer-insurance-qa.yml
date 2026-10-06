@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - commercial/trust-footer-insurance-links-v1
+      - commercial/adtraction-privacy-copy-v1
     paths:
       - '.github/workflows/trust-footer-insurance-qa.yml'
       - 'components/SiteFooter.tsx'
@@ -13,6 +14,8 @@ on:
       - 'pages/forsakring/vad-kostar-hemforsakring.tsx'
       - 'pages/forsakring/jamfor-hemforsakring.tsx'
       - 'tests/trust-footer-insurance.spec.ts'
+      - 'pages/cookies.tsx'
+      - 'pages/integritet.tsx'
   workflow_dispatch:
 
 jobs:
