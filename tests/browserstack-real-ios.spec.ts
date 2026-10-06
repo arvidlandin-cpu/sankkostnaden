@@ -4,6 +4,8 @@ const routes = [
   { slug: 'home', path: '/' },
   { slug: 'bredband', path: '/bredband/' },
   { slug: 'mobil', path: '/mobil/' },
+  { slug: 'mobil-billigaste', path: '/mobil/billigaste-mobilabonnemanget/' },
+  { slug: 'forstaarskostnad', path: '/verktyg/forstaarskostnad/' },
   { slug: 'el', path: '/elavtal/' },
   { slug: 'forsakring', path: '/forsakring/' },
   { slug: 'ekonomi', path: '/ekonomi/' },

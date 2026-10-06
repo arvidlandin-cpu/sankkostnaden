@@ -1,10 +1,18 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Calculator, PiggyBank } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Calculator, PiggyBank } from 'lucide-react';
 import { calculateFirstYearCost, type FirstYearCostInput } from '../../lib/firstYearCost';
 import styles from '../../styles/FirstYearCostCalculator.module.css';
 
 type Offer = FirstYearCostInput & { name: string };
+
+type Props = {
+  commercial?: boolean;
+  commercialHref?: string;
+  commercialLabel?: string;
+  source?: string;
+  after?: ReactNode;
+};
 
 const emptyOffer = (name: string): Offer => ({
   name,
@@ -24,6 +32,17 @@ const money = new Intl.NumberFormat('sv-SE', {
 function toNumber(value: string) {
   const parsed = Number(value.replace(',', '.'));
   return Number.isFinite(parsed) ? parsed : 0;
+}
+
+function hasOfferData(offer: Offer) {
+  return offer.campaignPrice > 0 || offer.regularPrice > 0 || offer.monthlyExtras > 0 || offer.oneTimeFees > 0;
+}
+
+function emitGa4(eventName: string, params: Record<string, string | number | boolean> = {}) {
+  if (typeof window === 'undefined') return;
+  const w = window as Window & { gtag?: (...args: unknown[]) => void; dataLayer?: Record<string, unknown>[] };
+  if (typeof w.gtag === 'function') w.gtag('event', eventName, params);
+  else if (Array.isArray(w.dataLayer)) w.dataLayer.push({ event: eventName, ...params });
 }
 
 function Field({
@@ -114,29 +133,58 @@ function OfferCard({
   );
 }
 
-export default function FirstYearCostCalculator() {
+export default function FirstYearCostCalculator({
+  commercial = false,
+  commercialHref,
+  commercialLabel = 'Se aktuella alternativ',
+  source = commercial ? 'commercial' : 'prototype',
+  after,
+}: Props) {
   const [a, setA] = useState<Offer>(emptyOffer('Alternativ A'));
   const [b, setB] = useState<Offer>(emptyOffer('Alternativ B'));
+  const readyTracked = useRef(false);
 
   const resultA = useMemo(() => calculateFirstYearCost(a), [a]);
   const resultB = useMemo(() => calculateFirstYearCost(b), [b]);
-  const hasAnyValue = resultA.total > 0 || resultB.total > 0;
-  const difference = Math.abs(resultA.total - resultB.total);
-  const cheaper = resultA.total === resultB.total ? null : resultA.total < resultB.total ? a.name : b.name;
+  const hasA = hasOfferData(a);
+  const hasB = hasOfferData(b);
+  const readyToCompare = hasA && hasB;
+  const difference = readyToCompare ? Math.abs(resultA.total - resultB.total) : 0;
+  const cheaper = readyToCompare && resultA.total !== resultB.total ? (resultA.total < resultB.total ? a.name : b.name) : null;
+
+  useEffect(() => {
+    if (!readyToCompare || readyTracked.current) return;
+    readyTracked.current = true;
+    emitGa4('first_year_cost_ready', {
+      source,
+      first_year_cost_a: Math.round(resultA.total),
+      first_year_cost_b: Math.round(resultB.total),
+      first_year_difference: Math.round(difference),
+    });
+  }, [difference, readyToCompare, resultA.total, resultB.total, source]);
+
+  const continueToCommercial = () => {
+    emitGa4('first_year_cost_continue', {
+      source,
+      first_year_cost_a: Math.round(resultA.total),
+      first_year_cost_b: Math.round(resultB.total),
+      first_year_difference: Math.round(difference),
+    });
+  };
 
   return (
     <>
       <header className={styles.topbar}>
         <Link href='/' className={styles.brand}><PiggyBank size={20} /><strong>Sänk Kostnaden</strong></Link>
-        <span>Förstaårskostnad · prototyp</span>
+        <span>{commercial ? 'Förstaårskostnad' : 'Förstaårskostnad · prototyp'}</span>
       </header>
 
       <main className={styles.shell}>
-        <Link href='/' className={styles.back}><ArrowLeft size={16} /> Till startsidan</Link>
+        <Link href={commercial ? '/mobil/billigaste-mobilabonnemanget/' : '/'} className={styles.back}><ArrowLeft size={16} /> {commercial ? 'Till mobiljämförelsen' : 'Till startsidan'}</Link>
 
         <section className={styles.hero}>
           <div className={styles.icon}><Calculator size={24} /></div>
-          <p className={styles.kicker}>PROTOTYP · ABONNEMANG</p>
+          <p className={styles.kicker}>{commercial ? 'KOSTNADSKALKYL · MOBIL' : 'PROTOTYP · ABONNEMANG'}</p>
           <h1>Jämför vad två erbjudanden faktiskt kostar första året</h1>
           <p>Fyll i kampanjpris, ordinarie pris och avgifter. Kalkylen räknar om båda alternativen till samma 12-månadersperiod.</p>
         </section>
@@ -147,17 +195,23 @@ export default function FirstYearCostCalculator() {
         </section>
 
         <section className={styles.comparison} aria-live='polite' data-testid='comparison-result'>
-          {!hasAnyValue ? (
+          {!hasA && !hasB ? (
             <>
               <span>JÄMFÖRELSE</span>
-              <h2>Fyll i minst ett pris för att börja.</h2>
-              <p>Alla värden är dina egna. Prototypen hämtar inga livepriser och rekommenderar ingen leverantör.</p>
+              <h2>Fyll i två erbjudanden för att jämföra.</h2>
+              <p>Kalkylatorn hämtar inga livepriser och rekommenderar ingen leverantör. Du fyller själv i prisuppgifterna du vill jämföra.</p>
+            </>
+          ) : !readyToCompare ? (
+            <>
+              <span>NÄSTA STEG</span>
+              <h2>Fyll i det andra alternativet också.</h2>
+              <p>Då kan vi jämföra båda erbjudandena över exakt samma tolv månader.</p>
             </>
           ) : difference === 0 ? (
             <>
               <span>JÄMFÖRELSE</span>
               <h2>Alternativen kostar lika mycket första året.</h2>
-              <p>Jämför därefter sådant som bindningstid, nät, hastighet och övriga villkor.</p>
+              <p>Jämför därefter sådant som bindningstid, nät, surfmängd och övriga villkor.</p>
             </>
           ) : (
             <>
@@ -166,12 +220,20 @@ export default function FirstYearCostCalculator() {
               <p>Det motsvarar ungefär {money.format(difference / 12)} per månad när båda alternativen räknas över tolv månader.</p>
             </>
           )}
+
+          {commercial && commercialHref && readyToCompare && (
+            <a className={styles.commercialAction} href={commercialHref} onClick={continueToCommercial} data-testid='first-year-commercial-cta'>
+              {commercialLabel}<ArrowRight size={18}/>
+            </a>
+          )}
         </section>
 
         <aside className={styles.note}>
           <strong>Vad räknas med?</strong>
-          <p>Kampanjperiod, ordinarie månadspris, återkommande tillägg och engångsavgifter. Bindningstid, kvalitetsnivå och eventuella användningsbaserade kostnader måste fortfarande jämföras separat.</p>
+          <p>Kampanjperiod, ordinarie månadspris, återkommande tillägg och engångsavgifter. Bindningstid, nät, surfmängd och andra kvalitetsfaktorer måste fortfarande jämföras separat.</p>
         </aside>
+
+        {after && <section className={styles.after}>{after}</section>}
       </main>
     </>
   );

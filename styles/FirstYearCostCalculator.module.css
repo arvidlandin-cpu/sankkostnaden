@@ -220,6 +220,22 @@
   line-height: 1.55;
 }
 
+.commercialAction {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  min-height: 48px;
+  margin-top: 18px;
+  padding: 0 16px;
+  border-radius: 12px;
+  background: #dff46a;
+  color: #17201b;
+  font-size: 13px;
+  font-weight: 900;
+  text-decoration: none;
+}
+
 .note {
   margin-top: 18px;
   padding: 18px 20px;
@@ -239,6 +255,10 @@
   margin: 0;
   font-size: 13px;
   line-height: 1.55;
+}
+
+.after {
+  margin-top: 34px;
 }
 
 @media (max-width: 760px) {
@@ -266,6 +286,11 @@
 
   .grid {
     grid-template-columns: 1fr 1fr;
+  }
+
+  .commercialAction {
+    width: 100%;
+    box-sizing: border-box;
   }
 }
 
