@@ -2411,3 +2411,55 @@ footer{
     font-size:22px!important;
   }
 }
+
+
+/* Focused utility CTA for intent guides */
+.utilityToolCard{
+  margin:22px 0 28px;
+  padding:22px;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:20px;
+  align-items:center;
+  border:1px solid #d9e1d8;
+  border-radius:18px;
+  background:#f7faf4;
+}
+.utilityToolCard p{
+  margin:0 0 5px;
+  color:#738044;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:.1em;
+}
+.utilityToolCard h2{
+  margin:0 0 7px!important;
+  color:#17201b;
+  font-size:24px!important;
+}
+.utilityToolCard span{
+  display:block;
+  max-width:58ch;
+  color:#657068;
+  font-size:13px;
+  line-height:1.55;
+}
+.utilityToolCard>a{
+  min-height:46px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:0 15px;
+  border-radius:11px;
+  background:#17201b;
+  color:#fff!important;
+  font-size:13px;
+  font-weight:900;
+  text-decoration:none;
+  white-space:nowrap;
+}
+@media(max-width:640px){
+  .utilityToolCard{grid-template-columns:1fr;padding:17px}
+  .utilityToolCard>a{width:100%;box-sizing:border-box}
+}
