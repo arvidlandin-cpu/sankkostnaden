@@ -194,3 +194,44 @@ test('last click context is session-only and contains no raw calculator values',
   expect(JSON.stringify(stored)).not.toContain('annualKwh');
   expect(JSON.stringify(stored)).not.toContain('monthly');
 });
+
+
+test('mobile matcher answers and affiliate click share one funnel session',async({page})=>{
+  await page.addInitScript(()=>{(window as any).dataLayer=[];});
+  await page.goto('/mobil/billigaste-mobilabonnemanget/?qa=1');
+
+  await page.getByRole('button',{name:'Bara mig'}).click();
+  await page.getByRole('button',{name:'Inte viktigt'}).click();
+
+  const sponsored=page.locator('.matchPartnerGrid a[rel~="sponsored"]').first();
+  await expect(sponsored).toBeVisible();
+  await preventNavigation(sponsored);
+  await sponsored.click();
+
+  const events=await page.evaluate(()=>(window as any).dataLayer||[]);
+  const answers=events.filter((item:any)=>item.event==='mobile_match_answer');
+  const click=events.find((item:any)=>item.event==='affiliate_click'&&item.placement==='mobile_matcher');
+
+  expect(answers).toHaveLength(2);
+  expect(answers[0].funnel_session_id).toMatch(/^fs_/);
+  expect(answers[1].funnel_session_id).toBe(answers[0].funnel_session_id);
+  expect(click?.funnel_session_id).toBe(answers[0].funnel_session_id);
+});
+
+test('guided electricity matcher answer shares funnel session with partner click',async({page})=>{
+  await page.addInitScript(()=>{(window as any).dataLayer=[];});
+  await page.goto('/elavtal/jamfor-elavtal/?qa=1');
+
+  await page.getByRole('button',{name:'Flera avtal'}).click();
+  const link=page.locator('a[data-partner="Elskling"][data-placement="electricity_matcher"]').first();
+  await expect(link).toBeVisible();
+  await preventNavigation(link);
+  await link.click();
+
+  const events=await page.evaluate(()=>(window as any).dataLayer||[]);
+  const answer=events.find((item:any)=>item.event==='electricity_match_answer');
+  const click=events.find((item:any)=>item.event==='affiliate_click'&&item.partner==='Elskling'&&item.placement==='electricity_matcher');
+
+  expect(answer?.funnel_session_id).toMatch(/^fs_/);
+  expect(click?.funnel_session_id).toBe(answer.funnel_session_id);
+});
