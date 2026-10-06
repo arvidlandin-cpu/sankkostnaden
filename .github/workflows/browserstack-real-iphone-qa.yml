@@ -12,6 +12,10 @@ on:
       - 'components/experiments/MobileSurfPilot.tsx'
       - 'pages/experiments/mobile-surf-pilot.tsx'
       - 'styles/MobileSurfPilot.module.css'
+      - 'components/experiments/FirstYearCostCalculator.tsx'
+      - 'pages/verktyg/forstaarskostnad.tsx'
+      - 'styles/FirstYearCostCalculator.module.css'
+      - 'pages/mobil/billigaste-mobilabonnemanget.tsx'
   workflow_dispatch:
     inputs:
       base_url:
