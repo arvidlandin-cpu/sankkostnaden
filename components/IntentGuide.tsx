@@ -1,12 +1,13 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import { Check, PiggyBank } from 'lucide-react';
+import { ArrowRight, Check, PiggyBank } from 'lucide-react';
 import PartnerOffers from './PartnerOffers';
 import PartnerDirectory from './PartnerDirectory';
 import DecisionGateway from './DecisionGateway';
 import { getActivePartners, type PartnerCategory, type PartnerIntent } from '../lib/partners';
 
 type Section = { heading: string; body: string };
+type Utility = { href: string; eyebrow: string; title: string; body: string; cta: string };
 type Props = {
   title: string;
   description: string;
@@ -18,9 +19,10 @@ type Props = {
   sections: Section[];
   related: { href: string; label: string }[];
   elevatePartners?: boolean;
+  utility?: Utility;
 };
 
-export default function IntentGuide({ title, description, kicker, canonical, category, intent, bullets, sections, related, elevatePartners = false }: Props) {
+export default function IntentGuide({ title, description, kicker, canonical, category, intent, bullets, sections, related, elevatePartners = false, utility }: Props) {
   const categoryLabels: Record<PartnerCategory, string> = { el: 'Elavtal', bredband: 'Bredband', mobil: 'Mobil', forsakring: 'Försäkring', ekonomi: 'Lån & ekonomi' };
   const categoryPaths: Record<PartnerCategory, string> = { el: '/elavtal/', bredband: '/bredband/', mobil: '/mobil/', forsakring: '/forsakring/', ekonomi: '/ekonomi/' };
   const categoryLabel = categoryLabels[category];
@@ -88,6 +90,7 @@ export default function IntentGuide({ title, description, kicker, canonical, cat
           <div className='checkList'>
             {bullets.map(item => <p key={item}><Check size={17} /> {item}</p>)}
           </div>
+          {utility && <aside className='utilityToolCard'><div><p>{utility.eyebrow}</p><h2>{utility.title}</h2><span>{utility.body}</span></div><Link href={utility.href}>{utility.cta}<ArrowRight size={17}/></Link></aside>}
           {elevatePartnerBlock && <div id='guide-partners'><PartnerDirectory category={category} intent={intent} heading={category==='forsakring'&&intent==='home'?'Jämför hemförsäkring hos våra partners':compareHeadings[category]} /></div>}
           {category === 'el' && <aside className='decisionPanel decisionPanelLower' aria-label='Sänk Kostnaden-kontrollen'><div><p className='partnerEyebrow'>SÄNK KOSTNADEN-KONTROLLEN</p><h2>Jämför hela kostnaden – inte bara öre/kWh</h2><p>Kontrollera pris/påslag, fast avgift, rabattens längd, ordinarie villkor samt bindnings- och uppsägningstid. Använd samma årsförbrukning för alla alternativ.</p></div><div className='decisionMetrics'><span><b>1</b> Årsförbrukning</span><span><b>2</b> Rörlig kostnad</span><span><b>3</b> Fasta avgifter</span><span><b>4</b> Villkor efter rabatt</span></div></aside>}
           {category === 'mobil' && <aside className='decisionPanel decisionPanelLower' aria-label='Sänk Kostnaden-kontrollen för mobil'><div><p className='partnerEyebrow'>SÄNK KOSTNADEN-KONTROLLEN</p><h2>Jämför abonnemanget du faktiskt kommer använda</h2><p>Utgå från rätt surfmängd och nät. Räkna sedan kampanjperiod och ordinarie pris tillsammans så att ett lågt introduktionspris inte döljer den verkliga kostnaden.</p></div><div className='decisionMetrics'><span><b>1</b> Surfmängd</span><span><b>2</b> Mobilnät</span><span><b>3</b> Första året</span><span><b>4</b> Bindning & villkor</span></div></aside>}
