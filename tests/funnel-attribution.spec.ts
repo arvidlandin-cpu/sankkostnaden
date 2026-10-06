@@ -31,6 +31,7 @@ test('calculator and affiliate click share one funnel session and use verified n
     });
   });
   await sponsored.click();
+  await page.waitForTimeout(10);
   const hrefAfter=await sponsored.getAttribute('href');
   const networkHref=await page.evaluate(()=>(window as any).__networkHref||'');
 
