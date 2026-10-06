@@ -3,7 +3,7 @@ import { expect, test, type Page } from '@playwright/test';
 const route='/verktyg/byteskalender/';
 
 async function setNotice(page:Page,value:string,unit:'months'|'days'='months'){
-  await page.getByLabel('Uppsägningstid').fill(value);
+  await page.getByLabel('Antal för uppsägningstid').fill(value);
   await page.getByLabel('Enhet för uppsägningstid').selectOption(unit);
 }
 
