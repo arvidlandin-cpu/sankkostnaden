@@ -1,3 +1,12 @@
+test('homepage keeps a single editorial footer while inner pages get the global trust footer',async({page})=>{
+  await page.goto('/');
+  await expect(page.locator('footer')).toHaveCount(1);
+  await expect(page.locator('footer.siteFooter')).toHaveCount(0);
+
+  await page.goto('/forsakring/hemforsakring-bostadsratt/');
+  await expect(page.locator('footer.siteFooter')).toHaveCount(1);
+});
+
 import { expect, test } from '@playwright/test';
 
 test('site-wide trust footer exposes method and commercial transparency',async({page})=>{
