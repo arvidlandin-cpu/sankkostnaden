@@ -47,3 +47,41 @@ export function rememberAffiliateClick(data:{localClickId:string;partner:string;
     }));
   }catch{}
 }
+
+
+export type AffiliateNetworkAttribution = {
+  url: string;
+  network: 'adtraction' | 'addrevenue' | 'unsupported';
+  parameter: 'epi' | 'clickRef' | '';
+};
+
+export function buildAffiliateAttributionUrl(value:string,localClickId:string):AffiliateNetworkAttribution{
+  try{
+    const url=new URL(value);
+    const isAdtraction=url.pathname==='/t/t'
+      && url.searchParams.has('a')
+      && url.searchParams.has('as')
+      && url.searchParams.has('t')
+      && url.searchParams.has('tk');
+    if(isAdtraction){
+      const deepLink=url.searchParams.get('url');
+      if(deepLink!==null) url.searchParams.delete('url');
+      url.searchParams.set('epi',localClickId);
+      if(deepLink!==null) url.searchParams.set('url',deepLink);
+      return {url:url.toString(),network:'adtraction',parameter:'epi'};
+    }
+
+    const isAddrevenue=url.hostname==='addrevenue.io'
+      && url.pathname==='/t'
+      && url.searchParams.has('a')
+      && url.searchParams.has('c');
+    if(isAddrevenue){
+      url.searchParams.set('clickRef',localClickId);
+      return {url:url.toString(),network:'addrevenue',parameter:'clickRef'};
+    }
+
+    return {url:value,network:'unsupported',parameter:''};
+  }catch{
+    return {url:value,network:'unsupported',parameter:''};
+  }
+}
