@@ -41,6 +41,12 @@ on:
       - 'pages/elavtal/rorligt-elpris.tsx'
       - 'pages/forsakring/hemforsakring-bostadsratt.tsx'
       - 'pages/bredband/100-100.tsx'
+      - 'components/SiteFooter.tsx'
+      - 'pages/_app.tsx'
+      - 'styles/global.css'
+      - 'pages/forsakring/hemforsakring-hyresratt.tsx'
+      - 'pages/forsakring/vad-kostar-hemforsakring.tsx'
+      - 'pages/forsakring/jamfor-hemforsakring.tsx'
   workflow_dispatch:
     inputs:
       base_url:
@@ -98,7 +104,9 @@ jobs:
                curl -fsS "$QA_BASE_URL/verktyg/forstaarskostnad-bredband/" | grep -q "KOSTNADSKALKYL" && \
                curl -fsS "$QA_BASE_URL/verktyg/elavtalskostnad/" | grep -q "Jämför två elavtal" && \
                curl -fsS "$QA_BASE_URL/forsakring/hemforsakring-bostadsratt/" | grep -q "Behöver jag bostadsrättstillägg" && \
-               curl -fsS "$QA_BASE_URL/bredband/100-100/" | grep -q "Räkna om 100/100"; then
+               curl -fsS "$QA_BASE_URL/bredband/100-100/" | grep -q "Räkna om 100/100" && \
+               curl -fsS "$QA_BASE_URL/forsakring/vad-kostar-hemforsakring/" | grep -q "Gör skyddskollen" && \
+               curl -fsS "$QA_BASE_URL/" | grep -q "Affiliateinformation"; then
               exit 0
             fi
             sleep 2
