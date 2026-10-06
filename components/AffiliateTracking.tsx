@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { partners, type PartnerCategory, type PartnerIntent } from '../lib/partners';
-import { createLocalClickId, decorateAdtractionTrackingUrl, emitAnalyticsEvent, getFunnelSessionId, rememberAffiliateClick } from '../lib/clientAttribution';
+import { createLocalClickId, decorateAffiliateTrackingUrl, emitAnalyticsEvent, getFunnelSessionId, rememberAffiliateClick } from '../lib/clientAttribution';
 
 declare global {
   interface Window {
@@ -112,7 +112,7 @@ export default function AffiliateTracking() {
       if (params) {
         const localClickId=createLocalClickId();
         const funnelSessionId=getFunnelSessionId();
-        const decoration=decorateAdtractionTrackingUrl(baseHref,localClickId,funnelSessionId);
+        const decoration=decorateAffiliateTrackingUrl(baseHref,localClickId,funnelSessionId);
 
         if(decoration.tagged) anchor.href=decoration.url;
 
