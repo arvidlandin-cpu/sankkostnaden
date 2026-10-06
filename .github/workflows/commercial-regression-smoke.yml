@@ -1,0 +1,90 @@
+name: Commercial regression smoke
+
+on:
+  push:
+    branches:
+      - ops/commercial-smoke-v1
+    paths:
+      - '.github/workflows/commercial-regression-smoke.yml'
+  schedule:
+    - cron: '23 4 * * *'
+  workflow_dispatch:
+
+jobs:
+  local-commercial-smoke:
+    runs-on: ubuntu-latest
+    env:
+      QA_BASE_URL: 'http://127.0.0.1:3000'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.16.0
+
+      - name: Install dependencies
+        run: npm install --progress=false
+
+      - name: Integrity and static build
+        run: |
+          npm run check
+          npm run check:integrity
+          npx next build
+          npm run check:export
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Start local static server
+        run: |
+          python3 -m http.server 3000 --directory out > /tmp/commercial-smoke-http.log 2>&1 &
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:3000/app/ >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/commercial-smoke-http.log
+          exit 1
+
+      - name: Run commercial regression suite
+        run: |
+          npx playwright test             tests/funnel-attribution.spec.ts             tests/first-year-cost.spec.ts             tests/switch-calendar.spec.ts             tests/family-mobile-cost.spec.ts             tests/cost-prioritizer.spec.ts             tests/electricity-cost.spec.ts             tests/priority-seo-flow.spec.ts             tests/trust-footer-insurance.spec.ts             --project=chromium
+
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: commercial-regression-smoke
+          path: |
+            test-results/
+            playwright-report/
+          retention-days: 14
+
+  production-route-smoke:
+    if: github.ref_name == 'main' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify core production routes
+        shell: bash
+        run: |
+          set -euo pipefail
+          check() {
+            local url="$1"
+            local marker="$2"
+            local body
+            body="$(curl --retry 3 --retry-delay 2 --max-time 20 -fsSL "$url")"
+            echo "$body" | grep -Fq "$marker"
+            echo "OK: $url"
+          }
+
+          check "https://sankkostnaden.se/app/" "Vilket avtal bör du kontrollera först?"
+          check "https://sankkostnaden.se/verktyg/hushallskostnadskollen/" "Hushållskostnadskollen"
+          check "https://sankkostnaden.se/verktyg/forstaarskostnad/" "Jämför vad två erbjudanden"
+          check "https://sankkostnaden.se/verktyg/forstaarskostnad-bredband/" "Jämför vad två erbjudanden"
+          check "https://sankkostnaden.se/verktyg/byteskalender/" "När behöver du agera"
+          check "https://sankkostnaden.se/verktyg/elavtalskostnad/" "Jämför två elavtal"
+          check "https://sankkostnaden.se/mobil/lonar-sig-familjeabonnemang/" "Lönar sig familjeabonnemang"
+          check "https://sankkostnaden.se/forsakring/hemforsakring-bostadsratt/" "bostadsrättstillägg"
