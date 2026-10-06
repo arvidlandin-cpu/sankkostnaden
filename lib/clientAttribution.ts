@@ -65,19 +65,33 @@ export function decorateAdtractionTrackingUrl(value:string,localClickId:string,f
       && url.searchParams.get('t')==='2'
       && url.searchParams.get('tk')==='1';
 
-    if(!isAdtraction) return {url:value,network:'unknown',tagged:false,reason:'unsupported'};
-    if(url.searchParams.has('epi')) return {url:value,network:'adtraction',tagged:false,reason:'existing_epi'};
+    if(isAdtraction){
+      if(url.searchParams.has('epi')) return {url:value,network:'adtraction',tagged:false,reason:'existing_epi'};
 
-    const deeplink=url.searchParams.get('url');
-    if(deeplink!==null) url.searchParams.delete('url');
+      const deeplink=url.searchParams.get('url');
+      if(deeplink!==null) url.searchParams.delete('url');
 
-    url.searchParams.set('epi',localClickId);
-    url.searchParams.set('epi2',funnelSessionId);
+      url.searchParams.set('epi',localClickId);
+      url.searchParams.set('epi2',funnelSessionId);
 
-    // Adtraction documents that the deeplink URL parameter must be last.
-    if(deeplink!==null) url.searchParams.set('url',deeplink);
+      // Adtraction documents that the deeplink URL parameter must be last.
+      if(deeplink!==null) url.searchParams.set('url',deeplink);
 
-    return {url:url.toString(),network:'adtraction',tagged:true,reason:'tagged'};
+      return {url:url.toString(),network:'adtraction',tagged:true,reason:'tagged'};
+    }
+
+    const isAddrevenue=(url.hostname==='addrevenue.io'||url.hostname==='www.addrevenue.io')
+      && url.pathname==='/t'
+      && url.searchParams.has('a')
+      && url.searchParams.has('c');
+
+    if(isAddrevenue){
+      if(url.searchParams.has('clickRef')) return {url:value,network:'addrevenue',tagged:false,reason:'existing_clickref'};
+      url.searchParams.set('clickRef',localClickId);
+      return {url:url.toString(),network:'addrevenue',tagged:true,reason:'tagged'};
+    }
+
+    return {url:value,network:'unknown',tagged:false,reason:'unsupported'};
   }catch{
     return {url:value,network:'unknown',tagged:false,reason:'unsupported'};
   }
