@@ -1,15 +1,13 @@
 import { useMemo, useState } from 'react';
 import { ArrowRight, ArrowUpRight, BadgeCheck, Check, RotateCcw, Users, UserRound, Unplug } from 'lucide-react';
 import { getActivePartners, partnerRankScore, type ActivePartner } from '../lib/partners';
+import { emitAnalyticsEvent } from '../lib/clientAttribution';
 
 type Household='one'|'family';
 type Priority='flex'|'open';
 
 function track(event:string,params:Record<string,string|number>){
-  if(typeof window==='undefined') return;
-  const w=window as any;
-  if(typeof w.gtag==='function') w.gtag('event',event,params);
-  else if(Array.isArray(w.dataLayer)) w.dataLayer.push({event,...params});
+  emitAnalyticsEvent(event,params);
 }
 
 function scorePartner(p:ActivePartner,household:Household,priority:Priority){

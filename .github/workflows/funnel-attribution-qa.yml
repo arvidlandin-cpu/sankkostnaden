@@ -6,6 +6,7 @@ on:
       - commercial/funnel-attribution-v1
       - commercial/adtraction-epi-v1
       - commercial/addrevenue-clickref-v1
+      - commercial/matcher-funnel-session-v1
     paths:
       - '.github/workflows/funnel-attribution-qa.yml'
       - 'lib/clientAttribution.ts'

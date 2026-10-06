@@ -4,12 +4,10 @@ import {
   HousePlug, PawPrint, RotateCcw, Search, ShieldCheck, Sparkles, Unplug, Wifi
 } from 'lucide-react';
 import { getActivePartners, partnerRankScore, partners, type ActivePartner, type PartnerIntent } from '../lib/partners';
+import { emitAnalyticsEvent } from '../lib/clientAttribution';
 
 function track(event:string,params:Record<string,string|number>){
-  if(typeof window==='undefined') return;
-  const w=window as any;
-  if(typeof w.gtag==='function') w.gtag('event',event,params);
-  else if(Array.isArray(w.dataLayer)) w.dataLayer.push({event,...params});
+  emitAnalyticsEvent(event,params);
 }
 
 function PartnerCard({
