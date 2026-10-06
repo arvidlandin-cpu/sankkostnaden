@@ -1,6 +1,15 @@
 name: Affiliate revenue report
 
 on:
+  push:
+    branches:
+      - commercial/affiliate-revenue-report-v1
+    paths:
+      - '.github/workflows/affiliate-revenue-report.yml'
+      - 'scripts/affiliate-revenue-report.mjs'
+      - 'scripts/lib/affiliateRevenue.mjs'
+      - 'tests/affiliate-revenue-report.test.mjs'
+      - 'experiments/affiliate-revenue-report/README.md'
   workflow_dispatch:
     inputs:
       days:
