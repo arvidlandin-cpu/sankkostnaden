@@ -31,6 +31,8 @@
   font-size: clamp(44px, 6vw, 76px);
   line-height: .98;
   letter-spacing: -.055em;
+  overflow-wrap: anywhere;
+  hyphens: auto;
 }
 .hero p {
   max-width: 760px;
