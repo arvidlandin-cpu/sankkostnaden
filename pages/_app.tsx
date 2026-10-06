@@ -4,6 +4,7 @@ import type { AppProps } from 'next/app';
 import '../styles/global.css';
 import MobileQuickBar from '../components/MobileQuickBar';
 import AffiliateTracking from '../components/AffiliateTracking';
+import SiteFooter from '../components/SiteFooter';
 
 export default function App({ Component, pageProps }: AppProps) {
 
@@ -36,6 +37,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <meta name='apple-mobile-web-app-title' content='Sänk Kostnaden' />
       </Head>
       <Component {...pageProps} />
+      <SiteFooter />
       <AffiliateTracking />
       <MobileQuickBar />
     </>
