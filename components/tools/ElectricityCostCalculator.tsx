@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { ArrowLeft, ArrowRight, Calculator, Check, PiggyBank, Zap } from 'lucide-react';
 import PartnerDirectory from '../PartnerDirectory';
 import { calculateElectricityOffer, consumptionBand, differenceBand, type ElectricityOfferInput } from '../../lib/electricityCost';
+import { emitAnalyticsEvent } from '../../lib/clientAttribution';
 import styles from '../../styles/ElectricityCostCalculator.module.css';
 
 type Offer = ElectricityOfferInput & { name:string };
@@ -11,13 +12,6 @@ const money=new Intl.NumberFormat('sv-SE',{style:'currency',currency:'SEK',maxim
 const decimal=new Intl.NumberFormat('sv-SE',{maximumFractionDigits:1});
 
 const emptyOffer=(name:string):Offer=>({name,unitPriceOre:0,monthlyFee:0,annualDiscount:0});
-
-function emitGa4(eventName:string,params:Record<string,string|number|boolean>={}){
-  if(typeof window==='undefined') return;
-  const w=window as Window & { gtag?:(...args:unknown[])=>void; dataLayer?:Record<string,unknown>[] };
-  if(typeof w.gtag==='function') w.gtag('event',eventName,params);
-  else if(Array.isArray(w.dataLayer)) w.dataLayer.push({event:eventName,...params});
-}
 
 function Field({label,value,onChange,suffix}:{label:string;value:number;onChange:(value:number)=>void;suffix:string}){
   return <label className={styles.field}>
@@ -63,7 +57,7 @@ export default function ElectricityCostCalculator(){
     setShowResult(true);
     if(!tracked.current){
       tracked.current=true;
-      emitGa4('electricity_cost_ready',{
+      emitAnalyticsEvent('electricity_cost_ready',{
         source,
         consumption_band:consumptionBand(annualKwh),
         winner,
@@ -73,7 +67,7 @@ export default function ElectricityCostCalculator(){
   };
 
   const continueToPartners=()=>{
-    emitGa4('electricity_cost_continue',{
+    emitAnalyticsEvent('electricity_cost_continue',{
       source,
       consumption_band:consumptionBand(annualKwh),
       winner,
