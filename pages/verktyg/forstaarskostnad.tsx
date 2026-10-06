@@ -9,6 +9,7 @@ export default function FirstYearCostCommercialPage() {
         <title>Räkna förstaårskostnad för mobilabonnemang | Sänk Kostnaden</title>
         <meta name='description' content='Jämför två mobilabonnemang över samma 12 månader. Räkna kampanjpris, ordinarie pris och avgifter innan du väljer.' />
         <meta name='robots' content='noindex,nofollow,noarchive' />
+        <link rel='canonical' href='https://sankkostnaden.se/verktyg/forstaarskostnad/' />
       </Head>
       <FirstYearCostCalculator
         commercial
