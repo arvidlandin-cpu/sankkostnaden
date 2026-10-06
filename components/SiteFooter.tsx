@@ -1,7 +1,14 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { PiggyBank } from 'lucide-react';
 
 export default function SiteFooter(){
+  const router=useRouter();
+
+  // The homepage has its own full editorial footer. Avoid rendering a second
+  // global footer underneath it while keeping the trust links site-wide elsewhere.
+  if(router.pathname==='/') return null;
+
   return <footer className='siteFooter'>
     <div className='siteFooterInner'>
       <div className='siteFooterBrand'>
