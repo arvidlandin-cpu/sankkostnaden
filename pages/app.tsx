@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowRight, ArrowUpRight, Check, Gauge, PiggyBank, RotateCcw
 import styles from '../styles/App.module.css';
 import { getActivePartners, partnerGroupCheckedLabel, type PartnerIntent } from '../lib/partners';
 import { costCheckStorageKey, emptyCostAnswers, normalizeCostAnswers, prioritySortValue, scenarioAnnualSaving, type CostAnswers, type CostKey } from '../lib/costPrioritizer';
+import { emitAnalyticsEvent } from '../lib/clientAttribution';
 
 type Category = {
   key: CostKey;
@@ -25,13 +26,6 @@ const categories: Category[] = [
 const legacyStorageKey='sankkostnaden-cost-check-v4';
 const partnerIntent:Record<CostKey,PartnerIntent>={el:'electricity',bredband:'compare',mobil:'compare',forsakring:'home'};
 const rankLabels=['KONTROLLERA FÖRST','DÄREFTER','SEDAN','SIST'];
-
-function track(event:string,params:Record<string,string|number>){
-  if(typeof window==='undefined') return;
-  const w=window as Window & { gtag?:(...args:unknown[])=>void; dataLayer?:Record<string,unknown>[] };
-  if(typeof w.gtag==='function') w.gtag('event',event,params);
-  else if(Array.isArray(w.dataLayer)) w.dataLayer.push({event,...params});
-}
 
 export default function SavingsApp(){
   const [answers,setAnswers]=useState<CostAnswers>(emptyCostAnswers);
@@ -90,7 +84,7 @@ export default function SavingsApp(){
   useEffect(()=>{
     if(completed===4&&!completedTracked.current){
       completedTracked.current=true;
-      track('cost_check_complete',{top_category:noClearIssue?'none':top.key,has_costs:totalMonthly>0?1:0});
+      emitAnalyticsEvent('cost_check_complete',{top_category:noClearIssue?'none':top.key,has_costs:totalMonthly>0?1:0});
     }
   },[completed,noClearIssue,top.key,totalMonthly]);
 
@@ -98,8 +92,8 @@ export default function SavingsApp(){
 
   const update=(key:CostKey,field:'monthly'|'fit',value:number)=>{
     setAnswers(previous=>({...previous,[key]:{...previous[key],[field]:value}}));
-    if(field==='fit') track('cost_check_answer',{category:key,field:'fit',value});
-    else track('cost_check_cost_added',{category:key,has_value:value>0?1:0});
+    if(field==='fit') emitAnalyticsEvent('cost_check_answer',{category:key,field:'fit',value});
+    else emitAnalyticsEvent('cost_check_cost_added',{category:key,has_value:value>0?1:0});
   };
 
   const reset=()=>{
@@ -108,7 +102,7 @@ export default function SavingsApp(){
     setScenarioPct(10);
     completedTracked.current=false;
     try{window.localStorage.removeItem(costCheckStorageKey);window.localStorage.removeItem(legacyStorageKey);}catch{}
-    track('cost_check_reset',{source:'app'});
+    emitAnalyticsEvent('cost_check_reset',{source:'app'});
   };
 
   const activeCategory=categories.find(category=>category.key===active)!;
@@ -191,7 +185,7 @@ export default function SavingsApp(){
 
         {completed===4&&totalMonthly>0&&<div className={styles.scenarioBox}>
           <div><span>BESPARINGSSCENARIO · INTE EN PROGNOS</span><h3>Vad skulle en lägre kostnad motsvara på ett år?</h3><p>Välj ett rent räkneexempel. Vi påstår inte att just denna procent går att spara.</p></div>
-          <div className={styles.scenarioButtons}>{[5,10,20].map(pct=><button key={pct} className={scenarioPct===pct?styles.scenarioSelected:''} onClick={()=>{setScenarioPct(pct);track('cost_check_scenario',{scenario_pct:pct})}}>{pct}%</button>)}</div>
+          <div className={styles.scenarioButtons}>{[5,10,20].map(pct=><button key={pct} className={scenarioPct===pct?styles.scenarioSelected:''} onClick={()=>{setScenarioPct(pct);emitAnalyticsEvent('cost_check_scenario',{scenario_pct:pct})}}>{pct}%</button>)}</div>
         </div>}
 
         {completed<4?<div className={styles.ranking}><article className={styles.incompleteResult}><div className={styles.resultBody}><div><h3>{completed}/4 områden klara</h3></div><p>Slutför alla fyra områden innan vi prioriterar eller visar partnerförslag.</p></div></article></div>:
@@ -211,7 +205,7 @@ export default function SavingsApp(){
                 {partners.length>0&&<small className={styles.verifiedLine}>Partnerlänkar kontrollerade {partnerGroupCheckedLabel(partners)}</small>}
                 {partners.map((partner,partnerIndex)=><a key={partner.name} href={partner.trackingUrl} data-partner={partner.name} data-category={partner.category} data-intent={partnerIntent[result.key]} data-placement='cost_check_result' data-partner-position={partnerIndex+1} data-result-rank={index+1} target='_blank' rel='sponsored nofollow noopener'>{partnerIndex===0?'Jämför hos ':'Alternativ: '}{partner.name} <ArrowUpRight size={14}/></a>)}
                 <Link href={result.href}>{result.key==='forsakring'?'Välj försäkringstyp':'Jämför fler i guiden'} <ArrowRight size={14}/></Link>
-                {nextResult&&<a className={styles.nextCategory} href={`#result-${nextResult.key}`} onClick={()=>track('cost_check_next_category',{from:result.key,to:nextResult.key,rank:index+1})}>När du är klar: {nextResult.short} <ArrowRight size={14}/></a>}
+                {nextResult&&<a className={styles.nextCategory} href={`#result-${nextResult.key}`} onClick={()=>emitAnalyticsEvent('cost_check_next_category',{from:result.key,to:nextResult.key,rank:index+1})}>När du är klar: {nextResult.short} <ArrowRight size={14}/></a>}
               </div>
             </article>;
           })}
