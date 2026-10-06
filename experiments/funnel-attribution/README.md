@@ -1,6 +1,6 @@
 # Funnel attribution v3
 
-Status: first-party funnel attribution + verified Adtraction EPI and Addrevenue clickRef joins.
+Status: first-party funnel attribution + verified Adtraction EPI + verified Addrevenue clickRef join.
 
 ## First-party measurement
 
@@ -12,38 +12,46 @@ The IDs are random and are not derived from names, email addresses, phone number
 
 ## Adtraction
 
-Verified 2026-10-06 against Adtraction's current EPI documentation.
-
 For tracking links that match Adtraction's documented `/t/t?a=...&as=...&t=2&tk=1` structure, Sänk Kostnaden appends:
 
 - `epi=<local_click_id>`
 - `epi2=<funnel_session_id>`
 
-Adtraction documents EPI as its sub-ID function and states that EPI data is connected to conversions generated through the tracking link. For deeplinks, the destination `url` parameter remains last.
+Adtraction documents EPI as its sub-ID function and states that EPI data is connected to conversions generated through the tracking link. Up to five EPI values are supported.
+
+For Adtraction deeplinks, the destination `url` parameter is kept last.
+
+If a link already contains `epi`, the global attribution layer leaves it untouched. This protects isolated experiments that manage their own EPI values.
 
 ## Addrevenue
 
-Verified 2026-10-06 against Addrevenue's current tracking and API documentation.
+For links that match the current Addrevenue tracking structure:
 
-For tracking links that match `https://addrevenue.io/t?a=...&c=...`, Sänk Kostnaden appends:
+`https://addrevenue.io/t?a=...&c=...`
 
-- `clickRef=<local_click_id>`
+Sänk Kostnaden appends:
 
-Addrevenue documents `clickRef` as the click reference originating from the affiliate link and exposes `clickRef` on events and transactions. This lets approved transaction reporting be joined back to the corresponding local affiliate click without sending calculator inputs.
+- `r=<local_click_id>`
 
-No guessed `r`, `subid` or other undocumented outbound parameter is used.
+The value is the click reference for the outbound click and is intended to be available as `clickRef` on Addrevenue conversion/transaction data.
 
-## Existing references
+The implementation is deliberately narrow:
+- only host `addrevenue.io`
+- only path `/t`
+- only links containing both affiliate `a` and channel/campaign `c`
+- an existing `r` value is never overwritten
 
-If an Adtraction link already contains `epi`, or an Addrevenue link already contains `clickRef`, the global attribution layer leaves that value untouched. This protects isolated experiments and manually tagged links.
+We do not send the browser session ID to Addrevenue. The local click reference is enough to join an approved network conversion back to the first-party click, and the click already carries the `funnel_session_id` inside analytics.
 
-## Measurement chain
+This creates the chain:
 
-The intended chain is now:
+`tool event -> commercial continue -> affiliate_click(local_click_id + funnel_session_id) -> Addrevenue r/clickRef -> transaction`
 
-`tool event -> commercial continue -> affiliate_click(local_click_id + funnel_session_id) -> network reference -> transaction/conversion`
+## Networks not yet modified
 
-For Adtraction the join key is `epi`. For Addrevenue the join key is `clickRef`.
+Any tracking format that is not explicitly recognized remains unchanged. This includes custom partner redirects such as Bredbandsval until a supported click-reference format has been verified.
+
+The rule remains: do not guess network-specific query parameters.
 
 ## Analytics
 
@@ -66,27 +74,30 @@ Existing dimensions remain:
 
 ## Privacy
 
-Exact household costs remain local in the relevant tools. Network click references contain only random measurement IDs.
+Exact household costs remain local in the relevant tools. The session/click identifiers are random measurement IDs only.
 
 ## QA gates
 
 The automated attribution suite verifies that:
 
-1. calculator events and outbound clicks share one funnel session,
+1. calculator events and outbound Adtraction clicks share a funnel session,
 2. Adtraction `epi` equals the local click ID,
 3. Adtraction `epi2` equals the funnel session ID,
 4. Adtraction deeplink `url` remains last,
-5. Addrevenue `clickRef` equals the local click ID,
-6. existing EPI/clickRef values are preserved,
-7. repeat clicks get fresh local IDs,
-8. session storage contains no raw calculator values.
+5. repeat Adtraction clicks get fresh references,
+6. pre-existing Adtraction EPI is preserved,
+7. Addrevenue `r` equals the local click ID,
+8. pre-existing Addrevenue `r` is preserved,
+9. unsupported network links are not modified,
+10. session storage contains no raw calculator values.
 
-## Next reporting gate
+## Next measurement gate
 
-The next step is authenticated approved-conversion ingestion:
+Once real approved transactions are available, join them to `local_click_id` and calculate:
 
-1. obtain/read network reporting access,
-2. pull transactions with status and network reference,
-3. join `epi` / `clickRef` to local click IDs,
-4. calculate approved affiliate revenue per relevant visitor and per funnel,
-5. only then use revenue performance to adjust commercial exposure.
+- approved conversion rate per partner and placement,
+- approved revenue per relevant visit,
+- approved revenue per affiliate click,
+- tool-complete -> partner-click -> approved-conversion funnel.
+
+Do not optimize partner order from commission alone. Relevance remains the primary display criterion.
