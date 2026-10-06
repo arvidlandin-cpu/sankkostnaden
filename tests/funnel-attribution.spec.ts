@@ -12,7 +12,11 @@ async function fillElectricity(page:Page){
   await b.nth(2).fill('0');
 }
 
-test('calculator and affiliate click share one funnel session without changing partner URL',async({page})=>{
+async function preventNavigation(locator:any){
+  await locator.evaluate((element:any)=>element.addEventListener('click',(event:Event)=>event.preventDefault()));
+}
+
+test('calculator and Adtraction click share one funnel session and one EPI click reference',async({page})=>{
   await page.addInitScript(()=>{(window as any).dataLayer=[];});
   await page.goto('/verktyg/elavtalskostnad/?src=attribution_qa');
 
@@ -20,54 +24,122 @@ test('calculator and affiliate click share one funnel session without changing p
   await page.getByRole('button',{name:/Räkna årskostnaden/i}).click();
   await page.getByTestId('electricity-cost-commercial-cta').click();
 
-  const sponsored=page.locator('a[rel~="sponsored"]').first();
+  const sponsored=page.locator('a[data-partner="Elskling"]').first();
   await expect(sponsored).toBeVisible();
   const hrefBefore=await sponsored.getAttribute('href');
-  await sponsored.evaluate((element:any)=>element.addEventListener('click',(event:Event)=>event.preventDefault()));
+  expect(hrefBefore).not.toContain('epi=');
+
+  await preventNavigation(sponsored);
   await sponsored.click();
+
   const hrefAfter=await sponsored.getAttribute('href');
-
-  expect(hrefAfter).toBe(hrefBefore);
-
+  const tagged=new URL(hrefAfter!);
   const events=await page.evaluate(()=>(window as any).dataLayer||[]);
   const ready=events.find((item:any)=>item.event==='electricity_cost_ready');
   const continued=events.find((item:any)=>item.event==='electricity_cost_continue');
-  const click=events.find((item:any)=>item.event==='affiliate_click');
+  const click=events.find((item:any)=>item.event==='affiliate_click'&&item.partner==='Elskling');
 
   expect(ready?.funnel_session_id).toMatch(/^fs_/);
   expect(continued?.funnel_session_id).toBe(ready.funnel_session_id);
   expect(click?.funnel_session_id).toBe(ready.funnel_session_id);
   expect(click?.local_click_id).toMatch(/^clk_/);
-  expect(click?.partner).toBeTruthy();
-  expect(click?.placement).toBeTruthy();
+  expect(click?.affiliate_network).toBe('adtraction');
+  expect(click?.network_click_tagged).toBe(1);
+  expect(tagged.searchParams.get('epi')).toBe(click.local_click_id);
+  expect(tagged.searchParams.get('epi2')).toBe(click.funnel_session_id);
 });
 
-test('each outbound affiliate click gets a distinct local click id',async({page})=>{
+test('Adtraction deeplink keeps destination url last after EPI tagging',async({page})=>{
+  await page.addInitScript(()=>{(window as any).dataLayer=[];});
+  await page.goto('/mobil/billigaste-mobilabonnemanget/?qa=1');
+
+  const link=page.locator('a[data-partner="Comviq"]').first();
+  await expect(link).toHaveCount(1);
+  await preventNavigation(link);
+  await link.evaluate((element:any)=>element.click());
+
+  const href=await link.getAttribute('href');
+  expect(href).toContain('epi=');
+  expect(href).toContain('epi2=');
+  expect(href!.indexOf('&url=')).toBeGreaterThan(href!.indexOf('&epi2='));
+  expect(href!.match(/&url=/g)?.length).toBe(1);
+});
+
+test('each standard Adtraction click gets a fresh EPI and local click id',async({page})=>{
   await page.addInitScript(()=>{(window as any).dataLayer=[];});
   await page.goto('/elavtal/billigaste-elavtalet/?qa=1');
 
-  const sponsored=page.locator('a[rel~="sponsored"]');
-  await expect(sponsored.first()).toBeVisible();
-  await sponsored.first().evaluate((element:any)=>element.addEventListener('click',(event:Event)=>event.preventDefault()));
-  await sponsored.first().click();
-  await sponsored.first().click();
+  const link=page.locator('a[data-partner="Elskling"]').first();
+  await expect(link).toHaveCount(1);
+  await preventNavigation(link);
 
-  const clicks=await page.evaluate(()=>(window as any).dataLayer.filter((item:any)=>item.event==='affiliate_click'));
+  await link.evaluate((element:any)=>element.click());
+  const firstHref=await link.getAttribute('href');
+  const firstEpi=new URL(firstHref!).searchParams.get('epi');
+
+  await link.evaluate((element:any)=>element.click());
+  const secondHref=await link.getAttribute('href');
+  const secondEpi=new URL(secondHref!).searchParams.get('epi');
+
+  const clicks=await page.evaluate(()=>(window as any).dataLayer.filter((item:any)=>item.event==='affiliate_click'&&item.partner==='Elskling'));
   expect(clicks.length).toBeGreaterThanOrEqual(2);
-  expect(clicks[0].local_click_id).not.toBe(clicks[1].local_click_id);
+  expect(firstEpi).toBe(clicks[0].local_click_id);
+  expect(secondEpi).toBe(clicks[1].local_click_id);
+  expect(firstEpi).not.toBe(secondEpi);
   expect(clicks[0].funnel_session_id).toBe(clicks[1].funnel_session_id);
+});
+
+test('pre-existing EPI is preserved instead of overwritten',async({page})=>{
+  await page.addInitScript(()=>{(window as any).dataLayer=[];});
+  await page.goto('/elavtal/billigaste-elavtalet/?qa=1');
+
+  const link=page.locator('a[data-partner="Elskling"]').first();
+  await link.evaluate((element:any)=>{
+    const url=new URL(element.href);
+    url.searchParams.set('epi','existing_reference');
+    element.href=url.toString();
+    element.addEventListener('click',(event:Event)=>event.preventDefault());
+  });
+
+  await link.evaluate((element:any)=>element.click());
+  const href=await link.getAttribute('href');
+  const url=new URL(href!);
+  expect(url.searchParams.get('epi')).toBe('existing_reference');
+
+  const click=await page.evaluate(()=>(window as any).dataLayer.find((item:any)=>item.event==='affiliate_click'&&item.partner==='Elskling'));
+  expect(click.network_tag_reason).toBe('existing_epi');
+  expect(click.network_click_tagged).toBe(0);
+});
+
+test('unsupported network link is not modified',async({page})=>{
+  await page.addInitScript(()=>{(window as any).dataLayer=[];});
+  await page.goto('/forsakring/jamfor-hemforsakring/?qa=1');
+
+  const link=page.locator('a[data-partner="Hedvig"]').first();
+  await expect(link).toHaveCount(1);
+  const before=await link.getAttribute('href');
+  await preventNavigation(link);
+  await link.evaluate((element:any)=>element.click());
+  const after=await link.getAttribute('href');
+
+  expect(after).toBe(before);
+  const click=await page.evaluate(()=>(window as any).dataLayer.find((item:any)=>item.event==='affiliate_click'&&item.partner==='Hedvig'));
+  expect(click.affiliate_network).toBe('unknown');
+  expect(click.network_click_tagged).toBe(0);
+  expect(click.network_tag_reason).toBe('unsupported');
 });
 
 test('last click context is session-only and contains no raw calculator values',async({page})=>{
   await page.addInitScript(()=>{(window as any).dataLayer=[];});
   await page.goto('/elavtal/billigaste-elavtalet/?qa=1');
-  const sponsored=page.locator('a[rel~="sponsored"]').first();
-  await sponsored.evaluate((element:any)=>element.addEventListener('click',(event:Event)=>event.preventDefault()));
-  await sponsored.click();
+  const sponsored=page.locator('a[data-partner="Elskling"]').first();
+  await preventNavigation(sponsored);
+  await sponsored.evaluate((element:any)=>element.click());
 
   const stored=await page.evaluate(()=>JSON.parse(sessionStorage.getItem('sankkostnaden-last-affiliate-click-v1')||'{}'));
   expect(stored.local_click_id).toMatch(/^clk_/);
-  expect(stored.partner).toBeTruthy();
+  expect(stored.partner).toBe('Elskling');
+  expect(stored.network).toBe('adtraction');
   expect(stored.page_path).toBe('/elavtal/billigaste-elavtalet/');
   expect(JSON.stringify(stored)).not.toContain('annualKwh');
   expect(JSON.stringify(stored)).not.toContain('monthly');

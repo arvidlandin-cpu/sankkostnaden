@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - commercial/funnel-attribution-v1
+      - commercial/adtraction-epi-v1
     paths:
       - '.github/workflows/funnel-attribution-qa.yml'
       - 'lib/clientAttribution.ts'

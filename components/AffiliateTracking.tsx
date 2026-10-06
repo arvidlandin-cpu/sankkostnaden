@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { partners, type PartnerCategory, type PartnerIntent } from '../lib/partners';
-import { createLocalClickId, emitAnalyticsEvent, rememberAffiliateClick } from '../lib/clientAttribution';
+import { createLocalClickId, decorateAdtractionTrackingUrl, emitAnalyticsEvent, getFunnelSessionId, rememberAffiliateClick } from '../lib/clientAttribution';
 
 declare global {
   interface Window {
@@ -103,10 +103,26 @@ export default function AffiliateTracking() {
       if (!(target instanceof Element)) return;
       const anchor = target.closest('a[href]') as HTMLAnchorElement | null;
       if (!anchor) return;
+
+      const baseHref=anchor.dataset.skAffiliateBaseHref||anchor.href;
+      if(!anchor.dataset.skAffiliateBaseHref) anchor.dataset.skAffiliateBaseHref=baseHref;
+      else anchor.href=baseHref;
+
       const params = resolve(anchor);
       if (params) {
         const localClickId=createLocalClickId();
-        const clickParams={...params,local_click_id:localClickId};
+        const funnelSessionId=getFunnelSessionId();
+        const decoration=decorateAdtractionTrackingUrl(baseHref,localClickId,funnelSessionId);
+
+        if(decoration.tagged) anchor.href=decoration.url;
+
+        const clickParams={
+          ...params,
+          local_click_id:localClickId,
+          affiliate_network:decoration.network,
+          network_click_tagged:decoration.tagged?1:0,
+          network_tag_reason:decoration.reason,
+        };
         rememberAffiliateClick({
           localClickId,
           partner:String(params.partner||'unknown'),
@@ -114,6 +130,7 @@ export default function AffiliateTracking() {
           intent:String(params.intent||'unknown'),
           placement:String(params.placement||'unknown'),
           pagePath:String(params.page_path||window.location.pathname),
+          network:decoration.network,
         });
         emitAnalyticsEvent('affiliate_click',clickParams);
       }
