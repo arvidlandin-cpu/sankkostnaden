@@ -1,34 +1,35 @@
-# Funnel attribution v1
+# Funnel attribution v2
 
-Status: safe first-party funnel attribution.
+Status: safe first-party funnel attribution with verified network click references.
 
 ## What this adds
 
-Commercial tool events, partner impressions and outbound affiliate clicks now share a random `funnel_session_id` for the current browser session.
+Commercial tool events, partner impressions and outbound affiliate clicks share a random `funnel_session_id` for the current browser session.
 
-Every affiliate click also receives a unique `local_click_id`. The latest click context is kept in sessionStorage so the funnel can be debugged without persisting the user's calculator inputs.
+Every affiliate click receives a unique `local_click_id`. The latest click context is kept in sessionStorage so the funnel can be debugged without persisting calculator inputs.
 
-The IDs are random and are not derived from names, email addresses, phone numbers, contract dates or household costs.
+For tracking-link formats that have now been verified against current network documentation, the same random local click ID is also passed to the affiliate network:
 
-## What this does not do
+- **Adtraction:** `epi=<local_click_id>`
+- **Addrevenue:** `clickRef=<local_click_id>`
 
-This version deliberately does **not** append `epi`, `clickRef`, `subid`, `r` or other network-specific parameters to affiliate URLs.
+Adtraction deeplinks keep the destination `url` parameter last, as required by Adtraction's EPI documentation. Unsupported or unverified tracking formats are left unchanged.
 
-Reason: the active portfolio spans several networks and redirect formats. A guessed parameter could break attribution or commission. Network-level approved-conversion joining must only be enabled after the exact supported parameter and reporting field are verified for that network/program.
+## Why this is safe
 
-Until that verification exists, the reliable chain is:
+The IDs are random and are not derived from names, email addresses, phone numbers, contract dates, household costs or other calculator inputs.
 
-`tool event -> commercial continue -> affiliate_click(local_click_id + funnel_session_id)`
-
-Approved conversion/revenue remains network-side and is not yet joined to the local click ID.
+The original DOM link is restored immediately after the click event. Only the actual outbound click receives the supported network reference.
 
 ## Measurement
 
 Shared event parameter:
 - `funnel_session_id`
 
-Affiliate click parameter:
+Affiliate click parameters:
 - `local_click_id`
+- `affiliate_network`
+- `network_click_reference`
 
 Existing dimensions remain:
 - partner
@@ -38,14 +39,18 @@ Existing dimensions remain:
 - page path
 - partner position / result rank when available
 
+## Conversion joining
+
+Adtraction documents that EPI is attached to transactions/statistics and can therefore be used to identify which link produced a conversion.
+
+Addrevenue exposes `clickRef` on click/event and transaction reporting. The production links now send the same `local_click_id` through that field.
+
+This creates the intended chain:
+
+`tool event -> commercial continue -> affiliate_click(local_click_id) -> network click reference -> transaction/conversion`
+
+Actual approved-conversion ingestion still requires authenticated network reporting/API access and is a separate reporting step.
+
 ## Privacy
 
-Exact household costs in Kostnadskollen remain local. The session/click identifiers are random measurement IDs only. Cookie/privacy copy has been updated to describe the sessionStorage use.
-
-## Next attribution gate
-
-For each affiliate network:
-1. verify the supported outbound sub-ID/click-reference parameter,
-2. verify that the same value is returned in transaction/approved-conversion reporting,
-3. test one partner end-to-end,
-4. only then roll it out across that network.
+Exact household costs in Kostnadskollen remain local. The session/click identifiers are random measurement IDs only. Cookie/privacy copy describes that a supported affiliate network can receive the random click ID as a click reference.
