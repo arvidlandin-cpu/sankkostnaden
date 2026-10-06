@@ -26,6 +26,10 @@ on:
       - 'styles/TrafficTools.module.css'
       - 'pages/mobil/lonar-sig-familjeabonnemang.tsx'
       - 'pages/mobil/familjeabonnemang.tsx'
+      - 'pages/app.tsx'
+      - 'pages/verktyg/hushallskostnadskollen.tsx'
+      - 'styles/App.module.css'
+      - 'lib/costPrioritizer.ts'
   workflow_dispatch:
     inputs:
       base_url:
@@ -78,7 +82,8 @@ jobs:
         run: |
           for i in {1..90}; do
             if curl -fsS "$QA_BASE_URL/verktyg/byteskalender/" | grep -q "När behöver du agera" && \
-               curl -fsS "$QA_BASE_URL/mobil/lonar-sig-familjeabonnemang/" | grep -q "2–5 separata abonnemang"; then
+               curl -fsS "$QA_BASE_URL/mobil/lonar-sig-familjeabonnemang/" | grep -q "2–5 separata abonnemang" && \
+               curl -fsS "$QA_BASE_URL/app/" | grep -q "Exakta belopp skickas inte"; then
               exit 0
             fi
             sleep 2
