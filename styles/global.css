@@ -2463,3 +2463,51 @@ footer{
   .utilityToolCard{grid-template-columns:1fr;padding:17px}
   .utilityToolCard>a{width:100%;box-sizing:border-box}
 }
+
+
+.siteFooter{
+  margin-top:64px;
+  border-top:1px solid #e1e6e1;
+  background:#f7f9f6;
+}
+.siteFooterInner{
+  width:min(1120px,calc(100% - 32px));
+  margin:0 auto;
+  padding:30px 0 96px;
+  display:grid;
+  grid-template-columns:minmax(0,1.4fr) minmax(220px,.6fr);
+  gap:36px;
+}
+.siteFooterBrand>a{
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  color:#17201b;
+  text-decoration:none;
+}
+.siteFooterBrand p{
+  max-width:660px;
+  margin:12px 0 0;
+  color:#67726b;
+  font-size:12px;
+  line-height:1.6;
+}
+.siteFooter nav{
+  display:grid;
+  align-content:start;
+  gap:8px;
+}
+.siteFooter nav a{
+  color:#334038;
+  font-size:12px;
+  font-weight:800;
+  text-decoration:none;
+}
+.siteFooter nav a:hover{text-decoration:underline}
+@media(max-width:700px){
+  .siteFooterInner{
+    grid-template-columns:1fr;
+    gap:22px;
+    padding:24px 0 104px;
+  }
+}
