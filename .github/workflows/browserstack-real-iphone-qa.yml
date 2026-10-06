@@ -14,8 +14,11 @@ on:
       - 'styles/MobileSurfPilot.module.css'
       - 'components/experiments/FirstYearCostCalculator.tsx'
       - 'pages/verktyg/forstaarskostnad.tsx'
+      - 'pages/verktyg/forstaarskostnad-bredband.tsx'
       - 'styles/FirstYearCostCalculator.module.css'
       - 'pages/mobil/billigaste-mobilabonnemanget.tsx'
+      - 'pages/bredband/billigaste-bredbandet.tsx'
+      - 'pages/bredband/utan-bindningstid.tsx'
       - 'components/tools/SwitchCalendar.tsx'
       - 'pages/verktyg/byteskalender.tsx'
       - 'styles/SwitchCalendar.module.css'
@@ -83,7 +86,8 @@ jobs:
           for i in {1..90}; do
             if curl -fsS "$QA_BASE_URL/verktyg/byteskalender/" | grep -q "När behöver du agera" && \
                curl -fsS "$QA_BASE_URL/mobil/lonar-sig-familjeabonnemang/" | grep -q "2–5 separata abonnemang" && \
-               curl -fsS "$QA_BASE_URL/app/" | grep -q "Exakta belopp skickas inte"; then
+               curl -fsS "$QA_BASE_URL/app/" | grep -q "Exakta belopp skickas inte" && \
+               curl -fsS "$QA_BASE_URL/verktyg/forstaarskostnad-bredband/" | grep -q "KOSTNADSKALKYL"; then
               exit 0
             fi
             sleep 2
