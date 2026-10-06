@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { partners, type PartnerCategory, type PartnerIntent } from '../lib/partners';
+import { createLocalClickId, emitAnalyticsEvent, rememberAffiliateClick } from '../lib/clientAttribution';
 
 declare global {
   interface Window {
@@ -97,18 +98,25 @@ export default function AffiliateTracking() {
       };
     };
 
-    const emit = (eventName: string, params: Record<string, unknown>) => {
-      if (typeof window.gtag === 'function') window.gtag('event', eventName, params);
-      else if (Array.isArray(window.dataLayer)) window.dataLayer.push({ event: eventName, ...params });
-    };
-
     const handleClick = (event: MouseEvent) => {
       const target = event.target;
       if (!(target instanceof Element)) return;
       const anchor = target.closest('a[href]') as HTMLAnchorElement | null;
       if (!anchor) return;
       const params = resolve(anchor);
-      if (params) emit('affiliate_click', params);
+      if (params) {
+        const localClickId=createLocalClickId();
+        const clickParams={...params,local_click_id:localClickId};
+        rememberAffiliateClick({
+          localClickId,
+          partner:String(params.partner||'unknown'),
+          category:String(params.category||'unknown'),
+          intent:String(params.intent||'unknown'),
+          placement:String(params.placement||'unknown'),
+          pagePath:String(params.page_path||window.location.pathname),
+        });
+        emitAnalyticsEvent('affiliate_click',clickParams);
+      }
     };
 
     const observed = new WeakSet<HTMLAnchorElement>();
@@ -134,7 +142,7 @@ export default function AffiliateTracking() {
         observer?.unobserve(anchor);
         if (seenImpressionKeys.has(key)) return;
         seenImpressionKeys.add(key);
-        emit('partner_impression', params);
+        emitAnalyticsEvent('partner_impression', params);
       });
     }, { threshold: [0.35] }) : null;
 
