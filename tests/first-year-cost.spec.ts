@@ -1,0 +1,60 @@
+import { expect, test } from '@playwright/test';
+
+const route = '/experiments/forstaarskostnad/';
+
+async function fillOfferA(page: any) {
+  const offer = page.getByTestId('offer-a');
+  const inputs = offer.locator('input[type="number"]');
+  await inputs.nth(0).fill('199');
+  await inputs.nth(1).fill('6');
+  await inputs.nth(2).fill('449');
+  await inputs.nth(3).fill('0');
+  await inputs.nth(4).fill('299');
+}
+
+async function fillOfferB(page: any) {
+  const offer = page.getByTestId('offer-b');
+  const inputs = offer.locator('input[type="number"]');
+  await inputs.nth(0).fill('349');
+  await inputs.nth(1).fill('12');
+  await inputs.nth(2).fill('499');
+  await inputs.nth(3).fill('0');
+  await inputs.nth(4).fill('0');
+}
+
+test('calculates first-year cost and comparison correctly', async ({ page }) => {
+  await page.goto(route);
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex,nofollow,noarchive');
+
+  await fillOfferA(page);
+  await fillOfferB(page);
+
+  await expect(page.getByTestId('offer-a-total')).toContainText('4 187');
+  await expect(page.getByTestId('offer-b-total')).toContainText('4 188');
+  await expect(page.getByTestId('comparison-result')).toContainText('Alternativ A');
+  await expect(page.getByTestId('comparison-result')).toContainText('1 kr');
+});
+
+for (const viewport of [
+  { width: 360, height: 800 },
+  { width: 390, height: 844 },
+  { width: 430, height: 932 },
+]) {
+  test(`mobile layout has no horizontal overflow @ ${viewport.width}px`, async ({ page }) => {
+    await page.setViewportSize(viewport);
+    await page.goto(route);
+    await fillOfferA(page);
+
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+    expect(overflow).toBeLessThanOrEqual(1);
+  });
+}
+
+test('campaign period is capped at 12 months', async ({ page }) => {
+  await page.goto(route);
+  const inputs = page.getByTestId('offer-a').locator('input[type="number"]');
+  await inputs.nth(0).fill('100');
+  await inputs.nth(1).fill('24');
+  await inputs.nth(2).fill('999');
+  await expect(page.getByTestId('offer-a-total')).toContainText('1 200');
+});

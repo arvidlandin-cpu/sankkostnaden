@@ -1,0 +1,281 @@
+.topbar {
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 22px;
+  border-bottom: 1px solid #e5e9e5;
+  background: #fff;
+  color: #526057;
+  font-size: 12px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: #17201b;
+  text-decoration: none;
+}
+
+.shell {
+  width: min(1080px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 28px 0 72px;
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 26px;
+  color: #566159;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.hero {
+  max-width: 760px;
+  margin-bottom: 30px;
+}
+
+.icon {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 16px;
+  border-radius: 14px;
+  background: #eaf3e8;
+  color: #26352c;
+}
+
+.kicker,
+.comparison > span {
+  margin: 0 0 8px;
+  color: #667168;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .11em;
+}
+
+.hero h1 {
+  margin: 0;
+  max-width: 720px;
+  color: #17201b;
+  font-size: clamp(32px, 5vw, 56px);
+  line-height: .98;
+  letter-spacing: -.045em;
+}
+
+.hero > p:last-child {
+  max-width: 680px;
+  margin: 18px 0 0;
+  color: #657068;
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+.offers {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.offer {
+  padding: 22px;
+  border: 1px solid #dde3dd;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 10px 34px rgba(27, 40, 31, .05);
+}
+
+.nameField,
+.field {
+  display: block;
+}
+
+.nameField > span,
+.field > span {
+  display: block;
+  margin-bottom: 7px;
+  color: #59655e;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.nameField input,
+.field input {
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid #d8ded8;
+  border-radius: 11px;
+  background: #fbfcfa;
+  color: #17201b;
+  font: inherit;
+  font-weight: 750;
+  box-sizing: border-box;
+}
+
+.nameField input {
+  font-size: 17px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 13px;
+  margin-top: 18px;
+}
+
+.field > div {
+  position: relative;
+}
+
+.field input {
+  padding-right: 48px;
+}
+
+.field b {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #89928c;
+  font-size: 11px;
+}
+
+.result {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid #edf0ed;
+}
+
+.result div {
+  min-width: 0;
+}
+
+.result span {
+  display: block;
+  margin-bottom: 6px;
+  color: #78827b;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.result strong {
+  display: block;
+  color: #17201b;
+  font-size: clamp(20px, 3vw, 28px);
+  letter-spacing: -.035em;
+}
+
+.breakdown {
+  margin-top: 16px;
+  color: #657068;
+  font-size: 12px;
+}
+
+.breakdown summary {
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.breakdown p {
+  margin: 8px 0 0;
+  line-height: 1.45;
+}
+
+.comparison {
+  margin-top: 18px;
+  padding: 24px;
+  border-radius: 20px;
+  background: #1f2e26;
+  color: #eaf0eb;
+}
+
+.comparison > span {
+  color: #dff46a;
+}
+
+.comparison h2 {
+  margin: 0;
+  font-size: clamp(23px, 4vw, 36px);
+  line-height: 1.08;
+}
+
+.comparison h2 strong {
+  color: #dff46a;
+}
+
+.comparison p {
+  margin: 10px 0 0;
+  color: #c6d0c9;
+  line-height: 1.55;
+}
+
+.note {
+  margin-top: 18px;
+  padding: 18px 20px;
+  border: 1px solid #e1e6e1;
+  border-radius: 16px;
+  background: #f8faf7;
+  color: #566159;
+}
+
+.note strong {
+  display: block;
+  margin-bottom: 6px;
+  color: #253029;
+}
+
+.note p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+@media (max-width: 760px) {
+  .topbar {
+    padding: 0 16px;
+  }
+
+  .topbar > span {
+    max-width: 150px;
+    text-align: right;
+  }
+
+  .shell {
+    width: min(100% - 24px, 1080px);
+    padding-top: 20px;
+  }
+
+  .offers {
+    grid-template-columns: 1fr;
+  }
+
+  .offer {
+    padding: 17px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 390px) {
+  .grid,
+  .result {
+    grid-template-columns: 1fr;
+  }
+
+  .hero h1 {
+    font-size: 34px;
+  }
+}
