@@ -3,6 +3,7 @@ import { test, expect } from '@playwright/test';
 const routes = [
   { slug: 'home', path: '/' },
   { slug: 'bredband', path: '/bredband/' },
+  { slug: 'bredband-100-100', path: '/bredband/100-100/' },
   { slug: 'mobil', path: '/mobil/' },
   { slug: 'mobil-billigaste', path: '/mobil/billigaste-mobilabonnemanget/' },
   { slug: 'mobil-familj', path: '/mobil/familjeabonnemang/' },
@@ -19,6 +20,7 @@ const routes = [
   { slug: 'byta-elavtal', path: '/elavtal/byta-elavtal/' },
   { slug: 'byteskalender', path: '/verktyg/byteskalender/' },
   { slug: 'forsakring', path: '/forsakring/' },
+  { slug: 'forsakring-bostadsratt', path: '/forsakring/hemforsakring-bostadsratt/' },
   { slug: 'ekonomi', path: '/ekonomi/' },
   { slug: 'kostnadskollen', path: '/app/' },
   { slug: 'hushallskostnadskollen', path: '/verktyg/hushallskostnadskollen/' },
