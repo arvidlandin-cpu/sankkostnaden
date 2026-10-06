@@ -1,0 +1,67 @@
+name: Electricity cost QA
+
+on:
+  push:
+    branches:
+      - commercial/electricity-cost-tool-v1
+    paths:
+      - '.github/workflows/electricity-cost-qa.yml'
+      - 'lib/electricityCost.ts'
+      - 'components/tools/ElectricityCostCalculator.tsx'
+      - 'styles/ElectricityCostCalculator.module.css'
+      - 'pages/verktyg/elavtalskostnad.tsx'
+      - 'pages/elavtal/jamfor-elavtal.tsx'
+      - 'pages/elavtal/billigaste-elavtalet.tsx'
+      - 'pages/elavtal/rorligt-elpris.tsx'
+      - 'components/IntentGuide.tsx'
+      - 'styles/global.css'
+      - 'tests/electricity-cost.spec.ts'
+      - 'scripts/check-integrity.mjs'
+  workflow_dispatch:
+
+jobs:
+  electricity-cost-qa:
+    runs-on: ubuntu-latest
+    env:
+      QA_BASE_URL: 'http://127.0.0.1:3000'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Use Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.16.0
+      - name: Install dependencies
+        run: npm install --progress=false
+      - name: Existing checks
+        run: |
+          npm run check
+          npm run check:integrity
+      - name: Build static export
+        run: npx next build
+      - name: Check exported links
+        run: npm run check:export
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Start local static server
+        run: |
+          python3 -m http.server 3000 --directory out > /tmp/electricity-cost-http.log 2>&1 &
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:3000/verktyg/elavtalskostnad/ >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/electricity-cost-http.log
+          exit 1
+      - name: Run electricity cost QA
+        run: npx playwright test tests/electricity-cost.spec.ts --project=chromium
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: electricity-cost-qa
+          path: |
+            test-results/
+            playwright-report/
+          retention-days: 14
