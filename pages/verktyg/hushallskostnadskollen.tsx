@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import { ArrowLeft, ArrowRight, Calculator, PiggyBank } from 'lucide-react';
 import { costCheckStorageKey, emptyCostAnswers, normalizeCostAnswers } from '../../lib/costPrioritizer';
+import { emitAnalyticsEvent } from '../../lib/clientAttribution';
 
 const rows = [
   ['Boende', 'boende', 'Hyra/avgift, ränta och andra återkommande boendekostnader'],
@@ -26,13 +27,6 @@ const links:Partial<Record<Key,{href:string;label:string}>>={
   forsakring:{href:'/forsakring/jamfor-forsakring/',label:'Kontrollera försäkring'},
 };
 
-function track(event:string,params:Record<string,string|number>={}){
-  if(typeof window==='undefined') return;
-  const w=window as Window & { gtag?:(...args:unknown[])=>void; dataLayer?:Record<string,unknown>[] };
-  if(typeof w.gtag==='function') w.gtag('event',event,params);
-  else if(Array.isArray(w.dataLayer)) w.dataLayer.push({event,...params});
-}
-
 export default function Hushallskostnadskoll(){
   const [values,setValues]=useState<Values>(empty);
   const parsed=useMemo(()=>Object.fromEntries(rows.map(([,key])=>[key,Math.max(0,Number((values[key]||'0').replace(',','.'))||0)])) as Record<Key,number>,[values]);
@@ -54,7 +48,7 @@ export default function Hushallskostnadskoll(){
         forsakring:{...current.forsakring,monthly:parsed.forsakring},
       });
       window.localStorage.setItem(costCheckStorageKey,JSON.stringify({answers,scenarioPct:10,updatedAt:Date.now(),source:'hushallskostnadskollen'}));
-      track('household_cost_to_prioritizer',{categories_with_cost:comparableCount});
+      emitAnalyticsEvent('household_cost_to_prioritizer',{categories_with_cost:comparableCount});
     }catch{}
   };
 
