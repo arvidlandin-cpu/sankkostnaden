@@ -1,0 +1,66 @@
+name: Funnel attribution QA
+
+on:
+  push:
+    branches:
+      - commercial/funnel-attribution-v1
+    paths:
+      - '.github/workflows/funnel-attribution-qa.yml'
+      - 'lib/clientAttribution.ts'
+      - 'components/AffiliateTracking.tsx'
+      - 'components/experiments/FirstYearCostCalculator.tsx'
+      - 'components/tools/SwitchCalendar.tsx'
+      - 'components/tools/FamilyMobileCost.tsx'
+      - 'components/tools/ElectricityCostCalculator.tsx'
+      - 'pages/app.tsx'
+      - 'pages/verktyg/hushallskostnadskollen.tsx'
+      - 'tests/funnel-attribution.spec.ts'
+      - 'scripts/check-integrity.mjs'
+  workflow_dispatch:
+
+jobs:
+  funnel-attribution-qa:
+    runs-on: ubuntu-latest
+    env:
+      QA_BASE_URL: 'http://127.0.0.1:3000'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Use Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.16.0
+      - name: Install dependencies
+        run: npm install --progress=false
+      - name: Existing checks
+        run: |
+          npm run check
+          npm run check:integrity
+      - name: Build static export
+        run: npx next build
+      - name: Check exported links
+        run: npm run check:export
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Start local static server
+        run: |
+          python3 -m http.server 3000 --directory out > /tmp/funnel-attribution-http.log 2>&1 &
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:3000/verktyg/elavtalskostnad/ >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/funnel-attribution-http.log
+          exit 1
+      - name: Run attribution QA
+        run: npx playwright test tests/funnel-attribution.spec.ts --project=chromium
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: funnel-attribution-qa
+          path: |
+            test-results/
+            playwright-report/
+          retention-days: 14
