@@ -111,22 +111,49 @@ test('pre-existing EPI is preserved instead of overwritten',async({page})=>{
   expect(click.network_click_tagged).toBe(0);
 });
 
-test('unsupported network link is not modified',async({page})=>{
+test('Addrevenue click receives clickRef equal to the local click id',async({page})=>{
   await page.addInitScript(()=>{(window as any).dataLayer=[];});
   await page.goto('/forsakring/jamfor-hemforsakring/?qa=1');
 
   const link=page.locator('a[data-partner="Hedvig"]').first();
   await expect(link).toHaveCount(1);
   const before=await link.getAttribute('href');
+  expect(before).not.toContain('clickRef=');
+
   await preventNavigation(link);
   await link.evaluate((element:any)=>element.click());
-  const after=await link.getAttribute('href');
 
-  expect(after).toBe(before);
+  const after=await link.getAttribute('href');
+  const tagged=new URL(after!);
   const click=await page.evaluate(()=>(window as any).dataLayer.find((item:any)=>item.event==='affiliate_click'&&item.partner==='Hedvig'));
-  expect(click.affiliate_network).toBe('unknown');
+
+  expect(click.affiliate_network).toBe('addrevenue');
+  expect(click.network_click_tagged).toBe(1);
+  expect(click.network_tag_reason).toBe('tagged');
+  expect(tagged.searchParams.get('clickRef')).toBe(click.local_click_id);
+});
+
+test('pre-existing Addrevenue clickRef is preserved',async({page})=>{
+  await page.addInitScript(()=>{(window as any).dataLayer=[];});
+  await page.goto('/forsakring/jamfor-hemforsakring/?qa=1');
+
+  const link=page.locator('a[data-partner="Hedvig"]').first();
+  await link.evaluate((element:any)=>{
+    const url=new URL(element.href);
+    url.searchParams.set('clickRef','existing_reference');
+    element.href=url.toString();
+    element.addEventListener('click',(event:Event)=>event.preventDefault());
+  });
+
+  await link.evaluate((element:any)=>element.click());
+  const href=await link.getAttribute('href');
+  const url=new URL(href!);
+  expect(url.searchParams.get('clickRef')).toBe('existing_reference');
+
+  const click=await page.evaluate(()=>(window as any).dataLayer.find((item:any)=>item.event==='affiliate_click'&&item.partner==='Hedvig'));
+  expect(click.affiliate_network).toBe('addrevenue');
   expect(click.network_click_tagged).toBe(0);
-  expect(click.network_tag_reason).toBe('unsupported');
+  expect(click.network_tag_reason).toBe('existing_clickref');
 });
 
 test('last click context is session-only and contains no raw calculator values',async({page})=>{
