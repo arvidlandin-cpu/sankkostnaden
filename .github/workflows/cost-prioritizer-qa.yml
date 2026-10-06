@@ -1,0 +1,62 @@
+name: Cost prioritizer QA
+
+on:
+  push:
+    branches:
+      - commercial/cost-prioritizer-v5
+    paths:
+      - '.github/workflows/cost-prioritizer-qa.yml'
+      - 'lib/costPrioritizer.ts'
+      - 'pages/app.tsx'
+      - 'pages/verktyg/hushallskostnadskollen.tsx'
+      - 'styles/App.module.css'
+      - 'tests/cost-prioritizer.spec.ts'
+      - 'scripts/check-integrity.mjs'
+  workflow_dispatch:
+
+jobs:
+  cost-prioritizer-qa:
+    runs-on: ubuntu-latest
+    env:
+      QA_BASE_URL: 'http://127.0.0.1:3000'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Use Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.16.0
+      - name: Install dependencies
+        run: npm install --progress=false
+      - name: Existing checks
+        run: |
+          npm run check
+          npm run check:integrity
+      - name: Build static export
+        run: npx next build
+      - name: Check exported links
+        run: npm run check:export
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Start local static server
+        run: |
+          python3 -m http.server 3000 --directory out > /tmp/cost-prioritizer-http.log 2>&1 &
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:3000/app/ >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/cost-prioritizer-http.log
+          exit 1
+      - name: Run prioritizer QA
+        run: npx playwright test tests/cost-prioritizer.spec.ts --project=chromium
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cost-prioritizer-qa
+          path: |
+            test-results/
+            playwright-report/
+          retention-days: 14

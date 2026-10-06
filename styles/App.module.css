@@ -819,3 +819,70 @@
   .scoreOrb{min-width:0;width:100%;align-items:flex-start;text-align:left}
   .scoreOrb strong{max-width:none}
 }
+
+
+.scenarioBox{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:22px;
+  align-items:center;
+  margin:0 0 18px;
+  padding:20px 22px;
+  border:1px solid #d9e3cf;
+  border-radius:16px;
+  background:#f7faef;
+}
+.scenarioBox span{
+  display:block;
+  margin-bottom:5px;
+  color:#70803f;
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:.1em;
+}
+.scenarioBox h3{
+  margin:0 0 5px;
+  color:#17201b;
+  font-size:21px;
+}
+.scenarioBox p{
+  margin:0;
+  color:#69746d;
+  font-size:11px;
+  line-height:1.5;
+}
+.scenarioButtons{
+  display:flex;
+  gap:7px;
+}
+.scenarioButtons button{
+  min-width:52px;
+  min-height:42px;
+  border:1px solid #d6ddd2;
+  border-radius:10px;
+  background:#fff;
+  color:#536058;
+  font:inherit;
+  font-size:12px;
+  font-weight:900;
+  cursor:pointer;
+}
+.scenarioButtons .scenarioSelected{
+  border-color:#17201b;
+  background:#17201b;
+  color:#dff46a;
+}
+.scenarioLine{
+  margin:11px 0 0;
+  color:#5d6961;
+  font-size:11px;
+  line-height:1.5;
+}
+.scenarioLine strong{
+  color:#17201b;
+}
+@media(max-width:760px){
+  .scenarioBox{grid-template-columns:1fr;padding:17px}
+  .scenarioButtons{display:grid;grid-template-columns:repeat(3,1fr)}
+  .scenarioButtons button{width:100%}
+}
