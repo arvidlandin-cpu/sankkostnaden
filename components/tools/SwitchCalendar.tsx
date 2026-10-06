@@ -132,7 +132,7 @@ export default function SwitchCalendar() {
             <span>3. Vilken uppsägningstid står i avtalet?</span>
             <div className={styles.noticeRow}>
               <input
-                aria-label='Uppsägningstid'
+                aria-label='Antal för uppsägningstid'
                 type='number'
                 inputMode='numeric'
                 min='0'
