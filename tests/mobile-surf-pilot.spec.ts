@@ -118,7 +118,7 @@ test('participant invite hides experiment internals and records feedback', async
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto(`${route}?src=invite_v1`);
 
-  await expect(page.getByText('Testversion', { exact: true })).toBeVisible();
+  await expect(page.getByText('Mobilguiden', { exact: true })).toBeVisible();
   await expect(page.getByTestId('pilot-variant')).toHaveCount(0);
   await expect(page.getByText(/Experiment:/)).toHaveCount(0);
   await expect(page.getByText(/Fryst prototyp/)).toHaveCount(0);

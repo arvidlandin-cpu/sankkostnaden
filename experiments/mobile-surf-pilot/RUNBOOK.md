@@ -1,10 +1,10 @@
 # Mobile surf pilot – live runbook
 
-Updated: 2026-10-04
+Updated: 2026-10-06
 
 ## Current phase
 
-**Smoke test / usability only. Not yet a commercial A/B conclusion.**
+**Commercial pilot authorized by the owner on 2026-10-06. No commercial outcome or A/B winner established.**
 
 The isolated route is live and intentionally unlinked:
 
@@ -14,7 +14,7 @@ The isolated route is live and intentionally unlinked:
 - no entry from SEO-protected pages
 - production publishing path: GitHub -> Cloudflare Pages
 
-A real Hallon destination click has been manually verified by the owner. The click destination works. This does **not** yet prove that Adtraction has persisted the EPI reference or that a later transaction can be reconciled end-to-end.
+The owner confirmed on 2026-10-06 that Hallon/Adtraction verification, including the previously requested commercial/EPI checks, had already been completed. This is owner confirmation; no new API verification, transaction or commission is claimed. Do not reopen the completed verification gate.
 
 ## Recruitment link
 
@@ -50,9 +50,9 @@ Success to advance from usability:
 - A and B both complete on real devices
 - GA4 receives production-host pilot events after QA traffic isolation
 
-## Commercial start gate
+## Commercial verification record
 
-Do **not** call the experiment commercially live until all are true:
+The owner has confirmed the previously required checks below. Network outcomes must still be reconciled manually, since Adtraction is not connected to Windsor:
 
 1. Hallon/channel relationship is confirmed active in Adtraction.
 2. Current payment basis, commission/currency, cookie/attribution window and applicable terms are documented.
@@ -109,3 +109,15 @@ When the commercial gate is complete:
 - report an inconclusive result when sample/conversion maturity is insufficient rather than forcing a winner
 
 Any move from this isolated recruited population into organic traffic on the existing surf guide requires a separate decision.
+
+## Commercial rollout – 2026-10-06
+
+- Dedicated entry: `https://sankkostnaden.se/experiments/mobile-surf-pilot/?src=live_v1`.
+- Start: first successful Cloudflare Pages deployment of this rollout commit on 2026-10-06. Use its deployment timestamp as the cohort cutoff.
+- Active recruitment window: deployment through 2026-10-20 23:59 Europe/Stockholm; review on 2026-10-21. This is a review window, not an automated shutdown.
+- Distribution: direct URL only. No paid campaign, messages to third parties or links from protected pages are authorized by this release.
+- `src=invite_v1` stays usability data. `src=live_v1` is the dedicated commercial cohort. Direct/unknown sources are reported separately rather than silently pooled.
+- Production host alone does not prove a real participant. Exclude owner tests, QA, forced variants and automation. Assignment events are visits, not deduplicated participants.
+- All 2026-10-04 historical pilot activity remains excluded; 2026-10-05 and pre-deployment activity remains pre-launch/usability.
+- Questions, scoring, 50/50 allocation, partner, EPI structure and A/B handoff are frozen.
+- Measure approved net commission per relevant assigned participant only after manually reconciled network outcomes mature. Missing network revenue is unknown, not zero.

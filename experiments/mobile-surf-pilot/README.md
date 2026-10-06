@@ -1,8 +1,8 @@
 # Mobile surf pilot
 
-Status: live as an isolated smoke-test route on production after explicit approval on 2026-10-04.
+Status: isolated commercial pilot authorized on 2026-10-06 following owner confirmation of Hallon/Adtraction verification. See RUNBOOK.md for the deployment cutoff, cohort and review window.
 
-The route is available at `/experiments/mobile-surf-pilot/`, is `noindex,nofollow,noarchive`, is not in the sitemap, and no SEO-protected page links to it. The pilot is intentionally discoverable only by direct URL during the smoke-test phase.
+The route is available at `/experiments/mobile-surf-pilot/`, is `noindex,nofollow,noarchive`, is not in the sitemap, and no SEO-protected page links to it. The pilot is intentionally discoverable only by direct URL during the isolated pilot.
 
 ## Frozen baseline
 

@@ -89,6 +89,8 @@ function emitPilotEvent(participantId: string, variant: PilotVariant, event: str
 
 function emitGa4Event(eventName: string, params: Record<string, string | number | boolean> = {}) {
   if (typeof window === 'undefined') return;
+  const host = window.location.hostname;
+  if (!['sankkostnaden.se', 'www.sankkostnaden.se'].includes(host) || new URLSearchParams(window.location.search).has('qa') || navigator.webdriver) return;
   const payload = { experiment_id: experimentId, ...params };
   if (typeof window.gtag === 'function') window.gtag('event', eventName, payload);
   else {
@@ -121,7 +123,7 @@ export default function MobileSurfPilot() {
   const lowProfile = result.min === 0;
   const pilotBranchMatched = complete && lowProfile && ownSubscription;
 
-  const selectedPartner = forceNoPartner ? undefined : getActivePartners('mobil', 'data', 1)[0];
+  const selectedPartner = forceNoPartner ? undefined : getActivePartners('mobil', 'data', Infinity).find(partner => partner.name === 'Hallon');
   const partnerRelevant = Boolean(selectedPartner && selectedPartner.category === 'mobil' && selectedPartner.intents.includes('data'));
 
 
@@ -324,7 +326,7 @@ export default function MobileSurfPilot() {
     <>
       <header className={selectorStyles.topbar}>
         <Link className={selectorStyles.brand} href='/'><span><PiggyBank size={20} /></span><strong>Sänk Kostnaden</strong></Link>
-        <div className={pilotStyles.testBanner}>{showDebugMeta ? 'Privat pilot · testläge' : 'Testversion'}</div>
+        <div className={pilotStyles.testBanner}>{showDebugMeta ? 'Privat pilot · testläge' : 'Mobilguiden'}</div>
       </header>
 
       <main className={selectorStyles.shell}>
@@ -336,7 +338,7 @@ export default function MobileSurfPilot() {
         )}
 
         <section className={selectorStyles.hero}>
-          <span><Sparkles size={15} /> PILOT · MOBIL</span>
+          <span><Sparkles size={15} /> {showDebugMeta ? 'PILOT · MOBIL' : 'DIN SURFPROFIL'}</span>
           <h1>Hur mycket surf behöver du – på riktigt?</h1>
           <p>{showDebugMeta ? 'Fryst prototyp av samma tre frågor som den befintliga surfguiden. Endast överlämningen efter låg surfprofil testas.' : 'Svara på tre korta frågor så får du en enkel surfprofil och ett relevant nästa steg.'}</p>
           <div className={selectorStyles.progress} role='progressbar' aria-label='Framsteg' aria-valuemin={0} aria-valuemax={questions.length} aria-valuenow={answered}><i style={{ width: `${(answered / questions.length) * 100}%` }} /></div>
@@ -380,7 +382,7 @@ export default function MobileSurfPilot() {
 
             {showPartnerCard && selectedPartner && (
               <section className={pilotStyles.partnerCard} data-testid='pilot-partner-card'>
-                <span>RELEVANT ALTERNATIV · TESTLÄGE</span>
+                <span>{showDebugMeta ? 'RELEVANT ALTERNATIV · TESTLÄGE' : 'RELEVANT ALTERNATIV'}</span>
                 <h3>{selectedPartner.name}</h3>
                 <p>{selectedPartner.note}</p>
                 {affiliateHref ? (
@@ -405,14 +407,14 @@ export default function MobileSurfPilot() {
                 ) : (
                   <span className={pilotStyles.lockedAction}>Förbereder spårning…</span>
                 )}
-                <small>Annonslänk. Aktuellt pris, surfmängd och villkor kontrolleras hos operatören. Klicket märks med ett slumpmässigt EPI-ID för senare avstämning mot Adtraction.</small>
+                <small>Annonslänk. Vi kan få ersättning om du tecknar ett abonnemang. Kontrollera aktuellt pris, surfmängd och villkor hos operatören.</small>
               </section>
             )}
 
             {showNoMatch && (
               <section className={pilotStyles.noMatch} data-testid='pilot-no-match'>
-                <strong>Verifierat matchande alternativ saknas i testläget.</strong>
-                <p>Ingen partner visas när relevans eller verifiering saknas. Prototypen hittar inte på en rekommendation.</p>
+                <strong>Inget matchande alternativ finns just nu.</strong>
+                <p>Jämför flera abonnemang och kontrollera surfmängd, täckning och ordinarie pris innan du väljer.</p>
               </section>
             )}
 
@@ -437,7 +439,7 @@ export default function MobileSurfPilot() {
             )}
 
             <button className={selectorStyles.reset} onClick={reset}><RotateCcw size={14} /> Börja om</button>
-            <small>{showDebugMeta ? 'Piloten använder befintlig GA4 affiliate_click-spårning för utgående partnerklick och sparar samtidigt slumpmässigt click-ID lokalt för QA/avstämning. Ingen personlig besparing beräknas.' : 'Det här är en testversion. Ingen personlig besparing garanteras och aktuella villkor kontrolleras alltid hos operatören.'}</small>
+            <small>{showDebugMeta ? 'Piloten använder befintlig GA4 affiliate_click-spårning för utgående partnerklick och sparar samtidigt slumpmässigt click-ID lokalt för QA/avstämning. Ingen personlig besparing beräknas.' : 'Surfprofilen är en vägledning. Ingen personlig besparing garanteras. Kontrollera täckning och aktuella villkor hos operatören.'}</small>
           </aside>
         </section>
       </main>
