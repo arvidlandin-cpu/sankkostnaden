@@ -2,16 +2,10 @@ import { useMemo, useRef, useState } from 'react';
 import { ArrowRight, Check, Smartphone, Users } from 'lucide-react';
 import PartnerDirectory from '../PartnerDirectory';
 import { calculateFamilyMobileCost } from '../../lib/familyMobileCost';
+import { emitAnalyticsEvent } from '../../lib/clientAttribution';
 import styles from '../../styles/FamilyMobileCost.module.css';
 
 const money = new Intl.NumberFormat('sv-SE',{style:'currency',currency:'SEK',maximumFractionDigits:0});
-
-function emitGa4(eventName:string,params:Record<string,string|number|boolean>={}){
-  if(typeof window==='undefined') return;
-  const w=window as Window & { gtag?:(...args:unknown[])=>void; dataLayer?:Record<string,unknown>[] };
-  if(typeof w.gtag==='function') w.gtag('event',eventName,params);
-  else if(Array.isArray(w.dataLayer)) w.dataLayer.push({event:eventName,...params});
-}
 
 function NumberField({label,value,onChange,suffix='kr/mån'}:{label:string;value:number;onChange:(value:number)=>void;suffix?:string}){
   return <label className={styles.field}>
@@ -58,7 +52,7 @@ export default function FamilyMobileCost(){
     setShowResult(true);
     if(!tracked.current){
       tracked.current=true;
-      emitGa4('family_mobile_cost_ready',{
+      emitAnalyticsEvent('family_mobile_cost_ready',{
         people,
         winner:result.winner,
         annual_difference:Math.round(Math.abs(result.annualDifference)),
@@ -68,7 +62,7 @@ export default function FamilyMobileCost(){
   };
 
   const continueToPartners=()=>{
-    emitGa4('family_mobile_cost_continue',{
+    emitAnalyticsEvent('family_mobile_cost_continue',{
       people,
       winner:result.winner,
       annual_difference:Math.round(Math.abs(result.annualDifference)),
