@@ -3,9 +3,18 @@ name: Commercial regression smoke
 on:
   push:
     branches:
+      - main
       - ops/commercial-smoke-v1
+      - ops/commercial-regression-main-v2
     paths:
       - '.github/workflows/commercial-regression-smoke.yml'
+      - 'components/**'
+      - 'lib/**'
+      - 'pages/**'
+      - 'styles/**'
+      - 'scripts/**'
+      - 'tests/**'
+      - 'tests/production-commercial-smoke.spec.ts'
   schedule:
     - cron: '23 4 * * *'
   workflow_dispatch:
@@ -49,9 +58,22 @@ jobs:
           cat /tmp/commercial-smoke-http.log
           exit 1
 
+      - name: Run non-browser commercial checks
+        run: |
+          node --test tests/partner-health.test.mjs tests/affiliate-revenue-report.test.mjs
+
       - name: Run commercial regression suite
         run: |
-          npx playwright test             tests/funnel-attribution.spec.ts             tests/first-year-cost.spec.ts             tests/switch-calendar.spec.ts             tests/family-mobile-cost.spec.ts             tests/cost-prioritizer.spec.ts             tests/electricity-cost.spec.ts             tests/priority-seo-flow.spec.ts             tests/trust-footer-insurance.spec.ts             --project=chromium
+          npx playwright test \
+            tests/funnel-attribution.spec.ts \
+            tests/first-year-cost.spec.ts \
+            tests/switch-calendar.spec.ts \
+            tests/family-mobile-cost.spec.ts \
+            tests/cost-prioritizer.spec.ts \
+            tests/electricity-cost.spec.ts \
+            tests/priority-seo-flow.spec.ts \
+            tests/trust-footer-insurance.spec.ts \
+            --project=chromium
 
       - name: Upload Playwright report
         if: always()
@@ -66,7 +88,20 @@ jobs:
   production-route-smoke:
     if: github.ref_name == 'main' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
+    env:
+      QA_BASE_URL: 'https://sankkostnaden.se'
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.16.0
+
+      - name: Install dependencies
+        run: npm install --progress=false
+
       - name: Verify core production routes
         shell: bash
         run: |
@@ -88,3 +123,9 @@ jobs:
           check "https://sankkostnaden.se/verktyg/elavtalskostnad/" "Jämför två elavtal"
           check "https://sankkostnaden.se/mobil/lonar-sig-familjeabonnemang/" "Lönar sig familjeabonnemang"
           check "https://sankkostnaden.se/forsakring/hemforsakring-bostadsratt/" "bostadsrättstillägg"
+
+      - name: Install Chromium for live functional smoke
+        run: npx playwright install --with-deps chromium
+
+      - name: Run live commercial flows with analytics disabled
+        run: npx playwright test tests/production-commercial-smoke.spec.ts --project=chromium
