@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - commercial/funnel-attribution-v1
+      - commercial/network-subid-v1
     paths:
       - '.github/workflows/funnel-attribution-qa.yml'
       - 'lib/clientAttribution.ts'
@@ -14,6 +15,8 @@ on:
       - 'components/tools/ElectricityCostCalculator.tsx'
       - 'pages/app.tsx'
       - 'pages/verktyg/hushallskostnadskollen.tsx'
+      - 'pages/cookies.tsx'
+      - 'pages/integritet.tsx'
       - 'tests/funnel-attribution.spec.ts'
       - 'scripts/check-integrity.mjs'
   workflow_dispatch:
