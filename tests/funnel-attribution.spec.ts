@@ -1,4 +1,5 @@
 import { expect, test, type Page } from '@playwright/test';
+import { buildAffiliateAttributionUrl } from '../lib/clientAttribution';
 
 async function fillElectricity(page:Page){
   await page.getByLabel('Årsförbrukning i kWh').fill('20000');
@@ -12,7 +13,7 @@ async function fillElectricity(page:Page){
   await b.nth(2).fill('0');
 }
 
-test('calculator and affiliate click share one funnel session without changing partner URL',async({page})=>{
+test('calculator and affiliate click share one funnel session and use verified network click reference',async({page})=>{
   await page.addInitScript(()=>{(window as any).dataLayer=[];});
   await page.goto('/verktyg/elavtalskostnad/?src=attribution_qa');
 
@@ -23,11 +24,18 @@ test('calculator and affiliate click share one funnel session without changing p
   const sponsored=page.locator('a[rel~="sponsored"]').first();
   await expect(sponsored).toBeVisible();
   const hrefBefore=await sponsored.getAttribute('href');
-  await sponsored.evaluate((element:any)=>element.addEventListener('click',(event:Event)=>event.preventDefault()));
+  await sponsored.evaluate((element:any)=>{
+    element.addEventListener('click',(event:Event)=>{
+      (window as any).__networkHref=element.href;
+      event.preventDefault();
+    });
+  });
   await sponsored.click();
   const hrefAfter=await sponsored.getAttribute('href');
+  const networkHref=await page.evaluate(()=>(window as any).__networkHref||'');
 
   expect(hrefAfter).toBe(hrefBefore);
+  expect(networkHref).toContain('epi=clk_');
 
   const events=await page.evaluate(()=>(window as any).dataLayer||[]);
   const ready=events.find((item:any)=>item.event==='electricity_cost_ready');
@@ -40,6 +48,32 @@ test('calculator and affiliate click share one funnel session without changing p
   expect(click?.local_click_id).toMatch(/^clk_/);
   expect(click?.partner).toBeTruthy();
   expect(click?.placement).toBeTruthy();
+  expect(click?.affiliate_network).toBe('adtraction');
+  expect(click?.network_click_reference).toBe(1);
+  expect(networkHref).toContain('epi='+click.local_click_id);
+});
+
+test('network URL builder preserves Adtraction deeplink ordering and Addrevenue clickRef',()=>{
+  const adtraction=buildAffiliateAttributionUrl(
+    'https://at.to.tele2.se/t/t?a=1864648074&as=2111115937&t=2&tk=1&url=https%3A%2F%2Fwww.tele2.se%2Fmobilabonnemang',
+    'clk_test123'
+  );
+  expect(adtraction.network).toBe('adtraction');
+  expect(adtraction.parameter).toBe('epi');
+  expect(adtraction.url).toContain('epi=clk_test123');
+  expect(adtraction.url.indexOf('epi=clk_test123')).toBeLessThan(adtraction.url.indexOf('url='));
+
+  const addrevenue=buildAffiliateAttributionUrl(
+    'https://addrevenue.io/t?a=985083&c=3469603',
+    'clk_test456'
+  );
+  expect(addrevenue.network).toBe('addrevenue');
+  expect(addrevenue.parameter).toBe('clickRef');
+  expect(addrevenue.url).toContain('clickRef=clk_test456');
+
+  const unsupported=buildAffiliateAttributionUrl('https://example.com/path?x=1','clk_test789');
+  expect(unsupported.network).toBe('unsupported');
+  expect(unsupported.url).toBe('https://example.com/path?x=1');
 });
 
 test('each outbound affiliate click gets a distinct local click id',async({page})=>{
