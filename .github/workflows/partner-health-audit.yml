@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - ops/commercial-health-v2
+      - ops/network-attribution-coverage-v1
     paths:
       - '.github/workflows/partner-health-audit.yml'
       - 'scripts/partner-health.mjs'
