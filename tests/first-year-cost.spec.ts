@@ -2,6 +2,7 @@ import { expect, test, type Page } from '@playwright/test';
 
 const prototypeRoute = '/experiments/forstaarskostnad/';
 const commercialRoute = '/verktyg/forstaarskostnad/';
+const broadbandRoute = '/verktyg/forstaarskostnad-bredband/';
 
 async function fillOfferA(page: Page) {
   const offer = page.getByTestId('offer-a');
@@ -93,3 +94,50 @@ test('campaign period is capped at 12 months', async ({ page }) => {
   await inputs.nth(2).fill('999');
   await expect(page.getByTestId('offer-a-total')).toContainText('1 200');
 });
+
+
+test('broadband first-year tool is noindex and hands off to broadband partners', async ({ page }) => {
+  await page.goto(broadbandRoute);
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex,nofollow,noarchive');
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://sankkostnaden.se/verktyg/forstaarskostnad-bredband/');
+  await expect(page.getByText('KOSTNADSKALKYL · BREDBAND')).toBeVisible();
+
+  await fillOfferA(page);
+  await fillOfferB(page);
+
+  const cta = page.getByTestId('first-year-commercial-cta');
+  await expect(cta).toHaveAttribute('href', '#commercial-broadband-options');
+  await cta.click();
+
+  await expect(page).toHaveURL(/#commercial-broadband-options$/);
+  await expect(page.getByText(/Börja med adressen/i)).toBeVisible();
+  await expect(page.locator('a[rel~="sponsored"]')).not.toHaveCount(0);
+});
+
+test('cheapest broadband guide exposes first-year calculator without changing metadata', async ({ page }) => {
+  await page.goto('/bredband/billigaste-bredbandet/');
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://sankkostnaden.se/bredband/billigaste-bredbandet/');
+  await expect(page.getByRole('heading', { level: 1, name: /Billigaste bredbandet/i })).toBeVisible();
+  await expect(page.getByRole('link', { name: /Räkna förstaårskostnaden/i })).toHaveAttribute('href', '/verktyg/forstaarskostnad-bredband/?src=billigaste_bredbandet');
+});
+
+test('broadband no-binding guide exposes switch calendar without changing metadata', async ({ page }) => {
+  await page.goto('/bredband/utan-bindningstid/');
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://sankkostnaden.se/bredband/utan-bindningstid/');
+  await expect(page.getByRole('link', { name: /Öppna byteskalendern/i })).toHaveAttribute('href', '/verktyg/byteskalender/?kategori=bredband&src=bredband_utan_bindning');
+});
+
+for (const viewport of [
+  { width: 360, height: 800 },
+  { width: 390, height: 844 },
+  { width: 430, height: 932 },
+]) {
+  test(`commercial broadband layout has no horizontal overflow @ ${viewport.width}px`, async ({ page }) => {
+    await page.setViewportSize(viewport);
+    await page.goto(broadbandRoute);
+    await fillOfferA(page);
+    await fillOfferB(page);
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+    expect(overflow).toBeLessThanOrEqual(1);
+  });
+}
