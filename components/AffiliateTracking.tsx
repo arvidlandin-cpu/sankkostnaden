@@ -103,11 +103,16 @@ export default function AffiliateTracking() {
       if (!(target instanceof Element)) return;
       const anchor = target.closest('a[href]') as HTMLAnchorElement | null;
       if (!anchor) return;
+
+      const baseHref=anchor.dataset.skAffiliateBaseHref||anchor.href;
+      if(!anchor.dataset.skAffiliateBaseHref) anchor.dataset.skAffiliateBaseHref=baseHref;
+      else anchor.href=baseHref;
+
       const params = resolve(anchor);
       if (params) {
         const localClickId=createLocalClickId();
         const funnelSessionId=getFunnelSessionId();
-        const decoration=decorateAdtractionTrackingUrl(anchor.href,localClickId,funnelSessionId);
+        const decoration=decorateAdtractionTrackingUrl(baseHref,localClickId,funnelSessionId);
 
         if(decoration.tagged) anchor.href=decoration.url;
 
