@@ -6,6 +6,22 @@ Senast uppdaterad: 2026-09-29
 
 Bygg en långsiktig SEO-bas utan att störa nuvarande indexering. Nya idéer förbereds här och publiceras först i mindre vågor när Google hunnit crawla/indexera den befintliga sajten.
 
+## Genomfört 6 oktober 2026
+
+Följande delar av den prioriterade planen är nu genomförda utan att skapa en massvåg av nya indexerade URL:er:
+
+- **Byta elavtal:** byteskalender i kommersiellt flöde.
+- **Rörligt elpris / månadspris:** Ei:s nya benämning förtydligad i befintlig sida och elavtalskostnadskalkyl kopplad till flödet.
+- **Familjeabonnemang:** kalkyl för 2–5 personer med förstaårskostnad och familjerelevant partnerhandoff.
+- **Bredband 100/100:** befintlig indexerad sida kopplad till förstaårskostnad för bredband.
+- **Hemförsäkring bostadsrätt:** befintlig sida förstärkt kring bostadsrättstillägg, kollektivt tillägg, självrisk och åldersavdrag.
+- **Kostnadsprioriteraren:** Hushållskostnadskollen och Kostnadskollen delar lokala belopp och leder vidare i prioriterad ordning.
+- **Förstaårskostnad:** skarp för mobil och bredband via noindex-verktyg.
+- **Mätning:** separata funnel-events för kalkyl klar och kommersiell fortsättning; känsliga/exakta hushållsbelopp hålls lokalt i prioriteringsflödet.
+- **Daglig GSC-bevakning:** operativ uppföljning av prioriterade sökord och landningssidor.
+
+Nästa publiceringsvåg med nya SEO-URL:er ska fortfarande vänta på tydligare crawl/indexeringssignal. Prioritera mätning och förbättring av redan publicerade flöden framför att bygga hela Priority 2-listan samtidigt.
+
 ## Grundprincip
 
 1. Ändra inte stora delar av befintliga sidor samtidigt som 22 URL:er står som "Upptäckt – inte indexerad".
