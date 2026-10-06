@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { partners, type PartnerCategory, type PartnerIntent } from '../lib/partners';
-import { createLocalClickId, emitAnalyticsEvent, rememberAffiliateClick } from '../lib/clientAttribution';
+import { buildAffiliateAttributionUrl, createLocalClickId, emitAnalyticsEvent, rememberAffiliateClick } from '../lib/clientAttribution';
 
 declare global {
   interface Window {
@@ -106,7 +106,18 @@ export default function AffiliateTracking() {
       const params = resolve(anchor);
       if (params) {
         const localClickId=createLocalClickId();
-        const clickParams={...params,local_click_id:localClickId};
+        const originalHref=anchor.href;
+        const networkAttribution=buildAffiliateAttributionUrl(originalHref,localClickId);
+        if(networkAttribution.network!=='unsupported'){
+          anchor.href=networkAttribution.url;
+          window.setTimeout(()=>{ anchor.href=originalHref; },0);
+        }
+        const clickParams={
+          ...params,
+          local_click_id:localClickId,
+          affiliate_network:networkAttribution.network,
+          network_click_reference:networkAttribution.network==='unsupported'?0:1,
+        };
         rememberAffiliateClick({
           localClickId,
           partner:String(params.partner||'unknown'),
