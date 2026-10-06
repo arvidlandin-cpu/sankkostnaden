@@ -87,8 +87,10 @@ export function decorateAffiliateTrackingUrl(value:string,localClickId:string,fu
       && url.searchParams.has('c');
 
     if(isAddrevenue){
-      if(url.searchParams.has('clickRef')) return {url:value,network:'addrevenue',tagged:false,reason:'existing_clickref'};
-      url.searchParams.set('clickRef',localClickId);
+      // Addrevenue publisher links use r as the outbound sub-ID/click reference.
+      // It is exposed as clickRef in Addrevenue reporting.
+      if(url.searchParams.has('r')) return {url:value,network:'addrevenue',tagged:false,reason:'existing_clickref'};
+      url.searchParams.set('r',localClickId);
       return {url:url.toString(),network:'addrevenue',tagged:true,reason:'tagged'};
     }
 
