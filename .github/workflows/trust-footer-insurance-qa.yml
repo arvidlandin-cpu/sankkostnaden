@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - commercial/trust-footer-insurance-links-v1
+      - ops/commercial-health-v2
     paths:
       - '.github/workflows/trust-footer-insurance-qa.yml'
       - 'components/SiteFooter.tsx'
