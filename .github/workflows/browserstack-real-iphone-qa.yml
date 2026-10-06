@@ -16,6 +16,11 @@ on:
       - 'pages/verktyg/forstaarskostnad.tsx'
       - 'styles/FirstYearCostCalculator.module.css'
       - 'pages/mobil/billigaste-mobilabonnemanget.tsx'
+      - 'components/tools/SwitchCalendar.tsx'
+      - 'pages/verktyg/byteskalender.tsx'
+      - 'styles/SwitchCalendar.module.css'
+      - 'pages/elavtal/byta-elavtal.tsx'
+      - 'components/IntentGuide.tsx'
   workflow_dispatch:
     inputs:
       base_url:
@@ -61,6 +66,18 @@ jobs:
             sleep 2
           done
           echo "Cloudflare pilot preview did not become ready in time."
+          exit 1
+
+      - name: Wait for Cloudflare Pages production deploy
+        if: github.ref_name == 'main'
+        run: |
+          for i in {1..90}; do
+            if curl -fsS "$QA_BASE_URL/verktyg/byteskalender/" | grep -q "När behöver du agera"; then
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "Cloudflare production deploy did not become ready in time."
           exit 1
 
       - name: Run real iPhone Safari QA
