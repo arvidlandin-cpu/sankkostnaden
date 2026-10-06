@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, ArrowRight, Calculator, Check, PiggyBank, Zap } from 'lucide-react';
 import PartnerDirectory from '../PartnerDirectory';
@@ -42,7 +42,14 @@ export default function ElectricityCostCalculator(){
   const [a,setA]=useState<Offer>(emptyOffer('Alternativ A'));
   const [b,setB]=useState<Offer>(emptyOffer('Alternativ B'));
   const [showResult,setShowResult]=useState(false);
+  const [source,setSource]=useState('direct');
   const tracked=useRef(false);
+
+  useEffect(()=>{
+    const params=new URLSearchParams(window.location.search);
+    const src=(params.get('src')||'direct').toLowerCase().replace(/[^a-z0-9_-]/g,'').slice(0,40)||'direct';
+    setSource(src);
+  },[]);
 
   const resultA=useMemo(()=>calculateElectricityOffer(annualKwh,a),[annualKwh,a]);
   const resultB=useMemo(()=>calculateElectricityOffer(annualKwh,b),[annualKwh,b]);
@@ -57,7 +64,9 @@ export default function ElectricityCostCalculator(){
     if(!tracked.current){
       tracked.current=true;
       emitGa4('electricity_cost_ready',{
-        consumption_band:consumptionBand(annualKwh),
+        source,
+        source,
+      consumption_band:consumptionBand(annualKwh),
         winner,
         difference_band:differenceBand(difference),
       });
