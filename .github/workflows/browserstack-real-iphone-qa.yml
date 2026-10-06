@@ -21,6 +21,10 @@ on:
       - 'styles/SwitchCalendar.module.css'
       - 'pages/elavtal/byta-elavtal.tsx'
       - 'components/IntentGuide.tsx'
+      - 'components/tools/FamilyMobileCost.tsx'
+      - 'styles/FamilyMobileCost.module.css'
+      - 'pages/mobil/lonar-sig-familjeabonnemang.tsx'
+      - 'pages/mobil/familjeabonnemang.tsx'
   workflow_dispatch:
     inputs:
       base_url:
@@ -72,7 +76,8 @@ jobs:
         if: github.ref_name == 'main'
         run: |
           for i in {1..90}; do
-            if curl -fsS "$QA_BASE_URL/verktyg/byteskalender/" | grep -q "När behöver du agera"; then
+            if curl -fsS "$QA_BASE_URL/verktyg/byteskalender/" | grep -q "När behöver du agera" && \
+               curl -fsS "$QA_BASE_URL/mobil/lonar-sig-familjeabonnemang/" | grep -q "2–5 separata abonnemang"; then
               exit 0
             fi
             sleep 2
