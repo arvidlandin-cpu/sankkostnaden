@@ -14,6 +14,7 @@ const routes = [
   { slug: 'forsakring', path: '/forsakring/' },
   { slug: 'ekonomi', path: '/ekonomi/' },
   { slug: 'kostnadskollen', path: '/app/' },
+  { slug: 'hushallskostnadskollen', path: '/verktyg/hushallskostnadskollen/' },
   { slug: 'trygghetsforsakring', path: '/forsakring/trygghetsforsakring/' },
 ];
 
