@@ -5,6 +5,8 @@ const routes = [
   { slug: 'bredband', path: '/bredband/' },
   { slug: 'mobil', path: '/mobil/' },
   { slug: 'mobil-billigaste', path: '/mobil/billigaste-mobilabonnemanget/' },
+  { slug: 'mobil-familj', path: '/mobil/familjeabonnemang/' },
+  { slug: 'mobil-familjekalkyl', path: '/mobil/lonar-sig-familjeabonnemang/' },
   { slug: 'forstaarskostnad', path: '/verktyg/forstaarskostnad/' },
   { slug: 'el', path: '/elavtal/' },
   { slug: 'byta-elavtal', path: '/elavtal/byta-elavtal/' },
