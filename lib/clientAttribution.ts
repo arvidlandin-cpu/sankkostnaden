@@ -56,9 +56,10 @@ export type NetworkDecoration={
   reason:'tagged'|'existing_epi'|'existing_clickref'|'unsupported';
 };
 
-export function decorateAdtractionTrackingUrl(value:string,localClickId:string,funnelSessionId:string):NetworkDecoration{
+export function decorateAffiliateTrackingUrl(value:string,localClickId:string,funnelSessionId:string):NetworkDecoration{
   try{
     const url=new URL(value);
+
     const isAdtraction=url.pathname==='/t/t'
       && url.searchParams.has('a')
       && url.searchParams.has('as')
@@ -95,33 +96,4 @@ export function decorateAdtractionTrackingUrl(value:string,localClickId:string,f
   }catch{
     return {url:value,network:'unknown',tagged:false,reason:'unsupported'};
   }
-}
-
-
-export function decorateAddrevenueTrackingUrl(value:string,localClickId:string):NetworkDecoration{
-  try{
-    const url=new URL(value);
-    const isAddrevenue=url.hostname.toLowerCase()==='addrevenue.io'
-      && url.pathname==='/t'
-      && url.searchParams.has('a')
-      && url.searchParams.has('c');
-
-    if(!isAddrevenue) return {url:value,network:'unknown',tagged:false,reason:'unsupported'};
-    if(url.searchParams.has('r')) return {url:value,network:'addrevenue',tagged:false,reason:'existing_clickref'};
-
-    url.searchParams.set('r',localClickId);
-    return {url:url.toString(),network:'addrevenue',tagged:true,reason:'tagged'};
-  }catch{
-    return {url:value,network:'unknown',tagged:false,reason:'unsupported'};
-  }
-}
-
-export function decorateAffiliateTrackingUrl(value:string,localClickId:string,funnelSessionId:string):NetworkDecoration{
-  const adtraction=decorateAdtractionTrackingUrl(value,localClickId,funnelSessionId);
-  if(adtraction.network!=='unknown') return adtraction;
-
-  const addrevenue=decorateAddrevenueTrackingUrl(value,localClickId);
-  if(addrevenue.network!=='unknown') return addrevenue;
-
-  return {url:value,network:'unknown',tagged:false,reason:'unsupported'};
 }
