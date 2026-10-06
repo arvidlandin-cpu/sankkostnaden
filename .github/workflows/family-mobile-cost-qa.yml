@@ -9,6 +9,7 @@ on:
       - 'lib/familyMobileCost.ts'
       - 'components/tools/FamilyMobileCost.tsx'
       - 'styles/FamilyMobileCost.module.css'
+      - 'styles/TrafficTools.module.css'
       - 'pages/mobil/lonar-sig-familjeabonnemang.tsx'
       - 'pages/mobil/familjeabonnemang.tsx'
       - 'components/IntentGuide.tsx'
