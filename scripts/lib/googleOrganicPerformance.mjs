@@ -71,6 +71,15 @@ export function normalizeGa4LandingChannels(result){
   })).sort((a,b)=>b.sessions-a.sessions);
 }
 
+export function normalizeGa4EventChannels(result){
+  return (result?.rows||[]).map(row=>({
+    eventName:dimension(row,0)||'(not set)',
+    channel:dimension(row,1)||'Unassigned',
+    eventCount:metric(row,0),
+    totalUsers:metric(row,1),
+  })).sort((a,b)=>b.eventCount-a.eventCount);
+}
+
 export function normalizeGscTotals(result){
   const row=result?.rows?.[0]||{};
   return {
@@ -190,6 +199,19 @@ export function toMarkdown(report){
     );
     for(const row of ga.appFunnel){
       lines.push(`| ${row.eventName.replace(/\|/g,'/')} | ${int(row.eventCount)} | ${int(row.totalUsers)} |`);
+    }
+    lines.push('');
+  }
+
+  if(ga.appFunnelByChannel?.length){
+    lines.push(
+      '### Kostnadskollen /app/ – funnel per kanal',
+      '',
+      '| Kanal | Event | Antal | Användare |',
+      '| --- | --- | ---: | ---: |'
+    );
+    for(const row of ga.appFunnelByChannel){
+      lines.push(`| ${row.channel.replace(/\|/g,'/')} | ${row.eventName.replace(/\|/g,'/')} | ${int(row.eventCount)} | ${int(row.totalUsers)} |`);
     }
     lines.push('');
   }
