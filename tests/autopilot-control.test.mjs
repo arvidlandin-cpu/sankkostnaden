@@ -132,3 +132,35 @@ test('markdown never includes raw credentials and reports the north star',()=>{
   assert.match(markdown,/500/);
   assert.doesNotMatch(markdown,/private_key|API_TOKEN|GOOGLE_SERVICE_ACCOUNT_JSON/);
 });
+
+
+test('review calculates a KEEP verdict from enough post-change GSC data',()=>{
+  const g=google('2026-10-16T08:00:00Z');
+  g.gsc.focusQueryDaily=[
+    {date:'2026-10-08',query:'jämför försäkring',clicks:1,impressions:15,ctr:1/15,position:7.2},
+    {date:'2026-10-09',query:'jämför försäkring',clicks:1,impressions:20,ctr:0.05,position:7.8},
+  ];
+  const packet=buildDecisionPacket({
+    google:g,
+    policy:{...policy,thresholds:{...policy.thresholds,experimentReview:{minPostImpressions:30,minCtrLift:0.01,maxPositionLossToKeep:2.5,materialPositionLoss:3}}},
+    state:{activeExperiment:{id:'x',type:'SEO_SNIPPET_TEST',query:'jämför försäkring',target:'/forsakring/',startedAt:'2026-10-07T10:00:00Z',earliestReviewAt:'2026-10-15T08:00:00Z',status:'running',baseline:{impressions:31,clicks:0,ctr:0,position:7.6}}},
+    now:new Date('2026-10-16T08:00:00Z'),
+  });
+  assert.equal(packet.recommendedAction.type,'REVIEW_ACTIVE_EXPERIMENT');
+  assert.equal(packet.recommendedAction.details.evaluation.verdict,'KEEP');
+  assert.equal(packet.recommendedAction.details.evaluation.post.impressions,35);
+});
+
+test('review stays insufficient when post-change impressions are too few',()=>{
+  const g=google('2026-10-16T08:00:00Z');
+  g.gsc.focusQueryDaily=[
+    {date:'2026-10-08',query:'jämför försäkring',clicks:1,impressions:10,ctr:0.1,position:7.2},
+  ];
+  const packet=buildDecisionPacket({
+    google:g,
+    policy:{...policy,thresholds:{...policy.thresholds,experimentReview:{minPostImpressions:30,minCtrLift:0.01,maxPositionLossToKeep:2.5,materialPositionLoss:3}}},
+    state:{activeExperiment:{id:'x',type:'SEO_SNIPPET_TEST',query:'jämför försäkring',target:'/forsakring/',startedAt:'2026-10-07T10:00:00Z',earliestReviewAt:'2026-10-15T08:00:00Z',status:'running',baseline:{impressions:31,clicks:0,ctr:0,position:7.6}}},
+    now:new Date('2026-10-16T08:00:00Z'),
+  });
+  assert.equal(packet.recommendedAction.details.evaluation.verdict,'INSUFFICIENT_DATA');
+});
