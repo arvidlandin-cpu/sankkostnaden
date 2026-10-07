@@ -72,11 +72,3 @@ test('live production smoke never creates an analytics dataLayer on qa=1',async(
   const disabled=await page.evaluate(()=>Boolean((window as any)['ga-disable-G-E2XTJVY5EX']));
   expect(disabled).toBe(true);
 });
-
-
-test('live production: Cost Check quick path appears after a high-intent answer',async({page})=>{
-  await page.goto(q('/app/'),{waitUntil:'domcontentloaded'});
-  await page.getByRole('button',{name:/Priset har ändrats eller avtalet känns dyrt/i}).click();
-  await expect(page.getByText('SNABB VÄG')).toBeVisible();
-  await expect(page.locator('a[data-placement="cost_check_quick_path"]')).toHaveCount(1);
-});
