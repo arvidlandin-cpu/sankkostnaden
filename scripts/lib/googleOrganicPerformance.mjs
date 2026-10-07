@@ -73,6 +73,17 @@ export function normalizeGscRows(result,label='key'){
   })).sort((a,b)=>b.clicks-a.clicks||b.impressions-a.impressions);
 }
 
+export function normalizeGscPairs(result){
+  return (result?.rows||[]).map(row=>({
+    query:String(row?.keys?.[0]||''),
+    page:String(row?.keys?.[1]||''),
+    clicks:Number(row.clicks)||0,
+    impressions:Number(row.impressions)||0,
+    ctr:Number(row.ctr)||0,
+    position:Number(row.position)||0,
+  })).sort((a,b)=>b.clicks-a.clicks||b.impressions-a.impressions);
+}
+
 export function toMarkdown(report){
   const int=value=>new Intl.NumberFormat('sv-SE',{maximumFractionDigits:0}).format(value||0);
   const pct=value=>new Intl.NumberFormat('sv-SE',{style:'percent',maximumFractionDigits:1}).format(value||0);
@@ -131,6 +142,19 @@ export function toMarkdown(report){
     );
     for(const row of gsc.pages.slice(0,20)){
       lines.push(`| ${row.page.replace(/\|/g,'/')} | ${int(row.clicks)} | ${int(row.impressions)} | ${pct(row.ctr)} | ${dec(row.position)} |`);
+    }
+    lines.push('');
+  }
+
+  if(gsc.queryPages?.length){
+    lines.push(
+      '### Sökfråga → landningssida',
+      '',
+      '| Sökfråga | Landningssida | Klick | Visningar | CTR | Position |',
+      '| --- | --- | ---: | ---: | ---: | ---: |'
+    );
+    for(const row of gsc.queryPages.slice(0,30)){
+      lines.push(`| ${row.query.replace(/\|/g,'/')} | ${row.page.replace(/\|/g,'/')} | ${int(row.clicks)} | ${int(row.impressions)} | ${pct(row.ctr)} | ${dec(row.position)} |`);
     }
     lines.push('');
   }
