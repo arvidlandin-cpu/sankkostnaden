@@ -52,10 +52,13 @@ test('normalizes app funnel events and landing channels',()=>{
   assert.equal(events[0].eventName,'cost_check_complete');
   assert.equal(events[0].eventCount,4);
   const landings=normalizeGa4LandingChannels({rows:[
-    {dimensionValues:[{value:'/app/'},{value:'Organic Search'}],metricValues:[{value:'7'},{value:'5'}]},
+    {dimensionValues:[{value:'/app/'},{value:'Organic Search'}],metricValues:[{value:'7'},{value:'5'},{value:'4'},{value:'0.5714'},{value:'38.5'}]},
   ]});
   assert.equal(landings[0].channel,'Organic Search');
   assert.equal(landings[0].sessions,7);
+  assert.equal(landings[0].engagedSessions,4);
+  assert.equal(landings[0].engagementRate,0.5714);
+  assert.equal(landings[0].averageSessionDuration,38.5);
 });
 
 
