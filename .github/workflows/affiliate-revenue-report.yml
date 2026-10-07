@@ -60,3 +60,5 @@ jobs:
           path: affiliate-report/
           retention-days: 30
           if-no-files-found: ignore
+
+# Verification trigger after Adtraction token rotation 2026-10-07
