@@ -5,6 +5,7 @@ import {
   normalizeGa4Channels,
   normalizeGa4Events,
   normalizeGa4LandingChannels,
+  normalizeGa4EventChannels,
   normalizeGa4Totals,
   normalizeGscRows,
   normalizeGscPairs,
@@ -55,4 +56,13 @@ test('normalizes app funnel events and landing channels',()=>{
   ]});
   assert.equal(landings[0].channel,'Organic Search');
   assert.equal(landings[0].sessions,7);
+});
+
+
+test('normalizes app funnel by traffic channel',()=>{
+  const rows=normalizeGa4EventChannels({rows:[
+    {dimensionValues:[{value:'cost_check_answer'},{value:'Organic Search'}],metricValues:[{value:'9'},{value:'4'}]},
+  ]});
+  assert.equal(rows[0].channel,'Organic Search');
+  assert.equal(rows[0].eventCount,9);
 });
