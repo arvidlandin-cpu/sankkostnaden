@@ -171,6 +171,49 @@ function croCandidate(google,policy){
   return null;
 }
 
+function evaluateSeoExperiment(experiment,google,policy){
+  if(!experiment||experiment.type!=='SEO_SNIPPET_TEST'||!experiment.query) return null;
+  const started=String(experiment.startedAt||'').slice(0,10);
+  const rows=(google?.gsc?.focusQueryDaily||[])
+    .filter(row=>String(row.query||'').toLowerCase()===String(experiment.query).toLowerCase())
+    .filter(row=>String(row.date||'')>=started);
+  const impressions=rows.reduce((total,row)=>total+num(row.impressions),0);
+  const clicks=rows.reduce((total,row)=>total+num(row.clicks),0);
+  const weightedPosition=impressions
+    ? rows.reduce((total,row)=>total+(num(row.position)*num(row.impressions)),0)/impressions
+    : 0;
+  const ctr=impressions?clicks/impressions:0;
+  const baseline=experiment.baseline||{};
+  const cfg=policy?.thresholds?.experimentReview||{};
+  const minPostImpressions=num(cfg.minPostImpressions)||30;
+  const ctrLift=ctr-num(baseline.ctr);
+  const positionDelta=impressions?weightedPosition-num(baseline.position):0;
+  let verdict='INSUFFICIENT_DATA';
+  if(impressions>=minPostImpressions){
+    if(ctrLift>=num(cfg.minCtrLift||0.01) && positionDelta<=num(cfg.maxPositionLossToKeep||2.5)){
+      verdict='KEEP';
+    }else if(positionDelta>=num(cfg.materialPositionLoss||3) && ctrLift<=0){
+      verdict='REASSESS';
+    }else{
+      verdict='KEEP_OBSERVING';
+    }
+  }
+  return {
+    verdict,
+    query:experiment.query,
+    post:{impressions,clicks,ctr,position:weightedPosition},
+    baseline:{
+      impressions:num(baseline.impressions),
+      clicks:num(baseline.clicks),
+      ctr:num(baseline.ctr),
+      position:num(baseline.position),
+    },
+    deltas:{ctrLift,positionDelta},
+    minPostImpressions,
+    rows:rows.length,
+  };
+}
+
 function commercialObservations({addrevenue,adtraction,policy}){
   const minClicks=num(policy?.thresholds?.commercial?.minPartnerClicks)||25;
   const observations=[];
@@ -243,11 +286,14 @@ export function buildDecisionPacket({
       reviewDue:due,
     };
     if(due){
+      const evaluation=evaluateSeoExperiment(experiment,google,policy);
       candidates.push(action(
         'REVIEW_ACTIVE_EXPERIMENT',
         95,
-        'Minsta observationstid för det aktiva experimentet har passerat.',
-        {experiment:experimentGate,baseline:experiment.baseline||null}
+        evaluation?.verdict==='INSUFFICIENT_DATA'
+          ?'Minsta observationstid har passerat men post-change-stickprovet är fortfarande för litet för ett säkert beslut.'
+          :'Minsta observationstid för det aktiva experimentet har passerat och utfallet kan bedömas.',
+        {experiment:experimentGate,baseline:experiment.baseline||null,evaluation}
       ));
     }
   }
