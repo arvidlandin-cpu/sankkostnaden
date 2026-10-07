@@ -91,18 +91,6 @@ async function runGsc(accessToken,siteUrl,dimensions=[],dimensionFilters=[]){
 
 let report;
 if(!rawServiceAccount){
-  const focusQueries=new Set([
-    'jämför försäkring',
-    'vad menas med kvartspris på el',
-    'hur mycket kwh drar ett hus',
-    'hemförsäkring bostadsrätt',
-    'jämför elavtal',
-    'billigaste elavtalet',
-    'billigt elavtal',
-  ]);
-  const focusQueryDaily=normalizeGscDateQueryRows(gscDateQueriesRaw)
-    .filter(row=>focusQueries.has(row.query.toLowerCase()));
-
   report={
     generatedAt:new Date().toISOString(),
     configured:false,
@@ -176,6 +164,17 @@ if(!rawServiceAccount){
 
   const channels=normalizeGa4Channels(gaChannelsRaw);
   const organic=channels.find(row=>row.channel==='Organic Search')||{channel:'Organic Search',sessions:0,activeUsers:0};
+  const focusQueries=new Set([
+    'jämför försäkring',
+    'vad menas med kvartspris på el',
+    'hur mycket kwh drar ett hus',
+    'hemförsäkring bostadsrätt',
+    'jämför elavtal',
+    'billigaste elavtalet',
+    'billigt elavtal',
+  ]);
+  const focusQueryDaily=normalizeGscDateQueryRows(gscDateQueriesRaw)
+    .filter(row=>focusQueries.has(row.query.toLowerCase()));
 
   report={
     generatedAt:new Date().toISOString(),
