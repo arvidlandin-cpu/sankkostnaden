@@ -8,6 +8,7 @@ import {
   normalizeGa4Sources,
   normalizeGa4Totals,
   normalizeGscRows,
+  normalizeGscPairs,
   normalizeGscTotals,
   toMarkdown,
 } from './lib/googleOrganicPerformance.mjs';
@@ -103,7 +104,7 @@ if(!rawServiceAccount){
     discoverSearchConsoleSite(accessToken),
   ]);
 
-  const [gaTotalsRaw,gaChannelsRaw,gaPagesRaw,gaSourcesRaw,gscTotalsRaw,gscQueriesRaw,gscPagesRaw]=await Promise.all([
+  const [gaTotalsRaw,gaChannelsRaw,gaPagesRaw,gaSourcesRaw,gscTotalsRaw,gscQueriesRaw,gscPagesRaw,gscQueryPagesRaw]=await Promise.all([
     runGa4(accessToken,propertyId,{
       metrics:[{name:'sessions'},{name:'activeUsers'},{name:'totalUsers'},{name:'screenPageViews'}],
     }),
@@ -128,6 +129,7 @@ if(!rawServiceAccount){
     runGsc(accessToken,siteUrl,[]),
     runGsc(accessToken,siteUrl,['query']),
     runGsc(accessToken,siteUrl,['page']),
+    runGsc(accessToken,siteUrl,['query','page']),
   ]);
 
   const channels=normalizeGa4Channels(gaChannelsRaw);
@@ -153,6 +155,7 @@ if(!rawServiceAccount){
       totals:normalizeGscTotals(gscTotalsRaw),
       queries:normalizeGscRows(gscQueriesRaw,'query'),
       pages:normalizeGscRows(gscPagesRaw,'page'),
+      queryPages:normalizeGscPairs(gscQueryPagesRaw),
     },
   };
 }
