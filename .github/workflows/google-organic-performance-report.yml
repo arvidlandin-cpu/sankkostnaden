@@ -1,0 +1,64 @@
+name: Google organic performance report
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/google-organic-performance-report.yml'
+      - 'scripts/google-organic-performance-report.mjs'
+      - 'scripts/lib/googleServiceAccount.mjs'
+      - 'scripts/lib/googleOrganicPerformance.mjs'
+      - 'tests/google-organic-performance-report.test.mjs'
+      - 'experiments/google-organic-performance/README.md'
+  workflow_dispatch:
+    inputs:
+      days:
+        description: 'Number of inclusive days to report'
+        required: false
+        default: '30'
+  schedule:
+    - cron: '57 5 * * *'
+
+permissions:
+  contents: read
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    env:
+      GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+      GA4_MEASUREMENT_ID: 'G-E2XTJVY5EX'
+      TARGET_HOSTNAME: 'sankkostnaden.se'
+      REPORT_DAYS: ${{ github.event.inputs.days || '30' }}
+      REPORT_OUT_DIR: google-organic-performance-report
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.16.0
+
+      - name: Validate report logic
+        run: node --test tests/google-organic-performance-report.test.mjs
+
+      - name: Generate Google organic performance report
+        run: node scripts/google-organic-performance-report.mjs
+
+      - name: Publish summary
+        if: always()
+        run: |
+          if [ -f google-organic-performance-report/google-organic-performance.md ]; then
+            cat google-organic-performance-report/google-organic-performance.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload aggregate report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: google-organic-performance-report
+          path: google-organic-performance-report/
+          retention-days: 30
+          if-no-files-found: ignore
