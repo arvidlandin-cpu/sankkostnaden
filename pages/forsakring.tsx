@@ -67,8 +67,6 @@ export default function Forsakring(){
     introTitle='Jämför bara alternativ med likvärdigt skydd'
     introText='Billigast premie kan innebära högre självrisk eller smalare skydd. Börja med det skydd du faktiskt behöver och jämför sedan pris.'
     guides={[
-      {href:'/forsakring/jamfor-forsakring/',title:'Jämför försäkring',text:'Pris, självrisk och likvärdigt skydd.'},
-      {href:'/forsakring/hemforsakring-bostadsratt/',title:'Hemförsäkring bostadsrätt',text:'Pris, bostadsrättstillägg och rätt skydd.'},
       {href:'/forsakring/jamfor-hemforsakring/',title:'Jämför hemförsäkring',text:'Premie, självrisk och omfattning.'},
       {href:'/forsakring/djurforsakring/',title:'Jämför djurförsäkring',text:'Pris, självrisk och skydd.'},
       {href:'/forsakring/hemforsakring-skyddskoll/',title:'Skyddskoll',text:'Kontrollera vilket skydd du behöver.'},
@@ -79,6 +77,7 @@ export default function Forsakring(){
     ]}
     moreGuides={[
       {href:'/forsakring/hemforsakring-hyresratt/',title:'Hemförsäkring hyresrätt',text:'Relevant skydd för hyresrätt.'},
+      {href:'/forsakring/hemforsakring-bostadsratt/',title:'Hemförsäkring bostadsrätt',text:'Kontrollera bostadsrättsskyddet.'},
     ]}
   />;
 }
