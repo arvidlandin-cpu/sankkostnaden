@@ -3,6 +3,7 @@ name: Affiliate revenue report
 on:
   push:
     branches:
+      - main
       - commercial/affiliate-revenue-report-v1
     paths:
       - '.github/workflows/affiliate-revenue-report.yml'
@@ -27,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       ADTRACTION_API_TOKEN: ${{ secrets.ADTRACTION_API_TOKEN }}
-      ADDREVENUE_API_TOKEN: ${{ secrets.ADDREVENUE_API_TOKEN }}
+      ADDREVENUE_API_TOKEN: ${{ secrets.ADDREVENUE }}
       REPORT_DAYS: ${{ github.event.inputs.days || '30' }}
       REPORT_OUT_DIR: affiliate-report
     steps:
