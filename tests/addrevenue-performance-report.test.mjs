@@ -21,7 +21,7 @@ test('normalizes transaction status and local click reference',()=>{
 
   const delayed=normalizeTransaction({
     advertiserId:10,advertiserName:'Hedvig',programId:20,programName:'Hemförsäkring',
-    status:'delayed',commission:500,currency:'SEK',subids:{r:'clk_from_subid'},date:'2026-10-07T10:00:00Z'
+    status:'delayed',commission:500,currency:'SEK',subids:{r:'clk_fromsubid'},date:'2026-10-07T10:00:00Z'
   });
   assert.equal(delayed.status,'pending');
   assert.equal(delayed.matchedLocalClick,true);
