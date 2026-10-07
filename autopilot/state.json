@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "mode": "autonomous",
+  "activeExperiment": {
+    "id": "seo-snippet-jamfor-forsakring-2026-10-07",
+    "type": "SEO_SNIPPET_TEST",
+    "target": "/forsakring/jamfor-forsakring/",
+    "query": "jämför försäkring",
+    "startedAt": "2026-10-07T19:11:34+02:00",
+    "earliestReviewAt": "2026-10-15T08:30:00+02:00",
+    "status": "running",
+    "baseline": {
+      "impressions": 31,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7.6
+    }
+  },
+  "lastAutonomousAction": {
+    "type": "SEO_SNIPPET_TEST",
+    "at": "2026-10-07T19:11:34+02:00",
+    "commit": "867236a7db2d60a34f49f0bef5ead8da38013014"
+  },
+  "notes": [
+    "Only one growth experiment at a time unless a technical or attribution defect requires immediate repair.",
+    "Do not make another SEO change to the active experiment page before the review gate."
+  ]
+}
