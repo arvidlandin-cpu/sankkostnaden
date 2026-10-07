@@ -3,7 +3,7 @@ import IntentGuide from '../../components/IntentGuide';
 export default function Page() {
   return (
     <IntentGuide
-      title='Kvartspris på el 2026 – när kan det löna sig?'
+      title='Kvartspris på el 2026 – vad är det och när passar det?'
       description='Guide till kvartspris på el: hur avtalsformen fungerar, vem som kan dra nytta av att styra förbrukningen och vad du bör jämföra.'
       kicker='KVARTSPRIS EL'
       canonical='https://sankkostnaden.se/elavtal/kvartspris/'
