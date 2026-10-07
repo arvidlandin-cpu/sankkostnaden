@@ -53,6 +53,24 @@ export function normalizeGa4Sources(result){
   })).sort((a,b)=>b.sessions-a.sessions);
 }
 
+export function normalizeGa4Events(result){
+  return (result?.rows||[]).map(row=>({
+    eventName:dimension(row,0)||'(not set)',
+    pagePath:dimension(row,1)||'(not set)',
+    eventCount:metric(row,0),
+    totalUsers:metric(row,1),
+  })).sort((a,b)=>b.eventCount-a.eventCount);
+}
+
+export function normalizeGa4LandingChannels(result){
+  return (result?.rows||[]).map(row=>({
+    landingPage:dimension(row,0)||'(not set)',
+    channel:dimension(row,1)||'Unassigned',
+    sessions:metric(row,0),
+    activeUsers:metric(row,1),
+  })).sort((a,b)=>b.sessions-a.sessions);
+}
+
 export function normalizeGscTotals(result){
   const row=result?.rows?.[0]||{};
   return {
@@ -159,6 +177,32 @@ export function toMarkdown(report){
     );
     for(const row of gsc.queryPages.slice(0,30)){
       lines.push(`| ${row.query.replace(/\|/g,'/')} | ${row.page.replace(/\|/g,'/')} | ${int(row.clicks)} | ${int(row.impressions)} | ${pct(row.ctr)} | ${dec(row.position)} |`);
+    }
+    lines.push('');
+  }
+
+  if(ga.appFunnel?.length){
+    lines.push(
+      '### Kostnadskollen /app/ – funnel-events',
+      '',
+      '| Event | Antal | Användare |',
+      '| --- | ---: | ---: |'
+    );
+    for(const row of ga.appFunnel){
+      lines.push(`| ${row.eventName.replace(/\|/g,'/')} | ${int(row.eventCount)} | ${int(row.totalUsers)} |`);
+    }
+    lines.push('');
+  }
+
+  if(ga.appLandingChannels?.length){
+    lines.push(
+      '### /app/ som landningssida',
+      '',
+      '| Kanal | Sessioner | Aktiva användare |',
+      '| --- | ---: | ---: |'
+    );
+    for(const row of ga.appLandingChannels){
+      lines.push(`| ${row.channel.replace(/\|/g,'/')} | ${int(row.sessions)} | ${int(row.activeUsers)} |`);
     }
     lines.push('');
   }
