@@ -3,14 +3,13 @@ import IntentGuide from '../../components/IntentGuide';
 export default function Page() {
   return (
     <IntentGuide
-      title='Hemförsäkring bostadsrätt 2026 – pris & bostadsrättstillägg'
-      description='Vad kostar hemförsäkring för bostadsrätt? Se vad som påverkar priset, om bostadsrättstillägg behövs och hur självrisk, allrisk och villkor skiljer sig.'
+      title='Hemförsäkring bostadsrätt 2026 – pris, skydd och självrisk'
+      description='Hemförsäkring bostadsrätt 2026: se vad som påverkar priset och jämför självrisk, bostadsrättstillägg, lösöre, allrisk och andra viktiga villkor.'
       kicker='HEMFÖRSÄKRING BOSTADSRÄTT'
       canonical='https://sankkostnaden.se/forsakring/hemforsakring-bostadsratt/'
       category='forsakring' intent='home'
-      bullets={['Jämför årspremie för samma skydd och självrisk', 'Kontrollera om föreningen har kollektivt bostadsrättstillägg', 'Säkerställ att själva bostadsrätten har rätt skydd', 'Kontrollera lösöre, allrisk, reseskydd och andra tillägg']}
+      bullets={['Kontrollera om föreningen har kollektivt bostadsrättstillägg', 'Säkerställ att själva bostadsrätten har rätt skydd', 'Jämför premie, självrisk och åldersavdrag tillsammans', 'Kontrollera lösöre, allrisk, reseskydd och andra tillägg']}
       sections={[
-        { heading: 'Vad kostar hemförsäkring för bostadsrätt?', body: 'Priset varierar mellan hushåll och påverkas bland annat av bostadens läge och storlek, vilka som omfattas, vald självrisk, försäkringens omfattning och eventuella tillägg. Jämför därför årspremie för ett likvärdigt skydd i stället för att utgå från ett generellt snittpris.' },
         { heading: 'Behöver jag bostadsrättstillägg?', body: 'Som bostadsrättshavare behöver du kontrollera att det finns ett försäkringsskydd för delar av lägenheten som du har underhållsansvar för, till exempel ytskikt och fast inredning. Det kan lösas genom ett eget bostadsrättstillägg eller genom ett kollektivt upplägg som föreningen har tecknat.' },
         { heading: 'Har föreningen kollektivt bostadsrättstillägg?', body: 'Fråga styrelsen eller förvaltaren innan du lägger till ett eget tillägg. Kontrollera vilket bolag och vilka villkor som gäller, vad som omfattas och hur en skada ska anmälas. Ett kollektivt upplägg kan göra ett separat tillägg onödigt, men din vanliga hemförsäkring behövs fortfarande för bland annat lösöre och andra delar av hemförsäkringsskyddet.' },
         { heading: 'Vad kostar bostadsrättstillägg?', body: 'Kostnaden går inte att bedöma fristående från övriga villkor. Tillägget kan ligga i din egen försäkringspremie eller vara kollektivt via föreningen. Jämför därför total premie för ett likvärdigt skydd och undvik att betala dubbelt för samma bostadsrättsskydd.' },
