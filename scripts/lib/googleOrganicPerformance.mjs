@@ -114,6 +114,17 @@ export function normalizeGscPairs(result){
   })).sort((a,b)=>b.clicks-a.clicks||b.impressions-a.impressions);
 }
 
+export function normalizeGscDateQueryRows(result){
+  return (result?.rows||[]).map(row=>({
+    date:String(row?.keys?.[0]||''),
+    query:String(row?.keys?.[1]||''),
+    clicks:Number(row.clicks)||0,
+    impressions:Number(row.impressions)||0,
+    ctr:Number(row.ctr)||0,
+    position:Number(row.position)||0,
+  })).sort((a,b)=>a.date.localeCompare(b.date)||b.impressions-a.impressions);
+}
+
 export function toMarkdown(report){
   const int=value=>new Intl.NumberFormat('sv-SE',{maximumFractionDigits:0}).format(value||0);
   const pct=value=>new Intl.NumberFormat('sv-SE',{style:'percent',maximumFractionDigits:1}).format(value||0);
@@ -215,6 +226,19 @@ export function toMarkdown(report){
     );
     for(const row of gsc.appQueries.slice(0,20)){
       lines.push(`| ${row.query.replace(/\|/g,'/')} | ${int(row.clicks)} | ${int(row.impressions)} | ${pct(row.ctr)} | ${dec(row.position)} |`);
+    }
+    lines.push('');
+  }
+
+  if(gsc.focusQueryDaily?.length){
+    lines.push(
+      '### Prioriterade sökfrågor – daglig signal',
+      '',
+      '| Datum | Sökfråga | Klick | Visningar | CTR | Position |',
+      '| --- | --- | ---: | ---: | ---: | ---: |'
+    );
+    for(const row of gsc.focusQueryDaily.slice(-60)){
+      lines.push(`| ${row.date} | ${row.query.replace(/\|/g,'/')} | ${int(row.clicks)} | ${int(row.impressions)} | ${pct(row.ctr)} | ${dec(row.position)} |`);
     }
     lines.push('');
   }
