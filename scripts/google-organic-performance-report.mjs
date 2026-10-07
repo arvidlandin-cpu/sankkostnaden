@@ -71,7 +71,7 @@ async function runGa4(accessToken,propertyId,body){
   });
 }
 
-async function runGsc(accessToken,siteUrl,dimensions=[]){
+async function runGsc(accessToken,siteUrl,dimensions=[],dimensionFilters=[]){
   const body={
     startDate:period.startDate,
     endDate:period.endDate,
@@ -80,6 +80,7 @@ async function runGsc(accessToken,siteUrl,dimensions=[]){
     dataState:'all',
   };
   if(dimensions.length) body.dimensions=dimensions;
+  if(dimensionFilters.length) body.dimensionFilterGroups=[{filters:dimensionFilters}];
   return postJson(
     `https://www.googleapis.com/webmasters/v3/sites/${encodeURIComponent(siteUrl)}/searchAnalytics/query`,
     accessToken,
@@ -107,7 +108,7 @@ if(!rawServiceAccount){
     discoverSearchConsoleSite(accessToken),
   ]);
 
-  const [gaTotalsRaw,gaChannelsRaw,gaPagesRaw,gaSourcesRaw,gaEventsRaw,gaEventChannelsRaw,gaLandingChannelsRaw,gscTotalsRaw,gscQueriesRaw,gscPagesRaw,gscQueryPagesRaw]=await Promise.all([
+  const [gaTotalsRaw,gaChannelsRaw,gaPagesRaw,gaSourcesRaw,gaEventsRaw,gaEventChannelsRaw,gaLandingChannelsRaw,gscTotalsRaw,gscQueriesRaw,gscPagesRaw,gscQueryPagesRaw,gscDailyRaw,gscAppDailyRaw,gscAppQueriesRaw]=await Promise.all([
     runGa4(accessToken,propertyId,{
       metrics:[{name:'sessions'},{name:'activeUsers'},{name:'totalUsers'},{name:'screenPageViews'}],
     }),
@@ -145,7 +146,7 @@ if(!rawServiceAccount){
     }),
     runGa4(accessToken,propertyId,{
       dimensions:[{name:'landingPagePlusQueryString'},{name:'sessionDefaultChannelGroup'}],
-      metrics:[{name:'sessions'},{name:'activeUsers'}],
+      metrics:[{name:'sessions'},{name:'activeUsers'},{name:'engagedSessions'},{name:'engagementRate'},{name:'averageSessionDuration'}],
       dimensionFilter:{filter:{fieldName:'landingPagePlusQueryString',stringFilter:{matchType:'EXACT',value:'/app/',caseSensitive:false}}},
       orderBys:[{metric:{metricName:'sessions'},desc:true}],
       limit:50,
@@ -154,6 +155,9 @@ if(!rawServiceAccount){
     runGsc(accessToken,siteUrl,['query']),
     runGsc(accessToken,siteUrl,['page']),
     runGsc(accessToken,siteUrl,['query','page']),
+    runGsc(accessToken,siteUrl,['date']),
+    runGsc(accessToken,siteUrl,['date'],[{dimension:'page',operator:'equals',expression:'https://sankkostnaden.se/app/'}]),
+    runGsc(accessToken,siteUrl,['query'],[{dimension:'page',operator:'equals',expression:'https://sankkostnaden.se/app/'}]),
   ]);
 
   const channels=normalizeGa4Channels(gaChannelsRaw);
@@ -172,8 +176,8 @@ if(!rawServiceAccount){
       channels,
       pages:normalizeGa4Pages(gaPagesRaw),
       sources:normalizeGa4Sources(gaSourcesRaw),
-      appFunnel:normalizeGa4Events(gaEventsRaw).filter(row=>['cost_check_start','cost_check_answer','cost_check_complete','partner_impression','affiliate_click','cost_check_quick_guide_click','cost_check_next_category','cost_check_scenario','cost_check_cost_added'].includes(row.eventName)),
-      appFunnelByChannel:normalizeGa4EventChannels(gaEventChannelsRaw).filter(row=>['cost_check_start','cost_check_answer','cost_check_complete','partner_impression','affiliate_click','cost_check_quick_guide_click','cost_check_next_category','cost_check_scenario','cost_check_cost_added'].includes(row.eventName)),
+      appFunnel:normalizeGa4Events(gaEventsRaw).filter(row=>['cost_check_start','cost_check_answer','cost_check_complete','cost_check_quick_path_shown','partner_impression','affiliate_click','cost_check_quick_guide_click','cost_check_next_category','cost_check_scenario','cost_check_cost_added'].includes(row.eventName)),
+      appFunnelByChannel:normalizeGa4EventChannels(gaEventChannelsRaw).filter(row=>['cost_check_start','cost_check_answer','cost_check_complete','cost_check_quick_path_shown','partner_impression','affiliate_click','cost_check_quick_guide_click','cost_check_next_category','cost_check_scenario','cost_check_cost_added'].includes(row.eventName)),
       appLandingChannels:normalizeGa4LandingChannels(gaLandingChannelsRaw),
     },
     gsc:{
@@ -183,6 +187,9 @@ if(!rawServiceAccount){
       queries:normalizeGscRows(gscQueriesRaw,'query'),
       pages:normalizeGscRows(gscPagesRaw,'page'),
       queryPages:normalizeGscPairs(gscQueryPagesRaw),
+      daily:normalizeGscRows(gscDailyRaw,'date').sort((a,b)=>a.date.localeCompare(b.date)),
+      appDaily:normalizeGscRows(gscAppDailyRaw,'date').sort((a,b)=>a.date.localeCompare(b.date)),
+      appQueries:normalizeGscRows(gscAppQueriesRaw,'query'),
     },
   };
 }

@@ -34,6 +34,7 @@ export default function SavingsApp(){
   const [hydrated,setHydrated]=useState(false);
   const completedTracked=useRef(false);
   const startedTracked=useRef(false);
+  const quickPathShownTracked=useRef<Set<CostKey>>(new Set());
   const questionCardRef=useRef<HTMLDivElement>(null);
 
   useEffect(()=>{
@@ -108,6 +109,7 @@ export default function SavingsApp(){
     setScenarioPct(10);
     completedTracked.current=false;
     startedTracked.current=false;
+    quickPathShownTracked.current.clear();
     try{window.localStorage.removeItem(costCheckStorageKey);window.localStorage.removeItem(legacyStorageKey);}catch{}
     emitAnalyticsEvent('cost_check_reset',{source:'app'});
   };
@@ -117,6 +119,12 @@ export default function SavingsApp(){
   const activeIndex=categories.findIndex(category=>category.key===active);
   const activeComplete=isComplete(active);
   const activeQuickPartner=activeAnswer.fit===2?resultPartners(active)[0]:undefined;
+
+  useEffect(()=>{
+    if(activeAnswer.fit!==2||quickPathShownTracked.current.has(active)) return;
+    quickPathShownTracked.current.add(active);
+    emitAnalyticsEvent('cost_check_quick_path_shown',{category:active,has_partner:activeQuickPartner?1:0});
+  },[active,activeAnswer.fit,activeQuickPartner]);
 
   const goNext=()=>{
     if(!activeComplete||activeIndex>=categories.length-1) return;

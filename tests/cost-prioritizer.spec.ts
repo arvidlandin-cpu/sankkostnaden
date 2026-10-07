@@ -92,6 +92,10 @@ test('Cost Check start event is emitted only on the first answer',async({page})=
   await page.getByRole('button',{name:/Klart – till Bredband/i}).click();
   await page.getByRole('button',{name:/Priset har höjts eller känns högt/i}).click();
 
-  const starts=await page.evaluate(()=>((window as any).dataLayer||[]).filter((event:any)=>event.event==='cost_check_start'));
+  const events=await page.evaluate(()=>(window as any).dataLayer||[]);
+  const starts=events.filter((event:any)=>event.event==='cost_check_start');
+  const quickShown=events.filter((event:any)=>event.event==='cost_check_quick_path_shown');
   expect(starts).toHaveLength(1);
+  expect(quickShown).toHaveLength(2);
+  expect(quickShown.map((event:any)=>event.category).sort()).toEqual(['bredband','el']);
 });
