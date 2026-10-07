@@ -34,7 +34,7 @@ test('priority insurance pages keep canonicals and expose protection check',asyn
 test('existing bostadsrätt SEO flow remains intact',async({page})=>{
   await page.goto('/forsakring/hemforsakring-bostadsratt/');
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href','https://sankkostnaden.se/forsakring/hemforsakring-bostadsratt/');
-  await expect(page.getByRole('heading',{level:1,name:'Hemförsäkring bostadsrätt 2026 – pris & bostadsrättstillägg'})).toBeVisible();
+  await expect(page.getByRole('heading',{level:1,name:'Hemförsäkring bostadsrätt 2026 – pris, skydd och självrisk'})).toBeVisible();
   await expect(page.getByRole('heading',{name:'Behöver jag bostadsrättstillägg?'})).toBeVisible();
 });
 

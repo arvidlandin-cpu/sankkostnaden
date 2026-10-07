@@ -23,16 +23,16 @@ export default function HouseElectricityTool() {
 
   return <>
     <Head>
-      <title>Hur mycket kWh drar ett hus? Normal elförbrukning 2026</title>
-      <meta name='description' content='Hur mycket kWh drar ett hus per år? Se riktvärden för villa med och utan elvärme och räkna på boyta, uppvärmning, hushåll, elbil och pool eller spa.' />
-      <link rel='canonical' href='https://sankkostnaden.se/elavtal/hur-mycket-el-drar-mitt-hus/' /><script type='application/ld+json' dangerouslySetInnerHTML={{__html: JSON.stringify({'@context':'https://schema.org','@type':'WebPage',name:"Hur mycket kWh drar ett hus? Normal elförbrukning 2026",description:"Hur mycket kWh drar ett hus per år? Se riktvärden för villa med och utan elvärme och räkna på boyta, uppvärmning, hushåll, elbil och pool eller spa.",url:"https://sankkostnaden.se/elavtal/hur-mycket-el-drar-mitt-hus/",isPartOf:{'@type':'WebSite',name:'Sänk Kostnaden',url:'https://sankkostnaden.se/'}})}} />
+      <title>Hur mycket el drar ett hus? Räkna kWh per år 2026</title>
+      <meta name='description' content='Hur mycket el drar ett hus? Räkna uppskattad årsförbrukning i kWh utifrån boyta, uppvärmning, hushåll, elbil och spa. Se uppskattad kWh per år och vad som driver elanvändningen.' />
+      <link rel='canonical' href='https://sankkostnaden.se/elavtal/hur-mycket-el-drar-mitt-hus/' /><script type='application/ld+json' dangerouslySetInnerHTML={{__html: JSON.stringify({'@context':'https://schema.org','@type':'WebPage',name:"Hur mycket el drar ett hus? Räkna kWh per år 2026",description:"Hur mycket el drar ett hus? Räkna uppskattad årsförbrukning i kWh utifrån boyta, uppvärmning, hushåll, elbil och spa. Se uppskattad kWh per år och vad som driver elanvändningen.",url:"https://sankkostnaden.se/elavtal/hur-mycket-el-drar-mitt-hus/",isPartOf:{'@type':'WebSite',name:'Sänk Kostnaden',url:'https://sankkostnaden.se/'}})}} />
       <meta name='robots' content='index,follow' />
     </Head>
     <main className={styles.shell}>
       <a className={styles.back} href='/elavtal/'>← Elavtal</a>
       <section className={styles.hero}>
         <span><Zap size={15} /> ELKOLL 2026</span>
-        <h1>Hur mycket kWh drar ett hus per år?</h1>
+        <h1>Hur mycket el drar ditt hus?</h1>
         <p>Bygg en snabb profil av huset och få ett riktvärde för årsförbrukningen. Resultatet är en uppskattning – din faktiska historik är alltid bättre när den finns.</p>
       </section>
       <section className={styles.toolGrid}>
