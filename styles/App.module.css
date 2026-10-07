@@ -946,3 +946,30 @@
   }
   .quickPathActions a{width:100%}
 }
+
+
+/* Cost Check primary start CTA – 2026-10-07 */
+.heroStart{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  margin-top:18px;
+  min-height:46px;
+  padding:12px 16px;
+  border-radius:11px;
+  background:#dff46a;
+  color:#17201b;
+  font-size:13px;
+  font-weight:900;
+  text-decoration:none;
+}
+.heroStart:hover{
+  transform:translateY(-1px);
+}
+@media(max-width:760px){
+  .heroStart{
+    width:100%;
+    min-height:50px;
+  }
+}
