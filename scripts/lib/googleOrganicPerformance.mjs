@@ -101,6 +101,9 @@ export function toMarkdown(report){
 
   const ga=report.ga4;
   const gsc=report.gsc;
+  const nonHubPages=(gsc.pages||[]).filter(row=>!['https://sankkostnaden.se/','https://sankkostnaden.se/app/'].includes(row.page));
+  const nonHubClicks=nonHubPages.reduce((sum,row)=>sum+(Number(row.clicks)||0),0);
+  const nonHubImpressions=nonHubPages.reduce((sum,row)=>sum+(Number(row.impressions)||0),0);
   lines.push(
     '## GA4',
     '',
@@ -117,6 +120,7 @@ export function toMarkdown(report){
     `- Visningar i Google: **${int(gsc.totals.impressions)}**`,
     `- CTR: **${pct(gsc.totals.ctr)}**`,
     `- Genomsnittlig position: **${dec(gsc.totals.position)}**`,
+    `- Klick till innehållssidor exkl. startsidan och /app/: **${int(nonHubClicks)}** av ${int(nonHubImpressions)} visningar`,
     ''
   );
 
