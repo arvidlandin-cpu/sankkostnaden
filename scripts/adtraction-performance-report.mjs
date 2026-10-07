@@ -3,6 +3,7 @@ import path from 'node:path';
 import {
   aggregatePerformance,
   aggregateTotals,
+  attributionCoverage,
   dateRange,
   normalizeAdtractionClick,
   normalizeAdtractionTransaction,
@@ -13,6 +14,7 @@ const days=Number(process.env.REPORT_DAYS||process.argv[2]||30);
 const period=dateRange(days);
 const outDir=process.env.REPORT_OUT_DIR||'adtraction-performance-report';
 const token=process.env.ADTRACTION_API_TOKEN;
+const attributionSince=process.env.ATTRIBUTION_TRACKING_SINCE||'2026-10-06T14:24:38Z';
 
 async function fetchJson(url,options={}){
   const response=await fetch(url,options);
@@ -50,12 +52,14 @@ const transactions=(Array.isArray(transactionData)?transactionData:[]).map(norma
 const clicks=(Array.isArray(clickData)?clickData:[]).map(normalizeAdtractionClick);
 const rows=aggregatePerformance(transactions,clicks);
 const totals=aggregateTotals(transactions,clicks);
+const coverage=attributionCoverage(clicks,attributionSince);
 
 const report={
   generatedAt:new Date().toISOString(),
   period,
   source:'Adtraction API v2 partner transactions + clicks',
   totals,
+  attributionCoverage:coverage,
   rows,
 };
 
