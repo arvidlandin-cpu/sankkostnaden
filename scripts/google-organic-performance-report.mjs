@@ -172,8 +172,8 @@ if(!rawServiceAccount){
       channels,
       pages:normalizeGa4Pages(gaPagesRaw),
       sources:normalizeGa4Sources(gaSourcesRaw),
-      appFunnel:normalizeGa4Events(gaEventsRaw).filter(row=>['cost_check_answer','cost_check_complete','partner_impression','affiliate_click','cost_check_next_category','cost_check_scenario','cost_check_cost_added'].includes(row.eventName)),
-      appFunnelByChannel:normalizeGa4EventChannels(gaEventChannelsRaw).filter(row=>['cost_check_answer','cost_check_complete','partner_impression','affiliate_click','cost_check_next_category','cost_check_scenario','cost_check_cost_added'].includes(row.eventName)),
+      appFunnel:normalizeGa4Events(gaEventsRaw).filter(row=>['cost_check_start','cost_check_answer','cost_check_complete','partner_impression','affiliate_click','cost_check_quick_guide_click','cost_check_next_category','cost_check_scenario','cost_check_cost_added'].includes(row.eventName)),
+      appFunnelByChannel:normalizeGa4EventChannels(gaEventChannelsRaw).filter(row=>['cost_check_start','cost_check_answer','cost_check_complete','partner_impression','affiliate_click','cost_check_quick_guide_click','cost_check_next_category','cost_check_scenario','cost_check_cost_added'].includes(row.eventName)),
       appLandingChannels:normalizeGa4LandingChannels(gaLandingChannelsRaw),
     },
     gsc:{
