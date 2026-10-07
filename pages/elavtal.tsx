@@ -34,6 +34,7 @@ export default function Elavtal(){
       {href:'/elavtal/sa-laser-du-elfakturan/',title:'Så läser du elfakturan',text:'Hitta kostnaderna du faktiskt kan påverka.'},
     ]}
     moreGuides={[
+      {href:'/elavtal/hur-mycket-el-drar-mitt-hus/',title:'Elförbrukning i villa',text:'Räkna uppskattad årsförbrukning i kWh.'},
       {href:'/elavtal/rorligt-elpris/',title:'Rörligt elpris',text:'Fördelar, risk och villkor.'},
       {href:'/elavtal/kvartspris/',title:'Kvartspris',text:'För hushåll som kan styra förbrukningen.'},
       {href:'/elavtal/rorligt-fast-kvartspris/',title:'Rörligt, fast eller kvartspris?',text:'Jämför avtalsformerna.'},
