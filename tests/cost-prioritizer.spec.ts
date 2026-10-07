@@ -74,3 +74,24 @@ for(const viewport of [{width:360,height:800},{width:390,height:844},{width:430,
     expect(overflow).toBeLessThanOrEqual(1);
   });
 }
+
+
+test('high-intent answer exposes quick path without changing the full-flow result',async({page})=>{
+  await page.goto('/app/');
+  await page.getByRole('button',{name:/Priset har ändrats eller avtalet känns dyrt/i}).click();
+
+  await expect(page.getByText('SNABB VÄG')).toBeVisible();
+  await expect(page.locator('a[data-placement="cost_check_quick_path"]')).toHaveCount(1);
+  await expect(page.getByRole('button',{name:/Klart – till Bredband/i})).toBeEnabled();
+});
+
+test('Cost Check start event is emitted only on the first answer',async({page})=>{
+  await page.addInitScript(()=>{(window as any).dataLayer=[];});
+  await page.goto('/app/');
+  await page.getByRole('button',{name:/Priset har ändrats eller avtalet känns dyrt/i}).click();
+  await page.getByRole('button',{name:/Klart – till Bredband/i}).click();
+  await page.getByRole('button',{name:/Priset har höjts eller känns högt/i}).click();
+
+  const starts=await page.evaluate(()=>((window as any).dataLayer||[]).filter((event:any)=>event.event==='cost_check_start'));
+  expect(starts).toHaveLength(1);
+});
