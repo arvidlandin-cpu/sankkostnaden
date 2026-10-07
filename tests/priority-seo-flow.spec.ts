@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 test('bostadsrätt insurance keeps SEO metadata and adds focused decision support',async({page})=>{
   await page.goto('/forsakring/hemforsakring-bostadsratt/');
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href','https://sankkostnaden.se/forsakring/hemforsakring-bostadsratt/');
-  await expect(page.getByRole('heading',{level:1,name:'Hemförsäkring bostadsrätt 2026 – pris, skydd och självrisk'})).toBeVisible();
+  await expect(page.getByRole('heading',{level:1,name:'Hemförsäkring bostadsrätt 2026 – pris & bostadsrättstillägg'})).toBeVisible();
   await expect(page.getByRole('heading',{level:2,name:'Behöver jag bostadsrättstillägg?'})).toBeVisible();
   await expect(page.getByRole('heading',{level:2,name:'Har föreningen kollektivt bostadsrättstillägg?'})).toBeVisible();
   await expect(page.getByRole('link',{name:'Gör skyddskollen',exact:true})).toHaveAttribute('href','/forsakring/hemforsakring-skyddskoll/');
