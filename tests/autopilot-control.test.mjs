@@ -24,6 +24,7 @@ function google(now='2026-10-08T08:00:00Z'){
       organic:{sessions:20,activeUsers:18},
       appFunnel:[],
       appFunnelByChannel:[],
+      commercialByPageChannel:[],
     },
     gsc:{
       totals:{clicks:10,impressions:500,ctr:0.02,position:20},
@@ -206,4 +207,45 @@ test('high-impression reach-zone page can trigger an original utility upgrade',(
   const packet=buildDecisionPacket({google:g,policy:p,state:{},now:new Date('2026-10-08T08:00:00Z')});
   assert.equal(packet.recommendedAction.type,'CONTENT_UTILITY_UPGRADE');
   assert.equal(packet.recommendedAction.autonomous,true);
+});
+
+
+test('sitewide organic partner friction can trigger a page CRO test',()=>{
+  const g=google();
+  g.ga4.commercialByPageChannel=[
+    {eventName:'partner_impression',pagePath:'/elavtal/billigaste-elavtalet/',channel:'Organic Search',eventCount:40,totalUsers:10},
+    {eventName:'affiliate_click',pagePath:'/elavtal/billigaste-elavtalet/',channel:'Organic Search',eventCount:1,totalUsers:1},
+  ];
+  const p={
+    ...policy,
+    thresholds:{
+      ...policy.thresholds,
+      cro:{...policy.thresholds.cro,minPagePartnerImpressions:30,minPagePartnerUsers:8,maxPageAffiliateClickRate:0.08},
+      contentUtility:{minImpressions:100,minPosition:16,maxPosition:40,maxClicks:1}
+    },
+    autonomy:{auto:[...policy.autonomy.auto,'PAGE_COMMERCIAL_CRO_TEST']}
+  };
+  const packet=buildDecisionPacket({google:g,policy:p,state:{},now:new Date('2026-10-08T08:00:00Z')});
+  assert.equal(packet.recommendedAction.type,'PAGE_COMMERCIAL_CRO_TEST');
+  assert.equal(packet.recommendedAction.details.pagePath,'/elavtal/billigaste-elavtalet/');
+  assert.equal(packet.recommendedAction.autonomous,true);
+});
+
+test('sitewide commercial CRO ignores tiny organic samples',()=>{
+  const g=google();
+  g.ga4.commercialByPageChannel=[
+    {eventName:'partner_impression',pagePath:'/elavtal/billigaste-elavtalet/',channel:'Organic Search',eventCount:30,totalUsers:2},
+    {eventName:'affiliate_click',pagePath:'/elavtal/billigaste-elavtalet/',channel:'Organic Search',eventCount:0,totalUsers:0},
+  ];
+  const p={
+    ...policy,
+    thresholds:{
+      ...policy.thresholds,
+      cro:{...policy.thresholds.cro,minPagePartnerImpressions:30,minPagePartnerUsers:8,maxPageAffiliateClickRate:0.08},
+      contentUtility:{minImpressions:100,minPosition:16,maxPosition:40,maxClicks:1}
+    },
+    autonomy:{auto:[...policy.autonomy.auto,'PAGE_COMMERCIAL_CRO_TEST']}
+  };
+  const packet=buildDecisionPacket({google:g,policy:p,state:{},now:new Date('2026-10-08T08:00:00Z')});
+  assert.notEqual(packet.recommendedAction.type,'PAGE_COMMERCIAL_CRO_TEST');
 });

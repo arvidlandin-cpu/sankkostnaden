@@ -1,5 +1,5 @@
 {
-  "version": 3,
+  "version": 4,
   "objective": "Maximera långsiktigt godkänd affiliateintäkt per relevant besökare utan att vilseleda användaren, skada förtroendet eller störa fungerande SEO.",
   "mode": "autonomous_with_guardrails",
   "limits": {
@@ -28,7 +28,10 @@
       "minOrganicStarts": 25,
       "maxCompletionRate": 0.45,
       "minOrganicPartnerImpressions": 25,
-      "maxAffiliateClickRate": 0.08
+      "maxAffiliateClickRate": 0.08,
+      "minPagePartnerImpressions": 30,
+      "minPagePartnerUsers": 8,
+      "maxPageAffiliateClickRate": 0.08
     },
     "attribution": {
       "minSample": 3,
@@ -61,7 +64,8 @@
       "SEO_SNIPPET_TEST",
       "CRO_FRICTION_TEST",
       "REVIEW_ACTIVE_EXPERIMENT",
-      "CONTENT_UTILITY_UPGRADE"
+      "CONTENT_UTILITY_UPGRADE",
+      "PAGE_COMMERCIAL_CRO_TEST"
     ],
     "ownerReview": [
       "NEW_PAID_SERVICE",

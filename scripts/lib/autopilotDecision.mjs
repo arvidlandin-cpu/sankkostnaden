@@ -222,6 +222,42 @@ function contentUtilityCandidate(google,policy){
     .sort((a,b)=>b.score-a.score)[0]||null;
 }
 
+function commercialPageSnapshot(google){
+  const pages=new Map();
+  for(const row of google?.ga4?.commercialByPageChannel||[]){
+    if(row.channel!=='Organic Search') continue;
+    const pagePath=String(row.pagePath||'(not set)');
+    if(!pages.has(pagePath)) pages.set(pagePath,{pagePath,partnerImpressions:0,affiliateClicks:0,partnerUsers:0,affiliateClickUsers:0});
+    const item=pages.get(pagePath);
+    if(row.eventName==='partner_impression'){
+      item.partnerImpressions+=num(row.eventCount);
+      item.partnerUsers=Math.max(item.partnerUsers,num(row.totalUsers));
+    }
+    if(row.eventName==='affiliate_click'){
+      item.affiliateClicks+=num(row.eventCount);
+      item.affiliateClickUsers=Math.max(item.affiliateClickUsers,num(row.totalUsers));
+    }
+  }
+  return [...pages.values()].map(item=>({
+    ...item,
+    affiliateClickRate:item.partnerImpressions?item.affiliateClicks/item.partnerImpressions:0,
+  })).sort((a,b)=>b.partnerImpressions-a.partnerImpressions);
+}
+
+function pageCommercialCandidate(google,policy){
+  const cfg=policy?.thresholds?.cro||{};
+  return commercialPageSnapshot(google)
+    .filter(row=>row.pagePath!=='/app/')
+    .filter(row=>row.partnerImpressions>=num(cfg.minPagePartnerImpressions||30))
+    .filter(row=>row.partnerUsers>=num(cfg.minPagePartnerUsers||8))
+    .filter(row=>row.affiliateClickRate<num(cfg.maxPageAffiliateClickRate||0.08))
+    .map(row=>({
+      ...row,
+      score:row.partnerUsers*(1-row.affiliateClickRate),
+    }))
+    .sort((a,b)=>b.score-a.score)[0]||null;
+}
+
 function croCandidate(google,policy){
   const cfg=policy?.thresholds?.cro||{};
   const funnel=funnelSnapshot(google).organic;
@@ -383,6 +419,16 @@ export function buildDecisionPacket({
       ));
     }
 
+    const pageCommercial=pageCommercialCandidate(google,policy);
+    if(pageCommercial){
+      candidates.push(action(
+        'PAGE_COMMERCIAL_CRO_TEST',
+        66,
+        'En organisk innehållssida visar tillräckligt många partneralternativ men för få besökare klickar vidare. Testa ett enda tydligare kommersiellt steg utan att ändra sidans sökintention.',
+        pageCommercial
+      ));
+    }
+
     const cro=croCandidate(google,policy);
     if(cro){
       candidates.push(action(
@@ -419,6 +465,7 @@ export function buildDecisionPacket({
 
   const auto=(policy?.autonomy?.auto||[]).includes(recommended.type);
   const commercial=commercialObservations({addrevenue,adtraction,policy});
+  const commercialPages=commercialPageSnapshot(google);
 
   return {
     generatedAt:now.toISOString(),
@@ -447,6 +494,7 @@ export function buildDecisionPacket({
     },
     activeExperiment:experimentGate,
     commercialObservations:commercial,
+    commercialPages,
     recommendedAction:{
       ...recommended,
       autonomous:auto,

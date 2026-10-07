@@ -6,6 +6,7 @@ import {
   normalizeGa4Events,
   normalizeGa4LandingChannels,
   normalizeGa4EventChannels,
+  normalizeGa4CommercialPageChannels,
   normalizeGa4Totals,
   normalizeGscRows,
   normalizeGscPairs,
@@ -79,4 +80,16 @@ test('normalizes daily Search Console query rows',()=>{
   ]});
   assert.equal(rows[0].date,'2026-10-05');
   assert.equal(rows[1].query,'jämför försäkring');
+});
+
+
+test('normalizes commercial events by page and channel',()=>{
+  const rows=normalizeGa4CommercialPageChannels({rows:[
+    {dimensionValues:[{value:'partner_impression'},{value:'/elavtal/billigaste-elavtalet/'},{value:'Organic Search'}],metricValues:[{value:'32'},{value:'11'}]},
+    {dimensionValues:[{value:'affiliate_click'},{value:'/elavtal/billigaste-elavtalet/'},{value:'Organic Search'}],metricValues:[{value:'2'},{value:'2'}]},
+  ]});
+  assert.equal(rows[0].pagePath,'/elavtal/billigaste-elavtalet/');
+  assert.equal(rows[0].channel,'Organic Search');
+  assert.equal(rows[0].eventCount,32);
+  assert.equal(rows[1].eventName,'affiliate_click');
 });

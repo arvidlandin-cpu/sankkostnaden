@@ -83,6 +83,16 @@ export function normalizeGa4EventChannels(result){
   })).sort((a,b)=>b.eventCount-a.eventCount);
 }
 
+export function normalizeGa4CommercialPageChannels(result){
+  return (result?.rows||[]).map(row=>({
+    eventName:dimension(row,0)||'(not set)',
+    pagePath:dimension(row,1)||'(not set)',
+    channel:dimension(row,2)||'Unassigned',
+    eventCount:metric(row,0),
+    totalUsers:metric(row,1),
+  })).sort((a,b)=>b.eventCount-a.eventCount);
+}
+
 export function normalizeGscTotals(result){
   const row=result?.rows?.[0]||{};
   return {
@@ -280,6 +290,31 @@ export function toMarkdown(report){
       lines.push(`| ${row.channel.replace(/\|/g,'/')} | ${row.eventName.replace(/\|/g,'/')} | ${int(row.eventCount)} | ${int(row.totalUsers)} |`);
     }
     lines.push('');
+  }
+
+  if(ga.commercialByPageChannel?.length){
+    const organicCommercial=ga.commercialByPageChannel.filter(row=>row.channel==='Organic Search');
+    if(organicCommercial.length){
+      const pages=new Map();
+      for(const row of organicCommercial){
+        if(!pages.has(row.pagePath)) pages.set(row.pagePath,{partnerImpressions:0,affiliateClicks:0,users:0});
+        const item=pages.get(row.pagePath);
+        if(row.eventName==='partner_impression') item.partnerImpressions+=row.eventCount;
+        if(row.eventName==='affiliate_click') item.affiliateClicks+=row.eventCount;
+        item.users=Math.max(item.users,row.totalUsers);
+      }
+      lines.push(
+        '### Kommersiella events per sida – Organic Search',
+        '',
+        '| Sida | Partnerexponeringar | Affiliateklick | Klickgrad |',
+        '| --- | ---: | ---: | ---: |'
+      );
+      for(const [pagePath,item] of [...pages.entries()].sort((a,b)=>b[1].partnerImpressions-a[1].partnerImpressions).slice(0,20)){
+        const rate=item.partnerImpressions?item.affiliateClicks/item.partnerImpressions:0;
+        lines.push(`| ${pagePath.replace(/\|/g,'/')} | ${int(item.partnerImpressions)} | ${int(item.affiliateClicks)} | ${pct(rate)} |`);
+      }
+      lines.push('');
+    }
   }
 
   if(ga.appLandingChannels?.length){
