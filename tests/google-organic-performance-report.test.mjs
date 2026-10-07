@@ -5,6 +5,7 @@ import {
   normalizeGa4Channels,
   normalizeGa4Totals,
   normalizeGscRows,
+  normalizeGscPairs,
   normalizeGscTotals,
   toMarkdown,
 } from '../scripts/lib/googleOrganicPerformance.mjs';
@@ -30,6 +31,8 @@ test('normalizes Search Console totals and rows',()=>{
   assert.equal(totals.clicks,2);
   const rows=normalizeGscRows({rows:[{keys:['hemförsäkring bostadsrätt'],clicks:1,impressions:20,ctr:0.05,position:18.2}]},'query');
   assert.equal(rows[0].query,'hemförsäkring bostadsrätt');
+  const pairs=normalizeGscPairs({rows:[{keys:['jämför elavtal','https://sankkostnaden.se/elavtal/jamfor-elavtal/'],clicks:0,impressions:58,ctr:0,position:24.7}]});
+  assert.equal(pairs[0].page,'https://sankkostnaden.se/elavtal/jamfor-elavtal/');
 });
 
 test('unconfigured report does not expose credentials',()=>{
