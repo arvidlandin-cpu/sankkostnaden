@@ -68,6 +68,9 @@ export function normalizeGa4LandingChannels(result){
     channel:dimension(row,1)||'Unassigned',
     sessions:metric(row,0),
     activeUsers:metric(row,1),
+    engagedSessions:metric(row,2),
+    engagementRate:metric(row,3),
+    averageSessionDuration:metric(row,4),
   })).sort((a,b)=>b.sessions-a.sessions);
 }
 
@@ -177,6 +180,45 @@ export function toMarkdown(report){
     lines.push('');
   }
 
+  if(gsc.daily?.length){
+    lines.push(
+      '### Google – daglig utveckling',
+      '',
+      '| Datum | Klick | Visningar | CTR | Position |',
+      '| --- | ---: | ---: | ---: | ---: |'
+    );
+    for(const row of gsc.daily.slice(-14)){
+      lines.push(`| ${row.date} | ${int(row.clicks)} | ${int(row.impressions)} | ${pct(row.ctr)} | ${dec(row.position)} |`);
+    }
+    lines.push('');
+  }
+
+  if(gsc.appDaily?.length){
+    lines.push(
+      '### /app/ i Google – daglig utveckling',
+      '',
+      '| Datum | Klick | Visningar | CTR | Position |',
+      '| --- | ---: | ---: | ---: | ---: |'
+    );
+    for(const row of gsc.appDaily.slice(-14)){
+      lines.push(`| ${row.date} | ${int(row.clicks)} | ${int(row.impressions)} | ${pct(row.ctr)} | ${dec(row.position)} |`);
+    }
+    lines.push('');
+  }
+
+  if(gsc.appQueries?.length){
+    lines.push(
+      '### /app/ – synliga Google-sökfrågor',
+      '',
+      '| Sökfråga | Klick | Visningar | CTR | Position |',
+      '| --- | ---: | ---: | ---: | ---: |'
+    );
+    for(const row of gsc.appQueries.slice(0,20)){
+      lines.push(`| ${row.query.replace(/\|/g,'/')} | ${int(row.clicks)} | ${int(row.impressions)} | ${pct(row.ctr)} | ${dec(row.position)} |`);
+    }
+    lines.push('');
+  }
+
   if(gsc.queryPages?.length){
     lines.push(
       '### Sökfråga → landningssida',
@@ -220,11 +262,11 @@ export function toMarkdown(report){
     lines.push(
       '### /app/ som landningssida',
       '',
-      '| Kanal | Sessioner | Aktiva användare |',
-      '| --- | ---: | ---: |'
+      '| Kanal | Sessioner | Aktiva användare | Engagerade sessioner | Engagemang | Snittid |',
+      '| --- | ---: | ---: | ---: | ---: | ---: |'
     );
     for(const row of ga.appLandingChannels){
-      lines.push(`| ${row.channel.replace(/\|/g,'/')} | ${int(row.sessions)} | ${int(row.activeUsers)} |`);
+      lines.push(`| ${row.channel.replace(/\|/g,'/')} | ${int(row.sessions)} | ${int(row.activeUsers)} | ${int(row.engagedSessions)} | ${pct(row.engagementRate)} | ${dec(row.averageSessionDuration)} s |`);
     }
     lines.push('');
   }
