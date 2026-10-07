@@ -27,7 +27,7 @@ jobs:
   report:
     runs-on: ubuntu-latest
     env:
-      ADDREVENUE_API_TOKEN: ${{ secrets.ADDREVENUE_API_TOKEN }}
+      ADDREVENUE_API_TOKEN: ${{ secrets.ADDREVENUE }}
       REPORT_DAYS: ${{ github.event.inputs.days || '30' }}
       REPORT_OUT_DIR: addrevenue-performance-report
       ATTRIBUTION_TRACKING_SINCE: '2026-10-06T14:37:00Z'
@@ -46,7 +46,7 @@ jobs:
       - name: Require Addrevenue API token
         run: |
           if [ -z "$ADDREVENUE_API_TOKEN" ]; then
-            echo "ADDREVENUE_API_TOKEN is missing from GitHub Actions secrets."
+            echo "ADDREVENUE secret is missing from GitHub Actions secrets."
             exit 2
           fi
 
@@ -68,5 +68,3 @@ jobs:
           path: addrevenue-performance-report/
           retention-days: 30
           if-no-files-found: ignore
-
-# Verification trigger after Addrevenue token setup 2026-10-07
