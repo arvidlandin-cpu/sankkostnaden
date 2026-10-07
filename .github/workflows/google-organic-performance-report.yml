@@ -62,3 +62,5 @@ jobs:
           path: google-organic-performance-report/
           retention-days: 30
           if-no-files-found: ignore
+
+# Verification trigger after Google service account setup 2026-10-07
