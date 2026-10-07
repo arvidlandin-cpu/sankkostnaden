@@ -15,6 +15,7 @@ const inputRoot=process.env.AUTOPILOT_INPUT_ROOT||'autopilot-input';
 const outDir=process.env.AUTOPILOT_OUT_DIR||'autopilot-report';
 const policy=await readJson(process.env.AUTOPILOT_POLICY||'autopilot/policy.json')||{};
 const state=await readJson(process.env.AUTOPILOT_STATE||'autopilot/state.json')||{};
+const learningLedger=await readJson(process.env.AUTOPILOT_LEARNING_LEDGER||'autopilot/learning-ledger.json')||{};
 const now=process.env.AUTOPILOT_NOW?new Date(process.env.AUTOPILOT_NOW):new Date();
 
 const google=await readJson(path.join(inputRoot,'google','google-organic-performance.json'));
@@ -31,6 +32,7 @@ const packet=buildDecisionPacket({
   partnerHealth,
   policy,
   state,
+  learningLedger,
   now,
 });
 
