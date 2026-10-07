@@ -9,6 +9,7 @@ import {
   normalizeGa4Totals,
   normalizeGscRows,
   normalizeGscPairs,
+  normalizeGscDateQueryRows,
   normalizeGscTotals,
   toMarkdown,
 } from '../scripts/lib/googleOrganicPerformance.mjs';
@@ -68,4 +69,14 @@ test('normalizes app funnel by traffic channel',()=>{
   ]});
   assert.equal(rows[0].channel,'Organic Search');
   assert.equal(rows[0].eventCount,9);
+});
+
+
+test('normalizes daily Search Console query rows',()=>{
+  const rows=normalizeGscDateQueryRows({rows:[
+    {keys:['2026-10-06','jämför försäkring'],clicks:0,impressions:7,ctr:0,position:6.8},
+    {keys:['2026-10-05','jämför försäkring'],clicks:0,impressions:5,ctr:0,position:7.2},
+  ]});
+  assert.equal(rows[0].date,'2026-10-05');
+  assert.equal(rows[1].query,'jämför försäkring');
 });
