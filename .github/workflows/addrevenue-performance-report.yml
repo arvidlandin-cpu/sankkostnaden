@@ -61,3 +61,5 @@ jobs:
           path: addrevenue-performance-report/
           retention-days: 30
           if-no-files-found: ignore
+
+# Verification trigger after Addrevenue token setup 2026-10-07
