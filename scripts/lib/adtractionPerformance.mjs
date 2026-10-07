@@ -208,7 +208,7 @@ export function toMarkdown(report){
       '| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |'
     );
     for(const row of report.rows){
-      lines.push(`| ${row.partner.replace(/\\|/g,'/')} | ${row.totalClicks} | ${row.taggedClicks} | ${row.approvedTransactions} | ${row.pendingTransactions} | ${row.deniedTransactions} | ${money(row.approvedCommission)} | ${money(row.approvedRevenuePerClick)} |`);
+      lines.push(`| ${row.partner.replace(/\|/g,'/')} | ${row.totalClicks} | ${row.taggedClicks} | ${row.approvedTransactions} | ${row.pendingTransactions} | ${row.deniedTransactions} | ${money(row.approvedCommission)} | ${money(row.approvedRevenuePerClick)} |`);
     }
     lines.push('');
   }
