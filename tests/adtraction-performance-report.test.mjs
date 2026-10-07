@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {
   aggregatePerformance,
   aggregateTotals,
+  attributionCoverage,
   dateRange,
   normalizeAdtractionClick,
   normalizeAdtractionTransaction,
@@ -56,6 +57,20 @@ test('aggregates clicks, sessions, transactions and approved revenue',()=>{
   assert.equal(totals.approvedTransactions,1);
 });
 
+test('separates post-rollout EPI coverage from legacy clicks',()=>{
+  const clicks=[
+    normalizeAdtractionClick({programName:'Hallon',currency:'SEK',clickDate:'2026-10-06T13:00:00+0000',epi:''}),
+    normalizeAdtractionClick({programName:'Hallon',currency:'SEK',clickDate:'2026-10-06T15:00:00+0000',epi:'clk_new1',epi2:'fs_one'}),
+    normalizeAdtractionClick({programName:'Tele2',currency:'SEK',clickDate:'2026-10-07T07:00:00+0000',epi:'clk_new2',epi2:'fs_two'}),
+  ];
+  const coverage=attributionCoverage(clicks,'2026-10-06T14:24:38Z');
+  assert.equal(coverage.clicks,2);
+  assert.equal(coverage.taggedClicks,2);
+  assert.equal(coverage.distinctFunnelSessions,2);
+  assert.equal(coverage.tagCoverage,1);
+  assert.equal(coverage.status,'no_signal');
+});
+
 test('report output never persists raw click or session IDs',()=>{
   const clicks=[
     normalizeAdtractionClick({programName:'Fello',currency:'SEK',epi:'clk_secret123',epi2:'fs_secret456'}),
@@ -66,6 +81,7 @@ test('report output never persists raw click or session IDs',()=>{
   const report={
     period:{from:'2026-10-01',to:'2026-10-07',days:7},
     totals:aggregateTotals(transactions,clicks),
+    attributionCoverage:attributionCoverage(clicks,'2026-10-06T14:24:38Z'),
     rows:aggregatePerformance(transactions,clicks),
   };
   const json=JSON.stringify(report);
