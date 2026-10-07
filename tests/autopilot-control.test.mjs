@@ -1,0 +1,134 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { buildDecisionPacket, toMarkdown } from '../scripts/lib/autopilotDecision.mjs';
+
+const policy={
+  version:1,
+  thresholds:{
+    freshnessHours:36,
+    seo:{minImpressions:80,minPosition:3,maxPosition:15,maxCtr:0.015},
+    cro:{minOrganicStarts:25,maxCompletionRate:0.45,minOrganicPartnerImpressions:25,maxAffiliateClickRate:0.08},
+    attribution:{minSample:3,repairBelowCoverage:0.5},
+    commercial:{minPartnerClicks:25},
+  },
+  limits:{maxConcurrentExperiments:1},
+  autonomy:{auto:['TECHNICAL_FIX','ATTRIBUTION_REPAIR','SEO_SNIPPET_TEST','CRO_FRICTION_TEST','REVIEW_ACTIVE_EXPERIMENT']},
+};
+
+function google(now='2026-10-08T08:00:00Z'){
+  return {
+    generatedAt:now,
+    configured:true,
+    ga4:{
+      totals:{sessions:100,activeUsers:80},
+      organic:{sessions:20,activeUsers:18},
+      appFunnel:[],
+      appFunnelByChannel:[],
+    },
+    gsc:{
+      totals:{clicks:10,impressions:500,ctr:0.02,position:20},
+      queryPages:[],
+    },
+  };
+}
+
+test('an active experiment blocks new growth experiments before review date',()=>{
+  const g=google();
+  g.gsc.queryPages=[{query:'billigaste elavtalet',page:'https://sankkostnaden.se/elavtal/',impressions:200,clicks:0,ctr:0,position:8}];
+  const packet=buildDecisionPacket({
+    google:g,
+    policy,
+    state:{activeExperiment:{id:'x',type:'SEO_SNIPPET_TEST',target:'/forsakring/',startedAt:'2026-10-07T10:00:00Z',earliestReviewAt:'2026-10-15T08:00:00Z',status:'running'}},
+    now:new Date('2026-10-08T08:00:00Z'),
+  });
+  assert.equal(packet.recommendedAction.type,'WAITING_FOR_EXPERIMENT');
+  assert.equal(packet.guardrails.activeExperimentBlocksGrowth,true);
+});
+
+test('review becomes the next autonomous action when the active experiment matures',()=>{
+  const packet=buildDecisionPacket({
+    google:google('2026-10-16T08:00:00Z'),
+    policy,
+    state:{activeExperiment:{id:'x',type:'SEO_SNIPPET_TEST',target:'/forsakring/',startedAt:'2026-10-07T10:00:00Z',earliestReviewAt:'2026-10-15T08:00:00Z',status:'running'}},
+    now:new Date('2026-10-16T08:00:00Z'),
+  });
+  assert.equal(packet.recommendedAction.type,'REVIEW_ACTIVE_EXPERIMENT');
+  assert.equal(packet.recommendedAction.autonomous,true);
+});
+
+test('attribution repair overrides the experiment wait gate',()=>{
+  const packet=buildDecisionPacket({
+    google:google(),
+    adtraction:{
+      generatedAt:'2026-10-08T08:00:00Z',
+      attributionCoverage:{clicks:10,taggedClicks:2,tagCoverage:0.2,status:'warning'},
+      totals:{totalClicks:10},
+      rows:[],
+    },
+    policy,
+    state:{activeExperiment:{id:'x',type:'SEO_SNIPPET_TEST',target:'/forsakring/',startedAt:'2026-10-07T10:00:00Z',earliestReviewAt:'2026-10-15T08:00:00Z',status:'running'}},
+    now:new Date('2026-10-08T08:00:00Z'),
+  });
+  assert.equal(packet.recommendedAction.type,'ATTRIBUTION_REPAIR');
+  assert.equal(packet.recommendedAction.autonomous,true);
+});
+
+test('low CTR ranking signal can trigger a bounded SEO snippet test',()=>{
+  const g=google();
+  g.gsc.queryPages=[{query:'billigaste elavtalet',page:'https://sankkostnaden.se/elavtal/',impressions:200,clicks:1,ctr:0.005,position:7.5}];
+  const packet=buildDecisionPacket({
+    google:g,
+    policy,
+    state:{},
+    now:new Date('2026-10-08T08:00:00Z'),
+  });
+  assert.equal(packet.recommendedAction.type,'SEO_SNIPPET_TEST');
+  assert.equal(packet.recommendedAction.details.query,'billigaste elavtalet');
+});
+
+test('organic funnel sample can trigger a CRO friction test',()=>{
+  const g=google();
+  g.ga4.appFunnelByChannel=[
+    {eventName:'cost_check_start',channel:'Organic Search',eventCount:40,totalUsers:35},
+    {eventName:'cost_check_complete',channel:'Organic Search',eventCount:10,totalUsers:10},
+    {eventName:'partner_impression',channel:'Organic Search',eventCount:10,totalUsers:10},
+    {eventName:'affiliate_click',channel:'Organic Search',eventCount:2,totalUsers:2},
+  ];
+  const packet=buildDecisionPacket({
+    google:g,
+    policy,
+    state:{},
+    now:new Date('2026-10-08T08:00:00Z'),
+  });
+  assert.equal(packet.recommendedAction.type,'CRO_FRICTION_TEST');
+  assert.equal(packet.recommendedAction.details.kind,'completion');
+});
+
+test('missing Google data blocks optimization instead of guessing',()=>{
+  const packet=buildDecisionPacket({
+    policy,
+    state:{},
+    now:new Date('2026-10-08T08:00:00Z'),
+  });
+  assert.equal(packet.systemStatus,'BLOCKED');
+  assert.equal(packet.recommendedAction.type,'TECHNICAL_FIX');
+});
+
+test('markdown never includes raw credentials and reports the north star',()=>{
+  const packet=buildDecisionPacket({
+    google:google(),
+    affiliate:{
+      generatedAt:'2026-10-08T08:00:00Z',
+      totals:[{network:'addrevenue',approvedCommission:500,approvedTransactions:1,pendingCommission:0}],
+    },
+    addrevenue:{generatedAt:'2026-10-08T08:00:00Z',totals:{clicks:5},rows:[]},
+    adtraction:{generatedAt:'2026-10-08T08:00:00Z',totals:{totalClicks:5},rows:[]},
+    policy,
+    state:{},
+    now:new Date('2026-10-08T08:00:00Z'),
+  });
+  const markdown=toMarkdown(packet);
+  assert.match(markdown,/Godkänd affiliateintäkt/);
+  assert.match(markdown,/500/);
+  assert.doesNotMatch(markdown,/private_key|API_TOKEN|GOOGLE_SERVICE_ACCOUNT_JSON/);
+});

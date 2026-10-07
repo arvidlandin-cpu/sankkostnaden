@@ -1,0 +1,125 @@
+name: Sänk Kostnaden autopilot
+
+on:
+  push:
+    branches:
+      - main
+      - ops/ultimate-autopilot
+    paths:
+      - '.github/workflows/autopilot-control.yml'
+      - 'autopilot/**'
+      - 'AUTOPILOT.md'
+      - 'scripts/autopilot-control.mjs'
+      - 'scripts/google-organic-performance-report.mjs'
+      - 'scripts/affiliate-revenue-report.mjs'
+      - 'scripts/addrevenue-performance-report.mjs'
+      - 'scripts/adtraction-performance-report.mjs'
+      - 'scripts/partner-health.mjs'
+      - 'scripts/lib/autopilotDecision.mjs'
+      - 'scripts/lib/googleServiceAccount.mjs'
+      - 'scripts/lib/googleOrganicPerformance.mjs'
+      - 'scripts/lib/affiliateRevenue.mjs'
+      - 'scripts/lib/addrevenuePerformance.mjs'
+      - 'scripts/lib/adtractionPerformance.mjs'
+      - 'tests/autopilot-control.test.mjs'
+  workflow_dispatch:
+  schedule:
+    - cron: '20 6 * * *'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sankkostnaden-autopilot
+  cancel-in-progress: false
+
+jobs:
+  decide:
+    runs-on: ubuntu-latest
+    env:
+      GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+      ADTRACTION_API_TOKEN: ${{ secrets.ADTRACTION_API_TOKEN }}
+      ADDREVENUE_API_TOKEN: ${{ secrets.ADDREVENUE }}
+      GA4_MEASUREMENT_ID: 'G-E2XTJVY5EX'
+      TARGET_HOSTNAME: 'sankkostnaden.se'
+      REPORT_DAYS: '30'
+      ATTRIBUTION_TRACKING_SINCE_ADTRACTION: '2026-10-06T14:24:38Z'
+      ATTRIBUTION_TRACKING_SINCE_ADDREVENUE: '2026-10-06T14:37:00Z'
+      AUTOPILOT_INPUT_ROOT: 'autopilot-input'
+      AUTOPILOT_OUT_DIR: 'autopilot-report'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.16.0
+
+      - name: Validate autopilot and source logic
+        run: |
+          node --test tests/autopilot-control.test.mjs
+          node --test tests/google-organic-performance-report.test.mjs
+          node --test tests/affiliate-revenue-report.test.mjs
+          node --test tests/addrevenue-performance-report.test.mjs
+          node --test tests/adtraction-performance-report.test.mjs
+          node --test tests/partner-health.test.mjs
+
+      - name: Collect Google and GA4
+        continue-on-error: true
+        env:
+          REPORT_OUT_DIR: autopilot-input/google
+        run: node scripts/google-organic-performance-report.mjs
+
+      - name: Collect aggregate affiliate revenue
+        continue-on-error: true
+        env:
+          REPORT_OUT_DIR: autopilot-input/affiliate
+        run: node scripts/affiliate-revenue-report.mjs
+
+      - name: Collect Addrevenue performance
+        continue-on-error: true
+        env:
+          REPORT_OUT_DIR: autopilot-input/addrevenue
+          ATTRIBUTION_TRACKING_SINCE: ${{ env.ATTRIBUTION_TRACKING_SINCE_ADDREVENUE }}
+        run: node scripts/addrevenue-performance-report.mjs
+
+      - name: Collect Adtraction performance
+        continue-on-error: true
+        env:
+          REPORT_OUT_DIR: autopilot-input/adtraction
+          ATTRIBUTION_TRACKING_SINCE: ${{ env.ATTRIBUTION_TRACKING_SINCE_ADTRACTION }}
+        run: node scripts/adtraction-performance-report.mjs
+
+      - name: Collect partner health
+        continue-on-error: true
+        env:
+          PARTNER_HEALTH_OUT_DIR: autopilot-input/partner-health
+          PARTNER_HEALTH_STALE_DAYS: '45'
+        run: node scripts/partner-health.mjs
+
+      - name: Build guarded decision packet
+        run: node scripts/autopilot-control.mjs
+
+      - name: Publish autopilot summary
+        if: always()
+        run: |
+          if [ -f autopilot-report/summary.md ]; then
+            cat autopilot-report/summary.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload autopilot decision packet
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sankkostnaden-autopilot
+          path: |
+            autopilot-report/
+            autopilot-input/google/
+            autopilot-input/affiliate/
+            autopilot-input/addrevenue/
+            autopilot-input/adtraction/
+            autopilot-input/partner-health/
+          retention-days: 30
+          if-no-files-found: ignore
