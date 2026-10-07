@@ -156,6 +156,7 @@ export default function SavingsApp(){
         <div className={styles.badge}><Sparkles size={17}/> Kostnadskollen 2026</div>
         <h1>Vilket avtal bör du kontrollera först?</h1>
         <p>Svara på en fråga per område. Har du redan fyllt i Hushållskostnadskollen följer beloppen med automatiskt i samma webbläsare.</p>
+        <a className={styles.heroStart} href='#fragor' onClick={()=>emitAnalyticsEvent('cost_check_hero_start_click',{source:'app_hero'})}>Starta kollen – 4 korta frågor <ArrowRight size={17}/></a>
         <div className={styles.heroStats}>
           <div><strong>{completed}/4</strong><span>områden analyserade</span></div>
           <div><strong>{totalMonthly?totalMonthly.toLocaleString('sv-SE')+' kr':'—'}</strong><span>angiven kostnad / mån</span></div>
