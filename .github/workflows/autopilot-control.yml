@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - 'ops/autopilot-*'
+      - 'ops/revenue-machine-*'
     paths:
       - '.github/workflows/autopilot-control.yml'
       - 'autopilot/**'

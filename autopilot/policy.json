@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "objective": "Maximera långsiktigt godkänd affiliateintäkt per relevant besökare utan att vilseleda användaren, skada förtroendet eller störa fungerande SEO.",
   "mode": "autonomous_with_guardrails",
   "limits": {
@@ -16,7 +16,13 @@
       "minImpressions": 80,
       "minPosition": 3,
       "maxPosition": 15,
-      "maxCtr": 0.015
+      "maxCtr": 0.015,
+      "earlyStage": {
+        "minImpressions": 25,
+        "maxPosition": 10,
+        "maxCtr": 0.005,
+        "minDistinctDays": 4
+      }
     },
     "cro": {
       "minOrganicStarts": 25,
@@ -30,13 +36,22 @@
     },
     "commercial": {
       "minPartnerClicks": 25,
-      "minNetworkClicks": 40
+      "minNetworkClicks": 40,
+      "partnerRoutingMinClicks": 50,
+      "partnerRoutingMinApproved": 5,
+      "minVerifiedTagCoverage": 0.9
     },
     "experimentReview": {
       "minPostImpressions": 30,
       "minCtrLift": 0.01,
       "maxPositionLossToKeep": 2.5,
       "materialPositionLoss": 3
+    },
+    "contentUtility": {
+      "minImpressions": 100,
+      "minPosition": 16,
+      "maxPosition": 40,
+      "maxClicks": 1
     }
   },
   "autonomy": {
@@ -45,7 +60,8 @@
       "ATTRIBUTION_REPAIR",
       "SEO_SNIPPET_TEST",
       "CRO_FRICTION_TEST",
-      "REVIEW_ACTIVE_EXPERIMENT"
+      "REVIEW_ACTIVE_EXPERIMENT",
+      "CONTENT_UTILITY_UPGRADE"
     ],
     "ownerReview": [
       "NEW_PAID_SERVICE",
@@ -68,5 +84,11 @@
       "NORMAL_DAILY_RUN",
       "WAITING_FOR_SAMPLE"
     ]
+  },
+  "guardrails": {
+    "existingPageUtilityOnly": true,
+    "noScaledSeoPages": true,
+    "noUnsupportedPriceClaims": true,
+    "commercialRoutingRequiresEqualUserRelevance": true
   }
 }

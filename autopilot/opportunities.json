@@ -1,6 +1,194 @@
 {
-  "version": 1,
-  "purpose": "Evidence-backed strategic opportunity backlog. The weekly strategy radar may add, re-score or retire items. The daily autopilot may execute only one eligible growth experiment at a time.",
-  "updatedAt": null,
-  "opportunities": []
+  "version": 2,
+  "purpose": "Evidence-backed strategic opportunity backlog. Execute one bounded growth experiment at a time; technical and attribution repairs may supersede the lock.",
+  "updatedAt": "2026-10-07T22:12:00+02:00",
+  "currentConstraint": "Relevant organic traffic is still the binding constraint. Only 1 Google click reached content pages outside the home page and /app/ during the latest 30-day GSC window, so conversion optimization must remain sample-gated.",
+  "opportunities": [
+    {
+      "id": "electricity-total-cost-utility",
+      "rank": 1,
+      "status": "queued_after_active_experiment",
+      "actionType": "CONTENT_UTILITY_UPGRADE",
+      "target": "/elavtal/billigaste-elavtalet/",
+      "thesis": "Turn the existing first-year-cost calculator into the center of the page so visitors compare total 12-month cost by consumption before choosing a partner, instead of consuming another generic top-list.",
+      "evidence": {
+        "gsc": [
+          "billigaste elavtalet: 38 impressions, position 20.3, 0 clicks",
+          "billigt elavtal: 24 impressions, position 14.6, 0 clicks",
+          "page: 119 impressions, 0 clicks"
+        ],
+        "marketPattern": "Leading Swedish results increasingly compare total cost across household consumption levels and distinguish fixed fee, markup and campaign period.",
+        "sourceUrls": [
+          "https://www.borskollen.se/elavtal/billigaste",
+          "https://developers.google.com/search/docs/fundamentals/creating-helpful-content"
+        ]
+      },
+      "expectedImpact": "high",
+      "confidence": "medium",
+      "timeToLearnDays": 14,
+      "guardrails": [
+        "existing URL only",
+        "no unsupported 'cheapest' claim",
+        "user inputs determine comparison context",
+        "keep affiliate disclosure visible"
+      ],
+      "successSignal": [
+        "higher qualified organic CTR/ranking over time",
+        "more partner impressions and verified affiliate clicks from the page",
+        "eventual approved revenue per relevant visitor"
+      ]
+    },
+    {
+      "id": "quarter-hour-price-intent-bridge",
+      "rank": 2,
+      "status": "queued_after_active_experiment",
+      "actionType": "CONTENT_UTILITY_UPGRADE",
+      "target": "/elavtal/kvartspris/",
+      "thesis": "Add a compact 'Passar kvartspris mig?' decision utility to satisfy the explanatory query first and then bridge suitable users to relevant electricity comparison options.",
+      "evidence": {
+        "gsc": [
+          "vad menas med kvartspris på el: 28 impressions, position 9.1, 0 clicks",
+          "kvartspris el: 52 impressions, position 19.7, 0 clicks",
+          "page: 156 impressions, position 21.9, 0 clicks"
+        ],
+        "marketPattern": "Search demand mixes explanation with decision support; a useful calculator/check beats multiplying keyword-variant pages.",
+        "sourceUrls": [
+          "https://developers.google.com/search/docs/fundamentals/creating-helpful-content",
+          "https://developers.google.com/search/docs/fundamentals/using-gen-ai-content"
+        ],
+        "googleGuidance": "Interactive tools can be main content when they directly fulfill the page purpose; automated content should add original value rather than scale pages for rankings."
+      },
+      "expectedImpact": "high",
+      "confidence": "medium_high",
+      "timeToLearnDays": 14,
+      "guardrails": [
+        "answer the informational intent before commercial CTA",
+        "no claim that quarter-hour pricing always saves money",
+        "one useful page, no fan-out pages"
+      ],
+      "successSignal": [
+        "CTR improvement on top-10 explanatory query",
+        "more organic sessions reaching relevant electricity partner options"
+      ]
+    },
+    {
+      "id": "early-stage-serp-learning-loop",
+      "rank": 3,
+      "status": "infrastructure_ready",
+      "actionType": "SEO_SNIPPET_TEST",
+      "target": "existing pages with repeated top-10 low-CTR queries",
+      "thesis": "On a young site, waiting for 80 impressions can slow learning too much. Permit one controlled snippet test when a query has at least 25 impressions, top-10 average position, near-zero CTR and appears on at least four distinct days.",
+      "evidence": {
+        "gsc": [
+          "jämför försäkring qualified at 31 impressions and position 7.6 and is the active experiment",
+          "vad menas med kvartspris på el is the next likely candidate at 28 impressions and position 9.1"
+        ],
+        "rationale": "Small but repeated top-10 exposure is enough to test metadata without rewriting body content."
+      },
+      "expectedImpact": "medium_high",
+      "confidence": "high",
+      "timeToLearnDays": 7,
+      "guardrails": [
+        "one active experiment only",
+        "metadata-only unless a utility gap is independently proven",
+        "minimum post-change sample before verdict"
+      ]
+    },
+    {
+      "id": "home-insurance-original-utility",
+      "rank": 4,
+      "status": "watch",
+      "actionType": "CONTENT_UTILITY_UPGRADE",
+      "target": "/forsakring/hemforsakring-bostadsratt/",
+      "thesis": "Differentiate from generic insurance text with a practical collective-bostadsrättstillägg checklist and decision path into the existing protection check, while keeping claims conservative.",
+      "evidence": {
+        "gsc": [
+          "hemförsäkring bostadsrätt: 121 impressions, position 31.1, 0 clicks",
+          "page: 243 impressions, position 29.8, 0 clicks"
+        ],
+        "marketPattern": "Current results combine concrete coverage details, deductible ranges and clear purchase paths; trust and precision matter more than affiliate density.",
+        "sourceUrls": [
+          "https://www.folksam.se/forsakringar/hemforsakring/bostadsrattsforsakring",
+          "https://www.styrelsen.se/vad-kostar-hemforsakring-bostadsratt/"
+        ]
+      },
+      "expectedImpact": "medium_high",
+      "confidence": "medium",
+      "timeToLearnDays": 21,
+      "guardrails": [
+        "no fabricated prices or coverage facts",
+        "source time-sensitive claims",
+        "do not imply individualized insurance advice"
+      ]
+    },
+    {
+      "id": "organic-app-distribution",
+      "rank": 5,
+      "status": "sample_gated",
+      "actionType": "CRO_FRICTION_TEST",
+      "target": "contextual links from ranking content into /app/",
+      "thesis": "Kostnadskollen is already the strongest Google landing page. Once content pages receive enough real organic visits, test one context-specific path into the app rather than redesigning the whole funnel.",
+      "evidence": {
+        "gsc": [
+          "/app/: 26 clicks from 47 impressions, CTR 55.3%, position 5.3"
+        ],
+        "ga4": [
+          "8 Organic Search landing sessions on /app/",
+          "current app event sample is too small and recently instrumented for a broad CRO conclusion"
+        ]
+      },
+      "expectedImpact": "medium",
+      "confidence": "medium",
+      "timeToLearnDays": 14,
+      "guardrails": [
+        "do not infer funnel rates from pre-instrumentation periods",
+        "use organic cohort only",
+        "one CTA placement test at a time"
+      ]
+    },
+    {
+      "id": "verified-partner-routing",
+      "rank": 6,
+      "status": "future_data_gate",
+      "actionType": "PARTNER_ROUTING_TEST",
+      "target": "equally relevant partner choices",
+      "thesis": "When enough verified clicks and approved transactions exist, optimize ordering only among partners that are equally relevant to the user's intent, using approved revenue per click with an exploration floor.",
+      "evidence": {
+        "current": "No approved transactions yet; 104 Adtraction clicks include legacy/testing traffic and cannot support routing decisions.",
+        "rollout": "Post-attribution rollout currently has only 3 Adtraction clicks; 2 carry local EPI, so commercial learning is not mature."
+      },
+      "expectedImpact": "very_high_later",
+      "confidence": "low_now_high_later",
+      "timeToLearnDays": 30,
+      "guardrails": [
+        "user relevance outranks commission",
+        "require healthy attribution",
+        "minimum 50 verified clicks and 5 approved transactions before testing",
+        "never hide clearly better user-fit options for payout"
+      ]
+    },
+    {
+      "id": "automation-trust-disclosure",
+      "rank": 7,
+      "status": "backlog",
+      "actionType": "TRUST_UPGRADE",
+      "target": "/sa-jamfor-vi/ and /om/",
+      "thesis": "As more content and analysis becomes AI-assisted, explain who is responsible, how automation is used, what data sources drive comparisons and where human/owner review applies. This supports trust without pretending AI is an expert author.",
+      "evidence": {
+        "googleGuidance": "Google's current people-first guidance emphasizes Who, How and Why, accurate authorship, and context about automation when users would reasonably expect it.",
+        "sourceUrls": [
+          "https://developers.google.com/search/docs/fundamentals/creating-helpful-content",
+          "https://developers.google.com/search/docs/fundamentals/using-gen-ai-content"
+        ]
+      },
+      "expectedImpact": "trust_enabler",
+      "confidence": "high",
+      "timeToLearnDays": 30,
+      "guardrails": [
+        "no fake expert profiles",
+        "do not overstate human review",
+        "be specific about automated data collection versus editorial judgment"
+      ]
+    }
+  ]
 }

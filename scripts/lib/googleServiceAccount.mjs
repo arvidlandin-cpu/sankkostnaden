@@ -1,9 +1,39 @@
 import crypto from 'node:crypto';
 
 const tokenEndpoint='https://oauth2.googleapis.com/token';
+const RETRYABLE_STATUS=new Set([429,500,502,503,504]);
 
 function base64url(value){
   return Buffer.from(value).toString('base64url');
+}
+
+function sleep(ms){
+  return ms>0?new Promise(resolve=>setTimeout(resolve,ms)):Promise.resolve();
+}
+
+async function fetchTextWithRetry(url,options={},label='Google request'){
+  const attempts=Math.max(1,Number(process.env.GOOGLE_HTTP_RETRY_ATTEMPTS||3));
+  const baseMs=Math.max(0,Number(process.env.GOOGLE_HTTP_RETRY_BASE_MS||250));
+  let lastError=null;
+
+  for(let attempt=1;attempt<=attempts;attempt+=1){
+    try{
+      const response=await fetch(url,options);
+      const body=await response.text();
+      if(response.ok) return {response,body};
+      const error=new Error(label+' failed: '+response.status+' '+response.statusText+': '+body.slice(0,500));
+      error.status=response.status;
+      lastError=error;
+      if(!RETRYABLE_STATUS.has(response.status)||attempt===attempts) throw error;
+    }catch(error){
+      lastError=error;
+      const status=Number(error?.status)||0;
+      const retryable=status===0||RETRYABLE_STATUS.has(status);
+      if(!retryable||attempt===attempts) throw error;
+    }
+    await sleep(baseMs*Math.pow(2,attempt-1));
+  }
+  throw lastError||new Error(label+' failed');
 }
 
 export function parseServiceAccount(raw){
@@ -31,23 +61,22 @@ export async function getGoogleAccessToken(serviceAccount,scopes){
   signer.end();
   const assertion=unsigned+'.'+signer.sign(serviceAccount.private_key).toString('base64url');
 
-  const response=await fetch(tokenEndpoint,{
+  const {body}=await fetchTextWithRetry(tokenEndpoint,{
     method:'POST',
     headers:{'content-type':'application/x-www-form-urlencoded'},
     body:new URLSearchParams({
       grant_type:'urn:ietf:params:oauth:grant-type:jwt-bearer',
       assertion,
     }),
-  });
-  const body=await response.text();
-  if(!response.ok) throw new Error('Google OAuth token exchange failed: '+response.status+' '+body.slice(0,300));
+  },'Google OAuth token exchange');
+
   const data=JSON.parse(body);
   if(!data?.access_token) throw new Error('Google OAuth token exchange returned no access token.');
   return data.access_token;
 }
 
 export async function googleJson(url,accessToken,options={}){
-  const response=await fetch(url,{
+  const {body}=await fetchTextWithRetry(url,{
     ...options,
     headers:{
       'authorization':'Bearer '+accessToken,
@@ -55,8 +84,6 @@ export async function googleJson(url,accessToken,options={}){
       ...(options.body?{'content-type':'application/json'}:{}),
       ...(options.headers||{}),
     },
-  });
-  const body=await response.text();
-  if(!response.ok) throw new Error(response.status+' '+response.statusText+': '+body.slice(0,500));
+  },'Google API request');
   return body?JSON.parse(body):null;
 }
