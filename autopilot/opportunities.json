@@ -1,7 +1,7 @@
 {
   "version": 2,
   "purpose": "Evidence-backed strategic opportunity backlog. Execute one bounded growth experiment at a time; technical and attribution repairs may supersede the lock.",
-  "updatedAt": "2026-10-07T22:05:00+02:00",
+  "updatedAt": "2026-10-07T22:12:00+02:00",
   "currentConstraint": "Relevant organic traffic is still the binding constraint. Only 1 Google click reached content pages outside the home page and /app/ during the latest 30-day GSC window, so conversion optimization must remain sample-gated.",
   "opportunities": [
     {
@@ -20,7 +20,7 @@
         "marketPattern": "Leading Swedish results increasingly compare total cost across household consumption levels and distinguish fixed fee, markup and campaign period.",
         "sourceUrls": [
           "https://www.borskollen.se/elavtal/billigaste",
-          "https://konsumenten.se/elavtal/billigt-elavtal/"
+          "https://developers.google.com/search/docs/fundamentals/creating-helpful-content"
         ]
       },
       "expectedImpact": "high",
@@ -53,8 +53,10 @@
         ],
         "marketPattern": "Search demand mixes explanation with decision support; a useful calculator/check beats multiplying keyword-variant pages.",
         "sourceUrls": [
-          "https://developers.google.com/search/docs/fundamentals/ai-optimization-guide?version=published"
-        ]
+          "https://developers.google.com/search/docs/fundamentals/creating-helpful-content",
+          "https://developers.google.com/search/docs/fundamentals/using-gen-ai-content"
+        ],
+        "googleGuidance": "Interactive tools can be main content when they directly fulfill the page purpose; automated content should add original value rather than scale pages for rankings."
       },
       "expectedImpact": "high",
       "confidence": "medium_high",
@@ -163,6 +165,29 @@
         "require healthy attribution",
         "minimum 50 verified clicks and 5 approved transactions before testing",
         "never hide clearly better user-fit options for payout"
+      ]
+    },
+    {
+      "id": "automation-trust-disclosure",
+      "rank": 7,
+      "status": "backlog",
+      "actionType": "TRUST_UPGRADE",
+      "target": "/sa-jamfor-vi/ and /om/",
+      "thesis": "As more content and analysis becomes AI-assisted, explain who is responsible, how automation is used, what data sources drive comparisons and where human/owner review applies. This supports trust without pretending AI is an expert author.",
+      "evidence": {
+        "googleGuidance": "Google's current people-first guidance emphasizes Who, How and Why, accurate authorship, and context about automation when users would reasonably expect it.",
+        "sourceUrls": [
+          "https://developers.google.com/search/docs/fundamentals/creating-helpful-content",
+          "https://developers.google.com/search/docs/fundamentals/using-gen-ai-content"
+        ]
+      },
+      "expectedImpact": "trust_enabler",
+      "confidence": "high",
+      "timeToLearnDays": 30,
+      "guardrails": [
+        "no fake expert profiles",
+        "do not overstate human review",
+        "be specific about automated data collection versus editorial judgment"
       ]
     }
   ]
