@@ -1,0 +1,63 @@
+name: Addrevenue performance report
+
+on:
+  push:
+    branches:
+      - main
+      - commercial/addrevenue-performance-v1
+    paths:
+      - '.github/workflows/addrevenue-performance-report.yml'
+      - 'scripts/addrevenue-performance-report.mjs'
+      - 'scripts/lib/addrevenuePerformance.mjs'
+      - 'tests/addrevenue-performance-report.test.mjs'
+      - 'experiments/addrevenue-performance/README.md'
+  workflow_dispatch:
+    inputs:
+      days:
+        description: 'Number of inclusive days to report'
+        required: false
+        default: '30'
+  schedule:
+    - cron: '37 5 * * *'
+
+permissions:
+  contents: read
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    env:
+      ADDREVENUE_API_TOKEN: ${{ secrets.ADDREVENUE_API_TOKEN }}
+      REPORT_DAYS: ${{ github.event.inputs.days || '30' }}
+      REPORT_OUT_DIR: addrevenue-performance-report
+      ATTRIBUTION_TRACKING_SINCE: '2026-10-06T14:37:00Z'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.16.0
+
+      - name: Validate aggregation and privacy
+        run: node --test tests/addrevenue-performance-report.test.mjs
+
+      - name: Generate Addrevenue performance report
+        run: node scripts/addrevenue-performance-report.mjs
+
+      - name: Publish summary
+        if: always()
+        run: |
+          if [ -f addrevenue-performance-report/addrevenue-performance.md ]; then
+            cat addrevenue-performance-report/addrevenue-performance.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload aggregate report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: addrevenue-performance-report
+          path: addrevenue-performance-report/
+          retention-days: 30
+          if-no-files-found: ignore
