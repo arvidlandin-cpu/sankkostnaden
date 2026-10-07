@@ -3,7 +3,7 @@ import IntentGuide from '../../components/IntentGuide';
 export default function Page() {
   return (
     <IntentGuide
-      title='Jämför elavtal 2026 – pris, påslag och avtalsform'
+      title='Jämför elavtal 2026 – pris, påslag och avgifter'
       description='Jämför elavtal på ett sätt som tar hänsyn till påslag, fasta avgifter, avtalsform, uppsägningstid och din egen årsförbrukning.'
       kicker='JÄMFÖR ELAVTAL'
       canonical='https://sankkostnaden.se/elavtal/jamfor-elavtal/'
