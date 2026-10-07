@@ -32,8 +32,28 @@ export function normalizeAdtractionClick(click){
   return {
     partner:String(click?.programName||'Okänt program'),
     currency:String(click?.currency||'SEK'),
+    clickAt:String(click?.clickDate||''),
     localClickId:LOCAL_CLICK.test(epi)?epi:'',
     localSessionId:LOCAL_SESSION.test(epi2)?epi2:'',
+  };
+}
+
+export function attributionCoverage(clicks,since){
+  const cutoff=Date.parse(since);
+  const recent=Number.isFinite(cutoff)
+    ? clicks.filter(click=>Date.parse(click.clickAt)>=cutoff)
+    : clicks;
+  const tagged=recent.filter(click=>click.localClickId);
+  const sessions=new Set(tagged.map(click=>click.localSessionId).filter(Boolean));
+  const ratio=recent.length?tagged.length/recent.length:0;
+  const status=recent.length<3?'no_signal':ratio>=0.9?'healthy':ratio>=0.5?'watch':'warning';
+  return {
+    since,
+    clicks:recent.length,
+    taggedClicks:tagged.length,
+    distinctFunnelSessions:sessions.size,
+    tagCoverage:ratio,
+    status,
   };
 }
 
@@ -182,6 +202,7 @@ export function toMarkdown(report){
   const money=value=>new Intl.NumberFormat('sv-SE',{style:'currency',currency:'SEK',maximumFractionDigits:2}).format(value||0);
   const pct=value=>new Intl.NumberFormat('sv-SE',{style:'percent',maximumFractionDigits:1}).format(value||0);
   const t=report.totals;
+  const a=report.attributionCoverage;
   const lines=[
     '# Adtraction performance',
     '',
@@ -197,6 +218,14 @@ export function toMarkdown(report){
     `- Transaktioner matchade till lokalt klick-ID: **${t.matchedTransactions}/${t.totalTransactions}**`,
     `- Godkänd intäkt per Adtraction-klick: **${money(t.approvedRevenuePerClick)}**`,
     `- Godkänd konverteringsgrad per Adtraction-klick: **${pct(t.approvedConversionRate)}**`,
+    '',
+    '## EPI-täckning efter driftsättning',
+    '',
+    `- Start: **${a.since}**`,
+    `- Klick efter start: **${a.clicks}**`,
+    `- Klick med Sänk Kostnadens epi: **${a.taggedClicks}/${a.clicks}** (${pct(a.tagCoverage)})`,
+    `- Distinkta funnel-sessioner via epi2: **${a.distinctFunnelSessions}**`,
+    `- Signalstatus: **${a.status}**`,
     '',
   ];
 
