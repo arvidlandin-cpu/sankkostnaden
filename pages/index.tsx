@@ -152,8 +152,8 @@ export default function Home(){
 
       <section className={styles.section}>
         <div className={styles.principle}>
-          <div><p>VÅR PRINCIP</p><h2>Besparing först.<br/>Provision sedan.</h2></div>
-          <div><p>Sänk Kostnaden ska vara användbar även om du aldrig klickar på en partnerlänk. Vi hjälper dig förstå behov, total kostnad och villkor – men du kan också gå direkt till en partner om du redan vet vad du söker.</p><p>När en länk är kommersiell märks den tydligt. Alla aktörer på marknaden behöver inte finnas med.</p><a href='/sa-jamfor-vi/'>Läs hur vi jämför →</a></div>
+          <div><p>VÅR PRINCIP</p><h2>Besparing först.<br/>Enklare val sedan.</h2></div>
+          <div><p>Sänk Kostnaden hjälper dig förstå vad du betalar, vad som går att påverka och vilka alternativ som kan passa dig. Du ska få nytta av sajten även om du bara använder våra guider och verktyg.</p><p>När en länk är kommersiell märks den tydligt. Alla aktörer på marknaden behöver inte finnas med.</p><a href='/sa-jamfor-vi/'>Läs hur vi jämför →</a></div>
         </div>
       </section>
     </main>
