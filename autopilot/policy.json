@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "objective": "Maximera långsiktigt godkänd affiliateintäkt per relevant besökare utan att vilseleda användaren, skada förtroendet eller störa fungerande SEO.",
+  "mode": "autonomous_with_guardrails",
+  "limits": {
+    "maxConcurrentExperiments": 1,
+    "seoCooldownDays": 14,
+    "croCooldownDays": 7,
+    "minimumSeoObservationDays": 7,
+    "minimumCroObservationDays": 7,
+    "maxAutoFilesChanged": 6
+  },
+  "thresholds": {
+    "freshnessHours": 36,
+    "seo": {
+      "minImpressions": 80,
+      "minPosition": 3,
+      "maxPosition": 15,
+      "maxCtr": 0.015
+    },
+    "cro": {
+      "minOrganicStarts": 25,
+      "maxCompletionRate": 0.45,
+      "minOrganicPartnerImpressions": 25,
+      "maxAffiliateClickRate": 0.08
+    },
+    "attribution": {
+      "minSample": 3,
+      "repairBelowCoverage": 0.5
+    },
+    "commercial": {
+      "minPartnerClicks": 25,
+      "minNetworkClicks": 40
+    }
+  },
+  "autonomy": {
+    "auto": [
+      "TECHNICAL_FIX",
+      "ATTRIBUTION_REPAIR",
+      "SEO_SNIPPET_TEST",
+      "CRO_FRICTION_TEST",
+      "REVIEW_ACTIVE_EXPERIMENT"
+    ],
+    "ownerReview": [
+      "NEW_PAID_SERVICE",
+      "PAID_MEDIA",
+      "NEW_PARTNER_CONTRACT",
+      "REMOVE_MAJOR_CATEGORY",
+      "LEGAL_OR_COMPLIANCE_CHANGE",
+      "BROAD_SEO_RESTRUCTURE"
+    ]
+  },
+  "notification": {
+    "notifyOwnerOn": [
+      "OWNER_DECISION_REQUIRED",
+      "REVENUE_MILESTONE",
+      "AUTOPILOT_BLOCKED",
+      "EXPERIMENT_COMPLETED_WITH_MATERIAL_RESULT"
+    ],
+    "stayQuietOn": [
+      "NO_ACTION",
+      "NORMAL_DAILY_RUN",
+      "WAITING_FOR_SAMPLE"
+    ]
+  }
+}
