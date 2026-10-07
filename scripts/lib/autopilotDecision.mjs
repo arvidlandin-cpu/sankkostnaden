@@ -140,23 +140,86 @@ function partnerHealthActions(partnerHealth){
   )];
 }
 
-function seoCandidate(google,policy){
+function recentSeoQueries(learningLedger,policy,now){
+  const cooldownDays=num(policy?.limits?.seoCooldownDays)||14;
+  const cutoff=now.getTime()-(cooldownDays*86400000);
+  return new Set((learningLedger?.completedExperiments||[])
+    .filter(item=>item?.type==='SEO_SNIPPET_TEST')
+    .filter(item=>{
+      const at=Date.parse(item.completedAt||item.endedAt||item.reviewedAt||'');
+      return Number.isFinite(at)&&at>=cutoff;
+    })
+    .map(item=>String(item.query||'').toLowerCase())
+    .filter(Boolean));
+}
+
+function seoCandidate(google,policy,learningLedger,now){
   const cfg=policy?.thresholds?.seo||{};
-  const candidates=(google?.gsc?.queryPages||[])
+  const recent=recentSeoQueries(learningLedger,policy,now);
+  const daily=google?.gsc?.focusQueryDaily||[];
+  const daysByQuery=new Map();
+  for(const row of daily){
+    const key=String(row.query||'').toLowerCase();
+    if(!key) continue;
+    if(!daysByQuery.has(key)) daysByQuery.set(key,new Set());
+    if(row.date) daysByQuery.get(key).add(String(row.date));
+  }
+
+  const standard=(google?.gsc?.queryPages||[])
+    .filter(row=>!recent.has(String(row.query||'').toLowerCase()))
     .filter(row=>num(row.impressions)>=num(cfg.minImpressions||80))
     .filter(row=>num(row.position)>=num(cfg.minPosition||3)&&num(row.position)<=num(cfg.maxPosition||15))
     .filter(row=>num(row.ctr)<=num(cfg.maxCtr||0.015))
     .map(row=>({
+      mode:'standard',
       query:String(row.query||''),
       page:String(row.page||''),
       impressions:num(row.impressions),
       clicks:num(row.clicks),
       ctr:num(row.ctr),
       position:num(row.position),
+      distinctDays:daysByQuery.get(String(row.query||'').toLowerCase())?.size||0,
       score:num(row.impressions)*(1-Math.min(1,num(row.ctr)))*(16-Math.min(15,num(row.position))),
+    }));
+
+  const earlyCfg=cfg.earlyStage||{};
+  const early=(google?.gsc?.queryPages||[])
+    .filter(row=>!recent.has(String(row.query||'').toLowerCase()))
+    .filter(row=>num(row.impressions)>=num(earlyCfg.minImpressions||25))
+    .filter(row=>num(row.position)>0&&num(row.position)<=num(earlyCfg.maxPosition||10))
+    .filter(row=>num(row.ctr)<=num(earlyCfg.maxCtr??0.005))
+    .filter(row=>(daysByQuery.get(String(row.query||'').toLowerCase())?.size||0)>=num(earlyCfg.minDistinctDays||4))
+    .map(row=>({
+      mode:'early_stage',
+      query:String(row.query||''),
+      page:String(row.page||''),
+      impressions:num(row.impressions),
+      clicks:num(row.clicks),
+      ctr:num(row.ctr),
+      position:num(row.position),
+      distinctDays:daysByQuery.get(String(row.query||'').toLowerCase())?.size||0,
+      score:(num(row.impressions)*2)*(11-Math.min(10,num(row.position))),
+    }));
+
+  return [...standard,...early].sort((a,b)=>b.score-a.score)[0]||null;
+}
+
+function contentUtilityCandidate(google,policy){
+  const cfg=policy?.thresholds?.contentUtility||{};
+  return (google?.gsc?.pages||[])
+    .filter(row=>num(row.impressions)>=num(cfg.minImpressions||100))
+    .filter(row=>num(row.position)>=num(cfg.minPosition||16)&&num(row.position)<=num(cfg.maxPosition||40))
+    .filter(row=>num(row.clicks)<=num(cfg.maxClicks??1))
+    .filter(row=>!['https://sankkostnaden.se/','https://sankkostnaden.se/app/'].includes(String(row.page||'')))
+    .map(row=>({
+      page:String(row.page||''),
+      impressions:num(row.impressions),
+      clicks:num(row.clicks),
+      ctr:num(row.ctr),
+      position:num(row.position),
+      score:num(row.impressions)*(41-Math.min(40,num(row.position))),
     }))
-    .sort((a,b)=>b.score-a.score);
-  return candidates[0]||null;
+    .sort((a,b)=>b.score-a.score)[0]||null;
 }
 
 function croCandidate(google,policy){
@@ -252,6 +315,7 @@ export function buildDecisionPacket({
   partnerHealth=null,
   policy={},
   state={},
+  learningLedger={},
   now=new Date(),
 }={}){
   const health=sourceHealth({google,affiliate,addrevenue,adtraction,partnerHealth,policy,now});
@@ -299,13 +363,23 @@ export function buildDecisionPacket({
   }
 
   if(!experiment && health.status!=='blocked'){
-    const seo=seoCandidate(google,policy);
+    const seo=seoCandidate(google,policy,learningLedger,now);
     if(seo){
       candidates.push(action(
         'SEO_SNIPPET_TEST',
         70,
         'En sökfråga rankar tillräckligt bra och har tillräcklig exponering men låg CTR.',
         seo
+      ));
+    }
+
+    const utility=contentUtilityCandidate(google,policy);
+    if(utility){
+      candidates.push(action(
+        'CONTENT_UTILITY_UPGRADE',
+        60,
+        'En befintlig sida har tydlig efterfrågan men ligger i räckhållszonen utan klick. Förbättra den med en konkret originalnytta på samma URL i stället för att skapa fler SEO-sidor.',
+        utility
       ));
     }
 
