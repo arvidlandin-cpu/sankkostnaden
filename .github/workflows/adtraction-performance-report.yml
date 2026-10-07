@@ -1,0 +1,63 @@
+name: Adtraction performance report
+
+on:
+  push:
+    branches:
+      - main
+      - commercial/adtraction-click-analytics-v2
+    paths:
+      - '.github/workflows/adtraction-performance-report.yml'
+      - 'scripts/adtraction-performance-report.mjs'
+      - 'scripts/lib/adtractionPerformance.mjs'
+      - 'tests/adtraction-performance-report.test.mjs'
+      - 'experiments/adtraction-performance/README.md'
+  workflow_dispatch:
+    inputs:
+      days:
+        description: 'Number of inclusive days to report'
+        required: false
+        default: '30'
+  schedule:
+    - cron: '27 5 * * *'
+
+permissions:
+  contents: read
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    env:
+      ADTRACTION_API_TOKEN: ${{ secrets.ADTRACTION_API_TOKEN }}
+      REPORT_DAYS: ${{ github.event.inputs.days || '30' }}
+      REPORT_OUT_DIR: adtraction-performance-report
+      ATTRIBUTION_TRACKING_SINCE: '2026-10-06T14:24:38Z'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.16.0
+
+      - name: Validate aggregation and privacy
+        run: node --test tests/adtraction-performance-report.test.mjs
+
+      - name: Generate Adtraction performance report
+        run: node scripts/adtraction-performance-report.mjs
+
+      - name: Publish summary
+        if: always()
+        run: |
+          if [ -f adtraction-performance-report/adtraction-performance.md ]; then
+            cat adtraction-performance-report/adtraction-performance.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload aggregate report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: adtraction-performance-report
+          path: adtraction-performance-report/
+          retention-days: 30
+          if-no-files-found: ignore
