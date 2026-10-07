@@ -164,3 +164,46 @@ test('review stays insufficient when post-change impressions are too few',()=>{
   });
   assert.equal(packet.recommendedAction.details.evaluation.verdict,'INSUFFICIENT_DATA');
 });
+
+
+test('early-stage repeated top-10 query can trigger a metadata experiment before 80 impressions',()=>{
+  const g=google();
+  g.gsc.queryPages=[{query:'vad menas med kvartspris på el',page:'https://sankkostnaden.se/elavtal/kvartspris/',impressions:28,clicks:0,ctr:0,position:9.1}];
+  g.gsc.focusQueryDaily=[
+    {date:'2026-10-01',query:'vad menas med kvartspris på el',impressions:5,clicks:0,ctr:0,position:9},
+    {date:'2026-10-02',query:'vad menas med kvartspris på el',impressions:7,clicks:0,ctr:0,position:9.2},
+    {date:'2026-10-03',query:'vad menas med kvartspris på el',impressions:8,clicks:0,ctr:0,position:9.1},
+    {date:'2026-10-04',query:'vad menas med kvartspris på el',impressions:8,clicks:0,ctr:0,position:9.1},
+  ];
+  const p={...policy,thresholds:{...policy.thresholds,seo:{...policy.thresholds.seo,earlyStage:{minImpressions:25,maxPosition:10,maxCtr:0.005,minDistinctDays:4}},contentUtility:{minImpressions:100,minPosition:16,maxPosition:40,maxClicks:1}},autonomy:{auto:[...policy.autonomy.auto,'CONTENT_UTILITY_UPGRADE']}};
+  const packet=buildDecisionPacket({google:g,policy:p,state:{},learningLedger:{completedExperiments:[]},now:new Date('2026-10-08T08:00:00Z')});
+  assert.equal(packet.recommendedAction.type,'SEO_SNIPPET_TEST');
+  assert.equal(packet.recommendedAction.details.mode,'early_stage');
+});
+
+test('recently completed SEO query stays on cooldown',()=>{
+  const g=google();
+  g.gsc.queryPages=[{query:'vad menas med kvartspris på el',page:'https://sankkostnaden.se/elavtal/kvartspris/',impressions:28,clicks:0,ctr:0,position:9.1}];
+  g.gsc.focusQueryDaily=[
+    {date:'2026-10-01',query:'vad menas med kvartspris på el',impressions:5,clicks:0,ctr:0,position:9},
+    {date:'2026-10-02',query:'vad menas med kvartspris på el',impressions:7,clicks:0,ctr:0,position:9.2},
+    {date:'2026-10-03',query:'vad menas med kvartspris på el',impressions:8,clicks:0,ctr:0,position:9.1},
+    {date:'2026-10-04',query:'vad menas med kvartspris på el',impressions:8,clicks:0,ctr:0,position:9.1},
+  ];
+  const p={...policy,limits:{...policy.limits,seoCooldownDays:14},thresholds:{...policy.thresholds,seo:{...policy.thresholds.seo,earlyStage:{minImpressions:25,maxPosition:10,maxCtr:0.005,minDistinctDays:4}},contentUtility:{minImpressions:100,minPosition:16,maxPosition:40,maxClicks:1}},autonomy:{auto:[...policy.autonomy.auto,'CONTENT_UTILITY_UPGRADE']}};
+  const packet=buildDecisionPacket({
+    google:g,policy:p,state:{},
+    learningLedger:{completedExperiments:[{type:'SEO_SNIPPET_TEST',query:'vad menas med kvartspris på el',completedAt:'2026-10-05T08:00:00Z'}]},
+    now:new Date('2026-10-08T08:00:00Z')
+  });
+  assert.equal(packet.recommendedAction.type,'WAITING_FOR_SIGNAL');
+});
+
+test('high-impression reach-zone page can trigger an original utility upgrade',()=>{
+  const g=google();
+  g.gsc.pages=[{page:'https://sankkostnaden.se/forsakring/hemforsakring-bostadsratt/',impressions:243,clicks:0,ctr:0,position:29.8}];
+  const p={...policy,thresholds:{...policy.thresholds,contentUtility:{minImpressions:100,minPosition:16,maxPosition:40,maxClicks:1}},autonomy:{auto:[...policy.autonomy.auto,'CONTENT_UTILITY_UPGRADE']}};
+  const packet=buildDecisionPacket({google:g,policy:p,state:{},now:new Date('2026-10-08T08:00:00Z')});
+  assert.equal(packet.recommendedAction.type,'CONTENT_UTILITY_UPGRADE');
+  assert.equal(packet.recommendedAction.autonomous,true);
+});
