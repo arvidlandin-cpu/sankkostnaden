@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "objective": "Maximera långsiktigt godkänd affiliateintäkt per relevant besökare utan att vilseleda användaren, skada förtroendet eller störa fungerande SEO.",
   "mode": "autonomous_with_guardrails",
   "limits": {
@@ -31,6 +31,12 @@
     "commercial": {
       "minPartnerClicks": 25,
       "minNetworkClicks": 40
+    },
+    "experimentReview": {
+      "minPostImpressions": 30,
+      "minCtrLift": 0.01,
+      "maxPositionLossToKeep": 2.5,
+      "materialPositionLoss": 3
     }
   },
   "autonomy": {
