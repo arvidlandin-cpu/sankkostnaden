@@ -12,6 +12,7 @@ import {
   normalizeGa4Totals,
   normalizeGscRows,
   normalizeGscPairs,
+  normalizeGscDateQueryRows,
   normalizeGscTotals,
   toMarkdown,
 } from './lib/googleOrganicPerformance.mjs';
@@ -90,6 +91,18 @@ async function runGsc(accessToken,siteUrl,dimensions=[],dimensionFilters=[]){
 
 let report;
 if(!rawServiceAccount){
+  const focusQueries=new Set([
+    'jämför försäkring',
+    'vad menas med kvartspris på el',
+    'hur mycket kwh drar ett hus',
+    'hemförsäkring bostadsrätt',
+    'jämför elavtal',
+    'billigaste elavtalet',
+    'billigt elavtal',
+  ]);
+  const focusQueryDaily=normalizeGscDateQueryRows(gscDateQueriesRaw)
+    .filter(row=>focusQueries.has(row.query.toLowerCase()));
+
   report={
     generatedAt:new Date().toISOString(),
     configured:false,
@@ -108,7 +121,7 @@ if(!rawServiceAccount){
     discoverSearchConsoleSite(accessToken),
   ]);
 
-  const [gaTotalsRaw,gaChannelsRaw,gaPagesRaw,gaSourcesRaw,gaEventsRaw,gaEventChannelsRaw,gaLandingChannelsRaw,gscTotalsRaw,gscQueriesRaw,gscPagesRaw,gscQueryPagesRaw,gscDailyRaw,gscAppDailyRaw,gscAppQueriesRaw]=await Promise.all([
+  const [gaTotalsRaw,gaChannelsRaw,gaPagesRaw,gaSourcesRaw,gaEventsRaw,gaEventChannelsRaw,gaLandingChannelsRaw,gscTotalsRaw,gscQueriesRaw,gscPagesRaw,gscQueryPagesRaw,gscDailyRaw,gscAppDailyRaw,gscAppQueriesRaw,gscDateQueriesRaw]=await Promise.all([
     runGa4(accessToken,propertyId,{
       metrics:[{name:'sessions'},{name:'activeUsers'},{name:'totalUsers'},{name:'screenPageViews'}],
     }),
@@ -158,6 +171,7 @@ if(!rawServiceAccount){
     runGsc(accessToken,siteUrl,['date']),
     runGsc(accessToken,siteUrl,['date'],[{dimension:'page',operator:'equals',expression:'https://sankkostnaden.se/app/'}]),
     runGsc(accessToken,siteUrl,['query'],[{dimension:'page',operator:'equals',expression:'https://sankkostnaden.se/app/'}]),
+    runGsc(accessToken,siteUrl,['date','query']),
   ]);
 
   const channels=normalizeGa4Channels(gaChannelsRaw);
@@ -190,6 +204,7 @@ if(!rawServiceAccount){
       daily:normalizeGscRows(gscDailyRaw,'date').sort((a,b)=>a.date.localeCompare(b.date)),
       appDaily:normalizeGscRows(gscAppDailyRaw,'date').sort((a,b)=>a.date.localeCompare(b.date)),
       appQueries:normalizeGscRows(gscAppQueriesRaw,'query'),
+      focusQueryDaily,
     },
   };
 }
