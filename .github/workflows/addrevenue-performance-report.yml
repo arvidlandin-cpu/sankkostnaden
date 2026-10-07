@@ -43,6 +43,13 @@ jobs:
       - name: Validate aggregation and privacy
         run: node --test tests/addrevenue-performance-report.test.mjs
 
+      - name: Require Addrevenue API token
+        run: |
+          if [ -z "$ADDREVENUE_API_TOKEN" ]; then
+            echo "ADDREVENUE_API_TOKEN is missing from GitHub Actions secrets."
+            exit 2
+          fi
+
       - name: Generate Addrevenue performance report
         run: node scripts/addrevenue-performance-report.mjs
 
