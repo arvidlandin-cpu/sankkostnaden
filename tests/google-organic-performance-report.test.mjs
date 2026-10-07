@@ -3,6 +3,8 @@ import assert from 'node:assert/strict';
 import {
   dateRange,
   normalizeGa4Channels,
+  normalizeGa4Events,
+  normalizeGa4LandingChannels,
   normalizeGa4Totals,
   normalizeGscRows,
   normalizeGscPairs,
@@ -39,4 +41,18 @@ test('unconfigured report does not expose credentials',()=>{
   const md=toMarkdown({generatedAt:'2026-10-07T00:00:00Z',configured:false,ga4:null,gsc:null});
   assert.match(md,/GOOGLE_SERVICE_ACCOUNT_JSON saknas/);
   assert.doesNotMatch(md,/private_key|client_email/);
+});
+
+
+test('normalizes app funnel events and landing channels',()=>{
+  const events=normalizeGa4Events({rows:[
+    {dimensionValues:[{value:'cost_check_complete'},{value:'/app/'}],metricValues:[{value:'4'},{value:'3'}]},
+  ]});
+  assert.equal(events[0].eventName,'cost_check_complete');
+  assert.equal(events[0].eventCount,4);
+  const landings=normalizeGa4LandingChannels({rows:[
+    {dimensionValues:[{value:'/app/'},{value:'Organic Search'}],metricValues:[{value:'7'},{value:'5'}]},
+  ]});
+  assert.equal(landings[0].channel,'Organic Search');
+  assert.equal(landings[0].sessions,7);
 });
