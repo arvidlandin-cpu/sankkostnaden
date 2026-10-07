@@ -33,6 +33,7 @@ export default function SavingsApp(){
   const [scenarioPct,setScenarioPct]=useState(10);
   const [hydrated,setHydrated]=useState(false);
   const completedTracked=useRef(false);
+  const startedTracked=useRef(false);
   const questionCardRef=useRef<HTMLDivElement>(null);
 
   useEffect(()=>{
@@ -92,8 +93,13 @@ export default function SavingsApp(){
 
   const update=(key:CostKey,field:'monthly'|'fit',value:number)=>{
     setAnswers(previous=>({...previous,[key]:{...previous[key],[field]:value}}));
-    if(field==='fit') emitAnalyticsEvent('cost_check_answer',{category:key,field:'fit',value});
-    else emitAnalyticsEvent('cost_check_cost_added',{category:key,has_value:value>0?1:0});
+    if(field==='fit'){
+      if(!startedTracked.current){
+        startedTracked.current=true;
+        emitAnalyticsEvent('cost_check_start',{category:key});
+      }
+      emitAnalyticsEvent('cost_check_answer',{category:key,field:'fit',value});
+    }else emitAnalyticsEvent('cost_check_cost_added',{category:key,has_value:value>0?1:0});
   };
 
   const reset=()=>{
@@ -101,6 +107,7 @@ export default function SavingsApp(){
     setActive('el');
     setScenarioPct(10);
     completedTracked.current=false;
+    startedTracked.current=false;
     try{window.localStorage.removeItem(costCheckStorageKey);window.localStorage.removeItem(legacyStorageKey);}catch{}
     emitAnalyticsEvent('cost_check_reset',{source:'app'});
   };
@@ -109,6 +116,7 @@ export default function SavingsApp(){
   const activeAnswer=answers[active];
   const activeIndex=categories.findIndex(category=>category.key===active);
   const activeComplete=isComplete(active);
+  const activeQuickPartner=activeAnswer.fit===2?resultPartners(active)[0]:undefined;
 
   const goNext=()=>{
     if(!activeComplete||activeIndex>=categories.length-1) return;
@@ -169,6 +177,17 @@ export default function SavingsApp(){
               <div className={styles.moneyInput}><input type='number' min='0' inputMode='numeric' value={activeAnswer.monthly||''} onChange={event=>update(active,'monthly',Math.max(0,Number(event.target.value)||0))} placeholder='t.ex. 499'/><span>kr/mån</span></div>
             </div>
           </details>
+
+          {activeAnswer.fit===2&&<aside className={styles.quickPath}>
+            <div>
+              <span>SNABB VÄG</span>
+              <strong>{activeCategory.label} verkar värt att kontrollera direkt.</strong>
+              <p>Du kan gå vidare nu utan att slutföra alla fyra områden, eller fortsätta kollen för en komplett prioritering.</p>
+            </div>
+            <div className={styles.quickPathActions}>
+              {activeQuickPartner?<a href={activeQuickPartner.trackingUrl} data-partner={activeQuickPartner.name} data-category={activeQuickPartner.category} data-intent={partnerIntent[active]} data-placement='cost_check_quick_path' data-partner-position='1' target='_blank' rel='sponsored nofollow noopener'>Se alternativ hos {activeQuickPartner.name} <ArrowUpRight size={14}/></a>:<Link href={activeCategory.href} onClick={()=>emitAnalyticsEvent('cost_check_quick_guide_click',{category:active})}>Jämför {activeCategory.short.toLowerCase()} nu <ArrowRight size={14}/></Link>}
+            </div>
+          </aside>}
 
           <div className={styles.cardActions}>
             <button className={styles.reset} onClick={reset}><RotateCcw size={15}/> Börja om</button>
