@@ -8,6 +8,7 @@ import {
   normalizeGa4Sources,
   normalizeGa4Events,
   normalizeGa4LandingChannels,
+  normalizeGa4EventChannels,
   normalizeGa4Totals,
   normalizeGscRows,
   normalizeGscPairs,
@@ -106,7 +107,7 @@ if(!rawServiceAccount){
     discoverSearchConsoleSite(accessToken),
   ]);
 
-  const [gaTotalsRaw,gaChannelsRaw,gaPagesRaw,gaSourcesRaw,gaEventsRaw,gaLandingChannelsRaw,gscTotalsRaw,gscQueriesRaw,gscPagesRaw,gscQueryPagesRaw]=await Promise.all([
+  const [gaTotalsRaw,gaChannelsRaw,gaPagesRaw,gaSourcesRaw,gaEventsRaw,gaEventChannelsRaw,gaLandingChannelsRaw,gscTotalsRaw,gscQueriesRaw,gscPagesRaw,gscQueryPagesRaw]=await Promise.all([
     runGa4(accessToken,propertyId,{
       metrics:[{name:'sessions'},{name:'activeUsers'},{name:'totalUsers'},{name:'screenPageViews'}],
     }),
@@ -130,6 +131,13 @@ if(!rawServiceAccount){
     }),
     runGa4(accessToken,propertyId,{
       dimensions:[{name:'eventName'},{name:'pagePath'}],
+      metrics:[{name:'eventCount'},{name:'totalUsers'}],
+      dimensionFilter:{filter:{fieldName:'pagePath',stringFilter:{matchType:'EXACT',value:'/app/',caseSensitive:false}}},
+      orderBys:[{metric:{metricName:'eventCount'},desc:true}],
+      limit:100,
+    }),
+    runGa4(accessToken,propertyId,{
+      dimensions:[{name:'eventName'},{name:'sessionDefaultChannelGroup'}],
       metrics:[{name:'eventCount'},{name:'totalUsers'}],
       dimensionFilter:{filter:{fieldName:'pagePath',stringFilter:{matchType:'EXACT',value:'/app/',caseSensitive:false}}},
       orderBys:[{metric:{metricName:'eventCount'},desc:true}],
@@ -165,6 +173,7 @@ if(!rawServiceAccount){
       pages:normalizeGa4Pages(gaPagesRaw),
       sources:normalizeGa4Sources(gaSourcesRaw),
       appFunnel:normalizeGa4Events(gaEventsRaw).filter(row=>['cost_check_answer','cost_check_complete','partner_impression','affiliate_click','cost_check_next_category','cost_check_scenario','cost_check_cost_added'].includes(row.eventName)),
+      appFunnelByChannel:normalizeGa4EventChannels(gaEventChannelsRaw).filter(row=>['cost_check_answer','cost_check_complete','partner_impression','affiliate_click','cost_check_next_category','cost_check_scenario','cost_check_cost_added'].includes(row.eventName)),
       appLandingChannels:normalizeGa4LandingChannels(gaLandingChannelsRaw),
     },
     gsc:{
