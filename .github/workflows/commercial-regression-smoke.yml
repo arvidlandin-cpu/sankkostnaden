@@ -9,6 +9,7 @@ on:
       - 'ops/masterplan-*'
       - 'ops/ux-electricity-*'
       - 'ops/ux-family-*'
+      - 'ops/ux-first-year-*'
       - 'ops/mobile-category-*'
       - 'ops/insurance-category-*'
       - 'ops/design-v1-*'
