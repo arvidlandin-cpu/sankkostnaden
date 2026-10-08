@@ -388,3 +388,18 @@
   .proofInner>div:last-child{padding-right:8px}
   .proofInner span{width:30px;height:30px;flex-basis:30px}
 }
+
+/* Screenshot review 2026-10-08: the fixed five-category mobile bar already
+   duplicates the five links in this hero. Avoid 3 category directories
+   (hero, fixed bar and popular section) in the same short mobile journey. */
+.mobileNavigationHelp{display:none}
+@media(max-width:600px){
+  .areaList,.cardDivider{display:none}
+  .mobileNavigationHelp{
+    display:block;
+    font-size:13px;
+    line-height:1.5;
+    margin:14px 0 0;
+    color:var(--sk-ink-muted);
+  }
+}
