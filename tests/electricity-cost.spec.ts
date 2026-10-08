@@ -3,15 +3,18 @@ import { expect, test, type Page } from '@playwright/test';
 const route='/verktyg/elavtalskostnad/';
 
 async function fillExample(page:Page){
+  await page.getByRole('button',{name:/Ja, jämför mina erbjudanden/}).click();
   await page.getByLabel('Årsförbrukning i kWh').fill('20000');
-  const a=page.getByTestId('electricity-offer-a').locator('input[type="number"]');
-  const b=page.getByTestId('electricity-offer-b').locator('input[type="number"]');
-  await a.nth(0).fill('85');
-  await a.nth(1).fill('49');
-  await a.nth(2).fill('600');
-  await b.nth(0).fill('82');
-  await b.nth(1).fill('79');
-  await b.nth(2).fill('0');
+  const cardA=page.getByTestId('electricity-offer-a');
+  const cardB=page.getByTestId('electricity-offer-b');
+  await cardA.getByLabel('Elhandelspris att jämföra').fill('85');
+  await cardA.getByLabel('Fast avgift (skriv 0 om ingen)').fill('49');
+  await cardB.getByLabel('Elhandelspris att jämföra').fill('82');
+  await cardB.getByLabel('Fast avgift (skriv 0 om ingen)').fill('79');
+  await cardA.getByText('Rabatt och namn (valfritt)').click();
+  await cardB.getByText('Rabatt och namn (valfritt)').click();
+  await cardA.getByLabel('Rabatt totalt under 12 mån').fill('600');
+  await cardB.getByLabel('Rabatt totalt under 12 mån').fill('0');
 }
 
 test('electricity tool calculates annual contract cost correctly',async({page})=>{
@@ -28,10 +31,13 @@ test('electricity tool calculates annual contract cost correctly',async({page})=
   await expect(page.getByTestId('electricity-cost-result')).toContainText('Alternativ A');
 });
 
-test('electricity tool only hands off after a complete comparison',async({page})=>{
+test('exact comparison CTA appears only after correct prices and explicit fixed-fee values',async({page})=>{
   await page.goto(route);
+  await page.getByRole('button',{name:/Ja, jämför mina erbjudanden/}).click();
   await page.getByLabel('Årsförbrukning i kWh').fill('20000');
-  await page.getByTestId('electricity-offer-a').locator('input[type="number"]').nth(0).fill('85');
+  await page.getByTestId('electricity-offer-a').getByLabel('Elhandelspris att jämföra').fill('85');
+  await page.getByTestId('electricity-offer-b').getByLabel('Elhandelspris att jämföra').fill('82');
+  await expect(page.getByRole('button',{name:/Räkna årskostnaden/})).toBeDisabled();
   await expect(page.getByTestId('electricity-cost-commercial-cta')).toHaveCount(0);
 
   await fillExample(page);
@@ -142,5 +148,59 @@ for(const viewport of [{width:360,height:800},{width:390,height:844},{width:430,
     await tool.getByRole('button',{name:'20 000 kWh'}).click();
     const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-window.innerWidth);
     expect(overflow).toBeLessThanOrEqual(1);
+  });
+}
+
+// The user's default path must give value even without a kWh number or quote.
+test('electricity offers a real comparison service before any form fields',async({page})=>{
+  await page.goto(route+'?qa=1');
+  const chooser=page.getByTestId('electricity-start-choice');
+  await expect(chooser.getByRole('heading',{name:/Har du två erbjudanden med priser/i})).toBeVisible();
+  await expect(page.getByLabel('Årsförbrukning i kWh')).toHaveCount(0);
+  await chooser.getByRole('button',{name:/Nej, visa aktuella elavtal/}).click();
+  const routePanel=page.getByTestId('electricity-no-offer-path');
+  await expect(routePanel).toBeVisible();
+  const partner=routePanel.getByRole('link',{name:/Jämför elavtal hos Elskling/});
+  await expect(partner).toHaveAttribute('data-partner','Elskling');
+  await expect(partner).toHaveAttribute('rel',/sponsored/);
+  await expect(partner).toHaveAttribute('data-placement','electricity_calculator_no_offer');
+  await expect(routePanel.getByRole('link',{name:/Se våra aktiva elbolag/})).toHaveAttribute('href','/elavtal/');
+  await expect(page.getByTestId('electricity-cost-result')).toHaveCount(0);
+  await expect(page.locator('section[aria-label="Jämför två elavtal"]')).toHaveCount(0);
+});
+
+test('fee fields require explicit confirmation, including zero, before full-year winner',async({page})=>{
+  await page.goto(route+'?qa=1');
+  await page.getByRole('button',{name:/Ja, jämför mina erbjudanden/}).click();
+  await page.getByRole('button',{name:'5 000 kWh'}).click();
+  await expect(page.getByText(/Du använder just nu ett räkneexempel/)).toBeVisible();
+  const a=page.getByTestId('electricity-offer-a');
+  const b=page.getByTestId('electricity-offer-b');
+  await a.getByLabel('Elhandelspris att jämföra').fill('85');
+  await b.getByLabel('Elhandelspris att jämföra').fill('82');
+  await expect(page.getByRole('button',{name:/Räkna årskostnaden/})).toBeDisabled();
+  await a.getByLabel('Fast avgift (skriv 0 om ingen)').fill('0');
+  await b.getByLabel('Fast avgift (skriv 0 om ingen)').fill('0');
+  await expect(a.getByLabel('Fast avgift (skriv 0 om ingen)')).toHaveValue('0');
+  await expect(page.getByRole('button',{name:/Räkna årskostnaden/})).toBeEnabled();
+  await page.getByRole('button',{name:/Räkna årskostnaden/}).click();
+  await expect(page.getByTestId('electricity-cost-result')).toContainText('illustrativt');
+  await expect(page.getByTestId('electricity-cost-result')).toContainText('150');
+});
+
+for(const width of [360,390,430,1024,1440]){
+  test('electricity quick vs exact has no overflow at '+width+'px',async({page},info)=>{
+    await page.setViewportSize({width,height:844});
+    await page.goto(route+'?qa=1');
+    await expect(page.getByTestId('electricity-start-choice')).toBeVisible();
+    await page.getByRole('button',{name:/Nej, visa aktuella elavtal/}).click();
+    await expect(page.getByTestId('electricity-no-offer-path')).toBeVisible();
+    let overflow=await page.evaluate(()=>Math.max(document.body.scrollWidth,document.documentElement.scrollWidth)-document.documentElement.clientWidth);
+    expect(overflow).toBeLessThanOrEqual(1);
+    await page.getByRole('button',{name:/Ja, jämför mina erbjudanden/}).click();
+    await expect(page.getByTestId('electricity-offer-a')).toBeVisible();
+    overflow=await page.evaluate(()=>Math.max(document.body.scrollWidth,document.documentElement.scrollWidth)-document.documentElement.clientWidth);
+    expect(overflow).toBeLessThanOrEqual(1);
+    await page.screenshot({path:`test-results/screenshots/ux-electricity-${info.project.name}-${width}.png`,fullPage:true});
   });
 }

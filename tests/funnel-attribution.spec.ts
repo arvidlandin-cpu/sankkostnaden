@@ -1,15 +1,18 @@
 import { expect, test, type Page } from '@playwright/test';
 
 async function fillElectricity(page:Page){
+  await page.getByRole('button',{name:/Ja, jämför mina erbjudanden/}).click();
   await page.getByLabel('Årsförbrukning i kWh').fill('20000');
-  const a=page.getByTestId('electricity-offer-a').locator('input[type="number"]');
-  const b=page.getByTestId('electricity-offer-b').locator('input[type="number"]');
-  await a.nth(0).fill('85');
-  await a.nth(1).fill('49');
-  await a.nth(2).fill('600');
-  await b.nth(0).fill('82');
-  await b.nth(1).fill('79');
-  await b.nth(2).fill('0');
+  const a=page.getByTestId('electricity-offer-a');
+  const b=page.getByTestId('electricity-offer-b');
+  await a.getByLabel('Elhandelspris att jämföra').fill('85');
+  await a.getByLabel('Fast avgift (skriv 0 om ingen)').fill('49');
+  await b.getByLabel('Elhandelspris att jämföra').fill('82');
+  await b.getByLabel('Fast avgift (skriv 0 om ingen)').fill('79');
+  await a.getByText('Rabatt och namn (valfritt)').click();
+  await b.getByText('Rabatt och namn (valfritt)').click();
+  await a.getByLabel('Rabatt totalt under 12 mån').fill('600');
+  await b.getByLabel('Rabatt totalt under 12 mån').fill('0');
 }
 
 async function preventNavigation(locator:any){
@@ -47,6 +50,26 @@ test('calculator and Adtraction click share one funnel session and one EPI click
   expect(click?.network_click_tagged).toBe(1);
   expect(tagged.searchParams.get('epi')).toBe(click.local_click_id);
   expect(tagged.searchParams.get('epi2')).toBe(click.funnel_session_id);
+});
+
+test('electricity no-quote partner path preserves Adtraction click tracking without any calculator input',async({page})=>{
+  await page.addInitScript(()=>{(window as any).dataLayer=[];});
+  await page.goto('/verktyg/elavtalskostnad/?src=no_quote_qa');
+  await page.getByRole('button',{name:/Nej, visa aktuella elavtal/}).click();
+  const link=page.getByTestId('electricity-no-offer-path').locator('a[data-partner="Elskling"]');
+  await expect(link).toBeVisible();
+  await preventNavigation(link);
+  await link.click();
+  const tagged=new URL((await link.getAttribute('href'))!);
+  const events=await page.evaluate(()=>(window as any).dataLayer||[]);
+  const click=events.find((e:any)=>e.event==='affiliate_click'&&e.partner==='Elskling');
+  expect(click?.funnel_session_id).toMatch(/^fs_/);
+  expect(click?.local_click_id).toMatch(/^clk_/);
+  expect(click?.affiliate_network).toBe('adtraction');
+  expect(click?.network_click_tagged).toBe(1);
+  expect(tagged.searchParams.get('epi')).toBe(click.local_click_id);
+  expect(tagged.searchParams.get('epi2')).toBe(click.funnel_session_id);
+  expect(events.filter((e:any)=>e.event==='electricity_cost_ready')).toHaveLength(0);
 });
 
 test('Adtraction deeplink keeps destination url last after EPI tagging',async({page})=>{

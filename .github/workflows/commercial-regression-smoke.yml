@@ -7,6 +7,7 @@ on:
       - ops/commercial-smoke-v1
       - ops/commercial-regression-main-v2
       - 'ops/masterplan-*'
+      - 'ops/ux-electricity-*'
       - 'ops/mobile-category-*'
       - 'ops/insurance-category-*'
       - 'ops/design-v1-*'
