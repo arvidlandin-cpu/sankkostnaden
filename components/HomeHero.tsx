@@ -49,6 +49,7 @@ export default function HomeHero(){
         <div className={styles.choiceList}>
           <a href='/app/'><div><strong>Starta Kostnadskollen</strong><small>Första vägledning efter en fråga · gratis</small></div><ArrowRight size={17}/></a>
         </div>
+        <p className={styles.mobileNavigationHelp}>Vet du vilket område du vill jämföra? Välj det direkt i menyn längst ned.</p>
         <div className={styles.cardDivider}><span>eller välj område direkt</span></div>
         <div className={styles.areaList}>
           {order.map(key=>{
