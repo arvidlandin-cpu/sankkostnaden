@@ -99,7 +99,7 @@ jobs:
         run: |
           for i in {1..90}; do
             if curl -fsS "$QA_BASE_URL/verktyg/byteskalender/" | grep -q "När behöver du agera" && \
-               curl -fsS "$QA_BASE_URL/mobil/lonar-sig-familjeabonnemang/" | grep -q "2–5 separata abonnemang" && \
+               curl -fsS "$QA_BASE_URL/mobil/lonar-sig-familjeabonnemang/" | grep -q "Lönar sig familjeabonnemang för er?" && \
                curl -fsS "$QA_BASE_URL/app/" | grep -q "Exakta belopp skickas inte" && \
                curl -fsS "$QA_BASE_URL/verktyg/forstaarskostnad-bredband/" | grep -q "KOSTNADSKALKYL" && \
                curl -fsS "$QA_BASE_URL/verktyg/elavtalskostnad/" | grep -q "Jämför två elavtal" && \
