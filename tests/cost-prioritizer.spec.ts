@@ -128,6 +128,9 @@ for(const width of [360,390,430,1024,1440]){
     await page.goto('/app/?qa=1');
     const first=page.getByRole('group',{name:'Vad stämmer bäst om ditt elavtal?'});
     await expect(first).toBeVisible();
+    // No floating five-category toolbar obscuring the task: category switching
+    // remains available via the explicit on-page "Byt område" control.
+    await expect(page.locator('.mobileQuickBar')).toHaveCount(0);
     const css=await first.getByRole('button').first().evaluate(el=>({
       fontSize:parseFloat(getComputedStyle(el).fontSize),
       minHeight:parseFloat(getComputedStyle(el).minHeight),
