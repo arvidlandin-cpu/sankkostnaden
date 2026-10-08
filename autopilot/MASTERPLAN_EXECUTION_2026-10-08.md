@@ -34,12 +34,14 @@ Read also: `autopilot/PRODUCT_EXCELLENCE.md`, `STRATEGY_AND_EVIDENCE_STANDARD.md
 ### P0E — Progressive, interactive tools + early qualified partner options (**owner approved; implementation prioritized**)
 
 - [x] Audit current empty-form complexity and real screenshots of electricity 2-offer calculator and family mobile total-cost calculator; also inspected first-year mobile/broadband, household, loan and specialist tools. **Implementation contract:** `autopilot/PROGRESSIVE_UX_COMMERCIAL_MASTERPLAN_2026-10-08.md`.
-- [ ] **P1 electricity:** choose **have two real offers?** first; no-offer route goes straight to an eligible real comparator; yes-offer route progressively reveals only prices and necessary fees, with clear assumptions and exact calculations. Partner selection accessible without completing the form.
-- [ ] **P2 family mobile:** persons + have real prices? first; no-price route yields relevant family-provider options and checklist; exact quoted cost input optional and progressive; never invent discount.
-- [ ] **P3 shared first-year comparison** mobile/broadband: progressive campaign/fee fields, no-obligation partner route, correct network/availability caveats.
-- [ ] **P4 household cost map:** select few known bills, known subtotal, optional other categories; preserve privacy and /app/ handoff.
-- [ ] **P5 specialist loan/insurance/contract UX:** example first where suitable, safe exact mode, relevant partner CTA only after true fit and clearly marked sponsorship.
-- [ ] Verify every resulting flow against first useful step, all-active partner visibility, source distinctions, correct arithmetic, accessibility, 5 mobile/desktop viewports, analytics privacy, attributed referrals and approved revenue. **No release counted complete merely because plan was written.**
+- [x] **P1 electricity (PR #64, 2026-10-08):** choose **have two real offers?** first; no-offer route goes straight to an eligible real comparator; yes-offer route progressively reveals only prices and necessary fees, with clear assumptions and exact calculations. Partner selection accessible without completing the form.
+- [x] **P2 family mobile (PR #65, 2026-10-08):** persons + have real prices? first; no-price route yields relevant family-provider options and checklist; exact quoted cost input optional and progressive; never invent discount.
+- [x] **P3 shared first-year comparison (PR #66, 2026-10-08)** mobile/broadband: progressive campaign/fee fields, no-obligation partner route, correct network/availability caveats.
+- [x] **P4 household cost map (PR #67, 2026-10-08):** select few known bills, known subtotal, optional other categories; preserve privacy and /app/ handoff.
+- [x] **P5 specialist loan/insurance/contract UX (loan PR #68, insurance coverage PR #51, 2026-10-08):** example first where suitable, safe exact mode, relevant partner CTA only after true fit and clearly marked sponsorship.
+- [x] P6 targeted specialist audit on 2026-10-08: `SwitchCalendar` has 2 inputs + 1 unit select, `CondoInsuranceCheck` uses three click options without inputs, and `ElectricitySensitivity` offers an immediate illustrative result. No redundant new wizard is justified. `CostRealityCheck` is a secondary specialist guide utility; optional campaign entry is already progressive. Keep observing before restructuring.
+- [x] Source-level validation and full branch Build/commercial regression passed for PRs #64–#68; required click-first, first useful value and privacy-safe analytics tests were added for all changed calculators. **Actual approved affiliate income remains unverified.**
+- [ ] Complete post-main live Cloudflare Pages, real iPhone/browser screenshot, 360/390/430/1024/1440 visual read-through, accessibility contrast, partner clickref and approved-sale validation after final PR #67 deployment. CI/overflow is not a substitute for subjective visual QA.
 
 ### P1A — Electricity product category (**shipped to main in PR #50**)
 
