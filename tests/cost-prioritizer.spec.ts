@@ -101,16 +101,44 @@ test('Cost Check start event is emitted only on the first answer',async({page})=
 });
 
 
-test('hero start CTA scrolls to the first question and records intent',async({page})=>{
-  await page.addInitScript(()=>{(window as any).dataLayer=[];});
-  await page.goto('/app/');
-  const cta=page.getByRole('link',{name:/Få en första startpunkt efter en fråga/i});
-  await expect(cta).toBeVisible();
-  await cta.click();
-  await expect(page).toHaveURL(/#fragor$/);
-  const events=await page.evaluate(()=>(window as any).dataLayer||[]);
-  expect(events.filter((event:any)=>event.event==='cost_check_hero_start_click')).toHaveLength(1);
+test('clean Kostnadskollen begins immediately with one accessible question, no empty statistics',async({page})=>{
+  await page.setViewportSize({width:1440,height:900});
+  await page.goto('/app/?qa=1');
+  await expect(page.getByRole('heading',{level:1,name:'Vilket avtal bör du kontrollera först?'})).toBeVisible();
+  await expect(page.locator('[class*="heroStats"]')).toHaveCount(0);
+  await expect(page.locator('[class*="scoreOrb"]')).toHaveCount(0);
+  await expect(page.locator('#resultat')).toHaveCount(0);
+  const firstQuestion=page.getByRole('group',{name:'Vad stämmer bäst om ditt elavtal?'});
+  await expect(firstQuestion.getByRole('button')).toHaveCount(3);
+  const box=await firstQuestion.boundingBox();
+  expect(box).not.toBeNull();
+  expect(box!.y).toBeLessThan(800);
+  const picker=page.getByRole('button',{name:'Byt område'});
+  await expect(picker).toHaveAttribute('aria-expanded','false');
+  await picker.click();
+  await expect(picker).toHaveAttribute('aria-expanded','true');
+  await page.getByRole('button',{name:/^Mobil\s*–?$/}).first().click();
+  await expect(page.getByRole('heading',{name:'Mobilabonnemang'})).toBeVisible();
+  await expect(page.getByRole('group',{name:'Vad stämmer bäst om mobilabonnemanget?'})).toBeVisible();
 });
+
+for(const width of [360,390,430,1024,1440]){
+  test('Kostnadskollen clean entry and readable choice cards @ '+width+'px',async({page},info)=>{
+    await page.setViewportSize({width,height:844});
+    await page.goto('/app/?qa=1');
+    const first=page.getByRole('group',{name:'Vad stämmer bäst om ditt elavtal?'});
+    await expect(first).toBeVisible();
+    const css=await first.getByRole('button').first().evaluate(el=>({
+      fontSize:parseFloat(getComputedStyle(el).fontSize),
+      minHeight:parseFloat(getComputedStyle(el).minHeight),
+    }));
+    expect(css.fontSize).toBeGreaterThanOrEqual(14);
+    expect(css.minHeight).toBeGreaterThanOrEqual(56);
+    const overflow=await page.evaluate(()=>Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)-document.documentElement.clientWidth);
+    expect(overflow).toBeLessThanOrEqual(1);
+    await page.screenshot({path:`test-results/screenshots/design-v1-costcheck-${info.project.name}-${width}.png`,fullPage:true});
+  });
+}
 
 
 test('Kostnadskollen gives a truthful useful provisional action after one warning answer',async({page})=>{
