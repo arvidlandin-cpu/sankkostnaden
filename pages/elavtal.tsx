@@ -45,7 +45,7 @@ export default function Elavtal(){
     </div>
    </section>
    <article className='article guideWrap categoryArticle'>
-    <ElectricityMarketGateway/>
+    <div id='jamfor-elavtal' style={{scrollMarginTop:90}}><ElectricityMarketGateway/></div>
     <section className='categoryIntro'>
      <p className='kicker'>KONTROLLERA INNAN DU TECKNAR</p>
      <h2>Jämför på samma grund, oavsett elbolag</h2>
