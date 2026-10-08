@@ -36,3 +36,12 @@ Owner instruction: move AI design forward IMMEDIATELY after deep comparative ana
 ## Explicit remaining work
 
 Once CI is green, retrieve and subjectively review real latest-run screenshots; full cross-page visual inventory; visual A/B mockups of editorial vs task dashboard; unified navigation, spacing, cards, disclosure, verified logo treatment and accessibile contrast across homepage, app, five categories and original guides/tools. Do not call masterplan's design phase complete until reviewed screenshots and all page-family QA pass. Keep qualified acquisition work active independently.
+
+## Real rendered screenshot review added 2026-10-08
+
+GitHub Actions previous category artifacts were downloaded and inspected at 390px and 1440px. Current homepage design-v1 screenshots were captured from the branch as full-page Chromium artifacts (workflow run 37755772391) and manually inspected at 390px and 1440px. Observations:
+- Desktop has **three separate direct-category navigation locations** in the first two screens: top nav, five rows inside hero card, and visually rich "Populära jämförelser" category cards immediately below hero. The redundancy needs further user-based assessment on desktop; no automatic removal where immediate direct paths might matter.
+- Mobile has the **same five categories repeated** in the hero card, in an always-visible fixed bottom navigation and again below the hero in popular cards. The fixed bottom dock overlays the area-list portion as the visitor scrolls, while useful proof/content starts late. This is an observed visual duplication problem, not merely a source-code guess.
+- Therefore use a **mobile-only simplification** up to 600px: hide five redundant hero-category rows and the related divider but keep all 5 categories immediately visible and clickable in the persistent bottom bar, explain that route next to the main CTA, and keep category-image links lower in the page. Desktop retains category rows while further direct-journey evidence is gathered. This shortens the mobile journey and makes the single main task prominent without making category alternatives inaccessible.
+- Regression assertion checks all five bottom bar direct URLs visible at 360/390/430, corresponding duplicate hero links hidden, main CTA visible, and no horizontal overflow.
+- Important: screenshot captures are actual browser renders on the build branch, not proof of live Cloudflare deployment or validated conversion uplift. Re-capture after merge and audit all other page families separately.
