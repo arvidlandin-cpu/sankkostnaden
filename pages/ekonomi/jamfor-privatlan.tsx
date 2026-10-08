@@ -1,4 +1,5 @@
 import IntentGuide from '../../components/IntentGuide';
+import QuotedLoanTotals from '../../components/QuotedLoanTotals';
 
 export default function JamforPrivatlan(){
   return <IntentGuide
@@ -20,6 +21,7 @@ export default function JamforPrivatlan(){
       {heading:'Längre löptid kan göra månadskostnaden missvisande',body:'En lägre månadsbetalning kan bero på att lånet betalas tillbaka under längre tid. Kontrollera därför både löptiden och den totala återbetalningen.'},
       {heading:'Jämför på samma grund',body:'Använd samma lånebelopp och så lik löptid som möjligt. Då blir skillnader i ränta och avgifter lättare att se och du minskar risken att jämföra olika upplägg.'},
     ]}
+    extraUtility={<QuotedLoanTotals/>}
     related={[
       {href:'/ekonomi/samlingslan/',label:'När kan samlingslån sänka kostnaden?'},
       {href:'/ekonomi/',label:'Till Lån & ekonomi'},
