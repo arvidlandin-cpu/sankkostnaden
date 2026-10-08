@@ -74,6 +74,7 @@ jobs:
             tests/electricity-cost.spec.ts \
             tests/electricity-hub.spec.ts \
             tests/broadband-hub.spec.ts \
+            tests/mobile-hub.spec.ts \
             tests/priority-seo-flow.spec.ts \
             tests/trust-footer-insurance.spec.ts \
             --project=chromium
