@@ -15,6 +15,7 @@ test('example demonstrates why a lower monthly payment may cost more overall',as
 test('user can compare full-term numbers and see when entered quote is invalid',async({page})=>{
  await page.goto(route);
  const tool=page.getByTestId('loan-total-tool');
+ await tool.getByRole('button',{name:/Jag har två erbjudanden/}).click();
  const second=tool.getByRole('group',{name:'Alternativ B'});
  await second.getByLabel('Återstående återbetalningstid').fill('60');
  await expect(tool.getByTestId('loan-b-total')).toContainText('100 700');
@@ -38,6 +39,7 @@ test('tracking contains no personal finance inputs',async({page})=>{
  await page.addInitScript(()=>{(window as any).dataLayer=[];});
  await page.goto(route);
  const tool=page.getByTestId('loan-total-tool');
+ await tool.getByRole('button',{name:/Jag har två erbjudanden/}).click();
  await tool.getByLabel('Lånebelopp i kronor').fill('98765');
  await tool.getByRole('group',{name:'Alternativ A'}).getByLabel('Engångsavgift').fill('400');
  const events=await page.evaluate(()=>(window as any).dataLayer||[]);
@@ -49,4 +51,18 @@ test('tracking contains no personal finance inputs',async({page})=>{
    expect(used[0]).not.toHaveProperty(field);
  }
  await expect(tool.getByRole('link',{name:/Konsumenternas om lånekostnader/})).toHaveAttribute('href','https://www.konsumenternas.se/lan--betalningar/lan/konsumtionslan/kostnader-for-konsumtionslan/');
+});
+
+test('loan first screen shows useful sample totals without a wall of fields',async({page})=>{
+ await page.goto(route);
+ const tool=page.getByTestId('loan-total-tool');
+ await expect(tool.getByTestId('loan-a-total')).toContainText('139 700');
+ await expect(tool.getByTestId('loan-b-total')).toContainText('161 000');
+ await expect(tool.locator('input')).toHaveCount(0);
+ await expect(tool.getByTestId('loan-mode-chooser')).toContainText('inget låneerbjudande');
+ await tool.getByRole('button',{name:/Jag har två erbjudanden/}).click();
+ await expect(tool.getByLabel('Lånebelopp i kronor')).toBeVisible();
+ await tool.getByRole('button',{name:/Dölj prisfälten/}).click();
+ await expect(tool.locator('input')).toHaveCount(0);
+ await expect(tool.getByTestId('loan-a-total')).toBeVisible();
 });

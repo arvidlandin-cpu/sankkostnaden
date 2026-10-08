@@ -44,3 +44,10 @@
  .result{padding:17px}
  .principal>div{max-width:none}
 }
+
+
+.mode{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;padding:18px 20px;margin:12px 0 16px;border-radius:14px;border:1px solid #d8e2d4;background:#fff}
+.mode strong{display:block;color:#233d29;font-size:16px}
+.mode p{margin:7px 0 0;color:#526755;line-height:1.55;font-size:14px;max-width:580px}
+.mode button{display:inline-flex;align-items:center;justify-content:space-between;gap:12px;min-height:48px;padding:10px 15px;border:0;border-radius:11px;background:#e3f39b;color:#243a26;font:inherit;font-size:13px;font-weight:850;cursor:pointer}
+@media(max-width:490px){.mode{padding:15px}.mode button{width:100%}}
