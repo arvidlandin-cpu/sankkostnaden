@@ -39,15 +39,15 @@ export default function HomeHero(){
       <div className={styles.copy}>
         <div className={styles.badge}><span/> Gratis · ingen inloggning · tydliga partnerlänkar</div>
         <h1>Sänk dina fasta kostnader</h1>
-        <p>Se vilka avtal som kostar dig mest och jämför bredband, el, mobil, försäkring och lån. Börja med Kostnadskollen eller välj ett område direkt.</p>
+        <p>Osäker på vilket avtal du bör se över? Få en första startpunkt efter en enkel fråga, eller gå direkt till bredband, el, mobil, försäkring och ekonomi.</p>
         <div className={styles.trust}><span>Enkelt att börja</span><span>Du väljer själv</span><span>Gratis att använda</span></div>
       </div>
 
       <div className={styles.card}>
         <div className={styles.cardEyebrow}>BÖRJA HÄR</div>
-        <h2>Vilket avtal bör du kontrollera först?</h2>
+        <h2>Hitta ett bra ställe att börja.</h2>
         <div className={styles.choiceList}>
-          <a href='/app/'><div><strong>Starta Kostnadskollen</strong><small>Fyra områden · personlig prioritering · gratis</small></div><ArrowRight size={17}/></a>
+          <a href='/app/'><div><strong>Starta Kostnadskollen</strong><small>Första vägledning efter en fråga · gratis</small></div><ArrowRight size={17}/></a>
         </div>
         <div className={styles.cardDivider}><span>eller välj område direkt</span></div>
         <div className={styles.areaList}>
@@ -58,7 +58,7 @@ export default function HomeHero(){
             </a>;
           })}
         </div>
-        <p className={styles.cardHint}>Vet du redan vad du vill jämföra? Välj område direkt. Annars hjälper Kostnadskollen dig att prioritera vad som är mest rimligt att kontrollera först.</p>
+        <p className={styles.cardHint}>Vi hämtar inga personliga priser åt dig. Verktygen hjälper dig förstå vad som kan vara värt att kontrollera, och du väljer själv nästa steg.</p>
       </div>
     </div>
     <div className={styles.proof}>
