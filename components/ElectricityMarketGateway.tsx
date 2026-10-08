@@ -26,7 +26,7 @@ function Logo({partner}:{partner:ActivePartner}){
  */
 export default function ElectricityMarketGateway(){
   return <div className={styles.root} data-testid='electricity-market'>
-    <section id='jamfor-elavtal' className={styles.section} aria-labelledby='electricity-start-title'>
+    <section className={styles.section} aria-labelledby='electricity-start-title'>
       <div className={styles.sectionHead}>
         <div>
           <p className={styles.eyebrow}>ENKEL START · AKTUELLA PARTNERS</p>
