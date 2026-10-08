@@ -8,6 +8,7 @@ on:
       - ops/commercial-regression-main-v2
       - 'ops/masterplan-*'
       - 'ops/mobile-category-*'
+      - 'ops/insurance-category-*'
     paths:
       - '.github/workflows/commercial-regression-smoke.yml'
       - 'components/**'
@@ -75,7 +76,7 @@ jobs:
             tests/electricity-cost.spec.ts \
             tests/electricity-hub.spec.ts \
             tests/broadband-hub.spec.ts \
-            tests/mobile-hub.spec.ts \
+            tests/insurance-hub.spec.ts \
             tests/mobile-hub.spec.ts \
             tests/priority-seo-flow.spec.ts \
             tests/trust-footer-insurance.spec.ts \
