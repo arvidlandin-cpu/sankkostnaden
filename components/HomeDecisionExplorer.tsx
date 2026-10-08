@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowRight, Compass, ListChecks, Scale, SlidersHorizontal, Wallet, type LucideIcon } from 'lucide-react';
+import { ArrowRight, Compass, Scale, SlidersHorizontal, Wallet, type LucideIcon } from 'lucide-react';
 import { emitAnalyticsEvent } from '../lib/clientAttribution';
 import styles from '../styles/HomeDecisionExplorer.module.css';
 
