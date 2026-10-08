@@ -20,9 +20,29 @@ function sum(rows,field){
   return (rows||[]).reduce((total,row)=>total+num(row?.[field]),0);
 }
 
-function activeExperiment(state){
-  const experiment=state?.activeExperiment;
-  return experiment?.status==='running'?experiment:null;
+function activeExperiments(state){
+  // New multi-scope state takes precedence. Legacy state remains readable during migration.
+  const stored=Array.isArray(state?.activeExperiments)
+    ? state.activeExperiments
+    : state?.activeExperiment?[state.activeExperiment]:[];
+  return stored.filter(item=>item?.status==='running');
+}
+
+function pathScope(value){
+  if(!value) return null;
+  try{
+    const pathname=new URL(String(value),'https://sankkostnaden.se').pathname;
+    return pathname.split('/').filter(Boolean)[0]||'sitewide';
+  }catch{return null;}
+}
+
+function conflictsWithActive(page,experiments){
+  const scope=pathScope(page);
+  if(!scope) return true; // Unknown target may overlap: fail closed.
+  return experiments.some(item=>{
+    const activeScope=pathScope(item.target);
+    return !activeScope || activeScope==='sitewide' || scope==='sitewide' || activeScope===scope;
+  });
 }
 
 function action(type,priority,reason,details={}){
@@ -143,17 +163,20 @@ function partnerHealthActions(partnerHealth){
 function recentSeoQueries(learningLedger,policy,now){
   const cooldownDays=num(policy?.limits?.seoCooldownDays)||14;
   const cutoff=now.getTime()-(cooldownDays*86400000);
-  return new Set((learningLedger?.completedExperiments||[])
+  return new Set([
+    ...(learningLedger?.completedExperiments||[]),
+    ...(learningLedger?.cancelledExperiments||[]),
+  ]
     .filter(item=>item?.type==='SEO_SNIPPET_TEST')
     .filter(item=>{
-      const at=Date.parse(item.completedAt||item.endedAt||item.reviewedAt||'');
+      const at=Date.parse(item.completedAt||item.cancelledAt||item.endedAt||item.reviewedAt||'');
       return Number.isFinite(at)&&at>=cutoff;
     })
     .map(item=>String(item.query||'').toLowerCase())
     .filter(Boolean));
 }
 
-function seoCandidate(google,policy,learningLedger,now){
+function seoCandidate(google,policy,learningLedger,now,experiments=[]){
   const cfg=policy?.thresholds?.seo||{};
   const recent=recentSeoQueries(learningLedger,policy,now);
   const daily=google?.gsc?.focusQueryDaily||[];
@@ -167,6 +190,7 @@ function seoCandidate(google,policy,learningLedger,now){
 
   const standard=(google?.gsc?.queryPages||[])
     .filter(row=>!recent.has(String(row.query||'').toLowerCase()))
+    .filter(row=>!conflictsWithActive(row.page,experiments))
     .filter(row=>num(row.impressions)>=num(cfg.minImpressions||80))
     .filter(row=>num(row.position)>=num(cfg.minPosition||3)&&num(row.position)<=num(cfg.maxPosition||15))
     .filter(row=>num(row.ctr)<=num(cfg.maxCtr||0.015))
@@ -185,6 +209,7 @@ function seoCandidate(google,policy,learningLedger,now){
   const earlyCfg=cfg.earlyStage||{};
   const early=(google?.gsc?.queryPages||[])
     .filter(row=>!recent.has(String(row.query||'').toLowerCase()))
+    .filter(row=>!conflictsWithActive(row.page,experiments))
     .filter(row=>num(row.impressions)>=num(earlyCfg.minImpressions||25))
     .filter(row=>num(row.position)>0&&num(row.position)<=num(earlyCfg.maxPosition||10))
     .filter(row=>num(row.ctr)<=num(earlyCfg.maxCtr??0.005))
@@ -204,9 +229,10 @@ function seoCandidate(google,policy,learningLedger,now){
   return [...standard,...early].sort((a,b)=>b.score-a.score)[0]||null;
 }
 
-function contentUtilityCandidate(google,policy){
+function contentUtilityCandidate(google,policy,experiments=[]){
   const cfg=policy?.thresholds?.contentUtility||{};
   return (google?.gsc?.pages||[])
+    .filter(row=>!conflictsWithActive(row.page,experiments))
     .filter(row=>num(row.impressions)>=num(cfg.minImpressions||100))
     .filter(row=>num(row.position)>=num(cfg.minPosition||16)&&num(row.position)<=num(cfg.maxPosition||40))
     .filter(row=>num(row.clicks)<=num(cfg.maxClicks??1))
@@ -244,10 +270,11 @@ function commercialPageSnapshot(google){
   })).sort((a,b)=>b.partnerImpressions-a.partnerImpressions);
 }
 
-function pageCommercialCandidate(google,policy){
+function pageCommercialCandidate(google,policy,experiments=[]){
   const cfg=policy?.thresholds?.cro||{};
   return commercialPageSnapshot(google)
     .filter(row=>row.pagePath!=='/app/')
+    .filter(row=>!conflictsWithActive(row.pagePath,experiments))
     .filter(row=>row.partnerImpressions>=num(cfg.minPagePartnerImpressions||30))
     .filter(row=>row.partnerUsers>=num(cfg.minPagePartnerUsers||8))
     .filter(row=>row.affiliateClickRate<num(cfg.maxPageAffiliateClickRate||0.08))
@@ -357,7 +384,11 @@ export function buildDecisionPacket({
   const health=sourceHealth({google,affiliate,addrevenue,adtraction,partnerHealth,policy,now});
   const northStar=affiliateNorthStar({google,affiliate,addrevenue,adtraction});
   const funnel=funnelSnapshot(google);
-  const experiment=activeExperiment(state);
+  const experiments=activeExperiments(state);
+  const maxSlots=Math.max(1,num(policy?.limits?.maxConcurrentExperiments)||1);
+  const slotsAvailable=experiments.length<maxSlots;
+  const maxSeo=Math.max(1,num(policy?.limits?.maxConcurrentSeoExperiments)||1);
+  const seoSlotsAvailable=experiments.filter(item=>item.type==='SEO_SNIPPET_TEST').length<maxSeo;
   const candidates=[];
 
   candidates.push(...partnerHealthActions(partnerHealth));
@@ -372,11 +403,10 @@ export function buildDecisionPacket({
     ));
   }
 
-  let experimentGate=null;
-  if(experiment){
+  const experimentGates=experiments.map(experiment=>{
     const reviewAt=Date.parse(experiment.earliestReviewAt||'');
     const due=Number.isFinite(reviewAt)&&now.getTime()>=reviewAt;
-    experimentGate={
+    return {
       id:experiment.id,
       type:experiment.type,
       target:experiment.target,
@@ -385,21 +415,26 @@ export function buildDecisionPacket({
       earliestReviewAt:experiment.earliestReviewAt,
       reviewDue:due,
     };
-    if(due){
+  });
+  for(let i=0;i<experiments.length;i++){
+    const experiment=experiments[i];
+    const experimentGate=experimentGates[i];
+    if(experimentGate.reviewDue){
       const evaluation=evaluateSeoExperiment(experiment,google,policy);
       candidates.push(action(
         'REVIEW_ACTIVE_EXPERIMENT',
         95,
         evaluation?.verdict==='INSUFFICIENT_DATA'
-          ?'Minsta observationstid har passerat men post-change-stickprovet är fortfarande för litet för ett säkert beslut.'
-          :'Minsta observationstid för det aktiva experimentet har passerat och utfallet kan bedömas.',
+          ?'Observationstid har passerat men stickprovet är för litet för ett säkert beslut.'
+          :'Aktivt experiment har passerat minsta observationstid och kan bedömas.',
         {experiment:experimentGate,baseline:experiment.baseline||null,evaluation}
       ));
     }
   }
 
-  if(!experiment && health.status!=='blocked'){
-    const seo=seoCandidate(google,policy,learningLedger,now);
+  if(slotsAvailable && health.status!=='blocked'){
+    if(seoSlotsAvailable){
+    const seo=seoCandidate(google,policy,learningLedger,now,experiments);
     if(seo){
       candidates.push(action(
         'SEO_SNIPPET_TEST',
@@ -409,7 +444,8 @@ export function buildDecisionPacket({
       ));
     }
 
-    const utility=contentUtilityCandidate(google,policy);
+    }
+    const utility=contentUtilityCandidate(google,policy,experiments);
     if(utility){
       candidates.push(action(
         'CONTENT_UTILITY_UPGRADE',
@@ -419,7 +455,7 @@ export function buildDecisionPacket({
       ));
     }
 
-    const pageCommercial=pageCommercialCandidate(google,policy);
+    const pageCommercial=pageCommercialCandidate(google,policy,experiments);
     if(pageCommercial){
       candidates.push(action(
         'PAGE_COMMERCIAL_CRO_TEST',
@@ -429,7 +465,7 @@ export function buildDecisionPacket({
       ));
     }
 
-    const cro=croCandidate(google,policy);
+    const cro=experiments.length===0?croCandidate(google,policy):null; // /app/ spans categories; avoid overlapping funnels.
     if(cro){
       candidates.push(action(
         'CRO_FRICTION_TEST',
@@ -446,12 +482,12 @@ export function buildDecisionPacket({
   let recommended=candidates[0]||null;
 
   if(!recommended){
-    if(experiment){
+    if(!slotsAvailable){
       recommended=action(
         'WAITING_FOR_EXPERIMENT',
         0,
-        'Ett kontrollerat experiment pågår. Samla post-change-data och undvik nya tillväxtändringar.',
-        {experiment:experimentGate}
+        'Alla oberoende experimentslots används. Fortsätt samla data och förbereda icke-överlappande möjligheter.',
+        {experiments:experimentGates}
       );
     }else{
       recommended=action(
@@ -492,7 +528,8 @@ export function buildDecisionPacket({
       adtraction:adtraction?.attributionCoverage||null,
       addrevenue:addrevenue?.attributionCoverage||null,
     },
-    activeExperiment:experimentGate,
+    activeExperiment:experimentGates[0]||null,
+    activeExperiments:experimentGates,
     commercialObservations:commercial,
     commercialPages,
     recommendedAction:{
@@ -502,8 +539,10 @@ export function buildDecisionPacket({
     },
     candidateActions:candidates,
     guardrails:{
-      oneExperimentAtATime:num(policy?.limits?.maxConcurrentExperiments||1)===1,
-      activeExperimentBlocksGrowth:Boolean(experiment),
+      oneExperimentAtATime:maxSlots===1,
+      maxConcurrentExperiments:maxSlots,
+      activeExperimentCount:experiments.length,
+      activeExperimentBlocksGrowth:!slotsAvailable,
       noActionBelowThreshold:recommended.type==='WAITING_FOR_SIGNAL'||recommended.type==='WAITING_FOR_EXPERIMENT',
     },
   };
@@ -553,17 +592,16 @@ export function toMarkdown(packet){
   }
   lines.push('');
 
-  if(packet.activeExperiment){
-    lines.push(
-      '## Aktivt experiment',
-      '',
-      '- ID: **'+packet.activeExperiment.id+'**',
-      '- Typ: **'+packet.activeExperiment.type+'**',
-      '- Mål: **'+packet.activeExperiment.target+'**',
-      '- Tidigaste review: **'+packet.activeExperiment.earliestReviewAt+'**',
-      '- Review klar att göra: **'+(packet.activeExperiment.reviewDue?'ja':'nej')+'**',
-      ''
-    );
+  if(packet.activeExperiments?.length){
+    lines.push('## Pågående experiment ('+packet.activeExperiments.length+')','');
+    for(const experiment of packet.activeExperiments){
+      lines.push(
+        '- **'+experiment.type+'** · '+experiment.target+' · '+experiment.id,
+        '  Tidigaste granskning: '+(experiment.earliestReviewAt||'ej bestämt'),
+        '  Klar för granskning: '+(experiment.reviewDue?'ja':'nej')
+      );
+    }
+    lines.push('');
   }
 
   if(r.details&&Object.keys(r.details).length){
@@ -574,8 +612,8 @@ export function toMarkdown(packet){
     '## Autopilotregel',
     '',
     packet.guardrails.activeExperimentBlocksGrowth
-      ?'Ett tillväxtexperiment pågår. Nya SEO/CRO-experiment blockeras, men mät- och attributionfel får repareras.'
-      :'Ingen experimentlåsning är aktiv.',
+      ?'Alla experimentslots är upptagna. Tekniska fel och attribution får repareras.'
+      :'Oberoende förändringar är tillåtna inom '+packet.guardrails.maxConcurrentExperiments+' slots, aldrig för samma kategori/funnel.',
     '',
     'Ingen rå persondata, order-ID, klick-ID eller credential ingår i rapporten.',
     ''
