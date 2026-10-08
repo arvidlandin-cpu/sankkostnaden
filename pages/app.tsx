@@ -91,7 +91,7 @@ export default function SavingsApp(){
   const nextUnanswered=categories.find(category=>!isComplete(category.key));
 
   useEffect(()=>{
-    if(completed<1||completed>=4||earlyResultTracked.current)return;
+    if(completed<1||completed>=4||!earlyHasSignal||earlyResultTracked.current)return;
     earlyResultTracked.current=true;
     emitAnalyticsEvent('cost_check_early_result_available',{
       source:'app',questions_answered:completed,
@@ -270,7 +270,7 @@ export default function SavingsApp(){
           <Check size={20}/>
           <div><h3>Du har inte angett någon tydlig anledning att prioritera ett byte just nu.</h3>
             <p>Du har svarat på alla fyra områden, men vi har inte jämfört dina faktiska avtal med marknadens erbjudanden. Vill du ändå dubbelkolla kan du välja en kategori i menyn. Inget byte rekommenderas automatiskt.</p>
-            <Link href='/elavtal/'>Se avtal och villkor i lugn och ro <ArrowRight size={16}/></Link>
+            <div className={styles.noIssueLinks} aria-label='Utforska avtal om du vill'>{categories.map(category=><Link key={category.key} href={category.href}>{category.short} <ArrowRight size={14}/></Link>)}</div>
           </div>
         </div> : <div className={styles.ranking}>
           {evaluatedResults.map((result,index)=>{
