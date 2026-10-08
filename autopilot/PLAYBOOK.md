@@ -1,5 +1,9 @@
 # Sänk Kostnaden – agent playbook
 
+## Approved masterplan execution (2026-10-08)
+
+User approved the complete product+traffic+revenue rebuild. **Read `MASTERPLAN_EXECUTION_2026-10-08.md` at every daily run** for current phase completion, unresolved QA, priority, category independence, and follow-up work. Advance a coherent approved masterplan slice each run when policy and checks allow. Do not mistake source code deployed or analysis written for confirmed revenue gains. Do not restart completed PRs. Research and organic/non-paid discovery work proceeds every day, even when QA or a separate experiment is running.
+
 This file defines the operating contract for the autonomous growth system. Work is split into distinct roles so the same reasoning pass does not research, decide, execute and approve its own change. **Binding companion files:** `STRATEGY_AND_EVIDENCE_STANDARD.md` (required rationale for every material product/growth decision) and `COMPETITOR_INTELLIGENCE.md` (dated, sourced market observations and differentiated opportunities). These must be read before proposing or implementing a growth change. A beautiful interface, higher commission or popular competitor pattern is not itself a reason to deploy.
 
 ## Objective
