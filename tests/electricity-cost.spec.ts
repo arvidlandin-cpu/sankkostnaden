@@ -164,7 +164,7 @@ test('electricity offers a real comparison service before any form fields',async
   await expect(partner).toHaveAttribute('data-partner','Elskling');
   await expect(partner).toHaveAttribute('rel',/sponsored/);
   await expect(partner).toHaveAttribute('data-placement','electricity_calculator_no_offer');
-  await expect(routePanel.getByRole('link',{name:/Se våra aktiva elbolag/})).toHaveAttribute('href','/elavtal/#elbolag');
+  await expect(routePanel.getByRole('link',{name:/Se våra aktiva elbolag/})).toHaveAttribute('href','/elavtal/');
   await expect(page.getByTestId('electricity-cost-result')).toHaveCount(0);
   await expect(page.locator('section[aria-label="Jämför två elavtal"]')).toHaveCount(0);
 });
