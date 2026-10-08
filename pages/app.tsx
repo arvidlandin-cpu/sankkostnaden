@@ -84,8 +84,10 @@ export default function SavingsApp(){
   const totalMonthly=Object.values(answers).reduce((sum,answer)=>sum+answer.monthly,0);
   const noClearIssue=completed===4&&evaluatedResults.every(result=>result.fit===0);
   const topTied=completed===4&&!noClearIssue&&evaluatedResults.length>1&&evaluatedResults[0].priorityValue===evaluatedResults[1].priorityValue;
-  const earlyTop=evaluatedResults[0];
-  const earlyHasSignal=Boolean(earlyTop&&earlyTop.fit>=1);
+  // Only answers that actually signal uncertainty or concern are actionable early results.
+  // A high monthly amount without a problem answer must never be presented as a reason to switch.
+  const earlyTop=evaluatedResults.find(result=>result.fit>=1);
+  const earlyHasSignal=Boolean(earlyTop);
   const nextUnanswered=categories.find(category=>!isComplete(category.key));
 
   useEffect(()=>{
@@ -141,6 +143,14 @@ export default function SavingsApp(){
     quickPathShownTracked.current.add(active);
     emitAnalyticsEvent('cost_check_quick_path_shown',{category:active,has_partner:activeQuickPartner?1:0});
   },[active,activeAnswer.fit,activeQuickPartner]);
+
+  const focusUnanswered=(key:CostKey)=>{
+    setActive(key);
+    window.requestAnimationFrame(()=>{
+      questionCardRef.current?.scrollIntoView({behavior:'smooth',block:'start'});
+      questionCardRef.current?.querySelector<HTMLButtonElement>('[role="group"] button')?.focus({preventScroll:true});
+    });
+  };
 
   const goNext=()=>{
     if(!activeComplete||activeIndex>=categories.length-1) return;
@@ -201,6 +211,14 @@ export default function SavingsApp(){
             </div>
           </details>
 
+          {activeAnswer.fit===0&&<aside className={styles.safePath} data-testid='cost-check-safe-feedback' aria-live='polite'>
+            <Check size={18}/>
+            <div><strong>{activeCategory.label} verkar vara under kontroll utifrån ditt svar.</strong>
+              <p>Vi har inte kontrollerat ditt faktiska avtal eller jämfört aktuella priser. Du behöver inte byta bara för att göra klart Kostnadskollen.</p>
+              <Link href={activeCategory.href}>Se aktuella villkor om du vill <ArrowRight size={14}/></Link>
+            </div>
+          </aside>}
+
           {activeAnswer.fit===2&&<aside className={styles.quickPath}>
             <div>
               <span>SNABB VÄG</span>
@@ -214,13 +232,13 @@ export default function SavingsApp(){
 
           <div className={styles.cardActions}>
             {completed>0&&<button className={styles.reset} onClick={reset}><RotateCcw size={15}/> Börja om</button>}
-            {completed>0&&completed<4&&<a className={styles.previewAction} href='#resultat' onClick={()=>emitAnalyticsEvent('cost_check_early_result_opened',{source:'app',questions_answered:completed})}>Se din första startpunkt <Target size={15}/></a>}
+            {completed>0&&completed<4&&earlyHasSignal&&<a className={styles.previewAction} href='#resultat' onClick={()=>emitAnalyticsEvent('cost_check_early_result_opened',{source:'app',questions_answered:completed})}>Se din första startpunkt <Target size={15}/></a>}
             {activeComplete&&(activeIndex<categories.length-1?<button className={styles.next} onClick={goNext}>Klart – till {categories[activeIndex+1].short} <ArrowRight size={17}/></button>:<a className={styles.next} href='#resultat'>Visa min prioritering <Target size={17}/></a>)}
           </div>
         </div>
       </section>
 
-      {completed>0&&<section id='resultat' className={styles.results}>
+      {completed>0&&(completed===4||earlyHasSignal)&&<section id='resultat' className={styles.results}>
         <div className={styles.resultIntro}>
           <div><span>{completed===4?'DIN KOSTNADSKOLL':'FÖRSTA VÄGEN VIDARE'}</span><h2>{completed===4?(noClearIssue?'Ingen tydlig brist identifierad':topTied?'Flera områden är likvärdiga att kontrollera':top.label+' bör kontrolleras först'):'Här kan du börja'}</h2></div>
           <p>{completed===4?'Dina svar hjälper oss prioritera områden att kontrollera. Partnerlänkarna är inte personliga prisrankningar.':'Detta är en preliminär vägledning utifrån dina svar – inte ett beräknat sparbelopp.'}</p>
@@ -237,22 +255,26 @@ export default function SavingsApp(){
             :<article className={`${styles.incompleteResult} ${styles.earlyResult}`} data-testid='cost-check-early-result'>
               <div className={styles.resultBody}>
                 <span className={styles.earlyEyebrow}>FÖRSTA STARTPUNKTEN · {completed} AV 4 OMRÅDEN KONTROLLERADE</span>
-                <h3>{earlyHasSignal?`${earlyTop.label} kan vara värt att kontrollera nu`:'Ingen tydlig brist i de områden du kontrollerat hittills'}</h3>
-                <p>{earlyHasSignal
-                  ?'Ditt svar visar en anledning att se över det här området. Det är en preliminär väg vidare – inte en ranking av marknadens avtal eller ett påstående om möjlig besparing.'
-                  :'Dina svar visar ännu ingen tydlig anledning till ett byte. Du kan fortsätta till nästa område eller kontrollera aktuella villkor om du vill.'}</p>
-                {earlyHasSignal&&<ul>{earlyTop.reasons.slice(0,2).map(reason=><li key={reason}><Check size={14}/>{reason}</li>)}</ul>}
+                <h3>{earlyTop?.label} kan vara värt att kontrollera nu</h3>
+                <p>Ditt svar visar att du är osäker eller har sett en förändring. Vi kan hjälpa dig vidare, men har inte kontrollerat avtalet eller beräknat en faktisk besparing.</p>
+                {earlyTop&&<ul>{earlyTop.reasons.slice(0,2).map(reason=><li key={reason}><Check size={14}/>{reason}</li>)}</ul>}
                 <p className={styles.earlyQualification}>Du kan få en bredare prioritering genom att kontrollera fler områden. Någon individuell besparing har inte beräknats.</p>
               </div>
               <div className={styles.earlyActions}>
-                {earlyHasSignal&&<Link className={styles.earlyPrimary} href={earlyTop.href} onClick={()=>emitAnalyticsEvent('cost_check_early_result_continue',{source:'app',category:earlyTop.key,questions_answered:completed})}>Kontrollera {earlyTop.short.toLowerCase()} nu <ArrowRight size={17}/></Link>}
-                {nextUnanswered&&<button type='button' onClick={()=>{setActive(nextUnanswered.key);window.requestAnimationFrame(()=>questionCardRef.current?.scrollIntoView({behavior:'smooth',block:'start'}))}}>Kontrollera även {nextUnanswered.short.toLowerCase()} <ArrowRight size={16}/></button>}
+                {earlyTop&&<Link className={styles.earlyPrimary} href={earlyTop.href} onClick={()=>emitAnalyticsEvent('cost_check_early_result_continue',{source:'app',category:earlyTop.key,questions_answered:completed})}>Se alternativ för {earlyTop.short.toLowerCase()} <ArrowRight size={17}/></Link>}
+                {nextUnanswered&&<button type='button' onClick={()=>focusUnanswered(nextUnanswered.key)}>{active===nextUnanswered.key?'Svara på frågan om':'Fortsätt med'} {nextUnanswered.short.toLowerCase()} <ArrowRight size={16}/></button>}
               </div>
             </article>}
         </div>:
-        <div className={styles.ranking}>
+        noClearIssue ? <div className={styles.noIssueSummary} data-testid='cost-check-no-issues'>
+          <Check size={20}/>
+          <div><h3>Du har inte angett någon tydlig anledning att prioritera ett byte just nu.</h3>
+            <p>Du har svarat på alla fyra områden, men vi har inte jämfört dina faktiska avtal med marknadens erbjudanden. Vill du ändå dubbelkolla kan du välja en kategori i menyn. Inget byte rekommenderas automatiskt.</p>
+            <Link href='/elavtal/'>Se avtal och villkor i lugn och ro <ArrowRight size={16}/></Link>
+          </div>
+        </div> : <div className={styles.ranking}>
           {evaluatedResults.map((result,index)=>{
-            const partners=resultPartners(result.key).slice(0,2);
+            const partners=result.fit>=1?resultPartners(result.key).slice(0,2):[];
             const nextResult=evaluatedResults[index+1];
             const tied=evaluatedResults.some((other,j)=>j!==index&&other.priorityValue===result.priorityValue);
             return <article id={'result-'+result.key} key={result.key} className={index===0?styles.topResult:''}>
@@ -265,7 +287,7 @@ export default function SavingsApp(){
               <div className={styles.resultActions}>
                 {partners.length>0&&<small className={styles.verifiedLine}>Partnerlänkar kontrollerade {partnerGroupCheckedLabel(partners)}</small>}
                 {partners.map((partner,partnerIndex)=><a key={partner.name} href={partner.trackingUrl} data-partner={partner.name} data-category={partner.category} data-intent={partnerIntent[result.key]} data-placement='cost_check_result' data-partner-position={partnerIndex+1} data-result-rank={index+1} target='_blank' rel='sponsored nofollow noopener'>{partnerIndex===0?'Jämför hos ':'Alternativ: '}{partner.name} <ArrowUpRight size={14}/></a>)}
-                <Link href={result.href}>{result.key==='forsakring'?'Välj försäkringstyp':'Jämför fler i guiden'} <ArrowRight size={14}/></Link>
+                <Link href={result.href}>{result.fit===0?'Se villkor om du vill':result.key==='forsakring'?'Välj försäkringstyp':'Jämför fler i guiden'} <ArrowRight size={14}/></Link>
                 {nextResult&&<a className={styles.nextCategory} href={`#result-${nextResult.key}`} onClick={()=>emitAnalyticsEvent('cost_check_next_category',{from:result.key,to:nextResult.key,rank:index+1})}>När du är klar: {nextResult.short} <ArrowRight size={14}/></a>}
               </div>
             </article>;
