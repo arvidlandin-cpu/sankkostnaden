@@ -3,5 +3,20 @@
   "purpose": "Permanent memory for completed experiments and durable commercial learnings. Only evidence-backed conclusions belong here.",
   "completedExperiments": [],
   "durableLearnings": [],
-  "rejectedPatterns": []
+  "rejectedPatterns": [],
+  "cancelledExperiments": [
+    {
+      "id": "seo-snippet-jamfor-forsakring-2026-10-07",
+      "type": "SEO_SNIPPET_TEST",
+      "target": "/forsakring/jamfor-forsakring/",
+      "query": "jämför försäkring",
+      "startedAt": "2026-10-07T19:11:34+02:00",
+      "cancelledAt": "2026-10-08",
+      "cancelledBy": "owner",
+      "reason": "Owner prioritized shipping independent growth improvements without waiting for Oct 15 review.",
+      "evaluation": "NOT_EVALUATED",
+      "contentDecision": "Keep current snippet as-is; no ungrounded revert and no claim that it won.",
+      "qualifier": "Do not treat as completed/validated SEO experiment."
+    }
+  ]
 }
