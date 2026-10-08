@@ -62,3 +62,7 @@ The site must earn a reason to be linked or shared: original calculator, consume
 Triage by **expected approved revenue potential × reachability of the relevant audience × actual information/partner capability**, tempered by confidence, trust, effort and risk. Do not present made-up weighted scores as facts. Score only when definitions and supporting inputs are recorded; otherwise use explicit relative comparisons (high/medium/low confidence).
 
 At every daily scan: add or update dated evidence, retire stale claims, identify *one* most decision-relevant learning and choose either a bounded next step or documented no-action. Audit across categories rather than assuming one electricity-page pattern is universally right. Review the revenue chain monthly as data matures. Multiple independent changes can proceed under the concurrent slot limit; never launch two changes that share a target URL, main funnel, user cohort, tracking baseline or acquisition query because their effects could not be separated. Market research and design preparation always continue.
+
+## Beyond incremental improvement
+
+`PRODUCT_EXCELLENCE.md` establishes the product-wide target and competitor benchmarking. For meaningful changes, consider the entire user journey and whether the correct answer is a thoughtful redesign rather than another minor cosmetic patch. No assumption of 'best' without observable user utility, independently sourced evidence and real qualified business outcomes. Keep releases bounded and independently measurable.
