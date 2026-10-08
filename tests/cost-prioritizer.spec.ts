@@ -151,7 +151,7 @@ test('Kostnadskollen gives a truthful useful provisional action after one warnin
  const early=page.getByTestId('cost-check-early-result');
  await expect(early).toBeVisible();
  await expect(early).toContainText('1 AV 4 OMRÅDEN');
- await expect(early).toContainText('preliminär väg vidare');
+ await expect(early).toContainText('inte kontrollerat avtalet');
  await expect(early.getByRole('link',{name:/Se alternativ för el/})).toHaveAttribute('href','/elavtal/jamfor-elavtal/');
  await expect(page.getByRole('link',{name:'Se din första startpunkt'})).toHaveAttribute('href','#resultat');
  await expect(early.getByRole('button',{name:/Fortsätt med bredband/i})).toBeVisible();
