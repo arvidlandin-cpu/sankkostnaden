@@ -31,6 +31,16 @@ Read also: `autopilot/PRODUCT_EXCELLENCE.md`, `STRATEGY_AND_EVIDENCE_STANDARD.md
 - [ ] Validate logo asset rights and quality; favicon is not the same as a reliable brand logo. Keep legible text fallback and honest sponsorship labels.
 - [ ] Continue nonpaid qualified acquisition and revenue tracking in parallel; design must not become an excuse to remain invisible to users.
 
+### P0E — Progressive, interactive tools + early qualified partner options (**owner approved; implementation prioritized**)
+
+- [x] Audit current empty-form complexity and real screenshots of electricity 2-offer calculator and family mobile total-cost calculator; also inspected first-year mobile/broadband, household, loan and specialist tools. **Implementation contract:** `autopilot/PROGRESSIVE_UX_COMMERCIAL_MASTERPLAN_2026-10-08.md`.
+- [ ] **P1 electricity:** choose **have two real offers?** first; no-offer route goes straight to an eligible real comparator; yes-offer route progressively reveals only prices and necessary fees, with clear assumptions and exact calculations. Partner selection accessible without completing the form.
+- [ ] **P2 family mobile:** persons + have real prices? first; no-price route yields relevant family-provider options and checklist; exact quoted cost input optional and progressive; never invent discount.
+- [ ] **P3 shared first-year comparison** mobile/broadband: progressive campaign/fee fields, no-obligation partner route, correct network/availability caveats.
+- [ ] **P4 household cost map:** select few known bills, known subtotal, optional other categories; preserve privacy and /app/ handoff.
+- [ ] **P5 specialist loan/insurance/contract UX:** example first where suitable, safe exact mode, relevant partner CTA only after true fit and clearly marked sponsorship.
+- [ ] Verify every resulting flow against first useful step, all-active partner visibility, source distinctions, correct arithmetic, accessibility, 5 mobile/desktop viewports, analytics privacy, attributed referrals and approved revenue. **No release counted complete merely because plan was written.**
+
 ### P1A — Electricity product category (**shipped to main in PR #50**)
 
 - [x] Replace hidden/quiz-gated electricity partner journey with coherent direct/comparison split on /elavtal/. 1 actual compare service (Elskling), 11 named direct suppliers alphabetically, all actual existing affiliate links; no fake price ranking.
