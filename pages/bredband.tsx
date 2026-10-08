@@ -1,43 +1,74 @@
-import { Wifi } from 'lucide-react';
-import CategoryLanding from '../components/CategoryLanding';
-import CostRealityCheck from '../components/CostRealityCheck';
+import Head from 'next/head';
+import Link from 'next/link';
+import { ArrowRight, Check, PiggyBank, ShieldCheck, Wifi } from 'lucide-react';
+import BroadbandMarketGateway from '../components/BroadbandMarketGateway';
+
+const guides=[
+ {href:'/bredband/bredband-pa-min-adress/',title:'Bredband på min adress',text:'Varför utbud och priser skiljer sig mellan adresser.'},
+ {href:'/bredband/billigaste-bredbandet/',title:'Vad avgör billigaste bredbandet?',text:'Kampanj, ordinarie pris och avgifter över ett år.'},
+ {href:'/bredband/utan-bindningstid/',title:'Bredband utan bindningstid',text:'Räkna på flexibilitet och uppsägningstid.'},
+ {href:'/bredband/100-100/',title:'Räcker 100/100 Mbit/s?',text:'Rätt hastighet för de flesta vardagsbehov.'},
+];
 
 export default function Bredband(){
-  return <CategoryLanding
-    category='bredband'
-    canonical='https://sankkostnaden.se/bredband/'
-    title='Jämför bredband 2026 – pris & hastighet'
-    description='Jämför bredband 2026 efter pris, hastighet och bindningstid. Se vilken fart du behöver och kontrollera vad som finns på din adress.'
-    kicker='JÄMFÖR BREDBAND'
-    heading='Jämför bredband utan att betala för mer fart än du behöver.'
-    lead='Börja med vad som finns på din adress. Jämför sedan samma hastighet, verklig årskostnad och bindningstid.'
-    icon={Wifi}
-    compareHref='/bredband/bredband-pa-min-adress/'
-    compareLabel='Hitta relevanta bredbandsalternativ'
-    helpHref='/bredband/vilken-hastighet-behover-jag/'
-    helpLabel='Hjälp mig välja hastighet'
-    partnerHeading='Aktuella bredbandsalternativ'
-    afterPartners={<CostRealityCheck mode='subscription' label='Bredband' />}
-    checks={[
-      'Vad som faktiskt går att beställa på adressen',
-      'Samma hastighet när priser jämförs',
-      'Kampanjpris och ordinarie pris över ett år',
-      'Bindningstid, uppsägningstid och eventuell utrustning',
-    ]}
-    introTitle='Fyra saker räcker för en bra första jämförelse'
-    introText='Bredband blir snabbt rörigt om du jämför allt samtidigt. Börja med tillgänglighet och rätt hastighet. Först därefter är priset meningsfullt att jämföra.'
-    guides={[
-      {href:'/bredband/billigaste-bredbandet/',title:'Billigaste bredbandet',text:'Räkna verklig förstaårskostnad.'},
-      {href:'/bredband/vilken-hastighet-behover-jag/',title:'Vilken hastighet behöver jag?',text:'Tre frågor om hushållets behov.'},
-      {href:'/bredband/fiber-eller-mobilt-bredband/',title:'Fiber eller mobilt?',text:'Välj teknik efter stabilitet, signal och behov.'},
-      {href:'/bredband/utan-bindningstid/',title:'Utan bindningstid',text:'Jämför flexibilitet och pris.'},
-    ]}
-    moreGuides={[
-      {href:'/bredband/100-100/',title:'Bredband 100/100',text:'När räcker 100 Mbit/s?'},
-      {href:'/bredband/250-250/',title:'Bredband 250/250',text:'När är 250 Mbit/s lagom?'},
-      {href:'/bredband/500-500/',title:'Bredband 500/500',text:'För större hushåll och hög samtidighet.'},
-      {href:'/bredband/1000-1000/',title:'Bredband 1000/1000',text:'När är gigabit motiverat?'},
-      {href:'/bredband/5g-bredband/',title:'5G-bredband',text:'När kan det ersätta fiber?'},
-    ]}
-  />;
+ const title='Jämför bredband 2026 – pris & hastighet';
+ const description='Jämför bredband 2026 efter pris, hastighet och bindningstid. Se vilken fart du behöver och kontrollera vad som finns på din adress.';
+ const canonical='https://sankkostnaden.se/bredband/';
+ return <>
+  <Head>
+   <title>{title} | Sänk Kostnaden</title>
+   <meta name='description' content={description}/>
+   <meta name='robots' content='index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1'/>
+   <meta property='og:type' content='website'/><meta property='og:locale' content='sv_SE'/>
+   <meta property='og:title' content={title}/><meta property='og:description' content={description}/><meta property='og:url' content={canonical}/>
+   <link rel='canonical' href={canonical}/>
+   <script type='application/ld+json' dangerouslySetInnerHTML={{__html:JSON.stringify({'@context':'https://schema.org','@graph':[{'@type':'WebPage',name:title,description,url:canonical,isPartOf:{'@type':'WebSite',name:'Sänk Kostnaden',url:'https://sankkostnaden.se/'}},{'@type':'BreadcrumbList',itemListElement:[{'@type':'ListItem',position:1,name:'Sänk Kostnaden',item:'https://sankkostnaden.se/'},{'@type':'ListItem',position:2,name:'Bredband',item:canonical}]}]})}}/>
+  </Head>
+  <header className='topbar'>
+   <Link className='brand' href='/'><span className='brandMark'><PiggyBank size={22}/></span><span>Sänk Kostnaden</span></Link>
+   <nav><Link href='/bredband/'>Bredband</Link><Link href='/elavtal/'>El</Link><Link href='/mobil/'>Mobil</Link><Link href='/forsakring/'>Försäkring</Link><Link href='/ekonomi/'>Ekonomi</Link></nav>
+   <a className='topbarCta' href='#category-partners'>Jämför bredband →</a>
+  </header>
+  <main>
+   <section className='guideHero categoryHero guideHero-bredband'>
+    <div className='guideWrap'>
+     <nav className='breadcrumbs' aria-label='Brödsmulor'><Link href='/'>Start</Link><span>›</span><span aria-current='page'>Bredband</span></nav>
+     <div className='categoryHeroIcon'><Wifi size={25}/></div>
+     <p className='kicker'>BREDBAND · ENKLARE VAL</p>
+     <h1>Hitta bredband som passar ditt hem – inte bara ett lockpris.</h1>
+     <p className='lead'>Börja med att kontrollera vilka operatörer som finns på din adress. Välj sedan en lämplig hastighet och jämför hela kostnaden, även efter kampanjen.</p>
+     <div className='categoryHeroActions'>
+      <a className='primary' href='#category-partners'>Kontrollera bredbandsalternativ <ArrowRight size={17}/></a>
+      <Link className='secondaryLight' href='/bredband/vilken-hastighet-behover-jag/'>Hjälp mig välja hastighet <ArrowRight size={17}/></Link>
+     </div>
+     <p className='fine'><ShieldCheck size={13}/> Gratis vägledning · inga kontaktuppgifter hos oss · inga påstådda adressunika livepriser</p>
+    </div>
+   </section>
+   <article className='article guideWrap categoryArticle'>
+    <div id='category-partners' style={{scrollMarginTop:90}}><BroadbandMarketGateway/></div>
+    <section className='categoryIntro'>
+     <p className='kicker'>JÄMFÖR PÅ LIKA VILLKOR</p>
+     <h2>Så undviker du att lockpriset styr valet</h2>
+     <p>Kontrollera först att anslutningen verkligen finns på adressen. Jämför sedan samma hastighet och en rimlig kostnad över minst första året.</p>
+     <div className='checkList compactChecks'>
+      {['Utbud på din adress – fiber, koax eller mobil uppkoppling','Samma hastighet och villkor i båda alternativen','Kampanjens längd, ordinarie pris och startavgifter','Bindnings- och uppsägningstid samt eventuell utrustning'].map(item=><p key={item}><Check size={17}/>{item}</p>)}
+     </div>
+    </section>
+    <section className='categoryGuideSection'>
+     <div className='categoryGuideHead'><div><p className='kicker'>HJÄLP & GUIDER</p><h2>Vill du förstå mer innan du väljer?</h2></div><p>Från hastighet och teknik till verklig årskostnad, utan att du behöver jämföra allt samtidigt.</p></div>
+     <div className='categoryGuideGrid'>
+      {guides.map(item=><Link href={item.href} key={item.href}><strong>{item.title}</strong><span>{item.text}</span><b>Läs guiden <ArrowRight size={15}/></b></Link>)}
+     </div>
+     <details className='categoryMore'><summary>Fler bredbandsguider <ArrowRight size={15}/></summary><div>
+      {[
+       ['/bredband/250-250/','Bredband 250/250'],
+       ['/bredband/500-500/','Bredband 500/500'],
+       ['/bredband/1000-1000/','Bredband 1000/1000'],
+       ['/bredband/5g-bredband/','5G-bredband'],
+      ].map(([href,label])=><Link href={href} key={href}><span><strong>{label}</strong></span><ArrowRight size={14}/></Link>)}
+     </div></details>
+    </section>
+   </article>
+  </main>
+ </>;
 }
