@@ -1,5 +1,16 @@
 # Sänk Kostnaden — less typing, earlier usefulness, truthful partner handoff
-**Approved owner direction: 2026-10-08. Execution status: approved DESIGN/IMPLEMENTATION PROGRAM, code changes in following scoped PRs.**
+**Approved owner direction: 2026-10-08. Execution status: priority tool rebuilds implemented and merged. Full post-production visual/design and commercial performance verification still open.**
+
+## Implementation ledger (2026-10-08)
+- **P1 electricity:** PR #64, merged; true comparator path before detailed price form, explicit exact fee confirmation.
+- **P2 family mobile:** PR #65, merged; two-click start, active family partner choice, optional full-price calculation.
+- **P3 shared mobile/broadband first-year costs:** PR #66, merged; early qualified category next step, ordinary-price quick comparison, exact campaign and fee entry optional.
+- **P4 household cost map:** PR #67, merged; category-choice first, only *entered* known subtotal, local preserved-cost handoff.
+- **P5 loan:** PR #68, merged; immediate illustrative same-principal repayment lesson, detailed real-offer fields on demand.
+- **P6 source audit:** SwitchCalendar, CondoInsuranceCheck and ElectricitySensitivity already have manageable progressive/click-first tasks; no gratuitous rebuild. Secondary CostRealityCheck has optional campaign fields; monitor as a distinct specialist tool.
+- **Quality:** full branch Build and commercial regression suites passed at merge for #64–#68. Mobile width tests and price-free pathways added. Actual live production screenshots, accessibility/branding judgement, affiliate-click IDs, qualified visitor flow and *approved revenue* are separate remaining work, not claimed as accomplished. Full sitewide visual design system project P0D remains separate and open.
+
+
 
 The owner has inspected rendered screenshots of `/verktyg/elavtalskostnad/` and `/mobil/lonar-sig-familjeabonnemang/` and explicitly rejected the spreadsheet-like, dense, blank-form experience. The same principle applies sitewide: **one plain-language task, 0–2 low-knowledge clicks to first relevant value, and visible contextually appropriate eligible partner next steps without demanding exact input.** Optional *exact mode* retains trustworthy complete cost calculation for people with real offers.
 
