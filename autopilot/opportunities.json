@@ -5,43 +5,9 @@
   "currentConstraint": "Relevant organic traffic is still the binding constraint. Only 1 Google click reached content pages outside the home page and /app/ during the latest 30-day GSC window, so conversion optimization must remain sample-gated.",
   "opportunities": [
     {
-      "id": "electricity-total-cost-utility",
-      "rank": 1,
-      "status": "ready_for_independent_scope_review",
-      "actionType": "CONTENT_UTILITY_UPGRADE",
-      "target": "/elavtal/billigaste-elavtalet/",
-      "thesis": "Turn the existing first-year-cost calculator into the center of the page so visitors compare total 12-month cost by consumption before choosing a partner, instead of consuming another generic top-list.",
-      "evidence": {
-        "gsc": [
-          "billigaste elavtalet: 38 impressions, position 20.3, 0 clicks",
-          "billigt elavtal: 24 impressions, position 14.6, 0 clicks",
-          "page: 119 impressions, 0 clicks"
-        ],
-        "marketPattern": "Leading Swedish results increasingly compare total cost across household consumption levels and distinguish fixed fee, markup and campaign period.",
-        "sourceUrls": [
-          "https://www.borskollen.se/elavtal/billigaste",
-          "https://developers.google.com/search/docs/fundamentals/creating-helpful-content"
-        ]
-      },
-      "expectedImpact": "high",
-      "confidence": "medium",
-      "timeToLearnDays": 14,
-      "guardrails": [
-        "existing URL only",
-        "no unsupported 'cheapest' claim",
-        "user inputs determine comparison context",
-        "keep affiliate disclosure visible"
-      ],
-      "successSignal": [
-        "higher qualified organic CTR/ranking over time",
-        "more partner impressions and verified affiliate clicks from the page",
-        "eventual approved revenue per relevant visitor"
-      ]
-    },
-    {
       "id": "partner-visibility-clarity-pilot",
-      "rank": 2,
-      "status": "ready_for_independent_scope_review",
+      "rank": 1,
+      "status": "next_scoped_candidate",
       "actionType": "CRO_FRICTION_TEST",
       "target": "/elavtal/ first, then reuse validated design principles across /bredband/, /mobil/, /forsakring/ and relevant finance flows",
       "thesis": "Current comparison UI underplays partner brands and forces visitors through repeated 'direct', 'choose path', 'top three' and collapsed directory layers. Pilot a clearer commercial hierarchy: show prominent recognizable brands with appropriately sourced logos, explain a concrete verified reason to consider each option, distinguish comparison service from provider, make the full partner selection easy to discover, and give each primary card a clear next step without increasing cognitive overload.",
@@ -78,6 +44,49 @@
         "more unique organic visitors reaching verified affiliate links",
         "eventual increase in approved revenue per relevant organic visitor"
       ]
+    },
+    {
+      "id": "electricity-total-cost-utility",
+      "rank": 2,
+      "status": "partly_shipped_measurement_pending",
+      "actionType": "CONTENT_UTILITY_UPGRADE",
+      "target": "/elavtal/billigaste-elavtalet/",
+      "thesis": "Stage 1 (shipped): make the importance of kWh price versus fixed monthly fee obvious without needing supplier quotes. Stage 2 (optional): evaluate whether deeper first-year total-cost comparison merits further on-page integration when evidence supports it.",
+      "evidence": {
+        "gsc": [
+          "billigaste elavtalet: 38 impressions, position 20.3, 0 clicks",
+          "billigt elavtal: 24 impressions, position 14.6, 0 clicks",
+          "page: 119 impressions, 0 clicks"
+        ],
+        "marketPattern": "Leading Swedish results increasingly compare total cost across household consumption levels and distinguish fixed fee, markup and campaign period.",
+        "sourceUrls": [
+          "https://www.borskollen.se/elavtal/billigaste",
+          "https://developers.google.com/search/docs/fundamentals/creating-helpful-content"
+        ]
+      },
+      "expectedImpact": "unknown_until_real_users",
+      "confidence": "medium",
+      "timeToLearnDays": 14,
+      "guardrails": [
+        "existing URL only",
+        "no unsupported 'cheapest' claim",
+        "user inputs determine comparison context",
+        "keep affiliate disclosure visible"
+      ],
+      "successSignal": [
+        "higher qualified organic CTR/ranking over time",
+        "more partner impressions and verified affiliate clicks from the page",
+        "eventual approved revenue per relevant visitor"
+      ],
+      "release": {
+        "date": "2026-10-08",
+        "pr": "https://github.com/arvidlandin-cpu/sankkostnaden/pull/45",
+        "commit": "3ad726ee6476cb1b63d64c2c6700dced2074c814",
+        "scope": "Added an interactive in-page electricity kWh-versus-fixed-fee explanation on /elavtal/billigaste-elavtalet/. Full two-offer annual cost calculator remains separately available, linked in the new utility.",
+        "verified": "Branch Build check and full Electricity cost QA both passed; main post-merge checks may finish separately.",
+        "measurement": "Event electricity_sensitivity_used (consumption band only) and electricity_sensitivity_to_calculator. No organic lift or revenue causality claimed.",
+        "followUp": "Revisit deeper first-year-cost offer comparison only after evaluating qualitative comprehension or sufficient real organic behavior. Do not replicate the newly shipped sensitivity widget."
+      }
     },
     {
       "id": "quarter-hour-price-intent-bridge",
