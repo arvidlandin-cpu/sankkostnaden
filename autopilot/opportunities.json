@@ -25,7 +25,6 @@
       "confidence": "medium_qualitative_ux_problem_not_yet_quantified",
       "timeToLearnDays": 14,
       "guardrails": [
-        "do not deploy a competing growth experiment while the active SEO snippet experiment is running",
         "no blanket 12-card logo wall or visually overwhelming affiliate density",
         "do not fabricate discounts, live prices, cheapest claims, ratings or provider advantages",
         "differentiate only with verified intent/contract facts; disclose that sorting is not a price ranking",
@@ -91,20 +90,19 @@
     {
       "id": "quarter-hour-price-intent-bridge",
       "rank": 3,
-      "status": "ready_for_independent_scope_review",
+      "status": "implementation_in_branch_awaiting_checks",
       "actionType": "CONTENT_UTILITY_UPGRADE",
       "target": "/elavtal/kvartspris/",
-      "thesis": "Add a compact 'Passar kvartspris mig?' decision utility to satisfy the explanatory query first and then bridge suitable users to relevant electricity comparison options.",
+      "thesis": "Interactive two-assumption hypothetical cost difference from shifting electricity between 15-minute price intervals; on existing guide, before generic choices. Does not estimate savings versus monthly price.",
       "evidence": {
         "gsc": [
-          "vad menas med kvartspris på el: 28 impressions, position 9.1, 0 clicks",
-          "kvartspris el: 52 impressions, position 19.7, 0 clicks",
-          "page: 156 impressions, position 21.9, 0 clicks"
+          "2026-09-08 to 2026-10-07: /elavtal/kvartspris/ 153 impressions, 0 clicks, avg position 21.62; latest Search Console day Oct 5.",
+          "Query 'vad menas med kvartspris på el' 28 impressions, position 9.11, 0 clicks."
         ],
         "marketPattern": "Search demand mixes explanation with decision support; a useful calculator/check beats multiplying keyword-variant pages.",
         "sourceUrls": [
-          "https://developers.google.com/search/docs/fundamentals/creating-helpful-content",
-          "https://developers.google.com/search/docs/fundamentals/using-gen-ai-content"
+          "https://ei.se/konsument/anvand-el-smartare/elhandelsavtal-med-kvartspris",
+          "https://www.elskling.se/jamfor/elpriser/timpriser"
         ],
         "googleGuidance": "Interactive tools can be main content when they directly fulfill the page purpose; automated content should add original value rather than scale pages for rankings."
       },
@@ -119,7 +117,12 @@
       "successSignal": [
         "CTR improvement on top-10 explanatory query",
         "more organic sessions reaching relevant electricity partner options"
-      ]
+      ],
+      "proposedImplementation": {
+        "branch": "growth/kvartspris-shift-value-tool-2026-10-08",
+        "date": "2026-10-08",
+        "requires": "green build, page and mobile QA; no causal revenue claim"
+      }
     },
     {
       "id": "early-stage-serp-learning-loop",
