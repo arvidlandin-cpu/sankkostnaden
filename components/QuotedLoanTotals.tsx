@@ -14,6 +14,7 @@ export default function QuotedLoanTotals(){
   const [a,setA]=useState<QuotedRepayment>(sampleA);
   const [b,setB]=useState<QuotedRepayment>(sampleB);
   const [changed,setChanged]=useState(false);
+  const [editing,setEditing]=useState(false);
   const tracked=useRef(false);
   const result=useMemo(()=>compareQuotedRepayments(principal,a,b),[principal,a,b]);
 
@@ -32,7 +33,7 @@ export default function QuotedLoanTotals(){
     else setB(previous=>({...previous,[key]:safe}));
   };
   const reset=()=>{
-    setPrincipal(samplePrincipal);setA({...sampleA});setB({...sampleB});setChanged(false);
+    setPrincipal(samplePrincipal);setA({...sampleA});setB({...sampleB});setChanged(false);setEditing(false);
   };
   return <section className={styles.root} data-testid='loan-total-tool' aria-labelledby='loan-total-heading'>
     <div className={styles.head}>
@@ -47,6 +48,13 @@ export default function QuotedLoanTotals(){
       <span>{changed?'DINA INMATNINGAR · KONTROLLERA AVTALSVILLKOREN':'ILLUSTRATIVT RÄKNEEXEMPEL · INTE ETT LÅNEERBJUDANDE'}</span>
       <button type='button' onClick={reset}><RotateCcw size={14}/> Återställ exemplet</button>
     </div>
+    <div className={styles.mode} data-testid='loan-mode-chooser'>
+      <div><strong>{editing?'Räkna med dina egna uppgifter':'Se vad löptiden betyder i ett enkelt exempel'}</strong>
+        <p>{editing?'Ange bara belopp som framgår av faktiska återbetalningsplaner. Kontrollera även effektiv ränta och SEKKI.':'Exemplet nedan jämför samma lånebelopp. Alternativ B har lägre månadsbetalning men kostar mer totalt. Det är inget låneerbjudande.'}</p>
+      </div>
+      {!editing ? <button type='button' onClick={()=>setEditing(true)}>Jag har två erbjudanden – jämför exakt <ArrowRight size={16}/></button> : <button type='button' onClick={()=>setEditing(false)}>Dölj prisfälten</button>}
+    </div>
+    {editing && <>
     <label className={styles.principal}>Samma lånebelopp för båda alternativen
       <div><input type='number' min='1' step='1000' inputMode='numeric' value={principal} onChange={event=>{markChanged();setPrincipal(Math.max(0,Number(event.target.value)||0));}} aria-label='Lånebelopp i kronor'/><span>kr</span></div>
     </label>
@@ -67,6 +75,7 @@ export default function QuotedLoanTotals(){
         </label>
       </fieldset>)}
     </div>
+    </>}
     <div className={styles.result} aria-live='polite'>
       {result?<><div className={styles.breakdown}>
         <div><span>Totalt att betala · alternativ A</span><strong data-testid='loan-a-total'>{money.format(result.a.totalPaid)}</strong><small>Varav {money.format(result.a.loanCost)} över lånebeloppet</small></div>
