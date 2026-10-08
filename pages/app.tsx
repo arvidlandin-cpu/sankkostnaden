@@ -175,6 +175,7 @@ export default function SavingsApp(){
       <section id='fragor' className={styles.diagnostic}>
         <div className={styles.stageToolbar}>
           <span>{completed===0?'En fråga räcker för att börja':completed===4?'Alla fyra områden kontrollerade':`${completed} av 4 områden klara`}</span>
+          {totalMonthly>0&&<span className={styles.importedCost}>Inlästa kostnader: {totalMonthly.toLocaleString('sv-SE')} kr/mån</span>}
           <button type='button' aria-expanded={areaPickerOpen} aria-controls='cost-check-area-picker' onClick={()=>setAreaPickerOpen(open=>!open)}>
             Byt område <ChevronDown size={15}/>
           </button>
