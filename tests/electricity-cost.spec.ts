@@ -55,9 +55,13 @@ test('analytics do not receive raw consumption or price inputs',async({page})=>{
   expect(event.source).toBe('privacy_test');
   expect(event.consumption_band).toBe('15000_24999');
   expect(event.difference_band).toBe('under_500');
-  expect(JSON.stringify(event)).not.toContain('20000');
-  expect(JSON.stringify(event)).not.toContain('85');
-  expect(JSON.stringify(event)).not.toContain('82');
+  // Session identifiers can randomly contain "82", "85" or "20000".
+  // Validate the outbound event SCHEMA rather than searching serialized IDs.
+  const allowed=new Set(['event','source','consumption_band','difference_band','winner','funnel_session_id','gtm.uniqueEventId']);
+  expect(Object.keys(event).filter((key:string)=>!allowed.has(key))).toEqual([]);
+  for(const raw of ['annual_kwh','kwh','consumption','unit_price','price_ore','monthly_fee','annual_total','price_a','price_b','total_a','total_b']){
+    expect(event).not.toHaveProperty(raw);
+  }
 });
 
 test('indexed electricity guides keep metadata and expose calculator',async({page})=>{

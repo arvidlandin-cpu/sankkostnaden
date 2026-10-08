@@ -9,6 +9,7 @@ on:
       - 'ops/masterplan-*'
       - 'ops/mobile-category-*'
       - 'ops/insurance-category-*'
+      - 'ops/design-v1-*'
     paths:
       - '.github/workflows/commercial-regression-smoke.yml'
       - 'components/**'
@@ -79,6 +80,7 @@ jobs:
             tests/insurance-hub.spec.ts \
             tests/quoted-loan-totals.spec.ts \
             tests/mobile-hub.spec.ts \
+            tests/design-homepage.spec.ts \
             tests/priority-seo-flow.spec.ts \
             tests/trust-footer-insurance.spec.ts \
             --project=chromium
