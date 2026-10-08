@@ -15,9 +15,17 @@
 - Följ experiment med kvalificerat trafiksample; kalla inte färre klick eller förbättrad affiliateintäkt för fakta utan mätning.
 
 ## Leverans i PR #71 – **första avgränsade slice**
-Startsidan: fyra höga statiska hjälpkort ersätts med ett kompakt interaktivt ämnesval, aktuell väg till jämförelse och separat länk till trefrågetest. Den som inte vet väljer Kostnadskollen. Alla fyra SEO-relevanta tester är kvar som faktiska HTML-länkar. Ny CSS-modul bygger på befintligt token-system, responsiva minsta klickytor och minskad rörelse. Kategorival och väg mäts utan personliga ekonomiska uppgifter.
 
-**Status:** Gren/PR skapad. Tills både Build och full commercial smoke har passerat, visuella screenshots kontrollerats och PR har mergats är detta **inte live**.
+**Visuell korrigering efter faktiskt 390/1440-screenshot:** En första variant med **fyra kategori-knappar** (el/bredband/mobil/försäkring) ovanpå sajtens redan existerande fem visuella kategorikort skapade oönskad upprepning. Den varianten är ersatt **innan merge**.
+
+Den nya startsidepanelen frågar i stället **vad besökaren vill göra**: var börja, hitta rätt nivå, jämföra två erbjudanden eller se hushållets kostnader. Panelen visar omedelbart befintliga korta nivå-/skyddstester, eller byter till en relevant CTA/kalkylator. Detta är ett kompletterande uppgiftsval till visuella **direktkategorierna** ovanför, inte ännu en kategori-meny.
+
+- De fyra ursprungliga SEO-relevanta nivå-/skyddstesterna är kvar som SSR-renderade riktiga HTML-länkar i standardvyn ("Hitta rätt nivå"), alltså ingen krav på JS-klick för att nå dem.
+- Ingen ny prisrankning, inget påstått personligt råd, inga ändringar i befintligt partnerurval eller trackingURL.
+- Ny CSS-modul bygger på tokens, minsta klickytor, tangentbord, responsiv layout och reduced motion. Kategori/uppgiftsval och utgångsposition spåras enbart med aggregerade nycklar, utan privata uppgifter.
+- **Source- och skärmbildsgranskning:** första versionens verkliga 390px/1440px CI-skärmbilder visar upprepningen; andra versionen måste skärmbildsgranskas på nytt.
+
+**Status:** Gren/PR skapad. Tills både Build och full commercial smoke har passerat för **sista kodcommit**, visuella screenshots kontrollerats och PR har mergats är detta **inte live**.
 
 ## Prioriterade följande slices
 1. **Kostnadskollen (/app/)** – förfina animation av rätt svar och övergången från ett svar till verkligt relevant nästa steg; bevara nyligen korrigerad sanningsenlig tidig återkoppling och säkerhetslogik.
