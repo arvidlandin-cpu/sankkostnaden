@@ -801,8 +801,8 @@
   box-shadow:0 16px 34px rgba(29,43,32,.08);
 }
 .toolGrid span{
-  color:#758348;
-  font-size:9px;
+  color:#546a32;
+  font-size:12px;
   font-weight:900;
   letter-spacing:.12em;
 }
@@ -875,9 +875,9 @@
   align-items:center;
   justify-content:space-between;
   gap:8px;
-  color:#5d6a62;
+  color:var(--sk-ink-muted);
   text-decoration:none;
-  font-size:11px;
+  font-size:12px;
   line-height:1.35;
 }
 .guideGroups a:hover{color:#17201b}
