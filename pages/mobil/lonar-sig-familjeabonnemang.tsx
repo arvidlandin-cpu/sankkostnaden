@@ -12,12 +12,12 @@ export default function FamilyMobileTool() {
       <script type='application/ld+json' dangerouslySetInnerHTML={{__html: JSON.stringify({'@context':'https://schema.org','@type':'WebPage',name:'Lönar sig familjeabonnemang? Kalkyl 2026',description:'Räkna om familjeabonnemang blir billigare än separata mobilabonnemang. Jämför total månadskostnad, årskostnad och brytpunkt per extra användare.',url:'https://sankkostnaden.se/mobil/lonar-sig-familjeabonnemang/',isPartOf:{'@type':'WebSite',name:'Sänk Kostnaden',url:'https://sankkostnaden.se/'}})}} />
       <meta name='robots' content='index,follow' />
     </Head>
-    <main className={styles.shell}>
+    <main className={`${styles.shell} ${styles.familyPage}`}>
       <a className={styles.back} href='/mobil/'>← Mobil</a>
       <section className={styles.hero}>
         <span><Users size={15} /> FAMILJEKOLL</span>
         <h1>Lönar sig familjeabonnemang för er?</h1>
-        <p>Räkna på hela familjen i stället för reklampriset på huvudabonnemanget. Jämför 2–5 separata abonnemang med ett familjeupplägg över samma tolv månader, inklusive kampanj och avgifter.</p>
+        <p>Välj hur många ni är och få hjälp direkt. Du kan se familjeabonnemang utan att fylla i några priser, eller jämföra er totalkostnad.</p>
       </section>
 
       <FamilyMobileCost />

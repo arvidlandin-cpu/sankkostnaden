@@ -240,3 +240,19 @@
 @media(max-width:760px){
   .hero{padding:28px 22px 26px;border-radius:22px}
 }
+
+/* FamilyMobile UX: the calculator belongs to a readable content column,
+   not a full-window spreadsheet. Keep this isolated from other tools. */
+.familyPage{padding-top:20px}
+.familyPage .back{max-width:920px;margin-bottom:15px;font-size:13px}
+.familyPage .hero{max-width:920px;box-sizing:border-box;margin:0 auto 16px;padding:26px 30px;border-radius:19px;box-shadow:0 14px 36px rgba(25,38,29,.085)}
+.familyPage .hero h1{font-size:clamp(32px,4vw,51px);max-width:740px;line-height:1.07;margin:8px 0 11px}
+.familyPage .hero>span{font-size:12px}
+.familyPage .hero p{font-size:15px;line-height:1.5;max-width:700px;margin:0}
+.familyPage .seoCopy{margin:50px auto}
+@media(max-width:760px){
+ .familyPage{padding:16px 12px 60px}
+ .familyPage .hero{padding:20px 19px;border-radius:17px}
+ .familyPage .hero h1{font-size:clamp(31px,8.5vw,42px)}
+ .familyPage .hero p{font-size:14px}
+}
