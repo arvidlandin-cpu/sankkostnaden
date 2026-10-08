@@ -113,8 +113,8 @@ export default function Home(){
 
       <section className={`${styles.section} ${styles.helpSection}`}>
         <div className={styles.sectionHead}>
-          <div><p>OSÄKER PÅ VAD DU SKA VÄLJA?</p><h2>Hitta din väg på ett klick.</h2></div>
-          <p>Välj vad du vill se över. Du får två enkla vägar vidare: jämför alternativ direkt eller gör ett kort snabbtest.</p>
+          <div><p>BEHÖVER DU HJÄLP PÅ VÄGEN?</p><h2>Välj hur du vill börja.</h2></div>
+          <p>Få en första startpunkt, hitta rätt nivå, jämför två erbjudanden eller se över hushållet – utan onödiga frågor.</p>
         </div>
         <HomeDecisionExplorer/>
       </section>
