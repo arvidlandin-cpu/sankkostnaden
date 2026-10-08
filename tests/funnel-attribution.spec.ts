@@ -52,6 +52,26 @@ test('calculator and Adtraction click share one funnel session and one EPI click
   expect(tagged.searchParams.get('epi2')).toBe(click.funnel_session_id);
 });
 
+test('electricity no-quote partner path preserves Adtraction click tracking without any calculator input',async({page})=>{
+  await page.addInitScript(()=>{(window as any).dataLayer=[];});
+  await page.goto('/verktyg/elavtalskostnad/?src=no_quote_qa');
+  await page.getByRole('button',{name:/Nej, visa aktuella elavtal/}).click();
+  const link=page.getByTestId('electricity-no-offer-path').locator('a[data-partner="Elskling"]');
+  await expect(link).toBeVisible();
+  await preventNavigation(link);
+  await link.click();
+  const tagged=new URL((await link.getAttribute('href'))!);
+  const events=await page.evaluate(()=>(window as any).dataLayer||[]);
+  const click=events.find((e:any)=>e.event==='affiliate_click'&&e.partner==='Elskling');
+  expect(click?.funnel_session_id).toMatch(/^fs_/);
+  expect(click?.local_click_id).toMatch(/^clk_/);
+  expect(click?.affiliate_network).toBe('adtraction');
+  expect(click?.network_click_tagged).toBe(1);
+  expect(tagged.searchParams.get('epi')).toBe(click.local_click_id);
+  expect(tagged.searchParams.get('epi2')).toBe(click.funnel_session_id);
+  expect(events.filter((e:any)=>e.event==='electricity_cost_ready')).toHaveLength(0);
+});
+
 test('Adtraction deeplink keeps destination url last after EPI tagging',async({page})=>{
   await page.addInitScript(()=>{(window as any).dataLayer=[];});
   await page.goto('/mobil/billigaste-mobilabonnemanget/?qa=1');
