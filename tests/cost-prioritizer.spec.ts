@@ -169,6 +169,8 @@ test('up-to-date answer gives modest inline feedback, not a false preliminary ve
  await expect(page.locator('#resultat')).toHaveCount(0);
  await expect(page.getByRole('link',{name:'Se din första startpunkt'})).toHaveCount(0);
  await expect(page.locator('a[rel~="sponsored"]')).toHaveCount(0);
+ const events=await page.evaluate(()=>(window as any).dataLayer||[]);
+ expect(events.filter((item:any)=>item.event==='cost_check_early_result_available')).toHaveLength(0);
  await page.getByRole('button',{name:/Klart – till Bredband/}).click();
  await expect(page.getByRole('heading',{name:'Bredband'})).toBeVisible();
  await expect(page.getByRole('group',{name:'Vad stämmer bäst om bredbandet?'}).getByRole('button').first()).not.toHaveAttribute('aria-pressed','true');
@@ -206,6 +208,7 @@ test('four reassuring answers never create a fabricated affiliate priority or sa
  }
  await expect(page.getByTestId('cost-check-no-issues')).toBeVisible();
  await expect(page.getByTestId('cost-check-no-issues')).toContainText('inte jämfört dina faktiska avtal');
+ for(const category of ['El','Bredband','Mobil','Försäkring']) await expect(page.getByTestId('cost-check-no-issues').getByRole('link',{name:new RegExp('^'+category)})).toBeVisible();
  await expect(page.locator('[data-placement="cost_check_result"]')).toHaveCount(0);
  await expect(page.getByText('Flera områden är likvärdiga att kontrollera')).toHaveCount(0);
 });
