@@ -189,3 +189,23 @@ for(const width of [360,390,430,1024,1440]){
   expect(overflow).toBeLessThanOrEqual(1);
  });
 }
+
+for (const route of [commercialRoute, broadbandRoute]) {
+  test('switching detailed to quick and back never leaks hidden campaign fees into the result: '+route, async ({page}) => {
+    await page.goto(route);
+    await fillOfferA(page);
+    await fillOfferB(page);
+    await expect(page.getByTestId('offer-a-total')).toContainText('4 187');
+    await expect(page.getByTestId('offer-b-total')).toContainText('4 188');
+    await page.getByRole('button',{name:'Snabb jämförelse'}).click();
+    await expect(page.getByTestId('offer-a').locator('input[type="number"]')).toHaveCount(1);
+    await expect(page.getByTestId('offer-a-total')).toContainText('5 388');
+    await expect(page.getByTestId('offer-b-total')).toContainText('5 988');
+    await expect(page.getByTestId('comparison-result')).toContainText('600 kr');
+    await expect(page.getByTestId('comparison-result')).toContainText('Förenklad beräkning');
+    await page.getByRole('button',{name:'Exakt med kampanjer och avgifter'}).click();
+    await expect(page.getByTestId('offer-a-total')).toContainText('4 187');
+    await expect(page.getByTestId('offer-b-total')).toContainText('4 188');
+    await expect(page.getByTestId('comparison-result')).toContainText('1 kr');
+  });
+}
