@@ -151,21 +151,79 @@ test('Kostnadskollen gives a truthful useful provisional action after one warnin
  const early=page.getByTestId('cost-check-early-result');
  await expect(early).toBeVisible();
  await expect(early).toContainText('1 AV 4 OMRÅDEN');
- await expect(early).toContainText('preliminär väg vidare');
- await expect(early.getByRole('link',{name:/Kontrollera el nu/})).toHaveAttribute('href','/elavtal/jamfor-elavtal/');
+ await expect(early).toContainText('inte kontrollerat avtalet');
+ await expect(early.getByRole('link',{name:/Se alternativ för el/})).toHaveAttribute('href','/elavtal/jamfor-elavtal/');
  await expect(page.getByRole('link',{name:'Se din första startpunkt'})).toHaveAttribute('href','#resultat');
- await expect(early.getByRole('button',{name:/Kontrollera även bredband/i})).toBeVisible();
+ await expect(early.getByRole('button',{name:/Fortsätt med bredband/i})).toBeVisible();
  await expect(early).not.toContainText('kr/år');
 });
 
-test('an up-to-date contract answer never pressures visitor into affiliate click',async({page})=>{
+test('up-to-date answer gives modest inline feedback, not a false preliminary verdict',async({page})=>{
  await page.goto('/app/?qa=1');
  await page.getByRole('button',{name:/Nyligen jämfört – jag har koll på pris och avgifter/i}).click();
- const early=page.getByTestId('cost-check-early-result');
- await expect(early).toContainText('Ingen tydlig brist');
- await expect(early.locator('a')).toHaveCount(0);
- await early.getByRole('button',{name:/Kontrollera även bredband/i}).click();
+ const safe=page.getByTestId('cost-check-safe-feedback');
+ await expect(safe).toContainText('Elavtal verkar vara under kontroll utifrån ditt svar');
+ await expect(safe).toContainText('inte kontrollerat ditt faktiska avtal');
+ await expect(safe.getByRole('link',{name:/Se aktuella villkor om du vill/})).toHaveAttribute('href','/elavtal/jamfor-elavtal/');
+ await expect(page.getByTestId('cost-check-early-result')).toHaveCount(0);
+ await expect(page.locator('#resultat')).toHaveCount(0);
+ await expect(page.getByRole('link',{name:'Se din första startpunkt'})).toHaveCount(0);
+ await expect(page.locator('a[rel~="sponsored"]')).toHaveCount(0);
+ const events=await page.evaluate(()=>(window as any).dataLayer||[]);
+ expect(events.filter((item:any)=>item.event==='cost_check_early_result_available')).toHaveLength(0);
+ await page.getByRole('button',{name:/Klart – till Bredband/}).click();
  await expect(page.getByRole('heading',{name:'Bredband'})).toBeVisible();
+ await expect(page.getByRole('group',{name:'Vad stämmer bäst om bredbandet?'}).getByRole('button').first()).not.toHaveAttribute('aria-pressed','true');
+ await expect(page.getByText('Ingen tydlig brist i de områden du kontrollerat hittills')).toHaveCount(0);
+ await expect(page.locator('#resultat')).toHaveCount(0);
+});
+
+test('an actionable early result never loops back to the category already being answered',async({page})=>{
+ await page.goto('/app/?qa=1');
+ await page.getByRole('button',{name:/Nyligen jämfört – jag har koll på pris och avgifter/i}).click();
+ await page.getByRole('button',{name:/Klart – till Bredband/}).click();
+ await page.getByRole('button',{name:/Osäker på nivå\/pris eller länge sedan jag jämförde/}).click();
+ const early=page.getByTestId('cost-check-early-result');
+ await expect(early).toContainText('Bredband kan vara värt att kontrollera nu');
+ await expect(early.getByRole('link',{name:/Se alternativ för bredband/})).toHaveAttribute('href','/bredband/bredband-pa-min-adress/');
+ await expect(early.getByRole('button',{name:/Fortsätt med mobil/i})).toBeVisible();
+ await early.getByRole('button',{name:/Fortsätt med mobil/i}).click();
+ await expect(page.getByRole('heading',{name:'Mobilabonnemang'})).toBeVisible();
+ await expect(early.getByRole('button',{name:/Svara på frågan om mobil/i})).toBeVisible();
+ await expect(early).not.toContainText('Kontrollera även bredband');
+ await early.getByRole('button',{name:/Svara på frågan om mobil/i}).click();
+ await expect(page.getByRole('group',{name:'Vad stämmer bäst om mobilabonnemanget?'}).getByRole('button').first()).toBeFocused();
+});
+
+test('four reassuring answers never create a fabricated affiliate priority or saving',async({page})=>{
+ await page.goto('/app/?qa=1');
+ for(const phrase of [
+ /Nyligen jämfört – jag har koll på pris och avgifter/i,
+ /Nyligen jämfört – fart och pris känns rätt/i,
+ /Nyligen jämfört – surf och pris passar bra/i,
+ /Nyligen jämfört – bra koll på skydd och självrisk/i
+ ]){
+   await page.getByRole('button',{name:phrase}).click();
+   if(await page.getByRole('button',{name:/Klart – till/i}).count()) await page.getByRole('button',{name:/Klart – till/i}).click();
+ }
+ await expect(page.getByTestId('cost-check-no-issues')).toBeVisible();
+ await expect(page.getByTestId('cost-check-no-issues')).toContainText('inte jämfört dina faktiska avtal');
+ for(const category of ['El','Bredband','Mobil','Försäkring']) await expect(page.getByTestId('cost-check-no-issues').getByRole('link',{name:new RegExp('^'+category)})).toBeVisible();
+ await expect(page.locator('[data-placement="cost_check_result"]')).toHaveCount(0);
+ await expect(page.getByText('Flera områden är likvärdiga att kontrollera')).toHaveCount(0);
+});
+
+test('saved one-safe-answer session cannot masquerade as a completed result',async({page})=>{
+ await page.goto('/app/?qa=1');
+ await page.evaluate(()=>localStorage.setItem('sankkostnaden-cost-check-v5',JSON.stringify({
+    answers:{el:{fit:0,monthly:0},bredband:{fit:-1,monthly:0},mobil:{fit:-1,monthly:0},forsakring:{fit:-1,monthly:0}},
+    scenarioPct:10
+ })));
+ await page.reload();
+ await expect(page.locator('#resultat')).toHaveCount(0);
+ await expect(page.getByText('1 av 4 områden klara')).toBeVisible();
+ await page.getByRole('button',{name:/Klart – till Bredband/}).click();
+ await expect(page.locator('#resultat')).toHaveCount(0);
 });
 
 test('first useful Kostnadskollen event excludes any actual cost amounts',async({page})=>{

@@ -1097,3 +1097,21 @@
  .stageToolbar{flex-wrap:wrap}
  .stageToolbar .importedCost{max-width:100%;order:3;width:100%;margin:0}
 }
+
+
+/* Meaningful progress instead of a misleading success result before checking all areas. */
+.safePath{display:flex;align-items:flex-start;gap:13px;margin:0 28px 19px;padding:15px 17px;border-radius:13px;border:1px solid #dde7d9;background:#f6f9f1;color:#334a39}
+.safePath>svg{flex:0 0 auto;margin-top:2px;color:#587347}
+.safePath strong{font-size:14px;line-height:1.45}
+.safePath p{margin:6px 0 8px;color:#526458;font-size:13px;line-height:1.55}
+.safePath a{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:750;color:#2f553a;text-underline-offset:3px}
+.noIssueSummary{display:flex;gap:15px;align-items:flex-start;padding:25px;border:1px solid #dbe6d7;border-radius:16px;background:#fff}
+.noIssueSummary>svg{flex:0 0 auto;color:#536e47}
+.noIssueSummary h3{margin:0 0 8px;font-size:21px;line-height:1.3;color:#24372b}
+.noIssueSummary p{margin:0 0 13px;max-width:680px;color:#516156;line-height:1.65;font-size:14px}
+.noIssueSummary a{display:inline-flex;gap:9px;align-items:center;font-weight:800;color:#305538;text-underline-offset:3px;font-size:13px}
+@media(max-width:760px){.safePath{margin:0 16px 15px;padding:14px}.noIssueSummary{padding:17px;gap:12px}}
+
+.noIssueLinks{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.noIssueLinks a{min-height:44px;box-sizing:border-box;display:inline-flex;align-items:center;gap:9px;padding:11px 13px;border-radius:10px;border:1px solid #c9dac5;background:#f4f8ef;text-decoration:none;font-size:13px;color:#294b34}
+.noIssueLinks a:hover{border-color:#6c875d}
