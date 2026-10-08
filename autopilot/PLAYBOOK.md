@@ -1,6 +1,6 @@
 # Sänk Kostnaden – agent playbook
 
-This file defines the operating contract for the autonomous growth system. Work is split into distinct roles so the same reasoning pass does not research, decide, execute and approve its own change.
+This file defines the operating contract for the autonomous growth system. Work is split into distinct roles so the same reasoning pass does not research, decide, execute and approve its own change. **Binding companion files:** `STRATEGY_AND_EVIDENCE_STANDARD.md` (required rationale for every material product/growth decision) and `COMPETITOR_INTELLIGENCE.md` (dated, sourced market observations and differentiated opportunities). These must be read before proposing or implementing a growth change. A beautiful interface, higher commission or popular competitor pattern is not itself a reason to deploy.
 
 ## Objective
 
@@ -10,7 +10,7 @@ Traffic, impressions, CTR, funnel completion and affiliate clicks are diagnostic
 
 ## Scout
 
-Collect current evidence before forming an opinion: latest GA4 and Search Console data, Addrevenue and Adtraction performance, partner health, current experiment state, learning ledger, opportunity backlog, recent repository changes and relevant public market/SERP evidence.
+Collect current evidence before forming an opinion: latest GA4 and Search Console data, Addrevenue and Adtraction performance, partner health, current experiment state, learning ledger, opportunity backlog, recent repository changes and relevant public market/SERP evidence. Do this even when first-party visitor counts are near zero. Examine top competitors' current page flows, offer-data access and user-facing differences; distinguish observable features from their unverified results. Verify links and facts, date findings, and avoid reusing stale marketing claims.
 
 ## Analyst
 
@@ -18,13 +18,13 @@ Find the binding constraint. Typical bottlenecks are insufficient relevant traff
 
 ## Planner
 
-Rank actions by expected approved-revenue impact, evidence strength, time to learn, effort, reversibility and SEO/trust risk. Choose the smallest experiment that can falsify the hypothesis. Run one growth experiment at a time.
+Rank actions by expected approved-revenue impact, addressable user demand, achievable capability, evidence strength, time to learn, effort, reversibility and SEO/trust risk. For every material action, produce the 13-field decision record in `STRATEGY_AND_EVIDENCE_STANDARD.md`, compare at least two viable alternatives and the status quo, explain user value and business mechanism, and separate what we observe from what we hypothesize. No invented scoring weights or unsourced assumptions. Choose the smallest experiment that can falsify the hypothesis. Run one growth experiment at a time.
 
 The planner works through the revenue chain in order: relevant search demand → SERP click → useful on-site decision → qualified partner click → approved transaction. Fix the earliest binding constraint rather than polishing a later stage with no sample.
 
 ## Operator
 
-For autonomous actions allowed by policy: inspect the exact code, make a narrow reversible change, update state, record baseline and review rule, run tests and QA, open a PR and merge only when checks pass.
+For autonomous actions allowed by policy: inspect the exact code, make a narrow reversible change, update state, record baseline and review rule, include the evidence-based decision record in the PR, run tests and QA, open a PR and merge only when checks pass. Do not turn research findings into simultaneous product changes just to look active.
 
 ## Red team
 
@@ -36,7 +36,7 @@ After execution, confirm build and tests, wait for minimum observation time and 
 
 ## Strategy radar
 
-Once per week, scan current public evidence: Swedish search-result competitors, comparison UX, current Google guidance, partner/program changes that are publicly verifiable, AI-search discoverability patterns and credible agentic-growth workflows. Extract reusable operating patterns rather than copying competitors.
+**Daily at around 10:00 Europe/Stockholm**, independently of organic traffic, scan current public evidence: Swedish search-result competitors, comparison UX, consumer decisions and acquisition routes, current Google guidance, partner/program changes that are publicly verifiable, AI-search discoverability patterns and credible agentic-growth workflows. Rotate categories daily and cover all major categories within each week. Update the dated market map in `COMPETITOR_INTELLIGENCE.md` with genuinely new evidence (do not append repetitive filler); use `STRATEGY_AND_EVIDENCE_STANDARD.md` to assess original customer-value opportunities. Extract reusable operating patterns rather than copying competitors. Analyze the full product: initial discovery, landing value proposition, real prices or absence thereof, commercial partner relevance and display, mobile UX, user friction, trust, qualified affiliate click, eventual approved revenue. Avoid single-metric CRO thinking.
 
 Useful patterns from persistent-agent systems are: clear role ownership, authoritative source systems, durable memory, scheduled routines, explicit approval boundaries, evidence-preserving handoffs and a verifier that can say no. Do not imitate the theatrical part of multi-agent systems when a deterministic rule or a single operator is better.
 
