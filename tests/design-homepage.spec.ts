@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 const route='/?qa=1';
 const widths=[360,390,430,1024,1440];
 
-test('home's first action is clear, honest and visually dominant',async({page})=>{
+test('homepage first action is clear, honest and visually dominant',async({page})=>{
   await page.goto(route);
   const hero=page.locator('section[aria-label="Hitta rätt jämförelse"]');
   await expect(hero.getByRole('heading',{name:'Sänk dina fasta kostnader'})).toBeVisible();
