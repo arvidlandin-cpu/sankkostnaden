@@ -12,6 +12,9 @@ const items=[
 
 export default function MobileQuickBar(){
   const router=useRouter();
+  // Kostnadskollen has its own optional category selector. A fixed five-link
+  // overlay competes with answering the first question on a narrow screen.
+  if(router.pathname==='/app')return null;
   return <nav className='mobileQuickBar' aria-label='Snabbnavigering'>
     {items.map(({href,match,label,Icon})=>{
       const active=router.pathname.startsWith(match);
