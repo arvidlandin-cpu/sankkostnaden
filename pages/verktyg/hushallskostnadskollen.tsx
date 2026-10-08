@@ -29,6 +29,10 @@ const links:Partial<Record<Key,{href:string;label:string}>>={
 
 export default function Hushallskostnadskoll(){
   const [values,setValues]=useState<Values>(empty);
+  const [selected,setSelected]=useState<Key[]>([]);
+  const [showMore,setShowMore]=useState(false);
+  const selectedRows=rows.filter(([,key])=>selected.includes(key));
+  const knownCount=rows.filter(([,key])=>values[key].trim()!=='').length;
   const parsed=useMemo(()=>Object.fromEntries(rows.map(([,key])=>[key,Math.max(0,Number((values[key]||'0').replace(',','.'))||0)])) as Record<Key,number>,[values]);
   const total=Object.values(parsed).reduce((a,b)=>a+b,0);
   const annual=total*12;
@@ -37,15 +41,22 @@ export default function Hushallskostnadskoll(){
   const next=ranked[0]?.[0];
   const comparableCount=(['el','bredband','mobil','forsakring'] as Key[]).filter(key=>parsed[key]>0).length;
 
+  const chooseCategory=(key:Key)=>{
+    if(!selected.includes(key)){
+      setSelected(current=>[...current,key]);
+      emitAnalyticsEvent('household_category_selected',{category:key});
+    }
+  };
+
   const carryToPrioritizer=()=>{
     try{
       const existing=window.localStorage.getItem(costCheckStorageKey);
       const current=existing?normalizeCostAnswers(JSON.parse(existing)?.answers):emptyCostAnswers;
       const answers=normalizeCostAnswers({
-        el:{...current.el,monthly:parsed.el},
-        bredband:{...current.bredband,monthly:parsed.bredband},
-        mobil:{...current.mobil,monthly:parsed.mobil},
-        forsakring:{...current.forsakring,monthly:parsed.forsakring},
+        el:values.el.trim()!==''?{...current.el,monthly:parsed.el}:current.el,
+        bredband:values.bredband.trim()!==''?{...current.bredband,monthly:parsed.bredband}:current.bredband,
+        mobil:values.mobil.trim()!==''?{...current.mobil,monthly:parsed.mobil}:current.mobil,
+        forsakring:values.forsakring.trim()!==''?{...current.forsakring,monthly:parsed.forsakring}:current.forsakring,
       });
       window.localStorage.setItem(costCheckStorageKey,JSON.stringify({answers,scenarioPct:10,updatedAt:Date.now(),source:'hushallskostnadskollen'}));
       emitAnalyticsEvent('household_cost_to_prioritizer',{categories_with_cost:comparableCount});
@@ -71,16 +82,28 @@ export default function Hushallskostnadskoll(){
       <section className='guideHero'><div className='guideWrap'><Link className='back' href='/'><ArrowLeft size={16}/> Startsidan</Link><div className='guideIcon'><Calculator size={25}/></div><p className='kicker'>GRATIS VERKTYG • 2026</p><h1>Hushållskostnadskollen</h1><p className='lead'>Se vad dina återkommande kostnader faktiskt blir på ett år. Fyll i det du betalar i dag – verktyget jämför inte mot ett påhittat normalhushåll.</p></div></section>
 
       <article className='article guideWrap'>
-        <div className='note'><strong>Börja med verkliga belopp.</strong> Ta gärna senaste fakturorna eller kontoutdraget. Lämna en rad tom om den inte gäller ditt hushåll.</div>
+        <div className='note'><strong>Börja med en kostnad du vill kontrollera.</strong> Det går bra att välja ett område även om du inte vet vad du betalar. Inga belopp behöver anges för att följa länkarna till jämförelsen.</div>
 
-        <div style={{display:'grid',gap:12,margin:'28px 0'}}>
-          {rows.map(([label,key,help])=><label key={key} style={{display:'grid',gridTemplateColumns:'minmax(0,1fr) minmax(110px,150px)',gap:14,alignItems:'center',padding:'14px 0',borderBottom:'1px solid #e1e5df'}}>
+        <section data-testid='household-category-picker' style={{margin:'22px 0 20px'}}>
+          <h2 style={{marginBottom:10}}>Vad vill du börja med?</h2>
+          <p style={{marginTop:0,color:'#5f6c62'}}>Välj en kategori. Du kan lägga till fler när du vill.</p>
+          <div role='group' aria-label='Välj kostnadskategori' style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(145px,1fr))',gap:9}}>
+            {rows.filter(([,key])=>showMore||(['el','bredband','mobil','forsakring'] as Key[]).includes(key)).map(([label,key])=>
+              <button key={key} type='button' aria-pressed={selected.includes(key)} onClick={()=>chooseCategory(key)} style={{minHeight:52,textAlign:'left',padding:'11px 13px',borderRadius:12,border:selected.includes(key)?'2px solid #607f3b':'1px solid #cad6c9',background:selected.includes(key)?'#e6f5a4':'#fff',color:'#233c2a',font:'inherit',fontWeight:800,cursor:'pointer'}}>{label}{selected.includes(key)?' ✓':''}</button>
+            )}
+          </div>
+          {!showMore&&<button type='button' onClick={()=>setShowMore(true)} style={{marginTop:13,padding:'10px 0',border:0,background:'transparent',color:'#2c6034',font:'inherit',fontWeight:800,cursor:'pointer'}}>Visa fler kostnadskategorier +</button>}
+        </section>
+        {selectedRows.length===0&&<p data-testid='household-start-help' style={{color:'#56685b',marginBottom:26}}>Välj exempelvis el, mobil eller bredband för att få en första kontrollväg – utan något formulär.</p>}
+        {selectedRows.length>0&&<div data-testid='household-selected-costs' style={{display:'grid',gap:12,margin:'18px 0 22px'}}>
+          {selectedRows.map(([label,key,help])=><label key={key} style={{display:'grid',gridTemplateColumns:'minmax(0,1fr) minmax(110px,150px)',gap:14,alignItems:'center',padding:'14px 0',borderBottom:'1px solid #e1e5df'}}>
             <span><strong>{label}</strong><small style={{display:'block',color:'#68736c',marginTop:4}}>{help}</small></span>
             <span style={{display:'flex',alignItems:'center',gap:7,minWidth:0}}><input aria-label={label+', kronor per månad'} inputMode='decimal' value={values[key]} onChange={e=>setValues({...values,[key]:e.target.value.replace(/[^0-9,.]/g,'')})} placeholder='0' style={{width:'100%',minWidth:0,padding:'12px',border:'1px solid #cfd7ce',borderRadius:10,fontSize:16,textAlign:'right'}}/><b>kr</b></span>
           </label>)}
-        </div>
-
-        <div className='decisionPanel' aria-live='polite'><div><p className='partnerEyebrow'>DIN KOSTNADSBILD</p><h2>{total?total.toLocaleString('sv-SE'):'0'} kr/mån</h2><p>Det motsvarar <strong>{annual.toLocaleString('sv-SE')} kr per år</strong>. Av detta ligger {controllable.toLocaleString('sv-SE')} kr/mån i poster som ofta går att kontrollera eller jämföra utan att ändra själva boendet eller transportbehovet.</p></div><div className='decisionMetrics'><span><b>{Math.round(annual/1000)}</b> tkr/år</span><span><b>{Math.round(controllable)}</b> kr kontrollerbart/mån</span></div></div>
+          <p style={{margin:'2px 0 0',fontSize:13,color:'#667267'}}>Vet du inte beloppet? Lämna fältet tomt. Vi räknar bara med belopp du själv har angett.</p>
+          {selectedRows.filter(([,key])=>Boolean(links[key])).map(([label,key])=><Link key={key} href={links[key]!.href} style={{display:'inline-flex',alignItems:'center',gap:8,width:'fit-content',color:'#244a2e',fontWeight:800,textDecoration:'underline'}}>{links[key]!.label} <ArrowRight size={15}/></Link>)}
+        </div>}
+        {knownCount>0&&<div className='decisionPanel' aria-live='polite' data-testid='household-known-subtotal'><div><p className='partnerEyebrow'>SUMMA AV ANGIVNA BELOPP</p><h2>{total.toLocaleString('sv-SE')} kr/mån</h2><p>Det motsvarar <strong>{annual.toLocaleString('sv-SE')} kr per år</strong> för de {knownCount} poster du fyllt i. <strong>Det är inte hushållets totala kostnad</strong> om andra kostnader saknas. {controllable.toLocaleString('sv-SE')} kr/mån av de angivna beloppen ligger i poster som ofta går att jämföra.</p></div><div className='decisionMetrics'><span><b>{Math.round(annual/1000)}</b> tkr/år (angivet)</span><span><b>{Math.round(controllable)}</b> kr jämförbart/mån</span></div></div>}
 
         {comparableCount>0&&<><h2>Prioritera – inte bara den största kostnaden</h2><p>En stor kostnad är inte automatiskt den som är lättast att sänka. Skicka därför med dina fyra jämförbara belopp till Kostnadskollen och svara på en fråga per område. Beloppen ligger kvar lokalt i din webbläsare.</p><div className='intentActions'><Link className='primary' href='/app/?src=hushallskostnadskollen' onClick={carryToPrioritizer}>Prioritera mina avtal <ArrowRight size={16}/></Link>{next&&links[next]&&<Link className='secondary' href={links[next]!.href}>Gå direkt till {rows.find(([,k])=>k===next)?.[0].toLowerCase()}</Link>}</div></>}
 

@@ -15,6 +15,7 @@ async function answerAll(page:Page){
 
 test('household costs transfer locally into Kostnadskollen',async({page})=>{
   await page.goto('/verktyg/hushallskostnadskollen/');
+  for(const name of ['El','Bredband','Mobil','Försäkringar']) await page.getByRole('group',{name:'Välj kostnadskategori'}).getByRole('button',{name:new RegExp('^'+name)}).click();
   await page.getByLabel('El, kronor per månad').fill('800');
   await page.getByLabel('Bredband, kronor per månad').fill('500');
   await page.getByLabel('Mobil, kronor per månad').fill('700');
@@ -191,6 +192,51 @@ for(const width of [360,390,430]){
   await page.getByRole('button',{name:/Priset har ändrats eller avtalet känns dyrt/i}).click();
   await expect(page.getByTestId('cost-check-early-result')).toBeVisible();
   const overflow=await page.evaluate(()=>Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)-document.documentElement.clientWidth);
+  expect(overflow).toBeLessThanOrEqual(1);
+ });
+}
+
+test('household starts with category buttons rather than eight empty fields',async({page})=>{
+ await page.goto('/verktyg/hushallskostnadskollen/');
+ const picker=page.getByTestId('household-category-picker');
+ await expect(picker).toBeVisible();
+ await expect(page.locator('input[inputmode="decimal"]')).toHaveCount(0);
+ await expect(page.getByTestId('household-known-subtotal')).toHaveCount(0);
+ await picker.getByRole('button',{name:/^El/}).click();
+ await expect(page.getByLabel('El, kronor per månad')).toBeVisible();
+ await expect(page.getByTestId('household-known-subtotal')).toHaveCount(0);
+ await expect(page.getByRole('link',{name:/Kontrollera elavtalet/})).toBeVisible();
+ await page.getByLabel('El, kronor per månad').fill('750');
+ await expect(page.getByTestId('household-known-subtotal')).toContainText('750 kr/mån');
+ await expect(page.getByTestId('household-known-subtotal')).toContainText('inte hushållets totala kostnad');
+ await picker.getByRole('button',{name:/^Mobil/}).click();
+ await page.getByLabel('Mobil, kronor per månad').fill('399');
+ await expect(page.getByTestId('household-known-subtotal')).toContainText('1 149 kr/mån');
+});
+
+test('household does not erase unentered saved costs in Kostnadskollen',async({page})=>{
+ await page.goto('/verktyg/hushallskostnadskollen/');
+ await page.evaluate(()=>{
+  localStorage.setItem('sankkostnaden-cost-check-v5',JSON.stringify({answers:{el:{monthly:999},bredband:{monthly:555}},source:'previous'}));
+ });
+ const picker=page.getByTestId('household-category-picker');
+ await picker.getByRole('button',{name:/^Mobil/}).click();
+ await page.getByLabel('Mobil, kronor per månad').fill('250');
+ await page.getByRole('link',{name:/Prioritera mina avtal/i}).click();
+ const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem('sankkostnaden-cost-check-v5')||'{}'));
+ expect(saved.answers.el.monthly).toBe(999);
+ expect(saved.answers.bredband.monthly).toBe(555);
+ expect(saved.answers.mobil.monthly).toBe(250);
+});
+
+for(const width of [360,390,430,1024,1440]){
+ test('household progressive choices do not overflow '+width+'px',async({page})=>{
+  await page.setViewportSize({width,height:850});
+  await page.goto('/verktyg/hushallskostnadskollen/');
+  await page.getByTestId('household-category-picker').getByRole('button',{name:/^El/}).click();
+  await page.getByLabel('El, kronor per månad').fill('900');
+  await page.getByRole('button',{name:/Visa fler kostnadskategorier/}).click();
+  const overflow=await page.evaluate(()=>Math.max(document.body.scrollWidth,document.documentElement.scrollWidth)-document.documentElement.clientWidth);
   expect(overflow).toBeLessThanOrEqual(1);
  });
 }
