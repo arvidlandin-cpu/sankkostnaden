@@ -18,7 +18,7 @@ Find the binding constraint. Typical bottlenecks are insufficient relevant traff
 
 ## Planner
 
-Rank actions by expected approved-revenue impact, addressable user demand, achievable capability, evidence strength, time to learn, effort, reversibility and SEO/trust risk. For every material action, produce the 13-field decision record in `STRATEGY_AND_EVIDENCE_STANDARD.md`, compare at least two viable alternatives and the status quo, explain user value and business mechanism, and separate what we observe from what we hypothesize. No invented scoring weights or unsourced assumptions. Choose the smallest experiment that can falsify the hypothesis. Run one growth experiment at a time.
+Rank actions by expected approved-revenue impact, addressable user demand, achievable capability, evidence strength, time to learn, effort, reversibility and SEO/trust risk. For every material action, produce the 13-field decision record in `STRATEGY_AND_EVIDENCE_STANDARD.md`, compare at least two viable alternatives and the status quo, explain user value and business mechanism, and separate what we observe from what we hypothesize. No invented scoring weights or unsourced assumptions. Choose the smallest experiment that can falsify the hypothesis. Up to **two independent, scoped growth changes** may be under observation simultaneously if the policy permits. Never modify the same URL, acquisition query, shared funnel or attribution cohort concurrently: independence must be justified, not assumed.
 
 The planner works through the revenue chain in order: relevant search demand → SERP click → useful on-site decision → qualified partner click → approved transaction. Fix the earliest binding constraint rather than polishing a later stage with no sample.
 
@@ -40,17 +40,17 @@ After execution, confirm build and tests, wait for minimum observation time and 
 
 Useful patterns from persistent-agent systems are: clear role ownership, authoritative source systems, durable memory, scheduled routines, explicit approval boundaries, evidence-preserving handoffs and a verifier that can say no. Do not imitate the theatrical part of multi-agent systems when a deterministic rule or a single operator is better.
 
-Write evidence-backed strategic opportunities to `autopilot/opportunities.json`. The active-experiment lock still applies except for technical or attribution repair.
+Write evidence-backed strategic opportunities to `autopilot/opportunities.json`. Do not wait because another unrelated page has an active experiment. Respect the concurrent-slot limit, per-route/query/funnel overlap checks, and minimum-data gates; technical and attribution repairs remain exempt.
 
 ## Anti-hype rule
 
-The system must be able to conclude that no change should be made yet. More agents, pages or edits are not inherently better. Autonomy is earned by better decisions and disciplined waiting when data is weak.
+The system must be able to conclude that no change should be made yet. The October 7 insurance snippet test was explicitly cancelled by the owner on October 8: do not keep the October 15 review gate, do not declare a winner, and do not revert the current snippet without independent reason. More agents, pages or edits are not inherently better. Autonomy is earned by better decisions and disciplined waiting when data is weak.
 
 ## Early-stage learning mode
 
 When the site is still data-sparse, the system may run a metadata-only SEO experiment below the normal 80-impression threshold only if the same query has at least 25 impressions, averages top 10, has near-zero CTR and appears on at least four distinct GSC days. A recently completed query stays on cooldown so the system does not oscillate titles.
 
-For pages with at least 100 impressions and an average position roughly 16–40, prefer adding original utility to the existing URL over creating another keyword page. Examples are calculators, checklists or decision aids that help the visitor finish the underlying task. This action is CONTENT_UTILITY_UPGRADE and is still subject to the one-experiment lock.
+For pages with at least 100 impressions and an average position roughly 16–40, prefer adding original utility to the existing URL over creating another keyword page. Examples are calculators, checklists or decision aids that help the visitor finish the underlying task. This action is CONTENT_UTILITY_UPGRADE and must respect the active experiment slot limit and same-page/same-funnel conflict check.
 
 ## Commercial optimization
 
