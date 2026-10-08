@@ -115,8 +115,18 @@ test('sensitivity interaction analytics includes only a consumption band',async(
   expect(used).toBeTruthy();
   expect(used.consumption_band).toBe('15000_24999');
   expect(used.source).toBe('billigaste_elavtalet');
-  expect(JSON.stringify(used)).not.toContain('20000');
-  expect(JSON.stringify(used)).not.toContain('30');
+  // Validate the event payload by exact keys instead of searching serialized JSON:
+  // random funnel IDs may legitimately contain the digit sequences "30" or "20000".
+  expect(used).toMatchObject({
+    event:'electricity_sensitivity_used',
+    source:'billigaste_elavtalet',
+    consumption_band:'15000_24999',
+  });
+  const permitted=new Set(['event','source','consumption_band','funnel_session_id','gtm.uniqueEventId']);
+  expect(Object.keys(used).filter(key=>!permitted.has(key))).toEqual([]);
+  for(const forbidden of ['annual_kwh','kwh','monthly_fee','unit_price','price','monthly_cost','annual_cost']){
+    expect(used).not.toHaveProperty(forbidden);
+  }
 });
 
 for(const viewport of [{width:360,height:800},{width:390,height:844},{width:430,height:932}]){

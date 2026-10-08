@@ -6,6 +6,7 @@ on:
       - main
       - ops/commercial-smoke-v1
       - ops/commercial-regression-main-v2
+      - 'ops/masterplan-*'
     paths:
       - '.github/workflows/commercial-regression-smoke.yml'
       - 'components/**'
