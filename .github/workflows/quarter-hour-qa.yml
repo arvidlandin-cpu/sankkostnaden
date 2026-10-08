@@ -1,0 +1,29 @@
+name: Quarter-hour guide QA
+on:
+  push:
+    branches: ['growth/kvartspris-*']
+  pull_request:
+jobs:
+  quarter-hour-qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.16.0
+      - run: npm install --progress=false
+      - run: npm run check && npm run check:integrity && npx next build && npm run check:export
+      - run: npx playwright install --with-deps chromium
+      - name: Serve static site
+        run: |
+          python3 -m http.server 3000 --directory out >/tmp/quarter-hour.log 2>&1 &
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:3000/elavtal/kvartspris/ >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/quarter-hour.log
+          exit 1
+      - name: Test calculator, privacy and mobile
+        env:
+          QA_BASE_URL: http://127.0.0.1:3000
+        run: npx playwright test tests/quarter-hour-shift.spec.ts --project=chromium
