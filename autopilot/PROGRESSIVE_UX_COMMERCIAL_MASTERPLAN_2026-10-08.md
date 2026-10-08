@@ -5,10 +5,11 @@
 - **P1 electricity:** PR #64, merged; true comparator path before detailed price form, explicit exact fee confirmation.
 - **P2 family mobile:** PR #65, merged; two-click start, active family partner choice, optional full-price calculation.
 - **P3 shared mobile/broadband first-year costs:** PR #66, merged; early qualified category next step, ordinary-price quick comparison, exact campaign and fee entry optional.
+- **P3 round-trip accuracy safeguard:** PR #69, merged after full build and commercial regression; hidden exact campaign/fees never leak into the simplified 12-month comparison when toggling modes. Tested on mobile and broadband.
 - **P4 household cost map:** PR #67, merged; category-choice first, only *entered* known subtotal, local preserved-cost handoff.
 - **P5 loan:** PR #68, merged; immediate illustrative same-principal repayment lesson, detailed real-offer fields on demand.
 - **P6 source audit:** SwitchCalendar, CondoInsuranceCheck and ElectricitySensitivity already have manageable progressive/click-first tasks; no gratuitous rebuild. Secondary CostRealityCheck has optional campaign fields; monitor as a distinct specialist tool.
-- **Quality:** full branch Build and commercial regression suites passed at merge for #64–#68. Mobile width tests and price-free pathways added. Actual live production screenshots, accessibility/branding judgement, affiliate-click IDs, qualified visitor flow and *approved revenue* are separate remaining work, not claimed as accomplished. Full sitewide visual design system project P0D remains separate and open.
+- **Quality:** full branch Build and commercial regression suites passed at merge for #64–#69. Mobile width tests and price-free pathways added. Cloudflare Pages and production-route smoke were green after final UX release. The BrowserStack workflow's outdated production wording gate was fixed (2026-10-08), but actual real-iPhone QA was subsequently **quota-blocked** (`Automate testing time expired` on all three devices), despite GitHub's infrastructure-allowed green workflow status. Do not count this as an iPhone pass. Actual live-device coverage, accessibility/branding judgment, affiliate-click IDs, qualified visitor flow and *approved revenue* remain separate work, not claimed as accomplished. Full sitewide visual design system project P0D remains separate and open.
 
 
 
