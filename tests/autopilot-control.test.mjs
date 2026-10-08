@@ -249,3 +249,53 @@ test('sitewide commercial CRO ignores tiny organic samples',()=>{
   const packet=buildDecisionPacket({google:g,policy:p,state:{},now:new Date('2026-10-08T08:00:00Z')});
   assert.notEqual(packet.recommendedAction.type,'PAGE_COMMERCIAL_CRO_TEST');
 });
+
+test('cancelled test is not a running lock and is not given a review date',()=>{
+  const g=google();
+  g.gsc.queryPages=[
+    {query:'jämför försäkring',page:'https://sankkostnaden.se/forsakring/jamfor-forsakring/',impressions:100,clicks:0,ctr:0,position:8},
+    {query:'vad menas med kvartspris på el',page:'https://sankkostnaden.se/elavtal/kvartspris/',impressions:90,clicks:0,ctr:0,position:9},
+  ];
+  const p={...policy,limits:{maxConcurrentExperiments:2,maxConcurrentSeoExperiments:1,...policy.limits}};
+  const packet=buildDecisionPacket({
+    google:g,policy:p,
+    state:{activeExperiment:null,activeExperiments:[]},
+    learningLedger:{cancelledExperiments:[{type:'SEO_SNIPPET_TEST',query:'jämför försäkring',cancelledAt:'2026-10-08'}]},
+    now:new Date('2026-10-08T08:00:00Z'),
+  });
+  assert.equal(packet.activeExperiments.length,0);
+  assert.equal(packet.recommendedAction.type,'SEO_SNIPPET_TEST');
+  assert.equal(packet.recommendedAction.details.query,'vad menas med kvartspris på el');
+});
+
+test('one active insurance experiment permits unrelated electricity opportunity with two slots',()=>{
+  const g=google();
+  g.gsc.queryPages=[
+    {query:'billigaste elavtalet',page:'https://sankkostnaden.se/elavtal/billigaste-elavtalet/',impressions:150,clicks:0,ctr:0,position:8},
+    {query:'jämför hemförsäkring',page:'https://sankkostnaden.se/forsakring/jamfor-hemforsakring/',impressions:160,clicks:0,ctr:0,position:7},
+  ];
+  const p={...policy,limits:{...policy.limits,maxConcurrentExperiments:2,maxConcurrentSeoExperiments:1}};
+  const packet=buildDecisionPacket({
+    google:g,policy:p,
+    state:{activeExperiments:[{id:'insurance-ui',type:'PAGE_COMMERCIAL_CRO_TEST',target:'/forsakring/',status:'running',earliestReviewAt:'2026-10-15T08:00:00Z'}]},
+    now:new Date('2026-10-08T08:00:00Z'),
+  });
+  assert.equal(packet.recommendedAction.type,'SEO_SNIPPET_TEST');
+  assert.equal(packet.recommendedAction.details.query,'billigaste elavtalet');
+  assert.equal(packet.guardrails.activeExperimentBlocksGrowth,false);
+  assert.equal(packet.activeExperiments.length,1);
+});
+
+test('shared category is blocked and full experiment slots gate growth',()=>{
+  const g=google();
+  g.gsc.queryPages=[{query:'jämför försäkring',page:'https://sankkostnaden.se/forsakring/jamfor-forsakring/',impressions:150,clicks:0,ctr:0,position:8}];
+  const p={...policy,limits:{...policy.limits,maxConcurrentExperiments:2,maxConcurrentSeoExperiments:1}};
+  const state={activeExperiments:[
+    {id:'insurance-ui',type:'PAGE_COMMERCIAL_CRO_TEST',target:'/forsakring/',status:'running',earliestReviewAt:'2026-10-15T08:00:00Z'},
+    {id:'electricity-calc',type:'CONTENT_UTILITY_UPGRADE',target:'/elavtal/',status:'running',earliestReviewAt:'2026-10-15T08:00:00Z'},
+  ]};
+  const packet=buildDecisionPacket({google:g,policy:p,state,now:new Date('2026-10-08T08:00:00Z')});
+  assert.equal(packet.recommendedAction.type,'WAITING_FOR_EXPERIMENT');
+  assert.equal(packet.guardrails.activeExperimentBlocksGrowth,true);
+  assert.equal(packet.guardrails.activeExperimentCount,2);
+});
