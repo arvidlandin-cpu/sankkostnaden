@@ -42,6 +42,18 @@ function hasOfferData(offer: Offer) {
   return offer.campaignPrice > 0 || offer.regularPrice > 0 || offer.monthlyExtras > 0 || offer.oneTimeFees > 0;
 }
 
+/** In quick mode never include fees or promotional rates hidden from the visitor. */
+function visibleCostInput(offer: Offer, advanced: boolean): FirstYearCostInput {
+  if (advanced) return offer;
+  return {
+    campaignPrice: 0,
+    campaignMonths: 0,
+    regularPrice: offer.regularPrice,
+    monthlyExtras: 0,
+    oneTimeFees: 0,
+  };
+}
+
 function Field({
   label,
   value,
@@ -85,7 +97,7 @@ function OfferCard({
   testId: string;
   advanced: boolean;
 }) {
-  const result = useMemo(() => calculateFirstYearCost(offer), [offer]);
+  const result = useMemo(() => calculateFirstYearCost(visibleCostInput(offer, advanced)), [offer, advanced]);
 
   const update = (key: keyof FirstYearCostInput, value: number) => {
     setOffer({ ...offer, [key]: value });
@@ -159,8 +171,8 @@ export default function FirstYearCostCalculator({
   const [advanced, setAdvanced] = useState(false);
   const readyTracked = useRef(false);
 
-  const resultA = useMemo(() => calculateFirstYearCost(a), [a]);
-  const resultB = useMemo(() => calculateFirstYearCost(b), [b]);
+  const resultA = useMemo(() => calculateFirstYearCost(visibleCostInput(a, advanced)), [a, advanced]);
+  const resultB = useMemo(() => calculateFirstYearCost(visibleCostInput(b, advanced)), [b, advanced]);
   const hasA = hasOfferData(a);
   const hasB = hasOfferData(b);
   const readyToCompare = journey === 'prices' && (advanced ? (hasA && hasB) : (a.regularPrice > 0 && b.regularPrice > 0));
