@@ -128,7 +128,7 @@ export default function ElectricityCostCalculator(){
           rel='sponsored nofollow noopener' target='_blank'
           onClick={()=>emitAnalyticsEvent('electricity_cost_early_partner',{source,path:'no_offers',partner_role:'comparison_service'})}>
           Jämför elavtal hos Elskling <ArrowRight size={18}/></a>}
-        <Link className={styles.allSuppliers} href='/elavtal/#elbolag'>Se våra aktiva elbolag <ArrowRight size={16}/></Link>
+        <Link className={styles.allSuppliers} href='/elavtal/'>Se våra aktiva elbolag <ArrowRight size={16}/></Link>
         <p className={styles.commercialDisclosure}>Partnerlänk: vi kan få provision om du blir kund. Du behöver kontrollera aktuellt pris, avgifter och villkor hos tjänsten.</p>
       </section>}
 
