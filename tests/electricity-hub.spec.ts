@@ -8,7 +8,7 @@ test('electricity hub shows meaningful choices and all actual partner options wi
  await expect(page.getByRole('heading',{level:1,name:/Jämför elavtal utan att gissa/i})).toBeVisible();
  const section=page.getByTestId('electricity-market');
  await expect(section.getByRole('heading',{level:2,name:'Välj hur du vill jämföra'})).toBeVisible();
- await expect(section.getByText('12 aktiva samarbetspartners')).toBeVisible();
+ await expect(section.getByText('13 aktiva samarbetspartners')).toBeVisible();
  await expect(section.getByRole('heading',{name:'Jämför flera elbolag på ett ställe'})).toBeVisible();
  await expect(section.getByRole('heading',{name:'Våra aktiva elbolag'})).toBeVisible();
  const comparison=page.locator('a[data-placement="electricity_hub_comparison"]');
@@ -17,7 +17,7 @@ test('electricity hub shows meaningful choices and all actual partner options wi
  await expect(comparison).toHaveAttribute('rel',/sponsored/);
  await expect(comparison).toHaveAttribute('target','_blank');
  const suppliers=page.locator('a[data-placement="electricity_hub_supplier"]');
- await expect(suppliers).toHaveCount(11);
+ await expect(suppliers).toHaveCount(12);
  for(const supplier of await suppliers.all()){
   await expect(supplier).toHaveAttribute('rel',/sponsored/);
   await expect(supplier).toHaveAttribute('target','_blank');
@@ -33,8 +33,31 @@ test('electricity hub shows meaningful choices and all actual partner options wi
 test('electricity company list is alphabetical, not a hidden commission ranking',async({page})=>{
  await page.goto(route);
  const names=await page.locator('[data-placement="electricity_hub_supplier"]').evaluateAll(anchors=>anchors.map(a=>a.getAttribute('data-partner')||''));
- expect(names).toHaveLength(11);
+ expect(names).toHaveLength(12);
  expect(names).toEqual([...names].sort((a,b)=>a.localeCompare(b,'sv')));
+});
+
+
+test('Tibber has the supplied Adtraction tracking link and receives click attribution',async({page})=>{
+ await page.addInitScript(()=>{(window as any).dataLayer=[];});
+ await page.goto(route);
+ const tibber=page.locator('a[data-placement="electricity_hub_supplier"][data-partner="Tibber"]');
+ await expect(tibber).toHaveCount(1);
+ const before=await tibber.getAttribute('href');
+ expect(before).toBe('https://go.adt242.com/t/t?a=1590956516&as=2111115937&t=2&tk=1');
+ await expect(tibber).toHaveAttribute('rel',/sponsored/);
+ await tibber.evaluate((element:HTMLAnchorElement)=>element.addEventListener('click',event=>event.preventDefault()));
+ await tibber.click();
+ const tagged=new URL((await tibber.getAttribute('href'))!);
+ const events=await page.evaluate(()=>(window as any).dataLayer||[]);
+ const click=events.find((item:any)=>item.event==='affiliate_click'&&item.partner==='Tibber');
+ expect(click?.affiliate_network).toBe('adtraction');
+ expect(click?.network_click_tagged).toBe(1);
+ expect(click?.local_click_id).toMatch(/^clk_/);
+ expect(tagged.searchParams.get('a')).toBe('1590956516');
+ expect(tagged.searchParams.get('as')).toBe('2111115937');
+ expect(tagged.searchParams.get('epi')).toBe(click.local_click_id);
+ expect(tagged.searchParams.get('epi2')).toBe(click.funnel_session_id);
 });
 
 for(const viewport of [
