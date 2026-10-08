@@ -1,14 +1,15 @@
 {
-  "version": 4,
+  "version": 5,
   "objective": "Maximera långsiktigt godkänd affiliateintäkt per relevant besökare utan att vilseleda användaren, skada förtroendet eller störa fungerande SEO.",
   "mode": "autonomous_with_guardrails",
   "limits": {
-    "maxConcurrentExperiments": 1,
+    "maxConcurrentExperiments": 2,
     "seoCooldownDays": 14,
     "croCooldownDays": 7,
     "minimumSeoObservationDays": 7,
     "minimumCroObservationDays": 7,
-    "maxAutoFilesChanged": 6
+    "maxAutoFilesChanged": 6,
+    "maxConcurrentSeoExperiments": 1
   },
   "thresholds": {
     "freshnessHours": 36,
@@ -93,6 +94,8 @@
     "existingPageUtilityOnly": true,
     "noScaledSeoPages": true,
     "noUnsupportedPriceClaims": true,
-    "commercialRoutingRequiresEqualUserRelevance": true
+    "commercialRoutingRequiresEqualUserRelevance": true,
+    "independentTargetsOnly": true,
+    "noSameFunnelConcurrentGrowth": true
   }
 }
