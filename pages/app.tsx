@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { ArrowLeft, ArrowRight, ArrowUpRight, Check, Gauge, PiggyBank, RotateCcw, Sparkles, Target, Zap } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ArrowUpRight, Check, ChevronDown, Gauge, PiggyBank, RotateCcw, Target, Zap } from 'lucide-react';
 import styles from '../styles/App.module.css';
 import { getActivePartners, partnerGroupCheckedLabel, type PartnerIntent } from '../lib/partners';
 import { costCheckStorageKey, emptyCostAnswers, normalizeCostAnswers, prioritySortValue, scenarioAnnualSaving, type CostAnswers, type CostKey } from '../lib/costPrioritizer';
@@ -32,6 +32,7 @@ export default function SavingsApp(){
   const [active,setActive]=useState<CostKey>('el');
   const [scenarioPct,setScenarioPct]=useState(10);
   const [hydrated,setHydrated]=useState(false);
+  const [areaPickerOpen,setAreaPickerOpen]=useState(false);
   const completedTracked=useRef(false);
   const startedTracked=useRef(false);
   const earlyResultTracked=useRef(false);
@@ -119,6 +120,7 @@ export default function SavingsApp(){
   const reset=()=>{
     setAnswers(emptyCostAnswers);
     setActive('el');
+    setAreaPickerOpen(false);
     setScenarioPct(10);
     completedTracked.current=false;
     startedTracked.current=false;
@@ -161,34 +163,31 @@ export default function SavingsApp(){
     <header className='topbar'>
       <Link className='brand' href='/'><span className='brandMark'><PiggyBank size={22}/></span><span>Sänk Kostnaden</span></Link>
       <nav><Link href='/bredband/'>Bredband</Link><Link href='/elavtal/'>El</Link><Link href='/mobil/'>Mobil</Link><Link href='/forsakring/'>Försäkring</Link><Link href='/ekonomi/'>Ekonomi</Link></nav>
-      <a className='topbarCta' href={completed===4?'#resultat':'#fragor'}>{completed===4?'Se min prioritering →':'Starta kollen →'}</a>
     </header>
 
     <main className={styles.appShell}>
       <section className={styles.hero}>
-        <Link className='back' href='/'><ArrowLeft size={16}/> Startsidan</Link>
-        <div className={styles.badge}><Sparkles size={17}/> Kostnadskollen 2026</div>
+        <div className={styles.heroEyebrow}><Link className={styles.back} href='/'><ArrowLeft size={15}/> Startsidan</Link><span>KOSTNADSKOLLEN · GRATIS</span></div>
         <h1>Vilket avtal bör du kontrollera först?</h1>
-        <p>Svara på en fråga per område. Har du redan fyllt i Hushållskostnadskollen följer beloppen med automatiskt i samma webbläsare.</p>
-        <a className={styles.heroStart} href='#fragor' onClick={()=>emitAnalyticsEvent('cost_check_hero_start_click',{source:'app_hero'})}>Få en första startpunkt efter en fråga <ArrowRight size={17}/></a>
-        <div className={styles.heroStats}>
-          <div><strong>{completed}/4</strong><span>områden analyserade</span></div>
-          <div><strong>{totalMonthly?totalMonthly.toLocaleString('sv-SE')+' kr':'—'}</strong><span>angiven kostnad / mån</span></div>
-          <div><strong>{completed===4?(noClearIssue?'Ingen tydlig brist':topTied?'Likvärdigt':top.short):(4-completed)+' kvar'}</strong><span>{completed===4?(noClearIssue?'i dina svar':topTied?'flera områden':'bör kontrolleras först'):'tills prioriteringen är klar'}</span></div>
-        </div>
+        <p>Välj det som stämmer bäst. Du får en första väg vidare direkt – utan att behöva veta vad du betalar.</p>
       </section>
 
       <section id='fragor' className={styles.diagnostic}>
-        <div className={styles.progressRail}>
-          {categories.map(category=><button key={category.key} className={active===category.key?styles.activeTab:''} onClick={()=>{setActive(category.key);window.requestAnimationFrame(()=>questionCardRef.current?.scrollIntoView({behavior:'smooth',block:'start'}));}} aria-current={active===category.key?'step':undefined}>
-            <span>{category.short}</span><b>{isComplete(category.key)?'✓':'—'}</b>
-          </button>)}
+        <div className={styles.stageToolbar}>
+          <span>{completed===0?'En fråga räcker för att börja':completed===4?'Alla fyra områden kontrollerade':`${completed} av 4 områden klara`}</span>
+          <button type='button' aria-expanded={areaPickerOpen} aria-controls='cost-check-area-picker' onClick={()=>setAreaPickerOpen(open=>!open)}>
+            Byt område <ChevronDown size={15}/>
+          </button>
         </div>
+        {areaPickerOpen&&<div id='cost-check-area-picker' className={styles.progressRail} aria-label='Välj kostnadsområde'>
+          {categories.map(category=><button type='button' key={category.key} className={active===category.key?styles.activeTab:''} onClick={()=>{setActive(category.key);setAreaPickerOpen(false);window.requestAnimationFrame(()=>questionCardRef.current?.scrollIntoView({behavior:'smooth',block:'start'}));}} aria-current={active===category.key?'step':undefined}>
+            <span>{category.short}</span><b>{isComplete(category.key)?'✓':'–'}</b>
+          </button>)}
+        </div>}
 
         <div ref={questionCardRef} className={styles.questionCard}>
           <div className={styles.questionTop}>
-            <div><span>ANALYS {activeIndex+1} / 4</span><h2>{activeCategory.label}</h2></div>
-            <div className={styles.scoreOrb}><strong>{activeComplete?'Klar':'1'}</strong><small>{activeComplete?'område klart':'fråga kvar'}</small></div>
+            <div><span>OMRÅDE {activeIndex+1} AV 4</span><h2>{activeCategory.label}</h2></div>
           </div>
 
           <ChoiceQuestion title={activeCategory.fitQuestion} value={activeAnswer.fit} options={activeCategory.fitOptions} onChange={value=>update(active,'fit',value)}/>
@@ -205,7 +204,7 @@ export default function SavingsApp(){
             <div>
               <span>SNABB VÄG</span>
               <strong>{activeCategory.label} verkar värt att kontrollera direkt.</strong>
-              <p>Du kan gå vidare nu utan att slutföra alla fyra områden, eller fortsätta kollen för en komplett prioritering.</p>
+              <p>Se aktuella alternativ direkt eller fortsätt med nästa område.</p>
             </div>
             <div className={styles.quickPathActions}>
               {activeQuickPartner?<a href={activeQuickPartner.trackingUrl} data-partner={activeQuickPartner.name} data-category={activeQuickPartner.category} data-intent={partnerIntent[active]} data-placement='cost_check_quick_path' data-partner-position='1' target='_blank' rel='sponsored nofollow noopener'>Se alternativ hos {activeQuickPartner.name} <ArrowUpRight size={14}/></a>:<Link href={activeCategory.href} onClick={()=>emitAnalyticsEvent('cost_check_quick_guide_click',{category:active})}>Jämför {activeCategory.short.toLowerCase()} nu <ArrowRight size={14}/></Link>}
@@ -213,17 +212,17 @@ export default function SavingsApp(){
           </aside>}
 
           <div className={styles.cardActions}>
-            <button className={styles.reset} onClick={reset}><RotateCcw size={15}/> Börja om</button>
+            {completed>0&&<button className={styles.reset} onClick={reset}><RotateCcw size={15}/> Börja om</button>}
             {completed>0&&completed<4&&<a className={styles.previewAction} href='#resultat' onClick={()=>emitAnalyticsEvent('cost_check_early_result_opened',{source:'app',questions_answered:completed})}>Se din första startpunkt <Target size={15}/></a>}
-            {activeIndex<categories.length-1?<button className={styles.next} disabled={!activeComplete} onClick={goNext}>{activeComplete?'Klart – till '+categories[activeIndex+1].short:'Välj ett svar'} <ArrowRight size={17}/></button>:activeComplete?<a className={styles.next} href='#resultat'>Visa min prioritering <Target size={17}/></a>:<button className={styles.next} disabled>Välj ett svar <Target size={17}/></button>}
+            {activeComplete&&(activeIndex<categories.length-1?<button className={styles.next} onClick={goNext}>Klart – till {categories[activeIndex+1].short} <ArrowRight size={17}/></button>:<a className={styles.next} href='#resultat'>Visa min prioritering <Target size={17}/></a>)}
           </div>
         </div>
       </section>
 
-      <section id='resultat' className={styles.results}>
+      {completed>0&&<section id='resultat' className={styles.results}>
         <div className={styles.resultIntro}>
-          <div><span>DIN PERSONLIGA KOSTNADSKARTA</span><h2>{completed===4?(noClearIssue?'Ingen tydlig brist identifierad':topTied?'Flera områden är likvärdiga att kontrollera':top.label+' bör kontrolleras först'):'Slutför '+(4-completed)+' område'+(4-completed===1?'':'n')+' till'}</h2></div>
-          <p>Ordningen bygger först på dina varningssignaler och därefter på kostnaden om två områden är lika. Partnerlänkarna är relevanta startpunkter, inte personligt prisrankade.</p>
+          <div><span>{completed===4?'DIN KOSTNADSKOLL':'FÖRSTA VÄGEN VIDARE'}</span><h2>{completed===4?(noClearIssue?'Ingen tydlig brist identifierad':topTied?'Flera områden är likvärdiga att kontrollera':top.label+' bör kontrolleras först'):'Här kan du börja'}</h2></div>
+          <p>{completed===4?'Dina svar hjälper oss prioritera områden att kontrollera. Partnerlänkarna är inte personliga prisrankningar.':'Detta är en preliminär vägledning utifrån dina svar – inte ett beräknat sparbelopp.'}</p>
         </div>
 
         {completed===4&&totalMonthly>0&&<div className={styles.scenarioBox}>
@@ -271,16 +270,19 @@ export default function SavingsApp(){
             </article>;
           })}
         </div>}
-      </section>
+      </section>}
 
-      <section className={styles.explain}>
-        <Gauge size={25}/><div><strong>Hur prioriteras områdena?</strong><p>Det är inget betyg och ingen prisranking. Dina svar väger först; månadskostnaden används bara för att skilja annars likvärdiga områden.</p></div>
-        <Zap size={25}/><div><strong>Vad betyder procentscenariot?</strong><p>Det är bara matematik på dina egna belopp. Det är inte ett löfte om att marknaden kan sänka kostnaden med 5, 10 eller 20 procent.</p></div>
-      </section>
+      <details className={styles.methodology}>
+        <summary>Så fungerar Kostnadskollen <ChevronDown size={16}/></summary>
+        <div className={styles.explain}>
+          <Gauge size={25}/><div><strong>Hur prioriteras områdena?</strong><p>Det är inget betyg och ingen prisranking. Dina svar väger först; månadskostnaden används bara för att skilja annars likvärdiga områden.</p></div>
+          <Zap size={25}/><div><strong>Vad betyder procentscenariot?</strong><p>Det är bara matematik på dina egna belopp. Det är inte ett löfte om att marknaden kan sänka kostnaden med 5, 10 eller 20 procent.</p></div>
+        </div>
+      </details>
     </main>
   </>;
 }
 
 function ChoiceQuestion({title,value,options,onChange}:{title:string;value:number;options:Array<{label:string;value:number}>;onChange:(value:number)=>void}){
-  return <div className={styles.question}><label>{title}</label><div className={styles.choices}>{options.map(option=><button key={option.label} className={value===option.value?styles.selected:''} onClick={()=>onChange(option.value)}>{option.label}</button>)}</div></div>;
+  return <div className={styles.question}><p className={styles.questionLabel}>{title}</p><div className={styles.choices} role='group' aria-label={title}>{options.map(option=><button type='button' key={option.label} aria-pressed={value===option.value} className={value===option.value?styles.selected:''} onClick={()=>onChange(option.value)}>{option.label}</button>)}</div></div>;
 }
