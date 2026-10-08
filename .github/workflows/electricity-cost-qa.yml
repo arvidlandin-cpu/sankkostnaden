@@ -4,9 +4,13 @@ on:
   push:
     branches:
       - commercial/electricity-cost-tool-v1
+      - 'ops/electricity-value-*'
     paths:
       - '.github/workflows/electricity-cost-qa.yml'
       - 'lib/electricityCost.ts'
+      - 'lib/electricitySensitivity.ts'
+      - 'components/ElectricitySensitivity.tsx'
+      - 'styles/ElectricitySensitivity.module.css'
       - 'components/tools/ElectricityCostCalculator.tsx'
       - 'styles/ElectricityCostCalculator.module.css'
       - 'pages/verktyg/elavtalskostnad.tsx'

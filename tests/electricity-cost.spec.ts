@@ -85,3 +85,48 @@ for(const viewport of [{width:360,height:800},{width:390,height:844},{width:430,
     expect(overflow).toBeLessThanOrEqual(1);
   });
 }
+
+
+test('inline electricity savings sensitivity explains fee trade-off without provider price claims',async({page})=>{
+  await page.goto('/elavtal/billigaste-elavtalet/?qa=1');
+  const tool=page.getByTestId('electricity-sensitivity');
+  await expect(tool).toBeVisible();
+  await expect(tool).toContainText('räkneexempel');
+  await expect(tool.getByTestId('electricity-sensitivity-outcome')).toContainText('110');
+  await expect(tool).toContainText('7 200 kWh/år');
+
+  await tool.getByRole('button',{name:'20 000 kWh'}).click();
+  await expect(tool.getByTestId('electricity-sensitivity-outcome')).toContainText('640');
+  await expect(tool.getByTestId('electricity-sensitivity-outcome')).toContainText('lägre årskostnad');
+  await expect(tool.getByRole('link',{name:/Räkna årskostnaden för två erbjudanden/})).toHaveAttribute('href','/verktyg/elavtalskostnad/?src=billigaste_elavtalet');
+
+  await tool.getByLabel('Lägre elhandelspris med').fill('0');
+  await expect(tool.getByTestId('electricity-sensitivity-outcome')).toContainText('360');
+  await expect(tool.getByTestId('electricity-sensitivity-outcome')).toContainText('högre årskostnad');
+});
+
+test('sensitivity interaction analytics includes only a consumption band',async({page})=>{
+  await page.addInitScript(()=>{(window as any).dataLayer=[];});
+  await page.goto('/elavtal/billigaste-elavtalet/?qa=1');
+  const tool=page.getByTestId('electricity-sensitivity');
+  await tool.getByRole('button',{name:'20 000 kWh'}).click();
+  const events=await page.evaluate(()=>(window as any).dataLayer||[]);
+  const used=events.find((item:any)=>item.event==='electricity_sensitivity_used');
+  expect(used).toBeTruthy();
+  expect(used.consumption_band).toBe('15000_24999');
+  expect(used.source).toBe('billigaste_elavtalet');
+  expect(JSON.stringify(used)).not.toContain('20000');
+  expect(JSON.stringify(used)).not.toContain('30');
+});
+
+for(const viewport of [{width:360,height:800},{width:390,height:844},{width:430,height:932}]){
+  test('inline electricity sensitivity does not overflow at '+viewport.width+'px',async({page})=>{
+    await page.setViewportSize(viewport);
+    await page.goto('/elavtal/billigaste-elavtalet/?qa=1');
+    const tool=page.getByTestId('electricity-sensitivity');
+    await expect(tool).toBeVisible();
+    await tool.getByRole('button',{name:'20 000 kWh'}).click();
+    const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-window.innerWidth);
+    expect(overflow).toBeLessThanOrEqual(1);
+  });
+}
