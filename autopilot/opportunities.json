@@ -2,12 +2,12 @@
   "version": 4,
   "purpose": "Evidence-backed strategic opportunity backlog. Deploy up to two independent bounded growth initiatives; block overlapping page/funnel experiments. Market learning continues daily.",
   "updatedAt": "2026-10-08",
-  "currentConstraint": "Relevant organic traffic is still the binding constraint. Only 1 Google click reached content pages outside the home page and /app/ during the latest 30-day GSC window, so conversion optimization must remain sample-gated.",
+  "currentConstraint": "Acquisition/discoverability is the binding constraint: GSC 2026-09-08..10-07 shows 34 clicks, 33 to / or /app/ and just 1 to any other content page; GA4 22 Organic Search sessions (11 active users). Last GSC daily data available Oct 5. Scheduled Oct 8 affiliate reports: zero approved revenue; Adtraction post-EPI 2/4 tagged clicks and Addrevenue 0 clicks. Do not mistake test traffic for market traction.",
   "opportunities": [
     {
       "id": "partner-visibility-clarity-pilot",
       "rank": 1,
-      "status": "next_scoped_candidate",
+      "status": "research_ready_organic_sample_gated",
       "actionType": "CRO_FRICTION_TEST",
       "target": "/elavtal/ first, then reuse validated design principles across /bredband/, /mobil/, /forsakring/ and relevant finance flows",
       "thesis": "Current comparison UI underplays partner brands and forces visitors through repeated 'direct', 'choose path', 'top three' and collapsed directory layers. Pilot a clearer commercial hierarchy: show prominent recognizable brands with appropriately sourced logos, explain a concrete verified reason to consider each option, distinguish comparison service from provider, make the full partner selection easy to discover, and give each primary card a clear next step without increasing cognitive overload.",
@@ -25,13 +25,13 @@
       "confidence": "medium_qualitative_ux_problem_not_yet_quantified",
       "timeToLearnDays": 14,
       "guardrails": [
-        "do not deploy a competing growth experiment while the active SEO snippet experiment is running",
         "no blanket 12-card logo wall or visually overwhelming affiliate density",
         "do not fabricate discounts, live prices, cheapest claims, ratings or provider advantages",
         "differentiate only with verified intent/contract facts; disclose that sorting is not a price ranking",
         "prominent affiliate disclosure and equal user relevance; commission must not determine order",
         "preserve useful SEO content, tracking attribution, mobile readability, keyboard access and page performance",
-        "use permitted brand assets or clear text wordmarks when authentic logos are not available"
+        "use permitted brand assets or clear text wordmarks when authentic logos are not available",
+        "The owner cancelled the Oct 7 SEO snippet test; no Oct 15 wait. Still require qualified page-level organic exposure before claiming CRO uplift."
       ],
       "proposedPilot": [
         "Remove or consolidate one redundant commercial decision layer on /elavtal/.",
@@ -91,25 +91,24 @@
     {
       "id": "quarter-hour-price-intent-bridge",
       "rank": 3,
-      "status": "ready_for_independent_scope_review",
+      "status": "pr_48_qa_pending",
       "actionType": "CONTENT_UTILITY_UPGRADE",
       "target": "/elavtal/kvartspris/",
-      "thesis": "Add a compact 'Passar kvartspris mig?' decision utility to satisfy the explanatory query first and then bridge suitable users to relevant electricity comparison options.",
+      "thesis": "On existing /elavtal/kvartspris/, lead with a truthful, interactive two-assumption example of changing electricity trading cost by moving the same kWh between hypothetical quarter-hour prices. Distinct from five-question agreement-choice quiz and not a savings estimate against monthly pricing.",
       "evidence": {
         "gsc": [
-          "vad menas med kvartspris på el: 28 impressions, position 9.1, 0 clicks",
-          "kvartspris el: 52 impressions, position 19.7, 0 clicks",
-          "page: 156 impressions, position 21.9, 0 clicks"
+          "/elavtal/kvartspris/: 153 impressions, 0 clicks, avg position 21.62 in 2026-09-08..10-07; GSC latest daily data Oct 5.",
+          "vad menas med kvartspris på el: 28 impressions, 0 clicks, position 9.11."
         ],
         "marketPattern": "Search demand mixes explanation with decision support; a useful calculator/check beats multiplying keyword-variant pages.",
         "sourceUrls": [
-          "https://developers.google.com/search/docs/fundamentals/creating-helpful-content",
-          "https://developers.google.com/search/docs/fundamentals/using-gen-ai-content"
+          "https://ei.se/konsument/anvand-el-smartare/elhandelsavtal-med-kvartspris",
+          "https://www.elskling.se/jamfor/elpriser/timpriser"
         ],
         "googleGuidance": "Interactive tools can be main content when they directly fulfill the page purpose; automated content should add original value rather than scale pages for rankings."
       },
       "expectedImpact": "high",
-      "confidence": "medium_high",
+      "confidence": "high_math_low_revenue_evidence",
       "timeToLearnDays": 14,
       "guardrails": [
         "answer the informational intent before commercial CTA",
@@ -119,7 +118,8 @@
       "successSignal": [
         "CTR improvement on top-10 explanatory query",
         "more organic sessions reaching relevant electricity partner options"
-      ]
+      ],
+      "pr": "https://github.com/arvidlandin-cpu/sankkostnaden/pull/48"
     },
     {
       "id": "early-stage-serp-learning-loop",
@@ -130,7 +130,7 @@
       "thesis": "On a young site, waiting for 80 impressions can slow learning too much. Permit one controlled snippet test when a query has at least 25 impressions, top-10 average position, near-zero CTR and appears on at least four distinct days.",
       "evidence": {
         "gsc": [
-          "jämför försäkring qualified at 31 impressions and position 7.6 and is the active experiment",
+          "jämför försäkring qualified at 31 impressions and position 7.6 but the owner cancelled that experiment on Oct 8",
           "vad menas med kvartspris på el is the next likely candidate at 28 impressions and position 9.1"
         ],
         "rationale": "Small but repeated top-10 exposure is enough to test metadata without rewriting body content."
@@ -238,6 +238,37 @@
         "no fake expert profiles",
         "do not overstate human review",
         "be specific about automated data collection versus editorial judgment"
+      ]
+    },
+    {
+      "id": "broadband-prequote-speed-or-wifi-triage",
+      "rank": 9,
+      "status": "research_only",
+      "actionType": "CONTENT_UTILITY_UPGRADE",
+      "target": "existing /bredband/vilken-hastighet-behover-jag/ or /bredband/bredband-pa-min-adress/ after confirming no duplicate feature",
+      "thesis": "Help a low-knowledge user decide whether they need a different provider, more line speed, or a better home Wi-Fi setup before sending them to real address-based offer comparisons. Do not fake operator coverage or diagnose hardware without evidence.",
+      "evidence": {
+        "competitor": "Bredbandsval displays immediate address lookup, claims 21 providers and live address-specific offers; our site cannot match this feed. Source checked 2026-10-08.",
+        "sourceUrls": [
+          "https://www.bredbandsval.se/",
+          "https://www.bredbandsval.se/om-oss",
+          "https://www.pts.se/nyheter-och-pressmeddelanden/allt-vanligare-med-5g-och-hogre-hastigheter-for-fast-bredband/"
+        ],
+        "gsc": "Current speed-guide impressions only 10, avg position 61.4, 0 clicks; insufficient direct demand proof."
+      },
+      "expectedImpact": "unknown; differentiation and unpaid distribution candidate",
+      "confidence": "medium_problem_low_acquisition_evidence",
+      "timeToLearnDays": 30,
+      "guardrails": [
+        "No invented address availability, live offers or diagnoses",
+        "Check current guides/tools for overlap before building",
+        "Use only verified claims and user-entered data",
+        "No paid outreach, no mass SEO pages"
+      ],
+      "successSignal": [
+        "Useful clear no-identity decision and tested recommendation accuracy",
+        "Voluntary citations or qualified organic traffic over time",
+        "Later relevant tagged partner handoff and approved revenue"
       ]
     }
   ]
