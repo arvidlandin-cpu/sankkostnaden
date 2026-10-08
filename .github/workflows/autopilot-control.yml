@@ -7,6 +7,7 @@ on:
       - 'ops/autopilot-*'
       - 'ops/revenue-machine-*'
       - 'ops/sitewide-*'
+      - 'ops/cancel-*'
     paths:
       - '.github/workflows/autopilot-control.yml'
       - 'autopilot/**'

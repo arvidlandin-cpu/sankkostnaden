@@ -1,13 +1,13 @@
 {
-  "version": 3,
-  "purpose": "Evidence-backed strategic opportunity backlog. Execute one bounded growth experiment at a time; technical and attribution repairs may supersede the lock.",
-  "updatedAt": "2026-10-08T06:32:49.905Z",
+  "version": 4,
+  "purpose": "Evidence-backed strategic opportunity backlog. Deploy up to two independent bounded growth initiatives; block overlapping page/funnel experiments. Market learning continues daily.",
+  "updatedAt": "2026-10-08",
   "currentConstraint": "Relevant organic traffic is still the binding constraint. Only 1 Google click reached content pages outside the home page and /app/ during the latest 30-day GSC window, so conversion optimization must remain sample-gated.",
   "opportunities": [
     {
       "id": "electricity-total-cost-utility",
       "rank": 1,
-      "status": "queued_after_active_experiment",
+      "status": "ready_for_independent_scope_review",
       "actionType": "CONTENT_UTILITY_UPGRADE",
       "target": "/elavtal/billigaste-elavtalet/",
       "thesis": "Turn the existing first-year-cost calculator into the center of the page so visitors compare total 12-month cost by consumption before choosing a partner, instead of consuming another generic top-list.",
@@ -41,7 +41,7 @@
     {
       "id": "partner-visibility-clarity-pilot",
       "rank": 2,
-      "status": "queued_after_active_experiment",
+      "status": "ready_for_independent_scope_review",
       "actionType": "CRO_FRICTION_TEST",
       "target": "/elavtal/ first, then reuse validated design principles across /bredband/, /mobil/, /forsakring/ and relevant finance flows",
       "thesis": "Current comparison UI underplays partner brands and forces visitors through repeated 'direct', 'choose path', 'top three' and collapsed directory layers. Pilot a clearer commercial hierarchy: show prominent recognizable brands with appropriately sourced logos, explain a concrete verified reason to consider each option, distinguish comparison service from provider, make the full partner selection easy to discover, and give each primary card a clear next step without increasing cognitive overload.",
@@ -82,7 +82,7 @@
     {
       "id": "quarter-hour-price-intent-bridge",
       "rank": 3,
-      "status": "queued_after_active_experiment",
+      "status": "ready_for_independent_scope_review",
       "actionType": "CONTENT_UTILITY_UPGRADE",
       "target": "/elavtal/kvartspris/",
       "thesis": "Add a compact 'Passar kvartspris mig?' decision utility to satisfy the explanatory query first and then bridge suitable users to relevant electricity comparison options.",
