@@ -1,3 +1,7 @@
+## Approved progressive commercial UX mandate (2026-10-08)
+
+Read `PROGRESSIVE_UX_COMMERCIAL_MASTERPLAN_2026-10-08.md` before selecting the next development slice. Owner-provided real screenshots of the electricity and family mobile calculators show excessive up-front blank inputs. Rebuild whole interactive job with early truthful help, click-first choices, optional exact details, clearly relevant active partner comparison/direct routes without calculator completion. First electricity, then family mobile, then shared first-year/household/loan tools. Maintain exact math, privacy, independent SEO and affiliate tags; do not fake prices or force a credit purchase. A document or backlog item is not a shipped PR. Continue qualified audience acquisition and approved-revenue verification alongside product work.
+
 # Sänk Kostnaden – agent playbook
 
 ## Approved masterplan execution (2026-10-08)
