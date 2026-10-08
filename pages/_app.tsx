@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import Script from 'next/script';
 import type { AppProps } from 'next/app';
+import '../styles/design-tokens.css';
 import '../styles/global.css';
 import MobileQuickBar from '../components/MobileQuickBar';
 import AffiliateTracking from '../components/AffiliateTracking';
