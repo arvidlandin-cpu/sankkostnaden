@@ -32,3 +32,21 @@ for(const width of [360,390,430,1024]){
   expect(overflow).toBeLessThanOrEqual(1);
  });
 }
+
+
+test('tracking contains no personal finance inputs',async({page})=>{
+ await page.addInitScript(()=>{(window as any).dataLayer=[];});
+ await page.goto(route);
+ const tool=page.getByTestId('loan-total-tool');
+ await tool.getByLabel('Lånebelopp i kronor').fill('98765');
+ await tool.getByRole('group',{name:'Alternativ A'}).getByLabel('Engångsavgift').fill('400');
+ const events=await page.evaluate(()=>(window as any).dataLayer||[]);
+ const used=events.filter((event:any)=>event.event==='loan_total_comparison_used');
+ expect(used).toHaveLength(1);
+ expect(used[0].source).toBe('private_loan_guide');
+ expect(used[0].mode).toBe('user_edited');
+ for(const field of ['loan_amount','amount','principal','monthlyFee','setupFee','monthly_cost','numberOfMonths']){
+   expect(used[0]).not.toHaveProperty(field);
+ }
+ await expect(tool.getByRole('link',{name:/Konsumenternas om lånekostnader/})).toHaveAttribute('href','https://www.konsumenternas.se/lan--betalningar/lan/konsumtionslan/kostnader-for-konsumtionslan/');
+});
