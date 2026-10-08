@@ -29,11 +29,11 @@ Read also: `autopilot/PRODUCT_EXCELLENCE.md`, `STRATEGY_AND_EVIDENCE_STANDARD.md
 - [x] Evidence/decision file in `autopilot/decisions/2026-10-08-masterplan-electricity-journey.md`; branch complete commercial regression and Build successful at merge.
 - [ ] Verify deployed site after Cloudflare production propagation and later qualify actual organic click/approved revenue. Do NOT call this experiment a conversion win yet.
 
-### P1B — Bostadsrätt insurance original utility (**in progress on independent branch, no overlap with electricity**)
+### P1B — Bostadsrätt insurance original utility (**shipped to main in PR #51, independent category**)
 
-- [ ] Add two-step coverage checklist to existing /forsakring/hemforsakring-bostadsratt/ answering whether association has collective bostadsrättstillägg and whether visitor has ordinary home insurance.
-- [ ] Every result provides conservative next checks; never advise cancelling private coverage automatically; cite Konsumenternas and make assumptions explicit. No invented premium, savings or advice on a named insurer.
-- [ ] Validate existing H1, canonical, SEO guide path, no overflow, keyboard buttons and source links; complete commercial regression and merge when green.
+- [x] Add two-step coverage checklist to existing /forsakring/hemforsakring-bostadsratt/ answering whether association has collective bostadsrättstillägg and whether visitor has ordinary home insurance.
+- [x] Every result provides conservative next checks; never advise cancelling private coverage automatically; cite Konsumenternas and make assumptions explicit. No invented premium, savings or advice on a named insurer.
+- [x] Existing H1, canonical, SEO guide path, no overflow, keyboard buttons and source links verified; full branch commercial regression and Build passed. Merged as PR #51 (2026-10-08). Post-main prod check pending.
 - Evidence in `autopilot/decisions/2026-10-08-masterplan-condo-coverage-check.md`.
 
 ### P2 — Kostnadskollen as signature no-data entry
