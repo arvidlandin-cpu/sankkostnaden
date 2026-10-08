@@ -20,7 +20,7 @@ Read also: `autopilot/PRODUCT_EXCELLENCE.md`, `STRATEGY_AND_EVIDENCE_STANDARD.md
 - [x] Fix incorrect regression assertion searching random session ID digits in serialized analytics event; replace with event-key safety inspection. **PR #49**, merged to main 2026-10-08, branch Build and full commercial browser suite green.
 - [ ] Record reference screenshots / visual judgment for real production mobile (360/390/430) and desktop (1024/1440) after each major design ship; automated overflow alone is insufficient proof of visual quality. Compare first-screen clarity, tap/keyboard access, contrast, actual supplier branding.
 - [ ] Inventory active partner URL health, redirect destinations, tagged click identifiers, brand-logo usage permission/quality and coverage by category; fail rather than invent logo/offer information.
-- [ ] Monitor post-merge Build, commercial regression, BrowserStack/live production routes (PR #55 main checks pending at last inspection). Fix regressions before expanding scope.
+- [ ] Continue checking post-merge Build, full commercial regression, BrowserStack/live production routes for PR #57 and PR #58. Branch tests green; track real deploy and partner click attribution before declaring commercial success.
 
 ### P1A — Electricity product category (**shipped to main in PR #50**)
 
@@ -43,12 +43,12 @@ Read also: `autopilot/PRODUCT_EXCELLENCE.md`, `STRATEGY_AND_EVIDENCE_STANDARD.md
 - [x] A warning leads to a guide, not a fabricated offer ranking; fit=0 gets no pressure to click an affiliate partner. Exact eligibility/prices remain with providers.
 - [x] Build, full commercial regression and real iPhone QA passed on main for PR #53; 360/390/430px and both positive/no-clear-signal flows tested. Existing /app/ canonical, storage and complete 4/4 result retained. Commercial outcome still UNKNOWN.
 
-### P3 — Cohesive, category-specific remaining journeys (**broadband shipped in PR #55; mobile next**)
+### P3 — Cohesive, category-specific remaining journeys (**broadband, mobile and insurance shipped; finance in progress**)
 
 - [x] Broadband: address-first category rebuilt in PR #55, main merge 2026-10-08. Bredbandsval as a true address-based comparison service; Ownit and Internetport as two direct, visibly separate active suppliers. No pretend internal feed; distinct speed guide and exact first-year cost calculator; affiliate disclosures and mobile QA; branch Build and full Commercial regression green. **Commercial effect unknown until real organic users and approved outcomes.**
-- [ ] **Next: Mobile** — accurate surf/network/household needs, family totals and promo vs recurring annual costs; visible relevant brands; no unverifiable campaign prices. Audit existing mobile matcher vs complete alternatives before changing code.
-- [ ] Insurance: separate home/pet/travel/claims roles, compare coverage/deductibles and explain underwriting/personalized quote limits before CTA.
-- [ ] Finance: effective interest, total repayment and safe context; monthly-payment decrease must never be described as certain saving when term extends; no fabricated approval odds.
+- [x] Mobile shipped in PR #57: single-plan surf guidance or family total cost path, all 10 approved providers immediately visible in alphabetical order, no fake live ranking. Added verified Hallon family-shared-data intent. Green branch Build and commercial smoke, confirmed merged to main 2026-10-08. Revenue effect unknown.
+- [x] Insurance shipped in PR #58: four distinct paths for home, pet, travel and claims, 9 unique active partners visibly accessible with honest role and personal-price limitations. Green branch Build and commercial smoke, merged to main 2026-10-08. Approved revenue effect unknown.
+- [ ] Finance in QA: add clearly illustrative loan total-repayment calculator on existing /ekonomi/jamfor-privatlan/ without inventing effective APR or lender quotes. Separate full finance hub assessment still pending. No lower-monthly-equals-savings inference, no fabricated approval odds.
 - [ ] Apply consistent navigation, typography, design tokens, accessible logo treatment and commercial transparency **only when each user task benefits**, not blind replication of electricity layout.
 - [ ] Build sitewide partner metadata layer with verified provider role, source/freshness, logo rights, actual offers when sourced, separately stored affiliate compensation (not ranking data).
 
