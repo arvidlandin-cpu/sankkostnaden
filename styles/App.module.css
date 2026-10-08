@@ -1091,3 +1091,9 @@
  .previewAction{justify-content:flex-start}
  .reset{justify-content:flex-start}
 }
+
+.stageToolbar .importedCost{margin-left:auto;max-width:40%;font-size:12px;font-weight:700;color:#526855}
+@media(max-width:760px){
+ .stageToolbar{flex-wrap:wrap}
+ .stageToolbar .importedCost{max-width:100%;order:3;width:100%;margin:0}
+}
