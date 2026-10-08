@@ -81,7 +81,7 @@ test('family choice is useful without entering any prices or completing a form',
  await expect(option).toBeVisible();
  await expect(option).toContainText('ingen egen liveprislista');
  const exits=option.locator('a[data-placement="family_calculator_no_prices"]');
- await expect(exits).toHaveCount(5);
+ await expect(exits).toHaveCount(6);
  const names=await exits.evaluateAll(els=>els.map(el=>el.getAttribute('data-partner')||''));
  expect(names).toEqual([...names].sort((a,b)=>a.localeCompare(b,'sv')));
  for(const exit of await exits.all()){
