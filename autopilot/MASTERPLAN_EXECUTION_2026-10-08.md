@@ -22,6 +22,15 @@ Read also: `autopilot/PRODUCT_EXCELLENCE.md`, `STRATEGY_AND_EVIDENCE_STANDARD.md
 - [ ] Inventory active partner URL health, redirect destinations, tagged click identifiers, brand-logo usage permission/quality and coverage by category; fail rather than invent logo/offer information.
 - [ ] Continue checking post-merge Build, full commercial regression, BrowserStack/live production routes for PR #57 and PR #58. Branch tests green; track real deploy and partner click attribution before declaring commercial success.
 
+### P0D — Sitewide visual design, layout, identity and readability (**audit started, release outstanding**)
+
+- [x] Completed initial **source-level** comparison of homepage, Kostnadskollen, global CSS and four newly rebuilt category hubs. Found inconsistent independent navigation/layout systems, hardcoded near-identical green shades, microcopy under 12px on mobile, dense homepage entry card, favicon-based partner 'logos' and incomplete real screenshot review. Details and source-backed reasoning in `autopilot/DESIGN_SYSTEM_AUDIT_2026-10-08.md`.
+- [ ] Take real production screenshots across home, /app/, 5 categories, original tools and guides at 360/390/430/1024/1440; conduct **subjective visual** first-screen, typography, tap/keyboard, contrast and partner-brand review. Screen overflow tests alone do not prove quality.
+- [ ] Develop one consistent design-token and navigation/CTA/type system **using existing deep-forest/warm-white/lime identity as starting hypothesis**, with unified card and disclosure patterns. Do not simply increase all buttons or blindly duplicate category pages.
+- [ ] Prototype coherent page-family design alternatives and demonstrate mobile/desktop before-after before large styling changes. Roll out in measured slices (homepage and /app/ first, then categories, then tools and guides), with complete QA.
+- [ ] Validate logo asset rights and quality; favicon is not the same as a reliable brand logo. Keep legible text fallback and honest sponsorship labels.
+- [ ] Continue nonpaid qualified acquisition and revenue tracking in parallel; design must not become an excuse to remain invisible to users.
+
 ### P1A — Electricity product category (**shipped to main in PR #50**)
 
 - [x] Replace hidden/quiz-gated electricity partner journey with coherent direct/comparison split on /elavtal/. 1 actual compare service (Elskling), 11 named direct suppliers alphabetically, all actual existing affiliate links; no fake price ranking.
