@@ -32,6 +32,15 @@ for(const width of widths){
     const hero=page.locator('section[aria-label="Hitta rätt jämförelse"]');
     const first=hero.getByRole('link',{name:/Starta Kostnadskollen/});
     await expect(first).toBeVisible();
+    if(width<=430){
+      const quickBar=page.getByRole('navigation',{name:'Snabbnavigering'});
+      await expect(quickBar).toBeVisible();
+      for(const href of ['/bredband/','/elavtal/','/mobil/','/forsakring/','/ekonomi/']){
+        await expect(quickBar.locator(`a[href="${href}"]`)).toBeVisible();
+        await expect(hero.locator(`a[href="${href}"]`)).toBeHidden();
+      }
+      await expect(hero.getByText(/Välj det direkt i menyn längst ned/i)).toBeVisible();
+    }
     const data=await page.evaluate(()=>{
       const hero=document.querySelector('section[aria-label="Hitta rätt jämförelse"]');
       if(!hero)throw new Error('HomeHero missing');
