@@ -34,6 +34,7 @@ export default function SavingsApp(){
   const [hydrated,setHydrated]=useState(false);
   const completedTracked=useRef(false);
   const startedTracked=useRef(false);
+  const earlyResultTracked=useRef(false);
   const quickPathShownTracked=useRef<Set<CostKey>>(new Set());
   const questionCardRef=useRef<HTMLDivElement>(null);
 
@@ -82,6 +83,18 @@ export default function SavingsApp(){
   const totalMonthly=Object.values(answers).reduce((sum,answer)=>sum+answer.monthly,0);
   const noClearIssue=completed===4&&evaluatedResults.every(result=>result.fit===0);
   const topTied=completed===4&&!noClearIssue&&evaluatedResults.length>1&&evaluatedResults[0].priorityValue===evaluatedResults[1].priorityValue;
+  const earlyTop=evaluatedResults[0];
+  const earlyHasSignal=Boolean(earlyTop&&earlyTop.fit>=1);
+  const nextUnanswered=categories.find(category=>!isComplete(category.key));
+
+  useEffect(()=>{
+    if(completed<1||completed>=4||earlyResultTracked.current)return;
+    earlyResultTracked.current=true;
+    emitAnalyticsEvent('cost_check_early_result_available',{
+      source:'app',questions_answered:completed,
+      category:earlyTop?.key||'none',has_signal:earlyHasSignal?1:0,
+    });
+  },[completed,earlyHasSignal,earlyTop?.key]);
 
   useEffect(()=>{
     if(completed===4&&!completedTracked.current){
@@ -109,6 +122,7 @@ export default function SavingsApp(){
     setScenarioPct(10);
     completedTracked.current=false;
     startedTracked.current=false;
+    earlyResultTracked.current=false;
     quickPathShownTracked.current.clear();
     try{window.localStorage.removeItem(costCheckStorageKey);window.localStorage.removeItem(legacyStorageKey);}catch{}
     emitAnalyticsEvent('cost_check_reset',{source:'app'});
@@ -156,7 +170,7 @@ export default function SavingsApp(){
         <div className={styles.badge}><Sparkles size={17}/> Kostnadskollen 2026</div>
         <h1>Vilket avtal bör du kontrollera först?</h1>
         <p>Svara på en fråga per område. Har du redan fyllt i Hushållskostnadskollen följer beloppen med automatiskt i samma webbläsare.</p>
-        <a className={styles.heroStart} href='#fragor' onClick={()=>emitAnalyticsEvent('cost_check_hero_start_click',{source:'app_hero'})}>Starta kollen – 4 korta frågor <ArrowRight size={17}/></a>
+        <a className={styles.heroStart} href='#fragor' onClick={()=>emitAnalyticsEvent('cost_check_hero_start_click',{source:'app_hero'})}>Få en första startpunkt efter en fråga <ArrowRight size={17}/></a>
         <div className={styles.heroStats}>
           <div><strong>{completed}/4</strong><span>områden analyserade</span></div>
           <div><strong>{totalMonthly?totalMonthly.toLocaleString('sv-SE')+' kr':'—'}</strong><span>angiven kostnad / mån</span></div>
@@ -200,6 +214,7 @@ export default function SavingsApp(){
 
           <div className={styles.cardActions}>
             <button className={styles.reset} onClick={reset}><RotateCcw size={15}/> Börja om</button>
+            {completed>0&&completed<4&&<a className={styles.previewAction} href='#resultat' onClick={()=>emitAnalyticsEvent('cost_check_early_result_opened',{source:'app',questions_answered:completed})}>Se din första startpunkt <Target size={15}/></a>}
             {activeIndex<categories.length-1?<button className={styles.next} disabled={!activeComplete} onClick={goNext}>{activeComplete?'Klart – till '+categories[activeIndex+1].short:'Välj ett svar'} <ArrowRight size={17}/></button>:activeComplete?<a className={styles.next} href='#resultat'>Visa min prioritering <Target size={17}/></a>:<button className={styles.next} disabled>Välj ett svar <Target size={17}/></button>}
           </div>
         </div>
@@ -216,7 +231,25 @@ export default function SavingsApp(){
           <div className={styles.scenarioButtons}>{[5,10,20].map(pct=><button key={pct} className={scenarioPct===pct?styles.scenarioSelected:''} onClick={()=>{setScenarioPct(pct);emitAnalyticsEvent('cost_check_scenario',{scenario_pct:pct})}}>{pct}%</button>)}</div>
         </div>}
 
-        {completed<4?<div className={styles.ranking}><article className={styles.incompleteResult}><div className={styles.resultBody}><div><h3>{completed}/4 områden klara</h3></div><p>Slutför alla fyra områden innan vi prioriterar eller visar partnerförslag.</p></div></article></div>:
+        {completed<4?<div className={styles.ranking}>
+          {completed===0
+            ?<article className={styles.incompleteResult}><div className={styles.resultBody}><div><h3>Välj ett svar för att få en första startpunkt.</h3></div><p>Du behöver inte kunna ditt pris eller svara om alla områden för att börja.</p></div></article>
+            :<article className={`${styles.incompleteResult} ${styles.earlyResult}`} data-testid='cost-check-early-result'>
+              <div className={styles.resultBody}>
+                <span className={styles.earlyEyebrow}>FÖRSTA STARTPUNKTEN · {completed} AV 4 OMRÅDEN KONTROLLERADE</span>
+                <h3>{earlyHasSignal?`${earlyTop.label} kan vara värt att kontrollera nu`:'Ingen tydlig brist i de områden du kontrollerat hittills'}</h3>
+                <p>{earlyHasSignal
+                  ?'Ditt svar visar en anledning att se över det här området. Det är en preliminär väg vidare – inte en ranking av marknadens avtal eller ett påstående om möjlig besparing.'
+                  :'Dina svar visar ännu ingen tydlig anledning till ett byte. Du kan fortsätta till nästa område eller kontrollera aktuella villkor om du vill.'}</p>
+                {earlyHasSignal&&<ul>{earlyTop.reasons.slice(0,2).map(reason=><li key={reason}><Check size={14}/>{reason}</li>)}</ul>}
+                <p className={styles.earlyQualification}>Du kan få en bredare prioritering genom att kontrollera fler områden. Någon individuell besparing har inte beräknats.</p>
+              </div>
+              <div className={styles.earlyActions}>
+                {earlyHasSignal&&<Link className={styles.earlyPrimary} href={earlyTop.href} onClick={()=>emitAnalyticsEvent('cost_check_early_result_continue',{source:'app',category:earlyTop.key,questions_answered:completed})}>Kontrollera {earlyTop.short.toLowerCase()} nu <ArrowRight size={17}/></Link>}
+                {nextUnanswered&&<button type='button' onClick={()=>{setActive(nextUnanswered.key);window.requestAnimationFrame(()=>questionCardRef.current?.scrollIntoView({behavior:'smooth',block:'start'}))}}>Kontrollera även {nextUnanswered.short.toLowerCase()} <ArrowRight size={16}/></button>}
+              </div>
+            </article>}
+        </div>:
         <div className={styles.ranking}>
           {evaluatedResults.map((result,index)=>{
             const partners=resultPartners(result.key).slice(0,2);
