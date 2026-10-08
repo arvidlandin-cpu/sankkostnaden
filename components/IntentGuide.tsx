@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import type { ReactNode } from 'react';
 import Link from 'next/link';
 import { ArrowRight, Check, PiggyBank } from 'lucide-react';
 import PartnerOffers from './PartnerOffers';
@@ -20,9 +21,10 @@ type Props = {
   related: { href: string; label: string }[];
   elevatePartners?: boolean;
   utility?: Utility;
+  primaryUtility?: ReactNode;
 };
 
-export default function IntentGuide({ title, description, kicker, canonical, category, intent, bullets, sections, related, elevatePartners = false, utility }: Props) {
+export default function IntentGuide({ title, description, kicker, canonical, category, intent, bullets, sections, related, elevatePartners = false, utility, primaryUtility }: Props) {
   const categoryLabels: Record<PartnerCategory, string> = { el: 'Elavtal', bredband: 'Bredband', mobil: 'Mobil', forsakring: 'Försäkring', ekonomi: 'Lån & ekonomi' };
   const categoryPaths: Record<PartnerCategory, string> = { el: '/elavtal/', bredband: '/bredband/', mobil: '/mobil/', forsakring: '/forsakring/', ekonomi: '/ekonomi/' };
   const categoryLabel = categoryLabels[category];
@@ -86,6 +88,7 @@ export default function IntentGuide({ title, description, kicker, canonical, cat
           </div>
         </section>
         <article className='article guideWrap'>
+          {primaryUtility}
           <DecisionGateway category={category} intent={intent} currentPath={new URL(canonical).pathname} onPagePartners={elevatePartnerBlock} />
           <div className='checkList'>
             {bullets.map(item => <p key={item}><Check size={17} /> {item}</p>)}
