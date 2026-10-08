@@ -104,10 +104,62 @@ test('Cost Check start event is emitted only on the first answer',async({page})=
 test('hero start CTA scrolls to the first question and records intent',async({page})=>{
   await page.addInitScript(()=>{(window as any).dataLayer=[];});
   await page.goto('/app/');
-  const cta=page.getByRole('link',{name:/Starta kollen – 4 korta frågor/i});
+  const cta=page.getByRole('link',{name:/Få en första startpunkt efter en fråga/i});
   await expect(cta).toBeVisible();
   await cta.click();
   await expect(page).toHaveURL(/#fragor$/);
   const events=await page.evaluate(()=>(window as any).dataLayer||[]);
   expect(events.filter((event:any)=>event.event==='cost_check_hero_start_click')).toHaveLength(1);
 });
+
+
+test('Kostnadskollen gives a truthful useful provisional action after one warning answer',async({page})=>{
+ await page.goto('/app/?qa=1');
+ await page.getByRole('button',{name:/Priset har ändrats eller avtalet känns dyrt/i}).click();
+ const early=page.getByTestId('cost-check-early-result');
+ await expect(early).toBeVisible();
+ await expect(early).toContainText('1 AV 4 OMRÅDEN');
+ await expect(early).toContainText('preliminär väg vidare');
+ await expect(early.getByRole('link',{name:/Kontrollera el nu/})).toHaveAttribute('href','/elavtal/jamfor-elavtal/');
+ await expect(page.getByRole('link',{name:'Se din första startpunkt'})).toHaveAttribute('href','#resultat');
+ await expect(early.getByRole('button',{name:/Kontrollera även bredband/i})).toBeVisible();
+ await expect(early).not.toContainText('kr/år');
+});
+
+test('an up-to-date contract answer never pressures visitor into affiliate click',async({page})=>{
+ await page.goto('/app/?qa=1');
+ await page.getByRole('button',{name:/Nyligen jämfört – jag har koll på pris och avgifter/i}).click();
+ const early=page.getByTestId('cost-check-early-result');
+ await expect(early).toContainText('Ingen tydlig brist');
+ await expect(early.locator('a')).toHaveCount(0);
+ await early.getByRole('button',{name:/Kontrollera även bredband/i}).click();
+ await expect(page.getByRole('heading',{name:'Bredband'})).toBeVisible();
+});
+
+test('first useful Kostnadskollen event excludes any actual cost amounts',async({page})=>{
+ await page.addInitScript(()=>{(window as any).dataLayer=[];});
+ await page.goto('/app/?qa=1');
+ await page.getByText('Lägg till månadskostnad').click();
+ await page.locator('input[placeholder="t.ex. 499"]').fill('9876');
+ await page.getByRole('button',{name:/Osäker på avgifter\/villkor eller länge sedan jag jämförde/i}).click();
+ await expect(page.getByTestId('cost-check-early-result')).toBeVisible();
+ const events=await page.evaluate(()=>(window as any).dataLayer||[]);
+ const early=events.find((item:any)=>item.event==='cost_check_early_result_available');
+ expect(early).toBeTruthy();
+ expect(early.questions_answered).toBe(1);
+ expect(early.has_signal).toBe(1);
+ expect(early.category).toBe('el');
+ expect(early).not.toHaveProperty('monthly');
+ expect(early).not.toHaveProperty('monthly_cost');
+});
+
+for(const width of [360,390,430]){
+ test('early cost result does not overflow at '+width+'px',async({page})=>{
+  await page.setViewportSize({width,height:844});
+  await page.goto('/app/?qa=1');
+  await page.getByRole('button',{name:/Priset har ändrats eller avtalet känns dyrt/i}).click();
+  await expect(page.getByTestId('cost-check-early-result')).toBeVisible();
+  const overflow=await page.evaluate(()=>Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)-document.documentElement.clientWidth);
+  expect(overflow).toBeLessThanOrEqual(1);
+ });
+}
