@@ -55,3 +55,7 @@ For pages with at least 100 impressions and an average position roughly 16–40,
 ## Commercial optimization
 
 Partner payout alone never controls ranking. When enough verified attribution exists, commercial routing may be tested only among options that are genuinely equivalent for the user's intent. Until there are at least 50 verified partner clicks and 5 approved transactions in a comparable cohort, collect evidence rather than optimizing partner order.
+
+## Product-wide excellence mandate
+
+`PRODUCT_EXCELLENCE.md` defines the product-level ambition and mandatory competitive scorecard. Before polishing individual UI elements, compare the complete journey with leading alternatives and consider a coherent redesign rather than endless small patches. Align discovery, beginner and detailed routes, truthful partner options, useful decisions and approved revenue. Do not claim market leadership without evidence.
