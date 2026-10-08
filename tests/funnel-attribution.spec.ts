@@ -1,15 +1,18 @@
 import { expect, test, type Page } from '@playwright/test';
 
 async function fillElectricity(page:Page){
+  await page.getByRole('button',{name:/Ja, jämför mina erbjudanden/}).click();
   await page.getByLabel('Årsförbrukning i kWh').fill('20000');
-  const a=page.getByTestId('electricity-offer-a').locator('input[type="number"]');
-  const b=page.getByTestId('electricity-offer-b').locator('input[type="number"]');
-  await a.nth(0).fill('85');
-  await a.nth(1).fill('49');
-  await a.nth(2).fill('600');
-  await b.nth(0).fill('82');
-  await b.nth(1).fill('79');
-  await b.nth(2).fill('0');
+  const a=page.getByTestId('electricity-offer-a');
+  const b=page.getByTestId('electricity-offer-b');
+  await a.getByLabel('Elhandelspris att jämföra').fill('85');
+  await a.getByLabel('Fast avgift (skriv 0 om ingen)').fill('49');
+  await b.getByLabel('Elhandelspris att jämföra').fill('82');
+  await b.getByLabel('Fast avgift (skriv 0 om ingen)').fill('79');
+  await a.getByText('Rabatt och namn (valfritt)').click();
+  await b.getByText('Rabatt och namn (valfritt)').click();
+  await a.getByLabel('Rabatt totalt under 12 mån').fill('600');
+  await b.getByLabel('Rabatt totalt under 12 mån').fill('0');
 }
 
 async function preventNavigation(locator:any){
