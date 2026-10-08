@@ -63,6 +63,8 @@ test('live production: family mobile calculator reaches result',async({page})=>{
 
 test('live production: household costs hand off locally to prioritizer',async({page})=>{
   await page.goto(q('/verktyg/hushallskostnadskollen/'),{waitUntil:'domcontentloaded'});
+  const categories=page.getByRole('group',{name:'Välj kostnadskategori'});
+  for(const name of ['El','Bredband','Mobil','Försäkringar']) await categories.getByRole('button',{name:new RegExp('^'+name)}).click();
   await page.getByLabel('El, kronor per månad').fill('800');
   await page.getByLabel('Bredband, kronor per månad').fill('500');
   await page.getByLabel('Mobil, kronor per månad').fill('700');
