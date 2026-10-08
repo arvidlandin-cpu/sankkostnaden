@@ -1,7 +1,7 @@
 {
-  "version": 2,
+  "version": 3,
   "purpose": "Evidence-backed strategic opportunity backlog. Execute one bounded growth experiment at a time; technical and attribution repairs may supersede the lock.",
-  "updatedAt": "2026-10-07T22:12:00+02:00",
+  "updatedAt": "2026-10-08T06:32:49.905Z",
   "currentConstraint": "Relevant organic traffic is still the binding constraint. Only 1 Google click reached content pages outside the home page and /app/ during the latest 30-day GSC window, so conversion optimization must remain sample-gated.",
   "opportunities": [
     {
@@ -39,8 +39,49 @@
       ]
     },
     {
-      "id": "quarter-hour-price-intent-bridge",
+      "id": "partner-visibility-clarity-pilot",
       "rank": 2,
+      "status": "queued_after_active_experiment",
+      "actionType": "CRO_FRICTION_TEST",
+      "target": "/elavtal/ first, then reuse validated design principles across /bredband/, /mobil/, /forsakring/ and relevant finance flows",
+      "thesis": "Current comparison UI underplays partner brands and forces visitors through repeated 'direct', 'choose path', 'top three' and collapsed directory layers. Pilot a clearer commercial hierarchy: show prominent recognizable brands with appropriately sourced logos, explain a concrete verified reason to consider each option, distinguish comparison service from provider, make the full partner selection easy to discover, and give each primary card a clear next step without increasing cognitive overload.",
+      "evidence": {
+        "ownerReview": "2026-10-08 screenshot of /elavtal/: partner logos and offer differentiation are visually weak; 12 partners are behind a collapsed details element until opened; repeated sections make the commercial choice feel indirect.",
+        "codeAudit": [
+          "components/GuidedPartnerMatchers.tsx: DirectPartnerStrip renders 2 brands, matcher asks how to compare, then renders 3 ranked cards, then AllPartners uses <details> closed by default.",
+          "styles/global.css: logo icons are 28px in direct strip and 34px in result cards; supporting copy and micro-labels frequently use 9–11px.",
+          "lib/partners.ts: partnerRankScore uses static priority and intent plus alphabetic tie-break; it does not compare live electricity prices. 'Förslag 1–3' must not imply a verified best-price ranking.",
+          "Live organic commercial events are now tracked per page, but samples are too small to conclude that a broad redesign improves approved affiliate revenue."
+        ],
+        "categoryScope": "Audit every commercial category, but test on one representative page first. Mobile-first accessibility and tap-target review are mandatory."
+      },
+      "expectedImpact": "medium_high_if_organic_traffic_grows",
+      "confidence": "medium_qualitative_ux_problem_not_yet_quantified",
+      "timeToLearnDays": 14,
+      "guardrails": [
+        "do not deploy a competing growth experiment while the active SEO snippet experiment is running",
+        "no blanket 12-card logo wall or visually overwhelming affiliate density",
+        "do not fabricate discounts, live prices, cheapest claims, ratings or provider advantages",
+        "differentiate only with verified intent/contract facts; disclose that sorting is not a price ranking",
+        "prominent affiliate disclosure and equal user relevance; commission must not determine order",
+        "preserve useful SEO content, tracking attribution, mobile readability, keyboard access and page performance",
+        "use permitted brand assets or clear text wordmarks when authentic logos are not available"
+      ],
+      "proposedPilot": [
+        "Remove or consolidate one redundant commercial decision layer on /elavtal/.",
+        "Increase brand prominence in the primary 2–3 cards and replace generic duplicate benefit bullets with truthful provider-type or intent distinctions.",
+        "Show a compact discoverable brand overview and a clear 'Se alla 12' option without hiding the existence of the alternatives.",
+        "Instrument organic page-level partner exposure, unique users, affiliate clicks, and later approved transactions; compare against the baseline only after minimum sample thresholds."
+      ],
+      "successSignal": [
+        "higher qualified organic partner click rate per exposure without worsening user comprehension or trust",
+        "more unique organic visitors reaching verified affiliate links",
+        "eventual increase in approved revenue per relevant organic visitor"
+      ]
+    },
+    {
+      "id": "quarter-hour-price-intent-bridge",
+      "rank": 3,
       "status": "queued_after_active_experiment",
       "actionType": "CONTENT_UTILITY_UPGRADE",
       "target": "/elavtal/kvartspris/",
@@ -73,7 +114,7 @@
     },
     {
       "id": "early-stage-serp-learning-loop",
-      "rank": 3,
+      "rank": 4,
       "status": "infrastructure_ready",
       "actionType": "SEO_SNIPPET_TEST",
       "target": "existing pages with repeated top-10 low-CTR queries",
@@ -96,7 +137,7 @@
     },
     {
       "id": "home-insurance-original-utility",
-      "rank": 4,
+      "rank": 5,
       "status": "watch",
       "actionType": "CONTENT_UTILITY_UPGRADE",
       "target": "/forsakring/hemforsakring-bostadsratt/",
@@ -123,7 +164,7 @@
     },
     {
       "id": "organic-app-distribution",
-      "rank": 5,
+      "rank": 6,
       "status": "sample_gated",
       "actionType": "CRO_FRICTION_TEST",
       "target": "contextual links from ranking content into /app/",
@@ -148,7 +189,7 @@
     },
     {
       "id": "verified-partner-routing",
-      "rank": 6,
+      "rank": 7,
       "status": "future_data_gate",
       "actionType": "PARTNER_ROUTING_TEST",
       "target": "equally relevant partner choices",
@@ -169,7 +210,7 @@
     },
     {
       "id": "automation-trust-disclosure",
-      "rank": 7,
+      "rank": 8,
       "status": "backlog",
       "actionType": "TRUST_UPGRADE",
       "target": "/sa-jamfor-vi/ and /om/",
