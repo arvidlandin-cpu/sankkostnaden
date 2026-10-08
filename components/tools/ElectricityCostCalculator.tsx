@@ -21,13 +21,13 @@ function Field({label,value,onChange,suffix,forceZero=false}:{label:string;value
   </label>;
 }
 
-function OfferCard({offer,setOffer,testId,feesKnown,onFeeEntered}:{offer:Offer;setOffer:(offer:Offer)=>void;testId:string;feesKnown:boolean;onFeeEntered:()=>void}){
+function OfferCard({offer,setOffer,testId,feesKnown,onFeeEntered}:{offer:Offer;setOffer:(offer:Offer)=>void;testId:string;feesKnown:boolean;onFeeEntered:(known:boolean)=>void}){
   return <section className={styles.offer} data-testid={testId}>
     <h3 className={styles.offerTitle}>{testId==='electricity-offer-a'?'Alternativ A':'Alternativ B'}</h3>
     <div className={styles.grid}>
       <Field label='Elhandelspris att jämföra' value={offer.unitPriceOre} suffix='öre/kWh' onChange={value=>setOffer({...offer,unitPriceOre:value})}/>
       <label className={styles.field}><span>Fast avgift (skriv 0 om ingen)</span>
-        <div><input type='number' min='0' step='1' inputMode='decimal' aria-label='Fast avgift (skriv 0 om ingen)' value={feesKnown?offer.monthlyFee:''} onChange={event=>{onFeeEntered();setOffer({...offer,monthlyFee:Math.max(0,Number(event.target.value)||0)});}}/><b>kr/mån</b></div>
+        <div><input type='number' min='0' step='1' inputMode='decimal' aria-label='Fast avgift (skriv 0 om ingen)' value={feesKnown?offer.monthlyFee:''} onChange={event=>{onFeeEntered(event.target.value.trim()!=='');setOffer({...offer,monthlyFee:Math.max(0,Number(event.target.value)||0)});}}/><b>kr/mån</b></div>
       </label>
     </div>
     <details className={styles.extraDetails}>
@@ -67,6 +67,8 @@ export default function ElectricityCostCalculator(){
 
   const chooseStart=(mode:'have_offers'|'find_offers')=>{
     setStartMode(mode);
+    setShowResult(false);
+    tracked.current=false;
     emitAnalyticsEvent('electricity_cost_start_path',{source,path:mode});
   };
   const calculate=()=>{
@@ -148,9 +150,9 @@ export default function ElectricityCostCalculator(){
         </div>
         <section className={styles.offers} aria-label='Jämför två elavtal'>
           <OfferCard offer={a} setOffer={offer=>{setA(offer);setShowResult(false);tracked.current=false}} testId='electricity-offer-a'
-            feesKnown={feesKnown.a} onFeeEntered={()=>setFeesKnown(prev=>({...prev,a:true}))}/>
+            feesKnown={feesKnown.a} onFeeEntered={known=>setFeesKnown(prev=>({...prev,a:known}))}/>
           <OfferCard offer={b} setOffer={offer=>{setB(offer);setShowResult(false);tracked.current=false}} testId='electricity-offer-b'
-            feesKnown={feesKnown.b} onFeeEntered={()=>setFeesKnown(prev=>({...prev,b:true}))}/>
+            feesKnown={feesKnown.b} onFeeEntered={known=>setFeesKnown(prev=>({...prev,b:known}))}/>
         </section>
         <button type='button' className={styles.calculate} disabled={!ready} onClick={calculate}>Räkna årskostnaden <ArrowRight size={18}/></button>
         {!ready&&<p className={styles.prompt}>Fyll i årsförbrukning, pris och fast avgift (skriv 0 om ingen) för båda alternativen – eller välj att kontrollera aktuella elavtal direkt ovan.</p>}
