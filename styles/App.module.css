@@ -1111,3 +1111,7 @@
 .noIssueSummary p{margin:0 0 13px;max-width:680px;color:#516156;line-height:1.65;font-size:14px}
 .noIssueSummary a{display:inline-flex;gap:9px;align-items:center;font-weight:800;color:#305538;text-underline-offset:3px;font-size:13px}
 @media(max-width:760px){.safePath{margin:0 16px 15px;padding:14px}.noIssueSummary{padding:17px;gap:12px}}
+
+.noIssueLinks{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.noIssueLinks a{min-height:44px;box-sizing:border-box;display:inline-flex;align-items:center;gap:9px;padding:11px 13px;border-radius:10px;border:1px solid #c9dac5;background:#f4f8ef;text-decoration:none;font-size:13px;color:#294b34}
+.noIssueLinks a:hover{border-color:#6c875d}
