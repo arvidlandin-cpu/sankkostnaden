@@ -350,3 +350,41 @@
   text-transform:uppercase;
 }
 .cardDivider::before,.cardDivider::after{content:'';height:1px;flex:1;background:#e2e6e1}
+
+/* Design-system v1: one visually dominant choice, readable secondary routes. */
+.choiceList a{
+  min-height:66px;
+  background:var(--sk-accent);
+  border-color:#c2d667;
+  box-shadow:0 7px 22px rgba(37,59,29,.12);
+}
+.choiceList a:hover{border-color:#a7c145;box-shadow:0 10px 25px rgba(37,59,29,.18)}
+.choiceList strong{font-size:16px;letter-spacing:-.01em}
+.choiceList small{font-size:12px;line-height:1.5;color:#3e5130}
+.areaList a{background:var(--sk-surface);border-color:var(--sk-line)}
+.areaList a small{font-size:12px;line-height:1.35;color:var(--sk-ink-muted)}
+.cardHint{font-size:12px;line-height:1.55;color:var(--sk-ink-muted);text-align:left;margin-top:16px}
+.cardDivider{font-size:12px;letter-spacing:.04em;color:var(--sk-ink-muted)}
+.proofInner strong{font-size:14px}
+.proofInner small{font-size:12px;line-height:1.45;color:var(--sk-ink-muted)}
+.areaList a:focus-visible,.choiceList a:focus-visible{outline:3px solid var(--sk-focus);outline-offset:3px}
+@media(max-width:600px){
+  .badge{font-size:12px;line-height:1.35}
+  .copy h1{font-size:clamp(40px,11vw,46px)}
+  .card{padding:20px 17px}
+  .card h2{font-size:24px}
+  .choiceList a{min-height:68px}
+  .areaList a{min-height:56px}
+  .proofInner>div{min-height:104px;gap:10px;padding:13px 11px}
+  .proofInner>div:first-child{padding-left:11px}
+  .proofInner>div:last-child{padding-right:11px}
+  .proofInner span{width:34px;height:34px;flex:0 0 34px}
+  .proofInner strong{font-size:12px;line-height:1.35}
+  .proofInner small{font-size:12px}
+}
+@media(max-width:370px){
+  .proofInner>div{gap:7px;padding:10px 8px}
+  .proofInner>div:first-child{padding-left:8px}
+  .proofInner>div:last-child{padding-right:8px}
+  .proofInner span{width:30px;height:30px;flex-basis:30px}
+}
