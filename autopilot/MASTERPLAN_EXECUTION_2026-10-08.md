@@ -36,14 +36,14 @@ Read also: `autopilot/PRODUCT_EXCELLENCE.md`, `STRATEGY_AND_EVIDENCE_STANDARD.md
 - [x] Existing H1, canonical, SEO guide path, no overflow, keyboard buttons and source links verified; full branch commercial regression and Build passed. Merged as PR #51 (2026-10-08). Post-main prod check pending.
 - Evidence in `autopilot/decisions/2026-10-08-masterplan-condo-coverage-check.md`.
 
-### P2 — Kostnadskollen as signature no-data entry
+### P2 — Kostnadskollen as signature no-data entry (**shipped to main in PR #53**)
 
-- [ ] Current /app/ requests one answer per 4 categories to show complete map; premature hard gating is a low-knowledge friction risk. Return a clearly **provisional, truthful relevant next step after first informative answer**, optionally deepen with other categories. Do not fabricate a largest potential saving or a confident cross-category ranking with one answer.
-- [ ] One primary action and one optional deepening path; remember inputs locally only, no personal-price data in analytics.
-- [ ] Distinguish obvious need to check a category from actual price/savings ranking. Keep category-specific premium, eligibility and cost validation at real partner sites.
-- [ ] QA desktop/mobile, cases no clear issue, unknown cost, partial completion, existing storage migration, source attribution, final 4/4 outcome, partner click tags. Preserve /app/ canonical and early indexed momentum (26 Google clicks in baseline).
+- [x] /app/ now returns a clearly **provisional, truthful relevant next step after first informative answer**, optionally deepened with other categories. No guessed cross-category savings or ranking. Shipped PR #53 (2026-10-08).
+- [x] One relevant category help action and optional deepening path; original cost values remain local-only, added events include category and progress but no price data.
+- [x] A warning leads to a guide, not a fabricated offer ranking; fit=0 gets no pressure to click an affiliate partner. Exact eligibility/prices remain with providers.
+- [x] Build, full commercial regression and real iPhone QA passed on main for PR #53; 360/390/430px and both positive/no-clear-signal flows tested. Existing /app/ canonical, storage and complete 4/4 result retained. Commercial outcome still UNKNOWN.
 
-### P3 — Cohesive, category-specific remaining journeys
+### P3 — Cohesive, category-specific remaining journeys (broadband implementation in QA)
 
 - [ ] Broadband: strong address/availability path via real provider or Bredbandsval, no pretend internal address-price feed; mobile speed guide + first-year price; partner list visible and differentiated.
 - [ ] Mobile: accurate surf/network/household needs, family totals and promo vs recurring annual costs; visible relevant brands; no unverifiable campaign prices.
