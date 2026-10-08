@@ -91,7 +91,7 @@ export default function MobileMarketGateway(){
       <div>
         <p className={styles.eyebrow}>JÄMFÖR INNAN DU BYTER</p>
         <h2 id='mobile-family-heading'>Jämför hela familjens förstaårskostnad</h2>
-        <p>Vi har {familyRelevant.length} aktiva mobilpartners markerade som familjerelevanta, men det betyder inte att de erbjuder ett aktuellt familjepris till alla. Kontrollera erbjudandets utformning och använd kalkylatorn för att se totalsumman.</p>
+        <p>Vi har {familyRelevant.length} aktiva mobilpartners med kända familjealternativ. Alla familjeupplägg fungerar inte likadant: vissa ger egen surf per person medan andra delar en gemensam surfmängd. Kontrollera aktuella villkor och räkna hela familjens årskostnad.</p>
       </div>
       <Link href='/mobil/lonar-sig-familjeabonnemang/' onClick={()=>pathClick('family_total_cost')}>Räkna för två till fem personer <ArrowRight size={18}/></Link>
     </section>
