@@ -1,4 +1,5 @@
 import IntentGuide from '../../components/IntentGuide';
+import CondoInsuranceCheck from '../../components/CondoInsuranceCheck';
 
 export default function Page() {
   return (
@@ -16,6 +17,7 @@ export default function Page() {
         { heading: 'Jämför självrisk och åldersavdrag – inte bara premie', body: 'Två försäkringar med liknande pris kan ge olika ersättning vid exempelvis vatten- eller brandskada. Kontrollera självrisk, åldersavdrag, ersättningsgränser och viktiga undantag innan du avgör vilket alternativ som är mest prisvärt.' },
         { heading: 'Hemförsäkringen behöver fortfarande passa hushållet', body: 'Bostadsrättsskyddet är bara en del av helheten. Kontrollera också vem som omfattas av hemförsäkringen samt skydd för lösöre, ansvar, rättsskydd, resor och eventuella allrisktillägg.' }
       ]}
+      extraUtility={<CondoInsuranceCheck/>}
       utility={{href:'/forsakring/hemforsakring-skyddskoll/',eyebrow:'VERKTYG · SKYDDSKOLL',title:'Kontrollera skyddet innan du jämför pris',body:'Tre korta frågor hjälper dig se vilka villkor som förtjänar extra kontroll utifrån boende och hushåll.',cta:'Gör skyddskollen'}}
       related={[{ href: '/forsakring/jamfor-hemforsakring/', label: 'Jämför hemförsäkring' }, { href: '/forsakring/vad-kostar-hemforsakring/', label: 'Vad kostar hemförsäkring?' }, { href: '/forsakring/hemforsakring-hyresratt/', label: 'Hemförsäkring för hyresrätt' }, { href: '/forsakring/hemforsakring-skyddskoll/', label: 'Gör skyddskollen för hemförsäkring' }]}
     />
