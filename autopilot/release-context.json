@@ -10,7 +10,9 @@
     "pricing": "Electricity quarter-hour spot feed SE1-SE4 is real, but NOT a per-provider offer feed. No fabricated cheapest provider, 'best choice', monthly quote, ratings, guaranteed saving or extrapolated shift savings.",
     "experimentStatus": "No active growth experiment in autopilot/state.json as of 2026-10-09; do not treat merged UX releases as commercially proven experiments.",
     "capacity": "Independent non-paid traffic acquisition remains the highest commercial constraint; continue alongside design. No paid media or contracts without owner approval.",
-    "finishStandard": "Read autopilot/PRODUCT_FINISHING_STANDARD_2026-10-09.md. Every screen, field, sentence and CTA must serve the user's immediate job, with premium consistent UX, real price data and QA. Do not call project finished from isolated feature PRs."
+    "finishStandard": "Read autopilot/PRODUCT_FINISHING_STANDARD_2026-10-09.md. Every screen, field, sentence and CTA must serve the user's immediate job, with premium consistent UX, real price data and QA. Do not call project finished from isolated feature PRs.",
+    "nextExecution": "1) Check exact Cloudflare production revision on homepage, /app/ and all category entry points; 2) validate real partner outbound click and network-side EPI/subID where supported (especially Bredbandsval), preserving legal disclosure; 3) evaluate relevant organic GSC/GA4 search and partner funnel; 4) iterate deep-page/copy/accessibility defects evidenced by screenshot/user behavior without resetting completed V5 PRs; 5) pursue independently scoped non-paid SEO and record approved revenue per relevant visitor. Follow autopilot policy sample thresholds.",
+    "strategySourceOfTruth": "Read AUTOPILOT.md, autopilot/PLAYBOOK.md, autopilot/MASTERPLAN_EXECUTION_2026-10-08.md, autopilot/PRODUCT_FINISHING_STANDARD_2026-10-09.md and autopilot/opportunities.json, then current main tree and latest QA. Scheduled workflow monitors/decides; it does not itself run a continuous ChatGPT development session."
   },
   "shipped": [
     {
@@ -158,7 +160,7 @@
     "No evidence that design changes improved approved affiliate revenue. Continue qualified organic visitor acquisition and real attribution checks.",
     "PR #48 (old hypothetical annual quarter-price widget) was CLOSED as redundant after spot widget PR #77; avoid resurrecting it.",
     "Masterplan 2026-10-08 traffic, partner counts and revenue remain a dated baseline; query live GA4/GSC/network data for current numbers.",
-    "BrowserStack physical iPhone sessions remain UNTESTED due depleted quota, despite older false-green run 37952606478. PR #90 corrects reporting. PR #88 proposing free WebKit test is open with merge conflict and a slow browser installation; do not mark it shipped before clean CI/merge.",
+    "BrowserStack physical-iPhone QA remains UNTESTED because the free quota is depleted; PR #90 made failure reporting honest. PR #88 for free WebKit Safari-engine checks remains OPEN (not shipped) and must pass current CI before possible merge. WebKit emulation is not real iPhone hardware.",
     "Current production-route smoke reached live routes, but deployment was not matched to exact main commit SHA.",
     "Bredbandsval network-side clickref/EPI attribution is unverified; maintain existing affiliate URL untouched until its branded redirect and any Tradedoubler EPI account activation are confirmed. Local affiliate_click event remains instrumented."
   ],
