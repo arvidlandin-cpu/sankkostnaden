@@ -8,7 +8,7 @@ test('broadband starts with a real address-checking partner rather than a fake l
  await expect(page.getByRole('heading',{level:1,name:/Hitta bredband som passar ditt hem/})).toBeVisible();
  const section=page.getByTestId('broadband-market');
  await expect(section.getByRole('heading',{name:'Vad kan du faktiskt få på din adress?'})).toBeVisible();
- await expect(section).toContainText('ingen egen databas med adressunika bredbandspriser');
+ await expect(section).toContainText('Adresskontrollen görs hos Bredbandsval');
  await expect(section.getByText('3 aktiva bredbandspartners')).toBeVisible();
  const comparison=page.locator('a[data-placement="broadband_hub_comparison"]');
  await expect(comparison).toHaveCount(1);

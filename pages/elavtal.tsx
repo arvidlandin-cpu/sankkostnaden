@@ -2,7 +2,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { ArrowRight, Check, PiggyBank, ShieldCheck, Zap } from 'lucide-react';
 import ElectricityMarketGateway from '../components/ElectricityMarketGateway';
-import pageStyles from '../styles/ElavtalLanding.module.css';
+import pageStyles from '../styles/CategoryPremium.module.css';
 
 const guides=[
  {href:'/elavtal/billigaste-elavtalet/',title:'Vad avgör vilket elavtal som är billigast?',text:'Förstå pris per kWh, månadsavgift och rabatter.'},

@@ -1,0 +1,192 @@
+/* Category landing 5.0: scope the light, premium visual language to this landing page.
+   All globally shared guide pages keep their current design until individually QA'd. */
+.main{background:#f8faff;overflow:clip}
+.topbar:global(.topbar){
+  background:#fff!important;border-bottom:1px solid #e7ecf7!important;
+  box-shadow:none!important;
+}
+.topbar :global(.brand){color:#121e43!important}
+.topbar :global(.brandMark){
+  background:#e8efff!important;color:#234bd1!important;
+  box-shadow:none!important;border-radius:12px!important;
+}
+.topbar :global(nav a){color:#344667!important}
+.topbar :global(nav a:hover){color:#1744bf!important}
+.topbar :global(.topbarCta){
+  background:#234bd1!important;color:#fff!important;
+  box-shadow:0 7px 20px rgba(35,75,209,.15)!important;
+}
+.hero:global(.categoryHero){
+  position:relative;isolation:isolate;display:flex;align-items:center;
+  min-height:450px!important;padding:56px 28px 62px!important;
+  background:linear-gradient(112deg,#f7f9ff 0%,#f1f6ff 73%,#e6edfc 100%)!important;
+  color:#121e43!important;border-bottom:1px solid #e2eaf9!important;
+}
+.hero:before,.hero:after{display:none!important}
+.heroArtwork{
+  pointer-events:none;position:absolute;inset:0 0 0 52%;z-index:0;
+  background-image:url('https://images.pexels.com/photos/5998829/pexels-photo-5998829.jpeg?auto=compress&cs=tinysrgb&w=1200');
+  background-position:center center;background-size:cover;
+}
+.heroArtwork:before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,#f5f8ff 0%,rgba(245,248,255,.98) 8%,rgba(245,248,255,.55) 38%,rgba(245,248,255,.02) 74%);
+}
+.heroArtwork:after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(0deg,rgba(248,250,255,.28),transparent 40%);
+}
+.heroInner:global(.guideWrap){
+  position:relative;z-index:1;width:min(1120px,100%);
+  margin:0 auto!important;max-width:1120px!important;
+}
+.hero :global(.breadcrumbs),.hero :global(.breadcrumbs a){color:#536681!important;font-size:13px!important}
+.hero :global(.breadcrumbs a:hover){color:#234bd1!important}
+.hero :global(.breadcrumbs span[aria-current='page']){color:#244cba!important}
+.hero :global(.categoryHeroIcon){
+  width:49px;height:49px;margin:24px 0 17px;
+  border-radius:16px;background:#e0eaff!important;color:#2453cb!important;
+  box-shadow:none!important;
+}
+.hero :global(.kicker){color:#335ccd!important;font-size:11px!important;letter-spacing:.115em!important}
+.hero :global(h1){
+  max-width:620px!important;color:#101d42!important;
+  font-size:clamp(41px,4.7vw,66px)!important;line-height:1.04!important;
+  letter-spacing:-.055em!important;text-shadow:none!important;margin:12px 0 16px!important;
+}
+.hero :global(.lead){
+  max-width:540px!important;margin:0!important;
+  font-size:clamp(15px,1.45vw,18px)!important;line-height:1.52!important;color:#475978!important;
+}
+.hero :global(.categoryHeroActions){
+  margin-top:27px!important;gap:10px!important;
+}
+.hero :global(.categoryHeroActions a){
+  min-height:48px;border-radius:13px!important;
+  padding:0 18px!important;font-size:13px!important;
+  box-shadow:none!important;
+}
+.hero :global(.categoryHeroActions .primary){
+  background:#234bd1!important;color:#fff!important;
+  box-shadow:0 9px 22px rgba(35,75,209,.16)!important;
+}
+.hero :global(.categoryHeroActions .secondaryLight){
+  background:rgba(255,255,255,.94)!important;
+  border:1px solid #cddbf5!important;color:#2547a6!important;
+  backdrop-filter:none!important;
+}
+.hero :global(.fine){
+  margin-top:17px!important;color:#596985!important;
+  font-size:12px!important;line-height:1.5!important;
+}
+.hero :global(.fine svg){color:#2b9a7f}
+.article:global(.categoryArticle){
+  margin:0 auto 65px!important;max-width:1160px!important;
+  padding:36px 26px 64px!important;border:0!important;
+  border-radius:0!important;background:transparent!important;box-shadow:none!important;
+  color:#273954!important;
+}
+.article :global(a:focus-visible),.hero :global(a:focus-visible),.topbar :global(a:focus-visible){
+  outline:3px solid #668dfa!important;outline-offset:3px!important;
+}
+.intro:global(.categoryIntro){
+  margin-top:50px;margin-bottom:0;padding:29px 32px 32px;
+  border:1px solid #dfe7f5;border-radius:21px;background:#fff;
+  box-shadow:0 9px 28px rgba(36,67,124,.035);
+}
+.intro :global(.kicker),.guides :global(.kicker){color:#335ccd!important}
+.intro :global(h2){color:#14264e!important;font-size:clamp(27px,3vw,33px)!important;line-height:1.15!important}
+.intro :global(p:not(.kicker)){color:#576983!important}
+.intro :global(.compactChecks){
+  padding:5px 15px!important;box-shadow:none!important;
+  border:1px solid #e3eaf5!important;background:#fafcff!important;
+}
+.intro :global(.compactChecks svg){color:#278d7f!important}
+.intro :global(.compactChecks p){color:#34486c!important;font-size:13px!important}
+.guides:global(.categoryGuideSection){margin-top:52px}
+.guides :global(.categoryGuideHead h2){color:#132750!important;font-size:clamp(28px,3vw,36px)!important}
+.guides :global(.categoryGuideHead>p){color:#596984!important}
+.guides :global(.categoryGuideGrid>a){
+  border:1px solid #dfe7f5!important;background:#fff!important;
+  box-shadow:0 8px 28px rgba(35,67,124,.035)!important;
+  border-radius:17px!important;padding:19px 21px!important;
+}
+.guides :global(.categoryGuideGrid>a:hover){border-color:#aebfeb!important}
+.guides :global(.categoryGuideGrid strong){color:#172a52!important}
+.guides :global(.categoryGuideGrid span){color:#60718a!important;font-size:13px!important}
+.guides :global(.categoryGuideGrid b){color:#2451c4!important;font-size:12px!important}
+.guides :global(.categoryMore){
+  border:1px solid #dfe7f5!important;border-radius:16px!important;background:#fff!important;
+}
+.guides :global(.categoryMore summary){color:#234aab!important;min-height:55px;font-size:13px!important}
+.guides :global(.categoryMore a){color:#263a60!important}
+@media(max-width:900px){
+ .heroArtwork{left:48%;background-position:47% center;opacity:.63}
+ .heroArtwork:before{background:linear-gradient(90deg,#f5f8ff,rgba(245,248,255,.8) 50%,rgba(245,248,255,.16))}
+ .hero :global(h1){max-width:565px!important}
+}
+@media(max-width:760px){
+ .hero:global(.categoryHero){min-height:0!important;padding:28px 18px 36px!important}
+ .heroArtwork{display:none}
+ .hero :global(.categoryHeroIcon){margin:19px 0 14px;width:43px;height:43px}
+ .hero :global(h1){max-width:640px!important;font-size:clamp(36px,7vw,49px)!important;line-height:1.08!important}
+ .hero :global(.lead){max-width:640px!important;font-size:15px!important}
+ .hero :global(.categoryHeroActions){display:grid!important;grid-template-columns:1fr;gap:9px!important}
+ .hero :global(.categoryHeroActions a){width:100%;justify-content:center}
+ .hero :global(.fine){font-size:11px!important}
+ .article:global(.categoryArticle){padding:24px 18px 48px!important;margin:0 auto 35px!important}
+ .intro:global(.categoryIntro){margin-top:35px;padding:21px 19px 24px}
+ .intro :global(.compactChecks){grid-template-columns:1fr;padding:10px 17px!important}
+ .intro :global(.compactChecks p){padding:10px 0!important}
+ .guides:global(.categoryGuideSection){margin-top:38px}
+ .guides :global(.categoryGuideHead){grid-template-columns:1fr;gap:12px}
+ .guides :global(.categoryGuideGrid){grid-template-columns:1fr}
+}
+@media(max-width:390px){
+ .hero:global(.categoryHero){padding:24px 16px 32px!important}
+ .hero :global(h1){font-size:35px!important}
+ .article:global(.categoryArticle){padding:20px 13px 38px!important}
+ .intro:global(.categoryIntro){padding:18px 15px}
+}
+@media(prefers-reduced-motion:reduce){
+ .hero *, .article *{scroll-behavior:auto}
+}
+
+
+/* Individual photographic accents reuse imagery already present on the site. */
+.hero:global(.guideHero-bredband) .heroArtwork{
+ background-image:url('https://images.pexels.com/photos/7019025/pexels-photo-7019025.jpeg?auto=compress&cs=tinysrgb&w=1200');
+}
+.hero:global(.guideHero-mobil) .heroArtwork{
+ background-image:url('https://images.pexels.com/photos/36665172/pexels-photo-36665172.jpeg?auto=compress&cs=tinysrgb&w=1200');
+}
+.hero:global(.guideHero-forsakring) .heroArtwork{
+ background-image:url('https://images.pexels.com/photos/20725528/pexels-photo-20725528.jpeg?auto=compress&cs=tinysrgb&w=1200');
+}
+.hero:global(.guideHero-ekonomi) .heroArtwork{
+ background-image:url('https://images.pexels.com/photos/7887849/pexels-photo-7887849.jpeg?auto=compress&cs=tinysrgb&w=1200');
+}
+/* Economy uses the older PartnerDirectory; retain its factual content but
+   harmonize its visual language without touching tracked outbound links. */
+.article :global(.partnerSection){
+ background:#f5f8ff!important;border-color:#e0e8f5!important;box-shadow:none!important;
+}
+.article :global(.partnerCard){border-color:#dae4f3!important;background:#fff!important}
+.article :global(.partnerButton),.article :global(.partnerButtonStrong){
+ background:#234bd1!important;color:#fff!important;
+}
+.article :global(.claimsSpotlight){border-color:#dce6f5!important;background:#fff!important}
+.article :global(.claimsSpotlight h2){color:#17294e!important}
+.article :global(.claimsSpotlight .kicker){color:#335bca!important}
+.article :global(.claimsSpotlightActions a:first-child){background:#234bd1!important;color:#fff!important}
+.article :global(.claimsSpotlightActions a:last-child){background:#edf3ff!important;color:#234ab6!important;border-color:#cddcf5!important}
+.article :global(.claimsSpotlightBrand){background:#f4f7ff!important;border-color:#e2e9f8!important}
+
+
+/* CategoryLanding (economy) uses a back link instead of breadcrumb nav. */
+.hero :global(.back){
+ display:inline-flex;align-items:center;gap:6px;
+ color:#36567f!important;font-size:13px!important;font-weight:750!important;
+ text-decoration:none!important;
+}
+.hero :global(.back:hover){color:#234bd1!important}
