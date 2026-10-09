@@ -108,16 +108,28 @@
       "scope": "Mobile navigation V5",
       "status": "merged",
       "note": "Mobile five-link bottom navigation unified in navy/blue with accessible focus, 229 browser checks passed. The BrowserStack physical iPhone runner was infrastructure-blocked by exhausted quota; cannot claim real iPhone QA."
+    },
+    {
+      "pr": 87,
+      "scope": "Kostnadskollen V5",
+      "status": "merged",
+      "note": "Scoped navy/blue page, accurate optional-cost Swedish copy and input accessibility; fixed selected hover-state detected in QA; 231 Chromium commercial/browser checks passed. Partner matching, SEO and privacy logic unchanged."
+    },
+    {
+      "pr": 90,
+      "scope": "Truthful real-iPhone QA gate",
+      "status": "merged",
+      "note": "BrowserStack workflow runs manually only; quota-expired connections now fail rather than misleadingly green. Does NOT mean real iPhone QA passed; no paid tier enabled."
     }
   ],
   "unresolved": [
     "Confirm Cloudflare production SHA and actual rendered Elavtal PR #79 and homepage PR #83 independently of CI.",
-    "Finish consistency and real copy review for Kostnadskollen, shared guides and deep category pages. PR #87 app style and #88 Safari-engine test currently in QA; do not mark them merged before checking.",
+    "Continue deep-page copy/interaction QA across all categories and common guides; Kostnadskollen PR #87 now merged.",
     "No evidence that design changes improved approved affiliate revenue. Continue qualified organic visitor acquisition and real attribution checks.",
     "PR #48 (old hypothetical annual quarter-price widget) was CLOSED as redundant after spot widget PR #77; avoid resurrecting it.",
     "Masterplan 2026-10-08 traffic, partner counts and revenue remain a dated baseline; query live GA4/GSC/network data for current numbers.",
-    "BrowserStack iPhone run 37952606478 was GREEN only because quota exhaustion returned exit 0; logs show 3 unexecuted sessions. PR #88 corrects this and adds free WebKit mobile tests. Physical-device QA remains unverified without available BrowserStack quota.",
+    "BrowserStack physical iPhone sessions remain UNTESTED due depleted quota, despite older false-green run 37952606478. PR #90 corrects reporting. PR #88 proposing free WebKit test is open with merge conflict and a slow browser installation; do not mark it shipped before clean CI/merge.",
     "Current production-route smoke reached live routes, but deployment was not matched to exact main commit SHA."
   ],
-  "latestMergedMainCommit": "4ebf6317125ab9591d2173ba3cdcda40a0880dca"
+  "latestMergedMainCommit": "81d157fa00a327f1be2080ace3aa2144a5dc7649"
 }
