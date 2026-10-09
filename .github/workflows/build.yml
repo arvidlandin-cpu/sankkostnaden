@@ -19,6 +19,8 @@ jobs:
         run: npm install --progress=false
       - name: Validate spot price parsing and DST
         run: node --test tests/spot-price-feed.test.mjs
+      - name: Test autopilot decision and release-context safeguards
+        run: node --test tests/autopilot-control.test.mjs
       - name: Check internal routes
         run: npm run check
       - name: Check metadata and tracking integrity
