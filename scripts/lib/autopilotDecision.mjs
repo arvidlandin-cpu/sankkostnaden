@@ -592,6 +592,22 @@ export function toMarkdown(packet){
   }
   lines.push('');
 
+  if(packet.projectContext){
+    const ctx=packet.projectContext;
+    lines.push(
+      '## Aktuellt produktläge (releasejournal)',
+      '',
+      '- Senast dokumenterad release: **'+(ctx.updatedAt||'okänt datum')+'** · main '+(ctx.latestVerifiedMainCommit||'okänt'),
+      '- Utcheckad revision för denna körning: **'+(ctx.checkoutSha||'saknas')+'**',
+      '- Senaste samlade releaser: '+(Array.isArray(ctx.shipped)?ctx.shipped.map(x=>'#'+x.pr+' '+x.scope).join('; '):'saknas'),
+      '- Produktbeslut: '+(ctx.decisionContext?.design||'kontrollera masterplan'),
+      '- Pris-/jämförelsegräns: '+(ctx.decisionContext?.pricing||'verifiera priskälla'),
+      '- Ej verifierat: '+(Array.isArray(ctx.unresolved)?ctx.unresolved.join(' | '):'kontrollera live QA'),
+      '- Läs autopilot/release-context.json, aktuell GitHub-kod och autopilot/MASTERPLAN_EXECUTION_2026-10-08.md innan nya åtgärder. Denna lista är inte ett automatiskt bevis på live deploy.',
+      ''
+    );
+  }
+
   if(packet.activeExperiments?.length){
     lines.push('## Pågående experiment ('+packet.activeExperiments.length+')','');
     for(const experiment of packet.activeExperiments){
