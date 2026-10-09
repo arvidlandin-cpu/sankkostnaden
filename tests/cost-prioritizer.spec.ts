@@ -298,3 +298,31 @@ for(const width of [360,390,430,1024,1440]){
   expect(overflow).toBeLessThanOrEqual(1);
  });
 }
+
+test('Kostnadskollen premium design maintains one useful first action, no fabricated savings',async({page})=>{
+ await page.goto('/app/?qa=1');
+ const heading=page.getByRole('heading',{level:1,name:'Vilket avtal bör du kontrollera först?'});
+ await expect(heading).toBeVisible();
+ expect(await heading.evaluate(el=>getComputedStyle(el).color)).toBe('rgb(17, 37, 76)');
+ const controls=page.getByRole('group',{name:'Vad stämmer bäst om ditt elavtal?'});
+ await expect(controls.getByRole('button')).toHaveCount(3);
+ const choice=controls.getByRole('button',{name:/Priset har ändrats eller avtalet känns dyrt/i});
+ await choice.click();
+ expect(await choice.evaluate(el=>getComputedStyle(el).backgroundColor)).toBe('rgb(237, 243, 255)');
+ await expect(page.locator('a[data-placement="cost_check_quick_path"]')).toHaveCount(1);
+ await expect(page.getByText('Här kan du börja')).toBeVisible();
+ await expect(page.locator('#resultat')).not.toContainText('garanterad besparing');
+ await page.getByText('Lägg till månadskostnad').click();
+ await expect(page.getByRole('spinbutton',{name:/Månadskostnad för El/i})).toBeVisible();
+});
+for(const width of [360,390,430,1024,1440]){
+ test('Kostnadskollen premium blue review at '+width+'px',async({page})=>{
+  await page.setViewportSize({width,height:860});
+  await page.goto('/app/?qa=1');
+  const group=page.getByRole('group',{name:'Vad stämmer bäst om ditt elavtal?'});
+  await expect(group.getByRole('button')).toHaveCount(3);
+  const excess=await page.evaluate(()=>Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)-document.documentElement.clientWidth);
+  expect(excess).toBeLessThanOrEqual(1);
+  await page.screenshot({path:'test-results/screenshots/kostnadskollen-v5-'+width+'.png',fullPage:true});
+ });
+}

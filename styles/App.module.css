@@ -1115,3 +1115,77 @@
 .noIssueLinks{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
 .noIssueLinks a{min-height:44px;box-sizing:border-box;display:inline-flex;align-items:center;gap:9px;padding:11px 13px;border-radius:10px;border:1px solid #c9dac5;background:#f4f8ef;text-decoration:none;font-size:13px;color:#294b34}
 .noIssueLinks a:hover{border-color:#6c875d}
+
+
+/* Kostnadskollen 5.0 — same intentional warm-white/navy visual language as category landing.
+   Calm first question, clearly selected option and honest optional numbers. */
+.appShell{
+ --sk-ink:#122449;--sk-ink-muted:#526785;--sk-focus:#668dfa;
+ max-width:1190px;padding:35px 30px 96px;
+ background:linear-gradient(165deg,#f7f9ff 0%,#fff 60%);
+ border-left:1px solid #eef2f9;border-right:1px solid #eef2f9;
+}
+.hero{max-width:820px;padding:18px 0 33px!important}
+.heroEyebrow{margin-bottom:18px;color:#315ac6!important}
+.heroEyebrow span{color:#315ac6!important}
+.heroEyebrow .back{color:#445d80!important}
+.hero h1{color:#11254c!important;letter-spacing:-.052em!important;font-size:clamp(37px,5.25vw,59px)!important;line-height:1.08!important}
+.hero>p{color:#506484!important;font-size:16px}
+.stageToolbar{max-width:840px;margin:0 auto 12px}
+.stageToolbar span,.stageToolbar .importedCost{color:#465d81!important}
+.stageToolbar button{border-color:#d7e2f5!important;color:#254ba5!important;background:#fff!important}
+.progressRail{max-width:840px;margin-left:auto;margin-right:auto}
+.progressRail button{border-color:#dce5f6!important;color:#355275!important}
+.progressRail .activeTab{background:#e8efff!important;color:#183f9f!important;border-color:#92adea!important}
+.progressRail .activeTab b{background:#234bd1!important;color:#fff!important}
+.questionCard{border:1px solid #dce6f5!important;border-radius:21px!important;box-shadow:0 14px 38px rgba(28,58,111,.065)!important}
+.questionTop{padding-top:27px!important}
+.questionTop span{color:#385dc4!important}
+.questionTop h2{color:#142a55!important;font-size:clamp(25px,3vw,31px)!important}
+.questionLabel{color:#344c6e!important;font-size:16px!important}
+.choices button{min-height:58px;color:#243d62!important;border-color:#dce6f5!important;border-radius:13px!important}
+.choices button:hover{background:#f5f8ff!important;border-color:#99b6ee!important}
+.choices .selected{border-color:#7293e9!important;background:#edf3ff!important;color:#173b91!important;box-shadow:inset 0 0 0 1px #adc0f2!important}
+.choices button.selected:hover{background:#edf3ff!important;border-color:#7293e9!important}
+.choices .selected::before{border-color:#234bd1!important}
+.optionalCost{border-top-color:#e5ecf7!important}
+.optionalCost summary{color:#3c5d94!important}
+.optionalCostBody p{color:#5d7088!important}
+.cardActions{border-top-color:#e6ecf6!important}
+.reset{color:#526785!important}
+.next{background:#234bd1!important;color:#fff!important;box-shadow:0 5px 16px rgba(35,75,209,.12)}
+.previewAction{color:#244ab2!important}
+.quickPath{background:#f0f5ff!important;border-color:#d1dffb!important}
+.quickPath span{color:#2e53bf!important}
+.quickPathActions a,.earlyActions .earlyPrimary{background:#234bd1!important;color:#fff!important}
+.safePath{background:#f1f8f6!important;border-color:#d1e9df!important;color:#31534a!important}
+.safePath>svg{color:#299276!important}
+.safePath a{color:#1d7660!important}
+.results{color:#163055}
+.resultIntro h2{color:#13284e!important}
+.scenarioBox{background:#f4f7ff!important;border-color:#dce5f7!important}
+.scenarioButtons .scenarioSelected{background:#234bd1!important;border-color:#234bd1!important;color:#fff!important}
+.earlyResult{border-color:#d7e3f9!important}
+.noIssueSummary{border-color:#dce7f6!important;background:#fff!important}
+.noIssueSummary>svg{color:#3158ba!important}
+.noIssueSummary h3{color:#183461!important}
+.noIssueSummary a{color:#2454b5!important}
+.noIssueLinks a{background:#f3f7ff!important;border-color:#d1dff9!important;color:#2249ae!important}
+.methodology{border-color:#e0e8f6!important}
+.methodology summary{color:#3c5784!important}
+.questionCard button:focus-visible,.questionCard a:focus-visible,.results a:focus-visible,
+.results button:focus-visible,.stageToolbar button:focus-visible,.progressRail button:focus-visible{
+ outline:3px solid #668dfa!important;outline-offset:3px!important;
+}
+@media(max-width:760px){
+ .appShell{padding:23px 16px 96px!important;border:0}
+ .hero{padding:7px 0 26px!important}
+ .hero h1{font-size:clamp(34px,9vw,44px)!important}
+ .hero>p{font-size:15px!important}
+ .questionTop{padding-top:21px!important}
+ .choices button{min-height:58px!important}
+}
+@media(max-width:380px){
+ .appShell{padding-left:12px!important;padding-right:12px!important}
+ .hero h1{font-size:34px!important}
+}

@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { ArrowLeft, ArrowRight, ArrowUpRight, Check, ChevronDown, Gauge, PiggyBank, RotateCcw, Target, Zap } from 'lucide-react';
 import styles from '../styles/App.module.css';
+import premium from '../styles/CategoryPremium.module.css';
 import { getActivePartners, partnerGroupCheckedLabel, type PartnerIntent } from '../lib/partners';
 import { costCheckStorageKey, emptyCostAnswers, normalizeCostAnswers, prioritySortValue, scenarioAnnualSaving, type CostAnswers, type CostKey } from '../lib/costPrioritizer';
 import { emitAnalyticsEvent } from '../lib/clientAttribution';
@@ -170,7 +171,7 @@ export default function SavingsApp(){
       <script type='application/ld+json' dangerouslySetInnerHTML={{__html:JSON.stringify({'@context':'https://schema.org','@type':'WebApplication',name:'Kostnadskollen',description:'Ett gratis verktyg som hjälper hushåll prioritera vilka återkommande avtal som är mest värda att granska först.',url:'https://sankkostnaden.se/app/',applicationCategory:'FinanceApplication',operatingSystem:'Web',isAccessibleForFree:true})}}/>
     </Head>
 
-    <header className='topbar'>
+    <header className={`topbar ${premium.topbar}`}>
       <Link className='brand' href='/'><span className='brandMark'><PiggyBank size={22}/></span><span>Sänk Kostnaden</span></Link>
       <nav><Link href='/bredband/'>Bredband</Link><Link href='/elavtal/'>El</Link><Link href='/mobil/'>Mobil</Link><Link href='/forsakring/'>Försäkring</Link><Link href='/ekonomi/'>Ekonomi</Link></nav>
     </header>
@@ -185,7 +186,7 @@ export default function SavingsApp(){
       <section id='fragor' className={styles.diagnostic}>
         <div className={styles.stageToolbar}>
           <span>{completed===0?'En fråga räcker för att börja':completed===4?'Alla fyra områden kontrollerade':`${completed} av 4 områden klara`}</span>
-          {totalMonthly>0&&<span className={styles.importedCost}>Inlästa kostnader: {totalMonthly.toLocaleString('sv-SE')} kr/mån</span>}
+          {totalMonthly>0&&<span className={styles.importedCost}>Dina angivna kostnader: {totalMonthly.toLocaleString('sv-SE')} kr/mån</span>}
           <button type='button' aria-expanded={areaPickerOpen} aria-controls='cost-check-area-picker' onClick={()=>setAreaPickerOpen(open=>!open)}>
             Byt område <ChevronDown size={15}/>
           </button>
@@ -206,8 +207,8 @@ export default function SavingsApp(){
           <details className={styles.optionalCost} open={activeAnswer.monthly>0}>
             <summary>{activeAnswer.monthly>0?activeAnswer.monthly.toLocaleString('sv-SE')+' kr/mån angivet':'Lägg till månadskostnad (valfritt)'}</summary>
             <div className={styles.optionalCostBody}>
-              <p>Beloppet används lokalt för att skilja annars likvärdiga områden och för ditt eget besparingsscenario. Exakta belopp skickas inte till vår analysmätning.</p>
-              <div className={styles.moneyInput}><input type='number' min='0' inputMode='numeric' value={activeAnswer.monthly||''} onChange={event=>update(active,'monthly',Math.max(0,Number(event.target.value)||0))} placeholder='t.ex. 499'/><span>kr/mån</span></div>
+              <p>Frivilligt. Vi använder beloppet här på sidan för din prioritering och ett räkneexempel, men skickar inte summan till vår besöksstatistik.</p>
+              <div className={styles.moneyInput}><input type='number' aria-label={`Månadskostnad för ${activeCategory.label}, kronor`} min='0' inputMode='numeric' value={activeAnswer.monthly||''} onChange={event=>update(active,'monthly',Math.max(0,Number(event.target.value)||0))} placeholder='t.ex. 499'/><span>kr/mån</span></div>
             </div>
           </details>
 
