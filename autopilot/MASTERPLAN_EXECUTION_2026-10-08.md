@@ -13,6 +13,14 @@ Read also: `autopilot/PRODUCT_EXCELLENCE.md`, `STRATEGY_AND_EVIDENCE_STANDARD.md
 - [ ] PR #88 — Free WebKit Safari-*engine* regression and correction of BrowserStack false-green behavior pending validation. A previous green 'real iPhone' run `37952606478` in fact logged **3 BrowserStack quota-expired connection failures**. Treat real-device status as UNTESTED / INFRASTRUCTURE BLOCKED, not a pass. The free WebKit desktop-engine-on-mobile-width substitute is not a physical iPhone.
 - [ ] Confirm Cloudflare page really reflects released UI; success from live route smoke is only confirmation of route availability/content markers, not of matching the deploy SHA. Recheck organic/relevant traffic and *approved* affiliate commission separately.
 
+## Next product-quality iteration — 2026-10-09
+
+- [x] **PR #95 – Bredband:** First screen now leads straight to active Bredbandsval.se multi-operator, address-specific comparison, with clear partner label and without requiring the address on our site. Existing category partners retained. **240 Chromium commercial/browser checks passed**.
+- [x] **PR #97 – Kostnadskollen:** One-answer actionable inline next step, including uncertainty. Users seeing a clear electricity/broadband problem can use an active comparison service (Elskling/Bredbandsval); mobile/insurance always see transparent category choices, not one arbitrarily selected vendor. Removed redundant 'Se din första startpunkt' link. **248 Chromium commercial/browser checks passed** on branch based on already merged #95.
+- [x] **PR #96 closed, not merged:** had 248 green branch tests but conflicted with PR #95 in the same CI workflow file; rebuilt from fresh main as PR #97 and re-ran the suite. Never claim #96 shipped.
+- [ ] Independently verify Cloudflare exact published version, outbound affiliate destination/event on real production click, and full first-screen mobile legibility. Builds and synthetic QA cannot demonstrate real approved revenue.
+- [ ] Continue work on low-knowledge Swedish phrasing, end-to-end drop-off, SEO traffic and attributed approved transactions; prioritize evidence over further decorative components.
+
 ## Product-quality release sync — 2026-10-09 evening
 
 - [x] **PR #92 – Mobil och försäkring, syfte före volym:** tog bort dubbla familjekalkyl-länkar och störande minietiketter i mobilens första flöde; reseskydd och skadeärende öppnas vid behov under Försäkring. Alla 10 mobilpartners och 9 unika försäkringspartners (inklusive partnerklick) behållna. Full kommersiell Playwright-regression: **235 godkända**. GitHub main build och production-route smoke godkända; exakt Cloudflare-version återstår att kontrollera.
