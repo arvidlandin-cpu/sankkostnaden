@@ -36,6 +36,7 @@ export default function Ekonomi(){
     compareLabel='Se våra lånejämförelser'
     helpHref='/verktyg/hushallskostnadskollen/'
     helpLabel='Börja med hushållskostnaderna'
+    comparisonFirst
     partnerIntent='loan'
     partnerHeading='Tjänster för att jämföra privatlån'
     afterPartners={savingBlock}
