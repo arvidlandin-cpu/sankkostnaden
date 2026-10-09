@@ -25,7 +25,7 @@ export default function MobileMarketGateway(){
         <div>
           <p className={styles.eyebrow}>ENKLARE VAL · UTAN INLOGGNING</p>
           <h2 id='mobile-start-title'>Vad vill du få ordning på?</h2>
-          <p>Välj en startpunkt, eller gå direkt till alla våra aktiva mobiloperatörer. Inget frågeformulär krävs för att se alternativen.</p>
+          <p>Börja med surfbehovet, familjens kostnader eller gå direkt till en operatör.</p>
         </div>
         <span className={styles.count}><CheckCircle2 size={16}/> {all.length} aktiva mobilpartners</span>
       </div>
@@ -39,7 +39,7 @@ export default function MobileMarketGateway(){
             <div className={styles.miniNames}><span>Surfvanor</span><span>Täckning</span><span>Bindningstid</span></div>
           </div>
           <Link className={styles.primary} href='/mobil/hur-mycket-surf-behover-jag/' onClick={()=>pathClick('single_surf_help')}>Hitta rätt nivå av surf <ArrowRight size={19}/></Link>
-          <small className={styles.sponsored}>Gratis vägledning · inga påstådda livepriser</small>
+          <small className={styles.sponsored}>Gratis vägledning · kontrollera erbjudanden hos operatören</small>
         </article>
         <article className={styles.directCard}>
           <div className={styles.routeIcon}><Users size={21}/></div>
