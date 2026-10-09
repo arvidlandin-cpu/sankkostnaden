@@ -24,6 +24,8 @@ Read also: `autopilot/PRODUCT_EXCELLENCE.md`, `STRATEGY_AND_EVIDENCE_STANDARD.md
 
 ### P0D — Sitewide visual design, layout, identity and readability (**audit started, release outstanding**)
 
+**Uppdaterad visuell målbild 2026-10-09:** ägarens bildfeedback väljer en lugn, luftig blå/mörkblå premiumkänsla från första designkonceptet (färre samtidiga element), framför tidigare skogsgrön/lime-hypotes. Se **`autopilot/VISUAL_UX_ROADMAP_2026-10-09.md`** för 4-stegs operativ designplan, skarpa godkännandekriterier och första pilot. Detta uppdaterar designriktningen, inte redan levererade produkt- eller SEO-beslut.
+
 - [x] Completed initial **source-level** comparison of homepage, Kostnadskollen, global CSS and four newly rebuilt category hubs. Found inconsistent independent navigation/layout systems, hardcoded near-identical green shades, microcopy under 12px on mobile, dense homepage entry card, favicon-based partner 'logos' and incomplete real screenshot review. Details and source-backed reasoning in `autopilot/DESIGN_SYSTEM_AUDIT_2026-10-08.md`.
 - [ ] Take real production screenshots across home, /app/, 5 categories, original tools and guides at 360/390/430/1024/1440; conduct **subjective visual** first-screen, typography, tap/keyboard, contrast and partner-brand review. Screen overflow tests alone do not prove quality.
 - [ ] Develop one consistent design-token and navigation/CTA/type system **using existing deep-forest/warm-white/lime identity as starting hypothesis**, with unified card and disclosure patterns. Do not simply increase all buttons or blindly duplicate category pages.
