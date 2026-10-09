@@ -18,10 +18,10 @@ type Category = {
 };
 
 const categories: Category[] = [
-  {key:'el',label:'Elavtal',short:'El',href:'/elavtal/jamfor-elavtal/',fitQuestion:'Vad stämmer bäst om ditt elavtal?',fitOptions:[{label:'Nyligen jämfört – jag har koll på pris och avgifter',value:0},{label:'Osäker på avgifter/villkor eller länge sedan jag jämförde',value:1},{label:'Priset har ändrats eller avtalet känns dyrt',value:2}]},
-  {key:'bredband',label:'Bredband',short:'Bredband',href:'/bredband/bredband-pa-min-adress/',fitQuestion:'Vad stämmer bäst om bredbandet?',fitOptions:[{label:'Nyligen jämfört – fart och pris känns rätt',value:0},{label:'Osäker på nivå/pris eller länge sedan jag jämförde',value:1},{label:'Priset har höjts eller känns högt',value:2}]},
-  {key:'mobil',label:'Mobilabonnemang',short:'Mobil',href:'/mobil/billigaste-mobilabonnemanget/',fitQuestion:'Vad stämmer bäst om mobilabonnemanget?',fitOptions:[{label:'Nyligen jämfört – surf och pris passar bra',value:0},{label:'Osäker på surf/pris eller länge sedan jag jämförde',value:1},{label:'Priset har höjts eller upplägget känns gammalt',value:2}]},
-  {key:'forsakring',label:'Försäkring',short:'Försäkring',href:'/forsakring/jamfor-forsakring/',fitQuestion:'Hur bra koll har du på försäkringarna?',fitOptions:[{label:'Nyligen jämfört – bra koll på skydd och självrisk',value:0},{label:'Delvis osäker eller länge sedan jag jämförde',value:1},{label:'Vet inte vad som ingår eller vad jag betalar för',value:2}]},
+  {key:'el',label:'Elavtal',short:'El',href:'/elavtal/jamfor-elavtal/',fitQuestion:'Vad stämmer bäst om ditt elavtal?',fitOptions:[{label:'Jag har koll på pris och villkor',value:0},{label:'Jag är osäker på avgifter eller villkor',value:1},{label:'Priset har höjts eller känns dyrt',value:2}]},
+  {key:'bredband',label:'Bredband',short:'Bredband',href:'/bredband/bredband-pa-min-adress/',fitQuestion:'Vad stämmer bäst om bredbandet?',fitOptions:[{label:'Hastighet och pris känns rätt',value:0},{label:'Jag är osäker på om priset är rimligt',value:1},{label:'Priset har höjts eller känns högt',value:2}]},
+  {key:'mobil',label:'Mobilabonnemang',short:'Mobil',href:'/mobil/billigaste-mobilabonnemanget/',fitQuestion:'Vad stämmer bäst om mobilabonnemanget?',fitOptions:[{label:'Surf och pris passar mig',value:0},{label:'Jag är osäker på surf eller pris',value:1},{label:'Priset är högt eller avtalet känns gammalt',value:2}]},
+  {key:'forsakring',label:'Försäkring',short:'Försäkring',href:'/forsakring/jamfor-forsakring/',fitQuestion:'Hur bra koll har du på försäkringarna?',fitOptions:[{label:'Jag har koll på mitt försäkringsskydd',value:0},{label:'Jag är osäker på skydd eller självrisk',value:1},{label:'Jag vet inte vad försäkringen täcker',value:2}]},
 ];
 
 const legacyStorageKey='sankkostnaden-cost-check-v4';
@@ -62,10 +62,10 @@ export default function SavingsApp(){
     const answer=answers[category.key];
     const reasons:string[]=[];
     if(answer.fit>=1){
-      if(category.key==='el') reasons.push(answer.fit===2?'Pris eller kampanj kan ha ändrats':'Avgifter eller villkor är inte helt tydliga');
-      if(category.key==='bredband') reasons.push(answer.fit===2?'Priset har höjts eller känns högt':'Du är osäker på pris, nivå eller när avtalet senast jämfördes');
-      if(category.key==='mobil') reasons.push(answer.fit===2?'Priset har höjts eller upplägget känns gammalt':'Du är osäker på surf, pris eller när abonnemanget senast jämfördes');
-      if(category.key==='forsakring') reasons.push(answer.fit===2?'Du saknar koll på vad skyddet faktiskt omfattar':'Du är osäker på skydd, självrisk eller när försäkringen senast jämfördes');
+      if(category.key==='el') reasons.push(answer.fit===2?'Ditt elpris har stigit eller känns högt':'Avgifter eller villkor är inte helt tydliga');
+      if(category.key==='bredband') reasons.push(answer.fit===2?'Priset har höjts eller känns högt':'Du är osäker på om bredbandspriset är rimligt');
+      if(category.key==='mobil') reasons.push(answer.fit===2?'Priset är högt eller avtalet känns gammalt':'Du är osäker på om surf och pris passar dig');
+      if(category.key==='forsakring') reasons.push(answer.fit===2?'Du saknar koll på vad skyddet faktiskt omfattar':'Du är osäker på skydd eller självrisk');
     }
     if(answer.monthly>0) reasons.push('Du har lagt in en faktisk månadskostnad för området');
     if(!reasons.length) reasons.push('Dina svar visar ingen tydlig brist just nu');
