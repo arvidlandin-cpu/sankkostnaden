@@ -30,9 +30,9 @@ export default function ElectricityMarketGateway(){
     <section className={styles.section} aria-labelledby='electricity-start-title'>
       <div className={styles.sectionHead}>
         <div>
-          <p className={styles.eyebrow}>ENKEL START · AKTUELLA PARTNERS</p>
+          <p className={styles.eyebrow}>BÖRJA HÄR</p>
           <h2 id='electricity-start-title'>Välj hur du vill jämföra</h2>
-          <p>Du behöver inte fylla i förbrukning här. Aktuella priser och villkor kontrolleras hos den tjänst eller det bolag du väljer.</p>
+          <p>Välj att jämföra flera erbjudanden hos Elskling eller gå direkt till ett elbolag. Du kan börja utan att ange förbrukning.</p>
         </div>
         <span className={styles.count}><CheckCircle2 size={16}/> {all.length} aktiva samarbetspartners</span>
       </div>
@@ -43,7 +43,7 @@ export default function ElectricityMarketGateway(){
           <div className={styles.routeCopy}>
             <span className={styles.routeType}>JÄMFÖRELSETJÄNST · FLERA ALTERNATIV</span>
             <h3>Jämför flera elbolag på ett ställe</h3>
-            <p>Fortsätt till Elskling för att kontrollera vilka aktuella erbjudanden som finns utifrån dina uppgifter. Vi hämtar inte in deras livepriser på den här sidan.</p>
+            <p>Elskling hjälper dig jämföra aktuella erbjudanden utifrån uppgifterna du fyller i hos dem.</p>
             <div className={styles.providerName}><Logo partner={comparison}/><strong>{comparison.name}</strong></div>
           </div>
           <a className={styles.primary} href={comparison.trackingUrl} onClick={()=>trackPath('compare_service')} data-partner={comparison.name} data-category='el' data-intent='compare' data-placement='electricity_hub_comparison' data-partner-position='1' target='_blank' rel='sponsored nofollow noopener'>Jämför aktuella elavtal hos Elskling <ArrowUpRight size={19}/></a>
@@ -55,7 +55,7 @@ export default function ElectricityMarketGateway(){
           <div className={styles.routeCopy}>
             <span className={styles.routeType}>ENSKILDA ELBOLAG</span>
             <h3>Vill du gå direkt till ett elbolag?</h3>
-            <p>Se våra {suppliers.length} aktiva elhandelsbolag, välj själv och kontrollera deras pris, fasta avgifter och avtalsform innan du tecknar.</p>
+            <p>Välj bland våra {suppliers.length} elbolag. Kontrollera pris och villkor hos det bolag du är intresserad av.</p>
             <div className={styles.miniNames}>{suppliers.slice(0,4).map(partner=><span key={partner.name}>{partner.name}</span>)}<span>+ {Math.max(0,suppliers.length-4)} fler</span></div>
           </div>
           <a className={styles.secondary} href='#elbolag' onClick={()=>trackPath('provider_list')}>Se alla elbolag <ArrowRight size={19}/></a>
@@ -72,7 +72,7 @@ export default function ElectricityMarketGateway(){
         <div>
           <p className={styles.eyebrow}>ÖPPET URVAL · INTE HELA MARKNADEN</p>
           <h2 id='electricity-providers-title'>Våra aktiva elbolag</h2>
-          <p>Alla {suppliers.length} leverantörer visas öppet i bokstavsordning. Vi har inte verifierade jämförbara livepriser och utser därför inte det billigaste bolaget.</p>
+          <p>Vi visar {suppliers.length} elbolag i bokstavsordning. Priser och villkor kontrolleras hos respektive bolag.</p>
         </div>
       </div>
       <div className={styles.supplierGrid}>
@@ -88,8 +88,8 @@ export default function ElectricityMarketGateway(){
       <div className={styles.nextIcon}><Calculator size={25}/></div>
       <div>
         <p className={styles.eyebrow}>FÖR DIG MED TVÅ ERBJUDANDEN</p>
-        <h2 id='electricity-cost-title'>Vilket elavtal kostar minst över ett år?</h2>
-        <p>Räkna på samma årsförbrukning, kWh-pris, fasta avgifter och rabatt med dina egna siffror. Verktyget använder inte påstådda livepriser.</p>
+        <h2 id='electricity-cost-title'>Vilket av dina två elavtal kostar minst på ett år?</h2>
+        <p>Jämför kWh-pris, fasta avgifter och rabatter med uppgifterna från dina två erbjudanden.</p>
       </div>
       <Link href='/verktyg/elavtalskostnad/?src=elavtal' onClick={()=>trackPath('cost_calculator')}>Räkna hela årskostnaden <ArrowRight size={18}/></Link>
     </section>
