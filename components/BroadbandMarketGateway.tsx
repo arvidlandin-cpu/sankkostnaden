@@ -24,7 +24,7 @@ export default function BroadbandMarketGateway(){
     <div>
      <p className={styles.eyebrow}>BÖRJA MED DIN ADRESS · INGEN INLOGGNING HÄR</p>
      <h2 id='broadband-start-title'>Vad kan du faktiskt få på din adress?</h2>
-     <p>Vi har ingen egen databas med adressunika bredbandspriser. Däremot kan du gå vidare till en jämförelsetjänst som kontrollerar utbud och pris utifrån din adress.</p>
+     <p>Se vilka anslutningar och erbjudanden som finns där du bor. Adresskontrollen görs hos Bredbandsval.</p>
     </div>
     <span className={styles.count}><CheckCircle2 size={16}/> {active.length} aktiva bredbandspartners</span>
    </div>
@@ -59,7 +59,7 @@ export default function BroadbandMarketGateway(){
     <div>
      <p className={styles.eyebrow}>GÅ DIREKT TILL OPERATÖR · AKTIVA LÄNKAR</p>
      <h2 id='broadband-provider-title'>Vill du kontrollera ett enskilt bolag?</h2>
-     <p>Här visas våra {providers.length} aktiva direkta bredbandspartners. Tillgänglighet, kampanjpris, startavgift och ordinarie pris måste kontrolleras hos respektive leverantör och på din adress.</p>
+     <p>Våra {providers.length} direktpartners. Kontrollera hastighet, kampanjpris och ordinarie villkor på din adress hos bolaget.</p>
     </div>
    </div>
    <div className={styles.routes}>
@@ -76,7 +76,7 @@ export default function BroadbandMarketGateway(){
    <div>
     <p className={styles.eyebrow}>HAR DU TVÅ ERBJUDANDEN?</p>
     <h2 id='broadband-year-title'>Jämför verklig kostnad första året</h2>
-    <p>Räkna med kampanjmånader, ordinarie pris, startavgifter och tillägg. Du fyller själv i uppgifter från erbjudandena – vi hittar inte på aktuella priser.</p>
+    <p>Lägg in pris, kampanjperiod och avgifter från dina två erbjudanden. Se vad de kostar under första året.</p>
    </div>
    <Link href='/verktyg/forstaarskostnad-bredband/?src=bredband' onClick={()=>track('first_year_calculator')}>Räkna förstaårskostnaden <ArrowRight size={18}/></Link>
   </section>

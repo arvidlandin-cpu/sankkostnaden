@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import premium from '../styles/CategoryPremium.module.css';
 import Link from 'next/link';
 import { ArrowRight, Check, PiggyBank, ShieldCheck, Wifi } from 'lucide-react';
 import BroadbandMarketGateway from '../components/BroadbandMarketGateway';
@@ -24,14 +25,15 @@ export default function Bredband(){
    <link rel='canonical' href={canonical}/>
    <script type='application/ld+json' dangerouslySetInnerHTML={{__html:JSON.stringify({'@context':'https://schema.org','@graph':[{'@type':'WebPage',name:title,description,url:canonical,isPartOf:{'@type':'WebSite',name:'Sänk Kostnaden',url:'https://sankkostnaden.se/'}},{'@type':'BreadcrumbList',itemListElement:[{'@type':'ListItem',position:1,name:'Sänk Kostnaden',item:'https://sankkostnaden.se/'},{'@type':'ListItem',position:2,name:'Bredband',item:canonical}]}]})}}/>
   </Head>
-  <header className='topbar'>
+  <header className={`topbar ${premium.topbar}`}>
    <Link className='brand' href='/'><span className='brandMark'><PiggyBank size={22}/></span><span>Sänk Kostnaden</span></Link>
    <nav><Link href='/bredband/'>Bredband</Link><Link href='/elavtal/'>El</Link><Link href='/mobil/'>Mobil</Link><Link href='/forsakring/'>Försäkring</Link><Link href='/ekonomi/'>Ekonomi</Link></nav>
    <a className='topbarCta' href='#category-partners'>Jämför bredband →</a>
   </header>
-  <main>
-   <section className='guideHero categoryHero guideHero-bredband'>
-    <div className='guideWrap'>
+  <main className={premium.main}>
+   <section className={`guideHero categoryHero guideHero-bredband ${premium.hero}`}>
+    <div className={premium.heroArtwork} aria-hidden='true'/>
+    <div className={`guideWrap ${premium.heroInner}`}>
      <nav className='breadcrumbs' aria-label='Brödsmulor'><Link href='/'>Start</Link><span>›</span><span aria-current='page'>Bredband</span></nav>
      <div className='categoryHeroIcon'><Wifi size={25}/></div>
      <p className='kicker'>BREDBAND · ENKLARE VAL</p>
@@ -44,9 +46,9 @@ export default function Bredband(){
      <p className='fine'><ShieldCheck size={13}/> Gratis vägledning · inga kontaktuppgifter hos oss · inga påstådda adressunika livepriser</p>
     </div>
    </section>
-   <article className='article guideWrap categoryArticle'>
+   <article className={`article guideWrap categoryArticle ${premium.article}`}>
     <div id='category-partners' style={{scrollMarginTop:90}}><BroadbandMarketGateway/></div>
-    <section className='categoryIntro'>
+    <section className={`categoryIntro ${premium.intro}`}>
      <p className='kicker'>JÄMFÖR PÅ LIKA VILLKOR</p>
      <h2>Så undviker du att lockpriset styr valet</h2>
      <p>Kontrollera först att anslutningen verkligen finns på adressen. Jämför sedan samma hastighet och en rimlig kostnad över minst första året.</p>
@@ -54,7 +56,7 @@ export default function Bredband(){
       {['Utbud på din adress – fiber, koax eller mobil uppkoppling','Samma hastighet och villkor i båda alternativen','Kampanjens längd, ordinarie pris och startavgifter','Bindnings- och uppsägningstid samt eventuell utrustning'].map(item=><p key={item}><Check size={17}/>{item}</p>)}
      </div>
     </section>
-    <section className='categoryGuideSection'>
+    <section className={`categoryGuideSection ${premium.guides}`}>
      <div className='categoryGuideHead'><div><p className='kicker'>HJÄLP & GUIDER</p><h2>Vill du förstå mer innan du väljer?</h2></div><p>Från hastighet och teknik till verklig årskostnad, utan att du behöver jämföra allt samtidigt.</p></div>
      <div className='categoryGuideGrid'>
       {guides.map(item=><Link href={item.href} key={item.href}><strong>{item.title}</strong><span>{item.text}</span><b>Läs guiden <ArrowRight size={15}/></b></Link>)}

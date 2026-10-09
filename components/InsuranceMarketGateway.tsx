@@ -68,7 +68,7 @@ export default function InsuranceMarketGateway(){
      <div className={styles.sectionHead}><div>
        <p className={styles.eyebrow}>BÖRJA MED RÄTT BEHOV</p>
        <h2 id='insurance-start-title'>Vad vill du försäkra eller kontrollera?</h2>
-       <p>Försäkringar kan inte rangordnas på premie ensam. Välj rätt skydd först, jämför sedan villkor och kontrollera det personliga priset hos försäkringsgivaren.</p>
+       <p>Börja med vad du vill försäkra. Jämför sedan skydd, självrisk och premie hos bolagen.</p>
      </div><span className={styles.count}><CheckCircle2 size={16}/> {total} aktiva försäkringspartners</span></div>
      <div className={styles.routes}>
        <article className={styles.compareCard}>
@@ -80,7 +80,7 @@ export default function InsuranceMarketGateway(){
            <div className={styles.miniNames}><span>Hemförsäkring</span><span>Bostadsrättstillägg</span><span>Självrisk</span></div>
          </div>
          <Link className={styles.primary} href='/forsakring/hemforsakring-skyddskoll/' onClick={()=>track('home_check')}>Kontrollera hemskyddet <ArrowRight size={19}/></Link>
-         <small className={styles.sponsored}>Gratis vägledning · ingen försäkringspremie hämtas här</small>
+         <small className={styles.sponsored}>Gratis vägledning · begär aktuellt pris hos bolaget</small>
        </article>
        <article className={styles.directCard}>
          <div className={styles.routeIcon}><PawPrint size={21}/></div>
