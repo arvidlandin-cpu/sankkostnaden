@@ -144,7 +144,7 @@ test('v5 selection shows exact quarter, local controls, and a useful action',asy
  await expect(section.getByRole('slider',{name:/Välj ett prisintervall/})).toHaveAttribute('max','95');
  await section.getByRole('button',{name:'Billigast',exact:true}).click();
  await expect(section.getByText(/20 öre\/kWh/i).first()).toBeVisible();
- await expect(section.getByRole('link',{name:/Vilken avtalsform passar mig/})).toHaveAttribute('href','/elavtal/vilket-elavtal-passar-mig/');
+ await expect(section.getByRole('link',{name:/Få hjälp att välja avtalsform/})).toHaveAttribute('href','/elavtal/vilket-elavtal-passar-mig/');
  await expect(section.getByText(/Spotpris utan moms/)).toBeVisible();
 });
 
