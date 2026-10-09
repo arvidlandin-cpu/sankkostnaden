@@ -47,3 +47,32 @@
 @media(max-width:720px){.heading{flex-direction:column}.dataTag{align-self:flex-start}.toolbar{align-items:stretch;flex-direction:column}.toolbar label{max-width:none}.days button{flex:1}.days{width:100%}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.metricNow{grid-column:1/-1}.graphHeading{flex-direction:column;gap:4px}.graph{height:154px}.root{border-radius:18px}.metricNow strong,.metricSmall strong{font-size:22px}}
 @media(max-width:380px){.metricNow,.metricSmall{padding:11px}.metricSmall strong{font-size:20px}.metricNow>span,.metricSmall>span{font-size:11px}}
 @media(prefers-reduced-motion:reduce){.more svg{transition:none}}
+
+
+/* Optional scenario: hidden until requested to keep the first screen calm. */
+.shiftShell{margin-top:16px;border:1px solid #d6e1f6;border-radius:15px;background:#f6f9ff;overflow:hidden}
+.shiftToggle{width:100%;min-height:62px;border:0;background:transparent;color:#153060;padding:15px 17px;display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer;text-align:left}
+.shiftToggle>span:first-child{display:flex;align-items:center;gap:11px;min-width:0}
+.shiftToggle>span:first-child svg{color:#2355dc;flex:0 0 auto}
+.shiftToggle strong{font-size:14px;line-height:1.4}
+.shiftToggle>span:last-child{display:flex;align-items:center;gap:4px;flex:0 0 auto;color:#3157c2;font-size:12px;font-weight:800}
+.shiftToggle svg{transition:transform .2s}
+.shiftPanel{padding:17px;border-top:1px solid #dae4f5;background:#fff}
+.shiftIntro{color:#4b5c75;line-height:1.55;font-size:13px;margin:0 0 14px!important}
+.shiftLayout{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:16px;align-items:stretch}
+.shiftControl{padding:12px 3px;min-width:0}
+.shiftHead{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.shiftHead label{font-size:13px;font-weight:800;color:#152849}
+.shiftHead strong{font-size:17px;color:#2550c5;white-space:nowrap}
+.shiftControl input[type=range]{display:block;width:100%;height:37px;margin:6px 0 0;accent-color:#2552ce;cursor:pointer}
+.shiftRange{display:flex;justify-content:space-between;color:#566782;font-size:12px}
+.shiftControl p{color:#55647a;font-size:12px;line-height:1.55;margin:14px 0 0!important}
+.shiftResult{display:flex;flex-direction:column;justify-content:center;gap:6px;background:#eaf1ff;border:1px solid #d8e3fb;border-radius:13px;padding:17px}
+.shiftResult>span{font-size:12px;line-height:1.45;color:#3f5478}
+.shiftResult>strong{font-size:clamp(27px,3.7vw,39px);line-height:1.13;letter-spacing:-.02em;color:#12358d}
+.shiftResult>small{font-size:12px;color:#3f587e;line-height:1.45}
+.shiftNotice{display:flex;align-items:flex-start;gap:8px;color:#596982;font-size:12px;line-height:1.65;background:#f7f9fc;border-radius:10px;padding:12px;margin:14px 0 0!important}
+.shiftNotice svg{flex:0 0 auto;margin-top:2px;color:#3d65ad}
+.shiftNotice strong{color:#233e70}
+@media(max-width:720px){.shiftToggle{align-items:flex-start;flex-direction:column;gap:10px}.shiftLayout{grid-template-columns:1fr}.shiftResult{padding:15px}.shiftPanel{padding:14px}}
+@media(prefers-reduced-motion:reduce){.shiftToggle svg{transition:none}}
