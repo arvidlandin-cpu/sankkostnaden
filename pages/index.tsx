@@ -105,7 +105,7 @@ export default function Home(){
         </div>
         <div className={styles.popularGrid}>
           {categories.map(({title,subtitle,href,image})=><a className={styles.popularCard} href={href} key={title}>
-            <img className={styles.popularImageExact} src={image} alt='' loading='lazy'/>
+            <div className={styles.popularPhoto}><img className={styles.popularImageExact} src={image} alt='' loading='lazy'/></div>
             <div className={styles.popularBody}><div><strong>{title}</strong><small>{subtitle}</small></div><ArrowRight size={17}/></div>
           </a>)}
         </div>
