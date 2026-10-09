@@ -6,6 +6,8 @@ Autopiloten optimerar för **långsiktigt godkänd affiliateintäkt per relevant
 
 ## Aktuellt läge 2026-10-09
 
+**Ägarinstruktion för slutproduktens kvalitet:** läs `autopilot/PRODUCT_FINISHING_STANDARD_2026-10-09.md` och följ kvalitetsgrindarna för syfte, svenska, partnerresa, verifierade tal, mobil visuell QA, SEO och faktisk intäkt vid varje kommande förbättring. Sluta inte vid en snygg men ofärdig första iteration.
+
 Varje operativ AI-genomgång ska läsa `autopilot/release-context.json`, aktuell `main`, `autopilot/MASTERPLAN_EXECUTION_2026-10-08.md`, senaste rapporter och öppna PR. GitHubs schemalagda kontroll är en **regelstyrd datakontroll**, inte en AI som automatiskt läser varje chatt, programmerar eller verifierar Cloudflare. Nya releaser ska föras in i release-registret och i masterplanens journal, med tydlig skillnad mellan *merged*, *CI-godkänd*, *verifierad publicering* och *affärseffekt*. Befintlig produkt- och konverteringsplan får inte nollställas av ett nytt designförslag.
 
 ## Två lager
