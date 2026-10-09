@@ -2,14 +2,15 @@
   "version": 1,
   "updatedAt": "2026-10-09",
   "purpose": "Verified code-release snapshot for the AI operator and autopilot decision packet. Historical baseline reports remain dated snapshots, not live inventory.",
-  "latestVerifiedMainCommit": "169a8d318613d17fd9276c27c3102d88fceb0194",
+  "latestVerifiedMainCommit": "9d4578092b94aa9cd630bd84631d1166dfc6797f",
   "decisionContext": {
     "northStar": "Long-term approved affiliate revenue per relevant visitor; truthful consumer value and SEO trust first.",
     "design": "Owner-approved 2026-10-09 direction: premium warm-white, dark navy/blue primary, restrained pastels, generous white space; first mockup's look but less visual density. Lyst interaction delight + The Zebra progressive questions + KAYAK optional deep comparisons. Roll out in bounded QA-backed slices. See VISUAL_UX_ROADMAP_2026-10-09.md.",
     "conversion": "Keep real comparison-service vs individual-supplier distinctions, partner visibility and clearly labeled affiliate links; user need not know consumption to reach legitimate partner options.",
     "pricing": "Electricity quarter-hour spot feed SE1-SE4 is real, but NOT a per-provider offer feed. No fabricated cheapest provider, 'best choice', monthly quote, ratings, guaranteed saving or extrapolated shift savings.",
     "experimentStatus": "No active growth experiment in autopilot/state.json as of 2026-10-09; do not treat merged UX releases as commercially proven experiments.",
-    "capacity": "Independent non-paid traffic acquisition remains the highest commercial constraint; continue alongside design. No paid media or contracts without owner approval."
+    "capacity": "Independent non-paid traffic acquisition remains the highest commercial constraint; continue alongside design. No paid media or contracts without owner approval.",
+    "finishStandard": "Read autopilot/PRODUCT_FINISHING_STANDARD_2026-10-09.md. Every screen, field, sentence and CTA must serve the user's immediate job, with premium consistent UX, real price data and QA. Do not call project finished from isolated feature PRs."
   },
   "shipped": [
     {
@@ -83,11 +84,23 @@
       "scope": "Elpriskollen 5.0",
       "status": "merged",
       "note": "Full 92/96/100 quarter chart, exact quarter slider, cheapest upcoming contiguous 2h and contiguous 2h price-shift scenario. One guide CTA. Branch Build and 188 browser regression tests passed; actual production SHA remains unverified."
+    },
+    {
+      "pr": 79,
+      "scope": "Elavtal page visual consistency",
+      "status": "merged",
+      "note": "Scoped dark navy/blue landing, partner and supplier cards; no SEO, affiliate or offer feed changes; 195 automated commercial and responsive tests passed. Cloudflare version still not independently checked."
+    },
+    {
+      "pr": 83,
+      "scope": "Homepage progressive household tools",
+      "status": "merged",
+      "note": "Moved redundant household tools behind accessible opt-in details, retained all routes and clarified cautious Swedish consumer copy. 201 tests passed. Cloudflare status still unverified."
     }
   ],
   "unresolved": [
-    "Cloudflare publication of PR #77 and exact live electricity-widget version not yet independently verified.",
-    "Sitewide before/after mobile and desktop visual QA remains open; PR #77's 390px and 1440px Playwright screenshots were visually inspected.",
+    "Confirm Cloudflare production SHA and actual rendered Elavtal PR #79 and homepage PR #83 independently of CI.",
+    "Finish consistent UX and verified before/after mobile screenshots for broadband, mobile, insurance, finance, app/Kostnadskollen and common guide surfaces; use finish standard.",
     "No evidence that design changes improved approved affiliate revenue. Continue qualified organic visitor acquisition and real attribution checks.",
     "PR #48 remains open with possible overlap; compare with released PR #77's continuous-window spot simulator before merging.",
     "Masterplan 2026-10-08 traffic, partner counts and revenue remain a dated baseline; query live GA4/GSC/network data for current numbers."
