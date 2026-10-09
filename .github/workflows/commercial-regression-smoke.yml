@@ -21,6 +21,7 @@ on:
       - 'design/home-progressive-*'
       - 'release/categories-v5-*'
       - 'release/mobile-navigation-*'
+      - 'ops/free-safari-engine-*'
       - 'feat/kvartspris-*'
     paths:
       - '.github/workflows/commercial-regression-smoke.yml'
@@ -59,8 +60,8 @@ jobs:
           npx next build
           npm run check:export
 
-      - name: Install Chromium
-        run: npx playwright install --with-deps chromium
+      - name: Install Chromium and WebKit
+        run: npx playwright install --with-deps chromium webkit
 
       - name: Start local static server
         run: |
@@ -101,6 +102,9 @@ jobs:
             tests/priority-seo-flow.spec.ts \
             tests/trust-footer-insurance.spec.ts \
             --project=chromium
+
+      - name: Run free Safari-engine mobile regression (not a physical iPhone)
+        run: npx playwright test tests/mobile-webkit-core.spec.ts --project=webkit
 
       - name: Upload Playwright report
         if: always()
