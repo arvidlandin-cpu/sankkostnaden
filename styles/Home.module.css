@@ -919,3 +919,99 @@
     padding-right:max(34px,calc((100vw - 1500px)/2));
   }
 }
+
+/* Home 5.0 · consistent with Elpriskollen and Elavtal 5.0.
+   Existing named layout classes are reused; no global article/SEO changes. */
+.nav{
+ background:#fff!important;border-bottom:1px solid #e3eaf7!important;
+ box-shadow:none!important;
+}
+.brand{color:#14254e!important}
+.brandMark{background:#e3ebff!important;color:#2551ce!important;box-shadow:none!important}
+.nav nav a{color:#3b4d6d!important}
+.nav nav a:hover{color:#224ac4!important}
+.navCta{background:#234bd1!important;color:#fff!important;box-shadow:0 6px 19px rgba(35,75,209,.13)!important}
+.navCta:hover{background:#193aa9!important}
+.nav a:focus-visible{outline:3px solid #6287ef;outline-offset:3px}
+
+.popularSection{
+ background:#fff!important;padding-top:55px!important;padding-bottom:66px!important;
+}
+.popularHeader p,.sectionHead>div>p,.principle>div>p:first-child{
+ color:#355bca!important;font-size:11px!important;font-weight:900!important;
+}
+.popularHeader h2,.sectionHead h2,.principle h2{color:#112348!important}
+.popularHeader span,.sectionHead>p{color:#60718a!important}
+.popularGrid{max-width:1316px!important;gap:14px!important}
+.popularCard{
+ background:#fff!important;border:1px solid #dfe7f4!important;
+ color:#14264f!important;border-radius:18px!important;
+ box-shadow:0 8px 25px rgba(28,59,113,.035)!important;
+}
+.popularCard:hover{border-color:#b9c9e9!important;box-shadow:0 13px 32px rgba(28,59,113,.075)!important}
+.popularImageExact{aspect-ratio:2.05/1!important;object-fit:cover!important}
+.popularBody{padding:13px 14px 15px!important;min-height:78px!important}
+.popularBody strong{font-size:17px;color:#17294f!important}
+.popularBody small{font-size:12px!important;color:#687a91!important}
+.popularBody svg{color:#234bd1!important}
+
+.helpSection{background:#f5f8ff!important;padding-top:60px!important;padding-bottom:70px!important}
+.toolsSection{background:#fff!important}
+.toolGrid>a{
+ background:#fff!important;border-color:#e1e9f5!important;
+ color:#17294f!important;box-shadow:0 6px 23px rgba(26,51,103,.035)!important;
+}
+.toolGrid>a:hover{border-color:#b8c9ec!important}
+.toolGrid span{color:#355ac6!important}
+.toolGrid strong{color:#132952!important}
+.toolGrid p{color:#60718c!important}
+.toolGrid b{color:#234ab9!important}
+.guideLibrarySection{background:#fff!important}
+.guideLibrary{border-color:#dfe8f5!important;background:#f9fbff!important}
+.guideLibrary summary{color:#2249ac!important}
+.guideGroups a{color:#4b6284!important}
+.principle>div:last-child{color:#526780}
+.principle a{color:#244ab1!important}
+.footer{border-top-color:#dfe6f3!important;color:#61728e!important}
+.footer>div:nth-child(2) a{color:#415879!important}
+@media(max-width:760px){
+ .popularSection{padding:38px 18px 46px!important}
+ .popularGrid{
+  display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  overflow:visible!important;gap:11px!important;padding-bottom:0!important;
+ }
+ .popularCard{flex:none!important;min-width:0!important}
+ .popularCard:last-child{grid-column:1/-1}
+ .popularImageExact{aspect-ratio:2.2/1!important}
+ .popularBody{padding:12px!important;min-height:75px!important}
+ .popularBody strong{font-size:15px!important}
+ .popularBody small{font-size:11px!important}
+ .popularHeader h2{font-size:clamp(31px,7vw,36px)!important}
+}
+@media(max-width:390px){
+ .popularGrid{gap:9px!important}
+ .popularBody{padding:10px!important}
+ .popularBody strong{font-size:14px!important}
+ .popularBody svg{width:15px}
+}
+@media(prefers-reduced-motion:reduce){
+ .popularCard:hover,.toolGrid>a:hover{transform:none!important}
+}
+
+/* Screenshot QA: photos had built-in labels. Crop the baked text so the
+   HTML title is the only visible category label. Ensure blue brand accent. */
+.nav .brandMark{background:#e3ebff!important;color:#2551ce!important}
+.popularPhoto{height:108px;overflow:hidden;position:relative;background:#eef3fb}
+.popularPhoto .popularImageExact{
+ width:100%!important;height:151px!important;display:block!important;
+ aspect-ratio:auto!important;object-fit:cover!important;
+ object-position:right top!important;
+}
+@media(max-width:760px){
+ .popularPhoto{height:91px}
+ .popularPhoto .popularImageExact{height:133px!important}
+}
+@media(max-width:390px){
+ .popularPhoto{height:86px}
+ .popularPhoto .popularImageExact{height:128px!important}
+}

@@ -118,3 +118,28 @@
   .option,.primary,.secondary{transition:none}
   .option:hover,.primary:hover,.secondary:hover{transform:none}
 }
+
+/* Home 5.0: scoped blue design tokens and calmer selected states. */
+.root{
+ --sk-line:#dfe7f5;--sk-surface:#fff;--sk-surface-soft:#f6f9ff;
+ --sk-ink:#14274d;--sk-ink-muted:#5c6e89;--sk-accent:#e2ecff;
+ --sk-action:#234bd1;--sk-action-ink:#fff;--sk-focus:#668dfa;
+ --sk-radius-panel:20px;
+}
+.question,.panel{box-shadow:0 6px 26px rgba(30,58,111,.035)}
+.questionLabel{color:#17294f!important}
+.option{border-color:#dde6f5;color:#213657}
+.option>svg{color:#345bba}
+.option:hover{border-color:#b7c9ef;box-shadow:0 7px 18px rgba(26,58,115,.05)}
+.option.selected{border-color:#87a4ef;background:#edf3ff;box-shadow:inset 0 0 0 1px #a9bfff}
+.option.selected>svg{color:#234bd1}
+.dot{border-color:#9aafd7}
+.selected .dot{background:#234bd1;border-color:#234bd1;box-shadow:0 0 0 3px #dce7ff}
+.panel{border-color:#dce6f7}
+.kicker{color:#365bcc}
+.panelIcon{color:#234bd1;background:#e0eaff}
+.panel h3{color:#162a50}
+.primary{background:#234bd1;color:#fff}
+.secondary{border-color:#cddbf4;color:#2a4bac;background:#fff}
+.caution{color:#677992}
+@media(prefers-reduced-motion:reduce){.option:hover,.primary:hover,.secondary:hover{transform:none}}
