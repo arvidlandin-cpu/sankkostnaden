@@ -3,6 +3,7 @@ import { ArrowRight, ArrowUpRight, Calculator, CheckCircle2, CircleHelp, GitComp
 import { emitAnalyticsEvent } from '../lib/clientAttribution';
 import { getActivePartners, type ActivePartner } from '../lib/partners';
 import styles from '../styles/ElectricityMarketGateway.module.css';
+import ElectricitySpotPrices from './ElectricitySpotPrices';
 
 const all=getActivePartners('el',undefined,40);
 const comparison=all.find(partner=>partner.name==='Elskling');
@@ -61,6 +62,8 @@ export default function ElectricityMarketGateway(){
           <small className={styles.sponsored}>Flera leverantörer · ingen prisranking</small>
         </article>
       </div>
+
+      <ElectricitySpotPrices/>
 
       <div className={styles.knowledge}>
         <CircleHelp size={20}/>

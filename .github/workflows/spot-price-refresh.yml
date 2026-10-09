@@ -1,0 +1,46 @@
+name: Swedish spot price refresh
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/spot-price-refresh.yml'
+      - 'scripts/refresh-spot-prices.mjs'
+      - 'scripts/lib/spotPriceFeed.mjs'
+  schedule:
+    # 03:36 UTC covers the Swedish morning; 12:36/14:36 fetch tomorrow after auction.
+    - cron: '36 3,12,14 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: swedish-spot-price-cache
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.16.0
+      - name: Test price format and DST safeguards
+        run: node --test tests/spot-price-feed.test.mjs
+      - name: Update SE1–SE4 spot prices from public source
+        run: node scripts/refresh-spot-prices.mjs
+      - name: Commit only changed daily price data
+        run: |
+          if git diff --quiet -- public/spot-prices/latest.json; then
+            echo "Price data unchanged"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/spot-prices/latest.json
+          git commit -m "data: refresh Swedish 15-minute spot prices"
+          git push

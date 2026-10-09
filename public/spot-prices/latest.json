@@ -1,0 +1,12 @@
+{
+  "source": "Elpriset just nu.se",
+  "sourceUrl": "https://www.elprisetjustnu.se/elpris-api",
+  "unit": "SEK/kWh",
+  "priceType": "spot",
+  "includesVat": false,
+  "includesElectricityTax": false,
+  "includesGridFee": false,
+  "includesSupplierFees": false,
+  "zone": "Europe/Stockholm",
+  "days": {}
+}
