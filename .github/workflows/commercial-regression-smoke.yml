@@ -16,6 +16,7 @@ on:
       - 'ops/design-v1-*'
       - 'design/interactive-*'
       - 'design/electricity-prices-*'
+      - 'design/elavtal-unified-*'
       - 'feat/kvartspris-*'
     paths:
       - '.github/workflows/commercial-regression-smoke.yml'
@@ -83,6 +84,7 @@ jobs:
             tests/cost-prioritizer.spec.ts \
             tests/electricity-cost.spec.ts \
             tests/electricity-hub.spec.ts \
+            tests/elavtal-visual-v5.spec.ts \
             tests/electricity-spot-prices.spec.ts \
             tests/broadband-hub.spec.ts \
             tests/insurance-hub.spec.ts \
