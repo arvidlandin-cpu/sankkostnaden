@@ -4,6 +4,15 @@
 
 Read also: `autopilot/PRODUCT_EXCELLENCE.md`, `STRATEGY_AND_EVIDENCE_STANDARD.md`, `PLAYBOOK.md`, `COMPETITOR_INTELLIGENCE.md`, `policy.json`, `state.json`, `opportunities.json`, and current GSC/GA4/network reports. The original user-approved full analysis is available in the conversation as `Sank_Kostnaden_Totalanalys_Masterplan_2026-10-08.md`; this repo ledger captures the operational milestones and requirements independently.
 
+## Samordnad UI/QA-uppdatering 2026-10-09 (senare samma dag)
+
+- [x] PR #85 — Harmonized actual broadband, mobile, insurance and economy category pages with existing Elavtal in one navy/blue visual system. Original PR #81 was superseded/closed, not merged. **225** automated Chromium/browser checks green; source URLs, sponsorship and affiliate IDs unchanged.
+- [x] PR #86 — Aligned mobile five-link navigation, touch and focus at 360–430px; **229** browser checks green. Original PR #82 was superseded/closed.
+- [x] PR #48 closed as overlapping older hypothetical annual price-shift calculator; it did **not** ship. Existing PR #77 actual-spot day scenario is the live code path.
+- [ ] PR #87 — Kostnadskollen color/copy/accessibility refinement pending corrected test pass. An initial test caught the selected radio hovering color regression; fix committed and being re-tested.
+- [ ] PR #88 — Free WebKit Safari-*engine* regression and correction of BrowserStack false-green behavior pending validation. A previous green 'real iPhone' run `37952606478` in fact logged **3 BrowserStack quota-expired connection failures**. Treat real-device status as UNTESTED / INFRASTRUCTURE BLOCKED, not a pass. The free WebKit desktop-engine-on-mobile-width substitute is not a physical iPhone.
+- [ ] Confirm Cloudflare page really reflects released UI; success from live route smoke is only confirmation of route availability/content markers, not of matching the deploy SHA. Recheck organic/relevant traffic and *approved* affiliate commission separately.
+
 ## Release sync 2026-10-09 — READ BEFORE ANY NEXT STEP
 
 The source of truth for shipped/ongoing work is **`autopilot/release-context.json` plus current `main` code**, not this document's Oct 8 baseline or ChatGPT memory alone. The automated decision packet now includes a release summary. The last *confirmed* main application release in this snapshot is `a067020d`. Quality CI succeeded for latest main at review; Cloudflare production version and real approved affiliate conversion after release remain unverified.
