@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowRight, ArrowUpRight, Calculator, CheckCircle2, CircleHelp, GitCompareArrows, ShieldCheck, Zap } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Calculator, CheckCircle2, GitCompareArrows, ShieldCheck, Zap } from 'lucide-react';
 import { emitAnalyticsEvent } from '../lib/clientAttribution';
 import { getActivePartners, type ActivePartner } from '../lib/partners';
 import styles from '../styles/ElectricityMarketGateway.module.css';
@@ -65,11 +65,6 @@ export default function ElectricityMarketGateway(){
 
       <ElectricitySpotPrices/>
 
-      <div className={styles.knowledge}>
-        <CircleHelp size={20}/>
-        <div><strong>Osäker på vilket elavtal som passar?</strong><p>Välj först rörligt, fast eller kvartspris – sedan kan du jämföra bolag med samma utgångspunkt.</p></div>
-        <Link href='/elavtal/vilket-elavtal-passar-mig/' onClick={()=>trackPath('contract_guidance')}>Få hjälp att välja <ArrowRight size={16}/></Link>
-      </div>
     </section>
 
     <section id='elbolag' className={styles.suppliers} aria-labelledby='electricity-providers-title'>
