@@ -2,10 +2,10 @@ import { expect, test, type Page } from '@playwright/test';
 
 async function answerAll(page:Page){
   const labels=[
-    /Priset har ändrats eller avtalet känns dyrt/i,
-    /Nyligen jämfört – fart och pris känns rätt/i,
-    /Nyligen jämfört – surf och pris passar bra/i,
-    /Nyligen jämfört – bra koll på skydd och självrisk/i,
+    /Priset har höjts eller känns dyrt/i,
+    /Hastighet och pris känns rätt/i,
+    /Surf och pris passar mig/i,
+    /Jag har koll på mitt försäkringsskydd/i,
   ];
   for(let i=0;i<labels.length;i++){
     await page.getByRole('button',{name:labels[i]}).click();
@@ -79,7 +79,7 @@ for(const viewport of [{width:360,height:800},{width:390,height:844},{width:430,
 
 test('high-intent answer exposes quick path without changing the full-flow result',async({page})=>{
   await page.goto('/app/');
-  await page.getByRole('button',{name:/Priset har ändrats eller avtalet känns dyrt/i}).click();
+  await page.getByRole('button',{name:/Priset har höjts eller känns dyrt/i}).click();
 
   await expect(page.getByText('DU KAN GÅ VIDARE REDAN NU')).toBeVisible();
   await expect(page.locator('a[data-placement="cost_check_quick_path"]')).toHaveCount(1);
@@ -89,7 +89,7 @@ test('high-intent answer exposes quick path without changing the full-flow resul
 test('Cost Check start event is emitted only on the first answer',async({page})=>{
   await page.addInitScript(()=>{(window as any).dataLayer=[];});
   await page.goto('/app/');
-  await page.getByRole('button',{name:/Priset har ändrats eller avtalet känns dyrt/i}).click();
+  await page.getByRole('button',{name:/Priset har höjts eller känns dyrt/i}).click();
   await page.getByRole('button',{name:/Klart – till Bredband/i}).click();
   await page.getByRole('button',{name:/Priset har höjts eller känns högt/i}).click();
 
@@ -147,7 +147,7 @@ for(const width of [360,390,430,1024,1440]){
 
 test('Kostnadskollen gives a truthful useful provisional action after one warning answer',async({page})=>{
  await page.goto('/app/?qa=1');
- await page.getByRole('button',{name:/Priset har ändrats eller avtalet känns dyrt/i}).click();
+ await page.getByRole('button',{name:/Priset har höjts eller känns dyrt/i}).click();
  const early=page.getByTestId('cost-check-early-result');
  await expect(early).toBeVisible();
  await expect(early).toContainText('1 AV 4 OMRÅDEN');
@@ -160,7 +160,7 @@ test('Kostnadskollen gives a truthful useful provisional action after one warnin
 
 test('up-to-date answer gives modest inline feedback, not a false preliminary verdict',async({page})=>{
  await page.goto('/app/?qa=1');
- await page.getByRole('button',{name:/Nyligen jämfört – jag har koll på pris och avgifter/i}).click();
+ await page.getByRole('button',{name:/Jag har koll på pris och villkor/i}).click();
  const safe=page.getByTestId('cost-check-safe-feedback');
  await expect(safe).toContainText('Elavtal verkar vara under kontroll utifrån ditt svar');
  await expect(safe).toContainText('inte kontrollerat ditt faktiska avtal');
@@ -180,9 +180,9 @@ test('up-to-date answer gives modest inline feedback, not a false preliminary ve
 
 test('an actionable early result never loops back to the category already being answered',async({page})=>{
  await page.goto('/app/?qa=1');
- await page.getByRole('button',{name:/Nyligen jämfört – jag har koll på pris och avgifter/i}).click();
+ await page.getByRole('button',{name:/Jag har koll på pris och villkor/i}).click();
  await page.getByRole('button',{name:/Klart – till Bredband/}).click();
- await page.getByRole('button',{name:/Osäker på nivå\/pris eller länge sedan jag jämförde/}).click();
+ await page.getByRole('button',{name:/Jag är osäker på om priset är rimligt/}).click();
  const early=page.getByTestId('cost-check-early-result');
  await expect(early).toContainText('Bredband kan vara värt att kontrollera nu');
  await expect(early.getByRole('link',{name:/Se alternativ för bredband/})).toHaveAttribute('href','/bredband/bredband-pa-min-adress/');
@@ -198,10 +198,10 @@ test('an actionable early result never loops back to the category already being 
 test('four reassuring answers never create a fabricated affiliate priority or saving',async({page})=>{
  await page.goto('/app/?qa=1');
  for(const phrase of [
- /Nyligen jämfört – jag har koll på pris och avgifter/i,
- /Nyligen jämfört – fart och pris känns rätt/i,
- /Nyligen jämfört – surf och pris passar bra/i,
- /Nyligen jämfört – bra koll på skydd och självrisk/i
+ /Jag har koll på pris och villkor/i,
+ /Hastighet och pris känns rätt/i,
+ /Surf och pris passar mig/i,
+ /Jag har koll på mitt försäkringsskydd/i
  ]){
    await page.getByRole('button',{name:phrase}).click();
    if(await page.getByRole('button',{name:/Klart – till/i}).count()) await page.getByRole('button',{name:/Klart – till/i}).click();
@@ -231,7 +231,7 @@ test('first useful Kostnadskollen event excludes any actual cost amounts',async(
  await page.goto('/app/?qa=1');
  await page.getByText('Lägg till månadskostnad').click();
  await page.locator('input[placeholder="t.ex. 499"]').fill('9876');
- await page.getByRole('button',{name:/Osäker på avgifter\/villkor eller länge sedan jag jämförde/i}).click();
+ await page.getByRole('button',{name:/Jag är osäker på avgifter eller villkor/i}).click();
  await expect(page.getByTestId('cost-check-early-result')).toBeVisible();
  const events=await page.evaluate(()=>(window as any).dataLayer||[]);
  const early=events.find((item:any)=>item.event==='cost_check_early_result_available');
@@ -247,7 +247,7 @@ for(const width of [360,390,430]){
  test('early cost result does not overflow at '+width+'px',async({page})=>{
   await page.setViewportSize({width,height:844});
   await page.goto('/app/?qa=1');
-  await page.getByRole('button',{name:/Priset har ändrats eller avtalet känns dyrt/i}).click();
+  await page.getByRole('button',{name:/Priset har höjts eller känns dyrt/i}).click();
   await expect(page.getByTestId('cost-check-early-result')).toBeVisible();
   const overflow=await page.evaluate(()=>Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)-document.documentElement.clientWidth);
   expect(overflow).toBeLessThanOrEqual(1);
@@ -306,7 +306,7 @@ test('Kostnadskollen premium design maintains one useful first action, no fabric
  expect(await heading.evaluate(el=>getComputedStyle(el).color)).toBe('rgb(17, 37, 76)');
  const controls=page.getByRole('group',{name:'Vad stämmer bäst om ditt elavtal?'});
  await expect(controls.getByRole('button')).toHaveCount(3);
- const choice=controls.getByRole('button',{name:/Priset har ändrats eller avtalet känns dyrt/i});
+ const choice=controls.getByRole('button',{name:/Priset har höjts eller känns dyrt/i});
  await choice.click();
  expect(await choice.evaluate(el=>getComputedStyle(el).backgroundColor)).toBe('rgb(237, 243, 255)');
  await expect(page.locator('a[data-placement="cost_check_quick_path"]')).toHaveCount(1);
@@ -331,7 +331,7 @@ test('uncertain broadband answer gives one immediate neutral category path, no f
  await page.goto('/app/?qa=1');
  await page.getByRole('button',{name:'Byt område'}).click();
  await page.getByRole('button',{name:/^Bredband/}).first().click();
- await page.getByRole('button',{name:/Osäker på nivå\/pris eller länge sedan jag jämförde/}).click();
+ await page.getByRole('button',{name:/Jag är osäker på om priset är rimligt/}).click();
  const immediate=page.getByTestId('cost-check-next-action');
  await expect(immediate).toBeVisible();
  await expect(immediate.getByRole('link',{name:/Se alternativ för bredband/})).toHaveAttribute('href','/bredband/');
@@ -355,7 +355,7 @@ test('high-intent mobile answer remains non-ranking, not an arbitrary partner li
  await page.goto('/app/?qa=1');
  await page.getByRole('button',{name:'Byt område'}).click();
  await page.getByRole('button',{name:/^Mobil/}).first().click();
- await page.getByRole('button',{name:/Priset har höjts eller upplägget känns gammalt/}).click();
+ await page.getByRole('button',{name:/Priset är högt eller avtalet känns gammalt/}).click();
  const immediate=page.getByTestId('cost-check-next-action');
  await expect(immediate.getByRole('link',{name:/Se alternativ för mobil/})).toHaveAttribute('href','/mobil/');
  await expect(immediate.locator('[data-placement="cost_check_quick_path"]')).toHaveCount(0);
@@ -366,7 +366,7 @@ for(const width of [360,390,430,1024,1440]){
  test('new first-answer quick exit remains usable at '+width+'px',async({page})=>{
   await page.setViewportSize({width,height:860});
   await page.goto('/app/?qa=1');
-  await page.getByRole('button',{name:/Osäker på avgifter\/villkor eller länge sedan jag jämförde/}).click();
+  await page.getByRole('button',{name:/Jag är osäker på avgifter eller villkor/}).click();
   const immediate=page.getByTestId('cost-check-next-action');
   await expect(immediate).toBeVisible();
   await expect(immediate.getByRole('link',{name:/Se alternativ för el/})).toBeVisible();
@@ -374,3 +374,23 @@ for(const width of [360,390,430,1024,1440]){
   expect(overflow).toBeLessThanOrEqual(1);
  });
 }
+
+test('question copy is concise, jargon-free and still offers the same three distinct choices',async({page})=>{
+ await page.goto('/app/?qa=1');
+ const expected=[
+  {label:'Elavtal',question:'Vad stämmer bäst om ditt elavtal?',next:'Bredband'},
+  {label:'Bredband',question:'Vad stämmer bäst om bredbandet?',next:'Mobil'},
+  {label:'Mobilabonnemang',question:'Vad stämmer bäst om mobilabonnemanget?',next:'Försäkring'},
+  {label:'Försäkring',question:'Hur bra koll har du på försäkringarna?',next:null},
+ ];
+ for(const step of expected){
+  const group=page.getByRole('group',{name:step.question});
+  const buttons=group.getByRole('button');
+  await expect(buttons).toHaveCount(3);
+  const labels=await buttons.allTextContents();
+  expect(labels.every(label=>label.length<=55 && !label.includes('/') && !label.includes('länge sedan jag jämförde'))).toBe(true);
+  await buttons.nth(0).click();
+  if(step.next) await page.getByRole('button',{name:new RegExp('Klart – till '+step.next)}).click();
+ }
+ await expect(page.getByTestId('cost-check-no-issues')).toBeVisible();
+});

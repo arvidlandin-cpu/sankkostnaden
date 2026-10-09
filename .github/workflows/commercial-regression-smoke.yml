@@ -22,6 +22,7 @@ on:
       - 'ux/mobile-insurance-purpose-first-*'
       - 'ux/broadband-direct-address-*'
       - 'ux/kostnadskollen-neutral-quickpaths-*'
+      - 'ux/kostnadskollen-svenska-svar-*'
       - 'ux/economy-comparison-first-*'
       - 'release/categories-v5-*'
       - 'release/mobile-navigation-*'
