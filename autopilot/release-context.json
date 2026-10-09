@@ -2,7 +2,7 @@
   "version": 1,
   "updatedAt": "2026-10-09",
   "purpose": "Verified code-release snapshot for the AI operator and autopilot decision packet. Historical baseline reports remain dated snapshots, not live inventory.",
-  "latestVerifiedMainCommit": "9d4578092b94aa9cd630bd84631d1166dfc6797f",
+  "latestVerifiedMainCommit": "4ebf6317125ab9591d2173ba3cdcda40a0880dca",
   "decisionContext": {
     "northStar": "Long-term approved affiliate revenue per relevant visitor; truthful consumer value and SEO trust first.",
     "design": "Owner-approved 2026-10-09 direction: premium warm-white, dark navy/blue primary, restrained pastels, generous white space; first mockup's look but less visual density. Lyst interaction delight + The Zebra progressive questions + KAYAK optional deep comparisons. Roll out in bounded QA-backed slices. See VISUAL_UX_ROADMAP_2026-10-09.md.",
@@ -96,14 +96,28 @@
       "scope": "Homepage progressive household tools",
       "status": "merged",
       "note": "Moved redundant household tools behind accessible opt-in details, retained all routes and clarified cautious Swedish consumer copy. 201 tests passed. Cloudflare status still unverified."
+    },
+    {
+      "pr": 85,
+      "scope": "Category landings V5",
+      "status": "merged",
+      "note": "Broadband, Mobile, Insurance, Finance and shared El landing harmonized to one scoped navy/blue system. Address and risk-first copy updated; 225 local commercial/browser checks passed; latest main production-route smoke succeeded for core routes, not exact Cloudflare SHA."
+    },
+    {
+      "pr": 86,
+      "scope": "Mobile navigation V5",
+      "status": "merged",
+      "note": "Mobile five-link bottom navigation unified in navy/blue with accessible focus, 229 browser checks passed. The BrowserStack physical iPhone runner was infrastructure-blocked by exhausted quota; cannot claim real iPhone QA."
     }
   ],
   "unresolved": [
     "Confirm Cloudflare production SHA and actual rendered Elavtal PR #79 and homepage PR #83 independently of CI.",
-    "Finish consistent UX and verified before/after mobile screenshots for broadband, mobile, insurance, finance, app/Kostnadskollen and common guide surfaces; use finish standard.",
+    "Finish consistency and real copy review for Kostnadskollen, shared guides and deep category pages. PR #87 app style and #88 Safari-engine test currently in QA; do not mark them merged before checking.",
     "No evidence that design changes improved approved affiliate revenue. Continue qualified organic visitor acquisition and real attribution checks.",
-    "PR #48 remains open with possible overlap; compare with released PR #77's continuous-window spot simulator before merging.",
-    "Masterplan 2026-10-08 traffic, partner counts and revenue remain a dated baseline; query live GA4/GSC/network data for current numbers."
+    "PR #48 (old hypothetical annual quarter-price widget) was CLOSED as redundant after spot widget PR #77; avoid resurrecting it.",
+    "Masterplan 2026-10-08 traffic, partner counts and revenue remain a dated baseline; query live GA4/GSC/network data for current numbers.",
+    "BrowserStack iPhone run 37952606478 was GREEN only because quota exhaustion returned exit 0; logs show 3 unexecuted sessions. PR #88 corrects this and adds free WebKit mobile tests. Physical-device QA remains unverified without available BrowserStack quota.",
+    "Current production-route smoke reached live routes, but deployment was not matched to exact main commit SHA."
   ],
-  "latestMergedMainCommit": "169a8d318613d17fd9276c27c3102d88fceb0194"
+  "latestMergedMainCommit": "4ebf6317125ab9591d2173ba3cdcda40a0880dca"
 }
