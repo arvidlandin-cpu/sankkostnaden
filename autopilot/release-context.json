@@ -2,7 +2,7 @@
   "version": 1,
   "updatedAt": "2026-10-09",
   "purpose": "Verified code-release snapshot for the AI operator and autopilot decision packet. Historical baseline reports remain dated snapshots, not live inventory.",
-  "latestVerifiedMainCommit": "4ebf6317125ab9591d2173ba3cdcda40a0880dca",
+  "latestVerifiedMainCommit": "761b1621eef55953220141042b3059481aab4d98",
   "decisionContext": {
     "northStar": "Long-term approved affiliate revenue per relevant visitor; truthful consumer value and SEO trust first.",
     "design": "Owner-approved 2026-10-09 direction: premium warm-white, dark navy/blue primary, restrained pastels, generous white space; first mockup's look but less visual density. Lyst interaction delight + The Zebra progressive questions + KAYAK optional deep comparisons. Roll out in bounded QA-backed slices. See VISUAL_UX_ROADMAP_2026-10-09.md.",
@@ -120,16 +120,28 @@
       "scope": "Truthful real-iPhone QA gate",
       "status": "merged",
       "note": "BrowserStack workflow runs manually only; quota-expired connections now fail rather than misleadingly green. Does NOT mean real iPhone QA passed; no paid tier enabled."
+    },
+    {
+      "pr": 92,
+      "scope": "Mobile + insurance progressive options",
+      "status": "merged",
+      "note": "Mobile removed duplicate family CTA and decorative labels; insurance secondary travel/claims routes are opt-in details. Existing 10 mobile operator and all 9 insurance partners retained with original tracking URLs. 235 Chromium commercial regression tests passed; main build and production-route smoke checks after #92 green."
+    },
+    {
+      "pr": 93,
+      "scope": "Economy comparison-first path",
+      "status": "merged",
+      "note": "Loan comparison and New loan/Consolidation choice appear before long optional learning/checklist; effective APR and full repayment guidance remains intact. Other category pages unaffected. 240 Chromium browser/commercial regression tests passed on branch; exact Cloudflare production SHA awaits verification."
     }
   ],
   "unresolved": [
-    "Confirm Cloudflare production SHA and actual rendered Elavtal PR #79 and homepage PR #83 independently of CI.",
-    "Continue deep-page copy/interaction QA across all categories and common guides; Kostnadskollen PR #87 now merged.",
+    "Verify Cloudflare's exact published content/SHA for the latest category journeys (PR #92 and #93) and prior V5 changes. GitHub production-route smoke checked key routes, not full content/version.",
+    "Continue deep-page copy, interactions and visual QA across Broadband, Mobile, Insurance, Economy, app and guides. PR #92/#93 reduce friction, but not proven conversion improvements.",
     "No evidence that design changes improved approved affiliate revenue. Continue qualified organic visitor acquisition and real attribution checks.",
     "PR #48 (old hypothetical annual quarter-price widget) was CLOSED as redundant after spot widget PR #77; avoid resurrecting it.",
     "Masterplan 2026-10-08 traffic, partner counts and revenue remain a dated baseline; query live GA4/GSC/network data for current numbers.",
     "BrowserStack physical iPhone sessions remain UNTESTED due depleted quota, despite older false-green run 37952606478. PR #90 corrects reporting. PR #88 proposing free WebKit test is open with merge conflict and a slow browser installation; do not mark it shipped before clean CI/merge.",
     "Current production-route smoke reached live routes, but deployment was not matched to exact main commit SHA."
   ],
-  "latestMergedMainCommit": "81d157fa00a327f1be2080ace3aa2144a5dc7649"
+  "latestMergedMainCommit": "761b1621eef55953220141042b3059481aab4d98"
 }

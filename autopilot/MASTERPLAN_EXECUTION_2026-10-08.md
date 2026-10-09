@@ -13,6 +13,13 @@ Read also: `autopilot/PRODUCT_EXCELLENCE.md`, `STRATEGY_AND_EVIDENCE_STANDARD.md
 - [ ] PR #88 — Free WebKit Safari-*engine* regression and correction of BrowserStack false-green behavior pending validation. A previous green 'real iPhone' run `37952606478` in fact logged **3 BrowserStack quota-expired connection failures**. Treat real-device status as UNTESTED / INFRASTRUCTURE BLOCKED, not a pass. The free WebKit desktop-engine-on-mobile-width substitute is not a physical iPhone.
 - [ ] Confirm Cloudflare page really reflects released UI; success from live route smoke is only confirmation of route availability/content markers, not of matching the deploy SHA. Recheck organic/relevant traffic and *approved* affiliate commission separately.
 
+## Product-quality release sync — 2026-10-09 evening
+
+- [x] **PR #92 – Mobil och försäkring, syfte före volym:** tog bort dubbla familjekalkyl-länkar och störande minietiketter i mobilens första flöde; reseskydd och skadeärende öppnas vid behov under Försäkring. Alla 10 mobilpartners och 9 unika försäkringspartners (inklusive partnerklick) behållna. Full kommersiell Playwright-regression: **235 godkända**. GitHub main build och production-route smoke godkända; exakt Cloudflare-version återstår att kontrollera.
+- [x] **PR #93 – Ekonomi, jämför före fördjupning:** lånejämförelsen och val av nytt privatlån/samlingslån blir tillgängliga före fyra långa checklistepunkter. Viktiga risker kring total återbetalning, effektiv ränta och villkor finns kvar. Full kommersiell Playwright-regression: **240 godkända** i PR. Ingen påstådd förbättring av faktisk intäkt.
+- [ ] **Fortsätt:** detaljerad, gärna verklig livebrowser-QA av /bredband/, /mobil/, /forsakring/, /ekonomi/, /app/ och guider med språkgranskning, Core Web Vitals, faktisk Cloudflare-verifiering, GA4/GSC och godkända affiliateutfall. Prioritera reella användarproblem framför fler kosmetiska kort.
+- [ ] BrowserStack faktisk iPhone körning kräver återställd quota; PR #90 säkrar att spärrade tester inte felaktigt rapporteras som gröna. Inga nya betalkostnader utan ägarbeslut.
+
 ## Release sync 2026-10-09 — READ BEFORE ANY NEXT STEP
 
 The source of truth for shipped/ongoing work is **`autopilot/release-context.json` plus current `main` code**, not this document's Oct 8 baseline or ChatGPT memory alone. The automated decision packet now includes a release summary. The last *confirmed* main application release in this snapshot is `a067020d`. Quality CI succeeded for latest main at review; Cloudflare production version and real approved affiliate conversion after release remain unverified.
