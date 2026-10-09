@@ -26,6 +26,7 @@ const categories: Category[] = [
 
 const legacyStorageKey='sankkostnaden-cost-check-v4';
 const partnerIntent:Record<CostKey,PartnerIntent>={el:'electricity',bredband:'compare',mobil:'compare',forsakring:'home'};
+const categoryEntry:Record<CostKey,string>={el:'/elavtal/',bredband:'/bredband/',mobil:'/mobil/',forsakring:'/forsakring/'};
 const rankLabels=['KONTROLLERA FÖRST','DÄREFTER','SEDAN','SIST'];
 
 export default function SavingsApp(){
@@ -137,13 +138,20 @@ export default function SavingsApp(){
   const activeAnswer=answers[active];
   const activeIndex=categories.findIndex(category=>category.key===active);
   const activeComplete=isComplete(active);
-  const activeQuickPartner=activeAnswer.fit===2?resultPartners(active)[0]:undefined;
+  // Direct comparison services (not arbitrarily selected suppliers) are the only
+  // outbound quick exits. For mobile and insurance we show the transparent category
+  // overview so the user can choose a relevant operator/insurance type themselves.
+  const quickCompare=activeAnswer.fit===2&&active==='el'
+    ?getActivePartners('el','compare',20).find(partner=>partner.name==='Elskling')
+    :activeAnswer.fit===2&&active==='bredband'
+      ?getActivePartners('bredband','compare',20).find(partner=>partner.name==='Bredbandsval.se')
+      :undefined;
 
   useEffect(()=>{
     if(activeAnswer.fit!==2||quickPathShownTracked.current.has(active)) return;
     quickPathShownTracked.current.add(active);
-    emitAnalyticsEvent('cost_check_quick_path_shown',{category:active,has_partner:activeQuickPartner?1:0});
-  },[active,activeAnswer.fit,activeQuickPartner]);
+    emitAnalyticsEvent('cost_check_quick_path_shown',{category:active,has_partner:quickCompare?1:0});
+  },[active,activeAnswer.fit,quickCompare]);
 
   const focusUnanswered=(key:CostKey)=>{
     setActive(key);
@@ -220,20 +228,20 @@ export default function SavingsApp(){
             </div>
           </aside>}
 
-          {activeAnswer.fit===2&&<aside className={styles.quickPath}>
+          {activeAnswer.fit>=1&&<aside className={styles.quickPath} data-testid='cost-check-next-action'>
             <div>
-              <span>SNABB VÄG</span>
-              <strong>{activeCategory.label} verkar värt att kontrollera direkt.</strong>
-              <p>Se aktuella alternativ direkt eller fortsätt med nästa område.</p>
+              <span>DU KAN GÅ VIDARE REDAN NU</span>
+              <strong>{activeAnswer.fit===2?activeCategory.label+' kan vara värt att kontrollera.':'Osäker på '+activeCategory.short.toLowerCase()+'? Börja här.'}</strong>
+              <p>{quickCompare?'Jämför utbud hos en extern jämförelsetjänst, eller svara om fler områden.':'Se relevanta alternativ utan att vi gissar vilket bolag som passar dig bäst.'}</p>
             </div>
             <div className={styles.quickPathActions}>
-              {activeQuickPartner?<a href={activeQuickPartner.trackingUrl} data-partner={activeQuickPartner.name} data-category={activeQuickPartner.category} data-intent={partnerIntent[active]} data-placement='cost_check_quick_path' data-partner-position='1' target='_blank' rel='sponsored nofollow noopener'>Se alternativ hos {activeQuickPartner.name} <ArrowUpRight size={14}/></a>:<Link href={activeCategory.href} onClick={()=>emitAnalyticsEvent('cost_check_quick_guide_click',{category:active})}>Jämför {activeCategory.short.toLowerCase()} nu <ArrowRight size={14}/></Link>}
+              {quickCompare?<a href={quickCompare.trackingUrl} data-partner={quickCompare.name} data-category={quickCompare.category} data-intent={partnerIntent[active]} data-placement='cost_check_quick_path' data-partner-position='1' target='_blank' rel='sponsored nofollow noopener'>${active==='el'?'Jämför elavtal hos Elskling':'Kontrollera bredband hos Bredbandsval'} <ArrowUpRight size={14}/></a>:<Link href={categoryEntry[active]} onClick={()=>emitAnalyticsEvent('cost_check_quick_guide_click',{category:active,destination:'category_overview'})}>Se alternativ för {activeCategory.short.toLowerCase()} <ArrowRight size={14}/></Link>}
             </div>
+            {quickCompare&&<small className={styles.quickDisclosure}>Partnerlänk · vi kan få provision. Priser och villkor kontrolleras hos tjänsten.</small>}
           </aside>}
 
           <div className={styles.cardActions}>
             {completed>0&&<button className={styles.reset} onClick={reset}><RotateCcw size={15}/> Börja om</button>}
-            {completed>0&&completed<4&&earlyHasSignal&&<a className={styles.previewAction} href='#resultat' onClick={()=>emitAnalyticsEvent('cost_check_early_result_opened',{source:'app',questions_answered:completed})}>Se din första startpunkt <Target size={15}/></a>}
             {activeComplete&&(activeIndex<categories.length-1?<button className={styles.next} onClick={goNext}>Klart – till {categories[activeIndex+1].short} <ArrowRight size={17}/></button>:<a className={styles.next} href='#resultat'>Visa min prioritering <Target size={17}/></a>)}
           </div>
         </div>
