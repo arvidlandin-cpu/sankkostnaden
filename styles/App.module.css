@@ -1146,6 +1146,7 @@
 .choices button{min-height:58px;color:#243d62!important;border-color:#dce6f5!important;border-radius:13px!important}
 .choices button:hover{background:#f5f8ff!important;border-color:#99b6ee!important}
 .choices .selected{border-color:#7293e9!important;background:#edf3ff!important;color:#173b91!important;box-shadow:inset 0 0 0 1px #adc0f2!important}
+.choices button.selected:hover{background:#edf3ff!important;border-color:#7293e9!important}
 .choices .selected::before{border-color:#234bd1!important}
 .optionalCost{border-top-color:#e5ecf7!important}
 .optionalCost summary{color:#3c5d94!important}
