@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import premium from '../styles/CategoryPremium.module.css';
 import Link from 'next/link';
 import { ArrowRight, Check, PiggyBank, ShieldCheck, Smartphone } from 'lucide-react';
 import MobileMarketGateway from '../components/MobileMarketGateway';
@@ -24,14 +25,15 @@ export default function Mobil(){
    <link rel='canonical' href={canonical}/>
    <script type='application/ld+json' dangerouslySetInnerHTML={{__html:JSON.stringify({'@context':'https://schema.org','@graph':[{'@type':'WebPage',name:title,description,url:canonical,isPartOf:{'@type':'WebSite',name:'Sänk Kostnaden',url:'https://sankkostnaden.se/'}},{'@type':'BreadcrumbList',itemListElement:[{'@type':'ListItem',position:1,name:'Sänk Kostnaden',item:'https://sankkostnaden.se/'},{'@type':'ListItem',position:2,name:'Mobil',item:canonical}]}]})}}/>
   </Head>
-  <header className='topbar'>
+  <header className={`topbar ${premium.topbar}`}>
    <Link className='brand' href='/'><span className='brandMark'><PiggyBank size={22}/></span><span>Sänk Kostnaden</span></Link>
    <nav><Link href='/bredband/'>Bredband</Link><Link href='/elavtal/'>El</Link><Link href='/mobil/'>Mobil</Link><Link href='/forsakring/'>Försäkring</Link><Link href='/ekonomi/'>Ekonomi</Link></nav>
    <a className='topbarCta' href='#category-partners'>Se mobilalternativ →</a>
   </header>
-  <main>
-   <section className='guideHero categoryHero guideHero-mobil'>
-    <div className='guideWrap'>
+  <main className={premium.main}>
+   <section className={`guideHero categoryHero guideHero-mobil ${premium.hero}`}>
+    <div className={premium.heroArtwork} aria-hidden='true'/>
+    <div className={`guideWrap ${premium.heroInner}`}>
      <nav className='breadcrumbs' aria-label='Brödsmulor'><Link href='/'>Start</Link><span>›</span><span aria-current='page'>Mobil</span></nav>
      <div className='categoryHeroIcon'><Smartphone size={25}/></div>
      <p className='kicker'>MOBIL · FÖRSTÅ VAD DU BETALAR FÖR</p>
@@ -44,9 +46,9 @@ export default function Mobil(){
      <p className='fine'><ShieldCheck size={13}/> Gratis vägledning · tydliga partnerlänkar · ingen påhittad prisranking</p>
     </div>
    </section>
-   <article className='article guideWrap categoryArticle'>
+   <article className={`article guideWrap categoryArticle ${premium.article}`}>
     <div id='category-partners' style={{scrollMarginTop:90}}><MobileMarketGateway/></div>
-    <section className='categoryIntro'>
+    <section className={`categoryIntro ${premium.intro}`}>
      <p className='kicker'>SAMMA BEHOV · SAMMA JÄMFÖRELSEGRUND</p>
      <h2>Se hela kostnaden, inte bara introduktionspriset</h2>
      <p>Rätt mobilabonnemang börjar med surfbehov och fungerande täckning. Jämför sedan samma villkor över tolv månader innan du väljer.</p>
@@ -54,7 +56,7 @@ export default function Mobil(){
       {['Mängden surf du faktiskt använder varje månad','Täckning där du oftast använder mobilen','Kampanjperiod, ordinarie pris och eventuella avgifter','Bindningstid, roaming och andra begränsningar'].map(item=><p key={item}><Check size={17}/>{item}</p>)}
      </div>
     </section>
-    <section className='categoryGuideSection'>
+    <section className={`categoryGuideSection ${premium.guides}`}>
      <div className='categoryGuideHead'><div><p className='kicker'>GUIDER OCH VERKTYG</p><h2>Hitta svaret på din mobilfråga</h2></div><p>Alla guider kan användas utan inloggning eller krav på att klicka vidare till en partner.</p></div>
      <div className='categoryGuideGrid'>
       {guides.map(item=><Link href={item.href} key={item.href}><strong>{item.title}</strong><span>{item.text}</span><b>Läs guiden <ArrowRight size={15}/></b></Link>)}
