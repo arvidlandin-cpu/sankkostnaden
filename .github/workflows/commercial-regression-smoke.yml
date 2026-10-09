@@ -19,6 +19,7 @@ on:
       - 'design/elavtal-unified-*'
       - 'design/home-premium-*'
       - 'design/home-progressive-*'
+      - 'ux/mobile-insurance-purpose-first-*'
       - 'release/categories-v5-*'
       - 'release/mobile-navigation-*'
       - 'feat/kvartspris-*'

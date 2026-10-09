@@ -11,8 +11,9 @@ test('mobile decision page keeps metadata and displays all real operators withou
   await expect(hub.getByText('10 aktiva mobilpartners')).toBeVisible();
   await expect(hub.getByRole('link',{name:/Hitta rätt nivå av surf/i})).toHaveAttribute('href','/mobil/hur-mycket-surf-behover-jag/');
   const familyLinks=hub.getByRole('link',{name:/Räkna familjens totalkostnad|Räkna för två till fem personer/});
-  await expect(familyLinks).toHaveCount(2);
+  await expect(familyLinks).toHaveCount(1);
   await expect(familyLinks.first()).toHaveAttribute('href','/mobil/lonar-sig-familjeabonnemang/');
+  await expect(hub.getByRole('heading',{name:'Jämför hela familjens förstaårskostnad'})).toHaveCount(0);
   const links=page.locator('a[data-placement="mobile_hub_operator"]');
   await expect(links).toHaveCount(10);
   const names=await links.evaluateAll(nodes=>nodes.map(node=>node.getAttribute('data-partner')||''));
@@ -23,7 +24,7 @@ test('mobile decision page keeps metadata and displays all real operators withou
     await expect(link).toHaveAttribute('data-category','mobil');
   }
   await expect(hub).toContainText('Ordningen är alfabetisk');
-  await expect(hub).toContainText('inga kompletta livepriser');
+  await expect(hub).toContainText('ingen fullständig liveprislista');
   await expect(page.locator('a[data-placement="mobile_hub_refurbished"]')).toHaveCount(0);
 });
 

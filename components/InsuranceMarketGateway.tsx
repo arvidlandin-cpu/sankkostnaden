@@ -101,11 +101,13 @@ export default function InsuranceMarketGateway(){
    <PartnerGroup items={pet} kind='pet' heading='Djurförsäkring – se våra aktiva alternativ'
     description='Kontrollera aktuella premier, veterinärvårdsbelopp, fasta och rörliga självrisker och undantag för just ditt djur. Ingen personlig offert ges här.'/>
 
+   <details className={styles.optionalJourneys} data-testid='insurance-other-needs'>
+    <summary><span><strong>Reseskydd eller hjälp efter en skada?</strong><small>Två andra behov – öppna bara om de gäller dig.</small></span><ArrowRight size={20}/></summary>
    <section className={styles.section} aria-labelledby='insurance-other-heading'>
      <div className={styles.sectionHead}><div>
        <p className={styles.eyebrow}>ANDRA BEHOV · INTE SAMMA JÄMFÖRELSE</p>
        <h2 id='insurance-other-heading'>Reseskydd eller hjälp efter en skada?</h2>
-       <p>Reseförsäkring och försäkringsersättning är två andra användarsituationer. Vi blandar därför inte dessa i en generell hemförsäkringsranking.</p>
+       <p>Kontrollera ditt befintliga skydd först. Komplettera bara om det behövs.</p>
      </div></div>
      <div className={styles.routes}>
        <SpecialRoute partner={travel[0]} intent='travel' title='Reser du snart? Kontrollera först vad du redan har.'
@@ -118,6 +120,7 @@ export default function InsuranceMarketGateway(){
          disclaimer='Partnerlänk till ärendehjälp · kontrollera eventuell kostnad, fullmakt och villkor'/>
      </div>
    </section>
+   </details>
 
    <div className={styles.knowledge}>
      <CircleHelp size={20}/>

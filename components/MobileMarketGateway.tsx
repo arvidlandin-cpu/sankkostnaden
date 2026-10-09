@@ -1,11 +1,10 @@
 import Link from 'next/link';
-import { ArrowRight, ArrowUpRight, Calculator, CheckCircle2, Smartphone, Users, Wifi } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, CheckCircle2, Smartphone, Users, Wifi } from 'lucide-react';
 import { emitAnalyticsEvent } from '../lib/clientAttribution';
 import { getActivePartners, type ActivePartner } from '../lib/partners';
 import styles from '../styles/ElectricityMarketGateway.module.css';
 
 const all=getActivePartners('mobil','compare',40).sort((a,b)=>a.name.localeCompare(b.name,'sv'));
-const familyRelevant=all.filter(p=>p.intents.includes('family'));
 
 function pathClick(path:string){
   emitAnalyticsEvent('mobile_hub_path',{source:'mobile_hub',path});
@@ -36,7 +35,7 @@ export default function MobileMarketGateway(){
             <span className={styles.routeType}>ETT ABONNEMANG</span>
             <h3>Hur mycket surf behöver du?</h3>
             <p>Börja med surfvanor och täckning där du använder mobilen. Du behöver inte veta din nuvarande månadskostnad för att få en första vägledning.</p>
-            <div className={styles.miniNames}><span>Surfvanor</span><span>Täckning</span><span>Bindningstid</span></div>
+
           </div>
           <Link className={styles.primary} href='/mobil/hur-mycket-surf-behover-jag/' onClick={()=>pathClick('single_surf_help')}>Hitta rätt nivå av surf <ArrowRight size={19}/></Link>
           <small className={styles.sponsored}>Gratis vägledning · kontrollera erbjudanden hos operatören</small>
@@ -47,7 +46,7 @@ export default function MobileMarketGateway(){
             <span className={styles.routeType}>TVÅ TILL FEM ABONNEMANG</span>
             <h3>Blir familjeabonnemang billigare?</h3>
             <p>Räkna hela hushållets kostnad för samma tolv månader, med extra användare, kampanjperiod och ordinarie pris. Ange själv de erbjudanden du har.</p>
-            <div className={styles.miniNames}><span>Flera personer</span><span>Förstaårskostnad</span><span>Verklig totalsumma</span></div>
+
           </div>
           <Link className={styles.secondary} href='/mobil/lonar-sig-familjeabonnemang/' onClick={()=>pathClick('family_calculator')}>Räkna familjens totalkostnad <ArrowRight size={19}/></Link>
           <small className={styles.sponsored}>Kalkyl med dina egna priser · inte en offert</small>
@@ -60,7 +59,7 @@ export default function MobileMarketGateway(){
         <div>
           <p className={styles.eyebrow}>ÖPPEN PARTNERÖVERSIKT · INGEN PRISRANKING</p>
           <h2 id='mobile-supplier-title'>Se våra aktiva mobiloperatörer</h2>
-          <p>Alla {all.length} aktiva abonnemangspartners visas nedan i bokstavsordning. Vi har inga kompletta livepriser för hela marknaden, så kontrollera alltid surfmängd, nät, kampanjpris, ordinarie pris och villkor hos operatören.</p>
+          <p>Se operatörerna i bokstavsordning. Kontrollera surf, täckning och slutpris direkt hos bolaget – vi har ingen fullständig liveprislista.</p>
         </div>
       </div>
       <div className={styles.supplierGrid}>
@@ -86,15 +85,6 @@ export default function MobileMarketGateway(){
       <p className={styles.disclosure}>Partnerlänkar: vi kan få provision om du blir kund, utan extra kostnad för dig. Urvalet omfattar inte hela marknaden. Ordningen är alfabetisk och baseras inte på pris eller provision.</p>
     </section>
 
-    <section className={styles.nextStep} aria-labelledby='mobile-family-heading'>
-      <div className={styles.nextIcon}><Calculator size={25}/></div>
-      <div>
-        <p className={styles.eyebrow}>JÄMFÖR INNAN DU BYTER</p>
-        <h2 id='mobile-family-heading'>Jämför hela familjens förstaårskostnad</h2>
-        <p>Vi har {familyRelevant.length} aktiva mobilpartners med kända familjealternativ. Alla familjeupplägg fungerar inte likadant: vissa ger egen surf per person medan andra delar en gemensam surfmängd. Kontrollera aktuella villkor och räkna hela familjens årskostnad.</p>
-      </div>
-      <Link href='/mobil/lonar-sig-familjeabonnemang/' onClick={()=>pathClick('family_total_cost')}>Räkna för två till fem personer <ArrowRight size={18}/></Link>
-    </section>
     <div className={styles.knowledge}>
       <Wifi size={20}/>
       <div><strong>Kontrollera nätet där du använder mobilen.</strong><p>Billigare abonnemang hjälper inte om täckningen inte fungerar hemma, på arbetet eller på resan.</p></div>

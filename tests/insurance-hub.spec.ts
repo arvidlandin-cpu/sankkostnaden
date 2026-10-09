@@ -28,8 +28,14 @@ test('insurance category separates home, pet, travel and claims with full active
  const names=await home.evaluateAll(els=>els.map(a=>a.getAttribute('data-partner')||''));
  expect(names).toEqual([...names].sort((a,b)=>a.localeCompare(b,'sv')));
  await expect(hub).toContainText('inte på provision eller livepremie');
+ const optional=hub.getByTestId('insurance-other-needs');
+ await expect(optional).not.toHaveAttribute('open');
+ await optional.locator('summary').click();
+ await expect(optional).toHaveAttribute('open','');
  await expect(hub.getByRole('link',{name:/Läs om ersättningsärenden/})).toHaveAttribute('href','/forsakring/forsakringsersattning/');
  await expect(hub.getByRole('link',{name:/Förstå reseskyddet/})).toHaveAttribute('href','/forsakring/reseforsakring/');
+ await optional.locator('summary').click();
+ await expect(optional).not.toHaveAttribute('open');
 });
 
 for(const viewport of [
