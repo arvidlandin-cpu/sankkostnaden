@@ -28,6 +28,7 @@ type Props={
   introTitle:string;
   introText:string;
   showPartners?:boolean;
+  comparisonFirst?:boolean;
   beforePartners?:ReactNode;
   afterPartners?:ReactNode;
 };
@@ -37,7 +38,7 @@ const labels:Record<PartnerCategory,string>={bredband:'Bredband',el:'El',mobil:'
 export default function CategoryLanding({
   category,canonical,title,description,kicker,heading,lead,icon:Icon,
   compareHref,compareLabel,helpHref,helpLabel,partnerIntent,partnerHeading,
-  checks,guides,moreGuides=[],introTitle,introText,showPartners=true,beforePartners,afterPartners,
+  checks,guides,moreGuides=[],introTitle,introText,showPartners=true,beforePartners,afterPartners,comparisonFirst=false,
 }:Props){
   const schema={'@context':'https://schema.org','@graph':[
     {'@type':'WebPage',name:title,description,url:canonical,isPartOf:{'@type':'WebSite',name:'Sänk Kostnaden',url:'https://sankkostnaden.se/'}},
@@ -83,12 +84,15 @@ export default function CategoryLanding({
 
 
       <article className={`article guideWrap categoryArticle ${premium.article}`}>
-        <section className={`categoryIntro ${premium.intro}`}>
+        {!comparisonFirst&&<>
+<section className={`categoryIntro ${premium.intro}`}>
           <p className='kicker'>BÖRJA HÄR</p>
           <h2>{introTitle}</h2>
           <p>{introText}</p>
           <div className='checkList compactChecks'>{checks.map(item=><p key={item}><Check size={17}/>{item}</p>)}</div>
         </section>
+
+        </>}
 
         {beforePartners}
 
@@ -96,6 +100,15 @@ export default function CategoryLanding({
           {showPartners&&<PartnerDirectory category={category} intent={partnerIntent} heading={partnerHeading}/>}
           {afterPartners}
         </div>
+        {comparisonFirst&&<>
+<section className={`categoryIntro ${premium.intro}`}>
+          <p className='kicker'>BÖRJA HÄR</p>
+          <h2>{introTitle}</h2>
+          <p>{introText}</p>
+          <div className='checkList compactChecks'>{checks.map(item=><p key={item}><Check size={17}/>{item}</p>)}</div>
+        </section>
+
+        </>}
 
         <section className={`categoryGuideSection ${premium.guides}`}>
           <div className='categoryGuideHead'><div><p className='kicker'>GUIDER</p><h2>Vill du läsa först?</h2></div><p>Välj den guide som motsvarar din fråga. Du behöver inte läsa allt för att komma vidare.</p></div>
