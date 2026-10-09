@@ -24,7 +24,7 @@ test('mobile decision page keeps metadata and displays all real operators withou
     await expect(link).toHaveAttribute('data-category','mobil');
   }
   await expect(hub).toContainText('Ordningen är alfabetisk');
-  await expect(hub).toContainText('inga kompletta livepriser');
+  await expect(hub).toContainText('ingen fullständig liveprislista');
   await expect(page.locator('a[data-placement="mobile_hub_refurbished"]')).toHaveCount(0);
 });
 
