@@ -10,6 +10,13 @@ test('broadband starts with a real address-checking partner rather than a fake l
  await expect(section.getByRole('heading',{name:'Vad kan du faktiskt få på din adress?'})).toBeVisible();
  await expect(section).toContainText('Adresskontrollen görs hos Bredbandsval');
  await expect(section.getByText('3 aktiva bredbandspartners')).toBeVisible();
+ const heroComparison=page.locator('a[data-placement="broadband_hero_comparison"]');
+ await expect(heroComparison).toHaveCount(1);
+ await expect(heroComparison).toHaveAttribute('data-partner','Bredbandsval.se');
+ await expect(heroComparison).toHaveAttribute('rel',/sponsored/);
+ await expect(heroComparison).toHaveAttribute('target','_blank');
+ await expect(heroComparison).toHaveAttribute('href',/visit\.bredbandsval\.se/);
+ await expect(page.getByText(/adressuppgifter hos Bredbandsval/)).toBeVisible();
  const comparison=page.locator('a[data-placement="broadband_hub_comparison"]');
  await expect(comparison).toHaveCount(1);
  await expect(comparison).toHaveAttribute('data-partner','Bredbandsval.se');
@@ -37,10 +44,10 @@ for(const viewport of [
   await page.goto(route);
   const overflow=await page.evaluate(()=>Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)-document.documentElement.clientWidth);
   expect(overflow).toBeLessThanOrEqual(1);
-  const start=page.getByRole('link',{name:/Kontrollera bredbandsalternativ/});
+  const start=page.getByRole('link',{name:/Kontrollera utbud på min adress/});
   await expect(start).toBeVisible();
-  await start.click();
-  await expect(page).toHaveURL(/#category-partners$/);
+  const partnerHref=await start.getAttribute('href');
+  expect(partnerHref).toContain('visit.bredbandsval.se');
   await expect(page.locator('a[data-placement="broadband_hub_comparison"]')).toBeVisible();
   await page.screenshot({path:`test-results/screenshots/masterplan-broadband-${info.project.name}-${viewport.width}.png`,fullPage:true});
  });
