@@ -3,6 +3,8 @@ import premium from '../styles/CategoryPremium.module.css';
 import Link from 'next/link';
 import { ArrowRight, Check, PiggyBank, ShieldCheck, Wifi } from 'lucide-react';
 import BroadbandMarketGateway from '../components/BroadbandMarketGateway';
+import { getActivePartners } from '../lib/partners';
+import { emitAnalyticsEvent } from '../lib/clientAttribution';
 
 const guides=[
  {href:'/bredband/bredband-pa-min-adress/',title:'Bredband på min adress',text:'Varför utbud och priser skiljer sig mellan adresser.'},
@@ -12,6 +14,7 @@ const guides=[
 ];
 
 export default function Bredband(){
+ const addressComparison=getActivePartners('bredband','compare',20).find(partner=>partner.name==='Bredbandsval.se');
  const title='Jämför bredband 2026 – pris & hastighet';
  const description='Jämför bredband 2026 efter pris, hastighet och bindningstid. Se vilken fart du behöver och kontrollera vad som finns på din adress.';
  const canonical='https://sankkostnaden.se/bredband/';
@@ -40,10 +43,10 @@ export default function Bredband(){
      <h1>Hitta bredband som passar ditt hem – inte bara ett lockpris.</h1>
      <p className='lead'>Börja med att kontrollera vilka operatörer som finns på din adress. Välj sedan en lämplig hastighet och jämför hela kostnaden, även efter kampanjen.</p>
      <div className='categoryHeroActions'>
-      <a className='primary' href='#category-partners'>Kontrollera bredbandsalternativ <ArrowRight size={17}/></a>
+      {addressComparison?<a className='primary' href={addressComparison.trackingUrl} data-partner={addressComparison.name} data-category='bredband' data-intent='compare' data-placement='broadband_hero_comparison' data-partner-position='1' onClick={()=>emitAnalyticsEvent('broadband_hub_path',{source:'broadband_hero',path:'address_compare'})} target='_blank' rel='sponsored nofollow noopener'>Kontrollera utbud på min adress <ArrowRight size={17}/></a>:<a className='primary' href='#category-partners'>Se våra bredbandsalternativ <ArrowRight size={17}/></a>}
       <Link className='secondaryLight' href='/bredband/vilken-hastighet-behover-jag/'>Hjälp mig välja hastighet <ArrowRight size={17}/></Link>
      </div>
-     <p className='fine'><ShieldCheck size={13}/> Gratis vägledning · inga kontaktuppgifter hos oss · inga påstådda adressunika livepriser</p>
+     <p className='fine'><ShieldCheck size={13}/> {addressComparison?'Partnerlänk · kontroll och adressuppgifter hos Bredbandsval · vi får eventuell provision':'Gratis vägledning · adresser och priser kontrolleras hos operatören'}</p>
     </div>
    </section>
    <article className={`article guideWrap categoryArticle ${premium.article}`}>
