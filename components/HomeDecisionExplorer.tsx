@@ -28,7 +28,7 @@ const goals: Goal[] = [
   {
     key: 'valja', label: 'Hitta rätt nivå', Icon: SlidersHorizontal,
     title: 'Välj rätt nivå innan du jämför pris.',
-    description: 'Få hjälp på tre korta frågor. Välj det snabbtest som passar ditt behov.',
+    description: 'Välj ett enkelt snabbtest för ditt behov. Du kan gå vidare utan att kunna ditt nuvarande pris.',
     links: [
       { label: 'Bredband: vilken hastighet?', href: '/bredband/vilken-hastighet-behover-jag/' },
       { label: 'Mobil: hur mycket surf?', href: '/mobil/hur-mycket-surf-behover-jag/' },

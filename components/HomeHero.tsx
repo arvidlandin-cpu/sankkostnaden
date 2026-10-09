@@ -1,74 +1,37 @@
-import {
-  ArrowRight,
-  CircleDollarSign,
-  Grid2X2,
-  Info,
-  Lock,
-  ShieldCheck,
-  Smartphone,
-  TrendingDown,
-  Wifi,
-  Zap,
-} from 'lucide-react';
+import { ArrowRight, Check, ShieldCheck } from 'lucide-react';
 import styles from '../styles/HomeHero.module.css';
 
-type AreaKey='bredband'|'el'|'mobil'|'forsakring'|'ekonomi';
-type Area={label:string;icon:any;href:string;sub:string};
-
-const areas:Record<AreaKey,Area>={
-  bredband:{label:'Bredband',icon:Wifi,href:'/bredband/',sub:'Pris, fart & adress'},
-  el:{label:'El',icon:Zap,href:'/elavtal/',sub:'Avtal & elpriser'},
-  mobil:{label:'Mobil',icon:Smartphone,href:'/mobil/',sub:'Surf & abonnemang'},
-  forsakring:{label:'Försäkring',icon:ShieldCheck,href:'/forsakring/',sub:'Hem & djur'},
-  ekonomi:{label:'Lån & ekonomi',icon:CircleDollarSign,href:'/ekonomi/',sub:'Ränta & totalkostnad'},
-};
-const order:AreaKey[]=['bredband','el','mobil','forsakring','ekonomi'];
-
+/**
+ * One primary action and one route to the category list.
+ * No repeated category directory: the homepage already has five visible cards
+ * below this hero, and a persistent category navigation on small screens.
+ */
 export default function HomeHero(){
-  return <section className={styles.shell} aria-label='Hitta rätt jämförelse'>
-    <div className={styles.photo} aria-hidden='true'>
-      <img
-        src='https://images.pexels.com/photos/5998829/pexels-photo-5998829.jpeg?auto=compress&cs=tinysrgb&w=3200'
-        alt=''
-        fetchPriority='high'
-        decoding='async'
-      />
+ return <section className={styles.shell} aria-label='Hitta rätt jämförelse'>
+  <div className={styles.visual} aria-hidden='true'>
+   <img
+    src='https://images.pexels.com/photos/5998829/pexels-photo-5998829.jpeg?auto=compress&cs=tinysrgb&w=1600'
+    alt='' fetchPriority='high' decoding='async'
+   />
+  </div>
+  <div className={styles.inner}>
+   <div className={styles.copy}>
+    <p className={styles.eyebrow}>SAMMA VARDAG. LÄGRE UTGIFTER.</p>
+    <h1>Sänk dina fasta kostnader</h1>
+    <p className={styles.lead}>Hitta ett bättre sätt att jämföra el, bredband, mobil och försäkringar. Börja med det du undrar över – resten hjälper vi dig med.</p>
+    <div className={styles.actions}>
+     <a href='/app/' className={styles.primary}>
+      <span><strong>Starta Kostnadskollen</strong><small>Få en startpunkt med en enkel fråga</small></span>
+      <ArrowRight size={21} aria-hidden='true'/>
+     </a>
+     <a href='/#jamfor' className={styles.secondary}>Välj en kostnad direkt <ArrowRight size={18} aria-hidden='true'/></a>
     </div>
-    <div className={styles.overlay}/>
-    <div className={styles.inner}>
-      <div className={styles.copy}>
-        <div className={styles.badge}><span/> Gratis · ingen inloggning · tydliga partnerlänkar</div>
-        <h1>Sänk dina fasta kostnader</h1>
-        <p>Osäker på vilket avtal du bör se över? Få en första startpunkt efter en enkel fråga, eller gå direkt till bredband, el, mobil, försäkring och ekonomi.</p>
-        <div className={styles.trust}><span>Enkelt att börja</span><span>Du väljer själv</span><span>Gratis att använda</span></div>
-      </div>
-
-      <div className={styles.card}>
-        <div className={styles.cardEyebrow}>BÖRJA HÄR</div>
-        <h2>Hitta ett bra ställe att börja.</h2>
-        <div className={styles.choiceList}>
-          <a href='/app/'><div><strong>Starta Kostnadskollen</strong><small>Första vägledning efter en fråga · gratis</small></div><ArrowRight size={17}/></a>
-        </div>
-        <p className={styles.mobileNavigationHelp}>Vet du vilket område du vill jämföra? Välj det direkt i menyn längst ned.</p>
-        <div className={styles.cardDivider}><span>eller välj område direkt</span></div>
-        <div className={styles.areaList}>
-          {order.map(key=>{
-            const item=areas[key],Icon=item.icon;
-            return <a key={key} href={item.href}>
-              <span><Icon size={20}/></span><div><strong>{item.label}</strong><small>{item.sub}</small></div><ArrowRight size={17}/>
-            </a>;
-          })}
-        </div>
-        <p className={styles.cardHint}>Vi hämtar inga personliga priser åt dig. Verktygen hjälper dig förstå vad som kan vara värt att kontrollera, och du väljer själv nästa steg.</p>
-      </div>
+    <div className={styles.trust}>
+     <span><Check size={16}/>Gratis att använda</span>
+     <span><Check size={16}/>Ingen inloggning</span>
+     <span><ShieldCheck size={16}/>Partnerlänkar är märkta</span>
     </div>
-    <div className={styles.proof}>
-      <div className={styles.proofInner}>
-        <div><span><Grid2X2 size={21}/></span><p><strong>5 kostnadsområden</strong><small>Allt på ett ställe</small></p></div>
-        <div><span><TrendingDown size={21}/></span><p><strong>Direkt till rätt område</strong><small>Partner eller hjälp direkt</small></p></div>
-        <div><span><Lock size={21}/></span><p><strong>Ingen inloggning</strong><small>Helt kostnadsfritt</small></p></div>
-        <div><span><Info size={21}/></span><p><strong>Tydlig affiliateinformation</strong><small>Kommersiella länkar märks tydligt</small></p></div>
-      </div>
-    </div>
-  </section>;
+   </div>
+  </div>
+ </section>;
 }

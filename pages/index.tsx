@@ -101,20 +101,20 @@ export default function Home(){
 
       <section className={`${styles.section} ${styles.popularSection}`} id='jamfor'>
         <div className={styles.popularHeader}>
-          <div><p>POPULÄRA JÄMFÖRELSER</p><h2>Börja med en kostnad.</h2><span>Välj det område du vill se över först. Du kan alltid byta senare.</span></div>
+          <div><p>POPULÄRA JÄMFÖRELSER</p><h2>Vad vill du spara på?</h2><span>Välj ett område och se dina alternativ. Du behöver inte jämföra allt på en gång.</span></div>
         </div>
         <div className={styles.popularGrid}>
           {categories.map(({title,subtitle,href,image})=><a className={styles.popularCard} href={href} key={title}>
             <img className={styles.popularImageExact} src={image} alt='' loading='lazy'/>
-            <div className={styles.popularBody}><small>{subtitle}</small><ArrowRight size={17}/></div>
+            <div className={styles.popularBody}><div><strong>{title}</strong><small>{subtitle}</small></div><ArrowRight size={17}/></div>
           </a>)}
         </div>
       </section>
 
       <section className={`${styles.section} ${styles.helpSection}`}>
         <div className={styles.sectionHead}>
-          <div><p>BEHÖVER DU HJÄLP PÅ VÄGEN?</p><h2>Välj hur du vill börja.</h2></div>
-          <p>Få en första startpunkt, hitta rätt nivå, jämför två erbjudanden eller se över hushållet – utan onödiga frågor.</p>
+          <div><p>FÖR DIG SOM VILL HA VÄGLEDNING</p><h2>Vad behöver du hjälp med?</h2></div>
+          <p>Hitta rätt nivå, jämför två erbjudanden eller få hjälp att välja vilken kostnad du ska börja med.</p>
         </div>
         <HomeDecisionExplorer/>
       </section>
