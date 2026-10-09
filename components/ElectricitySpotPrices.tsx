@@ -216,11 +216,6 @@ export default function ElectricitySpotPrices(){
     </div>}
    </div>
 
-   <div className={styles.nextActions}>
-    <div><strong>Vill du dra nytta av prisvariationerna?</strong><span>Förstå avtalsformen innan du jämför elbolag.</span></div>
-    <Link href='/elavtal/vilket-elavtal-passar-mig/' onClick={()=>emitAnalyticsEvent('electricity_spot_next',{destination:'guide',area})}>Vilken avtalsform passar mig? <ArrowRight size={17}/></Link>
-   </div>
-
    <button type='button' className={styles.more} aria-expanded={detailsOpen} aria-controls='spot-price-details'
     onClick={()=>setDetailsOpen(v=>!v)}>Så fungerar priserna <ChevronDown size={17} className={detailsOpen?styles.rotate:''}/></button>
    {detailsOpen&&<div id='spot-price-details' className={styles.explanation}>
@@ -229,6 +224,10 @@ export default function ElectricitySpotPrices(){
     <Link href='/elavtal/kvartspris/'>Läs mer om kvartspris <ArrowRight size={14}/></Link>
    </div>}
   </>}
+  <div className={styles.nextActions}>
+   <div><strong>Osäker på vilket elavtal som passar?</strong><span>Förstå avtalsformen innan du jämför elbolag.</span></div>
+   <Link href='/elavtal/vilket-elavtal-passar-mig/' onClick={()=>emitAnalyticsEvent('electricity_spot_next',{destination:'guide',area})}>Få hjälp att välja avtalsform <ArrowRight size={17}/></Link>
+  </div>
   <p className={styles.source}><Info size={15}/> Spotpris utan moms, skatter, nätavgift och påslag.
     Källa: <a href='https://www.elprisetjustnu.se/elpris-api' target='_blank' rel='noopener noreferrer'>Elpriset just nu.se</a>.
     Morgondagens priser visas när de finns tillgängliga.</p>
