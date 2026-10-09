@@ -2,6 +2,8 @@ import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { ArrowRight, ChevronDown, Clock3, Info, TrendingDown, TrendingUp, Zap } from 'lucide-react';
 import styles from '../styles/ElectricitySpotPrices.module.css';
+import { calculateSpotShiftScenario } from '../lib/spotShiftScenario';
+import { emitAnalyticsEvent } from '../lib/clientAttribution';
 
 type Area = 'SE1' | 'SE2' | 'SE3' | 'SE4';
 type Quarter = { start: string; end: string; sekPerKwh: number };
@@ -68,6 +70,8 @@ export default function ElectricitySpotPrices() {
   const [day, setDay] = useState<'today' | 'tomorrow'>('today');
   const [chosenHour, setChosenHour] = useState<number | null>(null);
   const [expanded, setExpanded] = useState(false);
+  const [shiftOpen, setShiftOpen] = useState(false);
+  const [shiftKwh, setShiftKwh] = useState(2);
   const [status, setStatus] = useState<'loading' | 'ready' | 'unavailable'>('loading');
   const [now, setNow] = useState<number | null>(null);
 
@@ -121,6 +125,9 @@ export default function ElectricitySpotPrices() {
     : undefined;
   const low = records.length ? records.reduce((a, b) => a.sekPerKwh <= b.sekPerKwh ? a : b) : null;
   const high = records.length ? records.reduce((a, b) => a.sekPerKwh >= b.sekPerKwh ? a : b) : null;
+  const shift = calculateSpotShiftScenario(records, shiftKwh);
+  const kronor = (value: number) => new Intl.NumberFormat('sv-SE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value);
+  const kwhLabel = (value: number) => new Intl.NumberFormat('sv-SE', { maximumFractionDigits: 1 }).format(value);
 
   return <section id='kvartspriser' data-testid='electricity-spot-prices' className={styles.root} aria-label='Aktuella spotpriser för el'>
     <div className={styles.heading}>
@@ -205,6 +212,39 @@ export default function ElectricitySpotPrices() {
           {' '}<strong>{selectedPrice !== null ? ore(selectedPrice) + ' öre/kWh' : 'pris saknas'}</strong>
           {' '}i timgenomsnitt.
         </p>
+      </div>
+      <div className={styles.shiftShell} data-testid='spot-shift-scenario'>
+        <button type='button' className={styles.shiftToggle}
+          aria-expanded={shiftOpen} aria-controls='spot-shift-calculator'
+          onClick={() => {
+            if (!shiftOpen) emitAnalyticsEvent('electricity_shift_opened', { source: 'electricity_spot', area, day });
+            setShiftOpen(open => !open);
+          }}>
+          <span><Zap size={18}/><strong>Vad händer om du flyttar el till billigare tider?</strong></span>
+          <span>Testa med reglage <ChevronDown size={17} className={shiftOpen ? styles.turn : ''}/></span>
+        </button>
+        {shiftOpen && shift && <div id='spot-shift-calculator' className={styles.shiftPanel}>
+          <p className={styles.shiftIntro}>Ett räkneexempel med <strong>verkliga spotpriser för {selectedDate}</strong> i {area}. Välj hur många kWh du tänker dig att flytta inom samma dygn.</p>
+          <div className={styles.shiftLayout}>
+            <div className={styles.shiftControl}>
+              <div className={styles.shiftHead}>
+                <label htmlFor='electricity-shift-kwh'>Flyttad förbrukning</label>
+                <strong>{kwhLabel(shiftKwh)} kWh</strong>
+              </div>
+              <input id='electricity-shift-kwh' type='range' min='0' max='10' step='0.5'
+                value={shiftKwh} onChange={event => setShiftKwh(Number(event.target.value))}
+                aria-valuetext={kwhLabel(shiftKwh) + ' kWh per valt dygn'}/>
+              <div className={styles.shiftRange}><span>0 kWh</span><span>10 kWh</span></div>
+              <p>Vi jämför snittet av dygnets <strong>åtta dyraste</strong> med dess <strong>åtta billigaste</strong> kvartar (två timmar per grupp, inte nödvändigtvis i följd).</p>
+            </div>
+            <div className={styles.shiftResult} aria-live='polite'>
+              <span>Illustrativ skillnad i spotkostnad denna dag</span>
+              <strong data-testid='spot-shift-result'>{kronor(shift.spotDifferenceSek)} kr</strong>
+              <small>{kwhLabel(shiftKwh)} kWh × {ore(shift.spreadSekPerKwh)} öre/kWh i prisskillnad</small>
+            </div>
+          </div>
+          <p className={styles.shiftNotice}><Info size={16}/> <span><strong>Ingen prognos eller garanterad besparing.</strong> Beräkningen förutsätter att just denna elmängd faktiskt går att flytta mellan de utvalda kvartar under dagen och att du har avtal som följer kvartspriserna. Vi känner inte till ditt förbrukningsmönster eller apparaternas effekt. Moms, elskatt, nät-/effektavgifter, påslag och fasta avgifter ingår inte. Siffran gäller bara den valda dagens spotpris – inte månad eller år.</span></p>
+        </div>}
       </div>
       <button type='button' className={styles.more} aria-expanded={expanded} aria-controls='spot-price-details'
         onClick={() => setExpanded(value => !value)}>
