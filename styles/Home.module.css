@@ -997,3 +997,21 @@
 @media(prefers-reduced-motion:reduce){
  .popularCard:hover,.toolGrid>a:hover{transform:none!important}
 }
+
+/* Screenshot QA: photos had built-in labels. Crop the baked text so the
+   HTML title is the only visible category label. Ensure blue brand accent. */
+.nav .brandMark{background:#e3ebff!important;color:#2551ce!important}
+.popularPhoto{height:108px;overflow:hidden;position:relative;background:#eef3fb}
+.popularPhoto .popularImageExact{
+ width:100%!important;height:151px!important;display:block!important;
+ aspect-ratio:auto!important;object-fit:cover!important;
+ object-position:center top!important;
+}
+@media(max-width:760px){
+ .popularPhoto{height:91px}
+ .popularPhoto .popularImageExact{height:133px!important}
+}
+@media(max-width:390px){
+ .popularPhoto{height:86px}
+ .popularPhoto .popularImageExact{height:128px!important}
+}
