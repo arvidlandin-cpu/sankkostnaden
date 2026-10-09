@@ -20,6 +20,7 @@ on:
       - 'design/home-premium-*'
       - 'design/home-progressive-*'
       - 'ux/mobile-insurance-purpose-first-*'
+      - 'ux/kostnadskollen-neutral-quickpaths-*'
       - 'ux/economy-comparison-first-*'
       - 'release/categories-v5-*'
       - 'release/mobile-navigation-*'
