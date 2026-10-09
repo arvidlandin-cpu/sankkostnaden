@@ -1005,7 +1005,7 @@
 .popularPhoto .popularImageExact{
  width:100%!important;height:151px!important;display:block!important;
  aspect-ratio:auto!important;object-fit:cover!important;
- object-position:center top!important;
+ object-position:right top!important;
 }
 @media(max-width:760px){
  .popularPhoto{height:91px}
