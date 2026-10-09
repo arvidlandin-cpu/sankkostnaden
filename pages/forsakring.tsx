@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import premium from '../styles/CategoryPremium.module.css';
 import Link from 'next/link';
 import { ArrowRight, Check, PiggyBank, ShieldCheck } from 'lucide-react';
 import InsuranceMarketGateway from '../components/InsuranceMarketGateway';
@@ -24,14 +25,15 @@ export default function Forsakring(){
      <link rel='canonical' href={canonical}/>
      <script type='application/ld+json' dangerouslySetInnerHTML={{__html:JSON.stringify({'@context':'https://schema.org','@graph':[{'@type':'WebPage',name:title,description,url:canonical,isPartOf:{'@type':'WebSite',name:'Sänk Kostnaden',url:'https://sankkostnaden.se/'}},{'@type':'BreadcrumbList',itemListElement:[{'@type':'ListItem',position:1,name:'Sänk Kostnaden',item:'https://sankkostnaden.se/'},{'@type':'ListItem',position:2,name:'Försäkring',item:canonical}]}]})}}/>
    </Head>
-   <header className='topbar'>
+   <header className={`topbar ${premium.topbar}`}>
      <Link className='brand' href='/'><span className='brandMark'><PiggyBank size={22}/></span><span>Sänk Kostnaden</span></Link>
      <nav><Link href='/bredband/'>Bredband</Link><Link href='/elavtal/'>El</Link><Link href='/mobil/'>Mobil</Link><Link href='/forsakring/'>Försäkring</Link><Link href='/ekonomi/'>Ekonomi</Link></nav>
      <a className='topbarCta' href='#category-partners'>Se försäkringsalternativ →</a>
    </header>
-   <main>
-     <section className='guideHero categoryHero guideHero-forsakring'>
-       <div className='guideWrap'>
+   <main className={premium.main}>
+     <section className={`guideHero categoryHero guideHero-forsakring ${premium.hero}`}>
+    <div className={premium.heroArtwork} aria-hidden='true'/>
+       <div className={`guideWrap ${premium.heroInner}`}>
          <nav className='breadcrumbs' aria-label='Brödsmulor'><Link href='/'>Start</Link><span>›</span><span aria-current='page'>Försäkring</span></nav>
          <div className='categoryHeroIcon'><ShieldCheck size={25}/></div>
          <p className='kicker'>FÖRSÄKRING · RÄTT SKYDD FÖRST</p>
@@ -44,9 +46,9 @@ export default function Forsakring(){
          <p className='fine'>Gratis vägledning · aktuella premier och villkor hos försäkringsbolagen · tydligt märkta partnerlänkar</p>
        </div>
      </section>
-     <article className='article guideWrap categoryArticle'>
+     <article className={`article guideWrap categoryArticle ${premium.article}`}>
        <div id='category-partners' style={{scrollMarginTop:90}}><InsuranceMarketGateway/></div>
-       <section className='categoryIntro'>
+       <section className={`categoryIntro ${premium.intro}`}>
          <p className='kicker'>SAMMA SKYDD · SAMMA JÄMFÖRELSEGRUND</p>
          <h2>Billigare premie säger inte allt</h2>
          <p>En försäkring med lägre premie kan ha högre självrisk, mindre ersättning eller fler undantag. Kontrollera vad som faktiskt ingår innan du bestämmer dig.</p>
@@ -54,7 +56,7 @@ export default function Forsakring(){
            {['Årspremie inklusive rabatter och villkor efter kampanjen','Självrisk samt särskilda självrisker vid olika skador','Omfattning, ersättningstak, undantag och åldersavdrag','Befintligt skydd via förening, hemförsäkring eller betalkort'].map(item=><p key={item}><Check size={17}/>{item}</p>)}
          </div>
        </section>
-       <section className='categoryGuideSection'>
+       <section className={`categoryGuideSection ${premium.guides}`}>
          <div className='categoryGuideHead'><div><p className='kicker'>MER KONSUMENTHJÄLP</p><h2>Vilken försäkringsfråga vill du lösa?</h2></div><p>Välj en guide för ditt behov. Inget köp krävs för att använda verktygen.</p></div>
          <div className='categoryGuideGrid'>
            {guides.map(item=><Link href={item.href} key={item.href}><strong>{item.title}</strong><span>{item.text}</span><b>Läs guiden <ArrowRight size={15}/></b></Link>)}
