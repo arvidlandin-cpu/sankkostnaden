@@ -63,3 +63,31 @@ for(const width of widths){
   await page.screenshot({path:'test-results/screenshots/design-v5-home-'+testInfo.project.name+'-'+width+'.png',fullPage:true});
  });
 }
+
+test('repeated household tools stay optional and their SEO routes remain reachable',async({page})=>{
+ await page.goto(route);
+ const panel=page.getByTestId('home-household-tools');
+ await expect(panel).not.toHaveAttribute('open');
+ await expect(panel.getByRole('link',{name:/Räkna hushållets kostnader/})).not.toBeVisible();
+ const summary=panel.locator('summary');
+ await expect(summary).toContainText('Vill du få koll på hela hushållet?');
+ await summary.focus();
+ await page.keyboard.press('Enter');
+ await expect(panel).toHaveAttribute('open','');
+ await expect(panel.getByRole('link',{name:/Räkna hushållets kostnader/})).toHaveAttribute('href','/verktyg/hushallskostnadskollen/');
+ await expect(panel.locator('a[href="/guide/arskoll-fasta-kostnader/"]')).toBeVisible();
+ await expect(panel.locator('a[href="/app/"]')).toBeVisible();
+ await page.keyboard.press('Enter');
+ await expect(panel).not.toHaveAttribute('open');
+});
+for(const width of [360,390,430,1024,1440]){
+ test('expanded household tools are accessible without overflow at '+width+'px',async({page})=>{
+  await page.setViewportSize({width,height:860});
+  await page.goto(route);
+  const panel=page.getByTestId('home-household-tools');
+  await panel.locator('summary').click();
+  await expect(panel.locator('a[href="/verktyg/hushallskostnadskollen/"]')).toBeVisible();
+  const overflow=await page.evaluate(()=>Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)-document.documentElement.clientWidth);
+  expect(overflow).toBeLessThanOrEqual(1);
+ });
+}

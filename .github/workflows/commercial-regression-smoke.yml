@@ -18,6 +18,7 @@ on:
       - 'design/electricity-prices-*'
       - 'design/elavtal-unified-*'
       - 'design/home-premium-*'
+      - 'design/home-progressive-*'
       - 'feat/kvartspris-*'
     paths:
       - '.github/workflows/commercial-regression-smoke.yml'

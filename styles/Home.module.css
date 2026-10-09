@@ -1015,3 +1015,20 @@
  .popularPhoto{height:86px}
  .popularPhoto .popularImageExact{height:128px!important}
 }
+
+
+/* Home V5 refinement: secondary household tools progressively disclosed. */
+.progressiveTools{margin:8px 0 0;border:1px solid #dbe6f8;border-radius:20px;background:#f7faff;overflow:hidden}
+.progressiveTools summary{min-height:114px;padding:24px 28px;display:flex;align-items:center;justify-content:space-between;gap:16px;cursor:pointer;list-style:none;color:#15274e}
+.progressiveTools summary::-webkit-details-marker{display:none}
+.progressiveTools summary>span{display:grid;gap:6px}
+.progressiveTools summary small{font-size:10px;letter-spacing:.12em;font-weight:900;color:#365bcc}
+.progressiveTools summary strong{font-size:clamp(22px,2.45vw,30px);font-weight:800;letter-spacing:-.035em;line-height:1.15}
+.progressiveTools summary em{font-style:normal;font-size:14px;color:#5b6d85}
+.progressiveTools summary>svg{flex:0 0 auto;color:#254dc7;transition:transform .16s ease}
+.progressiveTools[open] summary>svg{transform:rotate(90deg)}
+.progressiveTools[open] summary{border-bottom:1px solid #dbe6f8}
+.progressiveTools .toolGrid{padding:17px;gap:12px;margin:0}
+.progressiveTools summary:focus-visible,.progressiveTools a:focus-visible{outline:3px solid #668dfa;outline-offset:3px}
+@media(max-width:650px){.progressiveTools summary{min-height:100px;padding:19px 16px}.progressiveTools summary em{font-size:13px}.progressiveTools .toolGrid{padding:12px}.progressiveTools summary strong{font-size:23px}}
+@media(prefers-reduced-motion:reduce){.progressiveTools summary>svg{transition:none}}
