@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import premium from '../styles/CategoryPremium.module.css';
 import Link from 'next/link';
 import { ArrowLeft, ArrowRight, Check, PiggyBank } from 'lucide-react';
 import PartnerDirectory from './PartnerDirectory';
@@ -57,15 +58,16 @@ export default function CategoryLanding({
       <script type='application/ld+json' dangerouslySetInnerHTML={{__html:JSON.stringify(schema)}}/>
     </Head>
 
-    <header className='topbar'>
+    <header className={`topbar ${premium.topbar}`}>
       <Link className='brand' href='/'><span className='brandMark'><PiggyBank size={22}/></span><span>Sänk Kostnaden</span></Link>
       <nav><Link href='/bredband/'>Bredband</Link><Link href='/elavtal/'>El</Link><Link href='/mobil/'>Mobil</Link><Link href='/forsakring/'>Försäkring</Link><Link href='/ekonomi/'>Ekonomi</Link></nav>
       <a className='topbarCta' href='#category-partners'>Jämför {labels[category].toLowerCase()} →</a>
     </header>
 
-    <main>
-      <section className={`guideHero categoryHero guideHero-${category}`}>
-        <div className='guideWrap'>
+    <main className={premium.main}>
+      <section className={`guideHero categoryHero guideHero-${category} ${premium.hero}`}>
+        <div className={premium.heroArtwork} aria-hidden='true'/>
+        <div className={`guideWrap ${premium.heroInner}`}>
           <Link className='back' href='/'><ArrowLeft size={16}/> Till startsidan</Link>
           <div className='categoryHeroIcon'><Icon size={25}/></div>
           <p className='kicker'>{kicker}</p>
@@ -80,8 +82,8 @@ export default function CategoryLanding({
       </section>
 
 
-      <article className='article guideWrap categoryArticle'>
-        <section className='categoryIntro'>
+      <article className={`article guideWrap categoryArticle ${premium.article}`}>
+        <section className={`categoryIntro ${premium.intro}`}>
           <p className='kicker'>BÖRJA HÄR</p>
           <h2>{introTitle}</h2>
           <p>{introText}</p>
@@ -95,7 +97,7 @@ export default function CategoryLanding({
           {afterPartners}
         </div>
 
-        <section className='categoryGuideSection'>
+        <section className={`categoryGuideSection ${premium.guides}`}>
           <div className='categoryGuideHead'><div><p className='kicker'>GUIDER</p><h2>Vill du läsa först?</h2></div><p>Välj den guide som motsvarar din fråga. Du behöver inte läsa allt för att komma vidare.</p></div>
           <div className='categoryGuideGrid'>
             {guides.map(item=><Link href={item.href} key={item.href}><strong>{item.title}</strong><span>{item.text}</span><b>Läs guiden <ArrowRight size={15}/></b></Link>)}
