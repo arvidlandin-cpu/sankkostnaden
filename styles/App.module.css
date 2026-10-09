@@ -1189,3 +1189,9 @@
  .appShell{padding-left:12px!important;padding-right:12px!important}
  .hero h1{font-size:34px!important}
 }
+
+
+/* Cost check: disclosure travels with a verified comparison-service exit. */
+.quickDisclosure{grid-column:1/-1;margin:0;max-width:65ch;color:#526681;font-size:12px;line-height:1.5}
+.quickPathActions a:focus-visible{outline:3px solid #668dfa;outline-offset:3px}
+@media(max-width:760px){.quickDisclosure{grid-column:1}}
