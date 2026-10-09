@@ -2,6 +2,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { ArrowRight, Check, PiggyBank, ShieldCheck, Zap } from 'lucide-react';
 import ElectricityMarketGateway from '../components/ElectricityMarketGateway';
+import pageStyles from '../styles/ElavtalLanding.module.css';
 
 const guides=[
  {href:'/elavtal/billigaste-elavtalet/',title:'Vad avgör vilket elavtal som är billigast?',text:'Förstå pris per kWh, månadsavgift och rabatter.'},
@@ -24,14 +25,15 @@ export default function Elavtal(){
    <link rel='canonical' href={canonical}/>
    <script type='application/ld+json' dangerouslySetInnerHTML={{__html:JSON.stringify({'@context':'https://schema.org','@graph':[{'@type':'WebPage',name:title,description,url:canonical,isPartOf:{'@type':'WebSite',name:'Sänk Kostnaden',url:'https://sankkostnaden.se/'}},{'@type':'BreadcrumbList',itemListElement:[{'@type':'ListItem',position:1,name:'Sänk Kostnaden',item:'https://sankkostnaden.se/'},{'@type':'ListItem',position:2,name:'Elavtal',item:canonical}]}]})}}/>
   </Head>
-  <header className='topbar'>
+  <header className={`topbar ${pageStyles.topbar}`}>
    <Link className='brand' href='/'><span className='brandMark'><PiggyBank size={22}/></span>Sänk Kostnaden</Link>
    <nav><Link href='/bredband/'>Bredband</Link><Link href='/elavtal/'>El</Link><Link href='/mobil/'>Mobil</Link><Link href='/forsakring/'>Försäkring</Link><Link href='/ekonomi/'>Ekonomi</Link></nav>
    <a className='topbarCta' href='#jamfor-elavtal'>Se elalternativen →</a>
   </header>
-  <main>
-   <section className='guideHero categoryHero guideHero-el'>
-    <div className='guideWrap'>
+  <main className={pageStyles.main}>
+   <section className={`guideHero categoryHero guideHero-el ${pageStyles.hero}`}>
+    <div className={pageStyles.heroArtwork} aria-hidden='true'/>
+    <div className={`guideWrap ${pageStyles.heroInner}`}>
      <nav className='breadcrumbs' aria-label='Brödsmulor'><Link href='/'>Start</Link><span>›</span><span aria-current='page'>Elavtal</span></nav>
      <div className='categoryHeroIcon'><Zap size={25}/></div>
      <p className='kicker'>ELAVTAL · ENKLARE BESLUT</p>
@@ -44,9 +46,9 @@ export default function Elavtal(){
      <p className='fine'><ShieldCheck size={13}/> Gratis att använda · tydligt märkta partnerlänkar · ingen påstådd liveprisranking</p>
     </div>
    </section>
-   <article className='article guideWrap categoryArticle'>
+   <article className={`article guideWrap categoryArticle ${pageStyles.article}`}>
     <div id='jamfor-elavtal' style={{scrollMarginTop:90}}><ElectricityMarketGateway/></div>
-    <section className='categoryIntro'>
+    <section className={`categoryIntro ${pageStyles.intro}`}>
      <p className='kicker'>KONTROLLERA INNAN DU TECKNAR</p>
      <h2>Jämför på samma grund, oavsett elbolag</h2>
      <p>Nätavgiften går normalt inte att välja bort. Fokusera på elhandelsavtalets jämförbara kostnader och din egen årsförbrukning.</p>
@@ -54,7 +56,7 @@ export default function Elavtal(){
       {['Samma årsförbrukning och samma prisgrund för alla erbjudanden','KWh-pris eller påslag tillsammans med fasta avgifter','Kampanjpris, rabattens längd och ordinarie villkor','Avtalsform, bindningstid och uppsägningstid'].map(item=><p key={item}><Check size={17}/>{item}</p>)}
      </div>
     </section>
-    <section className='categoryGuideSection'>
+    <section className={`categoryGuideSection ${pageStyles.guides}`}>
      <div className='categoryGuideHead'><div><p className='kicker'>VERKTYG & GUIDER</p><h2>Vill du förstå mer innan du väljer?</h2></div><p>Välj den hjälp som motsvarar din fråga. Du behöver inte läsa alla guider för att jämföra.</p></div>
      <div className='categoryGuideGrid'>
       {guides.map(item=><Link href={item.href} key={item.href}><strong>{item.title}</strong><span>{item.text}</span><b>Läs guiden <ArrowRight size={15}/></b></Link>)}
