@@ -113,3 +113,19 @@
  .primary,.secondary{font-size:13px}
 }
 @media(prefers-reduced-motion:reduce){.compareCard,.directCard,.primary,.secondary{transition:none}.primary:hover,.secondary:hover{transform:none}}
+
+
+/* Progressive secondary insurance journeys: keep primary home/pet choices calm. */
+.optionalJourneys{margin:34px 0 18px;padding:0;border:1px solid #dce6f6;border-radius:18px;background:#f8faff;overflow:hidden}
+.optionalJourneys summary{padding:20px 23px;min-height:88px;display:flex;align-items:center;justify-content:space-between;gap:15px;list-style:none;cursor:pointer;color:#172c56}
+.optionalJourneys summary::-webkit-details-marker{display:none}
+.optionalJourneys summary span{display:flex;flex-direction:column;gap:6px}
+.optionalJourneys summary strong{font-size:18px;font-weight:850}
+.optionalJourneys summary small{font-size:13px;color:#5c708c}
+.optionalJourneys summary>svg{color:#2450ca;flex:0 0 auto;transition:transform .18s}
+.optionalJourneys[open] summary>svg{transform:rotate(90deg)}
+.optionalJourneys[open] summary{border-bottom:1px solid #dce6f6}
+.optionalJourneys>.section{padding:22px;margin:0;background:#fff}
+.optionalJourneys summary:focus-visible{outline:3px solid #668dfa;outline-offset:-3px}
+@media(max-width:680px){.optionalJourneys summary{padding:16px;min-height:80px}.optionalJourneys>.section{padding:16px}.optionalJourneys summary strong{font-size:16px}}
+@media(prefers-reduced-motion:reduce){.optionalJourneys summary>svg{transition:none}}
