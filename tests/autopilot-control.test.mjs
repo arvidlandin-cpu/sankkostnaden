@@ -299,3 +299,30 @@ test('shared category is blocked and full experiment slots gate growth',()=>{
   assert.equal(packet.guardrails.activeExperimentBlocksGrowth,true);
   assert.equal(packet.guardrails.activeExperimentCount,2);
 });
+
+test('autopilot summary includes factual release context without treating it as proven revenue',()=>{
+ const packet=buildDecisionPacket({
+   google:google('2026-10-09T07:00:00Z'),
+   policy,
+   state:{activeExperiments:[]},
+   now:new Date('2026-10-09T07:00:00Z'),
+ });
+ packet.projectContext={
+   updatedAt:'2026-10-09',
+   latestVerifiedMainCommit:'a067020d',
+   checkoutSha:'abcdef012345',
+   shipped:[{pr:74,scope:'15-minute spot prices'},{pr:75,scope:'Electricity shift scenario'}],
+   decisionContext:{
+     design:'Blue/navy and minimal, one choice at a time.',
+     pricing:'Spot prices do not imply provider price rankings.',
+   },
+   unresolved:['Cloudflare deployment unverified','Approved revenue unverified'],
+ };
+ const markdown=toMarkdown(packet);
+ assert.match(markdown,/## Aktuellt produktläge/);
+ assert.match(markdown,/#74 15-minute spot prices/);
+ assert.match(markdown,/#75 Electricity shift scenario/);
+ assert.match(markdown,/Cloudflare deployment unverified/);
+ assert.match(markdown,/Spot prices do not imply provider price rankings/);
+ assert.equal(packet.recommendedAction.type,'WAITING_FOR_SIGNAL');
+});
