@@ -18,6 +18,7 @@ on:
       - 'design/electricity-prices-*'
       - 'design/elavtal-unified-*'
       - 'design/home-premium-*'
+      - 'design/mobile-navigation-*'
       - 'feat/kvartspris-*'
     paths:
       - '.github/workflows/commercial-regression-smoke.yml'
@@ -92,6 +93,7 @@ jobs:
             tests/quoted-loan-totals.spec.ts \
             tests/mobile-hub.spec.ts \
             tests/design-homepage.spec.ts \
+            tests/mobile-navigation-v5.spec.ts \
             tests/home-decision-explorer.spec.ts \
             tests/priority-seo-flow.spec.ts \
             tests/trust-footer-insurance.spec.ts \
