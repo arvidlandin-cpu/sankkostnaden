@@ -17,6 +17,8 @@ jobs:
           node-version: 22.16.0
       - name: Install dependencies
         run: npm install --progress=false
+      - name: Validate spot price parsing and DST
+        run: node --test tests/spot-price-feed.test.mjs
       - name: Check internal routes
         run: npm run check
       - name: Check metadata and tracking integrity
