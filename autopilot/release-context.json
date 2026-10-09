@@ -2,7 +2,7 @@
   "version": 1,
   "updatedAt": "2026-10-09",
   "purpose": "Verified code-release snapshot for the AI operator and autopilot decision packet. Historical baseline reports remain dated snapshots, not live inventory.",
-  "latestVerifiedMainCommit": "a067020d9c8b43d2ebcfd7cc3b4102adec624d1d",
+  "latestVerifiedMainCommit": "169a8d318613d17fd9276c27c3102d88fceb0194",
   "decisionContext": {
     "northStar": "Long-term approved affiliate revenue per relevant visitor; truthful consumer value and SEO trust first.",
     "design": "Owner-approved 2026-10-09 direction: premium warm-white, dark navy/blue primary, restrained pastels, generous white space; first mockup's look but less visual density. Lyst interaction delight + The Zebra progressive questions + KAYAK optional deep comparisons. Roll out in bounded QA-backed slices. See VISUAL_UX_ROADMAP_2026-10-09.md.",
