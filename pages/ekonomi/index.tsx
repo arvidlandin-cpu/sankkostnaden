@@ -33,7 +33,7 @@ export default function Ekonomi(){
     lead='En lägre månadsbetalning kan bero på längre löptid. Jämför därför effektiv ränta, avgifter, löptid och total återbetalning.'
     icon={CircleDollarSign}
     compareHref='/ekonomi/jamfor-privatlan/'
-    compareLabel='Hitta relevanta lånejämförelser'
+    compareLabel='Se våra lånejämförelser'
     helpHref='/verktyg/hushallskostnadskollen/'
     helpLabel='Börja med hushållskostnaderna'
     partnerIntent='loan'
