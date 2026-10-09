@@ -77,13 +77,20 @@
       "scope": "Price-based shifting scenario",
       "status": "merged",
       "note": "0-10kWh optional slider, 8 highest vs 8 lowest quarters; same-day spot-only hypothetical arithmetic, no guaranteed or annual savings."
+    },
+    {
+      "pr": 77,
+      "scope": "Elpriskollen 5.0",
+      "status": "merged",
+      "note": "Full 92/96/100 quarter chart, exact quarter slider, cheapest upcoming contiguous 2h and contiguous 2h price-shift scenario. One guide CTA. Branch Build and 188 browser regression tests passed; actual production SHA remains unverified."
     }
   ],
   "unresolved": [
-    "Cloudflare published version and latest live interactive behavior not independently verified against production SHA.",
-    "Full human mobile/desktop before-after visuals, contrast, accessibility and asset rights remain open.",
+    "Cloudflare publication of PR #77 and exact live electricity-widget version not yet independently verified.",
+    "Sitewide before/after mobile and desktop visual QA remains open; PR #77's 390px and 1440px Playwright screenshots were visually inspected.",
     "No evidence that design changes improved approved affiliate revenue. Continue qualified organic visitor acquisition and real attribution checks.",
-    "Open PR #48 (separate hypothetical quarter-price shift guide) is not merged. Compare against PR #75 and avoid overlapping duplicate widgets.",
+    "PR #48 remains open with possible overlap; compare with released PR #77's continuous-window spot simulator before merging.",
     "Masterplan 2026-10-08 traffic, partner counts and revenue remain a dated baseline; query live GA4/GSC/network data for current numbers."
-  ]
+  ],
+  "latestMergedMainCommit": "169a8d318613d17fd9276c27c3102d88fceb0194"
 }
