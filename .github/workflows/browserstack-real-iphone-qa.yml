@@ -1,52 +1,6 @@
-name: BrowserStack real iPhone QA
+name: BrowserStack real iPhone QA (manual; quota-limited)
 
 on:
-  push:
-    branches: [main, pilot/mobile-surf-prototype-2026-10-04]
-    paths:
-      - '.github/workflows/browserstack-real-iphone-qa.yml'
-      - 'playwright.browserstack.config.ts'
-      - 'tests/browserstack-real-ios.spec.ts'
-      - 'browserstack.yml'
-      - 'tests/browserstack-mobile-surf-pilot.spec.ts'
-      - 'components/experiments/MobileSurfPilot.tsx'
-      - 'pages/experiments/mobile-surf-pilot.tsx'
-      - 'styles/MobileSurfPilot.module.css'
-      - 'components/experiments/FirstYearCostCalculator.tsx'
-      - 'pages/verktyg/forstaarskostnad.tsx'
-      - 'pages/verktyg/forstaarskostnad-bredband.tsx'
-      - 'styles/FirstYearCostCalculator.module.css'
-      - 'pages/mobil/billigaste-mobilabonnemanget.tsx'
-      - 'pages/bredband/billigaste-bredbandet.tsx'
-      - 'pages/bredband/utan-bindningstid.tsx'
-      - 'components/tools/SwitchCalendar.tsx'
-      - 'pages/verktyg/byteskalender.tsx'
-      - 'styles/SwitchCalendar.module.css'
-      - 'pages/elavtal/byta-elavtal.tsx'
-      - 'components/IntentGuide.tsx'
-      - 'components/tools/FamilyMobileCost.tsx'
-      - 'styles/FamilyMobileCost.module.css'
-      - 'styles/TrafficTools.module.css'
-      - 'pages/mobil/lonar-sig-familjeabonnemang.tsx'
-      - 'pages/mobil/familjeabonnemang.tsx'
-      - 'pages/app.tsx'
-      - 'pages/verktyg/hushallskostnadskollen.tsx'
-      - 'styles/App.module.css'
-      - 'lib/costPrioritizer.ts'
-      - 'components/tools/ElectricityCostCalculator.tsx'
-      - 'styles/ElectricityCostCalculator.module.css'
-      - 'pages/verktyg/elavtalskostnad.tsx'
-      - 'pages/elavtal/jamfor-elavtal.tsx'
-      - 'pages/elavtal/billigaste-elavtalet.tsx'
-      - 'pages/elavtal/rorligt-elpris.tsx'
-      - 'pages/forsakring/hemforsakring-bostadsratt.tsx'
-      - 'pages/bredband/100-100.tsx'
-      - 'components/SiteFooter.tsx'
-      - 'pages/_app.tsx'
-      - 'styles/global.css'
-      - 'pages/forsakring/hemforsakring-hyresratt.tsx'
-      - 'pages/forsakring/vad-kostar-hemforsakring.tsx'
-      - 'pages/forsakring/jamfor-hemforsakring.tsx'
   workflow_dispatch:
     inputs:
       base_url:
@@ -126,8 +80,9 @@ jobs:
           set -e
 
           if [ "$status" -ne 0 ] && grep -q "Automate testing time expired" /tmp/browserstack-qa.log; then
-            echo "::warning::BrowserStack Automate quota/time is exhausted. Treating this run as infrastructure-blocked rather than a product QA failure."
-            exit 0
+            echo "::error::BrowserStack quota/time is exhausted. Real iPhone tests DID NOT RUN, and must not be counted as passed."
+            echo "Real iPhone QA: NOT EXECUTED (BrowserStack quota exhausted). No evidence of an iPhone browser pass." >> "$GITHUB_STEP_SUMMARY"
+            exit 1
           fi
 
           exit "$status"
