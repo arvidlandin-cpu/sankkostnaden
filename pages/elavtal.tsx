@@ -36,14 +36,14 @@ export default function Elavtal(){
     <div className={`guideWrap ${pageStyles.heroInner}`}>
      <nav className='breadcrumbs' aria-label='Brödsmulor'><Link href='/'>Start</Link><span>›</span><span aria-current='page'>Elavtal</span></nav>
      <div className='categoryHeroIcon'><Zap size={25}/></div>
-     <p className='kicker'>ELAVTAL · ENKLARE BESLUT</p>
-     <h1>Jämför elavtal utan att gissa vilket som är billigast.</h1>
-     <p className='lead'>Välj om du vill jämföra flera bolag, se våra aktiva elhandlare direkt eller börja med att förstå hela årskostnaden. Inga kontaktuppgifter behövs här.</p>
+     <p className='kicker'>ELAVTAL · ENKLARE VAL</p>
+     <h1>Jämför elavtal. Välj med bättre koll.</h1>
+     <p className='lead'>Jämför flera bolag hos Elskling, gå direkt till ett elbolag eller räkna på två erbjudanden. Du behöver inte veta din förbrukning för att börja.</p>
      <div className='categoryHeroActions'>
-      <a className='primary' href='#jamfor-elavtal'>Se aktiva elalternativ <ArrowRight size={17}/></a>
+      <a className='primary' href='#jamfor-elavtal'>Jämför elavtal <ArrowRight size={17}/></a>
       <Link className='secondaryLight' href='/elavtal/vilket-elavtal-passar-mig/'>Hjälp mig välja avtalsform <ArrowRight size={17}/></Link>
      </div>
-     <p className='fine'><ShieldCheck size={13}/> Gratis att använda · tydligt märkta partnerlänkar · ingen påstådd liveprisranking</p>
+     <p className='fine'><ShieldCheck size={13}/> Gratis att använda · märkta partnerlänkar · aktuella erbjudanden hos bolagen</p>
     </div>
    </section>
    <article className={`article guideWrap categoryArticle ${pageStyles.article}`}>
@@ -53,7 +53,7 @@ export default function Elavtal(){
      <h2>Jämför på samma grund, oavsett elbolag</h2>
      <p>Nätavgiften går normalt inte att välja bort. Fokusera på elhandelsavtalets jämförbara kostnader och din egen årsförbrukning.</p>
      <div className='checkList compactChecks'>
-      {['Samma årsförbrukning och samma prisgrund för alla erbjudanden','KWh-pris eller påslag tillsammans med fasta avgifter','Kampanjpris, rabattens längd och ordinarie villkor','Avtalsform, bindningstid och uppsägningstid'].map(item=><p key={item}><Check size={17}/>{item}</p>)}
+      {['Samma årsförbrukning och samma prisgrund för alla erbjudanden','kWh-pris eller påslag tillsammans med fasta avgifter','Kampanjpris, rabattens längd och ordinarie villkor','Avtalsform, bindningstid och uppsägningstid'].map(item=><p key={item}><Check size={17}/>{item}</p>)}
      </div>
     </section>
     <section className={`categoryGuideSection ${pageStyles.guides}`}>
