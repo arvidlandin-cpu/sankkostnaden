@@ -90,3 +90,22 @@ test('no shift-savings figure is shown if current spot data is absent',async({pa
  await expect(page.getByTestId('spot-shift-scenario')).toHaveCount(0);
  await expect(page.getByText('Priserna är inte tillgängliga just nu.')).toBeVisible();
 });
+
+
+for(const width of [360,390,430,1024,1440]){
+ test('expanded shift scenario stays legible at '+width+'px',async({page})=>{
+  const {day,records}=mockSpotDay();
+  await page.setViewportSize({width,height:860});
+  await page.route('**/spot-prices/latest.json',route=>route.fulfill({
+   status:200,contentType:'application/json',
+   body:JSON.stringify({source:'Elpriset just nu.se',days:{[day]:{SE3:records}}}),
+  }));
+  await page.goto('/elavtal/?qa=1');
+  const container=page.getByTestId('spot-shift-scenario');
+  await container.getByRole('button',{name:/Vad händer om du flyttar el/i}).click();
+  await expect(container.getByTestId('spot-shift-result')).toHaveText('2,00 kr');
+  const overflow=await page.evaluate(()=>Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)-document.documentElement.clientWidth);
+  expect(overflow).toBeLessThanOrEqual(1);
+  await page.screenshot({path:'test-results/screenshots/spot-shift-'+width+'.png',fullPage:true});
+ });
+}
