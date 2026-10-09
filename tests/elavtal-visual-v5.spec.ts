@@ -7,7 +7,7 @@ test('Elavtal 5.0 retains SEO, honest comparison and commercial tracking',async(
  await page.goto(route);
  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href','https://sankkostnaden.se/elavtal/');
  await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content',/index,follow/);
- await expect(page.getByRole('heading',{level:1,name:'Jämför elavtal utan att gissa vilket som är billigast.'})).toHaveCount(1);
+ await expect(page.getByRole('heading',{level:1,name:'Jämför elavtal. Välj med bättre koll.'})).toHaveCount(1);
  await expect(page.getByRole('heading',{name:'Välj hur du vill jämföra'})).toBeVisible();
  await expect(page.getByRole('heading',{name:'Se när elen är billigare'})).toBeVisible();
  await expect(page.getByRole('heading',{name:'Våra aktiva elbolag'})).toBeVisible();
@@ -48,15 +48,15 @@ for(const width of widths){
   await page.setViewportSize({width,height:width<=430?844:900});
   await page.goto(route,{waitUntil:'networkidle'});
   const hero=page.locator('section.guideHero');
-  await expect(hero.getByRole('link',{name:/Se aktiva elalternativ/})).toBeVisible();
+  await expect(hero.getByRole('link',{name:/Jämför elavtal/})).toBeVisible();
   const documentMetrics=await page.evaluate(()=>({
    overflow:Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)-document.documentElement.clientWidth,
    heroHeadingHeight:document.querySelector('section.guideHero h1')?.getBoundingClientRect().height || 0,
   }));
   expect(documentMetrics.overflow).toBeLessThanOrEqual(1);
   expect(documentMetrics.heroHeadingHeight).toBeGreaterThan(40);
-  await hero.getByRole('link',{name:/Se aktiva elalternativ/}).focus();
-  const outline=await hero.getByRole('link',{name:/Se aktiva elalternativ/}).evaluate(el=>({
+  await hero.getByRole('link',{name:/Jämför elavtal/}).focus();
+  const outline=await hero.getByRole('link',{name:/Jämför elavtal/}).evaluate(el=>({
    style:getComputedStyle(el).outlineStyle,width:parseFloat(getComputedStyle(el).outlineWidth),
   }));
   expect(outline.style).toBe('solid');
