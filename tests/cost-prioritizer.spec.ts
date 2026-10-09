@@ -81,7 +81,7 @@ test('high-intent answer exposes quick path without changing the full-flow resul
   await page.goto('/app/');
   await page.getByRole('button',{name:/Priset har ändrats eller avtalet känns dyrt/i}).click();
 
-  await expect(page.getByText('SNABB VÄG')).toBeVisible();
+  await expect(page.getByText('DU KAN GÅ VIDARE REDAN NU')).toBeVisible();
   await expect(page.locator('a[data-placement="cost_check_quick_path"]')).toHaveCount(1);
   await expect(page.getByRole('button',{name:/Klart – till Bredband/i})).toBeEnabled();
 });
@@ -153,7 +153,7 @@ test('Kostnadskollen gives a truthful useful provisional action after one warnin
  await expect(early).toContainText('1 AV 4 OMRÅDEN');
  await expect(early).toContainText('inte kontrollerat avtalet');
  await expect(early.getByRole('link',{name:/Se alternativ för el/})).toHaveAttribute('href','/elavtal/jamfor-elavtal/');
- await expect(page.getByRole('link',{name:'Se din första startpunkt'})).toHaveAttribute('href','#resultat');
+ await expect(page.getByTestId('cost-check-next-action').getByRole('link',{name:/Jämför elavtal hos Elskling/})).toHaveAttribute('href',/adt231/);
  await expect(early.getByRole('button',{name:/Fortsätt med bredband/i})).toBeVisible();
  await expect(early).not.toContainText('kr/år');
 });
@@ -324,5 +324,53 @@ for(const width of [360,390,430,1024,1440]){
   const excess=await page.evaluate(()=>Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)-document.documentElement.clientWidth);
   expect(excess).toBeLessThanOrEqual(1);
   await page.screenshot({path:'test-results/screenshots/kostnadskollen-v5-'+width+'.png',fullPage:true});
+ });
+}
+
+test('uncertain broadband answer gives one immediate neutral category path, no fabricated ranking',async({page})=>{
+ await page.goto('/app/?qa=1');
+ await page.getByRole('button',{name:'Byt område'}).click();
+ await page.getByRole('button',{name:/^Bredband/}).first().click();
+ await page.getByRole('button',{name:/Osäker på nivå\/pris eller länge sedan jag jämförde/}).click();
+ const immediate=page.getByTestId('cost-check-next-action');
+ await expect(immediate).toBeVisible();
+ await expect(immediate.getByRole('link',{name:/Se alternativ för bredband/})).toHaveAttribute('href','/bredband/');
+ await expect(immediate.locator('a[rel~="sponsored"]')).toHaveCount(0);
+ await expect(page.getByRole('link',{name:'Se din första startpunkt'})).toHaveCount(0);
+});
+
+test('high-intent broadband comparison chooses real multi-provider partner rather than arbitrary supplier',async({page})=>{
+ await page.goto('/app/?qa=1');
+ await page.getByRole('button',{name:'Byt område'}).click();
+ await page.getByRole('button',{name:/^Bredband/}).first().click();
+ await page.getByRole('button',{name:/Priset har höjts eller känns högt/}).click();
+ const partner=page.getByTestId('cost-check-next-action').locator('a[data-placement="cost_check_quick_path"]');
+ await expect(partner).toHaveAttribute('data-partner','Bredbandsval.se');
+ await expect(partner).toHaveAttribute('href',/visit\.bredbandsval\.se/);
+ await expect(partner).toHaveAttribute('rel',/sponsored/);
+ await expect(page.getByTestId('cost-check-next-action')).toContainText('Partnerlänk');
+});
+
+test('high-intent mobile answer remains non-ranking, not an arbitrary partner link',async({page})=>{
+ await page.goto('/app/?qa=1');
+ await page.getByRole('button',{name:'Byt område'}).click();
+ await page.getByRole('button',{name:/^Mobil/}).first().click();
+ await page.getByRole('button',{name:/Priset har höjts eller upplägget känns gammalt/}).click();
+ const immediate=page.getByTestId('cost-check-next-action');
+ await expect(immediate.getByRole('link',{name:/Se alternativ för mobil/})).toHaveAttribute('href','/mobil/');
+ await expect(immediate.locator('[data-placement="cost_check_quick_path"]')).toHaveCount(0);
+ await expect(immediate).toContainText('utan att vi gissar');
+});
+
+for(const width of [360,390,430,1024,1440]){
+ test('new first-answer quick exit remains usable at '+width+'px',async({page})=>{
+  await page.setViewportSize({width,height:860});
+  await page.goto('/app/?qa=1');
+  await page.getByRole('button',{name:/Osäker på avgifter\/villkor eller länge sedan jag jämförde/}).click();
+  const immediate=page.getByTestId('cost-check-next-action');
+  await expect(immediate).toBeVisible();
+  await expect(immediate.getByRole('link',{name:/Se alternativ för el/})).toBeVisible();
+  const overflow=await page.evaluate(()=>Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)-document.documentElement.clientWidth);
+  expect(overflow).toBeLessThanOrEqual(1);
  });
 }
