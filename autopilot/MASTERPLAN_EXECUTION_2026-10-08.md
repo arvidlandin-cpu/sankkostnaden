@@ -4,6 +4,18 @@
 
 Read also: `autopilot/PRODUCT_EXCELLENCE.md`, `STRATEGY_AND_EVIDENCE_STANDARD.md`, `PLAYBOOK.md`, `COMPETITOR_INTELLIGENCE.md`, `policy.json`, `state.json`, `opportunities.json`, and current GSC/GA4/network reports. The original user-approved full analysis is available in the conversation as `Sank_Kostnaden_Totalanalys_Masterplan_2026-10-08.md`; this repo ledger captures the operational milestones and requirements independently.
 
+## Release sync 2026-10-09 — READ BEFORE ANY NEXT STEP
+
+The source of truth for shipped/ongoing work is **`autopilot/release-context.json` plus current `main` code**, not this document's Oct 8 baseline or ChatGPT memory alone. The automated decision packet now includes a release summary. The last *confirmed* main application release in this snapshot is `a067020d`. Quality CI succeeded for latest main at review; Cloudflare production version and real approved affiliate conversion after release remain unverified.
+
+- [x] PR #71: homepage goal explorer / guided first question, avoiding duplicated category cards. [x] PR #72: Tibber SE Adtraction link; active electricity program count changed to **13** (Elskling comparison + 12 direct suppliers). Never turn supplier directory into unsourced price ranking.
+- [x] PR #73: approved design plan changes *proposed final identity* to calm warm-white, dark-blue/blue with restrained pastels and more whitespace; detailed implementation across home /app/ categories is **not yet shipped**. Lyst / The Zebra / KAYAK remain inspiration, not conversion evidence.
+- [x] PR #74: real automatic quarter-hour market spot-price feed for SE1–SE4, with first Oct 9 fetch confirmed 96 periods per area, no API credential; price is **spot only**, not user quote or retailer ranking. Subsequent scheduled refreshes require monitoring.
+- [x] PR #75: day-specific expandable 0–10 kWh consumption-shift scenario using actual quarter-hour spot prices and a disclosed eight-cheapest/eight-most-expensive-quarter illustration. Not a forecast, not annual savings, not a full bill calculation. CI build and commercial smoke green.
+- [ ] Verify Cloudflare current publication, refreshed API JSON, dates and mobile functionality without claiming success from merge alone. [ ] Complete human visual/accessibility checks and publish design changes in bounded PRs. [ ] Track real qualified organic traffic, EPI/subID partner attribution and **approved** revenue; all commercial uplift remains UNKNOWN.
+- [ ] Open PR #48 is a distinct *hypothetical* quarter-hour explainer and remains **unmerged**; review redundancy with newly shipped PR #75 before making changes. Avoid parallel changes to the same electricity journey.
+- These releases **do not** supersede existing SEO, affiliate fairness or evidence-first gates. Do not duplicate completed features or restart old PRs. New price-data visualization must remain optional within the low-friction partner journey.
+
 ## Baseline verified on 2026-10-08
 
 - 30-day GSC: 1,265 impressions, 35 Google clicks, avg position 38.6; 26 clicks /app/, 7 homepage, **2 other content page clicks**.
@@ -28,7 +40,7 @@ Read also: `autopilot/PRODUCT_EXCELLENCE.md`, `STRATEGY_AND_EVIDENCE_STANDARD.md
 
 - [x] Completed initial **source-level** comparison of homepage, Kostnadskollen, global CSS and four newly rebuilt category hubs. Found inconsistent independent navigation/layout systems, hardcoded near-identical green shades, microcopy under 12px on mobile, dense homepage entry card, favicon-based partner 'logos' and incomplete real screenshot review. Details and source-backed reasoning in `autopilot/DESIGN_SYSTEM_AUDIT_2026-10-08.md`.
 - [ ] Take real production screenshots across home, /app/, 5 categories, original tools and guides at 360/390/430/1024/1440; conduct **subjective visual** first-screen, typography, tap/keyboard, contrast and partner-brand review. Screen overflow tests alone do not prove quality.
-- [ ] Develop one consistent design-token and navigation/CTA/type system **using existing deep-forest/warm-white/lime identity as starting hypothesis**, with unified card and disclosure patterns. Do not simply increase all buttons or blindly duplicate category pages.
+- [ ] Develop one consistent design-token and navigation/CTA/type system **using approved dark-navy/blue/warm-white/pastel direction from the Oct 9 visual roadmap**, with unified card and disclosure patterns. Do not simply increase all buttons or blindly duplicate category pages.
 - [ ] Prototype coherent page-family design alternatives and demonstrate mobile/desktop before-after before large styling changes. Roll out in measured slices (homepage and /app/ first, then categories, then tools and guides), with complete QA.
 - [ ] Validate logo asset rights and quality; favicon is not the same as a reliable brand logo. Keep legible text fallback and honest sponsorship labels.
 - [ ] Continue nonpaid qualified acquisition and revenue tracking in parallel; design must not become an excuse to remain invisible to users.

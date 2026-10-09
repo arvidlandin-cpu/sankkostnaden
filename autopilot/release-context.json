@@ -1,0 +1,89 @@
+{
+  "version": 1,
+  "updatedAt": "2026-10-09",
+  "purpose": "Verified code-release snapshot for the AI operator and autopilot decision packet. Historical baseline reports remain dated snapshots, not live inventory.",
+  "latestVerifiedMainCommit": "a067020d9c8b43d2ebcfd7cc3b4102adec624d1d",
+  "decisionContext": {
+    "northStar": "Long-term approved affiliate revenue per relevant visitor; truthful consumer value and SEO trust first.",
+    "design": "Owner-approved 2026-10-09 direction: premium warm-white, dark navy/blue primary, restrained pastels, generous white space; first mockup's look but less visual density. Lyst interaction delight + The Zebra progressive questions + KAYAK optional deep comparisons. Roll out in bounded QA-backed slices. See VISUAL_UX_ROADMAP_2026-10-09.md.",
+    "conversion": "Keep real comparison-service vs individual-supplier distinctions, partner visibility and clearly labeled affiliate links; user need not know consumption to reach legitimate partner options.",
+    "pricing": "Electricity quarter-hour spot feed SE1-SE4 is real, but NOT a per-provider offer feed. No fabricated cheapest provider, 'best choice', monthly quote, ratings, guaranteed saving or extrapolated shift savings.",
+    "experimentStatus": "No active growth experiment in autopilot/state.json as of 2026-10-09; do not treat merged UX releases as commercially proven experiments.",
+    "capacity": "Independent non-paid traffic acquisition remains the highest commercial constraint; continue alongside design. No paid media or contracts without owner approval."
+  },
+  "shipped": [
+    {
+      "pr": 53,
+      "scope": "Kostnadskollen",
+      "status": "merged",
+      "note": "Truthful early useful result; never invent personal savings."
+    },
+    {
+      "pr": 64,
+      "scope": "El cost calculator",
+      "status": "merged",
+      "note": "First yes/no real quotes path; no mandatory full form before partner."
+    },
+    {
+      "pr": 65,
+      "scope": "Family mobile",
+      "status": "merged",
+      "note": "Progressive click-first 2-5 person journey."
+    },
+    {
+      "pr": 66,
+      "scope": "Mobile and broadband first-year calculator",
+      "status": "merged",
+      "note": "Progressive optional actual cost entry."
+    },
+    {
+      "pr": 67,
+      "scope": "Household cost",
+      "status": "merged",
+      "note": "Only known costs are totaled."
+    },
+    {
+      "pr": 68,
+      "scope": "Loan illustration",
+      "status": "merged",
+      "note": "User-editable example with exact mode, not an invented offer."
+    },
+    {
+      "pr": 71,
+      "scope": "Homepage task explorer",
+      "status": "merged",
+      "note": "Avoid second duplicate category grid; 4 goal-first help options."
+    },
+    {
+      "pr": 72,
+      "scope": "Tibber affiliate",
+      "status": "merged",
+      "note": "Verified Adtraction tracking URL added, total 13 active electric partners (Elskling + 12 direct)."
+    },
+    {
+      "pr": 73,
+      "scope": "Visual 2.0 roadmap",
+      "status": "merged",
+      "note": "Owner-approved calmer dark-navy/blue palette, first mockup direction less clutter."
+    },
+    {
+      "pr": 74,
+      "scope": "15-minute spot prices",
+      "status": "merged",
+      "note": "SE1-SE4 day-ahead price API, interactive chart, GitHub refresh and honest unavailable state; successful initial 2026-10-09 96 quarters per region."
+    },
+    {
+      "pr": 75,
+      "scope": "Price-based shifting scenario",
+      "status": "merged",
+      "note": "0-10kWh optional slider, 8 highest vs 8 lowest quarters; same-day spot-only hypothetical arithmetic, no guaranteed or annual savings."
+    }
+  ],
+  "unresolved": [
+    "Cloudflare published version and latest live interactive behavior not independently verified against production SHA.",
+    "Full human mobile/desktop before-after visuals, contrast, accessibility and asset rights remain open.",
+    "No evidence that design changes improved approved affiliate revenue. Continue qualified organic visitor acquisition and real attribution checks.",
+    "Open PR #48 (separate hypothetical quarter-price shift guide) is not merged. Compare against PR #75 and avoid overlapping duplicate widgets.",
+    "Masterplan 2026-10-08 traffic, partner counts and revenue remain a dated baseline; query live GA4/GSC/network data for current numbers."
+  ]
+}

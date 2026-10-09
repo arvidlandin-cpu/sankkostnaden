@@ -16,6 +16,7 @@ const outDir=process.env.AUTOPILOT_OUT_DIR||'autopilot-report';
 const policy=await readJson(process.env.AUTOPILOT_POLICY||'autopilot/policy.json')||{};
 const state=await readJson(process.env.AUTOPILOT_STATE||'autopilot/state.json')||{};
 const learningLedger=await readJson(process.env.AUTOPILOT_LEARNING_LEDGER||'autopilot/learning-ledger.json')||{};
+const releaseContext=await readJson(process.env.AUTOPILOT_RELEASE_CONTEXT||'autopilot/release-context.json');
 const now=process.env.AUTOPILOT_NOW?new Date(process.env.AUTOPILOT_NOW):new Date();
 
 const google=await readJson(path.join(inputRoot,'google','google-organic-performance.json'));
@@ -35,6 +36,9 @@ const packet=buildDecisionPacket({
   learningLedger,
   now,
 });
+
+// This is factual release context, not a new growth experiment or proof of uplift.
+packet.projectContext=releaseContext?{...releaseContext,checkoutSha:process.env.GITHUB_SHA||null}:null;
 
 await fs.mkdir(outDir,{recursive:true});
 await fs.writeFile(path.join(outDir,'decision.json'),JSON.stringify(packet,null,2)+'\n','utf8');
