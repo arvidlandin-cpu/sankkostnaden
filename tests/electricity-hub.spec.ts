@@ -5,7 +5,7 @@ const route='/elavtal/?qa=1';
 test('electricity hub shows meaningful choices and all actual partner options without mandatory questions',async({page})=>{
  await page.goto(route);
  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href','https://sankkostnaden.se/elavtal/');
- await expect(page.getByRole('heading',{level:1,name:/Jämför elavtal utan att gissa/i})).toBeVisible();
+ await expect(page.getByRole('heading',{level:1,name:/Jämför elavtal\. Välj med bättre koll\./i})).toBeVisible();
  const section=page.getByTestId('electricity-market');
  await expect(section.getByRole('heading',{level:2,name:'Välj hur du vill jämföra'})).toBeVisible();
  await expect(section.getByText('13 aktiva samarbetspartners')).toBeVisible();
@@ -69,7 +69,7 @@ for(const viewport of [
   await page.goto(route);
   const overflow=await page.evaluate(()=>Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)-document.documentElement.clientWidth);
   expect(overflow).toBeLessThanOrEqual(1);
-  const anchor=page.getByRole('link',{name:/Se aktiva elalternativ/i});
+  const anchor=page.getByRole('link',{name:/Jämför elavtal/i});
   await expect(anchor).toBeVisible();
   await anchor.click();
   await expect(page).toHaveURL(/#jamfor-elavtal$/);
