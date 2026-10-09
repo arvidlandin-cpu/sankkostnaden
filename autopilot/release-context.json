@@ -2,7 +2,7 @@
   "version": 1,
   "updatedAt": "2026-10-09",
   "purpose": "Verified code-release snapshot for the AI operator and autopilot decision packet. Historical baseline reports remain dated snapshots, not live inventory.",
-  "latestVerifiedMainCommit": "761b1621eef55953220141042b3059481aab4d98",
+  "latestVerifiedMainCommit": "5cfaead1b3d8a117f912a9f88cfa50fcb3f06e94",
   "decisionContext": {
     "northStar": "Long-term approved affiliate revenue per relevant visitor; truthful consumer value and SEO trust first.",
     "design": "Owner-approved 2026-10-09 direction: premium warm-white, dark navy/blue primary, restrained pastels, generous white space; first mockup's look but less visual density. Lyst interaction delight + The Zebra progressive questions + KAYAK optional deep comparisons. Roll out in bounded QA-backed slices. See VISUAL_UX_ROADMAP_2026-10-09.md.",
@@ -132,16 +132,28 @@
       "scope": "Economy comparison-first path",
       "status": "merged",
       "note": "Loan comparison and New loan/Consolidation choice appear before long optional learning/checklist; effective APR and full repayment guidance remains intact. Other category pages unaffected. 240 Chromium browser/commercial regression tests passed on branch; exact Cloudflare production SHA awaits verification."
+    },
+    {
+      "pr": 95,
+      "scope": "Broadband first-screen address comparison",
+      "status": "merged",
+      "note": "Primary hero action now goes directly to active Bredbandsval multi-provider address comparison with transparent sponsored label; 240 branch commercial browser tests passed. No address entered or stored on SK. Cloudflare live SHA unverified."
+    },
+    {
+      "pr": 97,
+      "scope": "Kostnadskollen purposeful one-answer quick exits",
+      "status": "merged",
+      "note": "One answer gives inline useful action; for clear price worry electricity/broadband use actual Elskling/Bredbandsval comparison service, mobile/insurance and uncertain answers go to neutral category overview. No arbitrary direct vendor selection; duplicate preview action removed. 248 commercial browser tests passed on merged-compatible branch. No verified uplift."
     }
   ],
   "unresolved": [
-    "Verify Cloudflare's exact published content/SHA for the latest category journeys (PR #92 and #93) and prior V5 changes. GitHub production-route smoke checked key routes, not full content/version.",
-    "Continue deep-page copy, interactions and visual QA across Broadband, Mobile, Insurance, Economy, app and guides. PR #92/#93 reduce friction, but not proven conversion improvements.",
+    "Confirm Cloudflare's exact deployed version for PR #95/#97 (plus earlier V5), not inferred from successful GitHub build or route HTTP 200.",
+    "Deep QA: compare actual low-knowledge user success at broadband address exit and CostCheck answer-to-partner, audit Swedish copy of question options, all category guides and mobile visual UX; do not assume design increases revenue.",
     "No evidence that design changes improved approved affiliate revenue. Continue qualified organic visitor acquisition and real attribution checks.",
     "PR #48 (old hypothetical annual quarter-price widget) was CLOSED as redundant after spot widget PR #77; avoid resurrecting it.",
     "Masterplan 2026-10-08 traffic, partner counts and revenue remain a dated baseline; query live GA4/GSC/network data for current numbers.",
     "BrowserStack physical iPhone sessions remain UNTESTED due depleted quota, despite older false-green run 37952606478. PR #90 corrects reporting. PR #88 proposing free WebKit test is open with merge conflict and a slow browser installation; do not mark it shipped before clean CI/merge.",
     "Current production-route smoke reached live routes, but deployment was not matched to exact main commit SHA."
   ],
-  "latestMergedMainCommit": "761b1621eef55953220141042b3059481aab4d98"
+  "latestMergedMainCommit": "5cfaead1b3d8a117f912a9f88cfa50fcb3f06e94"
 }
