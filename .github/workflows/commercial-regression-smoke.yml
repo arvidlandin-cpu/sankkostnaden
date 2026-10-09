@@ -20,6 +20,7 @@ on:
       - 'design/home-premium-*'
       - 'design/home-progressive-*'
       - 'release/categories-v5-*'
+      - 'release/mobile-navigation-*'
       - 'feat/kvartspris-*'
     paths:
       - '.github/workflows/commercial-regression-smoke.yml'
@@ -88,6 +89,7 @@ jobs:
             tests/electricity-cost.spec.ts \
             tests/electricity-hub.spec.ts \
             tests/category-premium-v5.spec.ts \
+            tests/mobile-navigation-v5.spec.ts \
             tests/elavtal-visual-v5.spec.ts \
             tests/electricity-spot-prices.spec.ts \
             tests/broadband-hub.spec.ts \
