@@ -81,6 +81,7 @@ jobs:
             tests/cost-prioritizer.spec.ts \
             tests/electricity-cost.spec.ts \
             tests/electricity-hub.spec.ts \
+            tests/electricity-spot-prices.spec.ts \
             tests/broadband-hub.spec.ts \
             tests/insurance-hub.spec.ts \
             tests/quoted-loan-totals.spec.ts \
