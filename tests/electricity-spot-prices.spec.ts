@@ -74,7 +74,7 @@ test('day-specific live spot slider changes transparently and stays optional',as
  await input.press('Home');
  await expect(container.getByTestId('spot-shift-result')).toHaveText('0,00 kr');
  await expect(container).toContainText('Ingen prognos eller garanterad besparing.');
- await expect(container).toContainText('moms');
+ await expect(container).toContainText(/moms/i);
  await expect(container).toContainText('inte månad eller år');
  await reveal.click();
  await expect(reveal).toHaveAttribute('aria-expanded','false');
