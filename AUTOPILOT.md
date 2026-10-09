@@ -4,6 +4,10 @@
 
 Autopiloten optimerar för **långsiktigt godkänd affiliateintäkt per relevant besökare**. Trafik, ranking, CTR och affiliate-klick är delmål, inte slutmål.
 
+## Aktuellt läge 2026-10-09
+
+Varje operativ AI-genomgång ska läsa `autopilot/release-context.json`, aktuell `main`, `autopilot/MASTERPLAN_EXECUTION_2026-10-08.md`, senaste rapporter och öppna PR. GitHubs schemalagda kontroll är en **regelstyrd datakontroll**, inte en AI som automatiskt läser varje chatt, programmerar eller verifierar Cloudflare. Nya releaser ska föras in i release-registret och i masterplanens journal, med tydlig skillnad mellan *merged*, *CI-godkänd*, *verifierad publicering* och *affärseffekt*. Befintlig produkt- och konverteringsplan får inte nollställas av ett nytt designförslag.
+
 ## Två lager
 
 1. **GitHub Actions = sensorer + skyddsräcken.** Den hämtar GA4, Search Console, Adtraction, Addrevenue och partnerhälsa, reducerar allt till ett maskinläsbart beslutspaket och stoppar aggressiva ändringar när signalen är för svag.
@@ -25,7 +29,7 @@ Nya betaltjänster, betald annonsering, nya partneravtal, större borttagning av
 
 ## Guardrails
 
-- Max ett tillväxtexperiment åt gången.
+- Högst två oberoende, avgränsade tillväxtinitiativ samtidigt enligt `autopilot/policy.json`, aldrig samma kategori, flöde eller sökfråga.
 - Ett aktivt experiment får inte störas av nya SEO/CRO-tester innan utvärderingsgrinden.
 - Teknisk mätning och attribution får repareras även när ett experiment pågår.
 - Låg trafik betyder **vänta**, inte fylla sajten med fler ändringar.
