@@ -21,6 +21,7 @@ on:
       - 'design/home-progressive-*'
       - 'ux/mobile-insurance-purpose-first-*'
       - 'ux/broadband-direct-address-*'
+      - 'ux/kostnadskollen-neutral-quickpaths-*'
       - 'ux/economy-comparison-first-*'
       - 'release/categories-v5-*'
       - 'release/mobile-navigation-*'
