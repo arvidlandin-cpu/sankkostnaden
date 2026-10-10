@@ -72,6 +72,7 @@ test('kvartspris gives a truthful next step after one click and an optional seco
   await page.goto('/elavtal/kvartspris/?qa=1');
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href','https://sankkostnaden.se/elavtal/kvartspris/');
   await expect(page.getByRole('heading',{level:1,name:'Kvartspris på el 2026 – när kan det löna sig?'})).toBeVisible();
+  await expect(page.getByText('Spotpriset på elbörsen ändras var 15:e minut')).toBeVisible();
   const aid=page.getByTestId('quarter-price-decision');
   await expect(aid.getByRole('heading',{name:'Kan kvartspris passa dig?'})).toBeVisible();
   await expect(aid.getByTestId('quarter-price-result')).toHaveCount(0);
