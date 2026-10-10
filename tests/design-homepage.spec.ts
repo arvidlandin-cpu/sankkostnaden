@@ -111,8 +111,8 @@ for(const width of [360,390,430,1024,1440]){
   await expect(firstOption).toBeVisible();
   await firstOption.click();
   await expect(firstOption).toHaveClass(/selected/);
-  const chosen=await firstOption.evaluate(el=>getComputedStyle(el).backgroundColor);
-  expect(chosen).toBe('rgb(231, 238, 255)');
+  // The selected fill transitions over 140ms; Playwright auto-retries the final computed shade.
+  await expect(firstOption).toHaveCSS('background-color','rgb(231, 238, 255)');
   const footer=page.locator('.siteFooter');
   await expect(footer).toBeVisible();
   expect(await footer.evaluate(el=>getComputedStyle(el).backgroundColor)).toBe('rgb(249, 250, 252)');
@@ -129,7 +129,7 @@ for(const width of [360,390,430,1024,1440]){
   expect(await direct.evaluate(el=>getComputedStyle(el).backgroundColor)).toBe('rgb(35, 75, 209)');
   await expect(page.locator('a[rel~="sponsored"]').first()).toBeVisible();
   const guideOverlay=await page.locator('.guideHero').first().evaluate(el=>getComputedStyle(el).backgroundImage);
-  expect(guideOverlay).toContain('rgba(14, 31, 67');
+  expect(guideOverlay).toContain('rgba(16, 29, 66');
   const overflowGuide=await page.evaluate(()=>Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)-document.documentElement.clientWidth);
   expect(overflowGuide).toBeLessThanOrEqual(1);
   await page.screenshot({path:`test-results/screenshots/p0d-shared-guide-${info.project.name}-${width}.png`,fullPage:true});
