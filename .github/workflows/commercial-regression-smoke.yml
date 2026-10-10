@@ -118,6 +118,20 @@ jobs:
             tests/trust-footer-insurance.spec.ts \
             --project=chromium
 
+      - name: Preserve real Chromium screenshots before WebKit clears the Playwright output folder
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p qa-evidence/chromium
+          if [ -d test-results/screenshots ]; then
+            cp -a test-results/screenshots/. qa-evidence/chromium/
+          fi
+          if [ ! -s qa-evidence/chromium/design-v5-home-chromium-390.png ]; then
+            echo "::error::Expected 390px homepage screenshot missing. Do not report visual QA as complete."
+            exit 1
+          fi
+          echo "Retained $(find qa-evidence/chromium -type f -name '*.png' | wc -l) Chromium screenshots for review."
+
       - name: Run free Safari-engine mobile regression (not a physical iPhone)
         run: npx playwright test tests/mobile-webkit-core.spec.ts --project=webkit
 
@@ -127,6 +141,7 @@ jobs:
         with:
           name: commercial-regression-smoke
           path: |
+            qa-evidence/
             test-results/
             playwright-report/
           retention-days: 14
