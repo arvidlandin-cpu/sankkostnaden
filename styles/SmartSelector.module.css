@@ -419,3 +419,13 @@
 .result>a:hover,.topbarCta:hover{background:var(--sk-action-hover)}
 .options button:focus-visible,.result a:focus-visible,.result button:focus-visible,.topbar a:focus-visible{outline:3px solid var(--sk-focus);outline-offset:3px}
 @media(prefers-reduced-motion:reduce){.options button,.progress i{transition:none}.options button:hover{transform:none}}
+
+/* A Swedish compound such as "bredbandshastighet" must not expand the page
+   beyond the viewport on the mobile need selector. Use hyphenation first. */
+.hero h1{min-width:0;max-width:100%;overflow-wrap:anywhere;hyphens:auto}
+@media(max-width:560px){
+ .hero h1{font-size:clamp(32px,8.5vw,39px);line-height:1.07}
+ .questionHead{grid-template-columns:36px minmax(0,1fr)}
+ .questionHead>div{min-width:0}
+ .question h2{overflow-wrap:anywhere;hyphens:auto}
+}
