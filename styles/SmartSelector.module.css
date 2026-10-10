@@ -161,7 +161,7 @@
 }
 
 .result.complete {
-  box-shadow: 0 24px 60px var(--sk-accent-ink)2b;
+  box-shadow: 0 24px 60px rgba(35,75,209,.14);
 }
 
 .resultLabel {
