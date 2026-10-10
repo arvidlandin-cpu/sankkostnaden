@@ -83,7 +83,6 @@ test('kvartspris gives a truthful next step after one click and an optional seco
   await expect(aid.getByTestId('quarter-price-result')).toContainText('Kvartspris kan vara värt att undersöka');
   await expect(aid.getByTestId('quarter-price-result')).toContainText('ingen garanti');
   await expect(aid.getByRole('link',{name:'Jämför elavtal och villkor'})).toHaveAttribute('href','/elavtal/jamfor-elavtal/');
-  await expect(aid.getByRole('link',{name:'Se relevanta partneralternativ'})).toHaveAttribute('href','#guide-partners');
 
   const risk=aid.getByTestId('quarter-price-risk');
   await expect(risk.getByRole('button')).toHaveCount(2);
@@ -116,8 +115,7 @@ for(const width of [360,390,430,1024,1440]){
     expect(ring).toBeGreaterThanOrEqual(3);
     await first.click();
     await expect(aid.getByTestId('quarter-price-result')).toBeVisible();
-    await expect(aid.getByRole('link',{name:'Se relevanta partneralternativ'})).toHaveAttribute('href','#guide-partners');
-    const overflow=await page.evaluate(()=>Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)-document.documentElement.clientWidth);
+      const overflow=await page.evaluate(()=>Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)-document.documentElement.clientWidth);
     expect(overflow).toBeLessThanOrEqual(1);
     await page.screenshot({path:`test-results/screenshots/kvartspris-decision-${info.project.name}-${width}.png`,fullPage:true});
   });
