@@ -66,3 +66,59 @@ for(const width of [360,390,430,1024,1440]){
   await expect(aid.getByRole('heading',{name:/Betalar du för ett tillägg/i})).toBeVisible();
  });
 }
+
+test('kvartspris gives a truthful next step after one click and an optional second choice',async({page})=>{
+  await page.addInitScript(()=>{(window as any).dataLayer=[];});
+  await page.goto('/elavtal/kvartspris/?qa=1');
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href','https://sankkostnaden.se/elavtal/kvartspris/');
+  await expect(page.getByRole('heading',{level:1,name:'Kvartspris på el 2026 – när kan det löna sig?'})).toBeVisible();
+  const aid=page.getByTestId('quarter-price-decision');
+  await expect(aid.getByRole('heading',{name:'Kan kvartspris passa dig?'})).toBeVisible();
+  await expect(aid.getByTestId('quarter-price-result')).toHaveCount(0);
+  const initialOptions=aid.getByRole('group',{name:/Kan du flytta större elanvändning/i}).getByRole('button');
+  await expect(initialOptions).toHaveCount(3);
+  await expect(page.locator('a[rel~="sponsored"]').first()).toBeVisible();
+
+  await initialOptions.first().click();
+  await expect(aid.getByTestId('quarter-price-result')).toContainText('Kvartspris kan vara värt att undersöka');
+  await expect(aid.getByTestId('quarter-price-result')).toContainText('ingen garanti');
+  await expect(aid.getByRole('link',{name:'Jämför elavtal och villkor'})).toHaveAttribute('href','/elavtal/jamfor-elavtal/');
+  await expect(aid.getByRole('link',{name:'Se relevanta partneralternativ'})).toHaveAttribute('href','#guide-partners');
+
+  const risk=aid.getByTestId('quarter-price-risk');
+  await expect(risk.getByRole('button')).toHaveCount(2);
+  await risk.getByRole('button',{name:/Jag vill ha jämnare kostnad/i}).click();
+  await expect(aid.getByTestId('quarter-price-result')).toContainText('Väg styrbarheten mot prisvariationerna');
+  await expect(aid.getByRole('link',{name:'Jämför avtalsformer'})).toHaveAttribute('href','/elavtal/rorligt-fast-kvartspris/');
+
+  await initialOptions.nth(1).click();
+  await expect(aid.getByTestId('quarter-price-result')).toContainText('Jämför avgifter och avtalsform först');
+  await expect(risk.getByRole('button',{name:/Jag vill ha jämnare kostnad/i})).toHaveAttribute('aria-pressed','false');
+  await initialOptions.nth(2).click();
+  await expect(aid.getByTestId('quarter-price-result')).toContainText('Börja med att se vad du kan styra');
+  await expect(aid.getByRole('link',{name:/Energimarknadsinspektionens vägledning/i})).toHaveAttribute('href',/ei\\.se\\/konsument\\/el/);
+
+  const events=await page.evaluate(()=>(window as any).dataLayer||[]);
+  const answers=events.filter((event:any)=>event.event==='quarter_price_decision_answer');
+  expect(answers).toHaveLength(5);
+  expect(answers.every((event:any)=>event.source==='kvartspris_guide'&&!('monthly' in event)&&!('annual_cost' in event))).toBe(true);
+});
+
+for(const width of [360,390,430,1024,1440]){
+  test('kvartspris original utility is accessible and responsive at '+width+'px',async({page},info)=>{
+    await page.setViewportSize({width,height:width<=430?844:900});
+    await page.goto('/elavtal/kvartspris/?qa=1');
+    const aid=page.getByTestId('quarter-price-decision');
+    const first=aid.getByRole('group',{name:/Kan du flytta större elanvändning/i}).getByRole('button').first();
+    await first.focus();
+    await expect(first).toBeFocused();
+    const ring=await first.evaluate(element=>parseFloat(getComputedStyle(element).outlineWidth));
+    expect(ring).toBeGreaterThanOrEqual(3);
+    await first.click();
+    await expect(aid.getByTestId('quarter-price-result')).toBeVisible();
+    await expect(aid.getByRole('link',{name:'Se relevanta partneralternativ'})).toHaveAttribute('href','#guide-partners');
+    const overflow=await page.evaluate(()=>Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)-document.documentElement.clientWidth);
+    expect(overflow).toBeLessThanOrEqual(1);
+    await page.screenshot({path:`test-results/screenshots/kvartspris-decision-${info.project.name}-${width}.png`,fullPage:true});
+  });
+}
