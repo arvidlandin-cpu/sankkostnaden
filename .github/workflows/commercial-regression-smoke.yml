@@ -1,6 +1,15 @@
 name: Commercial regression smoke
 
 on:
+  pull_request:
+    paths:
+      - '.github/workflows/commercial-regression-smoke.yml'
+      - 'components/**'
+      - 'lib/**'
+      - 'pages/**'
+      - 'styles/**'
+      - 'scripts/**'
+      - 'tests/**'
   push:
     branches:
       - main
