@@ -1,8 +1,8 @@
 {
   "version": 4,
   "purpose": "Evidence-backed strategic opportunity backlog. Deploy up to two independent bounded growth initiatives; block overlapping page/funnel experiments. Market learning continues daily.",
-  "updatedAt": "2026-10-09",
-  "currentConstraint": "Qualified non-test organic traffic remains the binding commercial constraint. Earlier Oct 8 GSC/GA4 figures below are historical evidence, not a fresh measurement; read current GitHub autopilot report and live GSC/GA4 before launching a new growth test.",
+  "updatedAt": "2026-10-10",
+  "currentConstraint": "Qualified genuine organic traffic is the binding commercial constraint. Direct first-party GSC totals to 2026-10-06: 1,169 impressions, 35 clicks; /app/ 26, home 7, other content 2. GA4 25 Organic Search sessions 2026-09-10–10-09; do not treat Direct/QA as customers. Exact Cloudflare deployment SHA and approved network commission SEK remain UNKNOWN.",
   "opportunities": [
     {
       "id": "partner-visibility-clarity-pilot",
@@ -106,7 +106,7 @@
     {
       "id": "quarter-hour-price-intent-bridge",
       "rank": 3,
-      "status": "ready_for_independent_scope_review",
+      "status": "shipped_in_observation_not_proven",
       "actionType": "CONTENT_UTILITY_UPGRADE",
       "target": "/elavtal/kvartspris/",
       "thesis": "Add a compact 'Passar kvartspris mig?' decision utility to satisfy the explanatory query first and then bridge suitable users to relevant electricity comparison options.",
@@ -134,18 +134,27 @@
       "successSignal": [
         "CTR improvement on top-10 explanatory query",
         "more organic sessions reaching relevant electricity partner options"
-      ]
+      ],
+      "release": {
+        "date": "2026-10-10",
+        "pr": "https://github.com/arvidlandin-cpu/sankkostnaden/pull/103",
+        "mergeSha": "5db1c98226f85c5fe4ec4fb02840d5818f805f7a",
+        "observedScope": "Existing /elavtal/kvartspris/ one-click decision utility; one optional meaningful 2nd question; untouched title/meta/canonical and active partner links.",
+        "verified": "Build, 257 Chromium and 22 WebKit browser checks successful. 360/390/430/1024/1440 PNGs preserved; actual 390 and 1440 views inspected.",
+        "commercialProof": "UNKNOWN – no reliable post-deploy qualified organic cohort/approved SEK yet",
+        "nextGate": "Verify Cloudflare deployed SHA; at least 7 completed post-change GSC days and 30 page impressions before SEO inference; protect the active /elavtal/kvartspris/ URL/query scope."
+      }
     },
     {
       "id": "early-stage-serp-learning-loop",
       "rank": 4,
-      "status": "infrastructure_ready",
+      "status": "infrastructure_ready_no_active_snippet_test",
       "actionType": "SEO_SNIPPET_TEST",
       "target": "existing pages with repeated top-10 low-CTR queries",
       "thesis": "On a young site, waiting for 80 impressions can slow learning too much. Permit one controlled snippet test when a query has at least 25 impressions, top-10 average position, near-zero CTR and appears on at least four distinct days.",
       "evidence": {
         "gsc": [
-          "jämför försäkring qualified at 31 impressions and position 7.6 and is the active experiment",
+          "jämför försäkring: Oct 7 experiment cancelled by owner Oct 8, NOT running and no Oct 15 lock",
           "vad menas med kvartspris på el is the next likely candidate at 28 impressions and position 9.1"
         ],
         "rationale": "Small but repeated top-10 exposure is enough to test metadata without rewriting body content."
@@ -175,7 +184,8 @@
         "sourceUrls": [
           "https://www.folksam.se/forsakringar/hemforsakring/bostadsrattsforsakring",
           "https://www.styrelsen.se/vad-kostar-hemforsakring-bostadsratt/"
-        ]
+        ],
+        "codeReality": "CondoInsuranceCheck already shipped on /forsakring/hemforsakring-bostadsratt/, including collective coverage questions and regulator links; avoid duplicating existing utility. Existing-page reach 246 impressions/0 clicks to latest GSC date, insufficient qualified post-click cohort."
       },
       "expectedImpact": "medium_high",
       "confidence": "medium",
