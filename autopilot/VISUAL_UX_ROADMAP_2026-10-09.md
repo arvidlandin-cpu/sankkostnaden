@@ -1,4 +1,9 @@
 # Sänk Kostnaden 2.0 – visuell design och genomförandeplan
+
+## P0D STATUS 2026-10-10 – DESIGNBRIST BEKRÄFTAD AV ÄGAREN
+**Denna roadmap är inte slutförd.** Följ nu också den bindande `autopilot/UNIFIED_PRODUCT_DESIGN_2026-10-10.md`. Befintliga blå PR på huvudvyer gjorde inte helheten sammanhållen: `styles/design-tokens.css` är ännu skogsgrön/lime trots global import; `styles/global.css` och flera specialistmoduler är också gamla gröna. En hel användarresa mellan hem, kategori, guide och verktyg kan därför byta grafisk identitet. Detta är ett produktkvalitetsfel, inte endast estetisk framtidsidé.
+**Migrera i logisk ordning:** (0) faktiska före-bilder och tokens, (1) semantisk navy/varmvit foundation och 2–3 representativa kritiska specialistverktyg, (2) komplettera verktygsfamiljerna inklusive el, familjemobil, förstaår, försäkring, lån, byteskalender, (3) `App.module.css` och hela äldre `global.css` med kontrollerade scopes, (4) granska ALLA huvud-/under-/resultatflöden och godkänn helhet först då. Varje PR måste ha riktig före/efterrendering och regression, ingen blind global färg-ersättning.
+**Paus:** den nya isolerade BRF-styrelsefrågefunktionen på en separat branch startas inte som PR/produktion innan sidfamiljen är designmässigt sammanhållen. Konkurrent-/intäkts-/gratis trafikarbete fortsätter parallellt.
 **Datum:** 2026-10-09 · **Status:** beslutad designriktning, inte implementerad som helhet.
 **Prioritet:** P0D-designspåret i `autopilot/MASTERPLAN_EXECUTION_2026-10-08.md`; ersätter tidigare hypotetiskt förslag att nödvändigtvis behålla skogsgrön/lime som huvudsaklig visuell identitet.
 **Källor:** användarens bildfeedback 8–9 okt 2026, `autopilot/DESIGN_SYSTEM_AUDIT_2026-10-08.md`, `autopilot/decisions/2026-10-08-lyst-zebra-kayak-ux.md` och nuvarande kod i `pages/index.tsx`, `components/HomeHero.tsx`, `pages/elavtal.tsx`, `components/ElectricityMarketGateway.tsx`.

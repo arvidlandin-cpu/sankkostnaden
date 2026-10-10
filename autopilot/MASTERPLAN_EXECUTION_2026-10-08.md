@@ -1,5 +1,16 @@
 # APPROVED Masterplan — execution program, Sänk Kostnaden
 
+## P0D DESIGNÅTERSTÄLLNING – ÄGARBESLUT 2026-10-10 (ÖVERORDNAD KVALITETSGRIND)
+**Den visuella HELHETEN ÄR INTE KLAR.** Ägaren har sett den aktuella sajten: nya blå huvudvyer bryts av gamla gröna/lime undersidor och kalkylatorer. De godkända designkoncepten från 8–9 okt är inte uppnådda som sammanhållen produkt. **Bindande genomförande**: `autopilot/UNIFIED_PRODUCT_DESIGN_2026-10-10.md` och `VISUAL_UX_ROADMAP_2026-10-09.md`, med senare ägarbeslut över äldre grönt `DESIGN_SYSTEM_AUDIT_2026-10-08.md`.
+
+- [ ] Gemensamma marinblå/varmvit/klara blå semantiska tokens på riktigt, inte bara nya blå overrides ovanpå grönt.
+- [ ] Kritiska 360/390/430/1024/1440-resor med granskade före/efterbilder för startsida, app, alla 5 kategorier, guider, specialistverktyg och affärshandoff.
+- [ ] Migrerade moduler: `FamilyMobileCost`, `FirstYearCostCalculator`, `ElectricityCostCalculator`, `SwitchCalendar`, `CondoInsuranceCheck`, `QuotedLoanTotals`, `ElectricitySensitivity` och äldre `App.module.css`/global legacy-vyer, med rätt CTA/resultat/typografi.
+- [ ] Produktionsversion och verklig visuell kvalitet granskade; separat från CI/merge och verklig iPhone fortsatt UNTESTED.
+- [ ] Godkända partnerklick/provisioner följs parallellt; inga antagna användar-/intäktslyft från designen.
+**Pausad funktion:** `growth/brf-insurance-board-template-20261010` innehåller preliminär förfrågetext, ännu ingen PR eller merge. Avsluta först berörd sidfamiljs design så vi inte skapar fler fristående gränssnitt.
+**Genomför nu:** korrigera designgrunden, gör första sammanhängande modulmigreringen och full screenshot-QA. Arbeta senare vidare över resterande sidfamiljer utan ytterligare ägarinstruktion. Inga nya kostnader.
+
 **Approval:** user explicitly said "kör masterplan" on 2026-10-08 following comprehensive analysis. Product target: best attainable Swedish no-login consumer cost decision companion for low-knowledge households, with durable long-term **approved affiliate revenue per relevant visitor**, truthful offers and trustworthy discoverability. This file is the current **implementation ledger**, not a second proposal. Keep it updated as milestones complete.
 
 Read also: `autopilot/PRODUCT_EXCELLENCE.md`, `STRATEGY_AND_EVIDENCE_STANDARD.md`, `PLAYBOOK.md`, `COMPETITOR_INTELLIGENCE.md`, `policy.json`, `state.json`, `opportunities.json`, and current GSC/GA4/network reports. The original user-approved full analysis is available in the conversation as `Sank_Kostnaden_Totalanalys_Masterplan_2026-10-08.md`; this repo ledger captures the operational milestones and requirements independently.

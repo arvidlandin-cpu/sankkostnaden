@@ -1,3 +1,5 @@
+> **HISTORISKT DOKUMENT — INAKTUELL GRÖN REKOMMENDATION.** Ägarens senare beslut 2026-10-09 och förnyade uttryckliga överstyrning 2026-10-10 väljer marinblå, klarblå, varmvit design, inte skogsgrön/lime. Aktuell bindande källa: [UNIFIED_PRODUCT_DESIGN_2026-10-10.md](UNIFIED_PRODUCT_DESIGN_2026-10-10.md). Längre ned bevaras 8 okt-auditen som historiskt forskningsunderlag men dess färgrekommendation får inte återinföras.
+
 # Design-system audit — Sänk Kostnaden, 2026-10-08
 
 **Status: SOURCE/CSS AUDIT COMPLETE, LIVE VISUAL EVALUATION AND REDESIGN NOT COMPLETE.** This report is the immediate design branch of the owner's approved masterplan. It must not be reported as proof that every actual screen looks good. No production styling was changed by this documentation.
