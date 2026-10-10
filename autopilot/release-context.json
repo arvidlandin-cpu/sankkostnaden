@@ -12,7 +12,8 @@
     "capacity": "Independent non-paid traffic acquisition remains the highest commercial constraint; continue alongside design. No paid media or contracts without owner approval.",
     "finishStandard": "Read autopilot/PRODUCT_FINISHING_STANDARD_2026-10-09.md. Every screen, field, sentence and CTA must serve the user's immediate job, with premium consistent UX, real price data and QA. Do not call project finished from isolated feature PRs.",
     "nextExecution": "1) Check exact Cloudflare production revision on homepage, /app/ and all category entry points; 2) validate real partner outbound click and network-side EPI/subID where supported (especially Bredbandsval), preserving legal disclosure; 3) evaluate relevant organic GSC/GA4 search and partner funnel; 4) iterate deep-page/copy/accessibility defects evidenced by screenshot/user behavior without resetting completed V5 PRs; 5) pursue independently scoped non-paid SEO and record approved revenue per relevant visitor. Follow autopilot policy sample thresholds.",
-    "strategySourceOfTruth": "Read AUTOPILOT.md, autopilot/PLAYBOOK.md, autopilot/MASTERPLAN_EXECUTION_2026-10-08.md, autopilot/PRODUCT_FINISHING_STANDARD_2026-10-09.md and autopilot/opportunities.json, then current main tree and latest QA. Scheduled workflow monitors/decides; it does not itself run a continuous ChatGPT development session."
+    "strategySourceOfTruth": "Read AUTOPILOT.md, autopilot/PLAYBOOK.md, autopilot/MASTERPLAN_EXECUTION_2026-10-08.md, autopilot/PRODUCT_FINISHING_STANDARD_2026-10-09.md and autopilot/opportunities.json, then current main tree and latest QA. Scheduled workflow monitors/decides; it does not itself run a continuous ChatGPT development session.",
+    "nextProductWork": "2026-10-10: validate a scoped middle-button navigation regression in the commercial browser suite, then verify current production revision and real customer attribution. Keep PR #88 separate."
   },
   "shipped": [
     {
