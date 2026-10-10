@@ -28,6 +28,7 @@ on:
       - 'design/elavtal-unified-*'
       - 'design/home-premium-*'
       - 'design/home-progressive-*'
+      - 'design/p0d-*'
       - 'ux/mobile-insurance-purpose-first-*'
       - 'ux/broadband-direct-address-*'
       - 'ux/kostnadskollen-neutral-quickpaths-*'
