@@ -23,7 +23,6 @@
 .actions{display:flex;flex-wrap:wrap;gap:11px;margin-top:15px;align-items:center}
 .actions a{min-height:46px;display:inline-flex;gap:10px;align-items:center;justify-content:center;border-radius:11px;padding:10px 13px;text-decoration:none!important;font-size:14px;font-weight:760;line-height:1.4}
 .actions a:first-child{color:#fff!important;background:#244ba9}
-.actions a:last-child{color:#244ba9!important;border:1px solid #b7c8e5;background:#fff}
 .source{display:flex;gap:10px;align-items:flex-start;margin:18px 0 0!important;color:#627087;font-size:12px!important;line-height:1.65!important}
 .source>svg{color:#7182a1;flex:0 0 17px;margin-top:1px}
 .source a{color:#234da9;text-decoration:underline;text-underline-offset:3px}
