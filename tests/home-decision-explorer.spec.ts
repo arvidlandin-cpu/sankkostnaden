@@ -51,13 +51,13 @@ for(const width of [360,390,430,1024,1440]){
   test('P0D smart selectors keep navy result and blue choice at '+width+'px',async({page},info)=>{
     await page.setViewportSize({width,height:width<=430?844:900});
     await page.goto('/mobil/hur-mycket-surf-behover-jag/?qa=1');
-    await expect(page.getByRole('heading',{level:1,name:/Hur mycket surf behöver jag/i})).toBeVisible();
+    await expect(page.getByRole('heading',{level:1,name:/Hur mycket surf behöver du/i})).toBeVisible();
     const result=page.locator('main aside').first();
     await expect(result).toBeVisible();
     expect(await result.evaluate(el=>getComputedStyle(el).backgroundColor)).toBe('rgb(16, 37, 77)');
     const first=page.getByRole('button',{name:'Nästan alltid wifi'});
     await first.click();
-    expect(await first.evaluate(el=>getComputedStyle(el).backgroundColor)).toBe('rgb(231, 238, 255)');
+    await expect.poll(()=>first.evaluate(el=>getComputedStyle(el).backgroundColor)).toBe('rgb(231, 238, 255)');
     await page.getByRole('button',{name:'Meddelanden, kartor, bank'}).click();
     await page.getByRole('button',{name:'Bara mitt abonnemang'}).click();
     await expect(result.getByRole('heading',{name:/Du behöver sannolikt inte fri surf/})).toBeVisible();
@@ -68,7 +68,7 @@ for(const width of [360,390,430,1024,1440]){
     await page.screenshot({path:`test-results/screenshots/p0d-smart-selector-${info.project.name}-${width}.png`,fullPage:true});
 
     await page.goto('/bredband/vilken-hastighet-behover-jag/?qa=1');
-    await expect(page.getByRole('heading',{level:1,name:/Vilken bredbandshastighet behöver jag/i})).toBeVisible();
+    await expect(page.getByRole('heading',{level:1,name:/Vilken bredbandshastighet behöver du/i})).toBeVisible();
     const broadbandResult=page.locator('main aside').first();
     expect(await broadbandResult.evaluate(el=>getComputedStyle(el).backgroundColor)).toBe('rgb(16, 37, 77)');
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href','https://sankkostnaden.se/bredband/vilken-hastighet-behover-jag/');
@@ -82,6 +82,6 @@ test('P0D home-explorer selected decision still honors shared blue choice',async
   const explorer=page.getByTestId('home-decision-explorer');
   const btn=explorer.getByRole('button',{name:'Var ska jag börja?'});
   await btn.click();
-  expect(await btn.evaluate(el=>getComputedStyle(el).backgroundColor)).toBe('rgb(237, 243, 255)');
+  await expect.poll(()=>btn.evaluate(el=>getComputedStyle(el).backgroundColor)).toBe('rgb(237, 243, 255)');
   await expect(explorer.getByRole('link',{name:/Starta Kostnadskollen/})).toHaveAttribute('href','/app/');
 });
