@@ -416,3 +416,26 @@ test('restored Kostnadskollen answers do not create fake starts or completions',
   await expect.poll(()=>eventCount('cost_check_start')).toBe(1);
   await expect.poll(()=>eventCount('cost_check_complete')).toBe(1);
 });
+
+test('partly restored Kostnadskollen only records a completion after a real new answer',async({page})=>{
+  await page.addInitScript(()=>{
+    (window as any).dataLayer=[];
+    window.localStorage.setItem('sankkostnaden-cost-check-v5',JSON.stringify({
+      answers:{
+        el:{monthly:0,fit:-1},
+        bredband:{monthly:0,fit:0},
+        mobil:{monthly:0,fit:0},
+        forsakring:{monthly:0,fit:0},
+      },
+      scenarioPct:10,
+    }));
+  });
+  await page.goto('/app/');
+  const count=(name:string)=>page.evaluate(key=>((window as any).dataLayer||[]).filter((entry:any)=>entry.event===key).length,name);
+  await expect(page.getByRole('group',{name:'Vad stämmer bäst om ditt elavtal?'})).toBeVisible();
+  expect(await count('cost_check_start')).toBe(0);
+  expect(await count('cost_check_complete')).toBe(0);
+  await page.getByRole('button',{name:/Priset har höjts eller känns dyrt/i}).click();
+  await expect.poll(()=>count('cost_check_start')).toBe(1);
+  await expect.poll(()=>count('cost_check_complete')).toBe(1);
+});
