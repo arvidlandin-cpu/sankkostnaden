@@ -110,7 +110,7 @@ export default function QuarterPriceDecision(){
     </fieldset>}
 
     <p className={styles.source}><Info aria-hidden='true' size={17}/>
-      <span>Vägledningen gäller bara avtalsform – inte vilket bolag som är billigast. Spotpris är inte hela elräkningen; påslag, fasta avgifter, moms och eventuella nätavgifter tillkommer. Läs även <a href='https://ei.se/konsument/el/elavtal/olika-avtalstyper/kan-kvartsprisavtal-vara-bra-for-dig' target='_blank' rel='noopener noreferrer'>Energimarknadsinspektionens vägledning</a>.</span>
+      <span>Vägledningen gäller bara avtalsform – inte vilket bolag som är billigast. Spotpris är inte hela elräkningen; elhandlarens påslag och moms tillkommer, och elnätskostnaden faktureras separat. Läs även <a href='https://ei.se/konsument/el/elavtal/olika-avtalstyper/kan-kvartsprisavtal-vara-bra-for-dig' target='_blank' rel='noopener noreferrer'>Energimarknadsinspektionens vägledning</a>.</span>
     </p>
   </section>;
 }
