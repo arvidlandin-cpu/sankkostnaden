@@ -38,7 +38,7 @@
 - Observed internal issue (owner screenshot and source audit 2026-10-08): direct strip of 2 brands, path-choice panel, 3 cards using nearly identical text, and the rest in a collapsed directory; small icons/labels; static partner order can read like best-price ranking.
 - Original output: 2–3 prominent named options with verified distinct roles (price comparison vs individual supplier, suitability), an always discoverable full roster, fewer duplicate choices, mobile legibility, clear affiliate disclosure.
 - Measure on qualified organic cohorts and do not confuse page event *counts* with independent visitor counts; unique exposure and click users may need better instrumentation.
-- Existing active SEO experiment prevents starting this CRO growth pilot until review.
+- The October 7 insurance snippet experiment was explicitly cancelled October 8; no lingering calendar lock. UX improvement pieces are already shipped in PR #79/#85/#92/#93/#95/#97/#99; collect genuine organic cohorts before new commercial outcome claims.
 
 **Opportunity C – first-year total-cost explainer (electricity + mobile + broadband)**
 
@@ -49,7 +49,7 @@
 **Opportunity D – underserved FAQ/utility entry points from SERP landscape**
 
 - Use matched queries and search landing tasks. On existing pages, make utilities and decision support the main content where it fits intent; preserve ranking momentum and avoid scaled thin pages.
-- Example observed from first-party GSC: "vad menas med kvartspris på el" has early top-10 exposure but little traffic; avoid guessing why zero clicks. Re-evaluate after active snippet experiment.
+- First-party GSC to 2026-10-06: "vad menas med kvartspris på el" has 28 impressions, around position 9.1 over 3 dates and 0 clicks; not enough distinct dates for an early snippet test. Existing guide got an original one-click decision utility in merged PR #103 (2026-10-10). Its search and approved-revenue effect is still UNKNOWN; observe page/query cohorts, not a fake experiment outcome.
 
 ## Next ongoing scanning questions
 
@@ -58,3 +58,10 @@ Every day rotate across el, bredband, mobil, försäkring and ekonomi; make a fu
 Research topics: hero value proposition, trusted provider discoverability, first action, number/sequence of fields, eligibility/personal-data need, price/fee freshness, CTA specificity, mobile viewport content, social-proof provenance, logo permissibility, SEO intent, original tool utility, referral constraints, source of offer truth, and non-SEO distribution opportunities. Use authenticated access only when legitimately available and do not automate registrations or scrape gated user offers.
 
 **Research output is not permission to deploy.** Propose a documented hypothesis under `STRATEGY_AND_EVIDENCE_STANDARD.md`. Respect `policy.json` and experiment state. Refresh obsolete claims.
+
+## Dated evidence update — 2026-10-10
+
+- **Elpriskollen official guidance:** https://elpriskollen.se/sidor/vilket-avtal-ska-jag-valja.html says per-quarter exchange spot price changes each 15 minutes, potential benefit depends on shifting controllable household consumption, and monthly price averages the month. Our site cannot reproduce its independent market-wide offers. This is a source observation, not a claim that our tool increases conversion.
+- **Energimarknadsinspektionen official example:** https://ei.se/konsument/el/elavtal/olika-avtalstyper/kan-kvartsprisavtal-vara-bra-for-dig discusses load shifting for electric vehicles/heating and peak demand; notes that effect fees can complicate scheduling. We intentionally avoid fixed savings % or recommending a particular supplier.
+- **Original work delivered:** merged PR #103 adds cautious "Kan kvartspris passa dig?" to existing /elavtal/kvartspris/, first useful result after one answer with only a meaningful optional second question; Build, 257 Chromium and 22 WebKit cases green, 390 and 1440 desktop-engine screenshots inspected; no cloned 5-question generic selector and no made-up bill forecast. Daily genuine organic traffic and approved affiliate revenue remain the bottleneck.
+- **Next research:** identify realistic non-paid audiences for shareable decision support, e.g. associations for EV owners and energy consumption where group rules explicitly permit helpful educational tools. Document channel/audience permission before action. No automated mass posting, unsupported regulator endorsement or commercial outreach without owner review.

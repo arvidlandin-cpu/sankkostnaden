@@ -4,6 +4,16 @@
 
 Read also: `autopilot/PRODUCT_EXCELLENCE.md`, `STRATEGY_AND_EVIDENCE_STANDARD.md`, `PLAYBOOK.md`, `COMPETITOR_INTELLIGENCE.md`, `policy.json`, `state.json`, `opportunities.json`, and current GSC/GA4/network reports. The original user-approved full analysis is available in the conversation as `Sank_Kostnaden_Totalanalys_Masterplan_2026-10-08.md`; this repo ledger captures the operational milestones and requirements independently.
 
+## Leveranskontroll 2026-10-10 – verifierat i GitHub, inte antaget i Cloudflare
+
+- [x] **PR #88** – kostnadsfria WebKit-motortester på 360/390/430 px i obligatorisk kommersiell regression; 249 Chromium + 22 WebKit passerade före merge. BrowserStack fysisk iPhone är fortfarande EJ testad, eftersom gratisperioden är slut.
+- [x] **PR #102** – rättad Kostnadskollen-mätning: återställda svar får inte generera falsk `cost_check_complete`, verklig ny komplett kontroll spåras fortfarande. Build + **251 Chromium + 22 WebKit** passerade före merge. Kommersiell effekt ej bevisad.
+- [x] **PR #104** – skärmbilder från Chromium sparas separat före WebKit-städning i GitHub Actions. Build + **251 Chromium + 22 WebKit** passerade; **78 faktiska Chromium PNG-skärmbilder** bevarades och kontrollerades i artifact. Detta är inte fysisk iPhone-QA.
+- [x] **PR #103** – `/elavtal/kvartspris/`: efter en relevant fråga får besökaren sanningsenlig hjälp, och frivillig prisvariationsfråga visas bara när den ändrar rådet. Ingen ny SEO-sida, nya offerter, nya eller förändrade sponsorlänkar, omotiverade besparingar eller SEO-metadatabyten. Källstöd: Ei och Elpriskollen. Fullt beslutsunderlag `autopilot/decisions/kvartspris-utility-2026-10-10.md`; **257 Chromium + 22 WebKit** passerade; faktiska 390px och 1440px bildartefakter granskade, screenshotfiler för 360/390/430/1024/1440 finns. En aktiv scoped `CONTENT_UTILITY_UPGRADE` observation gäller bara denna URL. Dagens faktiska utfall inom kvalificerade organisk/klick/godkänd SEK är UNKNOWN, inte en vunnen studie.
+- [ ] **Produktionsgrind:** Cloudflare exakt deploy-SHA är ännu INTE bekräftat; public URL/crawl eller HTTP 200 räcker inte. Testtrafik ska göras med `?qa=1`; efter fullständig deploy granskas verklig mobilskärm och relevanta eventdata.
+- [ ] **Affärsgrind:** första godkända provision SEK, korrekt network-side Bredbandsval EPI och färsk godkänd Adtraction/Addrevenue/Tradedoubler-rapport är ännu inte verifierade. Windsor.ai Adtraction hämtning fick `AffiliateUser` → `AdvertiserUser` behörighetsfel; klassificera approved SEK som **UNKNOWN**, inte noll.
+- [ ] **Trafikgrind:** senast i direkt GSC (till 2026-10-06) 1 169 visningar/35 klick totalt; 26 klick till `/app/`, 7 till startsidan, 2 till andra innehållssidor. `/elavtal/kvartspris/` 156 visningar/0 klick/position cirka 21,7. Fortsätt legitim kostnadsfri innehållsnytta/distribution och följ originella sökfrågor, inte statiskt affiliatekort-CRO på för få användare.
+
 ## Current approved next-step order — reviewed 2026-10-09
 
 1. **Confirm production reality:** match Cloudflare-deployed content and relevant build revision to the latest merged `main`; assess key landing pages and Kostnadskollen at 360/390/430/1024/1440 (including Safari/WebKit status, without misreporting physical iPhone tests).
@@ -18,7 +28,7 @@ Read also: `autopilot/PRODUCT_EXCELLENCE.md`, `STRATEGY_AND_EVIDENCE_STANDARD.md
 - [x] PR #86 — Aligned mobile five-link navigation, touch and focus at 360–430px; **229** browser checks green. Original PR #82 was superseded/closed.
 - [x] PR #48 closed as overlapping older hypothetical annual price-shift calculator; it did **not** ship. Existing PR #77 actual-spot day scenario is the live code path.
 - [x] PR #87 — Kostnadskollen premium color/copy/accessibility refinement merged and recorded in release-context. Subsequent PR #97 (first-answer path) and PR #99 (plain-language copy) also merged; full mobile and production/deploy quality checks remain separate.
-- [ ] PR #88 — Free WebKit Safari-*engine* regression and correction of BrowserStack false-green behavior pending validation. A previous green 'real iPhone' run `37952606478` in fact logged **3 BrowserStack quota-expired connection failures**. Treat real-device status as UNTESTED / INFRASTRUCTURE BLOCKED, not a pass. The free WebKit desktop-engine-on-mobile-width substitute is not a physical iPhone.
+- [x] PR #88 — Free WebKit Safari-*engine* regression, merged 2026-10-10 with 249 Chromium + 22 WebKit checks green. BrowserStack physical iPhone remains quota-blocked and is **not** counted as passed. A previous green 'real iPhone' run `37952606478` in fact logged **3 BrowserStack quota-expired connection failures**. Treat real-device status as UNTESTED / INFRASTRUCTURE BLOCKED, not a pass. The free WebKit desktop-engine-on-mobile-width substitute is not a physical iPhone.
 - [ ] Confirm Cloudflare page really reflects released UI; success from live route smoke is only confirmation of route availability/content markers, not of matching the deploy SHA. Recheck organic/relevant traffic and *approved* affiliate commission separately.
 
 ## Plain-language review — 2026-10-09
