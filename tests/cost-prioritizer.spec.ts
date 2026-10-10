@@ -439,3 +439,46 @@ test('partly restored Kostnadskollen only records a completion after a real new 
   await expect.poll(()=>count('cost_check_start')).toBe(1);
   await expect.poll(()=>count('cost_check_complete')).toBe(1);
 });
+
+/* P0D: after an immediately useful answer, the output must stay in the same
+   blue/navy product as the initial question, including the "nothing to switch"
+   outcome. All captures are actual renders, not CSS-only assertions. */
+for(const width of [360,390,430,1024,1440]){
+ test('P0D CostCheck early/no-issue results share the blue system at '+width+'px',async({page},info)=>{
+  await page.setViewportSize({width,height:width<=430?844:900});
+  await page.goto('/app/?qa=1');
+  await page.getByRole('button',{name:/Priset har höjts eller känns dyrt/i}).click();
+  const firstResult=page.getByTestId('cost-check-early-result');
+  await expect(firstResult).toBeVisible();
+  const colors=await firstResult.evaluate(el=>{
+    const st=getComputedStyle(el);
+    return {background:st.backgroundImage,border:st.borderColor};
+  });
+  expect(colors.background).toContain('rgb(241, 245, 255)');
+  expect(colors.border).toBe('rgb(217, 226, 241)');
+  const earlyOverflow=await page.evaluate(()=>Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)-document.documentElement.clientWidth);
+  expect(earlyOverflow).toBeLessThanOrEqual(1);
+  await page.screenshot({path:`test-results/screenshots/p0d-costcheck-early-${info.project.name}-${width}.png`,fullPage:true});
+
+  await page.getByRole('button',{name:'Börja om'}).click();
+  const flow=[
+   {group:'Vad stämmer bäst om ditt elavtal?',next:'Bredband'},
+   {group:'Vad stämmer bäst om bredbandet?',next:'Mobil'},
+   {group:'Vad stämmer bäst om mobilabonnemanget?',next:'Försäkring'},
+   {group:'Hur bra koll har du på försäkringarna?',next:null},
+  ];
+  for(const step of flow){
+    const choices=page.getByRole('group',{name:step.group}).getByRole('button');
+    await choices.first().click();
+    if(step.next)await page.getByRole('button',{name:new RegExp('Klart – till '+step.next)}).click();
+  }
+  const noIssue=page.getByTestId('cost-check-no-issues');
+  await expect(noIssue).toBeVisible();
+  const firstExit=noIssue.getByRole('link').first();
+  await expect(firstExit).toBeVisible();
+  expect(await firstExit.evaluate(el=>getComputedStyle(el).backgroundColor)).toBe('rgb(241, 245, 255)');
+  const noIssueOverflow=await page.evaluate(()=>Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)-document.documentElement.clientWidth);
+  expect(noIssueOverflow).toBeLessThanOrEqual(1);
+  await page.screenshot({path:`test-results/screenshots/p0d-costcheck-safe-${info.project.name}-${width}.png`,fullPage:true});
+ });
+}
