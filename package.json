@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "check": "node scripts/check-site.mjs",
+    "check": "node scripts/check-site.mjs && node scripts/check-design-palette.mjs",
     "check:export": "node scripts/check-export.mjs",
     "check:integrity": "node scripts/check-integrity.mjs",
     "qa:mobile": "playwright test tests/mobile-visual.spec.ts",
