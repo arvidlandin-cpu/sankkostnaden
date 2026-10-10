@@ -1,5 +1,9 @@
 # Sänk Kostnaden – Autopilot
 
+## HÖGSTA PRIORITET – DESIGN-ÄGARÖVERSTYRNING 2026-10-10
+Läs **alltid först** `autopilot/UNIFIED_PRODUCT_DESIGN_2026-10-10.md`. Ägaren rapporterade att nuvarande blå huvudsidor och gröna undersidor/verktyg känns som en sönderhackad, ofärdig produkt långt från det godkända premiumkonceptet. Detta är ett **verifierat, ännu öppet P0D-kvalitetsproblem**. Kör inte fler fristående mikro-UX-widgetar i stället för helhetlig sammanhängande design; en förberedd BRF-meddelandefunktion på `growth/brf-insurance-board-template-20261010` är PAUSAD och inte publicerad. Godkänd identitet: varmvit, marinblå rubriker, klarblå primär handling, sparsamma pasteller; inte gamla skogsgrön/lime. Dela upp designfamiljer i reversibla PR med faktiskt granskade skärmbilder 360/390/430/1024/1440, Build, full Chromium+WebKit, kontrast, SEO och korrekt affiliate. Rapportera aldrig att sajten är sammanhållen enbart för att några PR är mergade. Tillväxtintäktsmålet är oförändrat och gratisanskaffning fortsätter parallellt.
+
+
 ## North star
 
 Autopiloten optimerar för **långsiktigt godkänd affiliateintäkt per relevant besökare**. Trafik, ranking, CTR och affiliate-klick är delmål, inte slutmål.
