@@ -163,3 +163,38 @@ for(const width of [360,390,430,1024,1440]){
     }
   });
 }
+
+
+/* Full-journey P0D: assert rendered shared components, sponsor handoff and source metadata. */
+for(const width of [360,390,430,1024,1440]){
+  test('navy guide decision and blue partner matcher at '+width+'px',async({page})=>{
+    await page.setViewportSize({width,height:width<=430?844:900});
+    await page.goto('/forsakring/hemforsakring-bostadsratt/?qa=1');
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href','https://sankkostnaden.se/forsakring/hemforsakring-bostadsratt/');
+    const gateway=page.locator('.decisionGateway');
+    await expect(gateway).toBeVisible();
+    const bg=await gateway.evaluate(el=>getComputedStyle(el).backgroundImage);
+    expect(bg).toContain('rgb(16, 37, 77)');
+    await expect(gateway.locator('.gatewayDirect')).toBeVisible();
+    const direct=await gateway.locator('.gatewayDirect').evaluate(el=>getComputedStyle(el).backgroundColor);
+    expect(direct).toBe('rgb(241, 245, 255)');
+    const checks=page.locator('.checkList svg');
+    expect(await checks.count()).toBeGreaterThan(1);
+    expect(await checks.first().evaluate(el=>getComputedStyle(el).color)).toBe('rgb(33, 70, 157)');
+    await expect(page.locator('a[rel~="sponsored"]').first()).toBeVisible();
+    const overflow=await page.evaluate(()=>Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)-document.documentElement.clientWidth);
+    expect(overflow).toBeLessThanOrEqual(1);
+    await page.screenshot({path:`test-results/screenshots/p0d-shared-guide-chromium-${width}.png`,fullPage:true});
+
+    await page.goto('/ekonomi/?qa=1');
+    const matcher=page.locator('.mobileMatcher').first();
+    await expect(matcher).toBeVisible();
+    expect(await matcher.evaluate(el=>getComputedStyle(el).backgroundImage)).toContain('rgb(241, 245, 255)');
+    const loan=page.getByRole('region',{name:'Hitta relevant lånejämförelse'});
+    const choice=loan.getByRole('button',{name:'Nytt privatlån'});
+    await choice.click();
+    expect(await choice.evaluate(el=>getComputedStyle(el).backgroundColor)).toBe('rgb(231, 238, 255)');
+    await expect(page.locator('a[rel~="sponsored"]').first()).toBeVisible();
+    await page.screenshot({path:`test-results/screenshots/p0d-shared-matcher-chromium-${width}.png`,fullPage:true});
+  });
+}
