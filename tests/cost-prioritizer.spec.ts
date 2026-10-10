@@ -394,3 +394,25 @@ test('question copy is concise, jargon-free and still offers the same three dist
  }
  await expect(page.getByTestId('cost-check-no-issues')).toBeVisible();
 });
+
+test('restored Kostnadskollen answers do not create fake starts or completions',async({page})=>{
+  await page.addInitScript(()=>{(window as any).dataLayer=[];});
+  const eventCount=(eventName:string)=>page.evaluate(name=>((window as any).dataLayer||[]).filter((entry:any)=>entry.event===name).length,eventName);
+
+  await page.goto('/app/');
+  await answerAll(page);
+  await expect.poll(()=>eventCount('cost_check_start')).toBe(1);
+  await expect.poll(()=>eventCount('cost_check_complete')).toBe(1);
+
+  await page.reload();
+  await expect(page.locator('#resultat')).toBeVisible();
+  expect(await eventCount('cost_check_start')).toBe(0);
+  expect(await eventCount('cost_check_complete')).toBe(0);
+  expect(await eventCount('cost_check_early_result_available')).toBe(0);
+
+  // The user can deliberately begin a new check; that new journey must still count.
+  await page.getByRole('button',{name:'Börja om'}).click();
+  await answerAll(page);
+  await expect.poll(()=>eventCount('cost_check_start')).toBe(1);
+  await expect.poll(()=>eventCount('cost_check_complete')).toBe(1);
+});
