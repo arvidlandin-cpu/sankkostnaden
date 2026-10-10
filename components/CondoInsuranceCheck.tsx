@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import Link from 'next/link';
-import { ArrowRight, CheckCircle2, CircleHelp, FileCheck2, ShieldCheck } from 'lucide-react';
+import { ArrowRight, CheckCircle2, ClipboardCopy, FileCheck2, ShieldCheck } from 'lucide-react';
 import { emitAnalyticsEvent } from '../lib/clientAttribution';
 import styles from '../styles/CondoInsuranceCheck.module.css';
 
 type Answer='yes'|'no'|'unknown';
 type Result={heading:string;details:string;steps:string[]};
+
+const boardRequest = `Hej!\n\nJag bor i en bostadsrätt och vill kontrollera mitt försäkringsskydd. Har föreningen ett kollektivt bostadsrättstillägg som gäller för lägenheterna?\n\nOm ja, kan ni berätta vilket försäkringsbolag som gäller och var jag kan läsa de aktuella villkoren? Jag vill särskilt kontrollera vad skyddet omfattar, självrisk, åldersavdrag, ersättningsgränser och eventuella undantag. Hur anmäler man en skada och vem kontaktar försäkringsbolaget?\n\nTack på förhand!`;
 
 function resultFor(collective:Answer,personal:Answer|null):Result{
  const collectiveMessages:Record<Answer,Result>={
@@ -34,12 +36,24 @@ function resultFor(collective:Answer,personal:Answer|null):Result{
 export default function CondoInsuranceCheck(){
  const [collective,setCollective]=useState<Answer|null>(null);
  const [personal,setPersonal]=useState<Answer|null>(null);
+ const [copyStatus,setCopyStatus]=useState<'idle'|'copied'|'manual'>('idle');
  const result=collective?resultFor(collective,personal):null;
  const choose=(field:'collective'|'personal',answer:Answer)=>{
-  if(field==='collective')setCollective(answer);else setPersonal(answer);
+  if(field==='collective'){setCollective(answer);setPersonal(null);setCopyStatus('idle');}else setPersonal(answer);
   emitAnalyticsEvent('condo_protection_answer',{source:'condo_insurance_guide',question:field,answer});
  };
- const reset=()=>{setCollective(null);setPersonal(null);};
+ const reset=()=>{setCollective(null);setPersonal(null);setCopyStatus('idle');};
+ const copyBoardRequest=async()=>{
+  if(!collective||collective==='no')return;
+  try{
+   if(!navigator.clipboard?.writeText)throw new Error('Clipboard unavailable');
+   await navigator.clipboard.writeText(boardRequest);
+   setCopyStatus('copied');
+   emitAnalyticsEvent('condo_board_request_copied',{source:'condo_insurance_guide',collective});
+  }catch{
+   setCopyStatus('manual');
+  }
+ };
  return <section className={styles.root} aria-labelledby='condo-insurance-check-title' data-testid='condo-insurance-check'>
   <div className={styles.head}>
    <div className={styles.icon}><ShieldCheck size={24}/></div>
@@ -63,6 +77,19 @@ export default function CondoInsuranceCheck(){
   {result&&<div className={styles.result} aria-live='polite'>
     <div className={styles.resultHead}><CheckCircle2 size={22}/><div><span>DIN NÄSTA KONTROLL · INGET FÖRSÄKRINGSBESLUT</span><h3>{result.heading}</h3><p>{result.details}</p></div></div>
     <ol>{result.steps.map(step=><li key={step}>{step}</li>)}</ol>
+    {collective!=='no'&&<aside className={styles.board} aria-labelledby='board-request-title'>
+      <div className={styles.boardIntro}>
+        <p className={styles.boardEyebrow}>NÄSTA PRAKTISKA STEG</p>
+        <h4 id='board-request-title'>Fråga styrelsen om skyddet</h4>
+        <p>Du kan använda samma korta fråga oavsett om du vet att föreningen har ett tillägg eller är osäker. Inget skickas automatiskt.</p>
+      </div>
+      <button type='button' className={styles.copyButton} onClick={copyBoardRequest}><ClipboardCopy aria-hidden='true' size={17}/> Kopiera frågan till styrelsen</button>
+      <p className={styles.copyFeedback} aria-live='polite'>{copyStatus==='copied'?'Texten är kopierad. Klistra in den i ditt eget mejl eller meddelande.':copyStatus==='manual'?'Kopiering gick inte. Öppna texten nedan och kopiera den manuellt.':''}</p>
+      <details className={styles.boardDetails} open={copyStatus==='manual'}>
+        <summary>Visa frågan som kopieras</summary>
+        <textarea aria-label='Fråga till bostadsrättsföreningens styrelse' readOnly rows={10} value={boardRequest}/>
+      </details>
+    </aside>}
     <div className={styles.actions}>
      <Link href='/forsakring/jamfor-hemforsakring/'>Se relevanta hemförsäkringsalternativ <ArrowRight size={17}/></Link>
      <button type='button' onClick={reset}>Börja om</button>
