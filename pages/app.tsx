@@ -46,7 +46,12 @@ export default function SavingsApp(){
       const saved=window.localStorage.getItem(costCheckStorageKey)||window.localStorage.getItem(legacyStorageKey);
       if(saved){
         const parsed=JSON.parse(saved);
-        if(parsed?.answers) setAnswers(normalizeCostAnswers(parsed.answers));
+        if(parsed?.answers){
+          const restored=normalizeCostAnswers(parsed.answers);
+          setAnswers(restored);
+          // A restored completed check is not a fresh completion or a new funnel start.
+          if(Object.values(restored).every(answer=>answer.fit>=0)) completedTracked.current=true;
+        }
         if(typeof parsed?.scenarioPct==='number') setScenarioPct(Math.min(50,Math.max(1,parsed.scenarioPct)));
       }
     }catch{}
@@ -93,20 +98,20 @@ export default function SavingsApp(){
   const nextUnanswered=categories.find(category=>!isComplete(category.key));
 
   useEffect(()=>{
-    if(completed<1||completed>=4||!earlyHasSignal||earlyResultTracked.current)return;
+    if(!hydrated||!startedTracked.current||completed<1||completed>=4||!earlyHasSignal||earlyResultTracked.current)return;
     earlyResultTracked.current=true;
     emitAnalyticsEvent('cost_check_early_result_available',{
       source:'app',questions_answered:completed,
       category:earlyTop?.key||'none',has_signal:earlyHasSignal?1:0,
     });
-  },[completed,earlyHasSignal,earlyTop?.key]);
+  },[completed,earlyHasSignal,earlyTop?.key,hydrated]);
 
   useEffect(()=>{
-    if(completed===4&&!completedTracked.current){
+    if(hydrated&&startedTracked.current&&completed===4&&!completedTracked.current){
       completedTracked.current=true;
       emitAnalyticsEvent('cost_check_complete',{top_category:noClearIssue?'none':top.key,has_costs:totalMonthly>0?1:0});
     }
-  },[completed,noClearIssue,top.key,totalMonthly]);
+  },[completed,hydrated,noClearIssue,top.key,totalMonthly]);
 
   const resultPartners=(key:CostKey)=>key==='forsakring'?[]:getActivePartners(key,partnerIntent[key],2);
 
