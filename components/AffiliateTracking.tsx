@@ -136,6 +136,13 @@ export default function AffiliateTracking() {
       }
     };
 
+    // Middle-click opens a partner in a new tab without firing a normal click.
+    // Decorate and record it before the browser follows the URL, just as for
+    // keyboard activation and touch/left-click. Never count a right-click menu.
+    const handleAuxClick = (event: MouseEvent) => {
+      if (event.button === 1) handleClick(event);
+    };
+
     const observed = new WeakSet<HTMLAnchorElement>();
     const seen = new WeakSet<HTMLAnchorElement>();
     const seenImpressionKeys = new Set<string>();
@@ -173,12 +180,14 @@ export default function AffiliateTracking() {
     };
 
     document.addEventListener('click', handleClick, true);
+    document.addEventListener('auxclick', handleAuxClick, true);
     scan();
     const mutation = new MutationObserver(scan);
     mutation.observe(document.body, { childList: true, subtree: true });
 
     return () => {
       document.removeEventListener('click', handleClick, true);
+      document.removeEventListener('auxclick', handleAuxClick, true);
       mutation.disconnect();
       observer?.disconnect();
     };
