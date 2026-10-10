@@ -93,7 +93,6 @@ export default function QuarterPriceDecision(){
       </div>
       <div className={styles.actions}>
         <Link href={result.destination}>{result.action}<ArrowRight aria-hidden='true' size={17}/></Link>
-        <a href='#guide-partners'>Se relevanta partneralternativ</a>
       </div>
     </div>}
 
