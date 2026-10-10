@@ -258,3 +258,19 @@ test('guided electricity matcher answer shares funnel session with partner click
   expect(answer?.funnel_session_id).toMatch(/^fs_/);
   expect(click?.funnel_session_id).toBe(answer.funnel_session_id);
 });
+
+
+test('middle mouse activation records and tags the Adtraction partner',async({page})=>{
+  await page.addInitScript(()=>{(window as any).dataLayer=[];});
+  await page.goto('/elavtal/billigaste-elavtalet/?qa=1');
+  const link=page.locator('a[data-partner="Elskling"]').first();
+  await expect(link).toBeVisible();
+  await link.evaluate((el:any)=>el.addEventListener('auxclick',(event:MouseEvent)=>event.preventDefault()));
+  await link.click({button:'middle'});
+  const href=new URL((await link.getAttribute('href'))!);
+  const events=await page.evaluate(()=>(window as any).dataLayer.filter((e:any)=>e.event==='affiliate_click'&&e.partner==='Elskling'));
+  expect(events).toHaveLength(1);
+  expect(events[0].affiliate_network).toBe('adtraction');
+  expect(href.searchParams.get('epi')).toBe(events[0].local_click_id);
+  expect(href.searchParams.get('epi2')).toBe(events[0].funnel_session_id);
+});
