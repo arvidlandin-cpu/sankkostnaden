@@ -91,3 +91,47 @@ for(const width of [360,390,430,1024,1440]){
   expect(overflow).toBeLessThanOrEqual(1);
  });
 }
+
+/* P0D shared pages: a blue first-year tool must NOT send visitors into a
+   forest-green partner matcher, guide or global footer. Screenshot the entire
+   actual journey at every owner-required width. */
+for(const width of [360,390,430,1024,1440]){
+ test('P0D partner and guide shells stay navy/blue at '+width+'px',async({page},info)=>{
+  await page.setViewportSize({width,height:width<=430?844:900});
+  await page.goto('/verktyg/forstaarskostnad/?qa=1');
+  await page.getByTestId('first-year-start').getByRole('button',{name:/Visa aktuella alternativ/i}).click();
+  const matcher=page.locator('.mobileMatcher');
+  await expect(matcher).toBeVisible();
+  const matcherColors=await matcher.evaluate(el=>{
+    const style=getComputedStyle(el);
+    return {background:style.backgroundImage,color:style.color};
+  });
+  expect(matcherColors.background).toContain('rgb(241, 245, 255)');
+  const firstOption=matcher.locator('.matchOptions button').first();
+  await expect(firstOption).toBeVisible();
+  await firstOption.click();
+  await expect(firstOption).toHaveClass(/selected/);
+  const chosen=await firstOption.evaluate(el=>getComputedStyle(el).backgroundColor);
+  expect(chosen).toBe('rgb(231, 238, 255)');
+  const footer=page.locator('.siteFooter');
+  await expect(footer).toBeVisible();
+  expect(await footer.evaluate(el=>getComputedStyle(el).backgroundColor)).toBe('rgb(249, 250, 252)');
+  const overflowFirst=await page.evaluate(()=>Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)-document.documentElement.clientWidth);
+  expect(overflowFirst).toBeLessThanOrEqual(1);
+  await page.screenshot({path:`test-results/screenshots/p0d-shared-firstyear-${info.project.name}-${width}.png`,fullPage:true});
+
+  await page.goto('/forsakring/hemforsakring-bostadsratt/?qa=1');
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href','https://sankkostnaden.se/forsakring/hemforsakring-bostadsratt/');
+  const gateway=page.locator('.decisionGateway').first();
+  await expect(gateway).toBeVisible();
+  const direct=gateway.locator('.gatewayDirect');
+  await expect(direct).toBeVisible();
+  expect(await direct.evaluate(el=>getComputedStyle(el).backgroundColor)).toBe('rgb(35, 75, 209)');
+  await expect(page.locator('a[rel~="sponsored"]').first()).toBeVisible();
+  const guideOverlay=await page.locator('.guideHero').first().evaluate(el=>getComputedStyle(el).backgroundImage);
+  expect(guideOverlay).toContain('rgba(14, 31, 67');
+  const overflowGuide=await page.evaluate(()=>Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)-document.documentElement.clientWidth);
+  expect(overflowGuide).toBeLessThanOrEqual(1);
+  await page.screenshot({path:`test-results/screenshots/p0d-shared-guide-${info.project.name}-${width}.png`,fullPage:true});
+ });
+}
