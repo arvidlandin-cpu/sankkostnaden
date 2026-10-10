@@ -91,3 +91,28 @@ for(const width of [360,390,430,1024,1440]){
   expect(overflow).toBeLessThanOrEqual(1);
  });
 }
+
+for(const width of [360,390,430,1024,1440]){
+ test('P0D same blue brand and trust footer across home journey at '+width+'px',async({page},info)=>{
+  await page.setViewportSize({width,height:width<=430?844:900});
+  await page.goto('/?qa=1');
+  const marks=page.locator('header span[class*="brandMark"],footer span[class*="brandMark"]');
+  await expect(marks).toHaveCount(2);
+  const colors=await marks.evaluateAll(nodes=>nodes.map(el=>({
+    background:getComputedStyle(el).backgroundColor,
+    ink:getComputedStyle(el).color,
+  })));
+  expect(colors.map(x=>x.background)).toEqual(['rgb(219, 231, 255)','rgb(219, 231, 255)']);
+  expect(colors.map(x=>x.ink)).toEqual(['rgb(33, 70, 157)','rgb(33, 70, 157)']);
+  const footer=page.getByRole('contentinfo');
+  await expect(footer.getByRole('link',{name:'Så jämför vi'})).toHaveAttribute('href','/sa-jamfor-vi/');
+  const principle=page.getByText('Besparing först.',{exact:false});
+  await expect(principle).toBeVisible();
+  const explanation=page.locator('div[class*="principle"] > div:last-child > p:first-child');
+  await expect(explanation).toContainText('Sänk Kostnaden hjälper dig förstå');
+  expect(await explanation.evaluate(el=>parseFloat(getComputedStyle(el).fontSize))).toBeGreaterThanOrEqual(14);
+  const excess=await page.evaluate(()=>Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)-document.documentElement.clientWidth);
+  expect(excess).toBeLessThanOrEqual(1);
+  await page.screenshot({path:`test-results/screenshots/p0d-home-header-footer-${info.project.name}-${width}.png`,fullPage:true});
+ });
+}
