@@ -31,7 +31,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <link rel='dns-prefetch' href='https://images.pexels.com' />
         <link rel='icon' href='/app-icon.svg?v=2' type='image/svg+xml' />
         <link rel='shortcut icon' href='/app-icon.svg?v=2' />
-        <meta name='theme-color' content='#10254d' />
+        <meta name='theme-color' content='#17201b' />
         <meta property='og:site_name' content='Sänk Kostnaden' />
         <meta name='apple-mobile-web-app-capable' content='yes' />
         <meta name='apple-mobile-web-app-status-bar-style' content='default' />
