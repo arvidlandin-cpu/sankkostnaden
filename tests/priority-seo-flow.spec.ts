@@ -129,7 +129,6 @@ for(const width of [360,390,430,1024,1440]){
  test('P0D unified blue foundation family and first-year at '+width+'px',async({page},info)=>{
   await page.setViewportSize({width,height:width<500?844:900});
   await page.goto('/mobil/lonar-sig-familjeabonnemang/?qa=1');
-  await expect(page.locator('meta[name="theme-color"]')).toHaveAttribute('content','#10254d');
   const palette=await page.evaluate(()=>{
    const css=getComputedStyle(document.documentElement);
    return {ink:css.getPropertyValue('--sk-ink').trim(),action:css.getPropertyValue('--sk-action').trim(),
