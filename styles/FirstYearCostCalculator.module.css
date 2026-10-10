@@ -229,7 +229,8 @@
   margin-top: 18px;
   padding: 0 16px;
   border-radius: 12px;
-  background: var(--sk-action);\n  color: var(--sk-action-ink);
+  background: var(--sk-action);
+  color: var(--sk-action-ink);
   font-size: 13px;
   font-weight: 900;
   text-decoration: none;
