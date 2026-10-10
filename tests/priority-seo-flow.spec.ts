@@ -122,3 +122,36 @@ for(const width of [360,390,430,1024,1440]){
     await page.screenshot({path:`test-results/screenshots/kvartspris-decision-${info.project.name}-${width}.png`,fullPage:true});
   });
 }
+
+/* P0D foundation: real rendered hero→tool→decision state across five widths.
+   Color tokens and controls are assertions, screenshots are independently reviewed. */
+for(const width of [360,390,430,1024,1440]){
+ test('P0D unified blue foundation family and first-year at '+width+'px',async({page},info)=>{
+  await page.setViewportSize({width,height:width<500?844:900});
+  await page.goto('/mobil/lonar-sig-familjeabonnemang/?qa=1');
+  await expect(page.locator('meta[name="theme-color"]')).toHaveAttribute('content','#10254d');
+  const palette=await page.evaluate(()=>{
+   const css=getComputedStyle(document.documentElement);
+   return {ink:css.getPropertyValue('--sk-ink').trim(),action:css.getPropertyValue('--sk-action').trim(),
+    canvas:css.getPropertyValue('--sk-canvas').trim(),accent:css.getPropertyValue('--sk-accent').trim()};
+  });
+  expect(palette).toEqual({ink:'#10254d',action:'#234bd1',canvas:'#fbfaf6',accent:'#e6edff'});
+  const family=page.getByTestId('family-start-choice');
+  await expect(family).toBeVisible();
+  await family.getByRole('button',{name:/Nej, visa familjeabonnemang/}).click();
+  await expect(page.getByTestId('family-mobile-no-prices')).toBeVisible();
+  await expect(page.locator('a[rel~="sponsored"]').first()).toBeVisible();
+  const overflowFamily=await page.evaluate(()=>Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)-document.documentElement.clientWidth);
+  expect(overflowFamily).toBeLessThanOrEqual(1);
+  await page.screenshot({path:`test-results/screenshots/p0d-family-${info.project.name}-${width}.png`,fullPage:true});
+
+  await page.goto('/verktyg/forstaarskostnad/?qa=1');
+  const start=page.getByTestId('first-year-start');
+  await expect(start).toBeVisible();
+  await start.getByRole('button',{name:/Visa aktuella alternativ/}).click();
+  await expect(page.getByTestId('first-year-no-prices')).toBeVisible();
+  const overflowCosts=await page.evaluate(()=>Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)-document.documentElement.clientWidth);
+  expect(overflowCosts).toBeLessThanOrEqual(1);
+  await page.screenshot({path:`test-results/screenshots/p0d-firstyear-${info.project.name}-${width}.png`,fullPage:true});
+ });
+}
