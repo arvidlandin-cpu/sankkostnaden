@@ -1165,12 +1165,12 @@
 .resultIntro h2{color:#13284e!important}
 .scenarioBox{background:#f4f7ff!important;border-color:#dce5f7!important}
 .scenarioButtons .scenarioSelected{background:#234bd1!important;border-color:#234bd1!important;color:#fff!important}
-.earlyResult{border-color:#d7e3f9!important}
+.earlyResult{border-color:var(--sk-line)!important}
 .noIssueSummary{border-color:#dce7f6!important;background:#fff!important}
 .noIssueSummary>svg{color:#3158ba!important}
 .noIssueSummary h3{color:#183461!important}
 .noIssueSummary a{color:#2454b5!important}
-.noIssueLinks a{background:#f3f7ff!important;border-color:#d1dff9!important;color:#2249ae!important}
+.noIssueLinks a{background:var(--sk-surface-soft)!important;border-color:var(--sk-line)!important;color:var(--sk-accent-ink)!important}
 .methodology{border-color:#e0e8f6!important}
 .methodology summary{color:#3c5784!important}
 .questionCard button:focus-visible,.questionCard a:focus-visible,.results a:focus-visible,
