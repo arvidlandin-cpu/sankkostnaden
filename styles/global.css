@@ -10,8 +10,8 @@ html {
 }
 body {
   margin: 0;
-  background: #f7f8f5;
-  color: #17201b;
+  background: var(--sk-canvas);
+  color: var(--sk-ink);
   font-family:
     Inter,
     ui-sans-serif,
