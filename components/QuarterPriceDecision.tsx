@@ -96,7 +96,7 @@ export default function QuarterPriceDecision(){
       </div>
     </div>}
 
-    {shift&&<fieldset className={styles.question}>
+    {shift==='large'&&<fieldset className={styles.question}>
       <legend>Vill du väga in hur priset kan variera? <span className={styles.optional}>(valfritt)</span></legend>
       <div className={styles.options} data-testid='quarter-price-risk'>
         <button type='button' className={styles.option} aria-pressed={risk==='okay'} onClick={()=>selectRisk('okay')}>
