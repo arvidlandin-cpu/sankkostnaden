@@ -209,3 +209,49 @@ for (const route of [commercialRoute, broadbandRoute]) {
     await expect(page.getByTestId('comparison-result')).toContainText('1 kr');
   });
 }
+
+
+/* Full-journey visual design acceptance: one shared palette on real pages, not mocks. */
+for(const width of [360,390,430,1024,1440]){
+  test('premium design foundation remains consistent for family and broadband at '+width+'px',async({page},info)=>{
+    await page.setViewportSize({width,height:width<=430?844:900});
+    await page.goto('/mobil/lonar-sig-familjeabonnemang/?qa=1');
+    const tokens=await page.evaluate(()=>{
+      const root=getComputedStyle(document.documentElement);
+      return {
+        canvas:root.getPropertyValue('--sk-canvas').trim(),
+        ink:root.getPropertyValue('--sk-ink').trim(),
+        action:root.getPropertyValue('--sk-action').trim(),
+        surface:root.getPropertyValue('--sk-surface-soft').trim(),
+        theme:document.querySelector('meta[name="theme-color"]')?.getAttribute('content')
+      };
+    });
+    expect(tokens).toEqual({
+      canvas:'#f9fafc',ink:'#101d42',action:'#234bd1',surface:'#f1f5ff',theme:'#101d42'
+    });
+    await page.getByRole('button',{name:/Nej, visa familjeabonnemang/}).click();
+    await expect(page.getByTestId('family-mobile-no-prices')).toBeVisible();
+    await expect(page.locator('a[rel~="sponsored"]').first()).toBeVisible();
+    let overflow=await page.evaluate(()=>document.documentElement.scrollWidth-document.documentElement.clientWidth);
+    expect(overflow).toBeLessThanOrEqual(1);
+    await page.screenshot({path:`test-results/screenshots/premium-family-${info.project.name}-${width}.png`,fullPage:true});
+    await page.getByRole('button',{name:/Ja, räkna på våra priser/}).click();
+    const quick=page.getByTestId('family-quick-calculator');
+    await quick.getByLabel('Vad betalar ni tillsammans idag?').fill('550');
+    await quick.getByLabel('Pris för familjens huvudabonnemang').fill('299');
+    await quick.getByLabel('Pris per extra person (skriv 0 om gratis)').fill('49');
+    await page.getByRole('button',{name:/Jämför era månadskostnader/}).click();
+    await expect(page.getByTestId('family-mobile-result')).toBeVisible();
+    expect(await page.getByTestId('family-mobile-result').evaluate(el=>getComputedStyle(el).backgroundColor)).toBe('rgb(16, 37, 77)');
+    await page.screenshot({path:`test-results/screenshots/premium-family-result-${info.project.name}-${width}.png`,fullPage:true});
+
+    await page.goto('/verktyg/forstaarskostnad-bredband/?qa=1');
+    await page.getByRole('button',{name:/Visa aktuella alternativ/}).click();
+    const early=page.getByTestId('first-year-early-partners');
+    await expect(early).toBeVisible();
+    expect(await early.evaluate(el=>getComputedStyle(el).backgroundColor)).toBe('rgb(35, 75, 209)');
+    overflow=await page.evaluate(()=>document.documentElement.scrollWidth-document.documentElement.clientWidth);
+    expect(overflow).toBeLessThanOrEqual(1);
+    await page.screenshot({path:`test-results/screenshots/premium-first-year-${info.project.name}-${width}.png`,fullPage:true});
+  });
+}
