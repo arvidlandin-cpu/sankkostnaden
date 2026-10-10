@@ -482,3 +482,14 @@ for(const width of [360,390,430,1024,1440]){
   await page.screenshot({path:`test-results/screenshots/p0d-costcheck-safe-${info.project.name}-${width}.png`,fullPage:true});
  });
 }
+
+test('P0D remaining CostCheck progress/score accents use navy tokens rather than olive',async({page})=>{
+  await page.setViewportSize({width:390,height:844});
+  await page.goto('/app/?qa=1');
+  const progress=page.locator('[class*="progressRail"] button b').first();
+  await expect(progress).toBeVisible();
+  expect(await progress.evaluate(el=>getComputedStyle(el).backgroundColor)).toBe('rgb(241, 245, 255)');
+  await page.getByRole('button',{name:/Priset har höjts eller känns dyrt/i}).click();
+  await expect(page.getByTestId('cost-check-early-result')).toBeVisible();
+  await page.screenshot({path:'test-results/screenshots/p0d-costcheck-progress-navy-390.png',fullPage:true});
+});
