@@ -9,14 +9,62 @@
   },
   "notes": [
     "Cancelled Oct 7 snippet test at owner's request; no 15 Oct review requirement. No evidence-backed winner/loser verdict.",
-    "Up to two independent scoped growth initiatives; do not edit overlapping pages/funnels or confound evaluation.",
-    "Keep source truth, click attribution, QA and owner approval for paid/compliance-sensitive actions."
+    "Keep source truth, click attribution, QA and owner approval for paid/compliance-sensitive actions.",
+    "One narrow kvartspris content-utility observation is active; unrelated scopes remain eligible up to policy limit. It is not a won SEO or commercial experiment."
   ],
-  "activeExperiments": [],
+  "activeExperiments": [
+    {
+      "id": "kvartspris-one-click-utility-20261010",
+      "type": "CONTENT_UTILITY_UPGRADE",
+      "status": "running",
+      "target": "/elavtal/kvartspris/",
+      "query": "kvartspris el",
+      "category": "el",
+      "scope": {
+        "urls": [
+          "/elavtal/kvartspris/"
+        ],
+        "queryCluster": [
+          "kvartspris el",
+          "vad menas med kvartspris på el",
+          "kvartspris på el"
+        ],
+        "funnel": "guide-specific utility and contextual partner navigation",
+        "excludes": [
+          "/elavtal/",
+          "/app/",
+          "/forsakring/"
+        ],
+        "independentFrom": "No other active scoped growth initiative at commit"
+      },
+      "startedAt": "2026-10-10T11:00:00+02:00",
+      "earliestReviewAt": "2026-10-18T11:00:00+02:00",
+      "baseline": {
+        "periodStart": "2026-09-10",
+        "latestGscDate": "2026-10-06",
+        "pageImpressions": 156,
+        "pageClicks": 0,
+        "averagePosition": 21.7,
+        "organicLandings": "UNKNOWN",
+        "eligibleApprovedCommissionSEK": "UNKNOWN"
+      },
+      "measurement": {
+        "gscMinCompletePostDays": 7,
+        "minPostPageImpressions": 30,
+        "ga4Event": "quarter_price_decision_answer",
+        "organicOnly": true,
+        "excludeQaAndDirect": true,
+        "northStar": "approved affiliate commission SEK per qualified visitor"
+      },
+      "rollback": "Revert the scoped guide and component changes if accessibility, attribution, indexation or content accuracy regress; keep if truthful and useful while data matures"
+    }
+  ],
   "lastStrategyDecision": {
-    "type": "CANCEL_SEO_EXPERIMENT",
-    "at": "2026-10-08",
-    "reason": "Owner explicitly cancelled October 15 review gate and authorized faster independent growth execution.",
-    "outcome": "Not evaluated; snippet content stays unchanged unless separately justified."
+    "type": "CONTENT_UTILITY_UPGRADE",
+    "at": "2026-10-10",
+    "target": "/elavtal/kvartspris/",
+    "reason": "GSC 156 impressions, 0 clicks, position around 21.7; original 1-click utility to serve informational intent before any affiliate comparison.",
+    "outcome": "IN_OBSERVATION_NOT_PROVEN",
+    "decisionDoc": "autopilot/decisions/kvartspris-utility-2026-10-10.md"
   }
 }
