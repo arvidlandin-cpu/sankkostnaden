@@ -198,3 +198,24 @@ for(const width of [360,390,430,1024,1440]){
     await page.screenshot({path:`test-results/screenshots/p0d-shared-matcher-chromium-${width}.png`,fullPage:true});
   });
 }
+
+/* P0D: category guides must not switch global canvas and default guide imagery
+   back to the forest/lime style when navigating from a blue category. */
+for(const width of [360,390,430,1024,1440]){
+ test('P0D global canvas and guide remain navy from category at '+width+'px',async({page},info)=>{
+  await page.setViewportSize({width,height:width<=430?844:900});
+  await page.goto('/forsakring/hemforsakring-bostadsratt/?qa=1');
+  const values=await page.evaluate(()=>{
+    const hero=document.querySelector('.guideHero')!;
+    return {canvas:getComputedStyle(document.body).backgroundColor,hero:getComputedStyle(hero).backgroundImage};
+  });
+  expect(values.canvas).toBe('rgb(249, 250, 252)');
+  expect(values.hero).toContain('rgba(16, 29, 66');
+  await expect(page.getByRole('heading',{level:1,name:/Hemförsäkring bostadsrätt 2026/})).toBeVisible();
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href','https://sankkostnaden.se/forsakring/hemforsakring-bostadsratt/');
+  await expect(page.locator('a[rel~="sponsored"]').first()).toBeVisible();
+  const overflow=await page.evaluate(()=>Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)-document.documentElement.clientWidth);
+  expect(overflow).toBeLessThanOrEqual(1);
+  await page.screenshot({path:`test-results/screenshots/p0d-guide-foundation-${info.project.name}-${width}.png`,fullPage:true});
+ });
+}
