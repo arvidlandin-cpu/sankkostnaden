@@ -5,9 +5,9 @@
   justify-content: space-between;
   gap: 16px;
   padding: 0 22px;
-  border-bottom: 1px solid #e5e9e5;
+  border-bottom: 1px solid var(--sk-line);
   background: #fff;
-  color: #526057;
+  color: var(--sk-ink-muted);
   font-size: 12px;
 }
 
@@ -15,7 +15,7 @@
   display: inline-flex;
   align-items: center;
   gap: 9px;
-  color: #17201b;
+  color: var(--sk-ink);
   text-decoration: none;
 }
 
@@ -30,7 +30,7 @@
   align-items: center;
   gap: 6px;
   margin-bottom: 26px;
-  color: #566159;
+  color: var(--sk-ink-muted);
   font-size: 13px;
   text-decoration: none;
 }
@@ -47,14 +47,14 @@
   place-items: center;
   margin-bottom: 16px;
   border-radius: 14px;
-  background: #eaf3e8;
-  color: #26352c;
+  background: var(--sk-surface-soft);
+  color: var(--sk-ink);
 }
 
 .kicker,
 .comparison > span {
   margin: 0 0 8px;
-  color: #667168;
+  color: var(--sk-ink-muted);
   font-size: 10px;
   font-weight: 900;
   letter-spacing: .11em;
@@ -63,7 +63,7 @@
 .hero h1 {
   margin: 0;
   max-width: 720px;
-  color: #17201b;
+  color: var(--sk-ink);
   font-size: clamp(32px, 5vw, 56px);
   line-height: .98;
   letter-spacing: -.045em;
@@ -72,7 +72,7 @@
 .hero > p:last-child {
   max-width: 680px;
   margin: 18px 0 0;
-  color: #657068;
+  color: var(--sk-ink-muted);
   font-size: 16px;
   line-height: 1.65;
 }
@@ -85,10 +85,10 @@
 
 .offer {
   padding: 22px;
-  border: 1px solid #dde3dd;
+  border: 1px solid var(--sk-line);
   border-radius: 20px;
   background: #fff;
-  box-shadow: 0 10px 34px rgba(27, 40, 31, .05);
+  box-shadow: 0 10px 34px rgba(19,39,82,.055);
 }
 
 .nameField,
@@ -100,7 +100,7 @@
 .field > span {
   display: block;
   margin-bottom: 7px;
-  color: #59655e;
+  color: var(--sk-ink-muted);
   font-size: 11px;
   font-weight: 800;
 }
@@ -111,10 +111,10 @@
   min-width: 0;
   min-height: 44px;
   padding: 10px 12px;
-  border: 1px solid #d8ded8;
+  border: 1px solid var(--sk-line);
   border-radius: 11px;
-  background: #fbfcfa;
-  color: #17201b;
+  background: var(--sk-surface-raised);
+  color: var(--sk-ink);
   font: inherit;
   font-weight: 750;
   box-sizing: border-box;
@@ -144,7 +144,7 @@
   right: 12px;
   top: 50%;
   transform: translateY(-50%);
-  color: #89928c;
+  color: var(--sk-ink-subtle);
   font-size: 11px;
 }
 
@@ -154,7 +154,7 @@
   gap: 10px;
   margin-top: 20px;
   padding-top: 18px;
-  border-top: 1px solid #edf0ed;
+  border-top: 1px solid var(--sk-line);
 }
 
 .result div {
@@ -164,21 +164,21 @@
 .result span {
   display: block;
   margin-bottom: 6px;
-  color: #78827b;
+  color: var(--sk-ink-muted);
   font-size: 10px;
   font-weight: 800;
 }
 
 .result strong {
   display: block;
-  color: #17201b;
+  color: var(--sk-ink);
   font-size: clamp(20px, 3vw, 28px);
   letter-spacing: -.035em;
 }
 
 .breakdown {
   margin-top: 16px;
-  color: #657068;
+  color: var(--sk-ink-muted);
   font-size: 12px;
 }
 
@@ -196,12 +196,12 @@
   margin-top: 18px;
   padding: 24px;
   border-radius: 20px;
-  background: #1f2e26;
-  color: #eaf0eb;
+  background: var(--sk-result);
+  color: var(--sk-result-muted);
 }
 
 .comparison > span {
-  color: #dff46a;
+  color: var(--sk-accent);
 }
 
 .comparison h2 {
@@ -211,12 +211,12 @@
 }
 
 .comparison h2 strong {
-  color: #dff46a;
+  color: var(--sk-accent);
 }
 
 .comparison p {
   margin: 10px 0 0;
-  color: #c6d0c9;
+  color: var(--sk-result-muted);
   line-height: 1.55;
 }
 
@@ -229,8 +229,8 @@
   margin-top: 18px;
   padding: 0 16px;
   border-radius: 12px;
-  background: #dff46a;
-  color: #17201b;
+  background: var(--sk-action);
+  color: var(--sk-action-ink);
   font-size: 13px;
   font-weight: 900;
   text-decoration: none;
@@ -239,16 +239,16 @@
 .note {
   margin-top: 18px;
   padding: 18px 20px;
-  border: 1px solid #e1e6e1;
+  border: 1px solid var(--sk-line);
   border-radius: 16px;
-  background: #f8faf7;
-  color: #566159;
+  background: var(--sk-surface-raised);
+  color: var(--sk-ink-muted);
 }
 
 .note strong {
   display: block;
   margin-bottom: 6px;
-  color: #253029;
+  color: var(--sk-ink);
 }
 
 .note p {
@@ -310,20 +310,25 @@
 .shell{max-width:920px}
 .hero{margin-bottom:22px}
 .hero h1{font-size:clamp(30px,4.2vw,45px);line-height:1.08}
-.start,.directPartners{background:#fff;border:1px solid #dce4d8;border-radius:18px;padding:24px;margin:0 0 16px;box-shadow:0 8px 26px rgba(18,37,24,.04)}
+.start,.directPartners{background:#fff;border:1px solid var(--sk-line);border-radius:18px;padding:24px;margin:0 0 16px;box-shadow:0 8px 26px rgba(19,39,82,.055)}
 .start h2,.directPartners h2{font-size:clamp(22px,3vw,27px);line-height:1.2;margin:0 0 16px;letter-spacing:-.025em}
 .startChoices{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.startChoices button{display:flex;align-items:center;justify-content:space-between;gap:12px;text-align:left;min-height:62px;padding:14px 16px;border:1px solid #cbd7c8;border-radius:12px;background:#f6f9f3;color:#1d3022;font:inherit;font-size:15px;font-weight:800;cursor:pointer}
-.startChoices button:first-child{background:#e5f59c}
-.startChoices button[aria-pressed='true']{border-color:#728f4c;box-shadow:inset 0 0 0 1px #728f4c}
-.directPartners>p{font-size:14px;line-height:1.6;color:#516153;max-width:670px}
-.directAction{display:inline-flex;justify-content:space-between;align-items:center;gap:20px;min-height:48px;padding:0 18px;border-radius:11px;background:#dff46a;color:#1c2d1f;font-weight:850;text-decoration:none}
+.startChoices button{display:flex;align-items:center;justify-content:space-between;gap:12px;text-align:left;min-height:62px;padding:14px 16px;border:1px solid var(--sk-line);border-radius:12px;background:var(--sk-surface-raised);color:var(--sk-ink);font:inherit;font-size:15px;font-weight:800;cursor:pointer}
+.startChoices button:first-child{background:var(--sk-choice-selected);border-color:var(--sk-choice-border)}
+.startChoices button[aria-pressed='true']{background:var(--sk-choice-selected);border-color:var(--sk-choice-border);box-shadow:inset 0 0 0 1px var(--sk-choice-border)}
+.directPartners>p{font-size:14px;line-height:1.6;color:var(--sk-ink-muted);max-width:670px}
+.directAction{display:inline-flex;justify-content:space-between;align-items:center;gap:20px;min-height:48px;padding:0 18px;border-radius:11px;background:var(--sk-action);color:var(--sk-action-ink);font-weight:850;text-decoration:none}
 .smallPrint{font-size:12px!important}
 .modeChoices{display:flex;gap:9px;flex-wrap:wrap;margin:17px 0 10px}
-.modeChoices button{min-height:45px;padding:10px 15px;border:1px solid #cad5c7;border-radius:11px;color:#304437;background:#fff;font:inherit;font-size:13px;font-weight:800;cursor:pointer}
-.modeChoices button[aria-pressed='true']{background:#20352a;color:#fff;border-color:#20352a}
-.calculationDisclaimer{margin:0 0 16px;max-width:720px;color:#617064;line-height:1.55;font-size:13px}
+.modeChoices button{min-height:45px;padding:10px 15px;border:1px solid var(--sk-line);border-radius:11px;color:var(--sk-ink);background:#fff;font:inherit;font-size:13px;font-weight:800;cursor:pointer}
+.modeChoices button[aria-pressed='true']{background:var(--sk-choice-selected);color:var(--sk-ink);border-color:var(--sk-choice-border)}
+.calculationDisclaimer{margin:0 0 16px;max-width:720px;color:var(--sk-ink-muted);line-height:1.55;font-size:13px}
 .offer>.field{margin-top:10px}
 .offer>.result{margin-top:16px}
-.startChoices button:focus-visible,.modeChoices button:focus-visible,.directAction:focus-visible{outline:3px solid #7d9945;outline-offset:3px}
+.startChoices button:focus-visible,.modeChoices button:focus-visible,.directAction:focus-visible{outline:3px solid var(--sk-focus);outline-offset:3px}
 @media(max-width:760px){.start,.directPartners{padding:17px}.startChoices{grid-template-columns:1fr}.startChoices button{min-height:56px}.offers{gap:12px}.hero{margin-bottom:19px}}
+
+/* A single trustworthy blue action and selected state, without pseudo-price rankings. */
+.startChoices button:hover,.modeChoices button:hover{border-color:var(--sk-choice-border)}
+.commercialAction:hover,.directAction:hover{background:var(--sk-action-hover)}
+@media(prefers-reduced-motion:reduce){.startChoices button,.modeChoices button{transition:none}}

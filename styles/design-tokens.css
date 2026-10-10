@@ -1,23 +1,33 @@
 /*
- * Sänk Kostnaden visual language, v1.
- * Semantic purpose first: trustworthy reading surface, one clear next action,
- * accessible navigation, distinguishable sponsored exits. Never use accent
- * color to imply that a provider is cheaper or officially recommended.
+ * Sänk Kostnaden — owner-approved 2026-10-09/10 premium design contract.
+ * One visual language throughout existing pages: warm-neutral surfaces,
+ * navy editorial headings and results, blue meaningful actions.
+ * Accent is a restrained non-ranking hint, never an affiliate winner marker.
  */
 :root {
   color-scheme: light;
-  --sk-canvas: #f7f8f5;
+  --sk-canvas: #f9fafc;
   --sk-surface: #ffffff;
-  --sk-surface-soft: #f2f6ed;
-  --sk-ink: #17201b;
-  --sk-ink-muted: #516157;
-  --sk-line: #dce4d9;
-  --sk-accent: #dff46a;
-  --sk-accent-ink: #17201b;
-  --sk-action: #17201b;
+  --sk-surface-soft: #f1f5ff;
+  --sk-surface-raised: #fbfcff;
+  --sk-ink: #101d42;
+  --sk-ink-muted: #485b78;
+  --sk-ink-subtle: #586c87;
+  --sk-line: #d9e2f1;
+  --sk-line-strong: #b7c8e5;
+  --sk-accent: #dbe7ff;
+  --sk-accent-ink: #21469d;
+  --sk-action: #234bd1;
+  --sk-action-hover: #193daa;
   --sk-action-ink: #ffffff;
-  --sk-focus: #426a36;
-  --sk-shadow-card: 0 10px 28px rgba(25, 43, 31, .065);
+  --sk-focus: #234bd1;
+  --sk-result: #10254d;
+  --sk-result-surface: #203b68;
+  --sk-result-line: #415982;
+  --sk-result-muted: #d8e3f5;
+  --sk-choice-selected: #e7eeff;
+  --sk-choice-border: #3157bc;
+  --sk-shadow-card: 0 10px 28px rgba(19, 39, 82, .065);
   --sk-radius-control: 12px;
   --sk-radius-card: 18px;
   --sk-radius-panel: 24px;
@@ -30,7 +40,7 @@
   --sk-text-detail: 12px;
   --sk-text-body: 16px;
 }
-/* Keyboard interaction deserves a visual affordance independent of color. */
+/* Visible on keyboard; never remove without restoring a strong equivalent. */
 :where(a,button,input,select,textarea):focus-visible {
   outline: 3px solid var(--sk-focus);
   outline-offset: 3px;
