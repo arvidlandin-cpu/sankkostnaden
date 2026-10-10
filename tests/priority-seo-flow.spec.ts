@@ -93,9 +93,10 @@ test('kvartspris gives a truthful next step after one click and an optional seco
 
   await initialOptions.nth(1).click();
   await expect(aid.getByTestId('quarter-price-result')).toContainText('Jämför avgifter och avtalsform först');
-  await expect(risk.getByRole('button',{name:/Jag vill ha jämnare kostnad/i})).toHaveAttribute('aria-pressed','false');
+  await expect(aid.getByTestId('quarter-price-risk')).toHaveCount(0);
   await initialOptions.nth(2).click();
   await expect(aid.getByTestId('quarter-price-result')).toContainText('Börja med att se vad du kan styra');
+  await expect(aid.getByTestId('quarter-price-risk')).toHaveCount(0);
   await expect(aid.getByRole('link',{name:/Energimarknadsinspektionens vägledning/i})).toHaveAttribute('href','https://ei.se/konsument/el/elavtal/olika-avtalstyper/kan-kvartsprisavtal-vara-bra-for-dig');
 
   const events=await page.evaluate(()=>(window as any).dataLayer||[]);
