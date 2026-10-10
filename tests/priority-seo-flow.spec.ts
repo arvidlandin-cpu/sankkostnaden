@@ -96,11 +96,11 @@ test('kvartspris gives a truthful next step after one click and an optional seco
   await expect(risk.getByRole('button',{name:/Jag vill ha jämnare kostnad/i})).toHaveAttribute('aria-pressed','false');
   await initialOptions.nth(2).click();
   await expect(aid.getByTestId('quarter-price-result')).toContainText('Börja med att se vad du kan styra');
-  await expect(aid.getByRole('link',{name:/Energimarknadsinspektionens vägledning/i})).toHaveAttribute('href',/ei\\.se\\/konsument\\/el/);
+  await expect(aid.getByRole('link',{name:/Energimarknadsinspektionens vägledning/i})).toHaveAttribute('href','https://ei.se/konsument/el/elavtal/olika-avtalstyper/kan-kvartsprisavtal-vara-bra-for-dig');
 
   const events=await page.evaluate(()=>(window as any).dataLayer||[]);
   const answers=events.filter((event:any)=>event.event==='quarter_price_decision_answer');
-  expect(answers).toHaveLength(5);
+  expect(answers).toHaveLength(4);
   expect(answers.every((event:any)=>event.source==='kvartspris_guide'&&!('monthly' in event)&&!('annual_cost' in event))).toBe(true);
 });
 
