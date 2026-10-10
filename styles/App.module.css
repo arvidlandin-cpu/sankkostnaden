@@ -98,8 +98,8 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: #f0f3ed;
-  color: #17201b;
+  background: var(--sk-surface-soft);
+  color: var(--sk-ink);
 }
 
 .progressRail .activeTab {
@@ -392,8 +392,8 @@
 .potential {
   padding: 5px 8px;
   border-radius: 999px;
-  background: #eef5dc;
-  color: #52631f;
+  background: var(--sk-surface-soft);
+  color: var(--sk-accent-ink);
   font-size: 10px;
   font-weight: 850;
 }
@@ -405,7 +405,7 @@
   margin: 10px 0 0;
   padding: 0;
   list-style: none;
-  color: #657068;
+  color: var(--sk-ink-muted);
   font-size: 12px;
 }
 
@@ -835,8 +835,8 @@
 .scenarioBox span{
   display:block;
   margin-bottom:5px;
-  color:#70803f;
-  font-size:9px;
+  color:var(--sk-accent-ink);
+  font-size:12px;
   font-weight:900;
   letter-spacing:.1em;
 }
@@ -847,8 +847,8 @@
 }
 .scenarioBox p{
   margin:0;
-  color:#69746d;
-  font-size:11px;
+  color:var(--sk-ink-muted);
+  font-size:13px;
   line-height:1.5;
 }
 .scenarioButtons{
