@@ -122,3 +122,44 @@ for(const width of [360,390,430,1024,1440]){
     await page.screenshot({path:`test-results/screenshots/kvartspris-decision-${info.project.name}-${width}.png`,fullPage:true});
   });
 }
+
+
+/* P0D full user-path color QA: inspect actual rendered pages, not merely CSS declarations. */
+for(const width of [360,390,430,1024,1440]){
+  test('premium insurance, finance and electricity specialist surfaces at '+width+'px',async({page},info)=>{
+    await page.setViewportSize({width,height:width<=430?844:900});
+
+    await page.goto('/mobil/lonar-sig-familjeabonnemang/?qa=1');
+    const familyHero=page.locator('main section').first();
+    const heroImage=await familyHero.evaluate(el=>getComputedStyle(el).backgroundImage);
+    expect(heroImage).toContain('rgb(16, 37, 77)');
+    await page.screenshot({path:`test-results/screenshots/p0d-family-hero-${info.project.name}-${width}.png`,fullPage:true});
+
+    await page.goto('/forsakring/hemforsakring-bostadsratt/?qa=1');
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href','https://sankkostnaden.se/forsakring/hemforsakring-bostadsratt/');
+    const condo=page.getByTestId('condo-insurance-check');
+    await condo.getByRole('group').first().getByRole('button',{name:'Vet inte'}).click();
+    const answer=condo.getByText('Börja med att fråga föreningen');
+    await expect(answer).toBeVisible();
+    const resultColor=await condo.locator('[class*="result"]').first().evaluate(el=>getComputedStyle(el).backgroundColor);
+    expect(resultColor).toBe('rgb(16, 37, 77)');
+    await expect(condo.getByRole('link',{name:/Se relevanta hemförsäkringsalternativ/})).toHaveAttribute('href','/forsakring/jamfor-hemforsakring/');
+    await page.screenshot({path:`test-results/screenshots/p0d-condo-${info.project.name}-${width}.png`,fullPage:true});
+
+    await page.goto('/ekonomi/jamfor-privatlan/?qa=1');
+    const loan=page.getByTestId('loan-total-tool');
+    await expect(loan.getByTestId('loan-a-total')).toContainText('139 700');
+    await expect(loan.getByTestId('loan-b-total')).toContainText('161 000');
+    const mode=loan.getByRole('button',{name:/Jag har två erbjudanden/});
+    await expect(mode).toBeVisible();
+    await page.screenshot({path:`test-results/screenshots/p0d-loan-${info.project.name}-${width}.png`,fullPage:true});
+
+    for(const [route,key] of [['/verktyg/elavtalskostnad/','electricity'],['/verktyg/byteskalender/','switch-calendar']] as const){
+      await page.goto(route+'?qa=1');
+      await expect(page.getByRole('heading',{level:1})).toBeVisible();
+      const overflow=await page.evaluate(()=>Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)-document.documentElement.clientWidth);
+      expect(overflow,route).toBeLessThanOrEqual(1);
+      await page.screenshot({path:`test-results/screenshots/p0d-${key}-${info.project.name}-${width}.png`,fullPage:true});
+    }
+  });
+}
