@@ -193,7 +193,7 @@ for(const width of [360,390,430,1024,1440]){
     const loan=page.getByRole('region',{name:'Hitta relevant lånejämförelse'});
     const choice=loan.getByRole('button',{name:'Nytt privatlån'});
     await choice.click();
-    expect(await choice.evaluate(el=>getComputedStyle(el).backgroundColor)).toBe('rgb(231, 238, 255)');
+    await expect.poll(()=>choice.evaluate(el=>getComputedStyle(el).backgroundColor)).toBe('rgb(231, 238, 255)');
     await expect(page.locator('a[rel~="sponsored"]').first()).toBeVisible();
     await page.screenshot({path:`test-results/screenshots/p0d-shared-matcher-chromium-${width}.png`,fullPage:true});
   });
