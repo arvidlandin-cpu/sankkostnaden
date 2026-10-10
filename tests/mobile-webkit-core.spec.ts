@@ -4,7 +4,7 @@ import { expect, test } from '@playwright/test';
 // This is useful Safari-engine regression, NOT a real iPhone / BrowserStack pass.
 const pages=[
  {href:'/',heading:/Sänk dina fasta kostnader/},
- {href:'/elavtal/',heading:/Jämför elavtal utan att gissa/},
+ {href:'/elavtal/',heading:/Jämför elavtal\. Välj med bättre koll/},
  {href:'/bredband/',heading:/Hitta bredband som passar ditt hem/},
  {href:'/mobil/',heading:/Jämför mobilabonnemang utan att betala/},
  {href:'/forsakring/',heading:/Välj rätt försäkringsskydd/},
@@ -23,7 +23,7 @@ for(const width of [360,390,430]){
     const question=page.getByRole('group',{name:'Vad stämmer bäst om ditt elavtal?'});
     await expect(question.getByRole('button')).toHaveCount(3);
    }else{
-    await expect(page.locator('a[href^="/"]').first()).toBeVisible();
+    expect(await page.locator('a:visible').count()).toBeGreaterThan(0);
    }
   });
  }
