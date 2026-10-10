@@ -141,7 +141,7 @@ for(const width of [360,390,430,1024,1440]){
     await condo.getByRole('group').first().getByRole('button',{name:'Vet inte'}).click();
     const answer=condo.getByText('Börja med att fråga föreningen');
     await expect(answer).toBeVisible();
-    const resultColor=await answer.evaluate(el=>getComputedStyle(el.closest('[class*="result"]')!).backgroundColor);
+    const resultColor=await condo.locator('[class*="result"]').first().evaluate(el=>getComputedStyle(el).backgroundColor);
     expect(resultColor).toBe('rgb(16, 37, 77)');
     await expect(condo.getByRole('link',{name:/Se relevanta hemförsäkringsalternativ/})).toHaveAttribute('href','/forsakring/jamfor-hemforsakring/');
     await page.screenshot({path:`test-results/screenshots/p0d-condo-${info.project.name}-${width}.png`,fullPage:true});
