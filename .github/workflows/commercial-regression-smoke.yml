@@ -115,6 +115,7 @@ jobs:
             tests/design-homepage.spec.ts \
             tests/home-decision-explorer.spec.ts \
             tests/priority-seo-flow.spec.ts \
+            tests/sitewide-design-contract.spec.ts \
             tests/trust-footer-insurance.spec.ts \
             --project=chromium
 
