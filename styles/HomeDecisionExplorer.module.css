@@ -42,29 +42,29 @@
   cursor:pointer;
   transition:border-color .18s ease,background .18s ease,transform .18s ease,box-shadow .18s ease;
 }
-.option>svg{flex:0 0 auto;color:#3f6247}
-.option:hover{transform:translateY(-2px);border-color:#91aa83;box-shadow:0 7px 20px rgba(26,40,30,.06)}
-.option.selected{border-color:#718c52;background:#eff6d9;box-shadow:inset 0 0 0 1px #718c52}
-.option.selected>svg{color:#2c502c}
+.option>svg{flex:0 0 auto;color:var(--sk-accent-ink)}
+.option:hover{transform:translateY(-2px);border-color:var(--sk-line-strong);box-shadow:0 7px 20px rgba(26,40,30,.06)}
+.option.selected{border-color:var(--sk-choice-border);background:var(--sk-choice-selected);box-shadow:inset 0 0 0 1px var(--sk-choice-border)}
+.option.selected>svg{color:var(--sk-action)}
 .dot{
   width:9px;
   height:9px;
   flex:0 0 9px;
   margin-left:auto;
-  border:1.5px solid #98aa96;
+  border:1.5px solid var(--sk-line-strong);
   border-radius:50%;
 }
-.selected .dot{background:#416c31;border-color:#416c31;box-shadow:0 0 0 3px #cfe3b3}
+.selected .dot{background:var(--sk-choice-border);border-color:var(--sk-choice-border);box-shadow:0 0 0 3px var(--sk-accent)}
 .unknown{display:flex;flex-wrap:wrap;gap:4px 6px;align-items:center;margin:19px 0 0;color:var(--sk-ink-muted);font-size:14px;line-height:1.55}
 .panel{
   display:flex;
   flex-direction:column;
   min-height:324px;
   background:var(--sk-surface-soft);
-  border-color:#d5e3ce;
+  border-color:var(--sk-line);
 }
 .panelTop{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.kicker{color:#416338;font-size:12px;font-weight:900;letter-spacing:.09em}
+.kicker{color:var(--sk-accent-ink);font-size:12px;font-weight:900;letter-spacing:.09em}
 .step{color:var(--sk-ink-muted);font-size:12px;font-weight:700}
 .panelBody{margin:22px 0 19px}
 .panelIcon{width:48px;height:48px;display:grid;place-items:center;border-radius:15px;background:var(--sk-accent);color:var(--sk-ink)}
@@ -88,7 +88,7 @@
   transition:transform .17s ease,box-shadow .17s ease;
 }
 .primary{background:var(--sk-action);color:var(--sk-action-ink)}
-.secondary{background:#fff;border:1px solid #cddbcc;color:#273f30}
+.secondary{background:#fff;border:1px solid var(--sk-line-strong);color:var(--sk-ink)}
 .primary:hover,.secondary:hover{transform:translateY(-1px);box-shadow:0 7px 18px rgba(20,36,24,.08)}
 .caution{margin:12px 0 0;color:var(--sk-ink-muted);font-size:12px;line-height:1.5}
 .option:focus-visible,.primary:focus-visible,.secondary:focus-visible{outline:3px solid var(--sk-focus);outline-offset:3px}
@@ -120,12 +120,7 @@
 }
 
 /* Home 5.0: scoped blue design tokens and calmer selected states. */
-.root{
- --sk-line:#dfe7f5;--sk-surface:#fff;--sk-surface-soft:#f6f9ff;
- --sk-ink:#14274d;--sk-ink-muted:#5c6e89;--sk-accent:#e2ecff;
- --sk-action:#234bd1;--sk-action-ink:#fff;--sk-focus:#668dfa;
- --sk-radius-panel:20px;
-}
+/* Global semantic tokens govern this panel, including its keyboard focus and selected states. */
 .question,.panel{box-shadow:0 6px 26px rgba(30,58,111,.035)}
 .questionLabel{color:#17294f!important}
 .option{border-color:#dde6f5;color:#213657}

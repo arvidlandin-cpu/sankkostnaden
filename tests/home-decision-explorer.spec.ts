@@ -44,3 +44,44 @@ for (const width of [360, 390, 430, 1440]) {
     expect(dimensions.scrollWidth).toBeLessThanOrEqual(dimensions.viewport + 1);
   });
 }
+
+/* P0D: the existing mobile and broadband need selectors should feel like
+   the same product as the now-blue homepage. Actual screenshot QA at 5 widths. */
+for(const width of [360,390,430,1024,1440]){
+  test('P0D smart selectors keep navy result and blue choice at '+width+'px',async({page},info)=>{
+    await page.setViewportSize({width,height:width<=430?844:900});
+    await page.goto('/mobil/hur-mycket-surf-behover-jag/?qa=1');
+    await expect(page.getByRole('heading',{level:1,name:/Hur mycket surf behöver du/i})).toBeVisible();
+    const result=page.locator('main aside').first();
+    await expect(result).toBeVisible();
+    expect(await result.evaluate(el=>getComputedStyle(el).backgroundColor)).toBe('rgb(16, 37, 77)');
+    const first=page.getByRole('button',{name:'Nästan alltid wifi'});
+    await first.click();
+    await expect.poll(()=>first.evaluate(el=>getComputedStyle(el).backgroundColor)).toBe('rgb(231, 238, 255)');
+    await page.getByRole('button',{name:'Meddelanden, kartor, bank'}).click();
+    await page.getByRole('button',{name:'Bara mitt abonnemang'}).click();
+    await expect(result.getByRole('heading',{name:/Du behöver sannolikt inte fri surf/})).toBeVisible();
+    await expect(result.getByRole('link',{name:/Jämför billigare mobil/})).toHaveAttribute('href','/mobil/billigaste-mobilabonnemanget/');
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href','https://sankkostnaden.se/mobil/hur-mycket-surf-behover-jag/');
+    const overflow=await page.evaluate(()=>Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)-document.documentElement.clientWidth);
+    expect(overflow).toBeLessThanOrEqual(1);
+    await page.screenshot({path:`test-results/screenshots/p0d-smart-selector-${info.project.name}-${width}.png`,fullPage:true});
+
+    await page.goto('/bredband/vilken-hastighet-behover-jag/?qa=1');
+    await expect(page.getByRole('heading',{level:1,name:/Vilken bredbandshastighet behöver du/i})).toBeVisible();
+    const broadbandResult=page.locator('main aside').first();
+    expect(await broadbandResult.evaluate(el=>getComputedStyle(el).backgroundColor)).toBe('rgb(16, 37, 77)');
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href','https://sankkostnaden.se/bredband/vilken-hastighet-behover-jag/');
+    const broadbandOverflow=await page.evaluate(()=>Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)-document.documentElement.clientWidth);
+    expect(broadbandOverflow).toBeLessThanOrEqual(1);
+  });
+}
+test('P0D home-explorer selected decision still honors shared blue choice',async({page})=>{
+  await page.setViewportSize({width:390,height:844});
+  await page.goto('/?qa=1');
+  const explorer=page.getByTestId('home-decision-explorer');
+  const btn=explorer.getByRole('button',{name:'Var ska jag börja?'});
+  await btn.click();
+  await expect.poll(()=>btn.evaluate(el=>getComputedStyle(el).backgroundColor)).toBe('rgb(237, 243, 255)');
+  await expect(explorer.getByRole('link',{name:/Starta Kostnadskollen/})).toHaveAttribute('href','/app/');
+});
