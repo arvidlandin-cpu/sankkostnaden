@@ -2,16 +2,16 @@
   "version": 1,
   "updatedAt": "2026-10-11",
   "purpose": "Verified code-release snapshot for the AI operator and autopilot decision packet. Historical baseline reports remain dated snapshots, not live inventory.",
-  "latestVerifiedMainCommit": "94b65615b81236f46d38930afa54ec1a2b63a674",
+  "latestVerifiedMainCommit": "5f59f1e73c1fda9c51e3448501929e50e7925c64",
   "decisionContext": {
     "northStar": "Long-term approved affiliate revenue per relevant visitor; truthful consumer value and SEO trust first.",
-    "design": "P0E owner decision 2026-10-11 remains binding: text-to-interactive product shift, not color-only finish. UX PRs #125–131 and #134–136 merged and CI-tested. Independent 11-route live CSS/JS parity #38170691471 PASS. Continue only evidence-backed friction fixes, preserve SEO and partner tracking. Physical iPhone UNTESTED; conversions/revenue UNKNOWN.",
+    "design": "Later binding owner P0E 2026-10-11: lively visual low-text decision product after P0D palette. PRs #125-131, #134-136 and #139 now merged; mobile user choices show blue next-step panel above fixed navigation when otherwise obscured (instead of dead-feeling tap). Do not repeat these UI changes. No claims of confirmed UX satisfaction or revenue from CI.",
     "conversion": "Keep real comparison-service vs individual-supplier distinctions, partner visibility and clearly labeled affiliate links; user need not know consumption to reach legitimate partner options.",
     "pricing": "Electricity quarter-hour spot feed SE1-SE4 is real, but NOT a per-provider offer feed. No fabricated cheapest provider, 'best choice', monthly quote, ratings, guaranteed saving or extrapolated shift savings.",
     "experimentStatus": "As of 2026-10-10 one active scoped CONTENT_UTILITY_UPGRADE for /elavtal/kvartspris/ (PR #103), awaiting qualified organic measurements; cancelled Oct 7 insurance snippet remains inactive, no Oct 15 gate. Up to two fully independent initiatives subject to policy.",
     "capacity": "Independent non-paid traffic acquisition remains the highest commercial constraint; continue alongside design. No paid media or contracts without owner approval.",
     "finishStandard": "Read autopilot/PRODUCT_FINISHING_STANDARD_2026-10-09.md. Every screen, field, sentence and CTA must serve the user's immediate job, with premium consistent UX, real price data and QA. Do not call project finished from isolated feature PRs.",
-    "nextExecution": "P0E pages served on custom domain for 11 validated routes (Actions #38170691471) matching main design deploy 3c5ec74. Verify final combined-main smoke job #38170486799 and exact served SHA if provider access permits, but do not infer conversion lift. Focus observed UX bottlenecks rather than another redesign loop; prioritize real qualified organic value -> sponsored attributed click -> APPROVED commission, with network gap UNKNOWN. No new paid providers.",
+    "nextExecution": "P0E source and QA #125–131, #134–136, #139 merged and Pages SHA 5f59f1e client file parity 11/11 on own domain (Actions 38172132736). Focus next on documented buyer friction/organic discovery and true network-approved attribution, not another speculative color/UX redesign. Physical iPhone UNTESTED, unique served origin SHA UNKNOWN, commercial uplift UNKNOWN, all-network approved revenue UNKNOWN. No paid services/ads/new affiliate contracts.",
     "strategySourceOfTruth": "Read autopilot/EXPERIENCE_FIRST_2026-10-11.md, then MASTERPLAN_EXECUTION, PRODUCT_FINISHING_STANDARD, VISUAL_UX_ROADMAP, policy/state/GA4/GSC/network facts and latest GitHub branch+QA. Scheduled workflows do NOT mean ChatGPT can work autonomously without an actual running task."
   },
   "shipped": [
@@ -260,6 +260,12 @@
       "scope": "P0E 320/360 phone header single-line accessible brand",
       "status": "merged",
       "note": "Fixed visual 320/360 single-line header branding and 44px touch targets; screenshots manually reviewed; Build/Commercial green."
+    },
+    {
+      "pr": 139,
+      "scope": "P0E show category journey response above mobile fixed navigation",
+      "status": "merged",
+      "note": "Observed real 390px friction: blue result panel could be occluded by fixed mobile bottom dock when selecting compare/understand. Selective mobile-only scroll reveals the result and relevant CTA without altering DOM focus, desktop, affiliate tracking, prices or SEO. Build and full commercial Chromium+WebKit regression PASS. 360/390/430 actual screenshots visually reviewed, PR #139 merged. GitHub Actions #38172132736 confirms 11 custom-domain routes' compiled CSS+JS match Cloudflare Pages deploy SHA 5f59f1e."
     }
   ],
   "unresolved": [
@@ -276,7 +282,7 @@
     "GitHub screenshot archive now preserves Chromium screenshots; WebKit engine coverage passed, but physical-iPhone QA still blocked by exhausted free quota. Do not claim real-device pass.",
     "Approved Adtraction/Addrevenue/Tradedoubler SEK from authoritative partner reports is UNKNOWN on 2026-10-10; Windsor.ai Adtraction read returned affiliate-user/advertiser-user authorization error."
   ],
-  "latestMergedMainCommit": "3c5ec7418b1f69c9b6a2ac4e1cabf2a259a3c964",
+  "latestMergedMainCommit": "5f59f1e73c1fda9c51e3448501929e50e7925c64",
   "designVerification": {
     "inspectedAt": "2026-10-11",
     "ownerDirection": "P0D 2026-10-10 navy/warm-white",
@@ -333,11 +339,12 @@
         131,
         134,
         135,
-        136
+        136,
+        139
       ],
-      "qa": "Feature PRs #125–131, #134–136 all passed build/commercial Chromium regression on feature HEADs. Main release after #135 Cloudflare Pages deployed; 11-route client-asset parity independently passed. Combined-main full commercial regression run #38170486799 pending its final status on 2026-10-11. Physical iPhone UNTESTED.",
+      "qa": "PR #125–131, #134–136 and #139 Build + full commercial Chromium/Linux WebKit feature regression PASS, with actual representative mobile/desktop screenshots inspected. Post-merge Pages build SUCCESS + 11-route actual CSS/compiled JS parity #38172132736. This does not substitute for real iPhone or observed buyer conversion.",
       "pendingPrs": [],
-      "cloudflarePagesDeployLatestMain": "SUCCESS_FOR_DESIGN_SHA_3c5ec74; DOCS_ONLY_RELEASE_UPDATE_SHA_TO_BE_DEPLOYED",
+      "cloudflarePagesDeployLatestMain": "SUCCESS_FOR_DESIGN_SHA_5f59f1e73c1fda9c51e3448501929e50e7925c64; Pages https://900d5a4c.sankkostnaden.pages.dev/",
       "customDomainServedSha": "UNKNOWN",
       "physicalIphone": "UNTESTED",
       "organicConversionUplift": "UNKNOWN",
@@ -345,10 +352,10 @@
       "liveAssetIdentity": {
         "status": "PASS_CLIENT_ASSET_PARITY",
         "verificationDate": "2026-10-11",
-        "githubActionsRunId": 38170691471,
-        "actualGitHubMainDesignCommit": "3c5ec7418b1f69c9b6a2ac4e1cabf2a259a3c964",
+        "githubActionsRunId": 38172132736,
+        "actualGitHubMainDesignCommit": "5f59f1e73c1fda9c51e3448501929e50e7925c64",
         "cloudflarePagesDeployCheck": "success",
-        "previewUrl": "https://6b3fe37f.sankkostnaden.pages.dev/",
+        "previewUrl": "https://900d5a4c.sankkostnaden.pages.dev/",
         "ownOrigin": "https://sankkostnaden.se/",
         "verifiedRoutes": [
           "/",
@@ -363,9 +370,10 @@
           "/forsakring/hemforsakring-bostadsratt/",
           "/guide/arskoll-fasta-kostnader/"
         ],
-        "result": "All eleven routes' actual CSS paths and compiled product JavaScript paths matched exactly on the Pages-preview vs custom domain. GitHub Actions run #38170691471 passed. Next.js build-ID manifest exceptions still apply.",
-        "limitation": "Client asset parity does not prove unique origin/Cloudflare served commit SHA. Physical iPhone UNTESTED. Organic conversion uplift and approved whole-portfolio revenue UNKNOWN."
-      }
+        "result": "Read-only CI run #38172132736: 11 of 11 actual served route CSS and product-JS paths exactly match successfully deployed Cloudflare Pages preview. Only Next.js opaque build-ID manifest assets are excluded.",
+        "limitation": "Client asset identity on 11 routes does NOT establish the unique server-side SHA served by custom-domain origin or real iPhone usability. Organic conversion lift and portfolio-approved affiliate revenue UNKNOWN."
+      },
+      "latestVerifiedMainDesignCommit": "5f59f1e73c1fda9c51e3448501929e50e7925c64"
     }
   }
 }
