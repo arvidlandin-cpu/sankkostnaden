@@ -363,7 +363,7 @@ test('GA4 2 complete events for 1 start cannot be presented as 200 percent compl
 });
 
 test('already available condo checker is not recommended as another new widget before review',()=>{
- const g=google();
+ const g=google('2026-10-11T18:00:00Z');
  g.gsc.pages=[{page:'https://sankkostnaden.se/forsakring/hemforsakring-bostadsratt/',impressions:302,clicks:0,position:29}];
  const state={reviewedExistingUtilities:[{
   target:'/forsakring/hemforsakring-bostadsratt/',status:'already_served',
