@@ -33,7 +33,7 @@ export default function GuideReadingFlow({bullets,sections}:Props){
     {sections.map((section,index)=><details key={section.heading} open={index===0} className={styles.question}>
       <summary>
        <span className={styles.index}>{String(index+1).padStart(2,'0')}</span>
-       <h3>{section.heading}</h3>
+       <h2>{section.heading}</h2>
        <span className={styles.chevron}><ChevronDown size={19} aria-hidden='true'/></span>
       </summary>
       <div className={styles.answer}><p>{section.body}</p><span><ArrowUpRight size={15}/> Kontrollera alltid de faktiska villkoren innan du bestämmer dig.</span></div>
