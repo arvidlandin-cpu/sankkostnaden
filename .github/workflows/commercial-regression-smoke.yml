@@ -117,6 +117,7 @@ jobs:
             tests/design-homepage.spec.ts \
             tests/home-decision-explorer.spec.ts \
             tests/priority-seo-flow.spec.ts \
+            tests/experience-savings-checklists.spec.ts \
             tests/sitewide-design-contract.spec.ts \
             tests/p0d-sitewide-journey.spec.ts \
             tests/experience-guide-reading.spec.ts \

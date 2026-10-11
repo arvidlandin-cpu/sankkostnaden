@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import Link from 'next/link';
+import InteractiveChecklist from '../../components/InteractiveChecklist';
 import { ArrowLeft, ArrowRight, Check, PiggyBank } from 'lucide-react';
 
 const areas = [
@@ -38,10 +39,10 @@ export default function HushalletsFastaKostnader() {
 
           <h2>Checklista: gå igenom hushållets kostnader</h2>
           <p>Alla hushåll ser olika ut. Därför är dina egna fakturor och kontoutdrag den bästa utgångspunkten. Konsumentverket rekommenderar också att man tar fram räkningar och kontoutdrag när man gör budget och beskriver bland annat el, internet, mobil och försäkringar som relevanta utgiftsposter.</p>
-          <div className='checkList'>{areas.map(([title, text]) => <p key={title}><Check size={18}/><span><strong>{title}:</strong> {text}</span></p>)}</div>
+          <InteractiveChecklist title='Sju områden att kontrollera' description='Markera de områden du redan har gått igenom.' items={areas.map(([title,text])=>({title,text}))} nextHref='/verktyg/hushallskostnadskollen/' nextLabel='Räkna hushållets kostnader'/>
 
           <h2>Fem steg från faktura till lägre kostnad</h2>
-          <div className='checkList'>{audit.map(([title, text]) => <p key={title}><Check size={18}/><span><strong>{title}.</strong> {text}</span></p>)}</div>
+          <InteractiveChecklist title='Från faktura till beslut' items={audit.map(([title,text])=>({title,text}))} nextHref='/guide/arskoll-fasta-kostnader/' nextLabel='Öppna årskollen'/>
           <div className='note'><strong>Räkna på år, inte bara månad.</strong> En skillnad på 100 kr per månad motsvarar 1 200 kr per år. Lägg även till obligatoriska startavgifter, hårdvara och andra kostnader innan du jämför.</div>
 
           <h2>Vad räknar Konsumentverket på?</h2>
