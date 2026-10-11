@@ -1,7 +1,7 @@
 {
   "version": 4,
   "purpose": "Evidence-backed strategic opportunity backlog. Deploy up to two independent bounded growth initiatives; block overlapping page/funnel experiments. Market learning continues daily.",
-  "updatedAt": "2026-10-10",
+  "updatedAt": "2026-10-11",
   "currentConstraint": "Qualified genuine organic traffic is the binding commercial constraint. Direct first-party GSC totals to 2026-10-06: 1,169 impressions, 35 clicks; /app/ 26, home 7, other content 2. GA4 25 Organic Search sessions 2026-09-10–10-09; do not treat Direct/QA as customers. Exact Cloudflare deployment SHA and approved network commission SEK remain UNKNOWN.",
   "opportunities": [
     {
@@ -171,21 +171,20 @@
     {
       "id": "home-insurance-original-utility",
       "rank": 5,
-      "status": "watch",
+      "status": "existing_utility_shipped_discoverability_watch",
       "actionType": "CONTENT_UTILITY_UPGRADE",
       "target": "/forsakring/hemforsakring-bostadsratt/",
       "thesis": "Differentiate from generic insurance text with a practical collective-bostadsrättstillägg checklist and decision path into the existing protection check, while keeping claims conservative.",
       "evidence": {
         "gsc": [
-          "hemförsäkring bostadsrätt: 121 impressions, position 31.1, 0 clicks",
-          "page: 243 impressions, position 29.8, 0 clicks"
+          "2026-10-11 GSC last 30d /forsakring/hemforsakring-bostadsratt/: 302 impressions, 0 clicks, average position 29; most relevant query 'hemförsäkring bostadsrätt': 146 impressions, position 30.3."
         ],
         "marketPattern": "Current results combine concrete coverage details, deductible ranges and clear purchase paths; trust and precision matter more than affiliate density.",
         "sourceUrls": [
           "https://www.folksam.se/forsakringar/hemforsakring/bostadsrattsforsakring",
           "https://www.styrelsen.se/vad-kostar-hemforsakring-bostadsratt/"
         ],
-        "codeReality": "CondoInsuranceCheck already shipped on /forsakring/hemforsakring-bostadsratt/, including collective coverage questions and regulator links; avoid duplicating existing utility. Existing-page reach 246 impressions/0 clicks to latest GSC date, insufficient qualified post-click cohort."
+        "codeReality": "Already shipped CondoInsuranceCheck (2 progressively revealed questions), no second widget needed; seek organic discoverability and evidence, do not start overlapping form test."
       },
       "expectedImpact": "medium_high",
       "confidence": "medium",
@@ -194,7 +193,8 @@
         "no fabricated prices or coverage facts",
         "source time-sensitive claims",
         "do not imply individualized insurance advice"
-      ]
+      ],
+      "nextReview": "When actual organic traffic or a documented missing user job warrants; no automatic date gate or second widget."
     },
     {
       "id": "organic-app-distribution",
