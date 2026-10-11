@@ -158,3 +158,23 @@ for(const width of [360,390,430]){
    await page.screenshot({path:'test-results/screenshots/p0e-mobile-faststart-'+info.project.name+'-'+width+'.png',fullPage:true});
  });
 }
+
+for(const width of [320,360]){
+ test('P0E narrow phone header keeps full brand on one line '+width,async({page})=>{
+  await page.setViewportSize({width,height:800});
+  await page.goto('/?qa=1');
+  const header=page.locator('header');
+  const brand=header.getByRole('link',{name:'Sänk Kostnaden'});
+  const brandText=brand.locator('span').last();
+  const logoBox=await brandText.boundingBox();
+  expect(logoBox!.height,'Brand must not wrap into two lines').toBeLessThan(25);
+  const cta=header.getByRole('link',{name:/Börja jämföra/});
+  for(const link of [brand,cta]){
+   const box=await link.boundingBox();
+   expect(box!.height).toBeGreaterThanOrEqual(44);
+  }
+  const overflow=await page.evaluate(()=>Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)-document.documentElement.clientWidth);
+  expect(overflow).toBeLessThanOrEqual(1);
+  await page.screenshot({path:'test-results/screenshots/p0e-compact-header-'+width+'.png',fullPage:true});
+ });
+}
