@@ -2,6 +2,7 @@ import Head from 'next/head';
 import premium from '../styles/CategoryPremium.module.css';
 import Link from 'next/link';
 import { ArrowRight, Check, PiggyBank, ShieldCheck } from 'lucide-react';
+import CategoryJourney from '../components/CategoryJourney';
 import InsuranceMarketGateway from '../components/InsuranceMarketGateway';
 
 const guides=[
@@ -46,7 +47,8 @@ export default function Forsakring(){
          <p className='fine'>Gratis vägledning · aktuella premier och villkor hos försäkringsbolagen · tydligt märkta partnerlänkar</p>
        </div>
      </section>
-     <article className={`article guideWrap categoryArticle ${premium.article}`}>
+   <CategoryJourney category='forsakring' compareHref='#category-partners' helpHref='/forsakring/hemforsakring-skyddskoll/' understandHref='/forsakring/hemforsakring-bostadsratt/'/>
+   <article className={`article guideWrap categoryArticle ${premium.article}`}>
        <div id='category-partners' style={{scrollMarginTop:90}}><InsuranceMarketGateway/></div>
        <section className={`categoryIntro ${premium.intro}`}>
          <p className='kicker'>SAMMA SKYDD · SAMMA JÄMFÖRELSEGRUND</p>

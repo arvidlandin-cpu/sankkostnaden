@@ -3,6 +3,7 @@ import premium from '../styles/CategoryPremium.module.css';
 import Link from 'next/link';
 import { ArrowLeft, ArrowRight, Check, PiggyBank } from 'lucide-react';
 import PartnerDirectory from './PartnerDirectory';
+import CategoryJourney from './CategoryJourney';
 import type { ReactNode } from 'react';
 import type { PartnerCategory, PartnerIntent } from '../lib/partners';
 
@@ -81,7 +82,7 @@ export default function CategoryLanding({
           <p className='fine'>Inga kontaktuppgifter behövs för att börja.</p>
         </div>
       </section>
-
+      <CategoryJourney category={category} compareHref='#category-partners' helpHref={helpHref} understandHref='/ekonomi/samlingslan/'/>
 
       <article className={`article guideWrap categoryArticle ${premium.article}`}>
         {!comparisonFirst&&<>

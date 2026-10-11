@@ -2,6 +2,7 @@ import Head from 'next/head';
 import premium from '../styles/CategoryPremium.module.css';
 import Link from 'next/link';
 import { ArrowRight, Check, PiggyBank, ShieldCheck, Smartphone } from 'lucide-react';
+import CategoryJourney from '../components/CategoryJourney';
 import MobileMarketGateway from '../components/MobileMarketGateway';
 
 const guides=[
@@ -46,6 +47,7 @@ export default function Mobil(){
      <p className='fine'><ShieldCheck size={13}/> Gratis vägledning · tydliga partnerlänkar · ingen påhittad prisranking</p>
     </div>
    </section>
+   <CategoryJourney category='mobil' compareHref='#category-partners' helpHref='/mobil/hur-mycket-surf-behover-jag/' understandHref='/mobil/familjeabonnemang/'/>
    <article className={`article guideWrap categoryArticle ${premium.article}`}>
     <div id='category-partners' style={{scrollMarginTop:90}}><MobileMarketGateway/></div>
     <section className={`categoryIntro ${premium.intro}`}>

@@ -106,6 +106,7 @@ jobs:
             tests/electricity-hub.spec.ts \
             tests/economy-purpose-first.spec.ts \
             tests/category-premium-v5.spec.ts \
+            tests/experience-category-journeys.spec.ts \
             tests/mobile-navigation-v5.spec.ts \
             tests/elavtal-visual-v5.spec.ts \
             tests/electricity-spot-prices.spec.ts \

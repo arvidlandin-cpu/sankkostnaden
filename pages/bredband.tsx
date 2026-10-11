@@ -2,6 +2,7 @@ import Head from 'next/head';
 import premium from '../styles/CategoryPremium.module.css';
 import Link from 'next/link';
 import { ArrowRight, Check, PiggyBank, ShieldCheck, Wifi } from 'lucide-react';
+import CategoryJourney from '../components/CategoryJourney';
 import BroadbandMarketGateway from '../components/BroadbandMarketGateway';
 import { getActivePartners } from '../lib/partners';
 import { emitAnalyticsEvent } from '../lib/clientAttribution';
@@ -49,6 +50,7 @@ export default function Bredband(){
      <p className='fine'><ShieldCheck size={13}/> {addressComparison?'Partnerlänk · kontroll och adressuppgifter hos Bredbandsval · vi får eventuell provision':'Gratis vägledning · adresser och priser kontrolleras hos operatören'}</p>
     </div>
    </section>
+   <CategoryJourney category='bredband' compareHref='#category-partners' helpHref='/bredband/vilken-hastighet-behover-jag/' understandHref='/bredband/bredband-pa-min-adress/'/>
    <article className={`article guideWrap categoryArticle ${premium.article}`}>
     <div id='category-partners' style={{scrollMarginTop:90}}><BroadbandMarketGateway/></div>
     <section className={`categoryIntro ${premium.intro}`}>
