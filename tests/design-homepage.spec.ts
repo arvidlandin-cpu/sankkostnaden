@@ -116,3 +116,21 @@ for(const width of [360,390,430,1024,1440]){
   await page.screenshot({path:`test-results/screenshots/p0d-home-header-footer-${info.project.name}-${width}.png`,fullPage:true});
  });
 }
+
+test('experience P0: living hero selection changes the next step without a page reload',async({page})=>{
+ await page.setViewportSize({width:390,height:844});
+ await page.goto('/?qa=1');
+ const hero=page.locator('section[aria-label="Hitta rätt jämförelse"]');
+ const picker=hero.getByTestId('home-decision-explorer');
+ await expect(picker).toBeVisible();
+ const before=await picker.getByTestId('home-explorer-panel').textContent();
+ await picker.getByRole('button',{name:'Var ska jag börja?'}).click();
+ await expect(picker.getByTestId('home-explorer-panel')).toContainText('Få en första startpunkt');
+ await expect(picker.getByRole('link',{name:/Starta Kostnadskollen/})).toHaveAttribute('href','/app/');
+ expect(await picker.getByTestId('home-explorer-panel').textContent()).not.toEqual(before);
+ await picker.getByRole('button',{name:'Jämför två erbjudanden'}).click();
+ await expect(picker.locator('a[href="/verktyg/elavtalskostnad/"]')).toBeVisible();
+ const overflow=await page.evaluate(()=>Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)-document.documentElement.clientWidth);
+ expect(overflow).toBeLessThanOrEqual(1);
+ await page.screenshot({path:'test-results/screenshots/experience-p0-home-interactive-390.png',fullPage:true});
+});
