@@ -48,3 +48,12 @@ P0D:s marinblå/varmvita färgmigrering och stora skärmbildstester gjorde tidig
 - **Oberoende driftkontroll:** GitHub Actions **#38170691471**, Cloudflare Pages preview `https://6b3fe37f.sankkostnaden.pages.dev/` mot `https://sankkostnaden.se/`, **11/11 webbrutter PASS** för exakt sammanfallande kompilerade CSS och riktiga produkt-JS chunks (ej Next build-ID-manifest). Inkluderar startsida, Kostnadskollen, fem kategori-hubbar, kvartspris, två mobil-/försäkringsguider och årskoll. Detta **är filidentitet, inte ett bevis på unik serverad commit-SHA eller organisk affärseffekt**.
 - Övriga gränser: fysisk iPhone **UNTESTED**, verklig godkänd intäktsökning/konvertering **UNKNOWN**, rapport från ej lästa partnernätverk **UNKNOWN**. Ägarens visuella acceptans är inte automatiskt uppnådd bara för att tester är gröna.
 - Prioritera endast nya **observerade** hinder i produktkedjan efter denna etapp, inte nya isolerade widgets, färgbyten eller dubblerade guideavsnitt.
+
+
+## Slutlig tilläggsleverans: klick → synligt resultat (11 oktober 2026)
+
+PR **#139** är mergad efter godkänd Build, hela kommersiella Chromium/WebKit-regressionen och manuell granskning av verkliga 360/390/430-bilder. Den åtgärdar ett konkret problem i de fem kategoriernas vägval: resultatkortet kunde efter ett tryck visas **under den fasta mobilnavigeringen**, så det kändes som att inget hände. Komponentens mobilläge scrollar nu bara så mycket som behövs för att resultat och relevant fortsättnings-CTA ska synas ovanför dockan. Respekterar reduced-motion. Samma analytik, interna vägar, sponsrad spårning och SEO behålls. Desktop oförändrat.
+
+**Live QA:** GitHub Pages deploy `5f59f1e73c1fda9c51e3448501929e50e7925c64` lyckad; läsande GitHub Actions `#38172132736` visar **11/11** verkliga sidvägar med identiska CSS/JS-produktfiler mellan `https://900d5a4c.sankkostnaden.pages.dev/` och `https://sankkostnaden.se/`. Bygg-ID-manifest undantas. Fysisk iPhone **UNTESTED**. Exakt origin-SHA och faktisk organisk konverteringsförbättring/helportföljens godkända provision **UNKNOWN**.
+
+**Operatörsbeslut:** Dessa åtgärder är levererade; återstarta inte samma mobilscroll-/text-/blåfärgsarbete. Hitta och bevisa nästa verkliga friktionspunkt innan ytterligare UI-kod.

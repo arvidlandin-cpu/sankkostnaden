@@ -195,3 +195,5 @@ Daily operations (~09:00 local): read this file, check fresh reports and green p
 - Any broken clickRef/EPI/subID, leak of private price into events, SEO canonical/href regressions, mobile overflow or untested shared component: block.
 - Any paid campaign/subscription, new partner contract, deceptive review, changes involving legal obligations: owner approval required.
 - Never describe **planned** or **partly deployed** phases as complete. Every merged release is a quality milestone, not an approved-revenue milestone.
+
+Se [EXPERIENCE_FIRST_2026-10-11.md](EXPERIENCE_FIRST_2026-10-11.md) för senare verifierade PR #134–136 och #139, samt Pages/live-kontroll Actions #38172132736 (11/11 rutter).
