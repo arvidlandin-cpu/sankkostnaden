@@ -20,7 +20,7 @@ async function assets(url) {
 // their path without changing any actual product CSS or JS chunk.
 const regularJs=paths=>paths.filter(p=>!/_buildManifest\.js$|_ssgManifest\.js$/.test(p));
 const same=(x,y)=>JSON.stringify(x)===JSON.stringify(y);
-const routes=['/','/app/','/elavtal/kvartspris/','/mobil/lonar-sig-familjeabonnemang/','/forsakring/hemforsakring-bostadsratt/'];
+const routes=["/","/app/","/elavtal/","/bredband/","/mobil/","/forsakring/","/ekonomi/","/elavtal/kvartspris/","/mobil/lonar-sig-familjeabonnemang/","/forsakring/hemforsakring-bostadsratt/","/guide/arskoll-fasta-kostnader/"];
 const checks=[];
 for(const route of routes) {
   const [a,b]=await Promise.all([
@@ -44,6 +44,6 @@ for(const route of routes) {
 }
 if(checks.some(x=>!x.cssExactMatch||!x.productJsExactMatch||x.previewAssets.css<1||x.previewAssets.productJs<3))
   throw new Error('Pages preview and custom domain differ in actual product assets, NOT verified');
-console.log('PASS: all five routes have identical compiled CSS and actual JS chunks.');
+console.log('PASS: all '+checks.length+' routes have identical compiled CSS and actual JS chunks.');
 console.log('Next build-ID manifests can differ after a docs-only rebuild.');
 console.log('This is independent evidence of client-asset identity, NOT full origin SHA proof or real-device QA.');

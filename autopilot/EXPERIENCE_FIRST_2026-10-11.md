@@ -38,3 +38,13 @@ P0D:s marinblå/varmvita färgmigrering och stora skärmbildstester gjorde tidig
 - Read-only GitHub Actions **#38167682229** jämförde preview och `sankkostnaden.se` efter deploy. Samtliga fem skarpa sidvägar `/`, `/app/`, `/elavtal/kvartspris/`, `/mobil/lonar-sig-familjeabonnemang/`, `/forsakring/hemforsakring-bostadsratt/` gav **exakt klient-CSS- och verklig JS-chunk-identitet**. Endast Next.js opaka build-ID-manifest undantogs.
 - Detta stärker beviset att just **nya designens faktiska CSS/JS serveras** på den egna domänen. Det bevisar inte unik Cloudflare-deploy-SHA på custom domain och det ersätter INTE fysisk iPhone-review eller ägarens upplevelsegodkännande. Fysisk iPhone/organisk intäktstillväxt: **UNKNOWN/UNTESTED**.
 - Senare docs-only `main`-commits kan ge nytt bygg-ID utan kodförändring. Kontrollera Cloudflare Pages success för dem separat. **Använd inte CI eller exakt filidentitet som ursäkt att kalla all UX slutförd.**
+
+
+## Uppföljning 2026-10-11 – verkliga kompletteringar och live-kontroll
+
+- **PR #134:** Fyra snabba hjälpalternativ i startsidans mobilhero som 2 × 2-kort med riktig destinationslänk; testade och visuellt granskade 360/390. Mergad efter grön Build och Commercial.
+- **PR #135:** Elsidan efter livevalet visar kortare rubrik/beskrivning och två **faktiska** jämförelse-/elbolagskort, inga duplicerade frågerubriker. Samma spårade partnerlänkar. 390/1440 skärmbilder kontrollerade, Build och Commercial godkända, mergad.
+- **PR #136:** Ensradig varumärkesrad bredvid CTA även vid 320/360 px med minst 44 px klickytor, screenshotgranskat och mergat efter QA.
+- **Oberoende driftkontroll:** GitHub Actions **#38170691471**, Cloudflare Pages preview `https://6b3fe37f.sankkostnaden.pages.dev/` mot `https://sankkostnaden.se/`, **11/11 webbrutter PASS** för exakt sammanfallande kompilerade CSS och riktiga produkt-JS chunks (ej Next build-ID-manifest). Inkluderar startsida, Kostnadskollen, fem kategori-hubbar, kvartspris, två mobil-/försäkringsguider och årskoll. Detta **är filidentitet, inte ett bevis på unik serverad commit-SHA eller organisk affärseffekt**.
+- Övriga gränser: fysisk iPhone **UNTESTED**, verklig godkänd intäktsökning/konvertering **UNKNOWN**, rapport från ej lästa partnernätverk **UNKNOWN**. Ägarens visuella acceptans är inte automatiskt uppnådd bara för att tester är gröna.
+- Prioritera endast nya **observerade** hinder i produktkedjan efter denna etapp, inte nya isolerade widgets, färgbyten eller dubblerade guideavsnitt.
