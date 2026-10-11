@@ -10,6 +10,7 @@ import assert from 'node:assert/strict';
  */
 const migrated=[
   'styles/design-tokens.css',
+  'styles/App.module.css',
   'styles/CondoInsuranceCheck.module.css',
   'styles/FamilyMobileCost.module.css',
   'styles/FirstYearCostCalculator.module.css',
