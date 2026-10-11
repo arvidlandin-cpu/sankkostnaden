@@ -42,7 +42,7 @@ export default function Elavtal(){
      <p className='lead'>Jämför flera bolag hos Elskling, gå direkt till ett elbolag eller räkna på två erbjudanden. Du behöver inte veta din förbrukning för att börja.</p>
      <div className='categoryHeroActions'>
       <a className='primary' href='#jamfor-elavtal'>Jämför elavtal <ArrowRight size={17}/></a>
-      <Link className='secondaryLight' href='/elavtal/vilket-elavtal-passar-mig/'>Hjälp mig välja avtalsform <ArrowRight size={17}/></Link>
+
      </div>
      <p className='fine'><ShieldCheck size={13}/> Gratis att använda · märkta partnerlänkar · aktuella erbjudanden hos bolagen</p>
     </div>

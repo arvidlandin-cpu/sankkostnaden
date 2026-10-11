@@ -45,7 +45,7 @@ export default function Bredband(){
      <p className='lead'>Börja med att kontrollera vilka operatörer som finns på din adress. Välj sedan en lämplig hastighet och jämför hela kostnaden, även efter kampanjen.</p>
      <div className='categoryHeroActions'>
       {addressComparison?<a className='primary' href={addressComparison.trackingUrl} data-partner={addressComparison.name} data-category='bredband' data-intent='compare' data-placement='broadband_hero_comparison' data-partner-position='1' onClick={()=>emitAnalyticsEvent('broadband_hub_path',{source:'broadband_hero',path:'address_compare'})} target='_blank' rel='sponsored nofollow noopener'>Kontrollera utbud på min adress <ArrowRight size={17}/></a>:<a className='primary' href='#category-partners'>Se våra bredbandsalternativ <ArrowRight size={17}/></a>}
-      <Link className='secondaryLight' href='/bredband/vilken-hastighet-behover-jag/'>Hjälp mig välja hastighet <ArrowRight size={17}/></Link>
+
      </div>
      <p className='fine'><ShieldCheck size={13}/> {addressComparison?'Partnerlänk · kontroll och adressuppgifter hos Bredbandsval · vi får eventuell provision':'Gratis vägledning · adresser och priser kontrolleras hos operatören'}</p>
     </div>

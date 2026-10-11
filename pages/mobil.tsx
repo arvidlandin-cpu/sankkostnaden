@@ -42,7 +42,7 @@ export default function Mobil(){
      <p className='lead'>Börja med dina surfvanor eller familjens totalkostnad. Se sedan alla våra mobiloperatörer och kontrollera aktuella erbjudanden hos dem.</p>
      <div className='categoryHeroActions'>
       <a className='primary' href='#category-partners'>Se mobilalternativ <ArrowRight size={17}/></a>
-      <Link className='secondaryLight' href='/mobil/hur-mycket-surf-behover-jag/'>Hjälp mig välja surf <ArrowRight size={17}/></Link>
+
      </div>
      <p className='fine'><ShieldCheck size={13}/> Gratis vägledning · tydliga partnerlänkar · ingen påhittad prisranking</p>
     </div>
