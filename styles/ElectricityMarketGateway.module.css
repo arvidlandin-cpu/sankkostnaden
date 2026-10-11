@@ -129,3 +129,23 @@
 .optionalJourneys summary:focus-visible{outline:3px solid #668dfa;outline-offset:-3px}
 @media(max-width:680px){.optionalJourneys summary{padding:16px;min-height:80px}.optionalJourneys>.section{padding:16px}.optionalJourneys summary strong{font-size:16px}}
 @media(prefers-reduced-motion:reduce){.optionalJourneys summary>svg{transition:none}}
+
+/* P0E after live chooser: do not repeat a second massive introduction.
+   Preserve both sponsored vs supplier routes and all tracking anchors. */
+.sectionHead{margin-bottom:16px}
+.sectionHead h2{font-size:clamp(25px,3vw,34px)!important}
+.sectionHead p:not(.eyebrow){max-width:60ch}
+.compareCard,.directCard{padding:19px 21px 18px}
+.routeIcon{width:38px;height:38px;border-radius:12px;margin-bottom:11px}
+.routeCopy h3{font-size:clamp(20px,2.2vw,25px)!important;margin:7px 0!important}
+.routeCopy p{line-height:1.43;margin:0 0 10px}
+.providerName{margin-bottom:11px;padding:6px 9px}
+.logo{width:41px;height:41px;flex-basis:41px}
+.logo img{width:38px;height:38px}
+.miniNames{margin-bottom:11px}
+@media(max-width:680px){
+ .sectionHead{gap:8px;margin-bottom:13px}
+ .sectionHead h2{font-size:26px!important}
+ .compareCard,.directCard{padding:17px 16px}
+ .count{padding:8px 11px}
+}
