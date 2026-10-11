@@ -89,7 +89,7 @@ export default function IntentGuide({ title, description, kicker, canonical, cat
           </div>
         </section>
         <article className='article guideWrap'>
-          <DecisionGateway category={category} intent={intent} currentPath={new URL(canonical).pathname} onPagePartners={elevatePartnerBlock} />
+          <DecisionGateway category={category} intent={intent} currentPath={new URL(canonical).pathname} onPagePartners={elevatePartnerBlock} compact />
           <GuideReadingFlow bullets={bullets} sections={sections} />
           {utility && <aside className='utilityToolCard'><div><p>{utility.eyebrow}</p><h2>{utility.title}</h2><span>{utility.body}</span></div><Link href={utility.href}>{utility.cta}<ArrowRight size={17}/></Link></aside>}
           {extraUtility}
