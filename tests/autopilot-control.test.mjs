@@ -362,13 +362,25 @@ test('GA4 2 complete events for 1 start cannot be presented as 200 percent compl
  assert.match(toMarkdown(packet),/konverteringsgrad: \*\*UNKNOWN\*\*/);
 });
 
-test('already available condo checker is not recommended as another new widget before review',()=>{
+test('already available condo checker is not recommended as another redundant widget',()=>{
  const g=google('2026-10-11T18:00:00Z');
  g.gsc.pages=[{page:'https://sankkostnaden.se/forsakring/hemforsakring-bostadsratt/',impressions:302,clicks:0,position:29}];
  const state={reviewedExistingUtilities:[{
   target:'/forsakring/hemforsakring-bostadsratt/',status:'already_served',
-  recheckAfter:'2026-10-25T08:00:00+02:00'
+ 
  }]};
  const packet=buildDecisionPacket({google:g,policy:{...policy,limits:{maxConcurrentExperiments:2},thresholds:{...policy.thresholds,contentUtility:{minImpressions:100,minPosition:16,maxPosition:40,maxClicks:1}},autonomy:{auto:[...policy.autonomy.auto,'CONTENT_UTILITY_UPGRADE']}},state,now:new Date('2026-10-11T18:00:00Z')});
  assert.equal(packet.recommendedAction.type,'WAITING_FOR_SIGNAL');
+});
+
+test('if every partner API is unavailable, even reported-network zero is UNKNOWN',()=>{
+ const packet=buildDecisionPacket({
+   google:google(),
+   affiliate:{networks:[{network:'adtraction',configured:false},{network:'addrevenue',configured:false}],totals:[]},
+   partnerHealth:{networkCounts:{adtraction:26,addrevenue:11,tradedoubler:1}},
+   policy,now:new Date('2026-10-08T08:00:00Z')
+ });
+ assert.equal(packet.northStar.approvedRevenue,null);
+ assert.equal(packet.northStar.reportedNetworkApprovedCommission,null);
+ assert.match(toMarkdown(packet),/Rapporterade godkända provisioner i avlästa nätverk: \*\*UNKNOWN\*\*/);
 });
