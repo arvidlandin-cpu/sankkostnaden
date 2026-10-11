@@ -118,6 +118,7 @@ jobs:
             tests/priority-seo-flow.spec.ts \
             tests/sitewide-design-contract.spec.ts \
             tests/p0d-sitewide-journey.spec.ts \
+            tests/p0d-all-pages-audit.spec.ts \
             tests/family-result-contrast.spec.ts \
             tests/trust-footer-insurance.spec.ts \
             --project=chromium
