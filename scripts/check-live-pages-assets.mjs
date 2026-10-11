@@ -16,21 +16,34 @@ async function assets(url) {
   if(!css.length||js.length<3)throw new Error('Cannot find reliable Next assets at '+url+': css='+css.length+' js='+js.length);
   return {url,status:response.status,css,js};
 }
-const [a,b]=await Promise.all([assets(preview),assets(live)]);
+// These manifests carry an opaque Next build ID. A docs-only rebuild may change
+// their path without changing any actual product CSS or JS chunk.
+const regularJs=paths=>paths.filter(p=>!/_buildManifest\.js$|_ssgManifest\.js$/.test(p));
 const same=(x,y)=>JSON.stringify(x)===JSON.stringify(y);
-const result={
-  preview:a.url,live:b.url,
-  previewAssets:{css:a.css.length,js:a.js.length},
-  liveAssets:{css:b.css.length,js:b.js.length},
-  cssExactMatch:same(a.css,b.css),
-  jsExactMatch:same(a.js,b.js),
-  missingCssInLive:a.css.filter(x=>!b.css.includes(x)),
-  missingJsInLive:a.js.filter(x=>!b.js.includes(x)),
-  extraCssOnLive:b.css.filter(x=>!a.css.includes(x)),
-  extraJsOnLive:b.js.filter(x=>!a.js.includes(x))
-};
-console.log(JSON.stringify(result,null,2));
-if(!result.cssExactMatch||!result.jsExactMatch)
-  throw new Error('Pages preview and custom domain use different compiled assets; DO NOT claim deploy equivalence');
-console.log('PASS: custom domain and chosen Pages preview serve identical Next static asset fingerprints.');
-console.log('This verifies asset identity, NOT exact served Cloudflare custom-domain SHA or physical iPhone.');
+const routes=['/','/app/','/elavtal/kvartspris/','/mobil/lonar-sig-familjeabonnemang/','/forsakring/hemforsakring-bostadsratt/'];
+const checks=[];
+for(const route of routes) {
+  const [a,b]=await Promise.all([
+    assets(new URL(route,preview).toString()),
+    assets(new URL(route,live).toString()),
+  ]);
+  const productA=regularJs(a.js),productB=regularJs(b.js);
+  const result={
+    route,
+    previewAssets:{css:a.css.length,productJs:productA.length},
+    liveAssets:{css:b.css.length,productJs:productB.length},
+    cssExactMatch:same(a.css,b.css),
+    productJsExactMatch:same(productA,productB),
+    previewManifestIds:a.js.filter(x=>!productA.includes(x)),
+    liveManifestIds:b.js.filter(x=>!productB.includes(x)),
+    missingCssInLive:a.css.filter(x=>!b.css.includes(x)),
+    missingProductJsInLive:productA.filter(x=>!productB.includes(x)),
+  };
+  console.log(JSON.stringify(result,null,2));
+  checks.push(result);
+}
+if(checks.some(x=>!x.cssExactMatch||!x.productJsExactMatch||x.previewAssets.css<1||x.previewAssets.productJs<3))
+  throw new Error('Pages preview and custom domain differ in actual product assets, NOT verified');
+console.log('PASS: all five routes have identical compiled CSS and actual JS chunks.');
+console.log('Next build-ID manifests can differ after a docs-only rebuild.');
+console.log('This is independent evidence of client-asset identity, NOT full origin SHA proof or real-device QA.');
