@@ -42,7 +42,7 @@ export default function Forsakring(){
          <p className='lead'>Hem, djur, resa och ersättningsärenden är olika behov. Vi hjälper dig hitta rätt väg och synliggör våra relevanta partners utan att låtsas ha dina personliga premier.</p>
          <div className='categoryHeroActions'>
            <a className='primary' href='#category-partners'>Se försäkringsalternativen <ArrowRight size={17}/></a>
-           <Link className='secondaryLight' href='/forsakring/hemforsakring-skyddskoll/'>Kontrollera ditt hemskydd <ArrowRight size={17}/></Link>
+
          </div>
          <p className='fine'>Gratis vägledning · aktuella premier och villkor hos försäkringsbolagen · tydligt märkta partnerlänkar</p>
        </div>
