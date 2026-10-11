@@ -2,7 +2,7 @@ import {expect,test} from '@playwright/test';
 
 const sampleRoutes=[
  '/elavtal/kvartspris/',
- '/bredband/bredband-pa-min-adress/',
+ '/bredband/utan-bindningstid/',
  '/mobil/familjeabonnemang/',
  '/forsakring/hemforsakring-bostadsratt/',
  '/ekonomi/jamfor-privatlan/',
