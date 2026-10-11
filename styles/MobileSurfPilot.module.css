@@ -1,12 +1,12 @@
 .testBanner {
   display: inline-flex;
   align-items: center;
-  min-height: 36px;
+  min-height: 44px;
   padding: 0 14px;
-  border: 1px solid #dce2da;
+  border: 1px solid var(--sk-line);
   border-radius: 999px;
-  background: #f7f8f5;
-  color: #566159;
+  background: var(--sk-canvas);
+  color: var(--sk-ink-muted);
   font-size: 12px;
   font-weight: 850;
 }
@@ -17,15 +17,15 @@
   gap: 16px;
   margin: 0 0 16px;
   padding: 12px 14px;
-  border: 1px dashed #cbd4c7;
+  border: 1px dashed var(--sk-line-strong);
   border-radius: 14px;
-  background: #fbfcfa;
-  color: #667168;
+  background: var(--sk-surface-raised);
+  color: var(--sk-ink-muted);
   font-size: 12px;
 }
 
 .variantRow strong {
-  color: #17201b;
+  color: var(--sk-ink);
 }
 
 .primaryAction,
@@ -46,29 +46,29 @@
   align-items: center;
   justify-content: space-between;
   border: 0;
-  background: #dff46a;
-  color: #17201b;
+  background: var(--sk-action);
+  color: var(--sk-action-ink);
   cursor: pointer;
 }
 
 .secondaryAction {
-  border: 1px solid #68766d;
+  border: 1px solid var(--sk-result-muted);
   background: transparent;
-  color: #eef3ef;
+  color: var(--sk-result-muted);
   cursor: pointer;
 }
 
 .partnerCard {
   margin-top: 16px;
   padding: 18px;
-  border: 1px solid #536158;
+  border: 1px solid var(--sk-result-line);
   border-radius: 16px;
-  background: #202e26;
+  background: var(--sk-result-surface);
 }
 
 .partnerCard > span {
-  color: #dff46a;
-  font-size: 9px;
+  color: var(--sk-result-muted);
+  font-size: 12px;
   font-weight: 900;
   letter-spacing: .11em;
 }
@@ -82,7 +82,7 @@
 .noMatch p,
 .neutralContinuation p {
   margin: 0;
-  color: #c1cbc4;
+  color: var(--sk-result-muted);
   font-size: 12px;
   line-height: 1.5;
 }
@@ -90,8 +90,8 @@
 .partnerCard small {
   display: block;
   margin-top: 10px;
-  color: #9daaa1;
-  font-size: 10px;
+  color: var(--sk-result-muted);
+  font-size: 12px;
   line-height: 1.5;
 }
 
@@ -100,9 +100,9 @@
   align-items: center;
   justify-content: center;
   gap: 7px;
-  border: 1px solid #657269;
-  background: #334038;
-  color: #b9c4bc;
+  border: 1px solid var(--sk-result-line);
+  background: var(--sk-result);
+  color: var(--sk-result-muted);
 }
 
 .affiliateAction {
@@ -111,8 +111,8 @@
   justify-content: space-between;
   gap: 10px;
   border: 0;
-  background: #dff46a;
-  color: #17201b;
+  background: var(--sk-action);
+  color: var(--sk-action-ink);
   text-decoration: none;
 }
 
@@ -120,15 +120,15 @@
 .neutralContinuation {
   margin-top: 16px;
   padding: 16px;
-  border: 1px solid #536158;
+  border: 1px solid var(--sk-result-line);
   border-radius: 14px;
-  background: #202e26;
+  background: var(--sk-result-surface);
 }
 
 .noMatch strong {
   display: block;
   margin-bottom: 7px;
-  color: #f0f4f1;
+  color: #fff;
   font-size: 13px;
 }
 
@@ -139,8 +139,8 @@
   margin-top: 12px;
   padding: 12px 13px;
   border-radius: 10px;
-  background: #dff46a;
-  color: #17201b;
+  background: var(--sk-action);
+  color: var(--sk-action-ink);
   font-size: 13px;
   font-weight: 900;
   text-decoration: none;
@@ -166,21 +166,21 @@
 .feedbackCard {
   margin-top: 16px;
   padding: 16px;
-  border: 1px solid #536158;
+  border: 1px solid var(--sk-result-line);
   border-radius: 14px;
-  background: #202e26;
+  background: var(--sk-result-surface);
 }
 
 .feedbackCard > strong {
   display: block;
   margin-bottom: 6px;
-  color: #f0f4f1;
+  color: #fff;
   font-size: 13px;
 }
 
 .feedbackCard > p {
   margin: 0;
-  color: #c1cbc4;
+  color: var(--sk-result-muted);
   font-size: 12px;
   line-height: 1.5;
 }
@@ -192,12 +192,12 @@
 }
 
 .feedbackActions button {
-  min-height: 42px;
+  min-height: 48px;
   padding: 10px 12px;
-  border: 1px solid #68766d;
+  border: 1px solid var(--sk-result-line);
   border-radius: 10px;
   background: transparent;
-  color: #eef3ef;
+  color: var(--sk-result-muted);
   font: inherit;
   font-size: 12px;
   font-weight: 800;
@@ -207,14 +207,14 @@
 
 .feedbackActions button:hover,
 .feedbackSelected {
-  border-color: #dff46a !important;
-  background: #334038 !important;
-  color: #f4f8f5 !important;
+  border-color: var(--sk-choice-border) !important;
+  background: var(--sk-choice-selected) !important;
+  color: var(--sk-ink) !important;
 }
 
 .feedbackCard small {
   display: block;
   margin-top: 10px;
-  color: #b9c4bc;
-  font-size: 10px;
+  color: var(--sk-result-muted);
+  font-size: 12px;
 }
