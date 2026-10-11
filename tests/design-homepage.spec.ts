@@ -12,7 +12,7 @@ test('home V5: clear first action, SEO identity and one visible category directo
  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href','https://sankkostnaden.se/');
  const hero=page.locator('section[aria-label="Hitta rätt jämförelse"]');
  await expect(hero.getByRole('heading',{level:1,name:'Sänk dina fasta kostnader'})).toBeVisible();
- await expect(hero.getByText('SAMMA VARDAG. LÄGRE UTGIFTER.')).toBeVisible();
+ await expect(hero.getByText('FÄRRE FRÅGOR. KLARARE BESLUT.')).toBeVisible();
  const first=hero.getByRole('link',{name:/Starta Kostnadskollen/});
  await expect(first).toHaveAttribute('href','/app/');
  await expect(first).toContainText('Få en startpunkt med en enkel fråga');
