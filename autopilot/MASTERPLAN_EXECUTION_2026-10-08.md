@@ -1,5 +1,10 @@
 # APPROVED Masterplan — execution program, Sänk Kostnaden
 
+## NYTT BINDANDE ÄGARBESLUT 2026-10-11 – P0E UPPLEVELSE FÖRST
+
+**Läs [autopilot/EXPERIENCE_FIRST_2026-10-11.md](EXPERIENCE_FIRST_2026-10-11.md) först.** P0D färg- och tokensanering blev tekniskt klar men ÄGAREN bedömde den resulterande sajten som för textig och för lite interaktiv. Den äldre satsen ”bygg inte mer design” syftade på att inte duplicera P0D CSS, **inte** att ägaren accepterat UX som färdig. Nya prioriteten är synlig livfull beslutsprodukt: startsida, fem kategorier, progressiva faktaguider, klickbara vägval och premiumrytm. PR #125–129 mergade (Build + kommersiell regression godkända) och faktiskt screenshotgranskade. PR #130 och #131 är mergade efter Build, full kommersiell regression och visuell 390px-granskning. Ändra inte attribution eller SEO. Approved nätverksintäkt = **UNKNOWN** tills alla aktiva nätverk rapporterar.
+
+
 ### P0D slutkontroll 2026-10-11 — faktisk liveprodukt
 
 **Väsentlig ny fakta efter PR #122:** På fem skarpa URL:er matchar `https://sankkostnaden.se/` den lyckade Cloudflare Pages-previewversionens **CSS och verkliga JS-chunks exakt** (oavsett Next.js build-ID-manifest). Oberoende GitHub Actions #38159842849 och #38159934538 godkända. Första verifierings-PR #122 har mergats efter grön Build och kommersiell regression. Se `release-context.json.designVerification.customDomainClientAssets`.

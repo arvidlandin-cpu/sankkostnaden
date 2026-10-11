@@ -1,5 +1,10 @@
 # Sänk Kostnaden 2.0 – visuell design och genomförandeplan
 
+## NYTT BINDANDE ÄGARBESLUT 2026-10-11 – P0E UPPLEVELSE FÖRST
+
+**Läs [autopilot/EXPERIENCE_FIRST_2026-10-11.md](EXPERIENCE_FIRST_2026-10-11.md) först.** P0D färg- och tokensanering blev tekniskt klar men ÄGAREN bedömde den resulterande sajten som för textig och för lite interaktiv. Den äldre satsen ”bygg inte mer design” syftade på att inte duplicera P0D CSS, **inte** att ägaren accepterat UX som färdig. Nya prioriteten är synlig livfull beslutsprodukt: startsida, fem kategorier, progressiva faktaguider, klickbara vägval och premiumrytm. PR #125–129 mergade (Build + kommersiell regression godkända) och faktiskt screenshotgranskade. PR #130 och #131 är mergade efter Build, full kommersiell regression och visuell 390px-granskning. Ändra inte attribution eller SEO. Approved nätverksintäkt = **UNKNOWN** tills alla aktiva nätverk rapporterar.
+
+
 ## P0D STATUS 2026-10-10 – DESIGNBRIST BEKRÄFTAD AV ÄGAREN
 **Denna roadmap är inte slutförd.** Följ nu också den bindande `autopilot/UNIFIED_PRODUCT_DESIGN_2026-10-10.md`. Befintliga blå PR på huvudvyer gjorde inte helheten sammanhållen: `styles/design-tokens.css` är ännu skogsgrön/lime trots global import; `styles/global.css` och flera specialistmoduler är också gamla gröna. En hel användarresa mellan hem, kategori, guide och verktyg kan därför byta grafisk identitet. Detta är ett produktkvalitetsfel, inte endast estetisk framtidsidé.
 **Migrera i logisk ordning:** (0) faktiska före-bilder och tokens, (1) semantisk navy/varmvit foundation och 2–3 representativa kritiska specialistverktyg, (2) komplettera verktygsfamiljerna inklusive el, familjemobil, förstaår, försäkring, lån, byteskalender, (3) `App.module.css` och hela äldre `global.css` med kontrollerade scopes, (4) granska ALLA huvud-/under-/resultatflöden och godkänn helhet först då. Varje PR måste ha riktig före/efterrendering och regression, ingen blind global färg-ersättning.
