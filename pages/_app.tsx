@@ -3,6 +3,7 @@ import Script from 'next/script';
 import type { AppProps } from 'next/app';
 import '../styles/design-tokens.css';
 import '../styles/global.css';
+import '../styles/guide-partner-premium.css';
 import MobileQuickBar from '../components/MobileQuickBar';
 import AffiliateTracking from '../components/AffiliateTracking';
 import SiteFooter from '../components/SiteFooter';
