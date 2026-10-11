@@ -60,7 +60,7 @@ const goals: Goal[] = [
   },
 ];
 
-export default function HomeDecisionExplorer() {
+export default function HomeDecisionExplorer({heroMode=false}:{heroMode?:boolean}={}) {
   // Show a useful group of existing three-question tools immediately; the
   // visitor need not make two selections to reach those SEO-relevant routes.
   const [selected, setSelected] = useState<GoalKey>('valja');
@@ -72,9 +72,9 @@ export default function HomeDecisionExplorer() {
   }
 
   return (
-    <div className={styles.root} data-testid='home-decision-explorer'>
+    <div className={[styles.root,heroMode?styles.heroMode:''].join(' ')} data-testid='home-decision-explorer'>
       <div className={styles.question}>
-        <p className={styles.questionLabel}>Vad vill du få hjälp med?</p>
+        <p className={styles.questionLabel}>Välj din väg</p>
         <div className={styles.options} role='group' aria-label='Välj typ av hjälp'>
           {goals.map(({ key, label, Icon }) => (
             <button
@@ -91,13 +91,13 @@ export default function HomeDecisionExplorer() {
             </button>
           ))}
         </div>
-        <p className={styles.unknown}>Välj fritt. Du kan byta väg när du vill.</p>
+        <p className={styles.unknown}>Byt väg när du vill.</p>
       </div>
 
       <div id='home-explorer-panel' className={styles.panel} aria-live='polite' aria-atomic='true' data-testid='home-explorer-panel'>
         <div className={styles.panelTop}>
-          <span className={styles.kicker}>SNABB VÄG VIDARE</span>
-          <span className={styles.step}>Inga uppgifter krävs för att börja</span>
+          <span className={styles.kicker}>DIN VÄG VIDARE</span>
+          <span className={styles.step}>Välj, testa, jämför</span>
         </div>
         <div className={styles.panelBody}>
           <span className={styles.panelIcon} aria-hidden='true'><active.Icon size={26} /></span>

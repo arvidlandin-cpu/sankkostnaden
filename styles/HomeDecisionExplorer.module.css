@@ -138,3 +138,27 @@
 .secondary{border-color:#cddbf4;color:#2a4bac;background:#fff}
 .caution{color:#677992}
 @media(prefers-reduced-motion:reduce){.option:hover,.primary:hover,.secondary:hover{transform:none}}
+
+/* Experience P0: one responsive, living decision surface in the hero. */
+.heroMode{display:flex;flex-direction:column;gap:0;margin:0}
+.heroMode .question{background:transparent;border:0;box-shadow:none;padding:clamp(13px,2vw,22px)}
+.heroMode .questionLabel{font-size:18px;margin:0 0 12px;color:#14264e}
+.heroMode .options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.heroMode .option{min-height:62px;border-radius:14px;background:#fff;box-shadow:0 4px 15px rgba(36,67,124,.035);font-size:13px;line-height:1.25;padding:11px}
+.heroMode .option>svg{width:21px;height:21px}
+.heroMode .option.selected{background:#edf3ff;border-color:#88a8ee;box-shadow:inset 0 0 0 1px #b7caf4}
+.heroMode .option .dot{width:7px;height:7px;flex-basis:7px}
+.heroMode .unknown{display:none}
+.heroMode .panel{min-height:0;padding:20px 23px 22px;border-radius:19px;background:linear-gradient(135deg,#10254d 0%,#183c75 76%,#254d97 100%);border:1px solid #24477e;box-shadow:0 12px 31px rgba(12,35,77,.15);color:#fff}
+.heroMode .panelTop{gap:7px}.heroMode .kicker{color:#d5e5ff;font-size:11px}.heroMode .step{color:#b7cdf0;font-size:11px}
+.heroMode .panelBody{margin:8px 0 13px}.heroMode .panelIcon{display:none}
+.heroMode .panel h3{font-size:clamp(20px,2vw,25px);line-height:1.16;margin:6px 0;color:#fff;letter-spacing:-.03em}
+.heroMode .panelBody p{color:#d4e1f5;font-size:13px;line-height:1.48}
+.heroMode .actions{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.heroMode .actions a{min-height:48px;padding:10px 12px;line-height:1.3;font-size:12px;border-radius:11px}
+.heroMode .primary{background:#f3f6ff;color:#173a87}.heroMode .secondary{background:rgba(255,255,255,.10);color:#fff;border:1px solid #6788b9}
+.heroMode .primary:hover,.heroMode .secondary:hover{box-shadow:0 8px 20px rgba(8,20,42,.17)}
+.heroMode .caution{color:#bfd1ed;font-size:11px;line-height:1.42;margin-top:11px}
+@media(max-width:600px){.heroMode .question{padding:14px 12px 12px}.heroMode .option{font-size:12.5px;min-height:60px}.heroMode .option>svg{width:19px;height:19px}.heroMode .panel{padding:18px 15px 19px;border-radius:17px}.heroMode .panelTop{flex-wrap:wrap}.heroMode .actions{grid-template-columns:1fr}.heroMode .actions a{font-size:13px;min-height:47px}}
+@media(min-width:601px) and (max-width:1100px){.heroMode .actions.multi{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.heroMode .option,.heroMode .primary,.heroMode .secondary{transition:none}}

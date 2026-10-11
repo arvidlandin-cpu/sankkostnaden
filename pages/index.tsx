@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { ArrowRight, PiggyBank } from 'lucide-react';
 import styles from '../styles/Home.module.css';
 import HomeHero from '../components/HomeHero';
-import HomeDecisionExplorer from '../components/HomeDecisionExplorer';
 
 const categories=[
   {title:'Bredband',subtitle:'Pris, fart & adress',href:'/bredband/',image:'/design/card-bredband.webp'},
@@ -101,7 +100,7 @@ export default function Home(){
 
       <section className={`${styles.section} ${styles.popularSection}`} id='jamfor'>
         <div className={styles.popularHeader}>
-          <div><p>POPULÄRA JÄMFÖRELSER</p><h2>Vad vill du spara på?</h2><span>Välj ett område och se dina alternativ. Du behöver inte jämföra allt på en gång.</span></div>
+          <div><p>VÄLJ OMRÅDE</p><h2>Vad vill du se över?</h2><span>Fem områden. Välj ett – vi hjälper dig vidare därifrån.</span></div>
         </div>
         <div className={styles.popularGrid}>
           {categories.map(({title,subtitle,href,image})=><a className={styles.popularCard} href={href} key={title}>
@@ -109,14 +108,6 @@ export default function Home(){
             <div className={styles.popularBody}><div><strong>{title}</strong><small>{subtitle}</small></div><ArrowRight size={17}/></div>
           </a>)}
         </div>
-      </section>
-
-      <section className={`${styles.section} ${styles.helpSection}`}>
-        <div className={styles.sectionHead}>
-          <div><p>FÖR DIG SOM VILL HA VÄGLEDNING</p><h2>Vad behöver du hjälp med?</h2></div>
-          <p>Hitta rätt nivå, jämför två erbjudanden eller få hjälp att välja vilken kostnad du ska börja med.</p>
-        </div>
-        <HomeDecisionExplorer/>
       </section>
 
       <section className={`${styles.section} ${styles.toolsSection}`}>

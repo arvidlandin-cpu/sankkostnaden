@@ -1,36 +1,39 @@
-import { ArrowRight, Check, ShieldCheck } from 'lucide-react';
+import { ArrowRight, Check, ShieldCheck, Sparkles } from 'lucide-react';
 import styles from '../styles/HomeHero.module.css';
+import HomeDecisionExplorer from './HomeDecisionExplorer';
 
-/**
- * One primary action and one route to the category list.
- * No repeated category directory: the homepage already has five visible cards
- * below this hero, and a persistent category navigation on small screens.
- */
+/** Hero as a product entry, not a full-screen image or an article preamble. */
 export default function HomeHero(){
  return <section className={styles.shell} aria-label='Hitta rätt jämförelse'>
-  <div className={styles.visual} aria-hidden='true'>
-   <img
-    src='https://images.pexels.com/photos/5998829/pexels-photo-5998829.jpeg?auto=compress&cs=tinysrgb&w=1600'
-    alt='' fetchPriority='high' decoding='async'
-   />
-  </div>
+  <div className={styles.backdrop} aria-hidden='true'><span/><span/><span/></div>
   <div className={styles.inner}>
    <div className={styles.copy}>
-    <p className={styles.eyebrow}>SAMMA VARDAG. LÄGRE UTGIFTER.</p>
+    <p className={styles.eyebrow}><Sparkles size={16}/> FÄRRE FRÅGOR. KLARARE BESLUT.</p>
     <h1>Sänk dina fasta kostnader</h1>
-    <p className={styles.lead}>Hitta ett bättre sätt att jämföra el, bredband, mobil och försäkringar. Börja med det du undrar över – resten hjälper vi dig med.</p>
+    <p className={styles.lead}>Välj det du vill få hjälp med. Ett klick räcker för att hitta rätt väg – inga räkningar eller inloggning krävs.</p>
     <div className={styles.actions}>
      <a href='/app/' className={styles.primary}>
       <span><strong>Starta Kostnadskollen</strong><small>Få en startpunkt med en enkel fråga</small></span>
       <ArrowRight size={21} aria-hidden='true'/>
      </a>
-     <a href='/#jamfor' className={styles.secondary}>Välj en kostnad direkt <ArrowRight size={18} aria-hidden='true'/></a>
+     <a href='/#jamfor' className={styles.secondary}>Välj en kostnad direkt <ArrowRight size={17} aria-hidden='true'/></a>
     </div>
     <div className={styles.trust}>
-     <span><Check size={16}/>Gratis att använda</span>
-     <span><Check size={16}/>Ingen inloggning</span>
-     <span><ShieldCheck size={16}/>Partnerlänkar är märkta</span>
+     <span><Check size={16}/> Gratis</span>
+     <span><Check size={16}/> Utan inloggning</span>
+     <span><ShieldCheck size={16}/> Märkta partnerlänkar</span>
     </div>
+    <div className={styles.sequence} aria-hidden='true'>
+     <span><b>01</b> Välj vad du vill göra</span>
+     <i/>
+     <span><b>02</b> Få rätt verktyg</span>
+     <i/>
+     <span><b>03</b> Jämför på dina villkor</span>
+    </div>
+   </div>
+   <div className={styles.stage}>
+    <div className={styles.stageTop}><span className={styles.onlineDot}/> DIN SMARTA START <span className={styles.stageTime}>UTAN KONTO</span></div>
+    <HomeDecisionExplorer heroMode/>
    </div>
   </div>
  </section>;
