@@ -72,9 +72,8 @@
       "target": "/forsakring/hemforsakring-bostadsratt/",
       "status": "already_served",
       "reviewedAt": "2026-10-11",
-      "recheckAfter": "2026-10-25T08:00:00+02:00",
       "evidence": "On-page components/CondoInsuranceCheck.tsx already provides two meaningful collective-bostadsratts-tillagg/hemforsakring answers plus checklist and contextual partner handoff; 302 GSC impressions/0 clicks/avg position 29 is weak discoverability, not evidence of missing second widget.",
-      "reviewRule": "Revisit only with new organic query intent or user research; do not auto-build another insurance form. Does not occupy a growth experiment slot."
+      "reviewRule": "Revisit only if real organic/user evidence reveals a NEW uncovered task; set status to needs_new_utility. No new calendar gate or blocking of unrelated insurance work."
     }
   ]
 }
