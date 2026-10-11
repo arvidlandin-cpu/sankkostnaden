@@ -28,6 +28,6 @@ jobs:
           node-version: '22'
       - name: Compare actual deployed page fingerprints, read-only
         env:
-          SK_PAGES_PREVIEW_URL: ${{ github.event_name == 'workflow_dispatch' && inputs.pages_preview_url || 'https://86005561.sankkostnaden.pages.dev/' }}
+          SK_PAGES_PREVIEW_URL: ${{ github.event_name == 'workflow_dispatch' && inputs.pages_preview_url || 'https://900d5a4c.sankkostnaden.pages.dev/' }}
           SK_CUSTOM_DOMAIN_URL: 'https://sankkostnaden.se/'
         run: node scripts/check-live-pages-assets.mjs
