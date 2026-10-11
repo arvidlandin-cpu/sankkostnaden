@@ -30,9 +30,9 @@ export default function ElectricityMarketGateway(){
     <section className={styles.section} aria-labelledby='electricity-start-title'>
       <div className={styles.sectionHead}>
         <div>
-          <p className={styles.eyebrow}>BÖRJA HÄR</p>
-          <h2 id='electricity-start-title'>Välj hur du vill jämföra</h2>
-          <p>Välj att jämföra flera erbjudanden hos Elskling eller gå direkt till ett elbolag. Du kan börja utan att ange förbrukning.</p>
+          <p className={styles.eyebrow}>DINA ALTERNATIV</p>
+          <h2 id='electricity-start-title'>Jämför eller välj elbolag</h2>
+          <p>Jämför via Elskling eller välj en leverantör direkt. Priser och villkor kontrolleras hos dem.</p>
         </div>
         <span className={styles.count}><CheckCircle2 size={16}/> {all.length} aktiva samarbetspartners</span>
       </div>
@@ -43,7 +43,7 @@ export default function ElectricityMarketGateway(){
           <div className={styles.routeCopy}>
             <span className={styles.routeType}>JÄMFÖRELSETJÄNST · FLERA ALTERNATIV</span>
             <h3>Jämför flera elbolag på ett ställe</h3>
-            <p>Elskling hjälper dig jämföra aktuella erbjudanden utifrån uppgifterna du fyller i hos dem.</p>
+            <p>Jämför aktuella erbjudanden hos Elskling med deras egna uppgifter och villkor.</p>
             <div className={styles.providerName}><Logo partner={comparison}/><strong>{comparison.name}</strong></div>
           </div>
           <a className={styles.primary} href={comparison.trackingUrl} onClick={()=>trackPath('compare_service')} data-partner={comparison.name} data-category='el' data-intent='compare' data-placement='electricity_hub_comparison' data-partner-position='1' target='_blank' rel='sponsored nofollow noopener'>Jämför aktuella elavtal hos Elskling <ArrowUpRight size={19}/></a>
@@ -55,7 +55,7 @@ export default function ElectricityMarketGateway(){
           <div className={styles.routeCopy}>
             <span className={styles.routeType}>ENSKILDA ELBOLAG</span>
             <h3>Vill du gå direkt till ett elbolag?</h3>
-            <p>Välj bland våra {suppliers.length} elbolag. Kontrollera pris och villkor hos det bolag du är intresserad av.</p>
+            <p>Se våra {suppliers.length} elbolag och deras aktuella villkor.</p>
             <div className={styles.miniNames}>{suppliers.slice(0,4).map(partner=><span key={partner.name}>{partner.name}</span>)}<span>+ {Math.max(0,suppliers.length-4)} fler</span></div>
           </div>
           <a className={styles.secondary} href='#elbolag' onClick={()=>trackPath('provider_list')}>Se alla elbolag <ArrowRight size={19}/></a>

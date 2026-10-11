@@ -7,7 +7,7 @@ test('electricity hub shows meaningful choices and all actual partner options wi
  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href','https://sankkostnaden.se/elavtal/');
  await expect(page.getByRole('heading',{level:1,name:/Jämför elavtal\. Välj med bättre koll\./i})).toBeVisible();
  const section=page.getByTestId('electricity-market');
- await expect(section.getByRole('heading',{level:2,name:'Välj hur du vill jämföra'})).toBeVisible();
+ await expect(section.getByRole('heading',{level:2,name:'Jämför eller välj elbolag'})).toBeVisible();
  await expect(section.getByText('13 aktiva samarbetspartners')).toBeVisible();
  await expect(section.getByRole('heading',{name:'Jämför flera elbolag på ett ställe'})).toBeVisible();
  await expect(section.getByRole('heading',{name:'Våra aktiva elbolag'})).toBeVisible();
@@ -74,7 +74,7 @@ for(const viewport of [
   await anchor.click();
   await expect(page).toHaveURL(/#jamfor-elavtal$/);
   const section=page.getByTestId('electricity-market');
-  await expect(section.getByRole('heading',{name:'Välj hur du vill jämföra'})).toBeVisible();
+  await expect(section.getByRole('heading',{name:'Jämför eller välj elbolag'})).toBeVisible();
   const first=page.locator('a[data-placement="electricity_hub_comparison"]');
   const box=await first.boundingBox();
   expect(box).not.toBeNull();
@@ -82,3 +82,22 @@ for(const viewport of [
   await page.screenshot({path:`test-results/screenshots/masterplan-electricity-${testInfo.project.name}-${viewport.width}.png`,fullPage:true});
  });
 }
+
+test('P0E electricity market shows specific partner choices without repeating the category question',async({page})=>{
+ await page.setViewportSize({width:390,height:844});
+ await page.goto('/elavtal/?qa=1',{waitUntil:'networkidle'});
+ const chooser=page.getByTestId('category-journey-el');
+ const market=page.getByTestId('electricity-market');
+ await expect(chooser.getByRole('heading',{name:'Vad vill du göra?'})).toBeVisible();
+ await expect(market.getByRole('heading',{name:'Jämför eller välj elbolag'})).toBeVisible();
+ await expect(market.getByText('Välj hur du vill jämföra')).toHaveCount(0);
+ const firstChoice=market.locator('a[data-placement="electricity_hub_comparison"]');
+ await expect(firstChoice).toHaveAttribute('rel',/sponsored/);
+ await expect(firstChoice).toBeVisible();
+ const compareCard=firstChoice.locator('xpath=ancestor::article[1]');
+ const box=await compareCard.boundingBox();
+ expect(box!.height,'First comparison card should not become an article-sized text wall').toBeLessThan(390);
+ const over=await page.evaluate(()=>Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)-document.documentElement.clientWidth);
+ expect(over).toBeLessThanOrEqual(1);
+ await page.screenshot({path:'test-results/screenshots/p0e-electricity-shortened-390.png',fullPage:true});
+});
