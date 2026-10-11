@@ -60,7 +60,7 @@
 
 .heroStats span {
   color: #68736c;
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .diagnostic {
@@ -131,7 +131,7 @@
 .questionTop span,
 .resultIntro span {
   color: var(--sk-accent-ink);
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 900;
   letter-spacing: .13em;
 }
@@ -394,7 +394,7 @@
   border-radius: 999px;
   background: var(--sk-surface-soft);
   color: var(--sk-accent-ink);
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 850;
 }
 
@@ -441,7 +441,7 @@
   justify-content:flex-end;
   gap:5px;
   color:var(--sk-ink);
-  font-size:11px;
+  font-size:12px;
   font-weight:850;
   text-decoration:none;
 }
@@ -650,7 +650,7 @@
   letter-spacing:-.02em;
 }
 .scoreOrb small{
-  font-size:9px;
+  font-size:12px;
   line-height:1.2;
 }
 .next:disabled{
@@ -668,7 +668,7 @@
   border-radius:999px;
   background:#eef2ea;
   color:var(--sk-ink-muted);
-  font-size:9px;
+  font-size:12px;
   letter-spacing:.08em;
 }
 .topResult .rank>span{
@@ -756,7 +756,7 @@
   max-width:590px;
   margin:0 0 12px;
   color:#7a857e;
-  font-size:11px;
+  font-size:12px;
   line-height:1.5;
 }
 @media(max-width:760px){
@@ -774,7 +774,7 @@
   display:block;
   margin-bottom:2px;
   color:#77837a;
-  font-size:9px;
+  font-size:12px;
   font-weight:750;
 }
 .resultActions a[data-partner-position="1"]{
@@ -799,7 +799,7 @@
   border-radius:0!important;
   background:transparent!important;
   color:var(--sk-ink-muted)!important;
-  font-size:10px;
+  font-size:12px;
 }
 @media(max-width:760px){
   .verifiedLine{margin-bottom:4px}
@@ -875,7 +875,7 @@
 .scenarioLine{
   margin:11px 0 0;
   color:var(--sk-ink-muted);
-  font-size:11px;
+  font-size:12px;
   line-height:1.5;
 }
 .scenarioLine strong{
@@ -906,7 +906,7 @@
 }
 .quickPath span{
   color:var(--sk-accent-ink);
-  font-size:9px;
+  font-size:12px;
   font-weight:900;
   letter-spacing:.12em;
 }
@@ -917,7 +917,7 @@
 .quickPath p{
   margin:0;
   color:#68736c;
-  font-size:11px;
+  font-size:12px;
   line-height:1.45;
 }
 .quickPathActions{
@@ -934,7 +934,7 @@
   border-radius:10px;
   background:var(--sk-action);
   color:#fff;
-  font-size:11px;
+  font-size:12px;
   font-weight:850;
   text-decoration:none;
 }

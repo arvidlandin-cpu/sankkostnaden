@@ -321,7 +321,7 @@ footer .brand {
   background: #f5f7f3;
 }
 .partnerBox h3 { margin: 6px 0 8px; font-size: 23px; }
-.partnerEyebrow { margin: 0; font-size: 11px; letter-spacing: .12em; font-weight: 800; color: var(--sk-ink-muted); }
+.partnerEyebrow { margin: 0; font-size: 12px; letter-spacing: .12em; font-weight: 800; color: var(--sk-ink-muted); }
 .partnerDisabled { display: inline-block; margin-top: 8px; padding: 10px 14px; border-radius: 999px; background: #e4e8e3; color: #657068; font-size: 13px; font-weight: 750; }
 .partnerSection {
   margin: 0 0 34px;
@@ -512,7 +512,7 @@ footer .brand {
 .partnerBox { margin: 44px 0; padding: 28px; background: var(--sk-result); color: white; border-radius: 20px; }
 .partnerBox h2 { color: white; margin-top: 6px; }
 .partnerBox p { color: var(--sk-result-muted); }
-.partnerLabel { color: var(--sk-result-muted) !important; font-size: 11px; letter-spacing: .12em; font-weight: 800; }
+.partnerLabel { color: var(--sk-result-muted) !important; font-size: 12px; letter-spacing: .12em; font-weight: 800; }
 .partnerPending { display: inline-flex; padding: 11px 15px; border-radius: 10px; background: #ffffff12; color: #d9dfdb; font-weight: 750; font-size: 14px; }
 .inlineCta { display: inline-flex; margin-top: 8px; text-decoration: none; }
 .trafficLinks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
@@ -635,12 +635,12 @@ footer .brand {
 .partnerLogoSveland .logoHeart{width:42px;height:42px;border-radius:50% 50% 46% 46%;display:grid;place-items:center;background:#e3f3e7;color:#087b4f}
 .partnerLogoSveland>span:last-child{display:grid;line-height:1}
 .partnerLogoSveland b{font-size:20px;letter-spacing:.01em;color:#087b4f}
-.partnerLogoSveland small{font-size:8px;letter-spacing:.12em;font-weight:850;color:#526158;margin-top:5px}
+.partnerLogoSveland small{font-size:12px;letter-spacing:.12em;font-weight:850;color:#526158;margin-top:5px}
 .partnerCardBrand .partnerButton{margin-top:6px}
 .partnerCardBrand.isLassie .partnerButton{background:#5948c9}
 .partnerCardBrand.isSveland .partnerButton{background:#087b4f}
 .partnerCardBrand .commercialTag{white-space:nowrap}
-@media(max-width:520px){.partnerCardTop{align-items:center}.partnerCardBrand{min-height:230px}.partnerLogo b{font-size:23px}.partnerLogoLassie b{font-size:28px}.partnerCardBrand .commercialTag{font-size:8px}}
+@media(max-width:520px){.partnerCardTop{align-items:center}.partnerCardBrand{min-height:230px}.partnerLogo b{font-size:23px}.partnerLogoLassie b{font-size:28px}.partnerCardBrand .commercialTag{font-size:12px}}
 
 
 /* Fast conversion shortcuts */
@@ -650,7 +650,7 @@ footer .brand {
 .partnerExpressCard{min-width:0;display:flex;flex-direction:column;justify-content:space-between;gap:16px;padding:16px;border-radius:14px;background:#fff;color:var(--sk-ink)!important;text-decoration:none!important;transition:.16s ease;border-top:4px solid var(--sk-action)}
 .partnerExpressCard:hover{transform:translateY(-2px)}
 .expressBrand{font-size:20px;font-weight:900;letter-spacing:-.045em;overflow-wrap:anywhere}
-.expressAction{display:flex;align-items:center;justify-content:space-between;gap:5px;font-size:11px;font-weight:800;color:#566159}
+.expressAction{display:flex;align-items:center;justify-content:space-between;gap:5px;font-size:12px;font-weight:800;color:#566159}
 .brandTelia{border-top-color:#8c39d8!important}.brandTelia .expressBrand{color:#7d28c8}
 .brandVimla{border-top-color:#20b78c!important}.brandVimla .expressBrand{color:#087d62}
 .brandBredbandsval{border-top-color:#2476d8!important}.brandBredbandsval .expressBrand{color:#175ea9}
@@ -658,7 +658,7 @@ footer .brand {
 .brandSveland{border-top-color:#087b4f!important}.brandSveland .expressBrand{color:#087b4f}
 .livePartnerDock{max-width:1120px;margin:34px auto 10px;padding:26px 28px}
 .livePartnerDockHead{display:flex;align-items:end;justify-content:space-between;gap:30px;margin-bottom:16px}
-.livePartnerDockHead>div{display:grid;gap:5px}.livePartnerDockHead span{font-size:10px;font-weight:900;letter-spacing:.13em;color:var(--sk-accent-ink)}.livePartnerDockHead strong{font-size:25px;letter-spacing:-.035em}
+.livePartnerDockHead>div{display:grid;gap:5px}.livePartnerDockHead span{font-size:12px;font-weight:900;letter-spacing:.13em;color:var(--sk-accent-ink)}.livePartnerDockHead strong{font-size:25px;letter-spacing:-.035em}
 .livePartnerDockHead p{max-width:390px;margin:0;color:var(--sk-ink-muted);font-size:13px;line-height:1.5}
 .livePartnerDockGrid{display:grid;grid-template-columns:repeat(5,1fr);gap:9px}
 .livePartnerPill{min-width:0;min-height:88px;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:15px;border-radius:15px;background:#fff;border:1px solid var(--sk-line);border-top:4px solid var(--sk-action);color:var(--sk-ink);text-decoration:none;box-shadow:0 7px 20px rgba(16,29,66,0.031);transition:.16s ease}
@@ -1813,8 +1813,8 @@ footer{
 .refurbishedSpotlightCopy>small{
   display:block;
   margin-top:10px;
-  color:#99a59d;
-  font-size:9px;
+  color:var(--sk-result-muted);
+  font-size:12px;
 }
 .refurbishedSpotlightBrand{
   min-height:142px;
@@ -1911,8 +1911,8 @@ footer{
 .claimsSpotlight>div:first-child>small{
   display:block;
   margin-top:10px;
-  color:#99a59d;
-  font-size:9px;
+  color:var(--sk-result-muted);
+  font-size:12px;
 }
 .claimsSpotlightBrand{
   min-height:142px;
@@ -2286,7 +2286,7 @@ footer{
 .partnerWordmark,.matchPartnerTop h3{overflow-wrap:anywhere;word-break:normal}
 @media(max-width:430px){
   .matchPartnerTop{gap:7px}
-  .matchPartnerTop>span{font-size:9px;white-space:nowrap}
+  .matchPartnerTop>span{font-size:12px;white-space:nowrap}
   .directPartnerGrid>a{min-width:0}
 }
 
@@ -2429,7 +2429,7 @@ footer{
 .utilityToolCard p{
   margin:0 0 5px;
   color:var(--sk-accent-ink);
-  font-size:10px;
+  font-size:12px;
   font-weight:900;
   letter-spacing:.1em;
 }

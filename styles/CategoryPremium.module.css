@@ -48,7 +48,7 @@
   border-radius:16px;background:#e0eaff!important;color:#2453cb!important;
   box-shadow:none!important;
 }
-.hero :global(.kicker){color:#335ccd!important;font-size:11px!important;letter-spacing:.115em!important}
+.hero :global(.kicker){color:#335ccd!important;font-size:12px!important;letter-spacing:.115em!important}
 .hero :global(h1){
   max-width:620px!important;color:#101d42!important;
   font-size:clamp(41px,4.7vw,66px)!important;line-height:1.04!important;
@@ -133,7 +133,7 @@
  .hero :global(.lead){max-width:640px!important;font-size:15px!important}
  .hero :global(.categoryHeroActions){display:grid!important;grid-template-columns:1fr;gap:9px!important}
  .hero :global(.categoryHeroActions a){width:100%;justify-content:center}
- .hero :global(.fine){font-size:11px!important}
+ .hero :global(.fine){font-size:12px!important}
  .article:global(.categoryArticle){padding:24px 18px 48px!important;margin:0 auto 35px!important}
  .intro:global(.categoryIntro){margin-top:35px;padding:21px 19px 24px}
  .intro :global(.compactChecks){grid-template-columns:1fr;padding:10px 17px!important}

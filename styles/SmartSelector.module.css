@@ -22,7 +22,7 @@
   align-items: center;
   gap: 7px;
   color: var(--sk-accent-ink);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 900;
   letter-spacing: .12em;
 }
@@ -96,7 +96,7 @@
   height: 36px;
   border-radius: 11px;
   background: var(--sk-accent);
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .question h2 {
