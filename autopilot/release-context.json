@@ -5,14 +5,14 @@
   "latestVerifiedMainCommit": "94b65615b81236f46d38930afa54ec1a2b63a674",
   "decisionContext": {
     "northStar": "Long-term approved affiliate revenue per relevant visitor; truthful consumer value and SEO trust first.",
-    "design": "P0D owner design code migrated and broad visual QA performed via PR #118/#119/#120 by 2026-10-11; Cloudflare Pages check links exact deployed b05abf1 to success. Do not resume green/lime design, restart finished CSS work or create isolated widgets. Outstanding: independent custom-domain served-SHA + physical iPhone if free availability returns; commercial outcome not inferred from tests.",
+    "design": "P0D palette migration baseline completed; this is NOT proof UX is finished. Binding later owner decision P0E 2026-10-11 demands lively less-text interactive visual product using Lyst/Zebra/KAYAK principles; read autopilot/EXPERIENCE_FIRST_2026-10-11.md first. PR #125–#129 merged with screenshot review and QA, #130/#131 pending merge; do not duplicate their code or restart old green/lime CSS work.",
     "conversion": "Keep real comparison-service vs individual-supplier distinctions, partner visibility and clearly labeled affiliate links; user need not know consumption to reach legitimate partner options.",
     "pricing": "Electricity quarter-hour spot feed SE1-SE4 is real, but NOT a per-provider offer feed. No fabricated cheapest provider, 'best choice', monthly quote, ratings, guaranteed saving or extrapolated shift savings.",
     "experimentStatus": "As of 2026-10-10 one active scoped CONTENT_UTILITY_UPGRADE for /elavtal/kvartspris/ (PR #103), awaiting qualified organic measurements; cancelled Oct 7 insurance snippet remains inactive, no Oct 15 gate. Up to two fully independent initiatives subject to policy.",
     "capacity": "Independent non-paid traffic acquisition remains the highest commercial constraint; continue alongside design. No paid media or contracts without owner approval.",
     "finishStandard": "Read autopilot/PRODUCT_FINISHING_STANDARD_2026-10-09.md. Every screen, field, sentence and CTA must serve the user's immediate job, with premium consistent UX, real price data and QA. Do not call project finished from isolated feature PRs.",
-    "nextExecution": "P0D is source/CI/cloudflare-pages/live-asset-parity complete; do NOT restart color palette or create isolated widgets. Only source-fact-backed defects justify CSS iteration. Physical iPhone still UNTESTED with free quota expired; no new cost. Continue qualified organic traffic → useful decision → relevant sponsored tracked click → authoritative APPROVED commission, with approved SEK UNKNOWN until read from network. Kvartspris scoped observation continues through earliest 18 Oct; cancelled 7 Oct insurance snippet is not a calendar block.",
-    "strategySourceOfTruth": "Read AUTOPILOT.md, autopilot/PLAYBOOK.md, autopilot/MASTERPLAN_EXECUTION_2026-10-08.md, autopilot/PRODUCT_FINISHING_STANDARD_2026-10-09.md and autopilot/opportunities.json, then current main tree and latest QA. Scheduled workflow monitors/decides; it does not itself run a continuous ChatGPT development session."
+    "nextExecution": "Enforce owner P0E 2026-10-11 before dated P0D status. Check #130/#131 CI/merge; critically review 390px home→hub→guide→utility→sponsor flows and real screens. Do not infer conversion improvement from CI. Need exact Cloudflare custom-domain SHA and physical iPhone if no-cost. Approved commission UNKNOWN absent complete network inventory. No ads/paid services.",
+    "strategySourceOfTruth": "Read autopilot/EXPERIENCE_FIRST_2026-10-11.md, then MASTERPLAN_EXECUTION, PRODUCT_FINISHING_STANDARD, VISUAL_UX_ROADMAP, policy/state/GA4/GSC/network facts and latest GitHub branch+QA. Scheduled workflows do NOT mean ChatGPT can work autonomously without an actual running task."
   },
   "shipped": [
     {
@@ -200,6 +200,36 @@
       "scope": "Independent Pages-preview versus own-domain production asset identity regression",
       "status": "merged",
       "note": "Read-only five-route real HTTP compare of CSS and compiled JS chunks; successful #38159842849/#38159934538. Build and full commercial regression passed before merge. Next build-ID manifest changes intentionally excluded; product client files exact match. Not an absolute domain SHA or physical iPhone pass. No product frontend changes."
+    },
+    {
+      "pr": 125,
+      "scope": "P0E interactive home decision hero",
+      "status": "merged",
+      "note": "Moved live task chooser into first-screen hero; removed duplicate below, navy/warm-white UI. Green Build and commercial regression, 390/1440 screenshots visually inspected. No proven business lift."
+    },
+    {
+      "pr": 126,
+      "scope": "P0E five-category help / compare / understand deck",
+      "status": "merged",
+      "note": "Live task selection on five hubs without mandatory forms. Builds/Commercial regression green; screenshots at 390/1440 reviewed. Preserve all sponsor URLs/SEO."
+    },
+    {
+      "pr": 127,
+      "scope": "P0E visual guide reading steps",
+      "status": "merged",
+      "note": "GuideReadingFlow shared by IntentGuide with summary cards and native details SSR preserving exact H2 headings; green CI and reviewed responsive screenshots."
+    },
+    {
+      "pr": 128,
+      "scope": "P0E interactive four-household checklists",
+      "status": "merged",
+      "note": "Tickable client-local progress with SEO copy SSR; guide primary CTA white-on-blue contrast corrected; full Build/Commercial green, mobile and desktop screenshots reviewed."
+    },
+    {
+      "pr": 129,
+      "scope": "P0E compact guide action rail",
+      "status": "merged",
+      "note": "Reduces guide decision gateway from a mobile wall of text to two useful, accessible action links and short copy, preserving partner attribution. Build/Commercial green, 390/1440 screenshots reviewed."
     }
   ],
   "unresolved": [
@@ -216,7 +246,7 @@
     "GitHub screenshot archive now preserves Chromium screenshots; WebKit engine coverage passed, but physical-iPhone QA still blocked by exhausted free quota. Do not claim real-device pass.",
     "Approved Adtraction/Addrevenue/Tradedoubler SEK from authoritative partner reports is UNKNOWN on 2026-10-10; Windsor.ai Adtraction read returned affiliate-user/advertiser-user authorization error."
   ],
-  "latestMergedMainCommit": "94b65615b81236f46d38930afa54ec1a2b63a674",
+  "latestMergedMainCommit": "f86c2805687fa414d883f47a884e807c06fc250a",
   "designVerification": {
     "inspectedAt": "2026-10-11",
     "ownerDirection": "P0D 2026-10-10 navy/warm-white",
@@ -259,6 +289,27 @@
       "evidence": "GitHub Actions P0D independent live Pages asset identity run #38159842849 and #38159934538: all five paths CSS and real JS chunk paths matched exactly; only allowed Next build-ID manifest paths differed. This does not prove the actual served exact SHA.",
       "result": "CONTENT_ASSET_PARITY_CONFIRMED"
     },
-    "githubMainSnapshotAfterQA": "94b65615b81236f46d38930afa54ec1a2b63a674"
+    "githubMainSnapshotAfterQA": "94b65615b81236f46d38930afa54ec1a2b63a674",
+    "experienceFirst": {
+      "ownerInstructionDate": "2026-10-11",
+      "scope": "P0E interaction vs text-wall redesign",
+      "merged": [
+        125,
+        126,
+        127,
+        128,
+        129
+      ],
+      "qa": "Build + full commercial Chromium + Linux WebKit regression green for each PR HEAD; representative 390px and 1440px actual screenshots inspected; final composite main QA not yet complete.",
+      "pendingPrs": [
+        130,
+        131
+      ],
+      "cloudflarePagesDeployLatestMain": "UNKNOWN",
+      "customDomainServedSha": "UNKNOWN",
+      "physicalIphone": "UNTESTED",
+      "organicConversionUplift": "UNKNOWN",
+      "approvedNetworkRevenue": "UNKNOWN"
+    }
   }
 }
