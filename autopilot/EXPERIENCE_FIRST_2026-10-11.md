@@ -30,3 +30,11 @@ P0D:s marinblå/varmvita färgmigrering och stora skärmbildstester gjorde tidig
 - **#131** – dubbla hjälplänkar i alla fem kategoriheroer borttagna; de finns kvar i levande deck. Build, regression och 390px-bild granskade, mergad.
 
 **Designoperatörens handoff:** PR #125–#131 är mergade, men kontrollera alltid senaste CI, faktiskt Pages-publicerad commit och serverat liveinnehåll. Duplicera inte redan mergat #125–131 och bygg inte en ny separat wizard eller extra menyer. Nästa pass granskar faktisk 390px resa: hem → kategori → guide/verktyg → relevant sponsrad handoff. Åtgärda bara verifierat friktions- eller textväggsproblem efter komponenternas QA. Separera CI, merge, lyckad Pages-deploy, live-domänens faktisk serverade assets och verklig kommersiell effekt.
+
+
+## Oberoende live-verifiering av själva nya designen 2026-10-11
+
+- Designkod från mergade PR #125–131 finns på GitHub `main` vid `9b7c6cb`; dess Cloudflare Pages deploy check = **SUCCESS**, preview `https://f9d6a913.sankkostnaden.pages.dev/`.
+- Read-only GitHub Actions **#38167682229** jämförde preview och `sankkostnaden.se` efter deploy. Samtliga fem skarpa sidvägar `/`, `/app/`, `/elavtal/kvartspris/`, `/mobil/lonar-sig-familjeabonnemang/`, `/forsakring/hemforsakring-bostadsratt/` gav **exakt klient-CSS- och verklig JS-chunk-identitet**. Endast Next.js opaka build-ID-manifest undantogs.
+- Detta stärker beviset att just **nya designens faktiska CSS/JS serveras** på den egna domänen. Det bevisar inte unik Cloudflare-deploy-SHA på custom domain och det ersätter INTE fysisk iPhone-review eller ägarens upplevelsegodkännande. Fysisk iPhone/organisk intäktstillväxt: **UNKNOWN/UNTESTED**.
+- Senare docs-only `main`-commits kan ge nytt bygg-ID utan kodförändring. Kontrollera Cloudflare Pages success för dem separat. **Använd inte CI eller exakt filidentitet som ursäkt att kalla all UX slutförd.**

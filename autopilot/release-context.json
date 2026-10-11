@@ -11,7 +11,7 @@
     "experimentStatus": "As of 2026-10-10 one active scoped CONTENT_UTILITY_UPGRADE for /elavtal/kvartspris/ (PR #103), awaiting qualified organic measurements; cancelled Oct 7 insurance snippet remains inactive, no Oct 15 gate. Up to two fully independent initiatives subject to policy.",
     "capacity": "Independent non-paid traffic acquisition remains the highest commercial constraint; continue alongside design. No paid media or contracts without owner approval.",
     "finishStandard": "Read autopilot/PRODUCT_FINISHING_STANDARD_2026-10-09.md. Every screen, field, sentence and CTA must serve the user's immediate job, with premium consistent UX, real price data and QA. Do not call project finished from isolated feature PRs.",
-    "nextExecution": "Enforce owner P0E 2026-10-11 before dated P0D status. PR #125–#131 merged and browser-tested; check combined-main QA and live Pages publishing; critically review 390px home→hub→guide→utility→sponsor flows and real screens. Do not infer conversion improvement from CI. Need exact Cloudflare custom-domain SHA and physical iPhone if no-cost. Approved commission UNKNOWN absent complete network inventory. No ads/paid services.",
+    "nextExecution": "Owner P0E UX work #125–131 merged. Independent run #38167682229 confirms own-domain compiled CSS/JS matches Cloudflare Pages preview of design SHA 9b7c6cb on 5 routes; exact domain SHA and physical iPhone still UNKNOWN/UNTESTED. Focus observed real UX problems and qualified organic traffic/approved commissions, not repeating blue CSS/hero widgets. No paid services.",
     "strategySourceOfTruth": "Read autopilot/EXPERIENCE_FIRST_2026-10-11.md, then MASTERPLAN_EXECUTION, PRODUCT_FINISHING_STANDARD, VISUAL_UX_ROADMAP, policy/state/GA4/GSC/network facts and latest GitHub branch+QA. Scheduled workflows do NOT mean ChatGPT can work autonomously without an actual running task."
   },
   "shipped": [
@@ -258,7 +258,7 @@
     "GitHub screenshot archive now preserves Chromium screenshots; WebKit engine coverage passed, but physical-iPhone QA still blocked by exhausted free quota. Do not claim real-device pass.",
     "Approved Adtraction/Addrevenue/Tradedoubler SEK from authoritative partner reports is UNKNOWN on 2026-10-10; Windsor.ai Adtraction read returned affiliate-user/advertiser-user authorization error."
   ],
-  "latestMergedMainCommit": "9b7c6cb04aee8c08881d5e90a60cb513e7d205d1",
+  "latestMergedMainCommit": "36e56a7bf4cc8d4861623196e0dcffc982df69e8",
   "designVerification": {
     "inspectedAt": "2026-10-11",
     "ownerDirection": "P0D 2026-10-10 navy/warm-white",
@@ -316,11 +316,29 @@
       ],
       "qa": "Build + full commercial Chromium and Linux WebKit regression success for EACH feature PR #125-131; screenshots 390 and desktop reviewed on representative flows. Combined main post-merge QA pending.",
       "pendingPrs": [],
-      "cloudflarePagesDeployLatestMain": "UNKNOWN",
+      "cloudflarePagesDeployLatestMain": "SUCCESS_FOR_LATEST_DESIGN_SHA_9b7c6cb; DOCS_ONLY_36e56a7_DEPLOY_STATUS_NOT_YET_VERIFIED",
       "customDomainServedSha": "UNKNOWN",
       "physicalIphone": "UNTESTED",
       "organicConversionUplift": "UNKNOWN",
-      "approvedNetworkRevenue": "UNKNOWN"
+      "approvedNetworkRevenue": "UNKNOWN",
+      "liveAssetIdentity": {
+        "status": "PASS_CLIENT_ASSET_PARITY",
+        "verificationDate": "2026-10-11",
+        "githubActionsRunId": 38167682229,
+        "actualGitHubMainDesignCommit": "9b7c6cb04aee8c08881d5e90a60cb513e7d205d1",
+        "cloudflarePagesDeployCheck": "success",
+        "previewUrl": "https://f9d6a913.sankkostnaden.pages.dev/",
+        "ownOrigin": "https://sankkostnaden.se/",
+        "verifiedRoutes": [
+          "/",
+          "/app/",
+          "/elavtal/kvartspris/",
+          "/mobil/lonar-sig-familjeabonnemang/",
+          "/forsakring/hemforsakring-bostadsratt/"
+        ],
+        "result": "All five routes CSS path fingerprints and compiled product JS chunks matched exactly; only opaque Next build-ID manifest paths ignored.",
+        "limitation": "This establishes independent served client asset parity; exact custom-domain served commit SHA itself UNKNOWN, physical iPhone UNTESTED, commercial conversion effects UNKNOWN."
+      }
     }
   }
 }
