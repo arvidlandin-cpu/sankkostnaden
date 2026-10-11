@@ -567,7 +567,7 @@
 .popularHeader p{
   margin:0 0 9px!important;
   color:var(--sk-accent-ink)!important;
-  font-size:10px!important;
+  font-size:12px!important;
   line-height:1!important;
   font-weight:900!important;
   letter-spacing:.14em!important;
@@ -707,7 +707,7 @@
   line-height:1.08;
 }
 .popularBody small{
-  font-size:10.5px!important;
+  font-size:12px!important;
 }
 
 .helpSection{
@@ -1022,7 +1022,7 @@
 .progressiveTools summary{min-height:114px;padding:24px 28px;display:flex;align-items:center;justify-content:space-between;gap:16px;cursor:pointer;list-style:none;color:#15274e}
 .progressiveTools summary::-webkit-details-marker{display:none}
 .progressiveTools summary>span{display:grid;gap:6px}
-.progressiveTools summary small{font-size:10px;letter-spacing:.12em;font-weight:900;color:#365bcc}
+.progressiveTools summary small{font-size:12px;letter-spacing:.12em;font-weight:900;color:#365bcc}
 .progressiveTools summary strong{font-size:clamp(22px,2.45vw,30px);font-weight:800;letter-spacing:-.035em;line-height:1.15}
 .progressiveTools summary em{font-style:normal;font-size:14px;color:#5b6d85}
 .progressiveTools summary>svg{flex:0 0 auto;color:#254dc7;transition:transform .16s ease}
