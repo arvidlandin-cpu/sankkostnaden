@@ -8,6 +8,10 @@
 **Prioritet:** P0D-designspåret i `autopilot/MASTERPLAN_EXECUTION_2026-10-08.md`; ersätter tidigare hypotetiskt förslag att nödvändigtvis behålla skogsgrön/lime som huvudsaklig visuell identitet.
 **Källor:** användarens bildfeedback 8–9 okt 2026, `autopilot/DESIGN_SYSTEM_AUDIT_2026-10-08.md`, `autopilot/decisions/2026-10-08-lyst-zebra-kayak-ux.md` och nuvarande kod i `pages/index.tsx`, `components/HomeHero.tsx`, `pages/elavtal.tsx`, `components/ElectricityMarketGateway.tsx`.
 
+## VERIFY-LATEST 2026-10-11
+
+P0D grund- och sidfamiljsmigrering är genomförd i PR #118/#119/#120 och faktiskt Cloudflare Pages-checkad på main SHA `b05abf1`. Browser QA: 553 Chromium + 22 WebKit, 67 sidvägar × 390/1440, 14 kritiska resor × fem bredder. Ursprunglig 2026-10-10 risktext bevaras som historisk kontext. **Öppen kvalitetsgrind:** bekräfta vilken commit `sankkostnaden.se` faktiskt serverar och granska fysiskt mobilbeteende när kostnadsfri möjlighet finns. Inga tillväxtpåståenden eller nya grön/lime-pilotbyggen.
+
 ## Beslutad produktupplevelse
 Inspireras av **första, mer premium bildförslaget** och den senaste 6-panels-skissen, inte den mycket avskalade rena mobil-wizardvarianten. Visa mindre åt gången än i första designen. Skandinaviskt, välkomnande, modernt, lätt och trovärdigt.
 - Visuell målbild: ljus/varmvit bas, mörkblå rubriker, en primär klarblå knapp, återhållna pastellkort, mjuk radius och luft. Sätt exakta tokens efter kontrast-/screenshottest, inte från bildgenerering. En relevant hero-/miljöbild med verifierad användningsrätt; inte foton på varje komponent.

@@ -1,17 +1,17 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-10",
+  "updatedAt": "2026-10-11",
   "purpose": "Verified code-release snapshot for the AI operator and autopilot decision packet. Historical baseline reports remain dated snapshots, not live inventory.",
-  "latestVerifiedMainCommit": "5db1c98226f85c5fe4ec4fb02840d5818f805f7a",
+  "latestVerifiedMainCommit": "b05abf10afd789b2e550d3a287802456ae8a493d",
   "decisionContext": {
     "northStar": "Long-term approved affiliate revenue per relevant visitor; truthful consumer value and SEO trust first.",
-    "design": "Owner-approved 2026-10-09 direction: premium warm-white, dark navy/blue primary, restrained pastels, generous white space; first mockup's look but less visual density. Lyst interaction delight + The Zebra progressive questions + KAYAK optional deep comparisons. Roll out in bounded QA-backed slices. See VISUAL_UX_ROADMAP_2026-10-09.md.",
+    "design": "P0D owner design code migrated and broad visual QA performed via PR #118/#119/#120 by 2026-10-11; Cloudflare Pages check links exact deployed b05abf1 to success. Do not resume green/lime design, restart finished CSS work or create isolated widgets. Outstanding: independent custom-domain served-SHA + physical iPhone if free availability returns; commercial outcome not inferred from tests.",
     "conversion": "Keep real comparison-service vs individual-supplier distinctions, partner visibility and clearly labeled affiliate links; user need not know consumption to reach legitimate partner options.",
     "pricing": "Electricity quarter-hour spot feed SE1-SE4 is real, but NOT a per-provider offer feed. No fabricated cheapest provider, 'best choice', monthly quote, ratings, guaranteed saving or extrapolated shift savings.",
     "experimentStatus": "As of 2026-10-10 one active scoped CONTENT_UTILITY_UPGRADE for /elavtal/kvartspris/ (PR #103), awaiting qualified organic measurements; cancelled Oct 7 insurance snippet remains inactive, no Oct 15 gate. Up to two fully independent initiatives subject to policy.",
     "capacity": "Independent non-paid traffic acquisition remains the highest commercial constraint; continue alongside design. No paid media or contracts without owner approval.",
     "finishStandard": "Read autopilot/PRODUCT_FINISHING_STANDARD_2026-10-09.md. Every screen, field, sentence and CTA must serve the user's immediate job, with premium consistent UX, real price data and QA. Do not call project finished from isolated feature PRs.",
-    "nextExecution": "1) Verify exact Cloudflare Pages deployed revision (not merely HTTP 200) after PR #103; 2) verify Bredbandsval/Tradedoubler EPI and approved affiliate network transactions without guessing parameters; 3) follow organic GSC query/page cohorts and genuine referral/distribution for /elavtal/kvartspris/ and other independent indexed guides; 4) inspect screenshot artifacts from improved PR #104 pipeline and post-release visual QA; 5) progress other non-overlapping low-knowledge tools/real acquisition work with 13-field decisions, truthful offers and green CI. Avoid stale Oct 15 review gate.",
+    "nextExecution": "Stop duplicate P0D CSS/extra widget builds. Recheck custom-domain served SHA independently when available and verify true customer journeys/revenue. Follow the unchanged low-friction product-finishing gates, legitimate organics and active independent kvartspris scope; no paid services, mailouts, new contracts or ads.",
     "strategySourceOfTruth": "Read AUTOPILOT.md, autopilot/PLAYBOOK.md, autopilot/MASTERPLAN_EXECUTION_2026-10-08.md, autopilot/PRODUCT_FINISHING_STANDARD_2026-10-09.md and autopilot/opportunities.json, then current main tree and latest QA. Scheduled workflow monitors/decides; it does not itself run a continuous ChatGPT development session."
   },
   "shipped": [
@@ -176,20 +176,67 @@
       "scope": "Kvartspris guide original one-click utility",
       "status": "merged",
       "note": "PR #103 merged 2026-10-10. 257 Chromium and 22 WebKit tests green, five responsive screenshot widths inspected (390 and 1440 actual images). One-click truthful useful answer and optional meaningful second question, no SEO metadata or affiliate changes. Post-release organic and approved revenue effects UNKNOWN."
+    },
+    {
+      "pr": 118,
+      "scope": "P0D family mobile result label contrast",
+      "status": "merged",
+      "note": "WCAG contrast of hidden-until-result annual labels corrected from 2.07:1 to about 8.6:1 using existing result token. Five result-state viewport tests added; Build and commercial Chromium+WebKit regression passed. Merge SHA 8b5f636. No affiliate, SEO or calculator changes."
+    },
+    {
+      "pr": 119,
+      "scope": "P0D sitewide forest/lime legacy style migration",
+      "status": "merged",
+      "note": "Migrated product-owned old green rules in global.css, Home.module.css, App.module.css and MobileSurfPilot.module.css to shared navy/warm-white tokens; kept legitimate provider-owned colors and semantic elpris state. Introduced design guard and 14-route x 5-width screenshots. Build/commercial regression passed; merge SHA 8c269ee."
+    },
+    {
+      "pr": 120,
+      "scope": "P0D 67-route typography and comprehensive screenshot QA",
+      "status": "merged",
+      "note": "Improved 8–11px texts where meaningful; retained five-link mobile dock sizes to avoid new overlap. New screenshot audit of 67 public source routes at 390/1440 and representative 14 journeys at 360/390/430/1024/1440 plus revealed family result. PR CI 553 Chromium tests + 22 Linux WebKit tests green; main Build passed. Cloudflare Pages check explicitly reports deployed commit b05abf1. No measured real user uplift."
     }
   ],
   "unresolved": [
-    "Confirm Cloudflare's exact deployed version for PR #95/#97 (plus earlier V5), not inferred from successful GitHub build or route HTTP 200.",
+    "Cloudflare Pages build SUCCESS confirmed for commit b05abf1 via check-run 114527934005; domain sankkostnaden.se response itself is not yet independently matched to this SHA. Do not conflate preview deployment, Pages success and exact currently served custom-domain content.",
+    "Parallel Workers Builds check has failed for b05abf1 and earlier commits, while Cloudflare Pages succeeded. Check if Workers is abandoned/unrelated before spending effort or assuming a live-site outage; no new paid service.",
+    "Physical Safari/iPhone remains UNTESTED due expired BrowserStack free quota; Linux WebKit is a credible engine regression, not a physical device.",
+    "Owner quality direction P0D is implemented/source+CI+Pages-supported, with 67-page mobile/desktop image overview reviewed; owner subjective acceptance of exact custom-domain experience is not fabricated.",
     "Next product QA: independently inspect current live CostCheck and Broadband mobile screens, 1-question-to-partner drop-off, category SEO/guide comprehension and real partner earnings; code builds and browser smoke do not prove uplift.",
     "No evidence that design changes improved approved affiliate revenue. Continue qualified organic visitor acquisition and real attribution checks.",
     "PR #48 (old hypothetical annual quarter-price widget) was CLOSED as redundant after spot widget PR #77; avoid resurrecting it.",
     "Masterplan 2026-10-08 traffic, partner counts and revenue remain a dated baseline; query live GA4/GSC/network data for current numbers.",
-    "Current production-route smoke reached live routes, but deployment was not matched to exact main commit SHA.",
     "Bredbandsval network-side clickref/EPI attribution is unverified; maintain existing affiliate URL untouched until its branded redirect and any Tradedoubler EPI account activation are confirmed. Local affiliate_click event remains instrumented.",
-    "PR #103 has shipped to GitHub main, but exact Cloudflare deployed SHA was not independently verified; public crawler may still show older content due cache/deploy lag.",
     "PR #103 commercial/SEO effect requires at least 7 complete GSC days plus 30 relevant new impressions and organic qualified visits; no claimed uplift or approved commission.",
     "GitHub screenshot archive now preserves Chromium screenshots; WebKit engine coverage passed, but physical-iPhone QA still blocked by exhausted free quota. Do not claim real-device pass.",
     "Approved Adtraction/Addrevenue/Tradedoubler SEK from authoritative partner reports is UNKNOWN on 2026-10-10; Windsor.ai Adtraction read returned affiliate-user/advertiser-user authorization error."
   ],
-  "latestMergedMainCommit": "5db1c98226f85c5fe4ec4fb02840d5818f805f7a"
+  "latestMergedMainCommit": "b05abf10afd789b2e550d3a287802456ae8a493d",
+  "designVerification": {
+    "inspectedAt": "2026-10-11",
+    "ownerDirection": "P0D 2026-10-10 navy/warm-white",
+    "githubMainCommit": "b05abf10afd789b2e550d3a287802456ae8a493d",
+    "sourceMigration": "COMPLETED_AND_GREEN_CI",
+    "browserResponsiveQA": {
+      "screenshotAudit": "67 public routes x 390 and 1440px; 14 representative journeys x 360/390/430/1024/1440px; family result interaction five widths",
+      "chromiumCases": 553,
+      "linuxWebkitCases": 22,
+      "status": "PASS_ON_PR_120"
+    },
+    "manualImages": "Overview/contact-sheet review for all 67 mobile and desktop public route screenshots; selected full-resolution inspections of elavtal/mobil/partner/result state. No obvious forest/lime page theme in overview.",
+    "cloudflarePages": {
+      "status": "DEPLOY_SUCCESS_CHECK",
+      "commit": "b05abf10afd789b2e550d3a287802456ae8a493d",
+      "previewUrl": "https://86005561.sankkostnaden.pages.dev/",
+      "evidence": "GitHub Cloudflare Pages check-run 114527934005, summary 'Latest commit: b05abf1; Deploy successful'"
+    },
+    "separatelyFailedWorkersBuild": {
+      "status": "FAILURE",
+      "note": "Parallel Workers Builds check fails also on earlier commits 8c269ee, 8b5f636 and ef03fe3. This is not the successful Cloudflare Pages check. Do not assume it serves the custom domain."
+    },
+    "customDomainServedSha": "UNKNOWN",
+    "physicalIphone": "UNTESTED_FREE_QUOTA_EXHAUSTED",
+    "genuineApprovedCommissionSEK": "UNKNOWN",
+    "businessEffect": "UNKNOWN",
+    "closeout": "CODE_AND_PAGES_DEPLOY_VERIFIED; CUSTOM_DOMAIN_CURRENT_SHA_AND_REAL_DEVICE_NOT_VERIFIED"
+  }
 }

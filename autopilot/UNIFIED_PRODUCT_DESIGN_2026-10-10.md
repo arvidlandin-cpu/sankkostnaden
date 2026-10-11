@@ -2,6 +2,10 @@
 **Ägarbeslut 2026-10-10. Status: P0D SITEWIDE-DESIGNSKULD ÖPPEN.**
 **Senare och mer specifikt än** 2026-10-08 `DESIGN_SYSTEM_AUDIT_2026-10-08.md` (som föreslog grön/lime) och senare än enstaka framgångsrika kategori-PR. Ingen AI får tolka de gröna källfärgerna som ett fortsatt godkänt alternativ.
 
+## UPPDATERAD VERIFIERINGSSTATUS 2026-10-11
+
+**Den ursprungliga kritiken nedan är historisk för 2026-10-10, inte ett påstående om aktuell källkod.** Den godkända marinblå/varmvita målbilden gäller fortsatt. PR #118/#119/#120 är mergade efter QA, där PR #120 omfattade 553 Chromium och 22 Linux WebKit tester, 67 sidvägar vid 390/1440 och 14 högprioriterade sidresor i fem bredder. De verkliga skärmbilderna har översiktsgranskats; inga helsidesgröna sidfamiljer syntes. Cloudflare Pages check på exakta GitHub-committen `b05abf1` har **Deploy successful**, men det bevisar inte vilken byteversion den egna domänen just nu serverar. Fysisk iPhone ännu oprövad, approved affiliateintäkt UNKNOWN. Se `MASTERPLAN_EXECUTION_2026-10-08.md` och `release-context.json` för aktuell driftgrind. **Bygg inte fler isolerade widgets eller om redan migrerade CSS utan observerat behov.**
+
 ## 1. Beslutet, med användarens faktiska problem
 Ägaren har besökt produktionssajten och sett en sönderhackad helhet: blå premiumhuvudsidor leder till äldre gröna kalkylatorer/undersidor med olika knappar, resultatytor och typografier. Produkten är ännu **inte** visuellt sammanhållen och ser **inte** ut som de designkoncept som godkändes den 8–9 oktober. Tidigare svar med antal PR eller gröna tester utgör **inte** ett produktkvalitetsintyg.
 

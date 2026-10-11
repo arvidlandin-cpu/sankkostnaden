@@ -1,5 +1,18 @@
 # APPROVED Masterplan — execution program, Sänk Kostnaden
 
+## P0D DESIGNLEVERANS 2026-10-11 – VERIFIERAD KOD, TESTER OCH PAGES-DEPLOY
+
+**Bindande riktning oförändrad.** Ägarens 2026-10-10 kritik var korrekt för tidigare produktion. Detta är den nya verifierade framdriften: PR #118 (resultatkontrast), #119 (kontrollerad sanering av globala/app/hem/isolated pilot-färger) och #120 (typografi och full sitewide QA) är mergade. `main=b05abf10afd789b2e550d3a287802456ae8a493d` i denna ögonblicksbild. Inga partnerprogram, trackinglänkar, SEO-URL:er eller kalkyler ändrade.
+
+- [x] Semantiska gemensamma blå/varmvita tokens; produktägda legacy skogsgröna/lime-regler sanerade i migrerade CSS och guard utökad. Legitima leverantörsfärger och verkligt elprisläge undantagna.
+- [x] Sammanhängande huvud-/under-/verktygsfamiljer genomgångna i Chromium-screenshots: **67 public routes × 390/1440px** och kritiska **14 resor × 360/390/430/1024/1440px**; en interaktivt framräknad familjemobilresultatvy granskad i fem bredder. Kontaktark och valda fullstora bilder subjektivt granskade. Ingen gammal helsidesgrön design syntes i översikterna.
+- [x] PR #120 CI på HEAD: **553 Chromium + 22 Linux WebKit pass**, Build/check/integrity/export passerar. Linux WebKit ≠ fysisk iPhone.
+- [x] **Cloudflare Pages** GitHub check-run `114527934005` visar `Latest commit b05abf1` och **Deploy successful**, preview `https://86005561.sankkostnaden.pages.dev/`. Detta är verklig deploy-evidens, inte bara merge/CI.
+- [ ] Kontrollera separat aktuell byteversion som faktiskt serveras på den egna domänen, gärna live mobil/safari; kan inte beläggas genom Pages check ensam. **Custom-domain served SHA = UNKNOWN**, fysisk iPhone = **UNTESTED** (BrowserStack gratisquota slut). Parallell Workers Build är FAILED även på äldre commits; Pages success är separat. Ingen betalkostnad påbörjas.
+- [ ] Faktisk organisk nytta, kvalificerade sponsorklick med korrekt network-side subID/EPI och partnernätverkens **GODKÄNDA provision = UNKNOWN**. Inga design-/konverteringsvinster påstås från 553 tester.
+
+**P0D operator handoff:** Gör inte om #118–120 och återinför inte grön kod på nya grenar. Starta ingen isolerad widget innan det finns ett observerat verkligt produktfel. Återstående signoff är verklig custom-domain/physical-device-verifiering och fortsatt evidensstyrd finishing, inte fler generiska CSS-PR. Högst två *oberoende* initiativ; kvartsprisguiden observeras fortfarande till tidigast 18 okt och annullerade 7 okt-försäkringssnippeten är ingen kalenderbroms.
+
 ## P0D DESIGNÅTERSTÄLLNING – ÄGARBESLUT 2026-10-10 (ÖVERORDNAD KVALITETSGRIND)
 **Den visuella HELHETEN ÄR INTE KLAR.** Ägaren har sett den aktuella sajten: nya blå huvudvyer bryts av gamla gröna/lime undersidor och kalkylatorer. De godkända designkoncepten från 8–9 okt är inte uppnådda som sammanhållen produkt. **Bindande genomförande**: `autopilot/UNIFIED_PRODUCT_DESIGN_2026-10-10.md` och `VISUAL_UX_ROADMAP_2026-10-09.md`, med senare ägarbeslut över äldre grönt `DESIGN_SYSTEM_AUDIT_2026-10-08.md`.
 
