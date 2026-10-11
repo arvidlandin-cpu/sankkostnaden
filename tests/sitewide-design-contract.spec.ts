@@ -75,7 +75,7 @@ const partnerGuides=[
   ['bredband','/bredband/utan-bindningstid/'],
   ['mobil','/mobil/utan-bindningstid/'],
   ['forsakring','/forsakring/reseforsakring/'],
-  ['ekonomi','/ekonomi/kostnadskontroll-och-sparande/'],
+  ['ekonomi','/ekonomi/samlingslan/'],
 ] as const;
 for(const width of [360,390,430,1024,1440]){
  for(const [name,path] of partnerGuides){
@@ -83,7 +83,7 @@ for(const width of [360,390,430,1024,1440]){
    await page.setViewportSize({width,height:width<500?844:900});
    await page.goto(path+'?qa=1');
    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href','https://sankkostnaden.se'+path);
-   if(name==='el'){
+   if(name==='el'||name==='ekonomi'){
     await expect(page.locator('.decisionGateway').first()).toBeVisible();
     await expect(page.locator('#guide-partners')).toBeAttached();
    }else{
