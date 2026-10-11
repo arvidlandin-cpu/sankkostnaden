@@ -82,3 +82,16 @@ for(const width of [360,390,430,1024,1440]){
   await page.screenshot({path:'test-results/screenshots/p0d-app-result-'+info.project.name+'-'+width+'.png',fullPage:true});
  });
 }
+
+test('P0D completed CostCheck priority card is blue',async({page},info)=>{
+ await page.setViewportSize({width:390,height:844});
+ await page.goto('/app/?qa=1');
+ for(const phrase of [/Priset har höjts eller känns dyrt/i,/Hastighet och pris känns rätt/i,/Surf och pris passar mig/i,/Jag har koll på mitt försäkringsskydd/i]){
+  await page.getByRole('button',{name:phrase}).click();
+  if(await page.getByRole('button',{name:/Klart – till/i}).count())await page.getByRole('button',{name:/Klart – till/i}).click();
+ }
+ const card=page.locator('#resultat [class*="topResult"]').first();
+ await expect(card).toBeVisible();
+ expect(await card.evaluate(el=>getComputedStyle(el).backgroundColor)).toBe('rgb(231, 238, 255)');
+ await page.screenshot({path:'test-results/screenshots/p0d-app-complete-'+info.project.name+'.png',fullPage:true});
+});
