@@ -5,13 +5,13 @@
   "latestVerifiedMainCommit": "94b65615b81236f46d38930afa54ec1a2b63a674",
   "decisionContext": {
     "northStar": "Long-term approved affiliate revenue per relevant visitor; truthful consumer value and SEO trust first.",
-    "design": "P0D palette migration baseline completed; this is NOT proof UX is finished. Binding later owner decision P0E 2026-10-11 demands lively less-text interactive visual product using Lyst/Zebra/KAYAK principles; read autopilot/EXPERIENCE_FIRST_2026-10-11.md first. PR #125–#129 merged with screenshot review and QA, #130/#131 pending merge; do not duplicate their code or restart old green/lime CSS work.",
+    "design": "P0D palette migration baseline completed; this is NOT proof UX is finished. Binding later owner decision P0E 2026-10-11 demands lively less-text interactive visual product using Lyst/Zebra/KAYAK principles; read autopilot/EXPERIENCE_FIRST_2026-10-11.md first. PR #125–#131 now merged with screenshot review and QA; do not duplicate their code or restart old green/lime CSS work.",
     "conversion": "Keep real comparison-service vs individual-supplier distinctions, partner visibility and clearly labeled affiliate links; user need not know consumption to reach legitimate partner options.",
     "pricing": "Electricity quarter-hour spot feed SE1-SE4 is real, but NOT a per-provider offer feed. No fabricated cheapest provider, 'best choice', monthly quote, ratings, guaranteed saving or extrapolated shift savings.",
     "experimentStatus": "As of 2026-10-10 one active scoped CONTENT_UTILITY_UPGRADE for /elavtal/kvartspris/ (PR #103), awaiting qualified organic measurements; cancelled Oct 7 insurance snippet remains inactive, no Oct 15 gate. Up to two fully independent initiatives subject to policy.",
     "capacity": "Independent non-paid traffic acquisition remains the highest commercial constraint; continue alongside design. No paid media or contracts without owner approval.",
     "finishStandard": "Read autopilot/PRODUCT_FINISHING_STANDARD_2026-10-09.md. Every screen, field, sentence and CTA must serve the user's immediate job, with premium consistent UX, real price data and QA. Do not call project finished from isolated feature PRs.",
-    "nextExecution": "Enforce owner P0E 2026-10-11 before dated P0D status. Check #130/#131 CI/merge; critically review 390px home→hub→guide→utility→sponsor flows and real screens. Do not infer conversion improvement from CI. Need exact Cloudflare custom-domain SHA and physical iPhone if no-cost. Approved commission UNKNOWN absent complete network inventory. No ads/paid services.",
+    "nextExecution": "Enforce owner P0E 2026-10-11 before dated P0D status. PR #125–#131 merged and browser-tested; check combined-main QA and live Pages publishing; critically review 390px home→hub→guide→utility→sponsor flows and real screens. Do not infer conversion improvement from CI. Need exact Cloudflare custom-domain SHA and physical iPhone if no-cost. Approved commission UNKNOWN absent complete network inventory. No ads/paid services.",
     "strategySourceOfTruth": "Read autopilot/EXPERIENCE_FIRST_2026-10-11.md, then MASTERPLAN_EXECUTION, PRODUCT_FINISHING_STANDARD, VISUAL_UX_ROADMAP, policy/state/GA4/GSC/network facts and latest GitHub branch+QA. Scheduled workflows do NOT mean ChatGPT can work autonomously without an actual running task."
   },
   "shipped": [
@@ -230,6 +230,18 @@
       "scope": "P0E compact guide action rail",
       "status": "merged",
       "note": "Reduces guide decision gateway from a mobile wall of text to two useful, accessible action links and short copy, preserving partner attribution. Build/Commercial green, 390/1440 screenshots reviewed."
+    },
+    {
+      "pr": 130,
+      "scope": "P0E annual guide interactive task first",
+      "status": "merged",
+      "note": "Annual 6-checklist moved before redundant navy introduction; original calculation links preserved; Build/Commercial regression green, 390 screenshot manually inspected."
+    },
+    {
+      "pr": 131,
+      "scope": "P0E one clear category hero action",
+      "status": "merged",
+      "note": "Removed repeated secondary help buttons in all five category heroes; help remains in interactive deck, direct comparison remains; Build/Commercial regression green, 390 screenshot manually inspected."
     }
   ],
   "unresolved": [
@@ -246,7 +258,7 @@
     "GitHub screenshot archive now preserves Chromium screenshots; WebKit engine coverage passed, but physical-iPhone QA still blocked by exhausted free quota. Do not claim real-device pass.",
     "Approved Adtraction/Addrevenue/Tradedoubler SEK from authoritative partner reports is UNKNOWN on 2026-10-10; Windsor.ai Adtraction read returned affiliate-user/advertiser-user authorization error."
   ],
-  "latestMergedMainCommit": "f86c2805687fa414d883f47a884e807c06fc250a",
+  "latestMergedMainCommit": "9b7c6cb04aee8c08881d5e90a60cb513e7d205d1",
   "designVerification": {
     "inspectedAt": "2026-10-11",
     "ownerDirection": "P0D 2026-10-10 navy/warm-white",
@@ -298,13 +310,12 @@
         126,
         127,
         128,
-        129
-      ],
-      "qa": "Build + full commercial Chromium + Linux WebKit regression green for each PR HEAD; representative 390px and 1440px actual screenshots inspected; final composite main QA not yet complete.",
-      "pendingPrs": [
+        129,
         130,
         131
       ],
+      "qa": "Build + full commercial Chromium and Linux WebKit regression success for EACH feature PR #125-131; screenshots 390 and desktop reviewed on representative flows. Combined main post-merge QA pending.",
+      "pendingPrs": [],
       "cloudflarePagesDeployLatestMain": "UNKNOWN",
       "customDomainServedSha": "UNKNOWN",
       "physicalIphone": "UNTESTED",
