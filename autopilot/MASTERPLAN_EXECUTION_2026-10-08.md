@@ -1,6 +1,8 @@
 # APPROVED Masterplan — execution program, Sänk Kostnaden
 
 ## P0D DESIGNÅTERSTÄLLNING – ÄGARBESLUT 2026-10-10 (ÖVERORDNAD KVALITETSGRIND)
+**P0D 2026-10-11, /app/ (PR under QA):** grön resultatrubrik bekräftad i main-artifact 11691808125. Migrering till gemensamma blå tokens och fem responsiva bildtester pågår. Se beslut `autopilot/decisions/2026-10-11-p0d-costcheck-visual-journey.md`. Ej mergad, ej Cloudflare-verifierad. Global CSS och återstående guider är fortfarande öppna.
+
 **Den visuella HELHETEN ÄR INTE KLAR.** Ägaren har sett den aktuella sajten: nya blå huvudvyer bryts av gamla gröna/lime undersidor och kalkylatorer. De godkända designkoncepten från 8–9 okt är inte uppnådda som sammanhållen produkt. **Bindande genomförande**: `autopilot/UNIFIED_PRODUCT_DESIGN_2026-10-10.md` och `VISUAL_UX_ROADMAP_2026-10-09.md`, med senare ägarbeslut över äldre grönt `DESIGN_SYSTEM_AUDIT_2026-10-08.md`.
 
 - [ ] Gemensamma marinblå/varmvit/klara blå semantiska tokens på riktigt, inte bara nya blå overrides ovanpå grönt.
