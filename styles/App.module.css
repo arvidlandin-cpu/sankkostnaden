@@ -349,7 +349,7 @@
 }
 
 .ranking .topResult {
-  border-color: #cadb74;
+  border-color: var(--sk-choice-border);
   background: #f8fbe9;
   box-shadow: 0 14px 44px var(--sk-accent-ink)12;
 }
