@@ -45,6 +45,7 @@
   background: var(--sk-action);
   color: var(--sk-action-ink);
 }
+.article a.partnerButtonStrong { color: var(--sk-action-ink) !important; }
 .commercialTag,
 .partnerCardBrand .commercialTag,
 .partnerExpressLabel,

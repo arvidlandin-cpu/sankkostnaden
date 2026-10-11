@@ -18,12 +18,14 @@ const migrated=[
   'styles/ElectricitySensitivity.module.css',
   'styles/TrafficTools.module.css',
   'styles/QuarterPriceDecision.module.css',
+  'styles/guide-partner-premium.css',
 ];
 const forbidden=[
   '#17201b', // original green-black background and brand
   '#18211c', '#18231d', '#213029', '#202e26',
   '#dff46a', '#c7eb44', '#eff9a7', '#eef5dc',
   '#718246', '#839c55', '#3f6739', '#52631f',
+  '#eaf3d7', '#c8dc8c',
 ];
 let failures=[];
 for(const path of migrated){
