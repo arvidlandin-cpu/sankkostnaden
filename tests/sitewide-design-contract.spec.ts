@@ -83,7 +83,7 @@ for(const width of [360,390,430,1024,1440]){
    await page.setViewportSize({width,height:width<500?844:900});
    await page.goto(path+'?qa=1');
    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href','https://sankkostnaden.se'+path);
-   const panel=page.locator('.partnerSectionStrong').first();
+   const panel=page.locator('.partnerSection').first();
    await expect(panel).toBeVisible();
    expect(await panel.evaluate(el=>getComputedStyle(el).backgroundColor)).toBe('rgb(241, 245, 255)');
    const card=panel.locator('.partnerCardStrong').first();
@@ -102,7 +102,7 @@ for(const width of [360,390,430,1024,1440]){
 test('P0D partner card respects keyboard focus and reduced motion',async({page})=>{
  await page.setViewportSize({width:390,height:844});
  await page.emulateMedia({reducedMotion:'reduce'});
- await page.goto('/forsakring/djurforsakring/?qa=1');
+ await page.goto('/mobil/utan-bindningstid/?qa=1');
  const card=page.locator('.partnerCardBrand').first();
  await expect(card).toBeVisible();
  expect(await card.evaluate(el=>parseFloat(getComputedStyle(el).transitionDuration))).toBe(0);
