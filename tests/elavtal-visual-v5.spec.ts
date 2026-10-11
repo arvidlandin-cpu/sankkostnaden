@@ -8,7 +8,7 @@ test('Elavtal 5.0 retains SEO, honest comparison and commercial tracking',async(
  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href','https://sankkostnaden.se/elavtal/');
  await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content',/index,follow/);
  await expect(page.getByRole('heading',{level:1,name:'Jämför elavtal. Välj med bättre koll.'})).toHaveCount(1);
- await expect(page.getByRole('heading',{name:'Välj hur du vill jämföra'})).toBeVisible();
+ await expect(page.getByRole('heading',{name:'Jämför eller välj elbolag'})).toBeVisible();
  await expect(page.getByRole('heading',{name:'Se när elen är billigare'})).toBeVisible();
  await expect(page.getByRole('heading',{name:'Våra aktiva elbolag'})).toBeVisible();
  await expect(page.locator('a[data-placement="electricity_hub_comparison"]')).toHaveAttribute('rel',/sponsored/);
