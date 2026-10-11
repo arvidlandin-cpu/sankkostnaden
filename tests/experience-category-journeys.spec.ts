@@ -5,6 +5,7 @@ const routes=[
  {path:'/elavtal/',category:'el',help:'/elavtal/vilket-elavtal-passar-mig/',compare:'#jamfor-elavtal',understand:'/elavtal/sa-laser-du-elfakturan/'},
  {path:'/mobil/',category:'mobil',help:'/mobil/hur-mycket-surf-behover-jag/',compare:'#category-partners',understand:'/mobil/familjeabonnemang/'},
  {path:'/forsakring/',category:'forsakring',help:'/forsakring/hemforsakring-skyddskoll/',compare:'#category-partners',understand:'/forsakring/hemforsakring-bostadsratt/'},
+ {path:'/ekonomi/',category:'ekonomi',help:'/verktyg/hushallskostnadskollen/',compare:'#category-partners',understand:'/ekonomi/samlingslan/'},
 ] as const;
 
 for(const route of routes){
