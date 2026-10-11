@@ -105,8 +105,8 @@ function affiliateNorthStar({google,affiliate,addrevenue,adtraction,partnerHealt
     ?expected.filter(network=>!reportedNetworks.includes(network))
     :['UNKNOWN_ACTIVE_NETWORK_INVENTORY'];
   const complete=expected.length>0&&missingNetworks.length===0;
-  const knownApprovedCommission=reports.length?sum(affiliate?.totals,'approvedCommission'):null;
-  const knownApprovedTransactions=reports.length?sum(affiliate?.totals,'approvedTransactions'):null;
+  const knownApprovedCommission=reportedNetworks.length?sum(affiliate?.totals,'approvedCommission'):null;
+  const knownApprovedTransactions=reportedNetworks.length?sum(affiliate?.totals,'approvedTransactions'):null;
   const networkClicks=num(addrevenue?.totals?.clicks)+num(adtraction?.totals?.totalClicks);
   return {
     organicSessions,
@@ -269,17 +269,17 @@ function seoCandidate(google,policy,learningLedger,now,experiments=[]){
   return [...standard,...early].sort((a,b)=>b.score-a.score)[0]||null;
 }
 
-function contentUtilityCandidate(google,policy,experiments=[],state={},now=new Date()){
+function contentUtilityCandidate(google,policy,experiments=[],state={}){
   const cfg=policy?.thresholds?.contentUtility||{};
   const reviewed=state?.reviewedExistingUtilities||[];
   return (google?.gsc?.pages||[])
     .filter(row=>!conflictsWithActive(row.page,experiments))
     .filter(row=>!reviewed.some(review=>{
-      if(review?.status!=='already_served')return false;
-      const recheckAt=Date.parse(review.recheckAfter||'');
-      return pathScope(review.target)===pathScope(row.page)
-        && new URL(String(review.target),'https://sankkostnaden.se').pathname===new URL(String(row.page),'https://sankkostnaden.se').pathname
-        && Number.isFinite(recheckAt)&&now.getTime()<recheckAt;
+      // A live utility is not a new content gap. New evidence can explicitly
+      // change status to 'needs_new_utility'; no arbitrary insurance date lock.
+      return review?.status==='already_served'
+        && new URL(String(review.target),'https://sankkostnaden.se').pathname
+          ===new URL(String(row.page),'https://sankkostnaden.se').pathname;
     }))
     .filter(row=>num(row.impressions)>=num(cfg.minImpressions||100))
     .filter(row=>num(row.position)>=num(cfg.minPosition||16)&&num(row.position)<=num(cfg.maxPosition||40))
@@ -493,7 +493,7 @@ export function buildDecisionPacket({
     }
 
     }
-    const utility=contentUtilityCandidate(google,policy,experiments,state,now);
+    const utility=contentUtilityCandidate(google,policy,experiments,state);
     if(utility){
       candidates.push(action(
         'CONTENT_UTILITY_UPGRADE',
