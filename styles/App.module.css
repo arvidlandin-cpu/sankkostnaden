@@ -18,7 +18,7 @@
 
 .hero > p {
   max-width: 760px;
-  color: #59645e;
+  color: var(--sk-ink-muted);
   font-size: 18px;
   line-height: 1.65;
 }
@@ -86,7 +86,7 @@
   border: 1px solid #dfe4dd;
   border-radius: 13px;
   background: white;
-  color: #59645e;
+  color: var(--sk-ink-muted);
   font: inherit;
   font-weight: 750;
   cursor: pointer;
@@ -298,7 +298,7 @@
 .reset {
   border: 1px solid #d9dfd8;
   background: white;
-  color: #59645e;
+  color: var(--sk-ink-muted);
 }
 
 .next {
