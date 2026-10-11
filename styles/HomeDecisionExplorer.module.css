@@ -160,5 +160,21 @@
 .heroMode .primary:hover,.heroMode .secondary:hover{box-shadow:0 8px 20px rgba(8,20,42,.17)}
 .heroMode .caution{color:#bfd1ed;font-size:11px;line-height:1.42;margin-top:11px}
 @media(max-width:600px){.heroMode .question{padding:14px 12px 12px}.heroMode .option{font-size:12.5px;min-height:60px}.heroMode .option>svg{width:19px;height:19px}.heroMode .panel{padding:18px 15px 19px;border-radius:17px}.heroMode .panelTop{flex-wrap:wrap}.heroMode .actions{grid-template-columns:1fr}.heroMode .actions a{font-size:13px;min-height:47px}}
+/* P0E: real 360–430px screenshot review showed the default four useful links
+   consuming nearly an extra full mobile screen. Preserve ALL four SEO links
+   in SSR, but show a legible 2×2 quick-action deck with >= 64px touch targets. */
+@media(max-width:600px){
+ .heroMode .step{display:none}
+ .heroMode .panelBody{margin:7px 0 10px}
+ .heroMode .panelBody p{font-size:12.5px;line-height:1.4}
+ .heroMode .actions.multi{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ .heroMode .actions.multi a{
+  display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;
+  min-width:0;min-height:72px;gap:8px;padding:12px 10px;
+  font-size:12px;line-height:1.27;overflow-wrap:anywhere
+ }
+ .heroMode .actions.multi a>svg{align-self:flex-end;flex:0 0 auto;width:16px;height:16px}
+ .heroMode .caution{margin-top:9px}
+}
 @media(min-width:601px) and (max-width:1100px){.heroMode .actions.multi{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){.heroMode .option,.heroMode .primary,.heroMode .secondary{transition:none}}

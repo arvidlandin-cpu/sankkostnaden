@@ -134,3 +134,27 @@ test('experience P0: living hero selection changes the next step without a page 
  expect(overflow).toBeLessThanOrEqual(1);
  await page.screenshot({path:'test-results/screenshots/experience-p0-home-interactive-390.png',fullPage:true});
 });
+
+for(const width of [360,390,430]){
+ test('P0E hero fits four useful ways forward as a 2x2 mobile action deck '+width,async({page},info)=>{
+   await page.setViewportSize({width,height:844});
+   await page.goto('/?qa=1',{waitUntil:'networkidle'});
+   const hero=page.locator('section[aria-label="Hitta rätt jämförelse"]');
+   const picker=hero.getByTestId('home-decision-explorer');
+   const panel=picker.getByTestId('home-explorer-panel');
+   await expect(picker.getByRole('button',{name:'Hitta rätt nivå'})).toHaveAttribute('aria-pressed','true');
+   const links=panel.locator('a');
+   await expect(links).toHaveCount(4);
+   for(const link of await links.all()){
+     await expect(link).toBeVisible();
+     const rect=await link.boundingBox();
+     expect(rect!.width).toBeGreaterThan(110);
+     expect(rect!.height).toBeGreaterThanOrEqual(64);
+   }
+   const grid=await panel.locator('div[class*="actions"]').evaluate(el=>getComputedStyle(el).gridTemplateColumns);
+   expect(grid.split(' ').length,'Two quick-access columns').toBe(2);
+   const overflow=await page.evaluate(()=>Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)-document.documentElement.clientWidth);
+   expect(overflow).toBeLessThanOrEqual(1);
+   await page.screenshot({path:'test-results/screenshots/p0e-mobile-faststart-'+info.project.name+'-'+width+'.png',fullPage:true});
+ });
+}
