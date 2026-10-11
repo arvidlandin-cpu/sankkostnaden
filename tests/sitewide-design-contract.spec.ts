@@ -74,8 +74,8 @@ const partnerGuides=[
   ['el','/elavtal/byta-elavtal/'],
   ['bredband','/bredband/utan-bindningstid/'],
   ['mobil','/mobil/utan-bindningstid/'],
-  ['forsakring','/forsakring/djurforsakring/'],
-  ['ekonomi','/ekonomi/samlingslan/'],
+  ['forsakring','/forsakring/reseforsakring/'],
+  ['ekonomi','/ekonomi/kostnadskontroll-och-sparande/'],
 ] as const;
 for(const width of [360,390,430,1024,1440]){
  for(const [name,path] of partnerGuides){
@@ -83,16 +83,21 @@ for(const width of [360,390,430,1024,1440]){
    await page.setViewportSize({width,height:width<500?844:900});
    await page.goto(path+'?qa=1');
    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href','https://sankkostnaden.se'+path);
-   const panel=page.locator('.partnerSection').first();
-   await expect(panel).toBeVisible();
-   expect(await panel.evaluate(el=>getComputedStyle(el).backgroundColor)).toBe('rgb(241, 245, 255)');
-   const card=panel.locator('.partnerCardStrong').first();
-   const cta=card.locator('a.partnerButtonStrong').first();
-   await expect(cta).toHaveAttribute('rel',/sponsored/);
-   await expect(cta).toHaveAttribute('data-partner',/.+/);
-   expect(await cta.evaluate(el=>getComputedStyle(el).backgroundColor)).toBe('rgb(35, 75, 209)');
-   expect(await cta.evaluate(el=>getComputedStyle(el).color)).toBe('rgb(255, 255, 255)');
-   expect(await card.locator('.commercialTag').first().evaluate(el=>parseFloat(getComputedStyle(el).fontSize))).toBeGreaterThanOrEqual(12);
+   if(name==='el'){
+    await expect(page.locator('.decisionGateway').first()).toBeVisible();
+    await expect(page.locator('#guide-partners')).toBeAttached();
+   }else{
+    const panel=page.locator('.partnerSectionStrong').first();
+    await expect(panel).toBeVisible();
+    expect(await panel.evaluate(el=>getComputedStyle(el).backgroundColor)).toBe('rgb(241, 245, 255)');
+    const card=panel.locator('.partnerCardStrong').first();
+    const cta=card.locator('a.partnerButtonStrong').first();
+    await expect(cta).toHaveAttribute('rel',/sponsored/);
+    await expect(cta).toHaveAttribute('data-partner',/.+/);
+    expect(await cta.evaluate(el=>getComputedStyle(el).backgroundColor)).toBe('rgb(35, 75, 209)');
+    expect(await cta.evaluate(el=>getComputedStyle(el).color)).toBe('rgb(255, 255, 255)');
+    expect(await card.locator('.commercialTag').first().evaluate(el=>parseFloat(getComputedStyle(el).fontSize))).toBeGreaterThanOrEqual(12);
+   }
    const overflow=await page.evaluate(()=>Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)-document.documentElement.clientWidth);
    expect(overflow).toBeLessThanOrEqual(1);
    await page.screenshot({path:'test-results/screenshots/p0d-partner-'+name+'-'+info.project.name+'-'+width+'.png',fullPage:true});
