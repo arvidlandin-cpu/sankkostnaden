@@ -19,7 +19,7 @@ const slugs = [...new Set(walk(join(process.cwd(), 'pages'))
   .map(file => relative(join(process.cwd(), 'pages'), file).split(sep).join('/'))
   .filter(file => !file.startsWith('_') && !file.startsWith('experiments/'))
   .map(file => '/' + file.replace(/\.tsx$/, '').replace(/(^|\/)index$/, ''))
-  .map(file => file.replace(/\/+/g, '/') + (file === '/' ? '' : '/'))
+  .map(file => file === '/' ? '/' : file.replace(/\/+$/, '') + '/')
 )].sort();
 const widths = [390, 1440];
 
