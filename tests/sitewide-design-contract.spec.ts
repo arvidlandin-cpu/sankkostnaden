@@ -67,3 +67,18 @@ for(const width of [360,430,1024]){
     }
   });
 }
+
+for(const width of [360,390,430,1024,1440]){
+ test('P0D CostCheck result palette '+width+'px',async({page},info)=>{
+  await page.setViewportSize({width,height:844});
+  await page.goto('/app/?qa=1');
+  await page.getByRole('button',{name:/Priset har höjts eller känns dyrt/i}).click();
+  const eyebrow=page.locator('[class*="resultIntro"] span').first();
+  await expect(eyebrow).toBeVisible();
+  expect(await eyebrow.evaluate(el=>getComputedStyle(el).color)).toBe('rgb(33, 70, 157)');
+  const quick=page.locator('a[data-placement="cost_check_quick_path"]');
+  await expect(quick).toHaveCount(1);
+  expect(await quick.evaluate(el=>getComputedStyle(el).backgroundColor)).toBe('rgb(35, 75, 209)');
+  await page.screenshot({path:'test-results/screenshots/p0d-app-result-'+info.project.name+'-'+width+'.png',fullPage:true});
+ });
+}
