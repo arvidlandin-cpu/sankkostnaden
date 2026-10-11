@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Link from 'next/link';
 import { ArrowRight, BadgeHelp, BookOpenText, CircleCheck, Compass, Sparkles } from 'lucide-react';
 import { emitAnalyticsEvent } from '../lib/clientAttribution';
@@ -29,6 +29,7 @@ const options: Array<{key:Mode;label:string;icon:typeof Compass;small:string}>= 
 
 export default function CategoryJourney({category,compareHref,helpHref,understandHref}:Props){
  const [mode,setMode]=useState<Mode>('help');
+ const outcomeRef=useRef<HTMLDivElement>(null);
  const cfg=config[category];
  const active={
   help:{title:cfg.help,body:cfg.helpDescription,label:cfg.helpAction,href:helpHref},
@@ -38,6 +39,23 @@ export default function CategoryJourney({category,compareHref,helpHref,understan
  const choose=(next:Mode)=>{
    setMode(next);
    emitAnalyticsEvent('category_journey_mode_selected',{category,mode:next});
+   // On a narrow phone the fixed bottom category dock may cover the newly
+   // changed result. Only scroll when the result is actually obscured; never
+   // hijack an already visible choice or animate reduced-motion visitors.
+   if(typeof window!=='undefined'&&window.matchMedia('(max-width: 650px)').matches){
+     window.requestAnimationFrame(()=>{
+       const panel=outcomeRef.current;
+       if(!panel)return;
+       const bottomDock=document.querySelector<HTMLElement>('nav[aria-label="Snabbnavigering"]');
+       const navY=bottomDock?.getBoundingClientRect().top??window.innerHeight;
+       const usableBottom=Math.min(navY,window.innerHeight)-12;
+       const hiddenBy=panel.getBoundingClientRect().bottom-usableBottom;
+       if(hiddenBy>2){
+         const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+         window.scrollBy({top:hiddenBy,behavior:reduceMotion?'auto':'smooth'});
+       }
+     });
+   }
  };
  return <section className={s.root} aria-label={'Snabbstart för '+cfg.label} data-testid={'category-journey-'+category}>
   <div className={s.top}><div className={s.heading}><span className={s.spark}><Sparkles size={17}/></span><div><p>DIN SNABBSTART</p><h2>Vad vill du göra?</h2></div></div><span className={s.noLogin}>Ingen inloggning. Inga långa formulär.</span></div>
@@ -53,7 +71,7 @@ export default function CategoryJourney({category,compareHref,helpHref,understan
     </button>;
    })}
   </div>
-  <div className={s.outcome} id={'category-journey-next-'+category} aria-live='polite' data-testid='category-journey-result'>
+  <div ref={outcomeRef} className={s.outcome} id={'category-journey-next-'+category} aria-live='polite' data-testid='category-journey-result'>
    <div className={s.outcomeContent}>
     <span className={s.outcomeCaption}><BadgeHelp size={14}/> NÄSTA STEG FÖR DIG</span>
     <h3>{active.title}</h3><p>{active.body}</p>

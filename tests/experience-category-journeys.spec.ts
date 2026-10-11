@@ -49,3 +49,24 @@ for(const width of [360,390,430,1024,1440]){
   await page.screenshot({path:'test-results/screenshots/experience-p0-category-el-'+width+'.png',fullPage:true});
  });
 }
+
+for(const width of [360,390,430]){
+ test('P0E mobile makes changed result visible above fixed dock '+width+'px',async({page})=>{
+  await page.setViewportSize({width,height:844});
+  await page.goto('/elavtal/?qa=1');
+  const journey=page.getByTestId('category-journey-el');
+  const result=journey.getByTestId('category-journey-result');
+  const dock=page.getByRole('navigation',{name:'Snabbnavigering'});
+  await expect(dock).toBeVisible();
+  await journey.getByRole('button',{name:/Jag vill jämföra/}).click();
+  await expect(result).toContainText('Jämför elavtal');
+  await expect.poll(async()=>{
+    const panel=await result.boundingBox(),nav=await dock.boundingBox();
+    return panel&&nav?Math.round(nav.y-(panel.y+panel.height)):-999;
+  },{timeout:7000}).toBeGreaterThanOrEqual(8);
+  const next=result.getByRole('link',{name:/Se våra elalternativ/});
+  await expect(next).toHaveAttribute('href','#jamfor-elavtal');
+  await expect(next).toBeInViewport();
+  await page.screenshot({path:'test-results/screenshots/p0e-result-visible-over-dock-'+width+'.png',fullPage:true});
+ });
+}
