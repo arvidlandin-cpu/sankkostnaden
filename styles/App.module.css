@@ -1195,3 +1195,15 @@
 .quickDisclosure{grid-column:1/-1;margin:0;max-width:65ch;color:#526681;font-size:12px;line-height:1.5}
 .quickPathActions a:focus-visible{outline:3px solid #668dfa;outline-offset:3px}
 @media(max-width:760px){.quickDisclosure{grid-column:1}}
+
+/* P0D: keep the complete-results journey as blue as the first answer. */
+.resultIntro span,.rank>span,.verifiedLine{color:var(--sk-accent-ink)}
+.ranking .topResult{border-color:var(--sk-choice-border);background:var(--sk-choice-selected);box-shadow:var(--sk-shadow-card)}
+.meter{background:var(--sk-line)}
+.meter i{background:var(--sk-action)}
+.resultActions a:first-child,.resultActions a[data-partner-position="1"]{background:var(--sk-action)!important;border-color:var(--sk-action)!important;color:var(--sk-action-ink)!important}
+.resultActions a:nth-child(2),.resultActions a[data-partner-position="2"]{border-color:var(--sk-line)!important;color:var(--sk-ink)!important}
+.resultActions .nextCategory{color:var(--sk-accent-ink)!important;border-top-color:var(--sk-line)!important}
+.rank>span,.verifiedLine,.resultActions a{font-size:12px}
+.heroStart{background:var(--sk-action);color:var(--sk-action-ink)}
+@media(prefers-reduced-motion:reduce){.heroStart:hover{transform:none}}
