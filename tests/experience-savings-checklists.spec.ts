@@ -34,6 +34,9 @@ for(const width of [360,390,430,1024,1440]){
   await page.goto('/guide/arskoll-fasta-kostnader/?qa=1',{waitUntil:'networkidle'});
   const board=page.getByTestId('interactive-checklist');
   await expect(board.getByRole('button')).toHaveCount(6);
+  const mainCta=page.locator('.intentActions a.primary').first();
+  await expect(mainCta).toBeVisible();
+  expect(await mainCta.evaluate(el=>getComputedStyle(el).color)).toBe('rgb(255, 255, 255)');
   const next=board.getByRole('link',{name:/Räkna dina faktiska kostnader/});
   await expect(next).toHaveAttribute('href','/verktyg/hushallskostnadskollen/');
   const overflow=await page.evaluate(()=>Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)-document.documentElement.clientWidth);
