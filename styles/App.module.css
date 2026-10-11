@@ -59,7 +59,7 @@
 }
 
 .heroStats span {
-  color: #68736c;
+  color: var(--sk-ink-muted);
   font-size: 11px;
 }
 
@@ -181,7 +181,7 @@
 }
 
 .householdRow span {
-  color: #68736c;
+  color: var(--sk-ink-muted);
   font-size: 12px;
 }
 
@@ -212,7 +212,7 @@
 
 .question label small {
   margin-left: 6px;
-  color: #87918a;
+  color: var(--sk-ink-muted);
   font-weight: 500;
 }
 
@@ -268,7 +268,7 @@
 
 .moneyInput span {
   padding-right: 14px;
-  color: #68736c;
+  color: var(--sk-ink-muted);
   font-size: 12px;
 }
 
@@ -328,7 +328,7 @@
 
 .resultIntro > p {
   margin: 0;
-  color: #68736c;
+  color: var(--sk-ink-muted);
   line-height: 1.65;
 }
 
@@ -426,7 +426,7 @@
 }
 
 .resultScore small {
-  color: #7d8880;
+  color: var(--sk-ink-muted);
 }
 
 .resultActions{
@@ -667,7 +667,7 @@
   padding:6px 8px;
   border-radius:999px;
   background:#eef2ea;
-  color:#59665d;
+  color:var(--sk-ink-muted);
   font-size:9px;
   letter-spacing:.08em;
 }
@@ -734,7 +734,7 @@
   padding:0 30px;
   display:flex;
   align-items:center;
-  color:#5f6b63;
+  color:var(--sk-ink-muted);
   font-size:12px;
   font-weight:800;
   cursor:pointer;
@@ -916,7 +916,7 @@
 }
 .quickPath p{
   margin:0;
-  color:#68736c;
+  color:var(--sk-ink-muted);
   font-size:11px;
   line-height:1.45;
 }
