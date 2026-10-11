@@ -1,0 +1,91 @@
+/*
+ * P0D guide → partner journey. Shared premium surface contract for the
+ * existing guide and affiliate-card families. Provider wordmarks/brand marks
+ * retain their own colors; the commercial action itself stays clear blue.
+ * The legacy global.css declarations are still technical debt to remove
+ * after screenshot-backed migration of each dependent page family.
+ */
+.kicker,
+.article h2,
+.relatedGuides a,
+.partnerCard h3 {
+  color: var(--sk-ink);
+}
+.kicker,
+.partnerSectionStrong .partnerEyebrow {
+  color: var(--sk-accent-ink);
+}
+.article .relatedGuides a {
+  border-color: var(--sk-line);
+  background: var(--sk-surface);
+}
+.partnerSectionStrong {
+  background: var(--sk-surface-soft);
+  border: 1px solid var(--sk-line-strong);
+  box-shadow: var(--sk-shadow-card);
+}
+.partnerCardStrong {
+  background: var(--sk-surface);
+  border-color: var(--sk-line);
+  box-shadow: var(--sk-shadow-card);
+}
+.partnerCardBrand::before,
+.partnerExpressCard {
+  border-top-color: var(--sk-choice-border);
+}
+.partnerCardBrand::before {
+  background: var(--sk-choice-border);
+}
+.partnerLogo {
+  color: var(--sk-ink);
+}
+.partnerCardBrand.isLassie .partnerButton,
+.partnerCardBrand.isSveland .partnerButton,
+.partnerButtonStrong {
+  background: var(--sk-action);
+  color: var(--sk-action-ink);
+}
+.commercialTag,
+.partnerCardBrand .commercialTag,
+.partnerExpressLabel,
+.partnerLogoSveland small,
+.expressAction {
+  font-size: 12px;
+}
+.commercialTag,
+.matchPartnerTop > span,
+.matchPartnerCard li svg {
+  color: var(--sk-accent-ink);
+}
+.partnerFine,
+.expressAction {
+  color: var(--sk-ink-muted);
+}
+.partnerExpressCard {
+  background: var(--sk-surface);
+  color: var(--sk-ink) !important;
+}
+.partnerBox {
+  background: var(--sk-result);
+  color: #fff;
+}
+.partnerBox p,
+.partnerLabel,
+.decisionPanel p:not(.partnerEyebrow),
+.gatewayFine {
+  color: var(--sk-result-muted) !important;
+}
+.partnerLabel {
+  font-size: 12px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .partnerCardBrand,
+  .partnerCardBrand:hover,
+  .partnerButtonStrong,
+  .partnerButtonStrong:hover,
+  .partnerExpressCard,
+  .partnerExpressCard:hover {
+    transition: none;
+    transform: none;
+  }
+}
