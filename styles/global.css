@@ -2554,3 +2554,8 @@ footer{
  }
 }
 @media(prefers-reduced-motion:reduce){.mobileQuickBar a{transition:none!important}}
+
+/* UX experience P0: legacy .article a color must not overwrite white text
+   on the solid-blue primary action; verified via mobile + desktop screenshots. */
+.article .intentActions a.primary{color:var(--sk-action-ink)}
+.article .intentActions a.primary:hover,.article .intentActions a.primary:focus-visible{color:var(--sk-action-ink)}
