@@ -350,7 +350,7 @@
 
 .ranking .topResult {
   border-color: var(--sk-choice-border);
-  background: #f8fbe9;
+  background: var(--sk-choice-selected);
   box-shadow: 0 14px 44px var(--sk-accent-ink)12;
 }
 
