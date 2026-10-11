@@ -616,7 +616,7 @@ export function toMarkdown(packet){
     '',
     '- Organiska sessioner: **'+n(packet.northStar.organicSessions)+'**',
     '- Godkänd affiliateintäkt: **'+money(packet.northStar.approvedRevenue)+'**',
-    '- Godkända transaktioner: **'+n(packet.northStar.approvedTransactions)+'**',
+    '- Godkända transaktioner: **'+(packet.northStar.approvedTransactions==null?'UNKNOWN':n(packet.northStar.approvedTransactions))+'**',
     '- Intäkt per relevant besökare: **'+money(packet.northStar.approvedRevenuePerRelevantVisitor)+'**',
     '- Rapporterade godkända provisioner i avlästa nätverk: **'+money(packet.northStar.reportedNetworkApprovedCommission)+'**',
     '- Saknade intäktsnätverk: **'+(packet.northStar.revenueCoverage?.missingNetworks?.join(', ')||'UNKNOWN')+'**',
