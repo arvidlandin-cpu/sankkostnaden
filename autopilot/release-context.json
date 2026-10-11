@@ -2,7 +2,7 @@
   "version": 1,
   "updatedAt": "2026-10-11",
   "purpose": "Verified code-release snapshot for the AI operator and autopilot decision packet. Historical baseline reports remain dated snapshots, not live inventory.",
-  "latestVerifiedMainCommit": "b05abf10afd789b2e550d3a287802456ae8a493d",
+  "latestVerifiedMainCommit": "94b65615b81236f46d38930afa54ec1a2b63a674",
   "decisionContext": {
     "northStar": "Long-term approved affiliate revenue per relevant visitor; truthful consumer value and SEO trust first.",
     "design": "P0D owner design code migrated and broad visual QA performed via PR #118/#119/#120 by 2026-10-11; Cloudflare Pages check links exact deployed b05abf1 to success. Do not resume green/lime design, restart finished CSS work or create isolated widgets. Outstanding: independent custom-domain served-SHA + physical iPhone if free availability returns; commercial outcome not inferred from tests.",
@@ -11,7 +11,7 @@
     "experimentStatus": "As of 2026-10-10 one active scoped CONTENT_UTILITY_UPGRADE for /elavtal/kvartspris/ (PR #103), awaiting qualified organic measurements; cancelled Oct 7 insurance snippet remains inactive, no Oct 15 gate. Up to two fully independent initiatives subject to policy.",
     "capacity": "Independent non-paid traffic acquisition remains the highest commercial constraint; continue alongside design. No paid media or contracts without owner approval.",
     "finishStandard": "Read autopilot/PRODUCT_FINISHING_STANDARD_2026-10-09.md. Every screen, field, sentence and CTA must serve the user's immediate job, with premium consistent UX, real price data and QA. Do not call project finished from isolated feature PRs.",
-    "nextExecution": "Stop duplicate P0D CSS/extra widget builds. Recheck custom-domain served SHA independently when available and verify true customer journeys/revenue. Follow the unchanged low-friction product-finishing gates, legitimate organics and active independent kvartspris scope; no paid services, mailouts, new contracts or ads.",
+    "nextExecution": "P0D is source/CI/cloudflare-pages/live-asset-parity complete; do NOT restart color palette or create isolated widgets. Only source-fact-backed defects justify CSS iteration. Physical iPhone still UNTESTED with free quota expired; no new cost. Continue qualified organic traffic → useful decision → relevant sponsored tracked click → authoritative APPROVED commission, with approved SEK UNKNOWN until read from network. Kvartspris scoped observation continues through earliest 18 Oct; cancelled 7 Oct insurance snippet is not a calendar block.",
     "strategySourceOfTruth": "Read AUTOPILOT.md, autopilot/PLAYBOOK.md, autopilot/MASTERPLAN_EXECUTION_2026-10-08.md, autopilot/PRODUCT_FINISHING_STANDARD_2026-10-09.md and autopilot/opportunities.json, then current main tree and latest QA. Scheduled workflow monitors/decides; it does not itself run a continuous ChatGPT development session."
   },
   "shipped": [
@@ -194,10 +194,16 @@
       "scope": "P0D 67-route typography and comprehensive screenshot QA",
       "status": "merged",
       "note": "Improved 8–11px texts where meaningful; retained five-link mobile dock sizes to avoid new overlap. New screenshot audit of 67 public source routes at 390/1440 and representative 14 journeys at 360/390/430/1024/1440 plus revealed family result. PR CI 553 Chromium tests + 22 Linux WebKit tests green; main Build passed. Cloudflare Pages check explicitly reports deployed commit b05abf1. No measured real user uplift."
+    },
+    {
+      "pr": 122,
+      "scope": "Independent Pages-preview versus own-domain production asset identity regression",
+      "status": "merged",
+      "note": "Read-only five-route real HTTP compare of CSS and compiled JS chunks; successful #38159842849/#38159934538. Build and full commercial regression passed before merge. Next build-ID manifest changes intentionally excluded; product client files exact match. Not an absolute domain SHA or physical iPhone pass. No product frontend changes."
     }
   ],
   "unresolved": [
-    "Cloudflare Pages build SUCCESS confirmed for commit b05abf1 via check-run 114527934005; domain sankkostnaden.se response itself is not yet independently matched to this SHA. Do not conflate preview deployment, Pages success and exact currently served custom-domain content.",
+    "Cloudflare Pages successfully deployed P0D client code b05abf1, and production on sankkostnaden.se has exact matching CSS/compiled JS assets on five checked routes (GitHub Actions #38159842849/#38159934538). However actual custom-domain commit SHA itself remains UNKNOWN without independent origin marker; never conflate asset parity with unique deploy SHA.",
     "Parallel Workers Builds check has failed for b05abf1 and earlier commits, while Cloudflare Pages succeeded. Check if Workers is abandoned/unrelated before spending effort or assuming a live-site outage; no new paid service.",
     "Physical Safari/iPhone remains UNTESTED due expired BrowserStack free quota; Linux WebKit is a credible engine regression, not a physical device.",
     "Owner quality direction P0D is implemented/source+CI+Pages-supported, with 67-page mobile/desktop image overview reviewed; owner subjective acceptance of exact custom-domain experience is not fabricated.",
@@ -210,7 +216,7 @@
     "GitHub screenshot archive now preserves Chromium screenshots; WebKit engine coverage passed, but physical-iPhone QA still blocked by exhausted free quota. Do not claim real-device pass.",
     "Approved Adtraction/Addrevenue/Tradedoubler SEK from authoritative partner reports is UNKNOWN on 2026-10-10; Windsor.ai Adtraction read returned affiliate-user/advertiser-user authorization error."
   ],
-  "latestMergedMainCommit": "b05abf10afd789b2e550d3a287802456ae8a493d",
+  "latestMergedMainCommit": "94b65615b81236f46d38930afa54ec1a2b63a674",
   "designVerification": {
     "inspectedAt": "2026-10-11",
     "ownerDirection": "P0D 2026-10-10 navy/warm-white",
@@ -237,6 +243,22 @@
     "physicalIphone": "UNTESTED_FREE_QUOTA_EXHAUSTED",
     "genuineApprovedCommissionSEK": "UNKNOWN",
     "businessEffect": "UNKNOWN",
-    "closeout": "CODE_AND_PAGES_DEPLOY_VERIFIED; CUSTOM_DOMAIN_CURRENT_SHA_AND_REAL_DEVICE_NOT_VERIFIED"
+    "closeout": "SITEWIDE_DESIGN_SOURCE_AND_CHROMIUM_WEBKIT_AND_PAGES_CODE_AND_CUSTOM_DOMAIN_ASSET_PARITY_PASS; PHYSICAL_IPHONE_UNTESTED; EXACT_SERVED_SHA_UNKNOWN",
+    "customDomainClientAssets": {
+      "status": "PASS",
+      "checkedAt": "2026-10-11",
+      "comparedToPagesPreview": "https://86005561.sankkostnaden.pages.dev/",
+      "liveOrigin": "https://sankkostnaden.se/",
+      "routes": [
+        "/",
+        "/app/",
+        "/elavtal/kvartspris/",
+        "/mobil/lonar-sig-familjeabonnemang/",
+        "/forsakring/hemforsakring-bostadsratt/"
+      ],
+      "evidence": "GitHub Actions P0D independent live Pages asset identity run #38159842849 and #38159934538: all five paths CSS and real JS chunk paths matched exactly; only allowed Next build-ID manifest paths differed. This does not prove the actual served exact SHA.",
+      "result": "CONTENT_ASSET_PARITY_CONFIRMED"
+    },
+    "githubMainSnapshotAfterQA": "94b65615b81236f46d38930afa54ec1a2b63a674"
   }
 }

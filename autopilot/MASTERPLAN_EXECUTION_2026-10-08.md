@@ -1,5 +1,11 @@
 # APPROVED Masterplan — execution program, Sänk Kostnaden
 
+### P0D slutkontroll 2026-10-11 — faktisk liveprodukt
+
+**Väsentlig ny fakta efter PR #122:** På fem skarpa URL:er matchar `https://sankkostnaden.se/` den lyckade Cloudflare Pages-previewversionens **CSS och verkliga JS-chunks exakt** (oavsett Next.js build-ID-manifest). Oberoende GitHub Actions #38159842849 och #38159934538 godkända. Första verifierings-PR #122 har mergats efter grön Build och kommersiell regression. Se `release-context.json.designVerification.customDomainClientAssets`.
+
+**Status:** Hela blå/varmvita designens källa, centrala resultatvyer, 67 sidors 390/1440-skärmbilder, 14 flöden i fem bredder, Linux WebKit och Pages→egen-domän klientfilidentitet är nu genomförd/QA-godkänd. Stäng den repetitiva **P0D CSS-ombyggnadsloopen**. Kvarstående produktacceptans: fysisk iPhone ej testad (fri quota slut), Cloudflare custom-domain exakta serverade SHA inte absolut intygad trots verifierad filidentitet. Håll dessa som teknisk restverifiering, inte som anledning att starta om designarbetet. Verklig kommersiell konvertering och godkända provisioner: **UNKNOWN**.
+
 ## P0D DESIGNLEVERANS 2026-10-11 – VERIFIERAD KOD, TESTER OCH PAGES-DEPLOY
 
 **Bindande riktning oförändrad.** Ägarens 2026-10-10 kritik var korrekt för tidigare produktion. Detta är den nya verifierade framdriften: PR #118 (resultatkontrast), #119 (kontrollerad sanering av globala/app/hem/isolated pilot-färger) och #120 (typografi och full sitewide QA) är mergade. `main=b05abf10afd789b2e550d3a287802456ae8a493d` i denna ögonblicksbild. Inga partnerprogram, trackinglänkar, SEO-URL:er eller kalkyler ändrade.
