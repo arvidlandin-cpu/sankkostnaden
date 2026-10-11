@@ -71,6 +71,14 @@ function sourceHealth({google,affiliate,addrevenue,adtraction,partnerHealth,poli
     });
   }
 
+  if(num(partnerHealth?.networkCounts?.tradedoubler)>0){
+    sources.push({
+      source:'tradedoubler_revenue',
+      status:'missing',
+      ageHours:null,
+      required:false,
+    });
+  }
   return {
     status:sources.some(row=>row.required&&row.status!=='healthy')?'blocked'
       :sources.some(row=>row.status!=='healthy')?'degraded'
@@ -79,20 +87,46 @@ function sourceHealth({google,affiliate,addrevenue,adtraction,partnerHealth,poli
   };
 }
 
-function affiliateNorthStar({google,affiliate,addrevenue,adtraction}){
+function affiliateNorthStar({google,affiliate,addrevenue,adtraction,partnerHealth}){
   const organicSessions=num(google?.ga4?.organic?.sessions);
-  const approvedRevenue=sum(affiliate?.totals,'approvedCommission');
-  const approvedTransactions=sum(affiliate?.totals,'approvedTransactions');
-  const pendingRevenue=sum(affiliate?.totals,'pendingCommission');
+  // An API that did not respond must never be interpreted as SEK 0.
+  // Importantly, Tradedoubler is active in the partner registry but has no
+  // authoritative transaction report from the current collectors.
+  const expected=Object.entries(partnerHealth?.networkCounts||{})
+    .filter(([,count])=>num(count)>0)
+    .map(([name])=>name)
+    .sort();
+  const reports=Array.isArray(affiliate?.networks)?affiliate.networks:[];
+  const reportedNetworks=reports
+    .filter(row=>row.configured===true&&!row.error)
+    .map(row=>row.network)
+    .sort();
+  const missingNetworks=expected.length
+    ?expected.filter(network=>!reportedNetworks.includes(network))
+    :['UNKNOWN_ACTIVE_NETWORK_INVENTORY'];
+  const complete=expected.length>0&&missingNetworks.length===0;
+  const knownApprovedCommission=reports.length?sum(affiliate?.totals,'approvedCommission'):null;
+  const knownApprovedTransactions=reports.length?sum(affiliate?.totals,'approvedTransactions'):null;
   const networkClicks=num(addrevenue?.totals?.clicks)+num(adtraction?.totals?.totalClicks);
   return {
     organicSessions,
-    approvedRevenue,
-    pendingRevenue,
-    approvedTransactions,
+    // This is a subset, explicitly named as such, not the north-star total.
+    reportedNetworkApprovedCommission:knownApprovedCommission,
+    reportedNetworkApprovedTransactions:knownApprovedTransactions,
+    approvedRevenue:complete?knownApprovedCommission:null,
+    approvedTransactions:complete?knownApprovedTransactions:null,
+    pendingRevenue:complete?sum(affiliate?.totals,'pendingCommission'):null,
     networkClicks,
-    approvedRevenuePerRelevantVisitor:organicSessions?approvedRevenue/organicSessions:0,
-    approvedRevenuePerNetworkClick:networkClicks?approvedRevenue/networkClicks:0,
+    // Aggregate network revenue is not attributable to Organic Search until
+    // an actual network-side click/session join exists. Never divide it by GA4
+    // Organic Search visits or by all network clicks as a conversion claim.
+    approvedRevenuePerRelevantVisitor:null,
+    approvedRevenuePerNetworkClick:null,
+    revenueCoverage:{
+      status:complete?'complete':'partial_or_unknown',
+      reportedNetworks,
+      missingNetworks,
+    },
   };
 }
 
@@ -110,8 +144,14 @@ function funnelSnapshot(google){
       completes,
       partnerImpressions,
       affiliateClicks,
-      completionRate:starts?completes/starts:0,
-      affiliateClickRate:partnerImpressions?affiliateClicks/partnerImpressions:0,
+      // Event counts cannot identify a visitor/session cohort; 2 complete
+      // events and 1 start event are NOT a 200% conversion rate.
+      completionRate:null,
+      partnerUsers:Math.max(0,...(google?.ga4?.appFunnelByChannel||[])
+        .filter(row=>row.channel==='Organic Search'&&row.eventName==='partner_impression')
+        .map(row=>num(row.totalUsers))),
+      affiliateClickRate:partnerImpressions&&affiliateClicks<=partnerImpressions
+        ?affiliateClicks/partnerImpressions:null,
     },
     all:{
       starts:num(all.cost_check_start),
@@ -229,10 +269,18 @@ function seoCandidate(google,policy,learningLedger,now,experiments=[]){
   return [...standard,...early].sort((a,b)=>b.score-a.score)[0]||null;
 }
 
-function contentUtilityCandidate(google,policy,experiments=[]){
+function contentUtilityCandidate(google,policy,experiments=[],state={},now=new Date()){
   const cfg=policy?.thresholds?.contentUtility||{};
+  const reviewed=state?.reviewedExistingUtilities||[];
   return (google?.gsc?.pages||[])
     .filter(row=>!conflictsWithActive(row.page,experiments))
+    .filter(row=>!reviewed.some(review=>{
+      if(review?.status!=='already_served')return false;
+      const recheckAt=Date.parse(review.recheckAfter||'');
+      return pathScope(review.target)===pathScope(row.page)
+        && new URL(String(review.target),'https://sankkostnaden.se').pathname===new URL(String(row.page),'https://sankkostnaden.se').pathname
+        && Number.isFinite(recheckAt)&&now.getTime()<recheckAt;
+    }))
     .filter(row=>num(row.impressions)>=num(cfg.minImpressions||100))
     .filter(row=>num(row.position)>=num(cfg.minPosition||16)&&num(row.position)<=num(cfg.maxPosition||40))
     .filter(row=>num(row.clicks)<=num(cfg.maxClicks??1))
@@ -288,10 +336,10 @@ function pageCommercialCandidate(google,policy,experiments=[]){
 function croCandidate(google,policy){
   const cfg=policy?.thresholds?.cro||{};
   const funnel=funnelSnapshot(google).organic;
-  if(funnel.starts>=num(cfg.minOrganicStarts||25) && funnel.completionRate<num(cfg.maxCompletionRate||0.45)){
+  if(funnel.starts>=num(cfg.minOrganicStarts||25) && funnel.completionRate!=null && funnel.completionRate<num(cfg.maxCompletionRate||0.45)){
     return {kind:'completion',...funnel};
   }
-  if(funnel.partnerImpressions>=num(cfg.minOrganicPartnerImpressions||25) && funnel.affiliateClickRate<num(cfg.maxAffiliateClickRate||0.08)){
+  if(funnel.partnerImpressions>=num(cfg.minOrganicPartnerImpressions||25) && funnel.partnerUsers>=num(cfg.minOrganicPartnerUsers||8) && funnel.affiliateClickRate!=null && funnel.affiliateClickRate<num(cfg.maxAffiliateClickRate||0.08)){
     return {kind:'affiliate_click',...funnel};
   }
   return null;
@@ -382,7 +430,7 @@ export function buildDecisionPacket({
   now=new Date(),
 }={}){
   const health=sourceHealth({google,affiliate,addrevenue,adtraction,partnerHealth,policy,now});
-  const northStar=affiliateNorthStar({google,affiliate,addrevenue,adtraction});
+  const northStar=affiliateNorthStar({google,affiliate,addrevenue,adtraction,partnerHealth});
   const funnel=funnelSnapshot(google);
   const experiments=activeExperiments(state);
   const maxSlots=Math.max(1,num(policy?.limits?.maxConcurrentExperiments)||1);
@@ -445,7 +493,7 @@ export function buildDecisionPacket({
     }
 
     }
-    const utility=contentUtilityCandidate(google,policy,experiments);
+    const utility=contentUtilityCandidate(google,policy,experiments,state,now);
     if(utility){
       candidates.push(action(
         'CONTENT_UTILITY_UPGRADE',
@@ -550,7 +598,7 @@ export function buildDecisionPacket({
 
 export function toMarkdown(packet){
   const pct=value=>new Intl.NumberFormat('sv-SE',{style:'percent',maximumFractionDigits:1}).format(num(value));
-  const money=value=>new Intl.NumberFormat('sv-SE',{style:'currency',currency:'SEK',maximumFractionDigits:2}).format(num(value));
+  const money=value=>value==null?'UNKNOWN':new Intl.NumberFormat('sv-SE',{style:'currency',currency:'SEK',maximumFractionDigits:2}).format(num(value));
   const n=value=>new Intl.NumberFormat('sv-SE',{maximumFractionDigits:1}).format(num(value));
   const r=packet.recommendedAction;
   const lines=[
@@ -570,7 +618,9 @@ export function toMarkdown(packet){
     '- Godkänd affiliateintäkt: **'+money(packet.northStar.approvedRevenue)+'**',
     '- Godkända transaktioner: **'+n(packet.northStar.approvedTransactions)+'**',
     '- Intäkt per relevant besökare: **'+money(packet.northStar.approvedRevenuePerRelevantVisitor)+'**',
-    '- Nätverksklick: **'+n(packet.northStar.networkClicks)+'**',
+    '- Rapporterade godkända provisioner i avlästa nätverk: **'+money(packet.northStar.reportedNetworkApprovedCommission)+'**',
+    '- Saknade intäktsnätverk: **'+(packet.northStar.revenueCoverage?.missingNetworks?.join(', ')||'UNKNOWN')+'**',
+    '- Nätverksklick (inklusive historik/QA, ej nödvändigtvis riktiga organiska): **'+n(packet.northStar.networkClicks)+'**',
     '',
     '## Google',
     '',
@@ -580,9 +630,9 @@ export function toMarkdown(packet){
     '## Organisk Kostnadskollen-funnel',
     '',
     '- Starter: **'+n(packet.funnel.organic.starts)+'**',
-    '- Slutförda: **'+n(packet.funnel.organic.completes)+'** ('+pct(packet.funnel.organic.completionRate)+')',
+    '- Slutförda händelser: **'+n(packet.funnel.organic.completes)+'** (konverteringsgrad: **UNKNOWN**; saknar sessionskoppling)',
     '- Partnerexponeringar: **'+n(packet.funnel.organic.partnerImpressions)+'**',
-    '- Affiliateklick: **'+n(packet.funnel.organic.affiliateClicks)+'** ('+pct(packet.funnel.organic.affiliateClickRate)+')',
+    '- Affiliateklick: **'+n(packet.funnel.organic.affiliateClicks)+'** (händelseandel: '+(packet.funnel.organic.affiliateClickRate==null?'UNKNOWN':pct(packet.funnel.organic.affiliateClickRate))+', inte besökarkonvertering)',
     '',
     '## Datakvalitet',
     '',

@@ -66,5 +66,15 @@
     "reason": "GSC 156 impressions, 0 clicks, position around 21.7; original 1-click utility to serve informational intent before any affiliate comparison.",
     "outcome": "IN_OBSERVATION_NOT_PROVEN",
     "decisionDoc": "autopilot/decisions/kvartspris-utility-2026-10-10.md"
-  }
+  },
+  "reviewedExistingUtilities": [
+    {
+      "target": "/forsakring/hemforsakring-bostadsratt/",
+      "status": "already_served",
+      "reviewedAt": "2026-10-11",
+      "recheckAfter": "2026-10-25T08:00:00+02:00",
+      "evidence": "On-page components/CondoInsuranceCheck.tsx already provides two meaningful collective-bostadsratts-tillagg/hemforsakring answers plus checklist and contextual partner handoff; 302 GSC impressions/0 clicks/avg position 29 is weak discoverability, not evidence of missing second widget.",
+      "reviewRule": "Revisit only with new organic query intent or user research; do not auto-build another insurance form. Does not occupy a growth experiment slot."
+    }
+  ]
 }

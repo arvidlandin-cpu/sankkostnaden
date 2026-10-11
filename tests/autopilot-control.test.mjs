@@ -101,8 +101,8 @@ test('organic funnel sample can trigger a CRO friction test',()=>{
     state:{},
     now:new Date('2026-10-08T08:00:00Z'),
   });
-  assert.equal(packet.recommendedAction.type,'CRO_FRICTION_TEST');
-  assert.equal(packet.recommendedAction.details.kind,'completion');
+  assert.equal(packet.funnel.organic.completionRate,null);
+  assert.equal(packet.recommendedAction.type,'WAITING_FOR_SIGNAL');
 });
 
 test('missing Google data blocks optimization instead of guessing',()=>{
@@ -324,5 +324,51 @@ test('autopilot summary includes factual release context without treating it as 
  assert.match(markdown,/#75 Electricity shift scenario/);
  assert.match(markdown,/Cloudflare deployment unverified/);
  assert.match(markdown,/Spot prices do not imply provider price rankings/);
+ assert.equal(packet.recommendedAction.type,'WAITING_FOR_SIGNAL');
+});
+
+test('missing active Tradedoubler revenue does not become a false SEK 0 north star',()=>{
+ const packet=buildDecisionPacket({
+   google:google(),
+   partnerHealth:{generatedAt:'2026-10-11T17:40:18Z',networkCounts:{adtraction:26,addrevenue:11,tradedoubler:1}},
+   affiliate:{generatedAt:'2026-10-11T17:40:11Z',
+     networks:[{network:'adtraction',configured:true,records:1},{network:'addrevenue',configured:true,records:0}],
+     totals:[{network:'adtraction',approvedCommission:0,approvedTransactions:0,pendingCommission:0}]},
+   addrevenue:{generatedAt:'2026-10-11T17:40:12Z',totals:{clicks:0}},
+   adtraction:{generatedAt:'2026-10-11T17:40:13Z',totals:{totalClicks:109}},
+   now:new Date('2026-10-11T17:40:20Z'),policy
+ });
+ assert.equal(packet.northStar.approvedRevenue,null);
+ assert.equal(packet.northStar.reportedNetworkApprovedCommission,0);
+ assert.deepEqual(packet.northStar.revenueCoverage.missingNetworks,['tradedoubler']);
+ assert.equal(packet.northStar.approvedRevenuePerRelevantVisitor,null);
+ const md=toMarkdown(packet);
+ assert.match(md,/Godkänd affiliateintäkt: \*\*UNKNOWN\*\*/);
+ assert.match(md,/tradedoubler/);
+ assert.doesNotMatch(md,/200\s*%/);
+});
+
+test('GA4 2 complete events for 1 start cannot be presented as 200 percent completion',()=>{
+ const g=google();
+ g.ga4.appFunnelByChannel=[
+   {channel:'Organic Search',eventName:'cost_check_start',eventCount:1,totalUsers:1},
+   {channel:'Organic Search',eventName:'cost_check_complete',eventCount:2,totalUsers:1},
+   {channel:'Organic Search',eventName:'partner_impression',eventCount:25,totalUsers:1}
+ ];
+ const packet=buildDecisionPacket({google:g,policy,now:new Date('2026-10-08T08:00:00Z')});
+ assert.equal(packet.funnel.organic.completionRate,null);
+ assert.equal(packet.funnel.organic.partnerUsers,1);
+ assert.notEqual(packet.recommendedAction.type,'CRO_FRICTION_TEST');
+ assert.match(toMarkdown(packet),/konverteringsgrad: \*\*UNKNOWN\*\*/);
+});
+
+test('already available condo checker is not recommended as another new widget before review',()=>{
+ const g=google();
+ g.gsc.pages=[{page:'https://sankkostnaden.se/forsakring/hemforsakring-bostadsratt/',impressions:302,clicks:0,position:29}];
+ const state={reviewedExistingUtilities:[{
+  target:'/forsakring/hemforsakring-bostadsratt/',status:'already_served',
+  recheckAfter:'2026-10-25T08:00:00+02:00'
+ }]};
+ const packet=buildDecisionPacket({google:g,policy:{...policy,limits:{maxConcurrentExperiments:2},thresholds:{...policy.thresholds,contentUtility:{minImpressions:100,minPosition:16,maxPosition:40,maxClicks:1}},autonomy:{auto:[...policy.autonomy.auto,'CONTENT_UTILITY_UPGRADE']}},state,now:new Date('2026-10-11T18:00:00Z')});
  assert.equal(packet.recommendedAction.type,'WAITING_FOR_SIGNAL');
 });
