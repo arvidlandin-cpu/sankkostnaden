@@ -44,3 +44,16 @@ for(const width of [360,390,430,1024,1440]){
   await page.screenshot({path:'test-results/screenshots/experience-p0-checklist-'+width+'.png',fullPage:true});
  });
 }
+
+test('annual checklist starts with the action rather than a second navy lecture',async({page})=>{
+ await page.setViewportSize({width:390,height:844});
+ await page.goto('/guide/arskoll-fasta-kostnader/?qa=1');
+ const article=page.locator('article.article');
+ await expect(article.locator('> [data-testid="interactive-checklist"]').first()).toBeVisible();
+ expect(await article.locator('.decisionPanel').count()).toBe(0);
+ const board=page.getByTestId('interactive-checklist');
+ const primary=article.locator('.intentActions a.primary');
+ const a=await board.boundingBox(),b=await primary.first().boundingBox();
+ expect(a?.y||0).toBeLessThan(b?.y||0);
+ await expect(board.getByRole('button')).toHaveCount(6);
+});
