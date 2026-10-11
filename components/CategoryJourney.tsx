@@ -52,7 +52,7 @@ export default function CategoryJourney({category,compareHref,helpHref,understan
        const hiddenBy=panel.getBoundingClientRect().bottom-usableBottom;
        if(hiddenBy>2){
          const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-         window.scrollBy({top:hiddenBy,behavior:reduceMotion?'instant':'smooth'});
+         window.scrollBy({top:hiddenBy,behavior:reduceMotion?'auto':'smooth'});
        }
      });
    }
