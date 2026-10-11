@@ -49,7 +49,7 @@ for (const width of widths) {
     );
     expect(overflow, 'No horizontal overflow with the real result visible').toBeLessThanOrEqual(1);
     await testInfo.attach('family-mobile-result-' + width + 'px', {
-      body: await page.screenshot({fullPage: true}),
+      body: await page.screenshot({path: 'test-results/screenshots/p0d-family-result-' + testInfo.project.name + '-' + width + '.png', fullPage: true}),
       contentType: 'image/png',
     });
   });

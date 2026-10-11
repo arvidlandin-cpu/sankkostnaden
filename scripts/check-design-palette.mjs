@@ -18,6 +18,11 @@ const migrated=[
   'styles/ElectricitySensitivity.module.css',
   'styles/TrafficTools.module.css',
   'styles/QuarterPriceDecision.module.css',
+  // Owner-approved P0D: audited shared legacy surfaces, including guide/partner UI.
+  'styles/global.css',
+  'styles/Home.module.css',
+  'styles/App.module.css',
+  'styles/MobileSurfPilot.module.css',
 ];
 const forbidden=[
   '#17201b', // original green-black background and brand
@@ -30,7 +35,9 @@ for(const path of migrated){
   const css=readFileSync(path,'utf8');
   const tokens=(css.match(/#[\da-fA-F]{6}\b/g)||[]).map(x=>x.toLowerCase());
   const found=[...new Set(tokens.filter(value=>forbidden.includes(value)))];
-  if(found.length)failures.push({path,values:found});
+  // CSS variables cannot take raw hexadecimal opacity suffixes such as var(--sk-ink)12.
+  const invalidAlpha=css.match(/var\(--sk-[a-z-]+\)[0-9a-fA-F]{2}\b/g)||[];
+  if(found.length||invalidAlpha.length)failures.push({path,values:found,invalidAlpha});
 }
 assert.deepEqual(failures,[], 'P0D: legacy forest/lime colors must not return to migrated UI modules');
 console.log('P0D design palette guard passed for '+migrated.length+' completed component styles; intentionally excludes valid provider branding and legacy CSS awaiting source audit.');
