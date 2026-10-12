@@ -178,3 +178,41 @@
 }
 @media(min-width:601px) and (max-width:1100px){.heroMode .actions.multi{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){.heroMode .option,.heroMode .primary,.heroMode .secondary{transition:none}}
+
+
+/* P0F 2026-10-12 — one decisive, high-contrast product instrument.
+   All four existing SSR links remain present in the default route. */
+@media(min-width:1025px){
+ .heroMode .question{padding:27px 27px 22px}
+ .heroMode .questionLabel{font-size:23px;margin-bottom:17px;letter-spacing:-.035em}
+ .heroMode .options{gap:12px}
+ .heroMode .option{min-height:91px;padding:15px 16px;font-size:15px;border-radius:18px;gap:13px}
+ .heroMode .option>svg{width:25px;height:25px}
+ .heroMode .panel{padding:29px 30px 30px;border-radius:24px;min-height:293px}
+ .heroMode .panelBody{margin:15px 0 21px}
+ .heroMode .panel h3{font-size:clamp(29px,2.25vw,38px);line-height:1.08;margin:7px 0 12px}
+ .heroMode .panelBody p{font-size:15px;line-height:1.55;max-width:550px}
+ .heroMode .actions{gap:12px}
+ .heroMode .actions a{min-height:60px;padding:14px 16px;font-size:14px;border-radius:13px}
+ .heroMode .caution{font-size:12px;margin-top:16px}
+}
+@media(min-width:601px) and (max-width:1024px){
+ .heroMode .question{padding:19px 17px 16px}
+ .heroMode .option{min-height:72px}
+ .heroMode .panel{padding:21px 20px}
+ .heroMode .panel h3{font-size:26px}
+ .heroMode .actions.multi{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:600px){
+ .heroMode .question{padding:17px 14px 15px}
+ .heroMode .questionLabel{font-size:19px;margin-bottom:13px}
+ .heroMode .options{gap:9px}
+ .heroMode .option{min-height:69px;padding:12px 10px;font-size:13px}
+ .heroMode .panel{padding:20px 17px 21px}
+ .heroMode .panel h3{font-size:24px}
+ .heroMode .panelBody p{font-size:13px}
+ .heroMode .actions.multi a{min-height:75px}
+}
+@media(max-width:360px){
+ .heroMode .option{font-size:12px;gap:7px;padding:10px 8px}
+}
