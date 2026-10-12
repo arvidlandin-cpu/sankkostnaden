@@ -9,7 +9,7 @@ const sources:Record<Category,string>={
 };
 export default function CategoryHeroPhoto({category}:{category:Category}){
  const id=sources[category];
- const base='https://images.pexels.com/photos/'+id+'/pexels-photo-'+id+'.jpeg?auto=compress&cs=tinysrgb&fit=crop';
+ const base=['https://images.pexels.com/photos',id,'pexels-photo-'+id+'.jpeg'].join('/')+'?auto=compress&cs=tinysrgb&fit=crop';
  return <img
    src={base+'&w=1600'}
    srcSet={base+'&w=700 700w, '+base+'&w=1100 1100w, '+base+'&w=1600 1600w, '+base+'&w=2400 2400w'}
