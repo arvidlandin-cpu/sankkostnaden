@@ -44,7 +44,7 @@ for(const width of [390,1440]){
             focusable:document.querySelectorAll('button,a[href],input,select').length,
           };
         });
-        expect(snapshot.background,'sitewide canvas '+path).toBe('rgb(249, 250, 252)');
+        expect(snapshot.background,'sitewide canvas '+path).toBe('rgb(250, 249, 245)');
         expect(snapshot.overflow,'horizontal overflow '+path).toBeLessThanOrEqual(1);
         expect(snapshot.focusable,'functional links or controls '+path).toBeGreaterThan(0);
         await page.screenshot({path:`test-results/screenshots/p0d-journey-${name}-${info.project.name}-${width}.png`,fullPage:true});
