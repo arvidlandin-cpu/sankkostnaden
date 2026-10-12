@@ -250,3 +250,14 @@
  .article:global(.categoryArticle){padding:24px 14px 41px!important}
  .intro:global(.categoryIntro){padding:20px 18px}
 }
+
+/* The global article/guide selectors also carry !important. Beat them by
+   specificity rather than relying on CSS chunk order across Next routes. */
+@media(min-width:1025px){
+ .hero:global(.categoryHero) .heroInner:global(.guideWrap){max-width:1400px!important;width:100%!important}
+ .main .article:global(.categoryArticle){max-width:1420px!important;padding:65px 32px 85px!important}
+ .topbar:global(.topbar){padding-left:max(28px,calc((100vw - 1480px)/2))!important;padding-right:max(28px,calc((100vw - 1480px)/2))!important}
+}
+@media(min-width:761px) and (max-width:1024px){
+ .main .article:global(.categoryArticle){max-width:100%!important;padding:42px 28px 68px!important}
+}
