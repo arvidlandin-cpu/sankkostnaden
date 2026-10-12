@@ -105,12 +105,12 @@ export default function Home(){
           <div><p>VÄLJ OMRÅDE</p><h2>Vad vill du se över?</h2><span>Fem områden. Välj ett – vi hjälper dig vidare därifrån.</span></div>
         </div>
         <div className={styles.popularGrid}>
-          {categories.map(({title,subtitle,href,image,icon:Icon})=><a className={styles.popularCard} href={href} key={title}>
+          {categories.map(({title,subtitle,href,image,icon:Icon},index)=><a className={styles.popularCard} href={href} key={title}>
             <div className={styles.popularPhoto}>
               <img className={styles.popularImageExact}
                 src={image+'&w=1200'}
                 srcSet={image+'&w=700 700w, '+image+'&w=1200 1200w, '+image+'&w=1800 1800w'}
-                sizes='(max-width:760px) 95vw, (max-width:1100px) 45vw, 42vw'
+                sizes={index===4?'(max-width:760px) 95vw, (max-width:1100px) 32vw, 33vw':index<2?'(max-width:760px) 50vw, (max-width:1100px) 48vw, 50vw':'(max-width:760px) 50vw, (max-width:1100px) 32vw, 33vw'}
                 alt='' loading='lazy' decoding='async'/>
               <span className={styles.popularBadge} aria-hidden='true'><Icon size={27} strokeWidth={2.1}/></span>
             </div>
