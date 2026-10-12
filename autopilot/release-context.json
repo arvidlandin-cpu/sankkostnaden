@@ -5,14 +5,14 @@
   "latestVerifiedMainCommit": "5f59f1e73c1fda9c51e3448501929e50e7925c64",
   "decisionContext": {
     "northStar": "Long-term approved affiliate revenue per relevant visitor; truthful consumer value and SEO trust first.",
-    "design": "Later binding owner P0F 2026-10-12: screenshots show too small/narrow/boxy despite P0D/P0E. Bold category/home/partner visual scale on branch design/p0f-bold-premium-desktop-20261012; status IN PR/QA, not merged or live or visually approved. Read autopilot/BOLD_PREMIUM_SCALE_2026-10-12.md. Earlier P0D/P0E remain historical shipped changes; do not repeat them.",
+    "design": "P0G 2026-10-12 later owner decision: images/partner names/signature insights after P0F merge. Development branch design/p0g-assets-brand-insights-20261012; source QA/merge/live/visual acceptance separate. Read autopilot/ASSET_BRAND_EXPERIENCE_P0G_2026-10-12.md first.",
     "conversion": "Keep real comparison-service vs individual-supplier distinctions, partner visibility and clearly labeled affiliate links; user need not know consumption to reach legitimate partner options.",
     "pricing": "Electricity quarter-hour spot feed SE1-SE4 is real, but NOT a per-provider offer feed. No fabricated cheapest provider, 'best choice', monthly quote, ratings, guaranteed saving or extrapolated shift savings.",
     "experimentStatus": "As of 2026-10-10 one active scoped CONTENT_UTILITY_UPGRADE for /elavtal/kvartspris/ (PR #103), awaiting qualified organic measurements; cancelled Oct 7 insurance snippet remains inactive, no Oct 15 gate. Up to two fully independent initiatives subject to policy.",
     "capacity": "Independent non-paid traffic acquisition remains the highest commercial constraint; continue alongside design. No paid media or contracts without owner approval.",
     "finishStandard": "Read autopilot/PRODUCT_FINISHING_STANDARD_2026-10-09.md. Every screen, field, sentence and CTA must serve the user's immediate job, with premium consistent UX, real price data and QA. Do not call project finished from isolated feature PRs.",
-    "nextExecution": "Review P0F visual PR against actual desktop/mobile screenshots at 100% zoom, check Build/commercial regressions and partner attribution, then separately verify Pages deploy versus own-domain served product files before declaring live. Do not overlap the six shared CSS files with operator. Physical iPhone UNTESTED; approved all-network commission UNKNOWN; no CRO uplift inferred from CI. Kvartspris observation unaffected; cancelled insurance snippet stays cancelled.",
-    "strategySourceOfTruth": "Read autopilot/BOLD_PREMIUM_SCALE_2026-10-12.md first, then EXPERIENCE_FIRST_2026-10-11, MASTERPLAN_EXECUTION, PRODUCT_FINISHING_STANDARD, VISUAL_UX_ROADMAP, policy/state/GA4/GSC/network facts. CI, merge, deploy, served files and owner visual acceptance are distinct."
+    "nextExecution": "P0G source QA: responsive Pexels photo resolution, real SVG logo fallback, five useful category questions, Tibber sponsored disclosure distinct from independent spot chart, unchanged affiliate URL/canonical, browser tests in 360–1440. Do not change published SEO experiments. Live approved revenue UNKNOWN. Do not confuse CI with UX uplift.",
+    "strategySourceOfTruth": "Latest P0G: autopilot/ASSET_BRAND_EXPERIENCE_P0G_2026-10-12.md, then P0F/P0E and MASTERPLAN_EXECUTION, PRODUCT_FINISHING_STANDARD, VISUAL_UX_ROADMAP, policy/state, verified GSC/GA4 and network data."
   },
   "shipped": [
     {
