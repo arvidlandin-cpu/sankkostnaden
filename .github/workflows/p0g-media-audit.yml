@@ -25,12 +25,12 @@ jobs:
           set -u
           failed=0
           for id in 36777855 2962066 8067709 27175807 16139628 37834298 20838370 28949489 16098002; do
-            url="https://images.pexels.com/photos/$id/pexels-photo-$id.jpeg?auto=compress&cs=tinysrgb&w=1200&fit=crop"
+            url="https://images.pexels.com/photos/$id/pexels-photo-$id.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=700"
             file="/tmp/p0g-$id.jpg"
             if curl --retry 2 --retry-all-errors --retry-delay 1 --connect-timeout 10 --max-time 25 --fail --location --silent --show-error --output "$file" "$url"; then
               bytes=$(wc -c <"$file")
               mime=$(file --mime-type -b "$file")
-              echo "IMAGE $id OK bytes=$bytes type=$mime"
+              echo "IMAGE $id EXACT_SRCSET_700 OK bytes=$bytes type=$mime"
               if [[ "$mime" != "image/jpeg" || "$bytes" -lt 25000 ]]; then
                 echo "::error::Invalid image data for $id"
                 failed=1
