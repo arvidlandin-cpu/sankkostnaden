@@ -25,7 +25,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          for id in 39997379 3875157 4609074 4609079 4008771 4874926 6995135 7078807 7117518 4260743 4008771 5093672 6274776 8055093 5998169 6337116 9885411 3875141 8055076 8055828 8067709 28949489 16098002 4473625 5901387 6964105 4474041 4254149 27177239; do
+          for id in 39997379 4008771 4260743 7117518 8055828 8067709 28949489 16098002 4473625 5901387 6964105 4254149 27177239; do
             url="https://images.pexels.com/photos/$id/pexels-photo-$id.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1600"
             file="/tmp/p0h-$id.jpeg"
             curl --fail --location --silent --show-error --retry 2 --retry-all-errors --connect-timeout 10 --max-time 25 --output "$file" "$url"
@@ -38,12 +38,3 @@ jobs:
             echo "P0H photo $id HTTP OK, jpeg, $bytes bytes"
           done
           echo "All 12 new warm editorial photo sources are reachable."
-
-      - name: Store real photo candidates for owner-directed art selection
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: p0i-photo-candidates
-          path: /tmp/p0h-*.jpeg
-          if-no-files-found: warn
-          retention-days: 2
