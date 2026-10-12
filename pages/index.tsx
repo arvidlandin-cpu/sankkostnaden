@@ -1,15 +1,17 @@
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
-import { ArrowRight, PiggyBank } from 'lucide-react';
+import { ArrowRight, PiggyBank, Wifi, Zap, Smartphone, ShieldCheck, WalletCards } from 'lucide-react';
 import styles from '../styles/Home.module.css';
 import HomeHero from '../components/HomeHero';
 
+/* Licensed Pexels originals in responsive 700/1200/1800px variants. 
+   No pre-rendered text or logos in imagery; the overlay icons are vector UI. */
 const categories=[
-  {title:'Bredband',subtitle:'Pris, fart & adress',href:'/bredband/',image:'/design/card-bredband.webp'},
-  {title:'El',subtitle:'Avtal & elpriser',href:'/elavtal/',image:'/design/card-el.webp'},
-  {title:'Mobil',subtitle:'Surf & abonnemang',href:'/mobil/',image:'/design/card-mobil.webp'},
-  {title:'Försäkring',subtitle:'Hem, djur & resa',href:'/forsakring/',image:'/design/card-forsakring.webp'},
-  {title:'Lån & ekonomi',subtitle:'Ränta & totalkostnad',href:'/ekonomi/',image:'/design/card-ekonomi.webp'},
+  {title:'Bredband',subtitle:'Pris, fart & adress',href:'/bredband/',icon:Wifi,image:'https://images.pexels.com/photos/36777855/pexels-photo-36777855.jpeg?auto=compress&cs=tinysrgb&fit=crop'},
+  {title:'El',subtitle:'Avtal & elpriser',href:'/elavtal/',icon:Zap,image:'https://images.pexels.com/photos/2962066/pexels-photo-2962066.jpeg?auto=compress&cs=tinysrgb&fit=crop'},
+  {title:'Mobil',subtitle:'Surf & abonnemang',href:'/mobil/',icon:Smartphone,image:'https://images.pexels.com/photos/35052813/pexels-photo-35052813.jpeg?auto=compress&cs=tinysrgb&fit=crop'},
+  {title:'Försäkring',subtitle:'Hem, djur & resa',href:'/forsakring/',icon:ShieldCheck,image:'https://images.pexels.com/photos/4680321/pexels-photo-4680321.jpeg?auto=compress&cs=tinysrgb&fit=crop'},
+  {title:'Lån & ekonomi',subtitle:'Ränta & totalkostnad',href:'/ekonomi/',icon:WalletCards,image:'https://images.pexels.com/photos/16139628/pexels-photo-16139628.jpeg?auto=compress&cs=tinysrgb&fit=crop'},
 ];
 
 const guideGroups=[
