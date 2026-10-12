@@ -68,7 +68,17 @@ test('P0G home CDN sources deliver real imagery rather than placeholder thumbnai
   const imgs=page.locator('main #jamfor img');
   for(const image of await imgs.all()){
     await image.scrollIntoViewIfNeeded();
-    await expect.poll(()=>image.evaluate((el:HTMLImageElement)=>el.complete && el.naturalWidth>=700),{timeout:18000,intervals:[500,1000,2000]}).toBeTruthy();
+    try {
+      await expect.poll(()=>image.evaluate((el:HTMLImageElement)=>el.complete && el.naturalWidth>=700),{timeout:18000,intervals:[500,1000,2000]}).toBeTruthy();
+    } catch(error) {
+      const state=await image.evaluate((el:HTMLImageElement)=>({
+        src:el.getAttribute('src'),srcset:el.getAttribute('srcset'),currentSrc:el.currentSrc,
+        complete:el.complete,naturalWidth:el.naturalWidth,displayWidth:el.getBoundingClientRect().width,
+        devicePixelRatio:window.devicePixelRatio
+      }));
+      console.error('P0G IMAGE FAILURE DETAILS',JSON.stringify(state));
+      throw error;
+    }
   }
 });
 
