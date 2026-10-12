@@ -13,6 +13,29 @@ for(const width of [390,1440,1920]){
  for(const [name,path] of targets){
   await page.goto(base+path+'?qa=1',{waitUntil:'domcontentloaded',timeout:30000});
   await page.locator('h1').first().waitFor({timeout:20000});
+  // Full-page browser screenshots are not proof of image quality unless
+  // the off-screen responsive images have finished loading. Force each card
+  // into the viewport and wait for actual decoded pixels before capture.
+  const photos=page.locator('main img[src*="pexels.com"]');
+  for(const photo of await photos.all()){
+    await photo.scrollIntoViewIfNeeded();
+    await photo.evaluate(async(node)=>{const img=node;if(!img.complete||img.naturalWidth===0)await Promise.race([img.decode().catch(()=>{}),new Promise(r=>setTimeout(r,18000))]);});
+  }
+  const hero=page.locator('[data-testid^="p0h-hero-photo-"]').first();
+  if(await hero.count()) {
+    await hero.scrollIntoViewIfNeeded();
+    await hero.evaluate(async(node)=>{const img=node;if(!img.complete||img.naturalWidth===0)await Promise.race([img.decode().catch(()=>{}),new Promise(r=>setTimeout(r,18000))]);});
+  }
+  // Give large remote CSS background images the same readiness guarantee.
+  const sections=page.locator('[class*="CategorySpotlight_visual__"]');
+  for(const visual of await sections.all()){
+    const url=await visual.evaluate(node=>{
+      const value=getComputedStyle(node).backgroundImage;
+      return value.match(/url\\([\"']?(https?:[^\"')]+)/)?.[1]||null;
+    });
+    if(url) await page.evaluate(async u=>await Promise.race([new Promise(r=>{const i=new Image();i.onload=()=>r(true);i.onerror=()=>r(false);i.src=u}),new Promise(r=>setTimeout(()=>r(false),18000))]),url);
+  }
+  await page.evaluate(()=>scrollTo({top:0,left:0,behavior:'instant'}));
   const images=await page.evaluate(async()=>{
    const photos=[...document.querySelectorAll('main img[src*="pexels.com"]')];
    for(const image of photos.slice(0,2)){
