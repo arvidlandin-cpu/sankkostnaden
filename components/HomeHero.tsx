@@ -14,7 +14,7 @@ export default function HomeHero(){
   <div className={styles.inner}>
    <div className={styles.copy}>
     <p className={styles.eyebrow}><Sparkles size={18}/> FÖR LIVET HEMMA</p>
-    <h1>Mer kvar till <em>livet.</em><span> Mindre till det onödiga.</span></h1>
+    <h1>Sänk dina fasta kostnader.<em> Ge mer plats åt livet.</em></h1>
     <p className={styles.lead}>Bredband, el, mobil och försäkringar – det mesta rullar på av gammal vana. Vi hjälper dig se vad som är värt att jämföra, utan krångliga formulär.</p>
     <div className={styles.actions}>
      <a href='/app/' className={styles.primary}>
