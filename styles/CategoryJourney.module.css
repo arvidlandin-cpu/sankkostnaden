@@ -27,3 +27,48 @@
 @media(max-width:650px){.root{margin:-15px auto 12px;padding:17px 14px 12px;width:calc(100% - 26px);border-radius:19px}.top{align-items:flex-start}.heading h2{font-size:23px}.noLogin{display:none}.choices{gap:7px}.choice{flex-direction:column;justify-content:center;align-items:center;text-align:center;min-height:104px;border-radius:13px;padding:10px 5px;gap:6px}.choiceIcon{width:34px;height:34px;flex:0 0 34px}.choice strong{font-size:12px;line-height:1.25}.choice small{font-size:10px}.outcome{display:grid;gap:14px;padding:17px 16px;border-radius:14px}.outcome h3{font-size:21px}.outcome p{font-size:13px}.next{width:100%;max-width:none;align-self:auto}.note{font-size:11px}}
 @media(max-width:360px){.choice strong{font-size:11.5px}.choice small{font-size:10px}.choiceIcon{width:31px;height:31px;flex-basis:31px}}
 @media(prefers-reduced-motion:reduce){.choice,.next{transition:none}.choice:hover,.next:hover{transform:none}}
+
+
+/* P0F 2026-10-12 — the category decision deck is the hero's real outcome,
+   not a narrow floating widget. Scroll fix from PR #139 remains intact. */
+@media(min-width:1025px){
+ .root{width:min(1370px,calc(100% - 80px));margin:-43px auto 50px;padding:35px 38px 27px;border-radius:32px;box-shadow:0 28px 75px rgba(22,47,99,.13)}
+ .top{margin-bottom:25px}
+ .heading{gap:17px}.spark{width:54px;height:54px;border-radius:18px}
+ .heading p{font-size:12px}
+ .heading h2{font-size:clamp(32px,3vw,42px);line-height:1.07}
+ .noLogin{font-size:13px}
+ .choices{gap:17px}
+ .choice{min-height:120px;padding:20px 21px;border-radius:21px;gap:15px}
+ .choiceIcon{width:53px;height:53px;flex-basis:53px;border-radius:16px}
+ .choice strong{font-size:18px}
+ .choice small{font-size:13px}
+ .outcome{margin-top:22px;padding:28px 35px;border-radius:23px;min-height:155px;gap:30px}
+ .outcomeContent{max-width:800px}
+ .outcomeCaption{font-size:11px}
+ .outcome h3{font-size:clamp(27px,2.5vw,35px);line-height:1.08;margin:9px 0}
+ .outcome p{font-size:15px}
+ .next{max-width:360px;min-height:64px;padding:17px 23px;font-size:15px;border-radius:16px}
+ .note{font-size:12px;margin-top:16px}
+}
+@media(min-width:761px) and (max-width:1024px){
+ .root{width:calc(100% - 52px);margin:-30px auto 32px;padding:26px 25px 19px}
+ .heading h2{font-size:31px}
+ .choice{min-height:94px}
+ .choice strong{font-size:14px}
+ .outcome{padding:22px 24px}
+ .next{max-width:300px}
+}
+@media(max-width:760px){
+ .root{width:calc(100% - 26px);margin:-22px auto 26px;border-radius:22px;padding:21px 17px 16px}
+ .heading h2{font-size:26px}
+ .outcome{padding:20px}
+ .outcome h3{font-size:24px}
+ .next{min-height:54px}
+}
+@media(max-width:390px){
+ .root{padding:17px 13px 14px}
+ .choice{min-height:101px;padding:9px 5px}
+ .choice strong{font-size:12px}
+ .outcome{padding:18px 15px}
+}
