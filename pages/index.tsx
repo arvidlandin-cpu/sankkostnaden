@@ -9,8 +9,8 @@ import HomeHero from '../components/HomeHero';
 const categories=[
   {title:'Bredband',subtitle:'Pris, fart & adress',href:'/bredband/',icon:Wifi,image:'https://images.pexels.com/photos/36777855/pexels-photo-36777855.jpeg?auto=compress&cs=tinysrgb&fit=crop'},
   {title:'El',subtitle:'Avtal & elpriser',href:'/elavtal/',icon:Zap,image:'https://images.pexels.com/photos/2962066/pexels-photo-2962066.jpeg?auto=compress&cs=tinysrgb&fit=crop'},
-  {title:'Mobil',subtitle:'Surf & abonnemang',href:'/mobil/',icon:Smartphone,image:'https://images.pexels.com/photos/35052813/pexels-photo-35052813.jpeg?auto=compress&cs=tinysrgb&fit=crop'},
-  {title:'Försäkring',subtitle:'Hem, djur & resa',href:'/forsakring/',icon:ShieldCheck,image:'https://images.pexels.com/photos/4680321/pexels-photo-4680321.jpeg?auto=compress&cs=tinysrgb&fit=crop'},
+  {title:'Mobil',subtitle:'Surf & abonnemang',href:'/mobil/',icon:Smartphone,image:'https://images.pexels.com/photos/8067709/pexels-photo-8067709.jpeg?auto=compress&cs=tinysrgb&fit=crop'},
+  {title:'Försäkring',subtitle:'Hem, djur & resa',href:'/forsakring/',icon:ShieldCheck,image:'https://images.pexels.com/photos/27175807/pexels-photo-27175807.jpeg?auto=compress&cs=tinysrgb&fit=crop'},
   {title:'Lån & ekonomi',subtitle:'Ränta & totalkostnad',href:'/ekonomi/',icon:WalletCards,image:'https://images.pexels.com/photos/16139628/pexels-photo-16139628.jpeg?auto=compress&cs=tinysrgb&fit=crop'},
 ];
 
