@@ -31,7 +31,10 @@ for(const width of [390,1440,1920]){
   for(const visual of await sections.all()){
     const url=await visual.evaluate(node=>{
       const value=getComputedStyle(node).backgroundImage;
-      return value.match(/url\\([\"']?(https?:[^\"')]+)/)?.[1]||null;
+      const start=value.indexOf('https://images.pexels.com/');
+      if(start<0)return null;
+      const end=value.indexOf('"',start);
+      return value.slice(start,end>start?end:undefined);
     });
     if(url) await page.evaluate(async u=>await Promise.race([new Promise(r=>{const i=new Image();i.onload=()=>r(true);i.onerror=()=>r(false);i.src=u}),new Promise(r=>setTimeout(()=>r(false),18000))]),url);
   }
