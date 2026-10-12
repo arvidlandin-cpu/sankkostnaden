@@ -34,3 +34,6 @@
 @media(max-width:650px){.root{width:calc(100% - 26px);margin:23px auto 38px}.grid{border-radius:24px}.editorial{padding:26px 19px 22px}.editorial h2{font-size:clamp(31px,8vw,39px);max-width:none}.lead{font-size:15px;margin-bottom:23px}.eyebrow{font-size:10px}.questions{gap:8px}.choice{padding:12px 10px;min-height:69px;font-size:12px;border-radius:13px}.answer{padding:20px 17px;min-height:0}.answer p{font-size:14px;margin-bottom:16px}.action{width:100%;font-size:13px;min-height:51px}.visual{padding:29px 23px;min-height:0}.visualIcon{width:57px;height:57px;border-radius:19px;margin-bottom:20px}.visualIcon svg{width:28px}.visualKicker{font-size:10px}.visualTitle{font-size:clamp(31px,7.5vw,40px);max-width:20ch;margin-bottom:19px}.visualBody{font-size:14px}.visualLine{margin:0 0 20px}.brandLogo{max-width:225px;min-height:85px;padding:15px 20px}.partnerLink{width:100%;min-height:54px}.spotPrice{padding-top:19px}.priceExplain{font-size:10px}}
 @media(max-width:360px){.editorial{padding:23px 15px}.choice{font-size:11.5px;padding:10px 8px}.visual{padding:25px 17px}}
 @media(prefers-reduced-motion:reduce){.choice{transition:none}}
+
+/* SVG icon may be blocked by an image CDN; typography must not disappear. */
+.brandFallback{display:block;color:#121212;font-size:clamp(38px,4vw,54px);font-weight:900;letter-spacing:-.09em;line-height:1}
