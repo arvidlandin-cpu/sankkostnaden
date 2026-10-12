@@ -70,7 +70,7 @@ export default function CategoryLanding({
 
     <main className={premium.main}>
       <section className={`guideHero categoryHero guideHero-${category} ${premium.hero}`}>
-        <div className={premium.heroArtwork} aria-hidden='true'><CategoryHeroPhoto category='category'/></div>
+        <div className={premium.heroArtwork} aria-hidden='true'><CategoryHeroPhoto category={category}/></div>
         <div className={`guideWrap ${premium.heroInner}`}>
           <Link className='back' href='/'><ArrowLeft size={16}/> Till startsidan</Link>
           <div className='categoryHeroIcon'><Icon size={25}/></div>
