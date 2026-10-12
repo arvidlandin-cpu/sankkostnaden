@@ -58,6 +58,7 @@ const config:Record<PartnerCategory,Config>={
 
 export default function CategorySpotlight({category}:{category:PartnerCategory}){
   const [choice,setChoice]=useState<0|1>(0);
+  const [logoUnavailable,setLogoUnavailable]=useState(false);
   const info=config[category];const Icon=info.icon;const current=info.paths[choice];
   const tibber=category==='el'?getActivePartners('el','electricity',40).find(p=>p.name==='Tibber'):undefined;
   return <section className={s.root} data-testid={'p0g-insight-'+category} aria-labelledby={'p0g-insight-title-'+category}>
@@ -83,7 +84,7 @@ export default function CategorySpotlight({category}:{category:PartnerCategory})
         {category==='el'&&tibber?<>
           <p className={s.visualKicker}>EXEMPEL PÅ AKTIV PARTNER · INGEN PRISRANKING</p>
           <div className={s.brandLogo}>
-            <img src='https://upload.wikimedia.org/wikipedia/commons/1/18/Tibber_logo.svg' alt='Tibber' loading='lazy' width={240} height={74}/>
+            {logoUnavailable?<strong className={s.brandFallback}>Tibber</strong>:<img src='https://upload.wikimedia.org/wikipedia/commons/1/18/Tibber_logo.svg' alt='Tibber' loading='lazy' width={240} height={74} onError={()=>setLogoUnavailable(true)}/>}
           </div>
           <strong className={s.visualTitle}>Utforska elavtal och smart energianvändning</strong>
           <p className={s.visualBody}>Tibber är en av våra elpartners. Våra visade kvartspriser är oberoende spotdata och visar inte Tibbers personliga erbjudande.</p>
