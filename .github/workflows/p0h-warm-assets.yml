@@ -1,0 +1,39 @@
+name: P0H warm photographic experience audit
+
+on:
+  push:
+    branches:
+      - 'design/p0h-*'
+    paths:
+      - '.github/workflows/p0h-warm-assets.yml'
+      - 'components/HomeHero.tsx'
+      - 'pages/index.tsx'
+      - 'styles/CategoryPremium.module.css'
+      - 'styles/CategorySpotlight.module.css'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-real-photography:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - name: Check new warm editorial images really download
+        shell: bash
+        run: |
+          set -euo pipefail
+          for id in 3875141 8055076 8055828 8067709 28949489 16098002 4473625 5901387 6964105 4474041 4254149 27177239; do
+            url="https://images.pexels.com/photos/$id/pexels-photo-$id.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1600"
+            file="/tmp/p0h-$id.jpeg"
+            curl --fail --location --silent --show-error --retry 2 --retry-all-errors --connect-timeout 10 --max-time 25 --output "$file" "$url"
+            bytes=$(wc -c <"$file")
+            mime=$(file --mime-type -b "$file")
+            if [[ "$mime" != "image/jpeg" || "$bytes" -lt 9000 ]]; then
+              echo "::error::Photo $id delivered invalid image ($mime, $bytes bytes)"
+              exit 1
+            fi
+            echo "P0H photo $id HTTP OK, jpeg, $bytes bytes"
+          done
+          echo "All 12 new warm editorial photo sources are reachable."

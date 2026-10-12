@@ -227,7 +227,7 @@ for(const width of [360,390,430,1024,1440]){
       };
     });
     expect(tokens).toEqual({
-      canvas:'#f9fafc',ink:'#101d42',action:'#234bd1',surface:'#f1f5ff',theme:'#101d42'
+      canvas:'#faf9f5',ink:'#101d42',action:'#234bd1',surface:'#f2f4ed',theme:'#101d42'
     });
     await page.getByRole('button',{name:/Nej, visa familjeabonnemang/}).click();
     await expect(page.getByTestId('family-mobile-no-prices')).toBeVisible();

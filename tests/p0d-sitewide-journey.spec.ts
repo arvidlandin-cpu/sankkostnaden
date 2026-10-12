@@ -42,7 +42,7 @@ for (const width of viewports) {
       expect(metrics.overflow, 'No horizontal overflow on real route').toBeLessThanOrEqual(1);
       expect(metrics.ink).toBe('#101d42');
       expect(metrics.action).toBe('#234bd1');
-      expect(metrics.canvas).toBe('#f9fafc');
+      expect(metrics.canvas).toBe('#faf9f5');
       await page.screenshot({
         path: 'test-results/screenshots/p0d-journey-' + testInfo.project.name + '-' + route.name + '-' + width + '.png',
         fullPage: true,

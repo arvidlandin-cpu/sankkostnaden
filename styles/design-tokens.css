@@ -6,15 +6,15 @@
  */
 :root {
   color-scheme: light;
-  --sk-canvas: #f9fafc;
+  --sk-canvas: #faf9f5;
   --sk-surface: #ffffff;
-  --sk-surface-soft: #f1f5ff;
-  --sk-surface-raised: #fbfcff;
+  --sk-surface-soft: #f2f4ed;
+  --sk-surface-raised: #fffdfa;
   --sk-ink: #101d42;
   --sk-ink-muted: #485b78;
   --sk-ink-subtle: #586c87;
-  --sk-line: #d9e2f1;
-  --sk-line-strong: #b7c8e5;
+  --sk-line: #dfe5dd;
+  --sk-line-strong: #bfcdbf;
   --sk-accent: #dbe7ff;
   --sk-accent-ink: #21469d;
   --sk-action: #234bd1;

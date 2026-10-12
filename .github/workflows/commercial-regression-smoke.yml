@@ -127,6 +127,7 @@ jobs:
             tests/family-result-contrast.spec.ts \
             tests/trust-footer-insurance.spec.ts \
             tests/p0g-visual-journeys.spec.ts \
+            tests/p0h-warm-editorial.spec.ts \
             --project=chromium
 
       - name: Preserve real Chromium screenshots before WebKit clears the Playwright output folder

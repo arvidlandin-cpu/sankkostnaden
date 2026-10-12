@@ -177,7 +177,7 @@ for(const width of [360,390,430,1024,1440]){
     expect(bg).toContain('rgb(16, 37, 77)');
     await expect(gateway.locator('.gatewayDirect')).toBeVisible();
     const direct=await gateway.locator('.gatewayDirect').evaluate(el=>getComputedStyle(el).backgroundColor);
-    expect(direct).toBe('rgb(241, 245, 255)');
+    expect(direct).toBe('rgb(242, 244, 237)');
     const checks=page.locator('.checkList svg');
     expect(await checks.count()).toBeGreaterThan(1);
     expect(await checks.first().evaluate(el=>getComputedStyle(el).color)).toBe('rgb(33, 70, 157)');
@@ -189,7 +189,7 @@ for(const width of [360,390,430,1024,1440]){
     await page.goto('/ekonomi/?qa=1');
     const matcher=page.locator('.mobileMatcher').first();
     await expect(matcher).toBeVisible();
-    expect(await matcher.evaluate(el=>getComputedStyle(el).backgroundImage)).toContain('rgb(241, 245, 255)');
+    expect(await matcher.evaluate(el=>getComputedStyle(el).backgroundImage)).toContain('rgb(242, 244, 237)');
     const loan=page.getByRole('region',{name:'Hitta relevant lånejämförelse'});
     const choice=loan.getByRole('button',{name:'Nytt privatlån'});
     await choice.click();
@@ -209,7 +209,7 @@ for(const width of [360,390,430,1024,1440]){
     const hero=document.querySelector('.guideHero')!;
     return {canvas:getComputedStyle(document.body).backgroundColor,hero:getComputedStyle(hero).backgroundImage};
   });
-  expect(values.canvas).toBe('rgb(249, 250, 252)');
+  expect(values.canvas).toBe('rgb(250, 249, 245)');
   expect(values.hero).toContain('rgba(16, 29, 66');
   await expect(page.getByRole('heading',{level:1,name:/Hemförsäkring bostadsrätt 2026/})).toBeVisible();
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href','https://sankkostnaden.se/forsakring/hemforsakring-bostadsratt/');

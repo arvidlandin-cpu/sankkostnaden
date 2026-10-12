@@ -454,8 +454,8 @@ for(const width of [360,390,430,1024,1440]){
     const st=getComputedStyle(el);
     return {background:st.backgroundImage,border:st.borderColor};
   });
-  expect(colors.background).toContain('rgb(241, 245, 255)');
-  expect(colors.border).toBe('rgb(217, 226, 241)');
+  expect(colors.background).toContain('rgb(242, 244, 237)');
+  expect(colors.border).toBe('rgb(223, 229, 221)');
   const earlyOverflow=await page.evaluate(()=>Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)-document.documentElement.clientWidth);
   expect(earlyOverflow).toBeLessThanOrEqual(1);
   await page.screenshot({path:`test-results/screenshots/p0d-costcheck-early-${info.project.name}-${width}.png`,fullPage:true});
@@ -476,7 +476,7 @@ for(const width of [360,390,430,1024,1440]){
   await expect(noIssue).toBeVisible();
   const firstExit=noIssue.getByRole('link').first();
   await expect(firstExit).toBeVisible();
-  expect(await firstExit.evaluate(el=>getComputedStyle(el).backgroundColor)).toBe('rgb(241, 245, 255)');
+  expect(await firstExit.evaluate(el=>getComputedStyle(el).backgroundColor)).toBe('rgb(242, 244, 237)');
   const noIssueOverflow=await page.evaluate(()=>Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)-document.documentElement.clientWidth);
   expect(noIssueOverflow).toBeLessThanOrEqual(1);
   await page.screenshot({path:`test-results/screenshots/p0d-costcheck-safe-${info.project.name}-${width}.png`,fullPage:true});
@@ -489,7 +489,7 @@ test('P0D remaining CostCheck progress/score accents use navy tokens rather than
   await page.getByRole('button',{name:'Byt område'}).click();
   const progress=page.locator('[class*="progressRail"] button b').nth(1);
   await expect(progress).toBeVisible();
-  expect(await progress.evaluate(el=>getComputedStyle(el).backgroundColor)).toBe('rgb(241, 245, 255)');
+  expect(await progress.evaluate(el=>getComputedStyle(el).backgroundColor)).toBe('rgb(242, 244, 237)');
   await page.getByRole('button',{name:'Byt område'}).click();
   await page.getByRole('button',{name:/Priset har höjts eller känns dyrt/i}).click();
   await expect(page.getByTestId('cost-check-early-result')).toBeVisible();

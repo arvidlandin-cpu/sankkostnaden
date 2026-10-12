@@ -1,3 +1,4 @@
+import CategoryHeroPhoto from '../components/CategoryHeroPhoto';
 import Head from 'next/head';
 import Link from 'next/link';
 import { ArrowRight, Check, PiggyBank, ShieldCheck, Zap } from 'lucide-react';
@@ -34,7 +35,7 @@ export default function Elavtal(){
   </header>
   <main className={pageStyles.main}>
    <section className={`guideHero categoryHero guideHero-el ${pageStyles.hero}`}>
-    <div className={pageStyles.heroArtwork} aria-hidden='true'/>
+    <div className={pageStyles.heroArtwork} aria-hidden='true'><CategoryHeroPhoto category='el'/></div>
     <div className={`guideWrap ${pageStyles.heroInner}`}>
      <nav className='breadcrumbs' aria-label='Brödsmulor'><Link href='/'>Start</Link><span>›</span><span aria-current='page'>Elavtal</span></nav>
      <div className='categoryHeroIcon'><Zap size={25}/></div>

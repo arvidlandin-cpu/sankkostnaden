@@ -40,7 +40,7 @@ for (const width of widths) for (const slug of slugs) {
       };
     });
     expect(result.documentWidth - result.viewportWidth, 'horizontal page overflow').toBeLessThanOrEqual(1);
-    expect(result.background).toBe('#f9fafc');
+    expect(result.background).toBe('#faf9f5');
     expect(result.action).toBe('#234bd1');
     await page.screenshot({
       path: 'test-results/screenshots/p0d-all-pages-' + width + '-' + slug.replace(/\W+/g, '-').replace(/^-|-$/g, '') + '.png',

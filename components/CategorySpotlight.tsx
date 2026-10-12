@@ -12,7 +12,7 @@ const config:Record<PartnerCategory,Config>={
   bredband:{
     eyebrow:'DIN UPPKOPPLING · BÖRJA RÄTT',title:'Hela hemmet ska fungera. Inte bara priset.',
     lead:'Börja med hur ni faktiskt använder uppkopplingen. Kontrollera sedan vilka alternativ som finns på din adress.',
-    visual:'Adress först. Hastighet sedan.',icon:Wifi,
+    visual:'För allt som händer hemma.',icon:Wifi,
     paths:[
       {label:'Vardag, jobb & streaming',summary:'En stabil anslutning och rätt kapacitet är viktigare än högsta marknadsförda hastighet. 100/100 Mbit/s kan räcka för många hushåll, men kontrollera antal samtidiga användare.',next:'Hjälp mig hitta hastigheten',href:'/bredband/vilken-hastighet-behover-jag/'},
       {label:'Många samtidigt / gaming',summary:'När flera streamar, spelar eller har videomöten samtidigt behöver du även tänka på stabilitet och svarstid, inte bara hastigheten i reklam.',next:'Förstå utbud på adressen',href:'/bredband/bredband-pa-min-adress/'}
@@ -21,7 +21,7 @@ const config:Record<PartnerCategory,Config>={
   el:{
     eyebrow:'ELPRIS · RIKTIGA KVARTSVÄRDEN',title:'Se när elen kostar mer. Förstå vad du kan påverka.',
     lead:'Våra kvartspriser är elbörsens spotpriser, inte personliga elavtal eller offerter från en leverantör. Börja med den insikten och jämför sedan villkoren.',
-    visual:'Samma spotmarknad. Olika avtalsvillkor.',icon:Zap,
+    visual:'Smartare energi för vardagen.',icon:Zap,
     paths:[
       {label:'Jag vill förstå kvartspris',summary:'Ett kvartsprisavtal följer elmarknaden i 15-minutersintervall. Totalpriset påverkas också av bland annat elhandlarens avgifter, skatter och din faktiska förbrukning.',next:'Läs om kvartspris',href:'/elavtal/kvartspris/'},
       {label:'Jag vill välja avtalsform',summary:'Fast, rörligt och kvartspris innebär olika risk och möjlighet att påverka kostnaden. Börja med hushållets flexibilitet – inte en påhittad besparingssiffra.',next:'Välj rätt avtalsform',href:'/elavtal/vilket-elavtal-passar-mig/'}
@@ -30,7 +30,7 @@ const config:Record<PartnerCategory,Config>={
   mobil:{
     eyebrow:'MOBIL · DIN ANVÄNDNING STYR',title:'Betala för det du använder. Inte för en större siffra.',
     lead:'Hitta en rimlig väg utifrån din vardag innan du granskar surf, täckning och kampanjpriser hos operatörerna.',
-    visual:'Surfbehov före prislapp.',icon:Smartphone,
+    visual:'Mobilen ska passa ditt liv.',icon:Smartphone,
     paths:[
       {label:'Mest wifi hemma och på jobbet',summary:'Utgå från din nuvarande dataförbrukning när du har wifi större delen av dagen. Ett abonnemang med mindre surf kan vara relevant, men jämför även nät och villkor.',next:'Hitta rätt surfmängd',href:'/mobil/hur-mycket-surf-behover-jag/'},
       {label:'Streamar och delar ofta nät',summary:'Mycket video och hotspot kan kräva mer surf. Jämför hur erbjudanden hanterar hastighet, EU-roaming, bindningstid och förbrukningstak.',next:'Räkna på familjens kostnad',href:'/mobil/lonar-sig-familjeabonnemang/'}
@@ -39,7 +39,7 @@ const config:Record<PartnerCategory,Config>={
   forsakring:{
     eyebrow:'FÖRSÄKRING · SKYDDET FÖRST',title:'Rätt skydd känns bättre än enbart låg premie.',
     lead:'Se vad du redan har innan du betalar för mer. Välj behov och kontrollera omfattning, självrisk och undantag.',
-    visual:'Ingen premie kan ersätta rätt omfattning.',icon:ShieldCheck,
+    visual:'För allt du vill vara rädd om.',icon:ShieldCheck,
     paths:[
       {label:'Mitt hem och mina saker',summary:'Kontrollera bostadsform, lösöre, ansvar, rättsskydd och självrisk. I bostadsrätt är det viktigt att veta om tillägget ingår kollektivt.',next:'Kontrollera mitt hemskydd',href:'/forsakring/hemforsakring-skyddskoll/'},
       {label:'Min hund eller katt',summary:'Titta på veterinärvårdsbelopp, självrisker, undantag och hur villkoren förändras när djuret blir äldre innan du tar ställning till premien.',next:'Jämför djurförsäkring',href:'/forsakring/djurforsakring/'}
@@ -48,7 +48,7 @@ const config:Record<PartnerCategory,Config>={
   ekonomi:{
     eyebrow:'EKONOMI · HELA RÄKNINGEN RÄKNAS',title:'En lägre månadskostnad är inte alltid billigare.',
     lead:'Titta på hela lånekostnaden eller börja med hushållets fasta utgifter. Vi visar inte påhittade personliga räntor eller löften om besparing.',
-    visual:'Total kostnad slår lockande månadsbelopp.',icon:WalletCards,
+    visual:'Mer plats för livet än räkningar.',icon:WalletCards,
     paths:[
       {label:'Jag jämför lån',summary:'Samma belopp och löptid behöver jämföras med effektiv ränta, avgifter och hela återbetalningen. Längre löptid kan göra totalkostnaden högre.',next:'Så jämför du lån',href:'/ekonomi/jamfor-privatlan/'},
       {label:'Jag vill börja med min budget',summary:'Fyll i bara de kostnader du känner till. Hushållskollen summerar dina egna värden och visar inga påhittade besparingar.',next:'Räkna hushållets kostnader',href:'/verktyg/hushallskostnadskollen/'}
@@ -96,7 +96,7 @@ export default function CategorySpotlight({category}:{category:PartnerCategory})
           <p className={s.visualKicker}>ETT BRA BESLUT BÖRJAR MED RÄTT FRÅGA</p>
           <strong className={s.visualTitle}>{info.visual}</strong>
           <div className={s.visualLine}><span/><span/><span/></div>
-          <p className={s.visualBody}>Välj en situation till vänster. Du får ett relevant nästa steg utan att lämna ifrån dig kontaktuppgifter.</p>
+          <p className={s.visualBody}>Utgå från din vardag. Vi visar nästa steg utan att kräva kontaktuppgifter eller personliga priser.</p>
           <span className={s.visualFooter}>Vägledning före jämförelse <ArrowRight size={19}/></span>
         </>}
       </aside>

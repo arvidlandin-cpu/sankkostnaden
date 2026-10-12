@@ -11,11 +11,11 @@ test('home V5: clear first action, SEO identity and one visible category directo
  await page.goto(route);
  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href','https://sankkostnaden.se/');
  const hero=page.locator('section[aria-label="Hitta rätt jämförelse"]');
- await expect(hero.getByRole('heading',{level:1,name:'Sänk dina fasta kostnader'})).toBeVisible();
- await expect(hero.getByText('FÄRRE FRÅGOR. KLARARE BESLUT.')).toBeVisible();
+ await expect(hero.getByRole('heading',{level:1,name:/Sänk dina fasta kostnader/})).toBeVisible();
+ await expect(hero.getByText('FÖR LIVET HEMMA')).toBeVisible();
  const first=hero.getByRole('link',{name:/Starta Kostnadskollen/});
  await expect(first).toHaveAttribute('href','/app/');
- await expect(first).toContainText('Få en startpunkt med en enkel fråga');
+ await expect(first).toContainText('Få en enkel väg att börja');
  await expect(hero.getByRole('link',{name:/Välj en kostnad direkt/})).toHaveAttribute('href','/#jamfor');
  const list=page.locator('#jamfor');
  for(const [name,href] of categories){
@@ -54,7 +54,7 @@ for(const width of widths){
      heading:getComputedStyle(hero.querySelector('h1')!).color};
   });
   expect(d.overflow).toBeLessThanOrEqual(1);
-  expect(d.heading).toBe('rgb(16, 29, 66)');
+  expect(d.heading).toBe('rgb(20, 37, 70)');
   for(const item of d.tiny)expect(item.size,item.text||'unnamed').toBeGreaterThanOrEqual(12);
   await first.focus();
   const focus=await first.evaluate(el=>({width:parseFloat(getComputedStyle(el).outlineWidth),style:getComputedStyle(el).outlineStyle}));
@@ -109,7 +109,7 @@ for(const width of [360,390,430,1024,1440]){
   const principle=page.getByText('Besparing först.',{exact:false});
   await expect(principle).toBeVisible();
   const explanation=page.locator('div[class*="principle"] > div:last-child > p:first-child');
-  await expect(explanation).toContainText('Sänk Kostnaden hjälper dig förstå');
+  await expect(explanation).toContainText('Vi vill att du ska ha mer kvar');
   expect(await explanation.evaluate(el=>parseFloat(getComputedStyle(el).fontSize))).toBeGreaterThanOrEqual(14);
   const excess=await page.evaluate(()=>Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)-document.documentElement.clientWidth);
   expect(excess).toBeLessThanOrEqual(1);

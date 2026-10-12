@@ -281,3 +281,79 @@
  .heroArtwork{background-position:center center}
  .heroArtwork:before{background:linear-gradient(90deg,#f7f9ff 0%,rgba(247,249,255,.93) 18%,rgba(247,249,255,.45) 75%)}
 }
+
+
+/* P0H owner's later visual direction: warmly lit, human, generous editorial
+   category header. Genuine lifestyle photographs rather than cold product stock.
+   Do not remove existing SEO, destination URLs, or sponsored link metadata. */
+.main{background:#faf8f3}
+.hero:global(.categoryHero){background:#faf6ef!important;border-bottom:1px solid #ece5dc!important}
+.heroArtwork{
+ inset:0 0 0 49%;opacity:1;background-size:cover;background-position:center;
+ background-image:url('https://images.pexels.com/photos/3875141/pexels-photo-3875141.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=2400')!important;
+}
+.hero:global(.guideHero-bredband) .heroArtwork{background-image:url('https://images.pexels.com/photos/8055076/pexels-photo-8055076.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=2400')!important}
+.hero:global(.guideHero-el) .heroArtwork{background-image:url('https://images.pexels.com/photos/8055828/pexels-photo-8055828.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=2400')!important}
+.hero:global(.guideHero-mobil) .heroArtwork{background-image:url('https://images.pexels.com/photos/5901387/pexels-photo-5901387.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=2400')!important}
+.hero:global(.guideHero-forsakring) .heroArtwork{background-image:url('https://images.pexels.com/photos/28949489/pexels-photo-28949489.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=2400')!important}
+.hero:global(.guideHero-ekonomi) .heroArtwork{background-image:url('https://images.pexels.com/photos/6964105/pexels-photo-6964105.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=2400')!important}
+.heroArtwork:before{background:linear-gradient(90deg,#faf6ef 0%,rgba(250,246,239,.84) 9%,rgba(250,246,239,.09) 45%,transparent 74%)!important}
+.heroArtwork:after{background:linear-gradient(180deg,transparent 70%,rgba(27,35,28,.09))!important}
+.hero :global(.breadcrumbs),.hero :global(.breadcrumbs a){color:#5d7060!important}
+.hero :global(.categoryHeroIcon){background:#e6efe4!important;color:#4b7861!important;border-radius:17px!important}
+.hero :global(.kicker){color:#608267!important}
+.hero :global(h1){color:#152744!important;letter-spacing:-.058em!important}
+.hero :global(.lead){color:#4b5d60!important}
+.hero :global(.fine){color:#567265!important}
+.heroInner:global(.guideWrap){position:relative}
+.intro:global(.categoryIntro){background:#f2f5eb;border:1px solid #dfe8d9;border-left:5px solid #83a48b;border-radius:27px;box-shadow:none}
+.intro :global(.kicker),.guides :global(.kicker){color:#608267!important}
+.intro :global(.compactChecks){background:#fffefa!important;border-color:#e5eade!important}
+.guides :global(.categoryGuideGrid>a){background:#fffefa!important;border-color:#ebe6dd!important}
+.guides :global(.categoryGuideGrid>a:hover){border-color:#9fbaa0!important;background:#f5f8f1!important}
+.article :global(.partnerSection){background:#f4f6f1!important;border:1px solid #e0e8de!important}
+.article :global(.partnerCard){border-color:#e1e8df!important;background:#fffdfa!important}
+@media(min-width:1025px){
+ .hero:global(.categoryHero){min-height:680px!important;padding:92px max(40px,calc((100vw - 1500px)/2)) 137px!important}
+ .hero:global(.categoryHero) .heroInner:global(.guideWrap){max-width:1480px!important}
+ .hero :global(h1){font-size:clamp(64px,5.4vw,91px)!important;max-width:760px!important;line-height:1.055!important}
+ .hero :global(.lead){font-size:clamp(18px,1.35vw,21px)!important;max-width:620px!important}
+ .hero :global(.categoryHeroActions a){border-radius:15px!important;min-height:63px!important}
+ .main .article:global(.categoryArticle){max-width:1460px!important;padding-top:46px!important}
+}
+@media(min-width:761px) and (max-width:1024px){
+ .hero:global(.categoryHero){min-height:570px!important;padding:69px 30px 98px!important}
+ .heroArtwork{inset:0 0 0 48%}
+ .hero:global(.categoryHero) .heroInner:global(.guideWrap){max-width:100%!important}
+ .hero :global(h1){font-size:clamp(51px,6vw,69px)!important;max-width:640px!important}
+ .heroArtwork:before{background:linear-gradient(90deg,#faf6ef 0%,rgba(250,246,239,.94) 10%,rgba(250,246,239,.2) 75%)!important}
+}
+@media(max-width:760px){
+ .hero:global(.categoryHero){display:block;min-height:0!important;padding:30px 19px 235px!important;background:#faf6ef!important}
+ .heroArtwork{display:block!important;inset:auto 0 0;height:194px;opacity:1!important;background-position:center 47%}
+ .heroArtwork:before{background:linear-gradient(180deg,#faf6ef 0%,rgba(250,246,239,.0) 37%,transparent 55%)!important}
+ .heroArtwork:after{background:none!important}
+ .hero:global(.categoryHero) .heroInner:global(.guideWrap){width:100%!important;max-width:100%!important}
+ .hero :global(h1){font-size:clamp(38px,8.5vw,54px)!important;line-height:1.06!important}
+ .hero :global(.lead){font-size:15px!important;max-width:630px!important}
+ .hero :global(.categoryHeroActions){margin-top:24px!important}
+ .hero :global(.categoryHeroActions a){min-height:55px!important}
+ .main .article:global(.categoryArticle){padding-top:25px!important}
+}
+@media(max-width:390px){
+ .hero:global(.categoryHero){padding:27px 16px 209px!important}
+ .heroArtwork{height:181px}
+ .hero :global(h1){font-size:36px!important}
+}
+
+/* P0H proof from full-page mobile captures: CSS backgrounds can paint blank
+   before the CDN finishes. Real img loads eagerly with responsive srcset. */
+.heroArtwork>img{
+ position:relative;z-index:0;display:block;width:100%;height:100%;
+ min-height:100%;object-fit:cover;object-position:center center;
+}
+.heroArtwork:before,.heroArtwork:after{z-index:1;pointer-events:none}
+@media(max-width:760px){
+ .heroArtwork>img{width:100%;height:100%;object-position:center center}
+ .heroArtwork:before{z-index:1}
+}
