@@ -1,3 +1,4 @@
+import CategoryHeroPhoto from '../components/CategoryHeroPhoto';
 import Head from 'next/head';
 import premium from '../styles/CategoryPremium.module.css';
 import Link from 'next/link';
@@ -34,7 +35,7 @@ export default function Mobil(){
   </header>
   <main className={premium.main}>
    <section className={`guideHero categoryHero guideHero-mobil ${premium.hero}`}>
-    <div className={premium.heroArtwork} aria-hidden='true'/>
+    <div className={premium.heroArtwork} aria-hidden='true'><CategoryHeroPhoto category='mobil'/></div>
     <div className={`guideWrap ${premium.heroInner}`}>
      <nav className='breadcrumbs' aria-label='Brödsmulor'><Link href='/'>Start</Link><span>›</span><span aria-current='page'>Mobil</span></nav>
      <div className='categoryHeroIcon'><Smartphone size={25}/></div>
