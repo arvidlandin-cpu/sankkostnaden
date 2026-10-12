@@ -14,7 +14,7 @@ test('Elavtal 5.0 retains SEO, honest comparison and commercial tracking',async(
  await expect(page.locator('a[data-placement="electricity_hub_comparison"]')).toHaveAttribute('rel',/sponsored/);
  await expect(page.locator('a[data-placement="electricity_hub_supplier"]')).toHaveCount(12);
  await expect(page.getByText(/inte baserad på provision eller aktuella priser/i)).toBeVisible();
- await expect(page.locator('a[data-partner="Tibber"]')).toHaveAttribute('href',/go\.adt242\.com/);
+ await expect(page.locator('a[data-partner="Tibber"][data-placement="electricity_hub_supplier"]')).toHaveAttribute('href',/go\.adt242\.com/);
  await expect(page.getByRole('link',{name:/Räkna hela årskostnaden/})).toHaveAttribute('href','/verktyg/elavtalskostnad/?src=elavtal');
 });
 
