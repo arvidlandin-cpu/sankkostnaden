@@ -26,7 +26,7 @@ test('electricity hub shows meaningful choices and all actual partner options wi
  await expect(section.getByText(/ordningen är alfabetisk/i)).toBeVisible();
  await expect(section.getByText(/inte hela marknaden/i).last()).toBeVisible();
  await expect(section.getByRole('link',{name:/Räkna hela årskostnaden/i})).toHaveAttribute('href','/verktyg/elavtalskostnad/?src=elavtal');
- await expect(section.getByRole('link',{name:/Få hjälp att välja/i})).toHaveAttribute('href','/elavtal/vilket-elavtal-passar-mig/');
+ await expect(page.getByRole('link',{name:/Hjälp mig välja avtalsform/i})).toHaveAttribute('href','/elavtal/vilket-elavtal-passar-mig/');
  expect(await page.locator('button').filter({hasText:/Flera avtal|Direkt till bolag|Ursprung viktigt/}).count()).toBe(0);
 });
 

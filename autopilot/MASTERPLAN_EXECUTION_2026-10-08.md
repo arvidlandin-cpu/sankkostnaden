@@ -1,3 +1,6 @@
+## SENASTE BINDANDE ÄGARBESLUT 2026-10-12 – P0G BILDER, LOGOTYPER OCH SIGNATURUPPLEVELSER
+Läs [autopilot/ASSET_BRAND_EXPERIENCE_P0G_2026-10-12.md](ASSET_BRAND_EXPERIENCE_P0G_2026-10-12.md). Det senare ägarbeslutet kräver skarpa högupplösta bilder, större mänskligt läsbara partneridentiteter och interaktiva kategoriunika featuresektioner, inte generiska småkort. P0G implementeras separat och ska QA-/produktionsverifieras. Tidigare P0D/P0E/P0F, SEO, kvartsprisobservation och attribution bevaras. Godkänd partnerprovision = UNKNOWN utan nätverksdata.
+
 ## SENASTE BINDANDE ÄGARBESLUT 2026-10-12 – P0F RADIKAL PREMIUMSKALA
 
 Läs [autopilot/BOLD_PREMIUM_SCALE_2026-10-12.md](BOLD_PREMIUM_SCALE_2026-10-12.md) först. Ägarens aktuella produktskärmdumpar visar att blå P0D och P0E-interaktionerna inte räcker: gör helheten större, mer redaktionell, bredare och mindre småkortig. Denna P0F-revision är under arbete i `design/p0f-bold-premium-desktop-20261012`, ännu inte godkänd eller live. Undvik CSS-krock med pågående P0F-PR, kontrollera Build/kommersiell regression, riktiga screenshots och Pages-domän separat. Approved provision = UNKNOWN utan verifierade nätverksdata.

@@ -1,0 +1,76 @@
+name: P0G media delivery audit
+
+on:
+  push:
+    branches:
+      - 'design/p0g-*'
+    paths:
+      - '.github/workflows/p0g-media-audit.yml'
+      - 'pages/index.tsx'
+      - 'styles/CategoryPremium.module.css'
+      - 'components/CategorySpotlight.tsx'
+      - 'tests/p0g-visual-journeys.spec.ts'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-public-assets:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check image CDN and vector logo real HTTP delivery
+        shell: bash
+        run: |
+          set -u
+          failed=0
+          for id in 36777855 2962066 8067709 27175807 16139628 37834298 20838370 28949489 16098002; do
+            url="https://images.pexels.com/photos/$id/pexels-photo-$id.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=700"
+            file="/tmp/p0g-$id.jpg"
+            if curl --retry 2 --retry-all-errors --retry-delay 1 --connect-timeout 10 --max-time 25 --fail --location --silent --show-error --output "$file" "$url"; then
+              bytes=$(wc -c <"$file")
+              mime=$(file --mime-type -b "$file")
+              echo "IMAGE $id EXACT_SRCSET_700 OK bytes=$bytes type=$mime"
+              if [[ "$mime" != "image/jpeg" || "$bytes" -lt 8000 ]]; then
+                echo "::error::Invalid image data for $id"
+                failed=1
+              fi
+            else
+              echo "::error::Image $id HTTP fetch failed: $url"
+              failed=1
+            fi
+          done
+          if curl --retry 2 --retry-all-errors --retry-delay 1 --connect-timeout 10 --max-time 25 --fail --location --silent --show-error -o /tmp/p0g-tibber.svg 'https://upload.wikimedia.org/wikipedia/commons/1/18/Tibber_logo.svg'; then
+            echo "TIBBER SVG bytes=$(wc -c </tmp/p0g-tibber.svg) content=$(file --mime-type -b /tmp/p0g-tibber.svg)"
+          else
+            echo "::warning::Tibber SVG unavailable in runner; on-site text fallback is required"
+          fi
+          exit "$failed"
+
+  browser-photo-source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    env:
+      QA_BASE_URL: 'http://127.0.0.1:3000'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install packages and build local export
+        run: |
+          npm install --progress=false
+          npx next build
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Start local export
+        run: |
+          python3 -m http.server 3000 --directory out >/tmp/p0g-server.log 2>&1 &
+          for i in {1..25}; do
+            curl -fsS http://127.0.0.1:3000/ >/dev/null && exit 0
+            sleep 1
+          done
+          cat /tmp/p0g-server.log; exit 1
+      - name: Inspect all 5 homepage images in actual Chromium
+        run: npx playwright test tests/p0g-visual-journeys.spec.ts --project=chromium --grep 'P0G home CDN sources'

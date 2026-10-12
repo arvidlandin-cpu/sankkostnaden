@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { ArrowRight, Check, PiggyBank, ShieldCheck, Zap } from 'lucide-react';
 import ElectricityMarketGateway from '../components/ElectricityMarketGateway';
 import CategoryJourney from '../components/CategoryJourney';
+import CategorySpotlight from '../components/CategorySpotlight';
 import pageStyles from '../styles/CategoryPremium.module.css';
 
 const guides=[
@@ -48,6 +49,7 @@ export default function Elavtal(){
     </div>
    </section>
    <CategoryJourney category='el' compareHref='#jamfor-elavtal' helpHref='/elavtal/vilket-elavtal-passar-mig/' understandHref='/elavtal/sa-laser-du-elfakturan/'/>
+   <CategorySpotlight category='el'/>
    <article className={`article guideWrap categoryArticle ${pageStyles.article}`}>
     <div id='jamfor-elavtal' style={{scrollMarginTop:90}}><ElectricityMarketGateway/></div>
     <section className={`categoryIntro ${pageStyles.intro}`}>

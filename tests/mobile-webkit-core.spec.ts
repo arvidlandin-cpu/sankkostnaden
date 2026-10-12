@@ -32,7 +32,7 @@ test('WebKit mobile browser supports keyboard navigation, affiliate labels and r
  await page.setViewportSize({width:390,height:844});
  await page.goto('/elavtal/?qa=1');
  await expect(page.locator('a[data-placement="electricity_hub_comparison"]')).toHaveAttribute('rel',/sponsored/);
- await expect(page.locator('a[data-partner="Tibber"]')).toHaveAttribute('href',/go\.adt242\.com/);
+ await expect(page.locator('a[data-placement="electricity_hub_supplier"][data-partner="Tibber"]')).toHaveAttribute('href',/go\.adt242\.com/);
  await expect(page.getByTestId('electricity-spot-prices')).toBeVisible();
  const nav=page.getByRole('navigation',{name:'Snabbnavigering'});
  await expect(nav).toBeVisible();

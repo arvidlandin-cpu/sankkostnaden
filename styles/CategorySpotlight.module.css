@@ -1,0 +1,39 @@
+.root{width:min(1420px,calc(100% - 64px));margin:37px auto 58px;scroll-margin-top:85px}
+.grid{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);border-radius:32px;overflow:hidden;background:#fff;box-shadow:0 28px 74px rgba(18,37,80,.10);border:1px solid #dce5f5}
+.editorial{padding:clamp(32px,4.1vw,66px);min-width:0}
+.eyebrow,.visualKicker,.priceExplain{margin:0 0 15px;font-size:12px;font-weight:900;letter-spacing:.13em;color:#335bc4}
+.editorial h2{font-size:clamp(37px,3.6vw,57px);line-height:1.08;letter-spacing:-.055em;margin:0 0 20px;color:#14264b;max-width:17ch}
+.lead{max-width:610px;font-size:17px;color:#53647f;line-height:1.58;margin:0 0 31px}
+.questions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+.choice{display:flex;gap:10px;align-items:center;justify-content:space-between;min-height:66px;padding:15px 16px;text-align:left;background:#f7f9fd;border:1.5px solid #dce6f5;border-radius:15px;color:#26395e;font:inherit;font-weight:820;font-size:14px;cursor:pointer;transition:background .18s,border-color .18s}
+.choice span:last-child{font-size:16px;opacity:.8}
+.choice.active{background:#e9f0ff;border-color:#6c91eb;color:#163d9e}
+.choice:hover{border-color:#6c91eb}
+.answer{margin-top:19px;min-height:153px;background:#f3f6fc;border-radius:20px;padding:25px 26px}
+.answer p{font-size:15px;line-height:1.58;max-width:600px;color:#334966;margin:0 0 20px}
+.action{display:inline-flex;align-items:center;justify-content:space-between;gap:20px;min-height:50px;padding:12px 20px;background:#234bd1;border-radius:13px;font-size:14px;font-weight:850;text-decoration:none;color:#fff}
+.visual{position:relative;isolation:isolate;display:flex;flex-direction:column;min-width:0;justify-content:center;padding:clamp(34px,4.2vw,72px);color:#fff;background:radial-gradient(circle at 110% -20%,rgba(99,147,245,.43),transparent 60%),linear-gradient(145deg,#0b2147 0%,#1a407e 100%)}
+.visualIcon{display:grid;place-items:center;width:80px;height:80px;border:1px solid rgba(255,255,255,.25);border-radius:27px;background:rgba(255,255,255,.1);margin-bottom:42px}
+.visualKicker{color:#b5d1ff;margin-bottom:19px}
+.visualTitle{display:block;max-width:16ch;font-size:clamp(35px,3.5vw,56px);font-weight:850;line-height:1.1;letter-spacing:-.055em;color:#fff;margin-bottom:24px}
+.visualBody{max-width:48ch;color:#dce9fd;font-size:16px;line-height:1.6;margin:0 0 33px}
+.visualLine{display:flex;gap:8px;margin:8px 0 27px}.visualLine span{height:10px;border-radius:5px;background:#b9d7ff;flex:1}.visualLine span:nth-child(2){flex:1.3;background:#fff0b8}.visualLine span:nth-child(3){flex:.65;background:#95c9fc}
+.visualFooter{display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,.25);padding-top:22px;font-size:14px;font-weight:780;color:#e6efff}
+.brandLogo{min-height:100px;display:flex;align-items:center;max-width:280px;margin:0 0 22px;background:#fff;border-radius:22px;padding:18px 24px}
+.brandLogo img{display:block;width:100%;max-width:250px;height:auto;object-fit:contain}
+.el .visualTitle{font-size:clamp(31px,2.9vw,47px);max-width:17ch}
+.el .visualIcon{margin-bottom:30px}
+.partnerLink{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:59px;width:fit-content;max-width:100%;padding:14px 21px;background:#fff;color:#173d8c;text-decoration:none;font-size:15px;font-weight:850;border-radius:14px}
+.disclosure{color:#d2e0f4;display:flex;gap:7px;align-items:center;font-size:12px;line-height:1.5;margin-top:16px}
+.spotPrice{padding:24px 0 0}
+.priceExplain{padding:0 6px;color:#4264a0}
+.spotPrice>div{margin-top:9px}
+.choice:focus-visible,.action:focus-visible,.partnerLink:focus-visible{outline:3px solid #81a8ff;outline-offset:3px}
+@media(max-width:1150px){.root{width:calc(100% - 46px)}.editorial{padding:34px}.visual{padding:38px}.editorial h2{font-size:40px}.visualTitle{font-size:40px}.answer{padding:21px}}
+@media(max-width:900px){.grid{grid-template-columns:1fr}.visual{min-height:340px}.visualIcon{margin-bottom:28px}.editorial h2{max-width:24ch}.visualTitle{max-width:30ch}.visualBody{max-width:65ch}}
+@media(max-width:650px){.root{width:calc(100% - 26px);margin:23px auto 38px}.grid{border-radius:24px}.editorial{padding:26px 19px 22px}.editorial h2{font-size:clamp(31px,8vw,39px);max-width:none}.lead{font-size:15px;margin-bottom:23px}.eyebrow{font-size:10px}.questions{gap:8px}.choice{padding:12px 10px;min-height:69px;font-size:12px;border-radius:13px}.answer{padding:20px 17px;min-height:0}.answer p{font-size:14px;margin-bottom:16px}.action{width:100%;font-size:13px;min-height:51px}.visual{padding:29px 23px;min-height:0}.visualIcon{width:57px;height:57px;border-radius:19px;margin-bottom:20px}.visualIcon svg{width:28px}.visualKicker{font-size:10px}.visualTitle{font-size:clamp(31px,7.5vw,40px);max-width:20ch;margin-bottom:19px}.visualBody{font-size:14px}.visualLine{margin:0 0 20px}.brandLogo{max-width:225px;min-height:85px;padding:15px 20px}.partnerLink{width:100%;min-height:54px}.spotPrice{padding-top:19px}.priceExplain{font-size:10px}}
+@media(max-width:360px){.editorial{padding:23px 15px}.choice{font-size:11.5px;padding:10px 8px}.visual{padding:25px 17px}}
+@media(prefers-reduced-motion:reduce){.choice{transition:none}}
+
+/* SVG icon may be blocked by an image CDN; typography must not disappear. */
+.brandFallback{display:block;color:#121212;font-size:clamp(38px,4vw,54px);font-weight:900;letter-spacing:-.09em;line-height:1}

@@ -1124,3 +1124,17 @@
  .popularBody small{font-size:12px!important}
 }
 @media(prefers-reduced-motion:reduce){.popularCard{transition:none}.popularCard:hover{transform:none}}
+
+/* P0G image finishing: license-verified editorial photographs at responsive
+   sizes, with crisp lucide icons painted in HTML instead of inside raster art. */
+.popularPhoto{position:relative;background:#dce6f2;isolation:isolate}
+.popularPhoto:after{content:'';pointer-events:none;position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,35,62,.02) 20%,rgba(20,35,62,.12) 100%);z-index:1}
+.popularPhoto .popularImageExact{height:100%!important;width:100%!important;display:block;object-fit:cover!important;object-position:center 50%!important;transform:scale(1);transition:transform .5s ease}
+.popularCard:hover .popularImageExact{transform:scale(1.045)}
+.popularBadge{position:absolute;left:23px;bottom:18px;z-index:2;width:58px;height:58px;display:grid;place-items:center;border-radius:18px;color:#122b54;background:#fff7d6;box-shadow:0 8px 24px rgba(13,32,62,.19)}
+.popularCard:nth-child(2) .popularBadge{background:#fff0d8}
+.popularCard:nth-child(3) .popularBadge{background:#d9e9ff}
+.popularCard:nth-child(4) .popularBadge{background:#e1f5e6}
+.popularCard:nth-child(5) .popularBadge{background:#ede8ff}
+@media(max-width:760px){.popularBadge{left:12px;bottom:11px;width:44px;height:44px;border-radius:14px}.popularBadge svg{width:22px;height:22px}}
+@media(prefers-reduced-motion:reduce){.popularPhoto .popularImageExact{transition:none}.popularCard:hover .popularImageExact{transform:none}}

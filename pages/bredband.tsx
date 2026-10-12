@@ -3,6 +3,7 @@ import premium from '../styles/CategoryPremium.module.css';
 import Link from 'next/link';
 import { ArrowRight, Check, PiggyBank, ShieldCheck, Wifi } from 'lucide-react';
 import CategoryJourney from '../components/CategoryJourney';
+import CategorySpotlight from '../components/CategorySpotlight';
 import BroadbandMarketGateway from '../components/BroadbandMarketGateway';
 import { getActivePartners } from '../lib/partners';
 import { emitAnalyticsEvent } from '../lib/clientAttribution';
@@ -51,6 +52,7 @@ export default function Bredband(){
     </div>
    </section>
    <CategoryJourney category='bredband' compareHref='#category-partners' helpHref='/bredband/vilken-hastighet-behover-jag/' understandHref='/bredband/bredband-pa-min-adress/'/>
+   <CategorySpotlight category='bredband'/>
    <article className={`article guideWrap categoryArticle ${premium.article}`}>
     <div id='category-partners' style={{scrollMarginTop:90}}><BroadbandMarketGateway/></div>
     <section className={`categoryIntro ${premium.intro}`}>

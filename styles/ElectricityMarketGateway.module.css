@@ -234,3 +234,43 @@
  .compareCard .primary{min-height:48px;padding:10px 12px;font-size:13px}
  .compareCard .sponsored{margin-top:8px;font-size:12px}
 }
+
+/* P0G partner identities: real text in a scalable consistent identity strip,
+   not blown-up 16/32px third-party favicons. Partner action remains a
+   separate, clearly sponsored or offer-checking CTA. */
+.supplierIdentity{flex-direction:column;align-items:flex-start;gap:9px}
+.supplierIdentity>div:last-child{width:100%;padding-left:54px}
+.supplierIdentity>div:last-child small{font-size:13px;line-height:1.4}
+.supplier{gap:14px;padding:25px!important}
+.supplier a{font-size:14px}
+.providerName{max-width:100%;padding:14px 19px;border-radius:18px}
+.providerName>span{max-width:100%}
+@media(max-width:680px){
+ .supplier{padding:20px 17px!important}
+ .supplierIdentity>div:last-child{padding-left:48px}
+ .providerName{padding:11px 12px}
+}
+
+/* P0G.4: an editorial supplier directory, not twelve equally loud cards.
+   Feature/journey are the decision anchors; the complete, unranked
+   partner inventory is now a calm, accessible text-first list. */
+.suppliers{margin:46px 0 22px;padding:34px 38px 28px;background:#fff;border:1px solid #e0e7f3;border-radius:29px}
+.supplierGrid{gap:0 28px}
+.supplier{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:18px;min-height:104px!important;padding:19px 3px!important;border:0;border-bottom:1px solid #e5ebf5;border-radius:0;background:transparent;box-shadow:none!important}
+.supplierIdentity{gap:5px;min-width:0}
+.supplierIdentity>div:last-child{padding-left:54px}
+.supplier a{width:fit-content;max-width:240px;min-height:48px;font-size:13px;padding:12px 15px;white-space:normal}
+.supplier:hover{background:linear-gradient(90deg,transparent,#f8faff)}
+@media(max-width:1024px){
+ .suppliers{padding:27px 25px}
+ .supplierGrid{grid-template-columns:1fr 1fr;gap:0 20px}
+ .supplier{grid-template-columns:1fr;gap:8px;padding:19px 2px!important}
+ .supplier a{width:100%;max-width:none}
+}
+@media(max-width:680px){
+ .suppliers{margin:35px 0 17px;padding:21px 18px;border-radius:21px}
+ .supplierGrid{grid-template-columns:1fr}
+ .supplier{min-height:0!important;padding:18px 0!important;gap:11px}
+ .supplierIdentity>div:last-child{padding-left:46px}
+ .supplier a{width:100%;max-width:none}
+}

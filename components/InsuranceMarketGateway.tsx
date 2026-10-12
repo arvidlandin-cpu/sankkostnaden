@@ -3,6 +3,7 @@ import { ArrowRight, ArrowUpRight, CheckCircle2, CircleHelp, PawPrint, Plane, Sh
 import { emitAnalyticsEvent } from '../lib/clientAttribution';
 import { getActivePartners, type ActivePartner, type PartnerIntent } from '../lib/partners';
 import styles from '../styles/ElectricityMarketGateway.module.css';
+import PartnerIdentity from './PartnerIdentity';
 
 const home=getActivePartners('forsakring','home',30).sort((a,b)=>a.name.localeCompare(b.name,'sv'));
 const pet=getActivePartners('forsakring','pet',30).sort((a,b)=>a.name.localeCompare(b.name,'sv'));
@@ -11,12 +12,6 @@ const claims=getActivePartners('forsakring','claims',30);
 const total=new Set([...home,...pet,...travel,...claims].map(p=>p.name)).size;
 
 function track(path:string){emitAnalyticsEvent('insurance_hub_path',{path,source:'insurance_hub'});}
-
-function Brand({partner}:{partner:ActivePartner}){
- return <span className={styles.logo} aria-hidden='true'>
-   {partner.domain?<img src={`https://www.google.com/s2/favicons?domain=${encodeURIComponent(partner.domain)}&sz=128`} alt='' loading='lazy' width={48} height={48}/>:<ShieldCheck size={24}/>}
- </span>;
-}
 
 function PartnerGroup({items,kind,heading,description}:{items:ActivePartner[];kind:PartnerIntent;heading:string;description:string}){
  if(!items.length)return null;
@@ -28,8 +23,7 @@ function PartnerGroup({items,kind,heading,description}:{items:ActivePartner[];ki
    </div></div>
    <div className={styles.supplierGrid}>
      {items.map((partner,index)=><article key={partner.name} className={styles.supplier}>
-       <div className={styles.supplierIdentity}><Brand partner={partner}/><div>
-         <strong>{partner.name}</strong>
+       <div className={styles.supplierIdentity}><PartnerIdentity partner={partner}/><div>
          <small>{partner.name==='Compricer'?'Jämförelsetjänst – personliga offerter':'Försäkringsbolag eller försäkringstjänst – kontrollera skyddet'}</small>
        </div></div>
        <a href={partner.trackingUrl} onClick={()=>track(`${kind}_partner`)}
@@ -51,7 +45,7 @@ function SpecialRoute({partner,intent,title,body,guide,guideLabel,disclaimer}:{p
     <span className={styles.routeType}>{intent==='travel'?'RESA OCH AVBESTÄLLNING':'ERSÄTTNING EFTER EN SKADA'}</span>
     <h3>{title}</h3>
     <p>{body}</p>
-    {partner&&<div className={styles.providerName}><Brand partner={partner}/><strong>{partner.name}</strong></div>}
+    {partner&&<div className={styles.providerName}><PartnerIdentity partner={partner}/></div>}
    </div>
    <Link className={styles.secondary} href={guide} onClick={()=>track(`${intent}_guide`)}>{guideLabel} <ArrowRight size={17}/></Link>
    {partner&&<a className={styles.primary} href={partner.trackingUrl} onClick={()=>track(`${intent}_partner`)}

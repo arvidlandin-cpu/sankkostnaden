@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import PartnerIdentity from './PartnerIdentity';
 import {
   ArrowRight, ArrowUpRight, BadgeCheck, Check, CircleDollarSign, GitCompareArrows,
   HousePlug, PawPrint, RotateCcw, Search, ShieldCheck, Sparkles, Unplug, Wifi
@@ -17,7 +18,7 @@ function PartnerCard({
 }){
   return <article className='matchPartnerCard'>
     <div className='matchPartnerTop'>
-      <div><small>FÖRSLAG {position}</small><div className='partnerBrand'>{partner.domain&&<img src={`https://www.google.com/s2/favicons?domain=${partner.domain}&sz=128`} alt='' loading='lazy'/>}<h3>{partner.name}</h3></div></div>
+      <div><small>FÖRSLAG {position}</small><div className='partnerBrand'><h3><PartnerIdentity partner={partner}/></h3></div></div>
       <span><BadgeCheck size={13}/> PARTNERLÄNK</span>
     </div>
     <ul>{reasons.slice(0,2).map(item=><li key={item}><Check size={14}/>{item}</li>)}</ul>
@@ -42,7 +43,7 @@ function DirectPartnerStrip({items,label='Gå direkt till partner',placement,int
   return <div className='directPartnerBlock'>
     <div className='directPartnerHead'><div><small>REDO ATT JÄMFÖRA?</small><strong>{label}</strong></div><span>Partnerlänkar</span></div>
     <div className='directPartnerGrid'>{featured.map((p,i)=><a key={p.name} href={p.trackingUrl} target='_blank' rel='sponsored nofollow noopener' data-partner={p.name} data-category={p.category} data-intent={intent} data-placement={placement} data-partner-position={i+1}>
-      <span className='partnerBrand'>{p.domain&&<img src={`https://www.google.com/s2/favicons?domain=${p.domain}&sz=128`} alt='' loading='lazy'/>}<span className='partnerWordmark'>{p.name}</span></span><b>{p.cta||`Se aktuella alternativ`}<ArrowUpRight size={14}/></b>
+      <span className='partnerBrand'><PartnerIdentity partner={p}/></span><b>{p.cta||`Se aktuella alternativ`}<ArrowUpRight size={14}/></b>
     </a>)}</div>
     <p>{helperText}</p>
   </div>;

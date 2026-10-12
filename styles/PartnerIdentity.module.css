@@ -1,0 +1,5 @@
+.identity{display:inline-flex;align-items:center;gap:12px;min-width:0;max-width:100%;color:#15284e}
+.mark{display:grid;place-items:center;flex:0 0 42px;width:42px;height:42px;border-radius:14px;background:#e8efff;color:#2851b5;font-size:15px;font-weight:900;letter-spacing:-.055em;border:1px solid #dbe6fb;line-height:1}
+.name{display:inline-block;min-width:0;color:inherit;font-size:clamp(17px,1.45vw,21px);font-weight:850;letter-spacing:-.035em;overflow-wrap:anywhere;line-height:1.17}
+.large{gap:19px}.large .mark{flex-basis:69px;width:69px;height:69px;border-radius:22px;font-size:24px}.large .name{font-size:clamp(29px,3.5vw,45px)}
+@media(max-width:650px){.identity{gap:10px}.mark{flex-basis:37px;width:37px;height:37px;border-radius:12px}.name{font-size:17px}.large .mark{flex-basis:55px;width:55px;height:55px;border-radius:17px;font-size:20px}.large .name{font-size:28px}}

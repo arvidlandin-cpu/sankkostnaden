@@ -3,18 +3,12 @@ import { ArrowRight, ArrowUpRight, Calculator, CheckCircle2, GitCompareArrows, M
 import { getActivePartners, type ActivePartner } from '../lib/partners';
 import { emitAnalyticsEvent } from '../lib/clientAttribution';
 import styles from '../styles/ElectricityMarketGateway.module.css';
+import PartnerIdentity from './PartnerIdentity';
 
 const active=getActivePartners('bredband',undefined,20);
 const comparison=active.find(item=>item.name==='Bredbandsval.se');
 const providers=active.filter(item=>item.name!=='Bredbandsval.se').sort((a,b)=>a.name.localeCompare(b.name,'sv'));
 
-function Logo({partner}:{partner:ActivePartner}){
- return <span className={styles.logo} aria-hidden='true'>
-  {partner.domain
-    ?<img src={`https://www.google.com/s2/favicons?domain=${encodeURIComponent(partner.domain)}&sz=128`} alt='' width={48} height={48} loading='lazy'/>
-    :<Wifi size={24}/>}
- </span>;
-}
 function track(path:string){emitAnalyticsEvent('broadband_hub_path',{source:'broadband_hub',path});}
 
 export default function BroadbandMarketGateway(){
@@ -35,7 +29,7 @@ export default function BroadbandMarketGateway(){
       <span className={styles.routeType}>FLERA OPERATÖRER · JÄMFÖRELSETJÄNST</span>
       <h3>Kontrollera utbudet på din adress</h3>
       <p>Hos Bredbandsval kan du se vilka anslutningar och aktuella erbjudanden som är tillgängliga där du bor. Adressuppgifterna lämnas hos Bredbandsval, inte hos oss.</p>
-      <div className={styles.providerName}><Logo partner={comparison}/><strong>Bredbandsval.se</strong></div>
+      <div className={styles.providerName}><PartnerIdentity partner={comparison}/></div>
      </div>
      <a className={styles.primary} href={comparison.trackingUrl} onClick={()=>track('compare_by_address')} data-partner={comparison.name} data-category='bredband' data-intent='compare' data-placement='broadband_hub_comparison' data-partner-position='1' target='_blank' rel='sponsored nofollow noopener'>Kontrollera bredband på din adress <ArrowUpRight size={19}/></a>
      <small className={styles.sponsored}>Partnerlänk · faktisk adresskontroll hos Bredbandsval</small>
@@ -64,7 +58,7 @@ export default function BroadbandMarketGateway(){
    </div>
    <div className={styles.routes}>
     {providers.map((partner,index)=><article key={partner.name} className={styles.supplier}>
-     <div className={styles.supplierIdentity}><Logo partner={partner}/><div><strong>{partner.name}</strong><small>Enskild leverantör · adresskontroll hos bolaget</small></div></div>
+     <div className={styles.supplierIdentity}><PartnerIdentity partner={partner}/><div><small>Enskild leverantör · adresskontroll hos bolaget</small></div></div>
      <a href={partner.trackingUrl} onClick={()=>track('direct_supplier')} data-partner={partner.name} data-category='bredband' data-intent='compare' data-placement='broadband_hub_supplier' data-partner-position={index+1} target='_blank' rel='sponsored nofollow noopener'>Se bredband hos {partner.name} <ArrowUpRight size={17}/></a>
     </article>)}
    </div>

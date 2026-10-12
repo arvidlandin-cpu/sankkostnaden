@@ -1,15 +1,17 @@
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
-import { ArrowRight, PiggyBank } from 'lucide-react';
+import { ArrowRight, PiggyBank, Wifi, Zap, Smartphone, ShieldCheck, WalletCards } from 'lucide-react';
 import styles from '../styles/Home.module.css';
 import HomeHero from '../components/HomeHero';
 
+/* Licensed Pexels originals in responsive 700/1200/1800px variants. 
+   No pre-rendered text or logos in imagery; the overlay icons are vector UI. */
 const categories=[
-  {title:'Bredband',subtitle:'Pris, fart & adress',href:'/bredband/',image:'/design/card-bredband.webp'},
-  {title:'El',subtitle:'Avtal & elpriser',href:'/elavtal/',image:'/design/card-el.webp'},
-  {title:'Mobil',subtitle:'Surf & abonnemang',href:'/mobil/',image:'/design/card-mobil.webp'},
-  {title:'Försäkring',subtitle:'Hem, djur & resa',href:'/forsakring/',image:'/design/card-forsakring.webp'},
-  {title:'Lån & ekonomi',subtitle:'Ränta & totalkostnad',href:'/ekonomi/',image:'/design/card-ekonomi.webp'},
+  {title:'Bredband',subtitle:'Pris, fart & adress',href:'/bredband/',icon:Wifi,image:'https://images.pexels.com/photos/36777855/pexels-photo-36777855.jpeg?auto=compress&cs=tinysrgb&fit=crop'},
+  {title:'El',subtitle:'Avtal & elpriser',href:'/elavtal/',icon:Zap,image:'https://images.pexels.com/photos/2962066/pexels-photo-2962066.jpeg?auto=compress&cs=tinysrgb&fit=crop'},
+  {title:'Mobil',subtitle:'Surf & abonnemang',href:'/mobil/',icon:Smartphone,image:'https://images.pexels.com/photos/8067709/pexels-photo-8067709.jpeg?auto=compress&cs=tinysrgb&fit=crop'},
+  {title:'Försäkring',subtitle:'Hem, djur & resa',href:'/forsakring/',icon:ShieldCheck,image:'https://images.pexels.com/photos/27175807/pexels-photo-27175807.jpeg?auto=compress&cs=tinysrgb&fit=crop'},
+  {title:'Lån & ekonomi',subtitle:'Ränta & totalkostnad',href:'/ekonomi/',icon:WalletCards,image:'https://images.pexels.com/photos/16139628/pexels-photo-16139628.jpeg?auto=compress&cs=tinysrgb&fit=crop'},
 ];
 
 const guideGroups=[
@@ -103,8 +105,15 @@ export default function Home(){
           <div><p>VÄLJ OMRÅDE</p><h2>Vad vill du se över?</h2><span>Fem områden. Välj ett – vi hjälper dig vidare därifrån.</span></div>
         </div>
         <div className={styles.popularGrid}>
-          {categories.map(({title,subtitle,href,image})=><a className={styles.popularCard} href={href} key={title}>
-            <div className={styles.popularPhoto}><img className={styles.popularImageExact} src={image} alt='' loading='lazy'/></div>
+          {categories.map(({title,subtitle,href,image,icon:Icon},index)=><a className={styles.popularCard} href={href} key={title}>
+            <div className={styles.popularPhoto}>
+              <img className={styles.popularImageExact}
+                src={image+'&w=1200'}
+                srcSet={image+'&w=700 700w, '+image+'&w=1200 1200w, '+image+'&w=1800 1800w'}
+                sizes={index===4?'(max-width:760px) 95vw, (max-width:1100px) 32vw, 33vw':index<2?'(max-width:760px) 50vw, (max-width:1100px) 48vw, 50vw':'(max-width:760px) 50vw, (max-width:1100px) 32vw, 33vw'}
+                alt='' loading='lazy' decoding='async'/>
+              <span className={styles.popularBadge} aria-hidden='true'><Icon size={27} strokeWidth={2.1}/></span>
+            </div>
             <div className={styles.popularBody}><div><strong>{title}</strong><small>{subtitle}</small></div><ArrowRight size={17}/></div>
           </a>)}
         </div>
