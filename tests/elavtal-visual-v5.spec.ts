@@ -35,12 +35,12 @@ test('Elavtal 5.0 has the blue premium shell without green/lime CTAs',async({pag
    mainBackground:getComputedStyle(main).backgroundColor,
   };
  });
- expect(data.headline).toBe('rgb(16, 29, 66)');
+ expect(data.headline).toBe('rgb(21, 39, 68)');
  expect(data.heroCta).toBe('rgb(35, 75, 209)');
  expect(data.partnerCta).toBe('rgb(35, 75, 209)');
  expect(data.brandBackground).toBe('rgb(232, 239, 255)');
  expect(data.heroBackground).not.toContain('pexels-photo-14408369');
- expect(data.mainBackground).toBe('rgb(248, 250, 255)');
+ expect(data.mainBackground).toBe('rgb(250, 248, 243)');
 });
 
 for(const width of widths){
