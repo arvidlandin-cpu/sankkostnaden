@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { ArrowLeft, ArrowRight, Check, PiggyBank } from 'lucide-react';
 import PartnerDirectory from './PartnerDirectory';
 import CategoryJourney from './CategoryJourney';
+import CategorySpotlight from './CategorySpotlight';
 import type { ReactNode } from 'react';
 import type { PartnerCategory, PartnerIntent } from '../lib/partners';
 
@@ -83,6 +84,7 @@ export default function CategoryLanding({
         </div>
       </section>
       <CategoryJourney category={category} compareHref='#category-partners' helpHref={helpHref} understandHref='/ekonomi/samlingslan/'/>
+      <CategorySpotlight category={category}/>
 
       <article className={`article guideWrap categoryArticle ${premium.article}`}>
         {!comparisonFirst&&<>
