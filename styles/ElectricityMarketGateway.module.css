@@ -218,3 +218,19 @@
  .routeCopy h3{font-size:23px!important}
  .sectionHead h2{font-size:27px!important}
 }
+
+/* P0F commercial/mobile correction: retain the branded BLUE partner action,
+   and prevent the 390px first comparison from becoming a text wall. */
+.compareCard .primary{background:#234bd1;color:#fff!important;box-shadow:0 8px 19px rgba(1,14,43,.19)}
+@media(max-width:680px){
+ .compareCard{padding:15px 16px 14px;min-height:0}
+ .compareCard .routeIcon{display:none}
+ .compareCard .routeCopy h3{font-size:23px!important;line-height:1.13!important;margin:5px 0 7px!important}
+ .compareCard .routeCopy p{font-size:13.5px;line-height:1.42;margin:0 0 8px}
+ .compareCard .providerName{margin:0 0 8px;padding:4px 7px;gap:7px}
+ .compareCard .providerName strong{font-size:16px}
+ .compareCard .logo{width:36px;height:36px;flex-basis:36px}
+ .compareCard .logo img{width:33px;height:33px}
+ .compareCard .primary{min-height:48px;padding:10px 12px;font-size:13px}
+ .compareCard .sponsored{margin-top:8px;font-size:12px}
+}
