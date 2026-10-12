@@ -15,3 +15,20 @@ Inga fabricerade spotpriser, personliga premier, mobilsurfbehov, besparingslöft
 
 ## Stoppgrind / QA
 Gren `design/p0g-assets-brand-insights-20261012` är bara källkod tills PR och byggtest passerar, och ännu inte produktionsverifierad. Granska verkligt renderade screenshots 360/390/430/1024/1440 och Pexels-fotons `naturalWidth`. Använd 100 % browserzoom. Fysisk iPhone = UNTESTED. Val av frågealternativ måste byta nyttig kopia + navigeringsväg utan overflow, WCAG focus. Testa officiell Tibber-bild/varumärkessynlighet även på nät där externa SVG blockeras. **CI≠visuell kvalitetsacceptans; merge≠Pages deploy; Pages deploy≠egen-domän serverad SHA.** Verifiera dessa separat och rapportera sanningsenligt.
+
+## Bildmanifest – verifierat mot källsidor 12 oktober
+Bilderna kommer från Pexels, får enligt Pexels licens användas kommersiellt utan obligatorisk attribuering; varumärken och avbildade personer får aldrig framställas som sponsorer. Vi lämnar ändå foto-ID och källsidor för framtida asset-QA. Upplösningen måste kontrolleras i **riktig Chromium vid körning** innan release; ett foto-ID i koden är inte bevis på att bilden laddas i besökarens webbläsare.
+
+| Plats | Pexels-ID | Motiv/källa |
+|---|---|---|
+| Startsida Bredband | 36777855 | Scandinavian living room, Curtis Adams – https://www.pexels.com/photo/modern-scandinavian-living-room-with-natural-light-36777855/ |
+| Startsida El, el hero | 2962066 | Minimalist pendant light, Athena Sandrini – https://www.pexels.com/photo/brown-pendant-lamp-2962066/ |
+| Startsida Mobil | 8067709 | Smartphone, vardagsliv – https://www.pexels.com/photo/a-person-holding-a-smartphone-8067709/ |
+| Startsida Försäkring | 27175807 | Familj i vardagsrum – https://www.pexels.com/photo/cozy-family-moment-in-a-modern-living-room-27175807/ |
+| Startsida Ekonomi | 16139628 | Laptop och kalkylator – https://www.pexels.com/photo/computer-with-financial-calculator-16139628/ |
+| Hero Bredband | 37834298 | Modern Scandinavian interior, Margo Evardson – https://www.pexels.com/photo/modern-scandinavian-style-living-room-interior-37834298/ |
+| Hero Mobil | 20838370 | Hands with smartphone, coffee – https://www.pexels.com/photo/person-using-smartphone-while-having-coffee-20838370/ |
+| Hero Försäkring | 28949489 | Woman and Golden Retriever at home – https://www.pexels.com/photo/warm-home-scene-woman-and-golden-retriever-28949489/ |
+| Hero Ekonomi | 16098002 | Financial planning desk, Jakub Zerdzicki – https://www.pexels.com/photo/counting-bills-accountant-table-with-glasses-and-calculator-top-view-16098002/ |
+
+Tibber SVG: https://commons.wikimedia.org/wiki/File:Tibber_logo.svg (varumärkesskyddad trots angivet public-domain-verk). Tillåt inte påstående om partnerns formella stöd utöver existerande affiliateprogram.
