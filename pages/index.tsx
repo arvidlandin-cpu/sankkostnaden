@@ -111,7 +111,7 @@ export default function Home(){
                 src={image+'&w=1200'}
                 srcSet={image+'&w=700 700w, '+image+'&w=1200 1200w, '+image+'&w=1800 1800w'}
                 sizes={index===4?'(max-width:760px) 95vw, (max-width:1100px) 32vw, 33vw':index<2?'(max-width:760px) 50vw, (max-width:1100px) 48vw, 50vw':'(max-width:760px) 50vw, (max-width:1100px) 32vw, 33vw'}
-                alt='' loading='lazy' decoding='async'/>
+                alt='' loading='eager' fetchPriority={index<2?'high':'low'} decoding='async'/>
               <span className={styles.popularBadge} aria-hidden='true'><Icon size={27} strokeWidth={2.1}/></span>
             </div>
             <div className={styles.popularBody}><div><strong>{title}</strong><small>{subtitle}</small></div><ArrowRight size={17}/></div>
