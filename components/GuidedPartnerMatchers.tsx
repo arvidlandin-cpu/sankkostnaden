@@ -18,7 +18,7 @@ function PartnerCard({
 }){
   return <article className='matchPartnerCard'>
     <div className='matchPartnerTop'>
-      <div><small>FÖRSLAG {position}</small><div className='partnerBrand'><PartnerIdentity partner={partner}/></div></div>
+      <div><small>FÖRSLAG {position}</small><div className='partnerBrand'><h3><PartnerIdentity partner={partner}/></h3></div></div>
       <span><BadgeCheck size={13}/> PARTNERLÄNK</span>
     </div>
     <ul>{reasons.slice(0,2).map(item=><li key={item}><Check size={14}/>{item}</li>)}</ul>
