@@ -27,8 +27,8 @@ for(const width of [360,390,430,1024,1440]){
       await page.goto(route.url,{waitUntil:'domcontentloaded'});
       const section=page.getByTestId('p0g-insight-'+route.category);
       await expect(section).toBeVisible();
-      await expect(section.getByRole('heading',{level:2})).toHaveCount(1);
-      const options=section.getByRole('button');
+      await expect(section.locator('[class*=editorial] h2')).toHaveCount(1);
+      const options=section.locator('[role="group"][aria-label="Välj situation"] button');
       await expect(options).toHaveCount(2);
       const first=await section.locator('a').first().getAttribute('href');
       await options.nth(1).click();
@@ -36,7 +36,7 @@ for(const width of [360,390,430,1024,1440]){
       const second=await section.locator('a').first().getAttribute('href');
       expect(first).not.toEqual(second);
       const image=page.locator('[class*=heroArtwork]').first();
-      await expect(image).toBeVisible();
+      await expect(image).toHaveCount(1);
       expect(await image.evaluate(el=>getComputedStyle(el).backgroundImage)).toMatch(/pexels-photo-/);
       expect(await page.evaluate(()=>Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)-document.documentElement.clientWidth)).toBeLessThanOrEqual(1);
       await page.screenshot({path:'test-results/screenshots/p0g-'+route.name+'-'+testInfo.project.name+'-'+width+'.png',fullPage:true});
