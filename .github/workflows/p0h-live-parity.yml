@@ -1,0 +1,41 @@
+name: P0H actual public release identity
+
+on:
+  push:
+    branches: ['ops/p0h-live-parity-20261012']
+    paths:
+      - '.github/workflows/p0h-live-parity.yml'
+      - 'scripts/check-p0h-live.mjs'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  compare-public:
+    runs-on: ubuntu-latest
+    timeout-minutes: 13
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0'
+      - name: Build exactly this source snapshot
+        run: |
+          npm install --progress=false
+          npx next build
+          npm run check:export
+      - name: Await own-domain product parity, not just PR merge
+        shell: bash
+        run: |
+          set -u
+          for n in $(seq 1 10); do
+            echo "P0H live acceptance attempt $n of 10"
+            if node scripts/check-p0h-live.mjs; then
+              echo "Public seven-route identity verified after attempt $n"
+              exit 0
+            fi
+            sleep 32
+          done
+          echo "::error::The public site's product CSS/JS or P0H markers did not reach parity"
+          exit 1
