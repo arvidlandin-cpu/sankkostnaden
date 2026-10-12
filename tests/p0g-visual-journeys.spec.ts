@@ -71,3 +71,23 @@ test('P0G home CDN sources deliver real imagery rather than placeholder thumbnai
     await expect.poll(()=>image.evaluate((el:HTMLImageElement)=>el.complete && el.naturalWidth>=700),{timeout:18000,intervals:[500,1000,2000]}).toBeTruthy();
   }
 });
+
+
+test('P0G category hero remote originals resolve above desktop display resolution',async({page})=>{
+  await page.setViewportSize({width:1440,height:900});
+  for(const route of routes){
+    await page.goto(route.url,{waitUntil:'domcontentloaded'});
+    const source=await page.locator('[class*=heroArtwork]').first().evaluate(el=>getComputedStyle(el).backgroundImage);
+    const match=source.match(/url\(["']?(https?:[^"')]+)["']?\)/);
+    expect(match,route.name+' hero has an actual image URL').not.toBeNull();
+    const result=await page.evaluate(async source=>new Promise<{width:number;ok:boolean}>((resolve)=>{
+      const image=new Image();
+      const timeout=setTimeout(()=>resolve({width:0,ok:false}),12000);
+      image.onload=()=>{clearTimeout(timeout);resolve({width:image.naturalWidth,ok:true});};
+      image.onerror=()=>{clearTimeout(timeout);resolve({width:0,ok:false});};
+      image.src=source;
+    }),match![1]);
+    expect(result.ok,route.name+' hero image must actually load').toBeTruthy();
+    expect(result.width,route.name+' image must not be a stretched thumbnail').toBeGreaterThanOrEqual(1400);
+  }
+});
