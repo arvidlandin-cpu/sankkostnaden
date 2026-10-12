@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import PartnerIdentity from './PartnerIdentity';
 import { ArrowRight, ArrowUpRight, BadgeCheck, Check, RotateCcw, Users, UserRound, Unplug } from 'lucide-react';
 import { getActivePartners, partnerRankScore, type ActivePartner } from '../lib/partners';
 import { emitAnalyticsEvent } from '../lib/clientAttribution';
@@ -34,7 +35,7 @@ function PartnerCard({partner,household,priority,position}:{partner:ActivePartne
   const why=reasons(partner,household,priority);
   return <article className='matchPartnerCard'>
     <div className='matchPartnerTop'>
-      <div><small>FÖRSLAG {position}</small><div className='partnerBrand'>{partner.domain&&<img src={`https://www.google.com/s2/favicons?domain=${partner.domain}&sz=128`} alt='' loading='lazy'/>}<h3>{partner.name}</h3></div></div>
+      <div><small>FÖRSLAG {position}</small><div className='partnerBrand'><PartnerIdentity partner={partner}/></div></div>
       <span><BadgeCheck size={13}/> PARTNERLÄNK</span>
     </div>
     <ul>{why.map(item=><li key={item}><Check size={14}/>{item}</li>)}</ul>
@@ -89,7 +90,7 @@ export default function MobilePartnerMatcher(){
     <div className='directPartnerBlock'>
       <div className='directPartnerHead'><div><small>REDO ATT JÄMFÖRA?</small><strong>Se mobilabonnemang direkt</strong></div><span>Partnerlänkar</span></div>
       <div className='directPartnerGrid'>{all.slice(0,2).map((p,i)=><a key={p.name} href={p.trackingUrl} target='_blank' rel='sponsored nofollow noopener' data-partner={p.name} data-category='mobil' data-intent='direct' data-placement='mobile_direct' data-partner-position={i+1}>
-        <span className='partnerBrand'>{p.domain&&<img src={`https://www.google.com/s2/favicons?domain=${p.domain}&sz=128`} alt='' loading='lazy'/>}<span className='partnerWordmark'>{p.name}</span></span><b>{p.cta||'Se abonnemang'}<ArrowUpRight size={14}/></b>
+        <span className='partnerBrand'><PartnerIdentity partner={p}/></span><b>{p.cta||'Se abonnemang'}<ArrowUpRight size={14}/></b>
       </a>)}</div>
       <p>Vill du ha hjälp att välja? Svara på två frågor nedan.</p>
     </div>
