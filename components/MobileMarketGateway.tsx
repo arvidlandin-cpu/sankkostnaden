@@ -58,8 +58,8 @@ export default function MobileMarketGateway(){
       <div className={styles.supplierGrid}>
         {all.map((partner,index)=><article key={partner.name} className={styles.supplier}>
           <div className={styles.supplierIdentity}>
-            <Brand partner={partner}/>
-            <div><strong>{partner.name}</strong><small>Mobilabonnemang · aktiv partner</small></div>
+            <PartnerIdentity partner={partner}/>
+            <div><small>Mobilabonnemang · aktiv partner</small></div>
           </div>
           <a href={partner.trackingUrl}
             onClick={()=>pathClick('direct_operator')}
