@@ -7,11 +7,11 @@ import HomeHero from '../components/HomeHero';
 /* Licensed Pexels originals in responsive 700/1200/1800px variants. 
    No pre-rendered text or logos in imagery; the overlay icons are vector UI. */
 const categories=[
-  {title:'Bredband',subtitle:'Pris, fart & adress',href:'/bredband/',icon:Wifi,image:'https://images.pexels.com/photos/36777855/pexels-photo-36777855.jpeg?auto=compress&cs=tinysrgb&fit=crop'},
-  {title:'El',subtitle:'Avtal & elpriser',href:'/elavtal/',icon:Zap,image:'https://images.pexels.com/photos/2962066/pexels-photo-2962066.jpeg?auto=compress&cs=tinysrgb&fit=crop'},
+  {title:'Bredband',subtitle:'Pris, fart & adress',href:'/bredband/',icon:Wifi,image:'https://images.pexels.com/photos/8055076/pexels-photo-8055076.jpeg?auto=compress&cs=tinysrgb&fit=crop'},
+  {title:'El',subtitle:'Avtal & elpriser',href:'/elavtal/',icon:Zap,image:'https://images.pexels.com/photos/8055828/pexels-photo-8055828.jpeg?auto=compress&cs=tinysrgb&fit=crop'},
   {title:'Mobil',subtitle:'Surf & abonnemang',href:'/mobil/',icon:Smartphone,image:'https://images.pexels.com/photos/8067709/pexels-photo-8067709.jpeg?auto=compress&cs=tinysrgb&fit=crop'},
-  {title:'Försäkring',subtitle:'Hem, djur & resa',href:'/forsakring/',icon:ShieldCheck,image:'https://images.pexels.com/photos/27175807/pexels-photo-27175807.jpeg?auto=compress&cs=tinysrgb&fit=crop'},
-  {title:'Lån & ekonomi',subtitle:'Ränta & totalkostnad',href:'/ekonomi/',icon:WalletCards,image:'https://images.pexels.com/photos/16139628/pexels-photo-16139628.jpeg?auto=compress&cs=tinysrgb&fit=crop'},
+  {title:'Försäkring',subtitle:'Hem, djur & resa',href:'/forsakring/',icon:ShieldCheck,image:'https://images.pexels.com/photos/28949489/pexels-photo-28949489.jpeg?auto=compress&cs=tinysrgb&fit=crop'},
+  {title:'Lån & ekonomi',subtitle:'Ränta & totalkostnad',href:'/ekonomi/',icon:WalletCards,image:'https://images.pexels.com/photos/16098002/pexels-photo-16098002.jpeg?auto=compress&cs=tinysrgb&fit=crop'},
 ];
 
 const guideGroups=[
@@ -102,7 +102,7 @@ export default function Home(){
 
       <section className={`${styles.section} ${styles.popularSection}`} id='jamfor'>
         <div className={styles.popularHeader}>
-          <div><p>VÄLJ OMRÅDE</p><h2>Vad vill du se över?</h2><span>Fem områden. Välj ett – vi hjälper dig vidare därifrån.</span></div>
+          <div><p>VÄLJ OMRÅDE</p><h2>Dina kostnader. Ditt liv. Dina val.</h2><span>Det är här du börjar. Välj det som spelar störst roll i din vardag.</span></div>
         </div>
         <div className={styles.popularGrid}>
           {categories.map(({title,subtitle,href,image,icon:Icon},index)=><a className={styles.popularCard} href={href} key={title}>
@@ -141,8 +141,8 @@ export default function Home(){
 
       <section className={styles.section}>
         <div className={styles.principle}>
-          <div><p>VÅR PRINCIP</p><h2>Besparing först.<br/>Enklare val sedan.</h2></div>
-          <div><p>Sänk Kostnaden hjälper dig förstå vad du betalar, vad som går att påverka och vilka alternativ som kan passa dig. Du ska få nytta av sajten även om du bara använder våra guider och verktyg.</p><p>När en länk är kommersiell märks den tydligt. Alla aktörer på marknaden behöver inte finnas med.</p><a href='/sa-jamfor-vi/'>Läs hur vi jämför →</a></div>
+          <div><div className={styles.principleImage} aria-hidden='true'><img src='https://images.pexels.com/photos/4473625/pexels-photo-4473625.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1600' alt='' loading='lazy'/></div><p>VARFÖR VI FINNS</p><h2>Besparing först.<br/>Enklare val sedan.</h2></div>
+          <div><p>Vi vill att du ska ha mer kvar till det som gör vardagen bra. Vi hjälper dig förstå dina återkommande kostnader och hitta jämförelser som faktiskt passar ditt hem – utan att du behöver bli expert.</p><p>Guiderna är gratis. När vi länkar till en partner märker vi det tydligt. Vi jämför inte hela marknaden och lovar inga besparingar.</p><a href='/sa-jamfor-vi/'>Läs hur vi jämför →</a></div>
         </div>
       </section>
     </main>
