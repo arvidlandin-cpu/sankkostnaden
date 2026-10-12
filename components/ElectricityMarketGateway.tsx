@@ -3,6 +3,7 @@ import { ArrowRight, ArrowUpRight, Calculator, CheckCircle2, GitCompareArrows, S
 import { emitAnalyticsEvent } from '../lib/clientAttribution';
 import { getActivePartners, type ActivePartner } from '../lib/partners';
 import styles from '../styles/ElectricityMarketGateway.module.css';
+import PartnerIdentity from './PartnerIdentity';
 import ElectricitySpotPrices from './ElectricitySpotPrices';
 
 const all=getActivePartners('el',undefined,40);
@@ -11,14 +12,6 @@ const suppliers=all.filter(partner=>partner.name!=='Elskling').sort((a,b)=>a.nam
 
 function trackPath(path:string){
   emitAnalyticsEvent('electricity_hub_path',{path,source:'electricity_hub'});
-}
-
-function Logo({partner}:{partner:ActivePartner}){
-  return <span className={styles.logo} aria-hidden='true'>
-    {partner.domain
-      ? <img src={`https://www.google.com/s2/favicons?domain=${encodeURIComponent(partner.domain)}&sz=128`} alt='' loading='lazy' width={48} height={48}/>
-      : <Zap size={24}/>}
-  </span>;
 }
 
 /**
@@ -44,7 +37,7 @@ export default function ElectricityMarketGateway(){
             <span className={styles.routeType}>JÄMFÖRELSETJÄNST · FLERA ALTERNATIV</span>
             <h3>Jämför flera elbolag på ett ställe</h3>
             <p>Jämför aktuella erbjudanden hos Elskling med deras egna uppgifter och villkor.</p>
-            <div className={styles.providerName}><Logo partner={comparison}/><strong>{comparison.name}</strong></div>
+            <div className={styles.providerName}><PartnerIdentity partner={comparison}/></div>
           </div>
           <a className={styles.primary} href={comparison.trackingUrl} onClick={()=>trackPath('compare_service')} data-partner={comparison.name} data-category='el' data-intent='compare' data-placement='electricity_hub_comparison' data-partner-position='1' target='_blank' rel='sponsored nofollow noopener'>Jämför aktuella elavtal hos Elskling <ArrowUpRight size={19}/></a>
           <small className={styles.sponsored}>Partnerlänk · öppnas hos Elskling</small>
@@ -77,7 +70,7 @@ export default function ElectricityMarketGateway(){
       </div>
       <div className={styles.supplierGrid}>
         {suppliers.map((partner,index)=><article className={styles.supplier} key={partner.name}>
-          <div className={styles.supplierIdentity}><Logo partner={partner}/><div><strong>{partner.name}</strong><small>Elhandelsbolag · aktiv partner</small></div></div>
+          <div className={styles.supplierIdentity}><PartnerIdentity partner={partner}/><div><small>Elhandelsbolag · aktiv partner</small></div></div>
           <a href={partner.trackingUrl} onClick={()=>trackPath('direct_supplier')} data-partner={partner.name} data-category='el' data-intent='electricity' data-placement='electricity_hub_supplier' data-partner-position={index+1} target='_blank' rel='sponsored nofollow noopener' aria-label={`Se aktuella elavtal hos ${partner.name}`}>Se aktuella avtal <ArrowUpRight size={17}/></a>
         </article>)}
       </div>
