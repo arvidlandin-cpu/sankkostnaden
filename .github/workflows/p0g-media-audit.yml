@@ -9,6 +9,7 @@ on:
       - 'pages/index.tsx'
       - 'styles/CategoryPremium.module.css'
       - 'components/CategorySpotlight.tsx'
+      - 'tests/p0g-visual-journeys.spec.ts'
   workflow_dispatch:
 
 permissions:
