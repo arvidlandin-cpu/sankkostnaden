@@ -261,3 +261,7 @@
 @media(min-width:761px) and (max-width:1024px){
  .main .article:global(.categoryArticle){max-width:100%!important;padding:42px 28px 68px!important}
 }
+
+/* Regression contract: the established cool-white category canvas remains
+   #f8faff, including the electricity visual QA's exact color assertion. */
+.main{background:#f8faff}
