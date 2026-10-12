@@ -109,7 +109,7 @@ for(const width of [360,390,430,1024,1440]){
   const principle=page.getByText('Besparing först.',{exact:false});
   await expect(principle).toBeVisible();
   const explanation=page.locator('div[class*="principle"] > div:last-child > p:first-child');
-  await expect(explanation).toContainText('Sänk Kostnaden hjälper dig förstå');
+  await expect(explanation).toContainText('Vi vill att du ska ha mer kvar');
   expect(await explanation.evaluate(el=>parseFloat(getComputedStyle(el).fontSize))).toBeGreaterThanOrEqual(14);
   const excess=await page.evaluate(()=>Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)-document.documentElement.clientWidth);
   expect(excess).toBeLessThanOrEqual(1);
