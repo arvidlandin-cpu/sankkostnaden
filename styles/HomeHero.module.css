@@ -37,3 +37,43 @@
  .trust{margin-top:9px}
 }
 @media(prefers-reduced-motion:reduce){.primary{transition:none}.primary:hover{transform:none}}
+
+
+/* P0F 2026-10-12 — owner-reviewed visual amplification.
+   Deliberately wider editorial stage and bigger interactive decision surface.
+   Preserve the original nav/SEO/goal links and small-screen tap targets. */
+@media(min-width:1025px){
+ .inner{width:min(1480px,calc(100% - 96px));grid-template-columns:minmax(0,.94fr) minmax(0,1.06fr);gap:clamp(48px,5.2vw,102px);padding:clamp(86px,7.5vw,124px) 0 clamp(90px,8vw,130px)}
+ .copy{max-width:720px}
+ .copy h1{max-width:730px;font-size:clamp(67px,5.65vw,101px);line-height:1;letter-spacing:-.068em}
+ .lead{max-width:600px;font-size:clamp(18px,1.3vw,21px);line-height:1.52;margin-top:29px}
+ .actions{margin-top:36px;gap:15px}
+ .primary{min-width:338px;min-height:78px;padding:17px 25px;border-radius:20px}
+ .primary strong{font-size:17px}.primary small{font-size:13px}
+ .secondary{font-size:15px}
+ .trust{margin-top:23px;font-size:13px}
+ .sequence{margin-top:45px}
+ .stage{padding:11px;border-radius:32px;box-shadow:0 35px 95px rgba(26,53,108,.18),0 3px 10px rgba(26,53,108,.06)}
+ .stageTop{padding:15px 12px 10px;font-size:12px}
+}
+@media(min-width:761px) and (max-width:1024px){
+ .inner{width:calc(100% - 64px);gap:34px;grid-template-columns:minmax(0,.94fr) minmax(0,1.06fr);padding:65px 0 78px}
+ .copy h1{font-size:clamp(51px,6.5vw,72px)}
+ .stage{border-radius:26px}
+}
+@media(max-width:760px){
+ .inner{width:calc(100% - 36px);grid-template-columns:1fr;gap:28px;padding:42px 0 51px}
+ .copy{max-width:none}
+ .copy h1{font-size:clamp(43px,8.8vw,70px);line-height:1.03}
+ .lead{max-width:640px;line-height:1.5}
+ .stage{border-radius:24px}
+}
+@media(max-width:550px){
+ .inner{width:calc(100% - 32px);padding:30px 0 38px;gap:19px}
+ .copy h1{font-size:clamp(41px,10.8vw,54px)}
+ .lead{font-size:15px}
+ .primary{min-height:64px;border-radius:16px}
+ .stage{border-radius:20px}
+}
+/* Depth without fake metrics or animation-only content. */
+.shell{background:linear-gradient(115deg,#f8faff 0%,#eef3ff 56%,#e3eaff 100%)}

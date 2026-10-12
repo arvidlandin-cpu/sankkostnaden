@@ -190,3 +190,78 @@
  text-decoration:none!important;
 }
 .hero :global(.back:hover){color:#234bd1!important}
+
+
+/* P0F 2026-10-12 — broad, editorial category landings, one brand.
+   The 5 existing category flows and all partner URLs remain unchanged. */
+.main{background:#f5f7fd}
+@media(min-width:1025px){
+ .hero:global(.categoryHero){min-height:605px!important;padding:90px max(40px,calc((100vw - 1460px)/2)) 112px!important}
+ .heroInner:global(.guideWrap){max-width:1400px!important;width:100%!important}
+ .heroArtwork{inset:0 0 0 45%;background-position:center center}
+ .heroArtwork:before{background:linear-gradient(90deg,#f5f8ff 0%,rgba(245,248,255,.97) 12%,rgba(245,248,255,.30) 58%,rgba(245,248,255,0) 100%)}
+ .hero :global(.categoryHeroIcon){width:62px;height:62px;margin:27px 0 21px;border-radius:20px}
+ .hero :global(.kicker){font-size:13px!important}
+ .hero :global(h1){max-width:750px!important;font-size:clamp(60px,5.1vw,82px)!important;line-height:1.045!important;letter-spacing:-.059em!important;margin:16px 0 22px!important}
+ .hero :global(.lead){max-width:630px!important;font-size:clamp(18px,1.4vw,21px)!important;line-height:1.55!important}
+ .hero :global(.categoryHeroActions){margin-top:33px!important}
+ .hero :global(.categoryHeroActions a){min-height:62px;padding:0 25px!important;font-size:16px!important;border-radius:17px!important}
+ .hero :global(.fine){font-size:13px!important}
+ .article:global(.categoryArticle){max-width:1420px!important;padding:65px 32px 85px!important;margin-bottom:75px!important}
+}
+@media(min-width:761px) and (max-width:1024px){
+ .hero:global(.categoryHero){min-height:510px!important;padding:62px 32px 78px!important}
+ .heroInner:global(.guideWrap){max-width:100%!important}
+ .heroArtwork{inset:0 0 0 49%}
+ .hero :global(h1){font-size:clamp(51px,5.8vw,67px)!important;max-width:670px!important}
+ .hero :global(.lead){max-width:560px!important;font-size:17px!important}
+ .hero :global(.categoryHeroActions a){min-height:56px;font-size:15px!important}
+ .article:global(.categoryArticle){max-width:100%!important;padding:42px 28px 68px!important}
+}
+.intro:global(.categoryIntro){background:linear-gradient(125deg,#edf3ff 0%,#fff 85%);border:1px solid #d2e0f6;border-left:5px solid #345aca;border-radius:23px;box-shadow:none}
+.intro :global(h2){font-size:clamp(29px,3.05vw,42px)!important;letter-spacing:-.045em!important}
+.guides:global(.categoryGuideSection){margin-top:85px}
+.guides :global(.categoryGuideHead h2){font-size:clamp(32px,3.2vw,47px)!important;letter-spacing:-.05em!important}
+.guides :global(.categoryGuideGrid){gap:20px!important}
+.guides :global(.categoryGuideGrid>a){min-height:158px;padding:27px 30px!important;border-radius:22px!important;box-shadow:0 7px 25px rgba(25,49,96,.035)!important}
+.guides :global(.categoryGuideGrid strong){font-size:19px!important;line-height:1.25!important}
+.guides :global(.categoryGuideGrid span){font-size:14px!important;line-height:1.55!important}
+.guides :global(.categoryGuideGrid b){font-size:13px!important}
+.article :global(.partnerGrid){grid-template-columns:repeat(2,minmax(0,1fr));gap:19px}
+.article :global(.partnerCard){padding:26px;border-radius:22px;min-height:215px;box-shadow:0 8px 25px rgba(25,49,96,.045)}
+.article :global(.partnerButton){min-height:53px}
+@media(max-width:760px){
+ .hero:global(.categoryHero){padding:35px 19px 51px!important}
+ .heroInner:global(.guideWrap){width:100%!important}
+ .hero :global(h1){font-size:clamp(37px,8.2vw,54px)!important;line-height:1.07!important}
+ .hero :global(.categoryHeroActions a){min-height:55px!important;font-size:14px!important}
+ .hero :global(.fine){font-size:12px!important}
+ .article:global(.categoryArticle){padding:35px 18px 49px!important}
+ .intro:global(.categoryIntro){padding:24px 22px;border-left-width:4px}
+ .guides:global(.categoryGuideSection){margin-top:49px}
+ .guides :global(.categoryGuideGrid){gap:11px!important}
+ .guides :global(.categoryGuideGrid>a){min-height:123px;padding:21px!important}
+ .guides :global(.categoryGuideGrid strong){font-size:17px!important}
+ .article :global(.partnerGrid){grid-template-columns:1fr}
+}
+@media(max-width:390px){
+ .hero:global(.categoryHero){padding:26px 16px 41px!important}
+ .hero :global(h1){font-size:36px!important}
+ .article:global(.categoryArticle){padding:24px 14px 41px!important}
+ .intro:global(.categoryIntro){padding:20px 18px}
+}
+
+/* The global article/guide selectors also carry !important. Beat them by
+   specificity rather than relying on CSS chunk order across Next routes. */
+@media(min-width:1025px){
+ .hero:global(.categoryHero) .heroInner:global(.guideWrap){max-width:1400px!important;width:100%!important}
+ .main .article:global(.categoryArticle){max-width:1420px!important;padding:65px 32px 85px!important}
+ .topbar:global(.topbar){padding-left:max(28px,calc((100vw - 1480px)/2))!important;padding-right:max(28px,calc((100vw - 1480px)/2))!important}
+}
+@media(min-width:761px) and (max-width:1024px){
+ .main .article:global(.categoryArticle){max-width:100%!important;padding:42px 28px 68px!important}
+}
+
+/* Regression contract: the established cool-white category canvas remains
+   #f8faff, including the electricity visual QA's exact color assertion. */
+.main{background:#f8faff}

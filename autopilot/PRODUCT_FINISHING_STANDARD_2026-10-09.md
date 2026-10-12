@@ -1,3 +1,7 @@
+## SENASTE BINDANDE ÄGARBESLUT 2026-10-12 – P0F RADIKAL PREMIUMSKALA
+
+Läs [autopilot/BOLD_PREMIUM_SCALE_2026-10-12.md](BOLD_PREMIUM_SCALE_2026-10-12.md) först. Ägarens aktuella produktskärmdumpar visar att blå P0D och P0E-interaktionerna inte räcker: gör helheten större, mer redaktionell, bredare och mindre småkortig. Denna P0F-revision är under arbete i `design/p0f-bold-premium-desktop-20261012`, ännu inte godkänd eller live. Undvik CSS-krock med pågående P0F-PR, kontrollera Build/kommersiell regression, riktiga screenshots och Pages-domän separat. Approved provision = UNKNOWN utan verifierade nätverksdata.
+
 # Sänk Kostnaden — produktkvalitet och kontinuerlig färdigställning
 
 ## NYTT BINDANDE ÄGARBESLUT 2026-10-11 – P0E UPPLEVELSE FÖRST

@@ -149,3 +149,88 @@
  .compareCard,.directCard{padding:17px 16px}
  .count{padding:8px 11px}
 }
+
+
+/* P0F 2026-10-12 — market decisions and genuine sponsor options
+   have room to breathe. No change to rank/order, claims or tracking. */
+.sectionHead{margin-bottom:24px}
+.sectionHead>div{max-width:940px}
+.sectionHead h2{font-size:clamp(32px,3.3vw,49px)!important;letter-spacing:-.055em!important}
+.sectionHead p:not(.eyebrow){font-size:16px;line-height:1.56}
+.routes{gap:22px}
+.compareCard,.directCard{border-radius:26px;padding:30px 32px 29px;min-height:350px;box-shadow:0 11px 37px rgba(22,47,99,.055)}
+.compareCard{background:linear-gradient(135deg,#122956 0%,#1c417e 100%);border-color:#1c417e}
+.compareCard .routeIcon{background:rgba(255,255,255,.14);color:#fff}
+.compareCard .routeType{color:#c2d7ff}
+.compareCard .routeCopy h3{color:#fff!important}
+.compareCard .routeCopy p{color:#e0eafb}
+.compareCard .providerName{background:rgba(255,255,255,.95);border-color:transparent}
+.compareCard .miniNames span{color:#15305a}
+.compareCard .primary{background:#fff;color:#183e96!important;box-shadow:0 11px 23px rgba(6,20,53,.14)}
+.compareCard .sponsored{color:#d3e2fa}
+.directCard{background:#eef3ff;border-color:#d5e1fa}
+.routeIcon{width:52px;height:52px;margin-bottom:19px;border-radius:17px}
+.routeCopy h3{font-size:clamp(25px,2.5vw,34px)!important;line-height:1.15!important;margin:12px 0!important}
+.routeCopy p{font-size:15px;line-height:1.55;margin-bottom:20px}
+.primary,.secondary{min-height:60px;padding:16px 21px;border-radius:15px;font-size:15px}
+.providerName{margin-bottom:19px;padding:9px 13px}
+.supplierGrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.supplier{padding:24px;min-height:170px;border-radius:22px;box-shadow:0 8px 28px rgba(22,47,99,.045)}
+.supplierIdentity{gap:15px}
+.logo{width:54px;height:54px;flex-basis:54px;border-radius:15px}
+.logo img{width:50px;height:50px}
+.supplierIdentity strong{font-size:20px}
+.supplierIdentity small{font-size:13px}
+.supplier a{min-height:53px;padding:14px 16px;border-radius:13px;font-size:14px}
+.suppliers{padding-top:26px}
+.nextStep{margin:57px 0 38px;padding:32px 35px;border-radius:25px;gap:26px}
+.nextStep h2{font-size:clamp(27px,2.7vw,37px)!important}
+.nextStep p:not(.eyebrow){font-size:15px}
+.nextStep a{min-height:56px;padding:14px 20px;font-size:15px}
+.optionalJourneys{border-radius:21px;margin:43px 0 22px}
+@media(max-width:950px){
+ .sectionHead{gap:15px}
+ .sectionHead h2{font-size:clamp(30px,4vw,41px)!important}
+ .supplierGrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .supplier{padding:19px;min-height:156px}
+ .compareCard,.directCard{min-height:320px;padding:23px}
+ .routeCopy h3{font-size:27px!important}
+}
+@media(max-width:680px){
+ .sectionHead{gap:11px;margin-bottom:17px}
+ .sectionHead h2{font-size:29px!important}
+ .sectionHead p:not(.eyebrow){font-size:14px}
+ .routes{gap:12px}
+ .compareCard,.directCard{min-height:0;padding:22px 19px;border-radius:20px}
+ .routeIcon{width:44px;height:44px;margin-bottom:13px}
+ .routeCopy h3{font-size:25px!important}
+ .routeCopy p{font-size:14px;line-height:1.5;margin-bottom:13px}
+ .primary,.secondary{min-height:53px;padding:13px 15px;font-size:14px}
+ .supplierGrid{grid-template-columns:1fr;gap:12px}
+ .supplier{min-height:0;padding:18px;border-radius:19px;gap:12px}
+ .supplierIdentity strong{font-size:18px}
+ .supplier a{min-height:48px}
+ .nextStep{margin:40px 0 25px;padding:23px;border-radius:20px;gap:14px}
+ .nextStep h2{font-size:28px!important}
+}
+@media(max-width:390px){
+ .compareCard,.directCard{padding:20px 16px}
+ .routeCopy h3{font-size:23px!important}
+ .sectionHead h2{font-size:27px!important}
+}
+
+/* P0F commercial/mobile correction: retain the branded BLUE partner action,
+   and prevent the 390px first comparison from becoming a text wall. */
+.compareCard .primary{background:#234bd1;color:#fff!important;box-shadow:0 8px 19px rgba(1,14,43,.19)}
+@media(max-width:680px){
+ .compareCard{padding:15px 16px 14px;min-height:0}
+ .compareCard .routeIcon{display:none}
+ .compareCard .routeCopy h3{font-size:23px!important;line-height:1.13!important;margin:5px 0 7px!important}
+ .compareCard .routeCopy p{font-size:13.5px;line-height:1.42;margin:0 0 8px}
+ .compareCard .providerName{margin:0 0 8px;padding:4px 7px;gap:7px}
+ .compareCard .providerName strong{font-size:16px}
+ .compareCard .logo{width:36px;height:36px;flex-basis:36px}
+ .compareCard .logo img{width:33px;height:33px}
+ .compareCard .primary{min-height:48px;padding:10px 12px;font-size:13px}
+ .compareCard .sponsored{margin-top:8px;font-size:12px}
+}
