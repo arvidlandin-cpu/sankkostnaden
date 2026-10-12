@@ -272,9 +272,9 @@
 .heroArtwork{background-image:url('https://images.pexels.com/photos/36777855/pexels-photo-36777855.jpeg?auto=compress&cs=tinysrgb&w=2500&fit=crop')}
 .hero:global(.guideHero-bredband) .heroArtwork{background-image:url('https://images.pexels.com/photos/37834298/pexels-photo-37834298.jpeg?auto=compress&cs=tinysrgb&w=2500&fit=crop')}
 .hero:global(.guideHero-el) .heroArtwork{background-image:url('https://images.pexels.com/photos/2962066/pexels-photo-2962066.jpeg?auto=compress&cs=tinysrgb&w=2500&fit=crop')}
-.hero:global(.guideHero-mobil) .heroArtwork{background-image:url('https://images.pexels.com/photos/34975524/pexels-photo-34975524.jpeg?auto=compress&cs=tinysrgb&w=2500&fit=crop')}
-.hero:global(.guideHero-forsakring) .heroArtwork{background-image:url('https://images.pexels.com/photos/29140984/pexels-photo-29140984.jpeg?auto=compress&cs=tinysrgb&w=2500&fit=crop')}
-.hero:global(.guideHero-ekonomi) .heroArtwork{background-image:url('https://images.pexels.com/photos/10020082/pexels-photo-10020082.jpeg?auto=compress&cs=tinysrgb&w=2500&fit=crop')}
+.hero:global(.guideHero-mobil) .heroArtwork{background-image:url('https://images.pexels.com/photos/20838370/pexels-photo-20838370.jpeg?auto=compress&cs=tinysrgb&w=2500&fit=crop')}
+.hero:global(.guideHero-forsakring) .heroArtwork{background-image:url('https://images.pexels.com/photos/28949489/pexels-photo-28949489.jpeg?auto=compress&cs=tinysrgb&w=2500&fit=crop')}
+.hero:global(.guideHero-ekonomi) .heroArtwork{background-image:url('https://images.pexels.com/photos/16098002/pexels-photo-16098002.jpeg?auto=compress&cs=tinysrgb&w=2500&fit=crop')}
 .heroArtwork:before{background:linear-gradient(90deg,#f7f9ff 0%,rgba(247,249,255,.96) 12%,rgba(247,249,255,.48) 50%,rgba(247,249,255,.08) 89%)}
 .heroArtwork:after{background:linear-gradient(180deg,rgba(20,38,72,.025),rgba(12,34,72,.045))}
 @media(max-width:1024px) and (min-width:761px){
