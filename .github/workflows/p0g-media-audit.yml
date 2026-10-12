@@ -46,3 +46,30 @@ jobs:
             echo "::warning::Tibber SVG unavailable in runner; on-site text fallback is required"
           fi
           exit "$failed"
+
+  browser-photo-source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    env:
+      QA_BASE_URL: 'http://127.0.0.1:3000'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install packages and build local export
+        run: |
+          npm install --progress=false
+          npx next build
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Start local export
+        run: |
+          python3 -m http.server 3000 --directory out >/tmp/p0g-server.log 2>&1 &
+          for i in {1..25}; do
+            curl -fsS http://127.0.0.1:3000/ >/dev/null && exit 0
+            sleep 1
+          done
+          cat /tmp/p0g-server.log; exit 1
+      - name: Inspect all 5 homepage images in actual Chromium
+        run: npx playwright test tests/p0g-visual-journeys.spec.ts --project=chromium --grep 'P0G home CDN sources'
