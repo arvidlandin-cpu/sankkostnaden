@@ -1,3 +1,4 @@
+import CategoryHeroPhoto from '../components/CategoryHeroPhoto';
 import Head from 'next/head';
 import premium from '../styles/CategoryPremium.module.css';
 import Link from 'next/link';
@@ -34,7 +35,7 @@ export default function Forsakring(){
    </header>
    <main className={premium.main}>
      <section className={`guideHero categoryHero guideHero-forsakring ${premium.hero}`}>
-    <div className={premium.heroArtwork} aria-hidden='true'/>
+    <div className={premium.heroArtwork} aria-hidden='true'><CategoryHeroPhoto category='forsakring'/></div>
        <div className={`guideWrap ${premium.heroInner}`}>
          <nav className='breadcrumbs' aria-label='Brödsmulor'><Link href='/'>Start</Link><span>›</span><span aria-current='page'>Försäkring</span></nav>
          <div className='categoryHeroIcon'><ShieldCheck size={25}/></div>
