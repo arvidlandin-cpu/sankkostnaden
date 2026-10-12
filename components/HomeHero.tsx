@@ -2,7 +2,7 @@ import { ArrowRight, Check, ShieldCheck, Sparkles, ChevronDown } from 'lucide-re
 import styles from '../styles/HomeHero.module.css';
 import HomeDecisionExplorer from './HomeDecisionExplorer';
 
-const familyPhoto='https://images.pexels.com/photos/4874926/pexels-photo-4874926.jpeg?auto=compress&cs=tinysrgb&fit=crop';
+const familyPhoto='https://images.pexels.com/photos/39997379/pexels-photo-39997379.jpeg?auto=compress&cs=tinysrgb&fit=crop';
 
 /**
  * Owner direction P0H: the product must feel like a real household,
