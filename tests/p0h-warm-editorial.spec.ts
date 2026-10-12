@@ -40,7 +40,10 @@ test('P0H desktop warm family hero actually loads at readable source resolution'
  await page.setViewportSize({width:1440,height:900});
  await page.goto('/?qa=1',{waitUntil:'domcontentloaded'});
  const img=page.locator('section[aria-label="Hitta rätt jämförelse"] img[src*="3875141"]');
- await expect.poll(()=>img.evaluate((node:HTMLImageElement)=>node.complete&&node.naturalWidth>800),{timeout:20000}).toBeTruthy();
+ await expect.poll(()=>img.evaluate((node:HTMLImageElement)=>{
+  const chosen=Number(new URL(node.currentSrc).searchParams.get('w'))||0;
+  return node.complete&&node.naturalWidth>0&&chosen>=node.getBoundingClientRect().width*window.devicePixelRatio*.95;
+ }),{timeout:20000}).toBeTruthy();
  const url=await img.getAttribute('src');
  expect(url).toContain('images.pexels.com/photos/3875141');
 });
@@ -55,6 +58,9 @@ for(const width of [390,1440]){
    const bg=await image.evaluate(el=>getComputedStyle(el).backgroundImage);
    expect(bg).toContain('images.pexels.com/photos/');
    const rect=await image.boundingBox();
+   const source=hero.getByTestId('p0h-hero-photo-'+route.category);
+   await expect(source).toBeVisible();
+   await expect.poll(()=>source.evaluate((node:HTMLImageElement)=>node.complete&&node.naturalWidth>0),{timeout:18000}).toBeTruthy();
    expect(rect).not.toBeNull();
    expect(rect!.height).toBeGreaterThan(width===390?160:480);
    const insight=page.getByTestId('p0g-insight-'+route.category);
@@ -65,7 +71,7 @@ for(const width of [390,1440]){
    }else{
     const tibber=insight.locator('a[data-placement="electricity_insight_tibber"]');
     await expect(tibber).toHaveAttribute('rel',/sponsored/);
-    await expect(page.getByTestId('electricity-spot-prices')).toHaveCount(1);
+    await expect(insight.getByText('VERKLIGA SPOTPRISER',{exact:false})).toBeVisible();
    }
    const options=insight.locator('[role="group"][aria-label="Välj situation"] button');
    await expect(options).toHaveCount(2);
