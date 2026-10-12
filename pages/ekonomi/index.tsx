@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { ArrowRight, ArrowUpRight, CircleDollarSign } from 'lucide-react';
 import CategoryLanding from '../../components/CategoryLanding';
+import PartnerIdentity from '../../components/PartnerIdentity';
 import { getActivePartners } from '../../lib/partners';
 
 export default function Ekonomi(){
@@ -17,8 +18,7 @@ export default function Ekonomi(){
       <small>Partnerlänk · kontrollera funktioner, pris och villkor hos tjänsten.</small>
     </div>
     <div className='claimsSpotlightBrand'>
-      <img src={`https://www.google.com/s2/favicons?domain=${saving.domain}&sz=128`} alt='' loading='lazy'/>
-      <strong>{saving.name}</strong>
+      <PartnerIdentity partner={saving} large/>
       <span>Privatekonomisk överblick</span>
     </div>
   </section>:null;
