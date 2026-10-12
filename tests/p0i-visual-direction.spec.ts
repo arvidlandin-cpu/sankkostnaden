@@ -10,11 +10,11 @@ for(const width of [390,1024,1440,1920]){
     await page.setViewportSize({width,height:width===390?844:900});
     await page.goto('/',{waitUntil:'domcontentloaded'});
     const hero=page.locator('section[aria-label="Hitta rätt jämförelse"]');
-    const picture=hero.locator('img[src*="4874926"]');
+    const picture=hero.locator('img[src*="39997379"]');
     await expect(picture).toBeVisible();
     await expect.poll(()=>picture.evaluate((node:HTMLImageElement)=>node.complete&&node.naturalWidth>0),{timeout:20000}).toBeTruthy();
     const data=await hero.evaluate(root=>{
-      const photo=root.querySelector('img[src*="4874926"]') as HTMLImageElement;
+      const photo=root.querySelector('img[src*="39997379"]') as HTMLImageElement;
       const copy=root.querySelector('h1')!;
       const imageRect=photo.getBoundingClientRect(),textRect=copy.getBoundingClientRect();
       const overlay=root.querySelector('[class*=photoShade]')!;
@@ -40,7 +40,7 @@ for(const width of [390,1024,1440,1920]){
 test('P0I no fabricated outcome or sponsor implied by the hero family',async({page})=>{
   await page.goto('/');
   const hero=page.locator('section[aria-label="Hitta rätt jämförelse"]');
-  await expect(hero.locator('img[src*="4874926"]')).toHaveAttribute('alt','');
+  await expect(hero.locator('img[src*="39997379"]')).toHaveAttribute('alt','');
   await expect(hero.getByRole('heading',{level:1,name:/Sänk dina fasta kostnader/})).toBeVisible();
 });
 
@@ -51,7 +51,7 @@ for(const width of [390,1440,1920]){
     const hero=page.locator('section.guideHero');
     const photo=hero.getByTestId('p0h-hero-photo-bredband');
     await expect(photo).toBeVisible();
-    await expect(photo).toHaveAttribute('src',/6995135/);
+    await expect(photo).toHaveAttribute('src',/4008771/);
     await expect.poll(()=>photo.evaluate((node:HTMLImageElement)=>node.complete&&node.naturalWidth>0),{timeout:20000}).toBeTruthy();
     const rect=await photo.boundingBox();
     expect(rect).not.toBeNull();
