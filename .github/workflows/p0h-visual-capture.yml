@@ -1,0 +1,47 @@
+name: P0H actual viewport screenshot review
+
+on:
+  push:
+    branches:
+      - 'design/p0h-*'
+    paths:
+      - '.github/workflows/p0h-visual-capture.yml'
+      - 'scripts/p0h-visual-capture.mjs'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  screenshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0'
+      - name: Export site
+        run: |
+          npm install --progress=false
+          npx next build
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Launch source-matched local site
+        run: |
+          python3 -m http.server 3000 --directory out > /tmp/p0h-site.log 2>&1 &
+          for i in $(seq 1 25); do
+            curl --fail --silent 'http://127.0.0.1:3000/' > /dev/null && exit 0
+            sleep 1
+          done
+          cat /tmp/p0h-site.log; exit 1
+      - name: Capture complete pages at normal browser zoom
+        run: node scripts/p0h-visual-capture.mjs
+      - name: Store human-inspectable photo/screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: p0h-focused-visual-captures
+          path: p0h-visual-captures/
+          if-no-files-found: warn
+          retention-days: 7
