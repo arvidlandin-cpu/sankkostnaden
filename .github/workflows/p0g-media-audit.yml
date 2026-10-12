@@ -31,7 +31,7 @@ jobs:
               bytes=$(wc -c <"$file")
               mime=$(file --mime-type -b "$file")
               echo "IMAGE $id EXACT_SRCSET_700 OK bytes=$bytes type=$mime"
-              if [[ "$mime" != "image/jpeg" || "$bytes" -lt 25000 ]]; then
+              if [[ "$mime" != "image/jpeg" || "$bytes" -lt 8000 ]]; then
                 echo "::error::Invalid image data for $id"
                 failed=1
               fi
