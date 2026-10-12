@@ -3,6 +3,7 @@ import premium from '../styles/CategoryPremium.module.css';
 import Link from 'next/link';
 import { ArrowRight, Check, PiggyBank, ShieldCheck } from 'lucide-react';
 import CategoryJourney from '../components/CategoryJourney';
+import CategorySpotlight from '../components/CategorySpotlight';
 import InsuranceMarketGateway from '../components/InsuranceMarketGateway';
 
 const guides=[
@@ -48,6 +49,7 @@ export default function Forsakring(){
        </div>
      </section>
    <CategoryJourney category='forsakring' compareHref='#category-partners' helpHref='/forsakring/hemforsakring-skyddskoll/' understandHref='/forsakring/hemforsakring-bostadsratt/'/>
+   <CategorySpotlight category='forsakring'/>
    <article className={`article guideWrap categoryArticle ${premium.article}`}>
        <div id='category-partners' style={{scrollMarginTop:90}}><InsuranceMarketGateway/></div>
        <section className={`categoryIntro ${premium.intro}`}>
