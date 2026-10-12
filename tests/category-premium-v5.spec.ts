@@ -18,7 +18,7 @@ for(const target of targets){
    title:getComputedStyle(el.querySelector('h1')!).color,
    background:getComputedStyle(el).backgroundColor,
   }));
-  expect(colors.title).toBe('rgb(16, 29, 66)');
+  expect(colors.title).toBe('rgb(21, 39, 68)');
   const partners=page.locator('a[rel~="sponsored"]');
   expect(await partners.count()).toBeGreaterThan(0);
   const guides=page.locator('section.categoryGuideSection a[href^="/"]');
