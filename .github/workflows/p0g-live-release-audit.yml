@@ -1,0 +1,27 @@
+name: P0G product fingerprint vs production
+
+on:
+  push:
+    branches:
+      - 'ops/p0g-live-release-audit-20261012'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 9
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0'
+      - name: Build exported source
+        run: |
+          npm install --progress=false
+          npx next build
+          npm run check:export
+      - name: Compare P0G CSS/JS assets with actual live site
+        run: node scripts/check-p0g-main-live.mjs

@@ -2,17 +2,17 @@
   "version": 1,
   "updatedAt": "2026-10-12",
   "purpose": "Verified code-release snapshot for the AI operator and autopilot decision packet. Historical baseline reports remain dated snapshots, not live inventory.",
-  "latestVerifiedMainCommit": "5f59f1e73c1fda9c51e3448501929e50e7925c64",
+  "latestVerifiedMainCommit": "757379d2423d5def5fb2018f74d96e6ba8e2cfc4",
   "decisionContext": {
     "northStar": "Long-term approved affiliate revenue per relevant visitor; truthful consumer value and SEO trust first.",
-    "design": "P0G 2026-10-12 later owner decision: images/partner names/signature insights after P0F merge. Development branch design/p0g-assets-brand-insights-20261012; source QA/merge/live/visual acceptance separate. Read autopilot/ASSET_BRAND_EXPERIENCE_P0G_2026-10-12.md first.",
+    "design": "P0G owner decision 2026-10-12 fully implemented and merged as PR #142; current main product code SHA 757379d2. 642 Chromium + 22 WebKit passed; 9 image HTTP assets and actual Chromium loading pass. Own-domain seven-route exported CSS/product-JS fingerprint and P0G HTML markers PASS via GitHub Actions #38244863679 on 2026-10-12. This validates live product assets, not origin served SHA or subjective visual acceptance. Read autopilot/ASSET_BRAND_EXPERIENCE_P0G_2026-10-12.md and autopilot/P0G_RELEASE_AUDIT_2026-10-12.md.",
     "conversion": "Keep real comparison-service vs individual-supplier distinctions, partner visibility and clearly labeled affiliate links; user need not know consumption to reach legitimate partner options.",
     "pricing": "Electricity quarter-hour spot feed SE1-SE4 is real, but NOT a per-provider offer feed. No fabricated cheapest provider, 'best choice', monthly quote, ratings, guaranteed saving or extrapolated shift savings.",
     "experimentStatus": "As of 2026-10-10 one active scoped CONTENT_UTILITY_UPGRADE for /elavtal/kvartspris/ (PR #103), awaiting qualified organic measurements; cancelled Oct 7 insurance snippet remains inactive, no Oct 15 gate. Up to two fully independent initiatives subject to policy.",
     "capacity": "Independent non-paid traffic acquisition remains the highest commercial constraint; continue alongside design. No paid media or contracts without owner approval.",
     "finishStandard": "Read autopilot/PRODUCT_FINISHING_STANDARD_2026-10-09.md. Every screen, field, sentence and CTA must serve the user's immediate job, with premium consistent UX, real price data and QA. Do not call project finished from isolated feature PRs.",
-    "nextExecution": "P0G source QA: responsive Pexels photo resolution, real SVG logo fallback, five useful category questions, Tibber sponsored disclosure distinct from independent spot chart, unchanged affiliate URL/canonical, browser tests in 360–1440. Do not change published SEO experiments. Live approved revenue UNKNOWN. Do not confuse CI with UX uplift.",
-    "strategySourceOfTruth": "Latest P0G: autopilot/ASSET_BRAND_EXPERIENCE_P0G_2026-10-12.md, then P0F/P0E and MASTERPLAN_EXECUTION, PRODUCT_FINISHING_STANDARD, VISUAL_UX_ROADMAP, policy/state, verified GSC/GA4 and network data."
+    "nextExecution": "No overlapping P0G/P0F CSS rework by 08:00 design operator without new observed friction. Re-review actual 100%-zoom desktop and 360/390/430 mobile screenshots/real iPhone (UNTESTED); verify user flows/partner clickref/subID. Independently follow organic visits -> value -> tracked affiliate clicks -> network APPROVED commission; approved payout UNKNOWN until authorized ledger read. Don't infer conversion gains from CI. Preserve scoped kvartspris observation to 18 Oct and cancelled insurance snippet.",
+    "strategySourceOfTruth": "First current release audit autopilot/P0G_RELEASE_AUDIT_2026-10-12.md and bindable owner decision autopilot/ASSET_BRAND_EXPERIENCE_P0G_2026-10-12.md, then P0F/P0E/masterplan/finishing/visual roadmap, state/policy and authoritative commercial data."
   },
   "shipped": [
     {
@@ -266,6 +266,12 @@
       "scope": "P0E show category journey response above mobile fixed navigation",
       "status": "merged",
       "note": "Observed real 390px friction: blue result panel could be occluded by fixed mobile bottom dock when selecting compare/understand. Selective mobile-only scroll reveals the result and relevant CTA without altering DOM focus, desktop, affiliate tracking, prices or SEO. Build and full commercial Chromium+WebKit regression PASS. 360/390/430 actual screenshots visually reviewed, PR #139 merged. GitHub Actions #38172132736 confirms 11 custom-domain routes' compiled CSS+JS match Cloudflare Pages deploy SHA 5f59f1e."
+    },
+    {
+      "pr": 142,
+      "scope": "P0G high-resolution imagery, crisp partner name identities, Tibber featured brand and five category-specific interactive insights",
+      "status": "merged; seven-route public product asset identity verified; not owner visually signed off",
+      "note": "PR #142 squash merged main product SHA 757379d2423d5def5fb2018f74d96e6ba8e2cfc4. 642 Chromium + 22 Linux WebKit passed, P0G nine HTTP image sources and actual browser image resolution verified. GitHub Actions #38244863679 matched public custom-domain CSS and real JS for 7 of 7 routes and five HTML markers. Product is live; exact server-side served SHA UNKNOWN; real physical iPhone UNTESTED; approved affiliate commission UNKNOWN."
     }
   ],
   "unresolved": [
@@ -282,7 +288,7 @@
     "GitHub screenshot archive now preserves Chromium screenshots; WebKit engine coverage passed, but physical-iPhone QA still blocked by exhausted free quota. Do not claim real-device pass.",
     "Approved Adtraction/Addrevenue/Tradedoubler SEK from authoritative partner reports is UNKNOWN on 2026-10-10; Windsor.ai Adtraction read returned affiliate-user/advertiser-user authorization error."
   ],
-  "latestMergedMainCommit": "5f59f1e73c1fda9c51e3448501929e50e7925c64",
+  "latestMergedMainCommit": "757379d2423d5def5fb2018f74d96e6ba8e2cfc4",
   "designVerification": {
     "inspectedAt": "2026-10-11",
     "ownerDirection": "P0D 2026-10-10 navy/warm-white",
@@ -374,6 +380,44 @@
         "limitation": "Client asset identity on 11 routes does NOT establish the unique server-side SHA served by custom-domain origin or real iPhone usability. Organic conversion lift and portfolio-approved affiliate revenue UNKNOWN."
       },
       "latestVerifiedMainDesignCommit": "5f59f1e73c1fda9c51e3448501929e50e7925c64"
+    },
+    "p0g": {
+      "ownerInstructionDate": "2026-10-12",
+      "scope": "P0G.1 high-resolution images, P0G.2 partner identity, P0G.3 category signature insights/Tibber/quarter-price, P0G.4 less repetitive editorial supplier layouts",
+      "mergedPr": 142,
+      "mergedProductCodeMainSha": "757379d2423d5def5fb2018f74d96e6ba8e2cfc4",
+      "sourceHeadBeforeMerge": "15e51b4da8cec988412cdddfa67e369c5ebc30ce",
+      "buildCheck": "PASS",
+      "chromiumRegression": "642 passed GitHub Actions commercial regression #38243367197",
+      "linuxWebkitRegression": "22 passed same run, not physical iPhone",
+      "imageHttpAudit": "PASS all nine Pexels photos and Tibber SVG, GitHub Actions media audit #38233599470",
+      "actualBrowserImageTest": "PASS responsive home sources via Chromium media audit #38233599470",
+      "liveAssetIdentity": {
+        "status": "PASS",
+        "verifiedAt": "2026-10-12T11:48:01Z",
+        "run": 38244863679,
+        "origin": "https://sankkostnaden.se/",
+        "checkedRoutes": [
+          "/",
+          "/bredband/",
+          "/elavtal/",
+          "/mobil/",
+          "/forsakring/",
+          "/ekonomi/",
+          "/elavtal/kvartspris/"
+        ],
+        "cssExactAllSeven": true,
+        "productJsExactAllSeven": true,
+        "categoryMarkersPresentAllFive": true,
+        "note": "Compared actual live own-domain HTML with locally exported source-based CSS and real product-JS asset paths, excluding opaque Next build manifest. Not exact server SHA proof."
+      },
+      "sourceShipped": "YES",
+      "customerFacingProductLive": "VERIFIED_CLIENT_ASSET_PARITY_SEVEN_OF_SEVEN",
+      "physicalIphone": "UNTESTED",
+      "exactServedOriginSha": "UNKNOWN",
+      "subjectivePremiumDesignAcceptance": "PENDING_OWNER_VISUAL_REVIEW",
+      "organicConversionUplift": "UNKNOWN",
+      "approvedNetworkCommissionSEK": "UNKNOWN"
     }
   }
 }
