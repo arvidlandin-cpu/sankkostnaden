@@ -1,3 +1,6 @@
+## SENASTE RELEASESTATUS 2026-10-12 – P0G PRODUKTKOD OCH PUBLIKA ASSETS VERIFIERADE
+**PR #142 MERGED**, kod-SHA `757379d`. Chromium 642/642 och WebKit 22/22, bildleverans och verklig Chromium-bildladdning PASS. **GitHub Actions #38244863679 verifierade 7/7 live CSS- och produkt-JS-identitet på sankkostnaden.se samt 5/5 interaktiva kategorimarkörer.** Exakt serverad origin SHA UNKNOWN, fysisk iPhone UNTESTED, visuellt ägargodkännande PENDING, nätverkens godkända provision UNKNOWN. Läs [autopilot/P0G_RELEASE_AUDIT_2026-10-12.md](P0G_RELEASE_AUDIT_2026-10-12.md) först. Nya ändringar endast vid observerad defekt; ingen parallell P0G-rebuild av andra operatörer.
+
 ## SENASTE BINDANDE ÄGARBESLUT 2026-10-12 – P0G BILDER, LOGOTYPER OCH SIGNATURUPPLEVELSER
 Läs [autopilot/ASSET_BRAND_EXPERIENCE_P0G_2026-10-12.md](ASSET_BRAND_EXPERIENCE_P0G_2026-10-12.md). Det senare ägarbeslutet kräver skarpa högupplösta bilder, större mänskligt läsbara partneridentiteter och interaktiva kategoriunika featuresektioner, inte generiska småkort. P0G implementeras separat och ska QA-/produktionsverifieras. Tidigare P0D/P0E/P0F, SEO, kvartsprisobservation och attribution bevaras. Godkänd partnerprovision = UNKNOWN utan nätverksdata.
 
