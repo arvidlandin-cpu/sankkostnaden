@@ -3,20 +3,13 @@ import { ArrowRight, ArrowUpRight, CheckCircle2, Smartphone, Users, Wifi } from 
 import { emitAnalyticsEvent } from '../lib/clientAttribution';
 import { getActivePartners, type ActivePartner } from '../lib/partners';
 import styles from '../styles/ElectricityMarketGateway.module.css';
+import PartnerIdentity from './PartnerIdentity';
 
 const all=getActivePartners('mobil','compare',40).sort((a,b)=>a.name.localeCompare(b.name,'sv'));
 
 function pathClick(path:string){
   emitAnalyticsEvent('mobile_hub_path',{source:'mobile_hub',path});
 }
-function Brand({partner}:{partner:ActivePartner}){
-  return <span className={styles.logo} aria-hidden='true'>
-    {partner.domain
-      ? <img src={`https://www.google.com/s2/favicons?domain=${encodeURIComponent(partner.domain)}&sz=128`} alt='' loading='lazy' width={48} height={48}/>
-      : <Smartphone size={24}/>}
-  </span>;
-}
-
 export default function MobileMarketGateway(){
   return <div data-testid='mobile-market' className={styles.root}>
     <section className={styles.section} aria-labelledby='mobile-start-title'>
