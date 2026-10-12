@@ -69,12 +69,16 @@ test('P0G home CDN sources deliver real imagery rather than placeholder thumbnai
   for(const image of await imgs.all()){
     await image.scrollIntoViewIfNeeded();
     try {
-      await expect.poll(()=>image.evaluate((el:HTMLImageElement)=>el.complete && el.naturalWidth>=700),{timeout:18000,intervals:[500,1000,2000]}).toBeTruthy();
+      await expect.poll(()=>image.evaluate((el:HTMLImageElement)=>{
+        const pixelWidth=Number(new URL(el.currentSrc).searchParams.get('w')) || 0;
+        const required=Math.max(1,el.getBoundingClientRect().width*window.devicePixelRatio);
+        return el.complete && el.naturalWidth>0 && pixelWidth>=required*.95;
+      }),{timeout:18000,intervals:[500,1000,2000]}).toBeTruthy();
     } catch(error) {
       const state=await image.evaluate((el:HTMLImageElement)=>({
         src:el.getAttribute('src'),srcset:el.getAttribute('srcset'),currentSrc:el.currentSrc,
         complete:el.complete,naturalWidth:el.naturalWidth,displayWidth:el.getBoundingClientRect().width,
-        devicePixelRatio:window.devicePixelRatio
+        devicePixelRatio:window.devicePixelRatio,sourcePixelWidth:Number(new URL(el.currentSrc).searchParams.get('w'))||0
       }));
       console.error('P0G IMAGE FAILURE DETAILS',JSON.stringify(state));
       throw error;
