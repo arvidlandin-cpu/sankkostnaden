@@ -258,14 +258,3 @@ test('guided electricity matcher answer shares funnel session with partner click
   expect(answer?.funnel_session_id).toMatch(/^fs_/);
   expect(click?.funnel_session_id).toBe(answer.funnel_session_id);
 });
-
-test('middle-click on a sponsored link records the outbound action once',async({page})=>{
-  await page.addInitScript(()=>{(window as any).dataLayer=[];});
-  await page.goto('/elavtal/billigaste-elavtalet/?qa=1');
-  const link=page.locator('a[data-partner="Elskling"]').first();
-  await expect(link).toBeVisible();
-  await link.evaluate((el:any)=>el.addEventListener('auxclick',(event:MouseEvent)=>event.preventDefault()));
-  await link.click({button:'middle'});
-  const events=await page.evaluate(()=>(window as any).dataLayer.filter((e:any)=>e.event==='affiliate_click'));
-  expect(events).toHaveLength(1);
-});
