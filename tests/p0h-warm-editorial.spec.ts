@@ -27,6 +27,11 @@ for(const width of [360,390,430,1024,1440,1920]){
   const homeWidth=await hero.locator('[class*=inner]').evaluate(el=>el.getBoundingClientRect().width);
   expect(homeWidth/width).toBeGreaterThan(width>=1440?.74:.85);
   await expect(hero.getByTestId('home-decision-explorer')).toBeVisible();
+  if(width>=1440){
+   const firstUse=await hero.locator('#startval').boundingBox();
+   expect(firstUse).not.toBeNull();
+   expect(firstUse!.y).toBeLessThan(950); // 100% browser viewport, first real choice starts on screen
+  }
   const cats=page.locator('#jamfor');
   await expect(cats.getByRole('link')).toHaveCount(5);
   for(const image of await cats.locator('img').all())await expect(image).toHaveAttribute('srcset',/1800w/);
@@ -63,6 +68,11 @@ for(const width of [390,1440]){
    await expect.poll(()=>source.evaluate((node:HTMLImageElement)=>node.complete&&node.naturalWidth>0),{timeout:18000}).toBeTruthy();
    expect(rect).not.toBeNull();
    expect(rect!.height).toBeGreaterThan(width===390?160:480);
+   if(width===1440){
+    const journey=await page.getByTestId('category-journey-'+route.category).boundingBox();
+    expect(journey).not.toBeNull();
+    expect(journey!.y).toBeLessThan(950); // choices emerge in first normal-zoom viewport
+   }
    const insight=page.getByTestId('p0g-insight-'+route.category);
    await expect(insight).toBeVisible();
    if(route.category!=='el'){
