@@ -314,7 +314,7 @@
 .article :global(.partnerSection){background:#f4f6f1!important;border:1px solid #e0e8de!important}
 .article :global(.partnerCard){border-color:#e1e8df!important;background:#fffdfa!important}
 @media(min-width:1025px){
- .hero:global(.categoryHero){min-height:680px!important;padding:92px max(40px,calc((100vw - 1500px)/2)) 137px!important}
+ .hero:global(.categoryHero){min-height:555px!important;padding:56px max(40px,calc((100vw - 1500px)/2)) 76px!important}
  .hero:global(.categoryHero) .heroInner:global(.guideWrap){max-width:1480px!important}
  .hero :global(h1){font-size:clamp(64px,5.4vw,91px)!important;max-width:760px!important;line-height:1.055!important}
  .hero :global(.lead){font-size:clamp(18px,1.35vw,21px)!important;max-width:620px!important}
@@ -322,15 +322,15 @@
  .main .article:global(.categoryArticle){max-width:1460px!important;padding-top:46px!important}
 }
 @media(min-width:761px) and (max-width:1024px){
- .hero:global(.categoryHero){min-height:570px!important;padding:69px 30px 98px!important}
+ .hero:global(.categoryHero){min-height:500px!important;padding:48px 30px 67px!important}
  .heroArtwork{inset:0 0 0 48%}
  .hero:global(.categoryHero) .heroInner:global(.guideWrap){max-width:100%!important}
  .hero :global(h1){font-size:clamp(51px,6vw,69px)!important;max-width:640px!important}
  .heroArtwork:before{background:linear-gradient(90deg,#faf6ef 0%,rgba(250,246,239,.94) 10%,rgba(250,246,239,.2) 75%)!important}
 }
 @media(max-width:760px){
- .hero:global(.categoryHero){display:block;min-height:0!important;padding:30px 19px 235px!important;background:#faf6ef!important}
- .heroArtwork{display:block!important;inset:auto 0 0;height:194px;opacity:1!important;background-position:center 47%}
+ .hero:global(.categoryHero){display:block;min-height:0!important;padding:28px 19px 203px!important;background:#faf6ef!important}
+ .heroArtwork{display:block!important;inset:auto 0 0;height:170px;opacity:1!important;background-position:center 47%}
  .heroArtwork:before{background:linear-gradient(180deg,#faf6ef 0%,rgba(250,246,239,.0) 37%,transparent 55%)!important}
  .heroArtwork:after{background:none!important}
  .hero:global(.categoryHero) .heroInner:global(.guideWrap){width:100%!important;max-width:100%!important}
@@ -341,8 +341,8 @@
  .main .article:global(.categoryArticle){padding-top:25px!important}
 }
 @media(max-width:390px){
- .hero:global(.categoryHero){padding:27px 16px 209px!important}
- .heroArtwork{height:181px}
+ .hero:global(.categoryHero){padding:26px 16px 183px!important}
+ .heroArtwork{height:157px}
  .hero :global(h1){font-size:36px!important}
 }
 
