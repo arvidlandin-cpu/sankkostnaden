@@ -16,7 +16,7 @@
 .breadcrumbs a{color:#42604b;text-decoration:none;font-weight:730}
 .breadcrumbs a:hover{text-decoration:underline;text-underline-offset:3px}
 .breadcrumbs span[aria-current='page']{max-width:42ch;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.kicker{margin:0 0 14px;font-size:12px;letter-spacing:.14em;font-weight:900;color:#507e60}
+.kicker{margin:0 0 14px;font-size:12px;letter-spacing:.14em;font-weight:900;color:#3f674b}
 .copy h1{max-width:680px;margin:0!important;color:#142847!important;font-size:clamp(47px,4.85vw,73px)!important;line-height:1.08!important;letter-spacing:-.059em!important;font-weight:800;text-wrap:balance}
 .lead{max-width:610px;margin:22px 0 0;font-size:clamp(17px,1.3vw,20px);line-height:1.58;color:#42565a}
 .actions{display:flex;align-items:center;gap:12px 20px;flex-wrap:wrap;margin-top:29px}
