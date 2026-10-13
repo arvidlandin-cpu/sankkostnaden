@@ -25,7 +25,10 @@ const captureRoutes = new Set([
  '/bredband/fiber/','/elavtal/rorligt-elpris/','/mobil/5g-abonnemang/',
  '/forsakring/jamfor-hemforsakring/','/ekonomi/samlingslan/',
  '/bredband/vilken-hastighet-behover-jag/','/mobil/hur-mycket-surf-behover-jag/',
- '/elavtal/vilket-elavtal-passar-mig/','/elavtal/kvartspris/'
+ '/elavtal/vilket-elavtal-passar-mig/','/elavtal/kvartspris/',
+ // P0Q source-proven legacy family: 16 shared #7019025 CSS-only image pages.
+ // Capture only; preserve original DOM, canonical, affiliate markup and SEO cohorts.
+ '/affiliate/','/bredband/basta-bredbandet/','/bredband/billigaste-bredbandet/','/bredband/bredband-pa-min-adress/','/cookies/','/elavtal/billigaste-elavtalet/','/elavtal/rorligt-fast-kvartspris/','/elavtal/sa-laser-du-elfakturan/','/guide/arskoll-fasta-kostnader/','/guide/hushallets-fasta-kostnader-2026/','/guide/sank-fasta-kostnader/','/guide/sank-kostnader-automatiskt/','/integritet/','/om/','/sa-jamfor-vi/','/verktyg/hushallskostnadskollen/'
 ]);
 type ImageData={src:string;id:string;naturalWidth:number;displayWidth:number;currentSrc:string;loading:string;complete:boolean;alt:string;visible:boolean};
 type BgData={name:string;id:string;background:string;hasImage:boolean;childImageId:string|null;bounds:{width:number;height:number}};
