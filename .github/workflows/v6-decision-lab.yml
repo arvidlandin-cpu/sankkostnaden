@@ -1,0 +1,49 @@
+name: V6 independent decision-journey prototype QA
+on:
+  pull_request:
+    paths:
+      - 'pages/experiments/beslutsresa-v6.tsx'
+      - 'styles/V6DecisionLab.module.css'
+      - 'tests/v6-decision-lab.spec.ts'
+      - '.github/workflows/v6-decision-lab.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  browser-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      QA_BASE_URL: http://127.0.0.1:3000
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0'
+      - run: |
+          npm install --progress=false
+          npm run check
+          npm run check:integrity
+          npx next build
+          npm run check:export
+      - run: npx playwright install --with-deps chromium
+      - name: Serve isolated prototype
+        run: |
+          python3 -m http.server 3000 --directory out > /tmp/v6-lab.log 2>&1 &
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:3000/ >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          exit 1
+      - name: Real Chromium prototype journeys at 390 and 1440
+        run: npx playwright test tests/v6-decision-lab.spec.ts --project=chromium --workers=1
+      - name: Preserve prototype screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v6-one-decision-journey-browser-evidence
+          path: |
+            test-results/v6-journey/
+            playwright-report/
+          if-no-files-found: warn
+          retention-days: 14
