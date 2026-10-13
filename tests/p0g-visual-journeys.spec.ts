@@ -37,7 +37,8 @@ for(const width of [360,390,430,1024,1440]){
       expect(first).not.toEqual(second);
       const image=page.locator('[class*=heroArtwork]').first();
       await expect(image).toHaveCount(1);
-      expect(await image.evaluate(el=>getComputedStyle(el).backgroundImage)).toMatch(/pexels-photo-/);
+      expect(await image.evaluate(el=>getComputedStyle(el).backgroundImage)).toBe('none');
+      await expect(image.locator('img[data-testid^="p0h-hero-photo-"]')).toBeVisible();
       expect(await page.evaluate(()=>Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)-document.documentElement.clientWidth)).toBeLessThanOrEqual(1);
       await page.screenshot({path:'test-results/screenshots/p0g-'+route.name+'-'+testInfo.project.name+'-'+width+'.png',fullPage:true});
     });
@@ -87,21 +88,31 @@ test('P0G home CDN sources deliver real imagery rather than placeholder thumbnai
 });
 
 
-test('P0G category hero remote originals resolve above desktop display resolution',async({page})=>{
+test('P0P category hero loads ONE responsive photo without requesting hidden CSS fallback',async({page})=>{
   await page.setViewportSize({width:1440,height:900});
   for(const route of routes){
+    const imageNetworkRequests:string[]=[];
+    const handler=(req:{url:()=>string;resourceType:()=>string})=>{
+      if(req.resourceType()==='image'&&req.url().includes('images.pexels.com/photos/')) imageNetworkRequests.push(req.url());
+    };
+    page.on('request',handler);
     await page.goto(route.url,{waitUntil:'domcontentloaded'});
-    const source=await page.locator('[class*=heroArtwork]').first().evaluate(el=>getComputedStyle(el).backgroundImage);
-    const match=source.match(/url\(["']?(https?:[^"')]+)["']?\)/);
-    expect(match,route.name+' hero has an actual image URL').not.toBeNull();
-    const result=await page.evaluate(async source=>new Promise<{width:number;ok:boolean}>((resolve)=>{
-      const image=new Image();
-      const timeout=setTimeout(()=>resolve({width:0,ok:false}),12000);
-      image.onload=()=>{clearTimeout(timeout);resolve({width:image.naturalWidth,ok:true});};
-      image.onerror=()=>{clearTimeout(timeout);resolve({width:0,ok:false});};
-      image.src=source;
-    }),match![1]);
-    expect(result.ok,route.name+' hero image must actually load').toBeTruthy();
-    expect(result.width,route.name+' image must not be a stretched thumbnail').toBeGreaterThanOrEqual(1400);
+    const artwork=page.locator('[class*=heroArtwork]').first();
+    await expect(artwork).toBeVisible();
+    expect(await artwork.evaluate(el=>getComputedStyle(el).backgroundImage),
+      route.name+' category hero must not download a redundant CSS fallback').toBe('none');
+    const photo=artwork.locator('img[data-testid^="p0h-hero-photo-"]');
+    await expect(photo).toBeVisible();
+    await expect(photo).toHaveAttribute('src',/images\.pexels\.com\/photos\//);
+    await expect.poll(()=>photo.evaluate((img:HTMLImageElement)=>
+      img.complete && img.naturalWidth>0 && img.naturalWidth>=img.getBoundingClientRect().width*.9
+    ),{timeout:18000}).toBeTruthy();
+    const id=await photo.evaluate((im:HTMLImageElement)=>im.currentSrc.match(/photos\/(\d+)/)?.[1]||'');
+    const ids=[...new Set(imageNetworkRequests.map(url=>url.match(/photos\/(\d+)/)?.[1]).filter(Boolean))];
+    expect(ids.filter(photoId=>photoId===id).length,
+      route.name+' responsive hero has one photographic identity').toBe(1);
+    // Other category insight images may have their own distinct photo IDs.
+    if(route.name==='bredband')expect(ids,'no old mismatched #8055076 hidden broadband hero').not.toContain('8055076');
+    page.off('request',handler);
   }
 });
