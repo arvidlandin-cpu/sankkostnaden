@@ -1,0 +1,49 @@
+name: P0L focused first-screen visual proof
+
+on:
+  pull_request:
+    paths:
+      - 'styles/HomeHero.module.css'
+      - 'styles/CategoryPremium.module.css'
+      - 'tests/p0l-first-screen-usefulness.spec.ts'
+      - '.github/workflows/p0l-focused-visual.yml'
+  workflow_dispatch:
+
+jobs:
+  real-viewport-screenshots:
+    if: ${{ github.event_name == 'workflow_dispatch' || startsWith(github.head_ref, 'design/p0l-') }}
+    runs-on: ubuntu-latest
+    env:
+      QA_BASE_URL: http://127.0.0.1:3000
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.16.0
+      - run: npm install --progress=false
+      - name: Build static output
+        run: |
+          npm run check
+          npm run check:integrity
+          npm run build
+          npm run check:export
+      - name: Install real Chromium renderer
+        run: npx playwright install --with-deps chromium
+      - name: Start local source-version website
+        run: |
+          python3 -m http.server 3000 --directory out >/tmp/p0l-server.log 2>&1 &
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:3000/ >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/p0l-server.log
+          exit 1
+      - name: Test actual 390/1440 choices and capture twelve real full-page screenshots
+        run: npx playwright test tests/p0l-first-screen-usefulness.spec.ts --project=chromium
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: p0l-focused-100-percent-visuals
+          path: |
+            test-results/
+          retention-days: 7
