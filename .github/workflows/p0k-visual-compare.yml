@@ -1,0 +1,49 @@
+name: P0K real progressive decision tool comparison
+
+on:
+  push:
+    branches: ['design/p0k-progressive-smartselector-20261013']
+    paths:
+      - 'components/SmartSelector.tsx'
+      - 'styles/SmartSelector.module.css'
+      - 'scripts/p0k-visual-compare.mjs'
+      - '.github/workflows/p0k-visual-compare.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 16
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0'
+      - name: Build exact candidate
+        run: |
+          npm install --progress=false
+          npx next build
+          npm run check:export
+      - name: Install browser
+        run: npx playwright install --with-deps chromium
+      - name: Serve export locally
+        run: |
+          python3 -m http.server 3000 --directory out > /tmp/p0k.log 2>&1 &
+          for i in $(seq 1 30); do
+            curl -fsS http://127.0.0.1:3000/ >/dev/null && exit 0
+            sleep 1
+          done
+          cat /tmp/p0k.log; exit 1
+      - name: Compare true live first-view against source first-view and finished result
+        run: node scripts/p0k-visual-compare.mjs
+      - name: Store evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: p0k-real-progressive-before-after
+          path: p0k-visual-compare/
+          retention-days: 7
+          if-no-files-found: error

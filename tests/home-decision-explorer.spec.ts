@@ -57,7 +57,10 @@ for(const width of [360,390,430,1024,1440]){
     expect(await result.evaluate(el=>getComputedStyle(el).backgroundColor)).toBe('rgb(16, 37, 77)');
     const first=page.getByRole('button',{name:'Nästan alltid wifi'});
     await first.click();
+    await expect(page.getByTestId('smartselector-active-question').getByRole('heading',{name:'Vad gör du mest på mobildata?'})).toBeVisible();
+    await page.getByRole('button',{name:'Föregående'}).click();
     await expect.poll(()=>first.evaluate(el=>getComputedStyle(el).backgroundColor)).toBe('rgb(231, 238, 255)');
+    await first.click();
     await page.getByRole('button',{name:'Meddelanden, kartor, bank'}).click();
     await page.getByRole('button',{name:'Bara mitt abonnemang'}).click();
     await expect(result.getByRole('heading',{name:/Du behöver sannolikt inte fri surf/})).toBeVisible();

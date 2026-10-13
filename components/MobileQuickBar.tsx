@@ -12,9 +12,16 @@ const items=[
 
 export default function MobileQuickBar(){
   const router=useRouter();
-  // Kostnadskollen has its own optional category selector. A fixed five-link
-  // overlay competes with answering the first question on a narrow screen.
-  if(router.pathname==='/app')return null;
+  // First-party progressive choice tools, like Kostnadskollen, provide a
+  // local back button and comparison escape. A fixed 5-link bar was visually
+  // observed obscuring the active question and sponsored result at 390px.
+  // Keep the navigation on ordinary category/guide pages.
+  const focusedQuestionTools=new Set([
+    '/bredband/vilken-hastighet-behover-jag',
+    '/mobil/hur-mycket-surf-behover-jag',
+    '/elavtal/vilket-elavtal-passar-mig',
+  ]);
+  if(router.pathname==='/app'||focusedQuestionTools.has(router.pathname))return null;
   return <nav className='mobileQuickBar' aria-label='Snabbnavigering'>
     {items.map(({href,match,label,Icon})=>{
       const active=router.pathname.startsWith(match);
