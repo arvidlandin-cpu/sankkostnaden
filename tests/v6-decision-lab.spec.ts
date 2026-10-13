@@ -8,6 +8,11 @@ for(const width of [390,1440]){
   await page.setViewportSize({width,height:width===390?844:900});
   await page.goto(route+'?qa=1',{waitUntil:'domcontentloaded'});
   await expect(page.getByTestId('v6-goal-choice')).toBeVisible();
+  await expect(page.locator('nav.mobileQuickBar')).toHaveCount(0);
+  if(width===390){
+   const secondChoiceBottom=await page.getByTestId('v6-goal-compare').evaluate(el=>el.getBoundingClientRect().bottom);
+   expect(secondChoiceBottom,'two first useful choices must fit in 844px mobile first screen').toBeLessThan(810);
+  }
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content',/noindex/);
   await expect(page.locator('main h1')).toHaveCount(1);
   expect(await page.evaluate(()=>Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)-document.documentElement.clientWidth)).toBeLessThanOrEqual(1);
