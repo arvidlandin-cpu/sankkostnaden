@@ -1,0 +1,45 @@
+name: P0M independent public warm-photo release audit
+
+on:
+  push:
+    branches: ['ops/p0m-live-photo-parity-20261013']
+    paths:
+      - 'scripts/check-p0m-live.mjs'
+      - '.github/workflows/p0m-live-proof.yml'
+  pull_request:
+    paths:
+      - 'scripts/check-p0m-live.mjs'
+      - '.github/workflows/p0m-live-proof.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-public:
+    runs-on: ubuntu-latest
+    timeout-minutes: 16
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0'
+      - name: Build exact merged product source with no analytics or mutations
+        run: |
+          npm install --progress=false
+          npx next build
+          npm run check:export
+      - name: Verify actual sankkostnaden.se CSS, JS and photo identities
+        shell: bash
+        run: |
+          set -u
+          for attempt in $(seq 1 8); do
+            echo "P0M live parity attempt $attempt/8"
+            if node scripts/check-p0m-live.mjs; then
+              echo "Verified exact client assets + P0M photo markers on ten routes."
+              exit 0
+            fi
+            sleep 20
+          done
+          echo "::error::Public own-domain P0M release could not be verified; do not claim live."
+          exit 1

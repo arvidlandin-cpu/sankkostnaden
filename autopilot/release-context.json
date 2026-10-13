@@ -2,7 +2,7 @@
   "version": 1,
   "updatedAt": "2026-10-13",
   "purpose": "Verified code-release snapshot for the AI operator and autopilot decision packet. Historical baseline reports remain dated snapshots, not live inventory.",
-  "latestVerifiedMainCommit": "60a2021314bac79400aa4f8272aa478f74290160",
+  "latestVerifiedMainCommit": "eb22fdc8dbf6c2e534b5c1846dd11b5032771d00",
   "decisionContext": {
     "northStar": "Long-term approved affiliate revenue per relevant visitor; truthful consumer value and SEO trust first.",
     "design": "P0J: new warm photographed and readable editorial factual guide template is LIVE on own domain after product PR #147 main squash SHA 60a2021. Build successful #38363746789; final PR-head full commercial Chromium 679 PASS and Linux WebKit 22 PASS, 1 transient CDN image flaky retry recovered #38363746813. Real baseline vs source 24 full-page captures 390/1440 before/after #38363740584 PASS; 0 overflow, source photos loaded; own-domain read-only exact CSS+product JS identity on 6/6 representative routes #38367645430 PASS 2026-10-13T08:13Z, five photo markers and internal anchor endpoints live, /elavtal/kvartspris/ actively exempt from redesigned DOM. Stronger contrast #3f674b checked by build and visual screenshot, physical iPhone not tested. This means CODE/ASSET DELIVERY live, NOT owner visual final signoff or conversion/revenue gain. Read autopilot/P0J_RELEASE_AUDIT_2026-10-13.md.",
@@ -11,7 +11,7 @@
     "experimentStatus": "As of 2026-10-10 one active scoped CONTENT_UTILITY_UPGRADE for /elavtal/kvartspris/ (PR #103), awaiting qualified organic measurements; cancelled Oct 7 insurance snippet remains inactive, no Oct 15 gate. Up to two fully independent initiatives subject to policy.",
     "capacity": "Independent non-paid traffic acquisition remains the highest commercial constraint; continue alongside design. No paid media or contracts without owner approval.",
     "finishStandard": "Read autopilot/PRODUCT_FINISHING_STANDARD_2026-10-09.md. Every screen, field, sentence and CTA must serve the user's immediate job, with premium consistent UX, real price data and QA. Do not call project finished from isolated feature PRs.",
-    "nextExecution": "13 Oct P0K #149 + P0L #150 are MERGED to main with full source QA, NOT yet independently verified on own-domain current JS/CSS. Do not rebuild SmartSelector or edit home/category heros in competing branches. Next independently check actual sankkostnaden.se client asset parity against 831ec23 main, then physically review mobile if a free real device is available, and inspect remaining tool/leaf journey without duplicate widget PR. Preserve active /elavtal/kvartspris/ cohort, canceled Oct 7 snippet, SEO, partner clickref/subID/EPI and transparent sponsor labels. Qualified organic sessions, tagged valid partner clicks and network-authoritative APPROVED affiliate commission must remain distinct; payout UNKNOWN without network ledger. No costs, contracts, mass outreach or invented savings.",
+    "nextExecution": "P0M family-photo electricity journey #153 is MERGED + PUBLIC CSS and real product-JS verified on 10/10 paths with approved photo HTML identifiers. Existing P0K #149 and P0L #150 also included in this parity check. Do NOT recreate P0I–P0M or rework same hero/photo without newly observed deficiency. The 08:00 operator should inspect actual 390/1440 entire journey and any remaining objectively weak leaf/tool result and partner handoff; 09:00 datapilot must keep qualified ORGANIC traffic, sponsor tagged clickrefs/EPI/subIDs and network-authoritative APPROVED SEK strictly separate. Protect /elavtal/kvartspris/ cohort, cancelled insurance snippet, no new expenses or mass outreach; any new material UX scope needs 13-field evidence and screenshots. Real physical iPhone UNTESTED, owner's LIVE visual final acceptance PENDING, approved commission UNKNOWN.",
     "strategySourceOfTruth": "P0J_RELEASE_AUDIT_2026-10-13.md > P0I_RELEASE_AUDIT_2026-10-13.md > P0I_APPROVED_PHOTO_DIRECTION_2026-10-12.md > UNIFIED_PRODUCT_DESIGN_2026-10-10.md/MASTERPLAN_EXECUTION/PRODUCT_FINISHING_STANDARD, partner/legal/SEO policies."
   },
   "shipped": [
@@ -294,14 +294,20 @@
     {
       "pr": 149,
       "scope": "P0K progressive SmartSelector one-question-at-a-time across broadband/mobile/electricity guides",
-      "status": "merged into main source SHA 0536503707172c3ff76c9134210d3183f870fda1; own-domain parity UNKNOWN",
+      "status": "merged into main source SHA 0536503707172c3ff76c9134210d3183f870fda1; own-domain client CSS+real JS parity independently PASS 10/10 on #38401054369 (P0M live build)",
       "note": "Branch head fe4ca2f: Build PASS #38393511855; full 689 Chromium +22 Linux WebKit PASS #38393512013. Corrected test-only browser evaluate variable bug; inspected six true-browser 390/1440 results. Three genuine needs flows with skip/back/direct comparison, no fabricated all-skipped profile. Original SEO/partner data/attribution unchanged. Pages PR preview deployed. Real iPhone UNTESTED, owner final live acceptance PENDING, network-approved commission UNKNOWN."
     },
     {
       "pr": 150,
       "scope": "P0L first-usefulness faster on home and all five category heroes without changing brand",
-      "status": "merged into main source SHA 831ec23fab41ca45a2a1ed8ae19d4fa3786598cd; own-domain parity UNKNOWN",
+      "status": "merged into main source SHA 831ec23fab41ca45a2a1ed8ae19d4fa3786598cd; own-domain client CSS+real JS parity independently PASS 10/10 on #38401054369 (P0M live build)",
       "note": "Branch head 22e5a0f: Build PASS #38395446087; 12 first-screen 390/1440 screenshot/choice checks PASS #38395446158, visually inspected; full 689 Chromium +22 Linux WebKit PASS #38395446095 incl 1920 first-use P0H test. Only HomeHero/CategoryPremium CSS plus tests, decision; no partner/price/SEO changes. Pages PR preview deployed. Real iPhone UNTESTED, owner's actual live signoff PENDING, network-approved commission UNKNOWN."
+    },
+    {
+      "pr": 153,
+      "scope": "P0M electricity journey warm photographs without stock-scene repetition on home tile, category hero and SmartSelector",
+      "status": "merged main product SHA eb22fdc8dbf6c2e534b5c1846dd11b5032771d00; own-domain parity PASS 10/10 routes",
+      "note": "Build #38399199287 PASS, commercial full Chromium 691 PASS + Linux WebKit 22 PASS #38399199308, six actual 390/1440 screenshots inspected #38399199342. Public independent GitHub Actions #38401054369 10/10 live HTML exact CSS+real JS asset identity, Pexels #3875175 home, #3875141 el hero, #3875160 el SmartSelector. Other category paths and protected /elavtal/kvartspris/ checked. No promises of improved traffic, finance, pricing, or approved affiliate payout. Exact Cloudflare origin SHA UNKNOWN; physical iPhone UNTESTED; owner actual public aesthetics signoff PENDING; commission UNKNOWN."
     }
   ],
   "unresolved": [
@@ -319,9 +325,10 @@
     "Approved Adtraction/Addrevenue/Tradedoubler SEK from authoritative partner reports is UNKNOWN on 2026-10-10; Windsor.ai Adtraction read returned affiliate-user/advertiser-user authorization error.",
     "2026-10-13: P0I product is live with seven-route exact client CSS/JS parity but unique served Cloudflare origin commit SHA remains UNKNOWN; owner still needs final LIVE visual review and physical iPhone not tested. Network APPROVED affiliate commission UNKNOWN.",
     "2026-10-13 P0J: Real site client bundle and markup identity PASS 6/6 but unique origin SHA UNKNOWN, physically tested iPhone UNTESTED, owner final production visual signoff PENDING, authoritative network approved commission UNKNOWN.",
-    "2026-10-13 P0K/P0L now merged #149/#150: own-domain actual live client CSS+real product JS still UNVERIFIED for newly merged main 831ec23; confirmed only source QA + Cloudflare Pages PR previews, not live conversion. Full suite 689 Chromium+22 Linux WebKit passed for each final PR. Real iPhone UNTESTED; owner final live visual acceptance PENDING; all-network APPROVED commission UNKNOWN."
+    "2026-10-13 P0K/P0L now independently live verified together with P0M on 10/10 public client CSS/JS assets #38401054369; prior unverified state is superseded. Physical iPhone UNTESTED, owner live design acceptance PENDING, approved affiliate SEK UNKNOWN.",
+    "P0M #153 current own-domain CSS, real product JavaScript and warm electricity photos (#3875175 homepage tile, #3875141 category, #3875160 advisor) publicly verified on 10/10 routes, GitHub Actions #38401054369, 2026-10-13. This is NOT a unique origin SHA, physical device QA, objective consumer feedback or network-approved revenue. Separate legacy Cloudflare Workers build failures are unrelated to Pages deploy evidence unless proved otherwise."
   ],
-  "latestMergedMainCommit": "831ec23fab41ca45a2a1ed8ae19d4fa3786598cd",
+  "latestMergedMainCommit": "eb22fdc8dbf6c2e534b5c1846dd11b5032771d00",
   "designVerification": {
     "inspectedAt": "2026-10-11",
     "ownerDirection": "P0D 2026-10-10 navy/warm-white",
@@ -537,6 +544,32 @@
       "customDomainClientAssets": "UNKNOWN_NEW_RELEASE",
       "approvedCommissionSEK": "UNKNOWN",
       "ownerActualLiveSignoff": "PENDING"
+    },
+    "p0m": {
+      "pr": 153,
+      "mainProductSha": "eb22fdc8dbf6c2e534b5c1846dd11b5032771d00",
+      "sourceBuild": "PASS #38399199287",
+      "chromium": "691 PASS #38399199308",
+      "linuxWebkit": "22 PASS #38399199308; not physical iPhone",
+      "visual": "6 actual full-page 390/1440 home-el-tile, el-hero and el-advisor source screenshots manually reviewed #38399199342",
+      "liveDomain": {
+        "status": "PASS_10_OF_10_CLIENT_ASSET_PARITY",
+        "run": 38401054369,
+        "verifiedAt": "2026-10-13T12:57:42Z",
+        "origin": "https://sankkostnaden.se/",
+        "cssAllMatch": true,
+        "productJsAllMatch": true,
+        "photoMarkers": {
+          "home-electricity-tile": "3875175",
+          "electricity-category-hero": "3875141",
+          "electricity-advisor": "3875160"
+        },
+        "protectedQuarterPriceRouteRetained": true
+      },
+      "exactOriginSha": "UNKNOWN",
+      "physicalIphone": "UNTESTED",
+      "ownerLiveVisualSignoff": "PENDING",
+      "networkApprovedCommission": "UNKNOWN"
     }
   }
 }
