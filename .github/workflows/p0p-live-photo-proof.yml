@@ -1,0 +1,41 @@
+name: P0P independent own-domain responsive category photo delivery proof
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/p0p-live-photo-proof.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-public:
+    runs-on: ubuntu-latest
+    timeout-minutes: 17
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0'
+      - name: Verify exact post-P0P main source and static output
+        run: |
+          npm install --progress=false
+          npm run check
+          npm run check:integrity
+          npx next build
+          npm run check:export
+      - name: Compare actual public CSS and product JavaScript on all ten relevant routes
+        shell: bash
+        run: |
+          set -u
+          for attempt in $(seq 1 8); do
+            echo "P0P public CSS/product JavaScript parity attempt $attempt/8"
+            if node scripts/check-p0n-live.mjs; then
+              echo "P0P post-merge real public CSS/JS parity PASS on ten routes."
+              exit 0
+            fi
+            sleep 20
+          done
+          echo "::error::P0P's own-domain client assets are not yet verifiably identical."
+          exit 1
