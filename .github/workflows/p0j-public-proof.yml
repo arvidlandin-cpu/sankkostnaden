@@ -1,0 +1,40 @@
+name: P0J real public site release identity
+
+on:
+  push:
+    branches: ['ops/p0j-public-proof-20261013']
+    paths:
+      - 'scripts/check-p0j-public.mjs'
+      - '.github/workflows/p0j-public-proof.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  public-release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0'
+      - name: Build source and export
+        run: |
+          npm install --progress=false
+          npx next build
+          npm run check:export
+      - name: Compare compiled client assets on actual domain
+        shell: bash
+        run: |
+          set -u
+          for attempt in $(seq 1 12); do
+            echo "Checking public P0J identity attempt $attempt /12"
+            if node scripts/check-p0j-public.mjs; then
+              exit 0
+            fi
+            sleep 25
+          done
+          echo "::error::Independent P0J public verification not yet established."
+          exit 1
