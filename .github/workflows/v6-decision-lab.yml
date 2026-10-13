@@ -3,8 +3,14 @@ on:
   pull_request:
     paths:
       - 'pages/experiments/beslutsresa-v6.tsx'
+      - 'pages/experiments/v6-koncept.tsx'
+      - 'pages/experiments/kostnadskarta-v6.tsx'
+      - 'pages/experiments/snabbjamfor-v6.tsx'
       - 'styles/V6DecisionLab.module.css'
+      - 'styles/V6Variants.module.css'
+      - 'components/MobileQuickBar.tsx'
       - 'tests/v6-decision-lab.spec.ts'
+      - 'tests/v6-concept-variants.spec.ts'
       - '.github/workflows/v6-decision-lab.yml'
   workflow_dispatch:
 permissions:
@@ -36,7 +42,7 @@ jobs:
           done
           exit 1
       - name: Real Chromium prototype journeys at 390 and 1440
-        run: npx playwright test tests/v6-decision-lab.spec.ts --project=chromium --workers=1
+        run: npx playwright test tests/v6-decision-lab.spec.ts tests/v6-concept-variants.spec.ts --project=chromium --workers=1
       - name: Preserve prototype screenshots
         if: always()
         uses: actions/upload-artifact@v4
@@ -44,6 +50,7 @@ jobs:
           name: v6-one-decision-journey-browser-evidence
           path: |
             test-results/v6-journey/
+            test-results/v6-variants/
             playwright-report/
           if-no-files-found: warn
           retention-days: 14
