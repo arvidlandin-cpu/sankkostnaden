@@ -19,7 +19,9 @@ for(const width of [360,390,430,700,760,1440]){
   await expect(hero.getByTestId('home-decision-explorer')).toBeVisible();
   if(width<=700){
    await expect(secondary).toBeHidden();
-   await expect(headerCompare).toBeHidden();
+   await expect(headerCompare).toBeVisible();
+   const headerFill=await headerCompare.evaluate(node=>getComputedStyle(node).backgroundColor);
+   expect(headerFill).toBe('rgba(0, 0, 0, 0)'); // not a competing filled-blue CTA
    await expect(dock).toBeVisible();
    await expect(dock.getByRole('link')).toHaveCount(5);
    await expect(dock.getByRole('link',{name:'Bredband'})).toHaveAttribute('href','/bredband/');
