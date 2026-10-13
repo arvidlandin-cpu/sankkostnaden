@@ -27,6 +27,17 @@ for(const width of [360,390,430,1024,1440,1920]){
   const homeWidth=await hero.locator('[class*=inner]').evaluate(el=>el.getBoundingClientRect().width);
   expect(homeWidth/width).toBeGreaterThan(width>=1440?.74:.85);
   await expect(hero.getByTestId('home-decision-explorer')).toBeVisible();
+  // P0N: bottom category dock supplies direct category navigation on phones;
+  // only one filled-blue primary action competes on the opening mobile view.
+  if(width<=700){
+   await expect(page.locator('header a[href="#jamfor"]')).toBeHidden();
+   await expect(hero.locator('a[href="/#jamfor"]')).toBeHidden();
+   await expect(hero.locator('a[href="/app/"]')).toBeVisible();
+   await expect(page.locator('nav[aria-label="Snabbnavigering"]')).toBeVisible();
+  }else{
+   await expect(page.locator('header a[href="#jamfor"]')).toBeVisible();
+   await expect(hero.locator('a[href="/#jamfor"]')).toBeVisible();
+  }
   if(width>=1440){
    const firstUse=await hero.locator('#startval').boundingBox();
    expect(firstUse).not.toBeNull();
