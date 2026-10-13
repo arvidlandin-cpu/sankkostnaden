@@ -4,6 +4,9 @@ on:
   pull_request:
     paths:
       - 'tests/p0o-sitewide-photo-audit.spec.ts'
+      - 'styles/CategoryPremium.module.css'
+      - 'tests/p0g-visual-journeys.spec.ts'
+      - 'tests/p0h-warm-editorial.spec.ts'
       - '.github/workflows/p0o-sitewide-photo-audit.yml'
   workflow_dispatch:
 
@@ -12,7 +15,7 @@ permissions:
 
 jobs:
   image-census:
-    if: ${{ github.event_name == 'workflow_dispatch' || startsWith(github.head_ref, 'qa/p0o-') }}
+    if: ${{ github.event_name == 'workflow_dispatch' || startsWith(github.head_ref, 'qa/p0o-') || startsWith(github.head_ref, 'fix/p0p-') }}
     runs-on: ubuntu-latest
     timeout-minutes: 32
     env:
