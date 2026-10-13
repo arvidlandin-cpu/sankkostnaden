@@ -1,0 +1,65 @@
+/* P0R: editorial trust and policy pages, not marketing hero imagery.
+   Explicitly scoped to the five pages carrying this CSS module. */
+.hero:global(.guideHero) {
+  min-height: 0!important;
+  display: block!important;
+  padding: clamp(40px,6vw,79px) 24px clamp(47px,6vw,84px)!important;
+  border-bottom: 1px solid #e7e3da;
+  background: radial-gradient(ellipse 67% 120% at 97% 5%,rgba(214,228,231,.48),transparent 74%),
+              linear-gradient(135deg,#faf6ef 0%,#f8f7f3 58%,#f5f7f7 100%)!important;
+  color: #172946!important;
+}
+.hero:global(.guideHero)::before,
+.hero:global(.guideHero)::after { content: none!important;display:none!important; }
+.hero:global(.guideHero) :global(.guideWrap) {
+  width: min(100%,1010px)!important;
+  max-width: 1010px!important;
+  margin: 0 auto!important;
+  position: relative!important;
+  z-index:1;
+}
+.hero:global(.guideHero) :global(.back) {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #476477!important;
+  font-size: 13px;
+  font-weight: 720;
+  text-decoration: none;
+  margin-bottom: 23px;
+}
+.hero:global(.guideHero) :global(.back:hover),
+.hero:global(.guideHero) :global(.back:focus-visible){ color:#194e9b!important;text-decoration:underline; }
+.hero:global(.guideHero) :global(.kicker) {
+  margin:0 0 12px!important;
+  color:#4e7868!important;
+  font-size:12px!important;
+  letter-spacing:.13em!important;
+  line-height:1.5;
+}
+.hero:global(.guideHero) :global(h1) {
+  max-width: 880px!important;
+  margin:0!important;
+  color: #172946!important;
+  font-size: clamp(45px,5.1vw,73px)!important;
+  line-height:1.08!important;
+  letter-spacing:-.057em!important;
+  text-wrap:balance;
+}
+.hero:global(.guideHero) :global(.lead) {
+  max-width: 760px!important;
+  margin:21px 0 0!important;
+  color:#4a5c62!important;
+  font-size:clamp(17px,1.45vw,20px)!important;
+  line-height:1.65!important;
+}
+@media(max-width:700px) {
+ .hero:global(.guideHero) {
+   padding: 29px 20px 42px!important;
+ }
+ .hero:global(.guideHero) :global(.back) { margin-bottom:22px; }
+ .hero:global(.guideHero) :global(.kicker) {font-size:11px!important;margin-bottom:12px!important}
+ .hero:global(.guideHero) :global(h1) {font-size:clamp(37px,10vw,48px)!important;line-height:1.07!important;letter-spacing:-.055em!important}
+ .hero:global(.guideHero) :global(.lead) {margin-top:15px!important;font-size:16px!important;line-height:1.55!important}
+}
+@media(prefers-reduced-motion:reduce){.hero *{animation:none!important;transition:none!important}}
