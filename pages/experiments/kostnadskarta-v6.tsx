@@ -30,7 +30,7 @@ export default function CostMapV6(){
   return {background:total?('conic-gradient('+parts.join(',')+')'):'#e3eae4'};
  },[values,total,sorted]);
  const chosen=selected?areas.find(a=>a.key===selected):undefined;
- return <><Head><title>V6 koncept B – kostnadskarta | Sänk Kostnaden</title><meta name='robots' content='noindex,nofollow,noarchive'/></Head>
+ return <><Head><title>V6 koncept B – kostnadskarta | Sänk Kostnaden</title><meta name='description' content='Testa en visuell kostnadskarta med egna månadskostnader. En avgränsad noindex-prototyp.'/><meta name='robots' content='noindex,nofollow,noarchive'/></Head>
  <main className={s.shell} data-testid='v6-map'>
   <header className={s.header}><Link href='/' className={s.brand}><PiggyBank size={20}/> Sänk Kostnaden</Link><Link href='/experiments/v6-koncept/' className={s.hubBack}><ArrowLeft size={16}/> Alla koncept</Link></header>
   <div className={s.mapWrap}>
