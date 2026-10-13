@@ -1,0 +1,41 @@
+name: P0K P0L independent public client release audit
+
+on:
+  push:
+    branches: ['ops/p0kl-live-proof-20261013']
+    paths:
+      - 'scripts/check-p0kl-live.mjs'
+      - '.github/workflows/p0kl-live-proof.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-public:
+    runs-on: ubuntu-latest
+    timeout-minutes: 17
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0'
+      - name: Build exact merged product source without analytics or writes
+        run: |
+          npm install --progress=false
+          npx next build
+          npm run check:export
+      - name: Independently inspect current public domain CSS and product JS
+        shell: bash
+        run: |
+          set -u
+          for attempt in $(seq 1 8); do
+            echo "Public P0K/P0L client release check attempt ${attempt}/8"
+            if node scripts/check-p0kl-live.mjs; then
+              echo "Exact client assets and feature markers confirmed on ten routes."
+              exit 0
+            fi
+            sleep 20
+          done
+          echo "::error::The newest merged source client identity was not proved on the public domain. Do not claim shipped live."
+          exit 1
