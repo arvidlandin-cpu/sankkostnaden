@@ -7,7 +7,7 @@ const concepts=[
  {type:'B',tag:'VISUELL KOSTNADSÖVERSIKT',title:'Se kostnaderna framför dig',desc:'Markera en kostnad, ange ditt faktiska belopp och se hur hushållets kostnadskarta förändras.',href:'/experiments/kostnadskarta-v6/',icon:'layers'},
  {type:'C',tag:'DIREKT TILL ALTERNATIVEN',title:'Jämför utan omvägar',desc:'Välj ett område och se relevanta aktiva partners direkt, med en valfri behovsfiltrering.',href:'/experiments/snabbjamfor-v6/',icon:'sparkles'}
 ];
-export default function V6ConceptHub(){return <><Head><title>Tre prototyper för Sänk Kostnaden 6.0</title><meta name='robots' content='noindex,nofollow,noarchive'/></Head>
+export default function V6ConceptHub(){return <><Head><title>Tre prototyper för Sänk Kostnaden 6.0</title><meta name='description' content='Designlabb med tre klickbara användarresor för Sänk Kostnaden. En avgränsad noindex-prototyp.'/><meta name='robots' content='noindex,nofollow,noarchive'/></Head>
  <main className={s.shell} data-testid='v6-hub'>
   <header className={s.header}><Link href='/' className={s.brand}><PiggyBank size={20}/> Sänk Kostnaden</Link><span className={s.lab}>V6 · DESIGNLABB</span></header>
   <div className={s.hub}>
