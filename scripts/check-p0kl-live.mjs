@@ -14,11 +14,10 @@ const checks=[
  {route:'/elavtal/kvartspris/',markers:[]}
 ];
 function collect(html){
- const all=[...html.matchAll(/\\/_next\\/static\\/[^"'<>\\s?#]+/g)].map(m=>m[0].replace(/&amp;/g,'&'));
- return {css:[...new Set(all.filter(p=>p.endsWith('.css')))].sort(),
- js:[...new Set(all.filter(p=>p.endsWith('.js')&&!/_buildManifest\\.js$|_ssgManifest\\.js$/.test(p)))].sort()};
+ const all=[...html.matchAll(/\/_next\/static\/[^"'<>\s?#]+/g)].map(m=>m[0].replace(/&amp;/g,'&'));
+ return {css:[...new Set(all.filter(s=>s.endsWith('.css')))].sort(),
+         js:[...new Set(all.filter(s=>s.endsWith('.js')&&!/_buildManifest\.js$|_ssgManifest\.js$/.test(s)))].sort()};
 }
-const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
 let pass=0;
 for(const x of checks){
  let local='',live='';
