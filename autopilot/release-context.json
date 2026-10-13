@@ -1,18 +1,18 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12",
+  "updatedAt": "2026-10-13",
   "purpose": "Verified code-release snapshot for the AI operator and autopilot decision packet. Historical baseline reports remain dated snapshots, not live inventory.",
-  "latestVerifiedMainCommit": "757379d2423d5def5fb2018f74d96e6ba8e2cfc4",
+  "latestVerifiedMainCommit": "35ab45cb0f44a46f1353623a63dafd16040e79db",
   "decisionContext": {
     "northStar": "Long-term approved affiliate revenue per relevant visitor; truthful consumer value and SEO trust first.",
-    "design": "P0I owner-approved warm family photo/soft translucent hero behind text: see autopilot/P0I_APPROVED_PHOTO_DIRECTION_2026-10-12.md. Earlier P0H production code SHA 24e0baa; P0I branch design/p0i-photo-blend-approved-direction-20261012 PR #145 is a SOURCE CHANGE pending all build, visual screenshot, merge, production client asset identity and owner visual signoff. Owner said 'mkt bättre' to design mockups only; never equate those image mockups with real website output.",
+    "design": "P0I owner-approved warm family-photo/transparent fade visual DIRECTION successfully implemented as accessible real HTML/CSS in PR #145, code SHA 35ab45c merged 2026-10-13. Full source build 668 Chromium + 22 Linux WebKit PASS. Actual source Chrome fullpage screenshot review (390/1440/1920, 18 captures) PASS. Independently VERIFIED ON LIVE DOMAIN: GitHub Actions run #38359060697 compared exact compiled CSS + real product JS on seven public pages and saw P0I home/broadband family photo IDs and P0G five category markers. This confirms new product assets are live, NOT exact served origin Git SHA, owner final visual approval or physical iPhone. Owner said 'mkt bättre' of design mockups before merge, not explicit signoff of live release. See autopilot/P0I_RELEASE_AUDIT_2026-10-13.md and P0I_APPROVED_PHOTO_DIRECTION_2026-10-12.md.",
     "conversion": "Keep real comparison-service vs individual-supplier distinctions, partner visibility and clearly labeled affiliate links; user need not know consumption to reach legitimate partner options.",
     "pricing": "Electricity quarter-hour spot feed SE1-SE4 is real, but NOT a per-provider offer feed. No fabricated cheapest provider, 'best choice', monthly quote, ratings, guaranteed saving or extrapolated shift savings.",
     "experimentStatus": "As of 2026-10-10 one active scoped CONTENT_UTILITY_UPGRADE for /elavtal/kvartspris/ (PR #103), awaiting qualified organic measurements; cancelled Oct 7 insurance snippet remains inactive, no Oct 15 gate. Up to two fully independent initiatives subject to policy.",
     "capacity": "Independent non-paid traffic acquisition remains the highest commercial constraint; continue alongside design. No paid media or contracts without owner approval.",
     "finishStandard": "Read autopilot/PRODUCT_FINISHING_STANDARD_2026-10-09.md. Every screen, field, sentence and CTA must serve the user's immediate job, with premium consistent UX, real price data and QA. Do not call project finished from isolated feature PRs.",
-    "nextExecution": "Complete P0I photo source audit (Pexels 39997379/4008771/4260743/7117518), 390/1024/1440/1920 Playwright and full commercial Chromium+WebKit, screenshot inspection at 100% zoom. Only then merge and independently verify CSS/JS served on sankkostnaden.se. Preserve trust/SEO/affiliate EPI, no partner commission claim.",
-    "strategySourceOfTruth": "Latest P0I_APPROVED_PHOTO_DIRECTION_2026-10-12.md > P0H_WARM_HUMAN_EDITORIAL_2026-10-12.md > P0G_RELEASE_AUDIT_2026-10-12.md > MASTERPLAN_EXECUTION, PRODUCT_FINISHING_STANDARD, VISUAL_UX_ROADMAP and policy/state."
+    "nextExecution": "P0I SOURCE, QA AND CLIENT LIVE ASSET PARITY DONE; do not re-edit P0I hero/photos without new observed defect. Next design operator should inspect live current production at 100%-zoom 390/1440/1920, then address remaining high-friction journeys and long guides in separate scoped PRs, not duplicate P0I CSS. Continue organic qualified visitors -> useful experience -> attributable relevant sponsor click (subID/EPI) -> APPROVED network commission. Do not extrapolate conversion uplift from CI, owners' direct tests or custom-domain parity. Approved payout UNKNOWN until trusted network reports.",
+    "strategySourceOfTruth": "Latest P0I_RELEASE_AUDIT_2026-10-13.md > P0I_APPROVED_PHOTO_DIRECTION_2026-10-12.md > P0H_WARM_HUMAN_EDITORIAL_2026-10-12.md > P0G_RELEASE_AUDIT_2026-10-12.md > MASTERPLAN_EXECUTION/PRODUCT_FINISHING_STANDARD/VISUAL_UX_ROADMAP and partner/legal/SEO policy."
   },
   "shipped": [
     {
@@ -272,6 +272,18 @@
       "scope": "P0G high-resolution imagery, crisp partner name identities, Tibber featured brand and five category-specific interactive insights",
       "status": "merged; seven-route public product asset identity verified; not owner visually signed off",
       "note": "PR #142 squash merged main product SHA 757379d2423d5def5fb2018f74d96e6ba8e2cfc4. 642 Chromium + 22 Linux WebKit passed, P0G nine HTTP image sources and actual browser image resolution verified. GitHub Actions #38244863679 matched public custom-domain CSS and real JS for 7 of 7 routes and five HTML markers. Product is live; exact server-side served SHA UNKNOWN; real physical iPhone UNTESTED; approved affiliate commission UNKNOWN."
+    },
+    {
+      "pr": 144,
+      "scope": "P0H warm, human editorial premium redesign, homepage/category photography, compact choice panels and warm brand tokens",
+      "status": "merged/live code; actual original main SHA 24e0baa; superseded only in selected imagery/layout by live P0I",
+      "note": "12 Oct warm design code merged; independent screenshot QA at 390/1440/1920, 660 Chromium + 22 Linux WebKit passed. Owner visual release signoff not claimed."
+    },
+    {
+      "pr": 145,
+      "scope": "P0I owner-approved photo direction: sunlit family homepage, blended transparent gradient, warm family laptop broadband hero and category image",
+      "status": "merged 2026-10-13; public client asset identity verified 7/7; owner live visual signoff pending",
+      "note": "Code main product SHA 35ab45cb0f44a46f1353623a63dafd16040e79db. PR-head #38357883506: 668 Chromium + 22 Linux WebKit PASS. GitHub source UI screenshot #38357879530: 18 full-page at 390/1440/1920. Own-domain independent 7/7 CSS and actual product JS parity #38359060697; real P0I Pexels IDs 39997379 home and 4008771 broadband present, 5/5 P0G insight markers retained. Exact served origin SHA UNKNOWN; physical iPhone UNTESTED; approved network provision UNKNOWN."
     }
   ],
   "unresolved": [
@@ -286,9 +298,10 @@
     "Bredbandsval network-side clickref/EPI attribution is unverified; maintain existing affiliate URL untouched until its branded redirect and any Tradedoubler EPI account activation are confirmed. Local affiliate_click event remains instrumented.",
     "PR #103 commercial/SEO effect requires at least 7 complete GSC days plus 30 relevant new impressions and organic qualified visits; no claimed uplift or approved commission.",
     "GitHub screenshot archive now preserves Chromium screenshots; WebKit engine coverage passed, but physical-iPhone QA still blocked by exhausted free quota. Do not claim real-device pass.",
-    "Approved Adtraction/Addrevenue/Tradedoubler SEK from authoritative partner reports is UNKNOWN on 2026-10-10; Windsor.ai Adtraction read returned affiliate-user/advertiser-user authorization error."
+    "Approved Adtraction/Addrevenue/Tradedoubler SEK from authoritative partner reports is UNKNOWN on 2026-10-10; Windsor.ai Adtraction read returned affiliate-user/advertiser-user authorization error.",
+    "2026-10-13: P0I product is live with seven-route exact client CSS/JS parity but unique served Cloudflare origin commit SHA remains UNKNOWN; owner still needs final LIVE visual review and physical iPhone not tested. Network APPROVED affiliate commission UNKNOWN."
   ],
-  "latestMergedMainCommit": "757379d2423d5def5fb2018f74d96e6ba8e2cfc4",
+  "latestMergedMainCommit": "35ab45cb0f44a46f1353623a63dafd16040e79db",
   "designVerification": {
     "inspectedAt": "2026-10-11",
     "ownerDirection": "P0D 2026-10-10 navy/warm-white",
@@ -418,6 +431,45 @@
       "subjectivePremiumDesignAcceptance": "PENDING_OWNER_VISUAL_REVIEW",
       "organicConversionUplift": "UNKNOWN",
       "approvedNetworkCommissionSEK": "UNKNOWN"
+    },
+    "p0i": {
+      "ownerDirectionDate": "2026-10-12",
+      "productVersionCodeMainSha": "35ab45cb0f44a46f1353623a63dafd16040e79db",
+      "ownerReviewedTarget": "'mkt bättre' about graphic mockup previews, not a final signoff of a served site",
+      "productMergedPR": 145,
+      "buildCheck": "PASS PR-head #38357883509; main build #38358919160",
+      "chromiumRegression": "668 passed full commercial regression #38357883506; previous corrected-head #38357777920 also 668 passed",
+      "linuxWebkitRegression": "22 passed #38357883506 on Linux WebKit engine (not physical iPhone)",
+      "sourcePhotographicAudit": "PASS selected Pexels originals, high-res 13-source photo HTTP audit #38261322156 and current source photo selection",
+      "latestRealScreenshots": "18 full-page source-matched Chromium captures at 390/1440/1920; GitHub Actions #38357879530 PASS; manually reviewed hero and category image+crop and no horizontal scroll",
+      "actualPublicDomain": {
+        "origin": "https://sankkostnaden.se",
+        "checkedAt": "2026-10-13T06:52:37Z",
+        "run": 38359060697,
+        "status": "PASS_7_OF_7_EXACT_CLIENT_ASSET_PARITY",
+        "urls": [
+          "/",
+          "/bredband/",
+          "/elavtal/",
+          "/mobil/",
+          "/forsakring/",
+          "/ekonomi/",
+          "/elavtal/kvartspris/"
+        ],
+        "cssAllMatch": true,
+        "productJsAllMatch": true,
+        "homePhoto39997379": true,
+        "broadbandPhoto4008771": true,
+        "otherCategoryPhotoMarkers": true,
+        "existingP0GCategoryInsightsFiveOfFive": true,
+        "notes": "Read-only GitHub Actions independent fetch of actual public domain HTML. CSS and compiled product JS asset paths exactly match fresh export from product code commit 35ab45c. Excludes opaque Next build-manifest. Not evidence of unique served origin SHA or guaranteed user value."
+      },
+      "exactDeployedOriginSha": "UNKNOWN",
+      "realIphone": "UNTESTED",
+      "actualLiveOwnerVisualSignoff": "PENDING",
+      "organicConversionUplift": "UNKNOWN",
+      "approvedNetworkCommissionSEK": "UNKNOWN",
+      "nextOwnerEscalation": "Only substantial blocker, strategic change or verified commission milestone; continue scoped daily operations autonomously."
     }
   }
 }
