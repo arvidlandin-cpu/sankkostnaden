@@ -85,6 +85,6 @@
 @media(prefers-reduced-motion:reduce){.popularCard,.popularImageExact,.progressiveTools summary svg,.guideLibrary summary svg{transition:none}.popularCard:hover,.popularCard:hover .popularImageExact{transform:none}}
 
 /* P0N: when the five-way mobile navigation is available (<=700px), the
-   homepage header must not compete with its own primary first-step CTA.
+   homepage header comparison escape becomes a subtle text link rather than a second filled-blue CTA.
    Desktop/tablet header comparison CTA remains visible. */
-@media(max-width:700px){.navCta{display:none}}
+@media(max-width:700px){.navCta{background:transparent;color:#2c4976;box-shadow:none;min-height:44px;padding:0 7px;gap:5px;font-size:11px}.navCta:hover{text-decoration:underline;text-underline-offset:3px}.navCta:focus-visible{outline:3px solid #315ce0;outline-offset:2px}}
