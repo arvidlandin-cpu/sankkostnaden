@@ -51,3 +51,8 @@
  .photo>img{height:100%;min-height:100%;object-fit:cover;object-position:52% center}
  .photoShade{background:linear-gradient(90deg,#faf7f1 0%,rgba(250,247,241,.98) 24%,rgba(250,247,241,.78) 62%,rgba(250,247,241,.23) 100%),linear-gradient(0deg,#faf7f1 0%,transparent 60%)}
 }
+
+/* P0N: the five persistent mobile category shortcuts already supply the
+   'pick one cost directly' route. Show one prominent hero action instead of
+   another duplicate link at phone widths, retaining desktop/tablet paths. */
+@media(max-width:700px){.secondary{display:none}}

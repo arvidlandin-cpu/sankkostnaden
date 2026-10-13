@@ -1,0 +1,54 @@
+name: P0N real mobile first-action visual QA
+
+on:
+  pull_request:
+    paths:
+      - 'styles/Home.module.css'
+      - 'styles/HomeHero.module.css'
+      - 'tests/p0n-mobile-home-focus.spec.ts'
+      - 'tests/p0h-warm-editorial.spec.ts'
+      - '.github/workflows/p0n-mobile-first-fold.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  first-screen:
+    if: ${{ github.event_name == 'workflow_dispatch' || startsWith(github.head_ref, 'design/p0n-') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 17
+    env:
+      QA_BASE_URL: http://127.0.0.1:3000
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0'
+      - name: Exact source build
+        run: |
+          npm install --progress=false
+          npm run check
+          npm run check:integrity
+          npx next build
+          npm run check:export
+      - name: Install actual Chromium browser
+        run: npx playwright install --with-deps chromium
+      - name: Serve candidate locally
+        run: |
+          python3 -m http.server 3000 --directory out >/tmp/p0n-server.log 2>&1 &
+          for i in $(seq 1 35); do
+            if curl -fsS http://127.0.0.1:3000/ >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/p0n-server.log
+          exit 1
+      - name: Test six true viewport widths and capture full and first-fold images
+        run: npx playwright test tests/p0n-mobile-home-focus.spec.ts --project=chromium
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: p0n-six-width-100-percent-folds
+          path: test-results/
+          retention-days: 7
+          if-no-files-found: error
