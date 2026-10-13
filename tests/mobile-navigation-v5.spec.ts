@@ -29,3 +29,18 @@ test('mobile bar never competes with the first Kostnadskollen question',async({p
  await page.goto('/app/?qa=1');
  await expect(page.getByRole('navigation',{name:'Snabbnavigering'})).toHaveCount(0);
 });
+
+test('P0K focused quick choices are not covered by the fixed bottom site navigation',async({page})=>{
+ await page.setViewportSize({width:390,height:844});
+ for(const route of [
+  '/bredband/vilken-hastighet-behover-jag/',
+  '/mobil/hur-mycket-surf-behover-jag/',
+  '/elavtal/vilket-elavtal-passar-mig/',
+ ]){
+  await page.goto(route+'?qa=1');
+  await expect(page.getByRole('navigation',{name:'Snabbnavigering'})).toHaveCount(0);
+  const active=page.getByTestId('smartselector-active-question');
+  await expect(active.getByRole('button').first()).toBeVisible();
+  await expect(page.getByRole('link',{name:/Jämför direkt/}).first()).toBeVisible();
+ }
+});
