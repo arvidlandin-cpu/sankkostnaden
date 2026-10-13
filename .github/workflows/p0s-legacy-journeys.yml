@@ -1,0 +1,57 @@
+name: P0S legacy journeys visual and interaction QA
+on:
+  pull_request:
+    paths:
+      - 'pages/bredband/basta-bredbandet.tsx'
+      - 'pages/bredband/billigaste-bredbandet.tsx'
+      - 'pages/bredband/bredband-pa-min-adress.tsx'
+      - 'pages/elavtal/billigaste-elavtalet.tsx'
+      - 'pages/elavtal/rorligt-fast-kvartspris.tsx'
+      - 'pages/elavtal/sa-laser-du-elfakturan.tsx'
+      - 'pages/guide/**'
+      - 'pages/verktyg/hushallskostnadskollen.tsx'
+      - 'styles/LegacyJourney.module.css'
+      - 'components/LegacyGuidePhoto.tsx'
+      - 'tests/p0s-legacy-journeys.spec.ts'
+      - '.github/workflows/p0s-legacy-journeys.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  browser-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      QA_BASE_URL: http://127.0.0.1:3000
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0'
+      - run: |
+          npm install --progress=false
+          npm run check
+          npm run check:integrity
+          npx next build
+          npm run check:export
+      - run: npx playwright install --with-deps chromium
+      - name: Serve proposed static site
+        run: |
+          python3 -m http.server 3000 --directory out > /tmp/p0s-static.log 2>&1 &
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:3000/ >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          exit 1
+      - name: Screenshot all 11 real routes on desktop and phone
+        run: npx playwright test tests/p0s-legacy-journeys.spec.ts --project=chromium --workers=1
+      - name: Preserve first-screen and full-page evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: p0s-legacy-journey-screenshots
+          path: |
+            test-results/p0s-legacy-journey-evidence/
+            playwright-report/
+          if-no-files-found: warn
+          retention-days: 14

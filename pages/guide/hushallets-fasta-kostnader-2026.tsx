@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import legacyStyles from '../../styles/LegacyJourney.module.css';
 import Link from 'next/link';
 import InteractiveChecklist from '../../components/InteractiveChecklist';
 import { ArrowLeft, ArrowRight, Check, PiggyBank } from 'lucide-react';
@@ -32,8 +33,8 @@ export default function HushalletsFastaKostnader() {
       </Head>
       <header className='topbar'><Link className='brand' href='/'><span className='brandMark'><PiggyBank size={22}/></span><span>Sänk Kostnaden</span></Link></header>
       <main>
-        <section className='guideHero'><div className='guideWrap'><Link className='back' href='/'><ArrowLeft size={16}/> Startsidan</Link><div className='guideIcon'><PiggyBank size={25}/></div><p className='kicker'>HUSHÅLLSEKONOMI • UPPDATERAD 19 SEPTEMBER 2026</p><h1>Hushållets fasta kostnader 2026</h1><p className='lead'>En kostnadsfri checklista för att hitta återkommande kostnader som är värda att granska. Utgå från dina verkliga fakturor, jämför likvärdiga alternativ och kontrollera effekten på årsbasis.</p></div></section>
-        <article className='article guideWrap'>
+        <section className={'guideHero '+legacyStyles.hero}><div className='guideWrap'><Link className='back' href='/'><ArrowLeft size={16}/> Startsidan</Link><div className='guideIcon'><PiggyBank size={25}/></div><p className='kicker'>HUSHÅLLSEKONOMI • UPPDATERAD 19 SEPTEMBER 2026</p><h1>Hushållets fasta kostnader 2026</h1><p className='lead'>En kostnadsfri checklista för att hitta återkommande kostnader som är värda att granska. Utgå från dina verkliga fakturor, jämför likvärdiga alternativ och kontrollera effekten på årsbasis.</p></div></section>
+        <article className={'article guideWrap '+legacyStyles.content}>
           <div className='decisionPanel'><div><p className='partnerEyebrow'>KOSTNADSKOLL 2026</p><h2>Fyra avtal du kan kontrollera direkt</h2><p>El, bredband, mobil och försäkring är återkommande poster där pris och villkor kan jämföras. Välj den kostnad du vill börja med.</p></div><div className='decisionMetrics'><span><b>1</b> El</span><span><b>2</b> Bredband</span><span><b>3</b> Mobil</span><span><b>4</b> Försäkring</span></div></div>
           <div className='intentActions'><Link className='primary' href='/bredband/bredband-pa-min-adress/'>Bredband på min adress <ArrowRight size={16}/></Link><Link className='secondary' href='/elavtal/jamfor-elavtal/'>Jämför elavtal</Link><Link className='secondary' href='/mobil/billigaste-mobilabonnemanget/'>Jämför mobil</Link><Link className='secondary' href='/forsakring/jamfor-forsakring/'>Jämför försäkring</Link></div>
 

@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import legacyStyles from '../../styles/LegacyJourney.module.css';
 import Link from 'next/link';
 import InteractiveChecklist from '../../components/InteractiveChecklist';
 import { ArrowLeft, ArrowRight, Check, PiggyBank } from 'lucide-react';
@@ -22,8 +23,8 @@ export default function ArskollFastaKostnader() {
       </Head>
       <header className='topbar'><Link className='brand' href='/'><span className='brandMark'><PiggyBank size={22}/></span><span>Sänk Kostnaden</span></Link></header>
       <main>
-        <section className='guideHero'><div className='guideWrap'><Link className='back' href='/'><ArrowLeft size={16}/> Startsidan</Link><div className='guideIcon'><Check size={25}/></div><p className='kicker'>GRATIS CHECKLISTA • UPPDATERAD SEPTEMBER 2026</p><h1>Årskoll av hushållets fasta kostnader</h1><p className='lead'>En enkel kontroll en gång om året kan fånga kampanjpriser som löpt ut, onödiga tillägg och avtal som inte längre passar hushållet. Börja med de största posterna och gå vidare därifrån.</p></div></section>
-        <article className='article guideWrap'>
+        <section className={'guideHero '+legacyStyles.hero}><div className='guideWrap'><Link className='back' href='/'><ArrowLeft size={16}/> Startsidan</Link><div className='guideIcon'><Check size={25}/></div><p className='kicker'>GRATIS CHECKLISTA • UPPDATERAD SEPTEMBER 2026</p><h1>Årskoll av hushållets fasta kostnader</h1><p className='lead'>En enkel kontroll en gång om året kan fånga kampanjpriser som löpt ut, onödiga tillägg och avtal som inte längre passar hushållet. Börja med de största posterna och gå vidare därifrån.</p></div></section>
+        <article className={'article guideWrap '+legacyStyles.content}>
           <InteractiveChecklist title='Din årskoll, ett steg i taget' description='Gå igenom sex verkliga kontrollpunkter, i valfri ordning. Du behöver inte byta något för att använda listan.' items={checklist} nextHref='/verktyg/hushallskostnadskollen/' nextLabel='Räkna dina faktiska kostnader'/>
           <div className='intentActions'><Link className='primary' href='/verktyg/hushallskostnadskollen/'>Räkna hushållets kostnader <ArrowRight size={16}/></Link><Link className='secondary' href='/app/'>Prioritera vilka avtal du bör granska</Link></div>
           <h2>1. Bredband: kontrollera adressen först</h2><p>Utbudet kan skilja mellan adresser. Börja därför med vad som faktiskt går att beställa och jämför sedan totalpris, hastighet och bindningstid.</p><div className='intentActions'><Link className='primary' href='/bredband/bredband-pa-min-adress/'>Kontrollera bredband <ArrowRight size={16}/></Link><Link className='secondary' href='/bredband/vilken-hastighet-behover-jag/'>Hur snabbt behöver du?</Link></div>

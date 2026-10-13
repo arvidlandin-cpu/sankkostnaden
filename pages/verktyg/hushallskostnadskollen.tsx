@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import legacyStyles from '../../styles/LegacyJourney.module.css';
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import { ArrowLeft, ArrowRight, Calculator, PiggyBank } from 'lucide-react';
@@ -79,22 +80,22 @@ export default function Hushallskostnadskoll(){
     <header className='topbar'><Link className='brand' href='/'><span className='brandMark'><PiggyBank size={22}/></span><span>Sänk Kostnaden</span></Link></header>
 
     <main>
-      <section className='guideHero'><div className='guideWrap'><Link className='back' href='/'><ArrowLeft size={16}/> Startsidan</Link><div className='guideIcon'><Calculator size={25}/></div><p className='kicker'>GRATIS VERKTYG • 2026</p><h1>Hushållskostnadskollen</h1><p className='lead'>Se vad dina återkommande kostnader faktiskt blir på ett år. Fyll i det du betalar i dag – verktyget jämför inte mot ett påhittat normalhushåll.</p></div></section>
+      <section className={'guideHero '+legacyStyles.hero}><div className='guideWrap'><Link className='back' href='/'><ArrowLeft size={16}/> Startsidan</Link><div className='guideIcon'><Calculator size={25}/></div><p className='kicker'>GRATIS VERKTYG • 2026</p><h1>Hushålls<wbr/>kostnadskollen</h1><p className='lead'>Se vad dina återkommande kostnader faktiskt blir på ett år. Fyll i det du betalar i dag – verktyget jämför inte mot ett påhittat normalhushåll.</p></div></section>
 
-      <article className='article guideWrap'>
-        <div className='note'><strong>Börja med en kostnad du vill kontrollera.</strong> Det går bra att välja ett område även om du inte vet vad du betalar. Inga belopp behöver anges för att följa länkarna till jämförelsen.</div>
+      <article className={'article guideWrap '+legacyStyles.content+' '+legacyStyles.tool}>
 
-        <section data-testid='household-category-picker' style={{margin:'22px 0 20px'}}>
-          <h2 style={{marginBottom:10}}>Vad vill du börja med?</h2>
-          <p style={{marginTop:0,color:'#5f6c62'}}>Välj en kategori. Du kan lägga till fler när du vill.</p>
-          <div role='group' aria-label='Välj kostnadskategori' style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(145px,1fr))',gap:9}}>
+        <section data-testid='household-category-picker' className={legacyStyles.picker}>
+          <h2>Vad vill du börja med?</h2>
+          <p>Välj en kostnad att börja med. Lägg till fler när du vill.</p>
+          <div role='group' aria-label='Välj kostnadskategori' className={legacyStyles.categoryGrid}>
             {rows.filter(([,key])=>showMore||(['el','bredband','mobil','forsakring'] as Key[]).includes(key)).map(([label,key])=>
-              <button key={key} type='button' aria-pressed={selected.includes(key)} onClick={()=>chooseCategory(key)} style={{minHeight:52,textAlign:'left',padding:'11px 13px',borderRadius:12,border:selected.includes(key)?'2px solid #607f3b':'1px solid #cad6c9',background:selected.includes(key)?'#e6f5a4':'#fff',color:'#233c2a',font:'inherit',fontWeight:800,cursor:'pointer'}}>{label}{selected.includes(key)?' ✓':''}</button>
+              <button key={key} type='button' aria-pressed={selected.includes(key)} onClick={()=>chooseCategory(key)} className={legacyStyles.categoryButton}>{label}{selected.includes(key)?' ✓':''}</button>
             )}
           </div>
-          {!showMore&&<button type='button' onClick={()=>setShowMore(true)} style={{marginTop:13,padding:'10px 0',border:0,background:'transparent',color:'#2c6034',font:'inherit',fontWeight:800,cursor:'pointer'}}>Visa fler kostnadskategorier +</button>}
+          {!showMore&&<button type='button' onClick={()=>setShowMore(true)} className={legacyStyles.moreButton}>Visa fler kostnadskategorier +</button>}
         </section>
-        {selectedRows.length===0&&<p data-testid='household-start-help' style={{color:'#56685b',marginBottom:26}}>Välj exempelvis el, mobil eller bredband för att få en första kontrollväg – utan något formulär.</p>}
+        <div className='note'><strong>Börja med en kostnad du vill kontrollera.</strong> Det går bra att välja ett område även om du inte vet vad du betalar. Inga belopp behöver anges för att följa länkarna till jämförelsen.</div>
+        {selectedRows.length===0&&<p data-testid='household-start-help' className={legacyStyles.startHint}>Välj exempelvis el, mobil eller bredband för att få en första kontrollväg – utan något formulär.</p>}
         {selectedRows.length>0&&<div data-testid='household-selected-costs' style={{display:'grid',gap:12,margin:'18px 0 22px'}}>
           {selectedRows.map(([label,key,help])=><label key={key} style={{display:'grid',gridTemplateColumns:'minmax(0,1fr) minmax(110px,150px)',gap:14,alignItems:'center',padding:'14px 0',borderBottom:'1px solid #e1e5df'}}>
             <span><strong>{label}</strong><small style={{display:'block',color:'#68736c',marginTop:4}}>{help}</small></span>
