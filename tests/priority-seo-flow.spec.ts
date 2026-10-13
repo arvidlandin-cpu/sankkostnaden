@@ -167,7 +167,7 @@ for(const width of [360,390,430,1024,1440]){
 
 /* Full-journey P0D: assert rendered shared components, sponsor handoff and source metadata. */
 for(const width of [360,390,430,1024,1440]){
-  test('navy guide decision and blue partner matcher at '+width+'px',async({page})=>{
+  test('warm guide summary, navy decision and blue partner matcher at '+width+'px',async({page})=>{
     await page.setViewportSize({width,height:width<=430?844:900});
     await page.goto('/forsakring/hemforsakring-bostadsratt/?qa=1');
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href','https://sankkostnaden.se/forsakring/hemforsakring-bostadsratt/');
@@ -180,7 +180,7 @@ for(const width of [360,390,430,1024,1440]){
     expect(direct).toBe('rgb(242, 244, 237)');
     const checks=page.locator('.checkList svg');
     expect(await checks.count()).toBeGreaterThan(1);
-    expect(await checks.first().evaluate(el=>getComputedStyle(el).color)).toBe('rgb(33, 70, 157)');
+    // Updated warm editorial guide: neutral sage accent, while sponsored actions stay clearly blue.\n    expect(await checks.first().evaluate(el=>getComputedStyle(el).color)).toBe('rgb(83, 126, 97)');
     await expect(page.locator('a[rel~="sponsored"]').first()).toBeVisible();
     const overflow=await page.evaluate(()=>Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)-document.documentElement.clientWidth);
     expect(overflow).toBeLessThanOrEqual(1);
@@ -202,15 +202,17 @@ for(const width of [360,390,430,1024,1440]){
 /* P0D: category guides must not switch global canvas and default guide imagery
    back to the forest/lime style when navigating from a blue category. */
 for(const width of [360,390,430,1024,1440]){
- test('P0D global canvas and guide remain navy from category at '+width+'px',async({page},info)=>{
+ test('P0J editorial guide preserves warm neutral canvas at '+width+'px',async({page},info)=>{
   await page.setViewportSize({width,height:width<=430?844:900});
   await page.goto('/forsakring/hemforsakring-bostadsratt/?qa=1');
   const values=await page.evaluate(()=>{
-    const hero=document.querySelector('.guideHero')!;
-    return {canvas:getComputedStyle(document.body).backgroundColor,hero:getComputedStyle(hero).backgroundImage};
+    const hero=document.querySelector('[data-testid="editorial-guide-hero"]');
+    const fade=hero?.querySelector('[class*="scrim"]');
+    return {canvas:getComputedStyle(document.body).backgroundColor,editorial:Boolean(hero),hero:fade?getComputedStyle(fade).backgroundImage:''};
   });
   expect(values.canvas).toBe('rgb(250, 249, 245)');
-  expect(values.hero).toContain('rgba(16, 29, 66');
+  expect(values.editorial).toBe(true);
+  expect(values.hero).toContain('rgb(248, 243, 235)');
   await expect(page.getByRole('heading',{level:1,name:/Hemförsäkring bostadsrätt 2026/})).toBeVisible();
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href','https://sankkostnaden.se/forsakring/hemforsakring-bostadsratt/');
   await expect(page.locator('a[rel~="sponsored"]').first()).toBeVisible();

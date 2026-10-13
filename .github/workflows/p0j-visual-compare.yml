@@ -1,0 +1,50 @@
+name: P0J editorial guides before after screenshots
+
+on:
+  push:
+    branches: ['design/p0j-editorial-leaf-guides-20261013']
+    paths:
+      - 'components/IntentGuide.tsx'
+      - 'components/EditorialGuideHero.tsx'
+      - 'styles/EditorialGuide.module.css'
+      - 'scripts/p0j-visual-compare.mjs'
+      - '.github/workflows/p0j-visual-compare.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0'
+      - name: Build this branch
+        run: |
+          npm install --progress=false
+          npx next build
+          npm run check:export
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Serve exact source export
+        run: |
+          python3 -m http.server 3000 --directory out > /tmp/p0j.log 2>&1 &
+          for i in $(seq 1 30); do
+            curl -fsS http://127.0.0.1:3000/ >/dev/null && exit 0
+            sleep 1
+          done
+          cat /tmp/p0j.log; exit 1
+      - name: Capture public before and branch after
+        run: node scripts/p0j-visual-compare.mjs
+      - name: Upload fullpage comparison evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: p0j-real-before-after
+          path: p0j-visual-compare/
+          retention-days: 7
+          if-no-files-found: error
