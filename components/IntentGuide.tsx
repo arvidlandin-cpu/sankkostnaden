@@ -3,6 +3,8 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { ArrowRight, PiggyBank } from 'lucide-react';
 import GuideReadingFlow from './GuideReadingFlow';
+import EditorialGuideHero from './EditorialGuideHero';
+import styles from '../styles/EditorialGuide.module.css';
 import PartnerOffers from './PartnerOffers';
 import PartnerDirectory from './PartnerDirectory';
 import DecisionGateway from './DecisionGateway';
@@ -29,6 +31,9 @@ export default function IntentGuide({ title, description, kicker, canonical, cat
   const categoryLabels: Record<PartnerCategory, string> = { el: 'Elavtal', bredband: 'Bredband', mobil: 'Mobil', forsakring: 'Försäkring', ekonomi: 'Lån & ekonomi' };
   const categoryPaths: Record<PartnerCategory, string> = { el: '/elavtal/', bredband: '/bredband/', mobil: '/mobil/', forsakring: '/forsakring/', ekonomi: '/ekonomi/' };
   const categoryLabel = categoryLabels[category];
+  // Do not alter the active /elavtal/kvartspris/ content-utility observation.
+  // It keeps the entire original hero and reading structure through 18 Oct.
+  const observeQuarterPrice = new URL(canonical).pathname === '/elavtal/kvartspris/';
   const compareHeadings: Record<PartnerCategory, string> = { el: 'Aktiva elalternativ att jämföra', bredband: 'Aktiva bredbandsalternativ att jämföra', mobil: 'Aktiva mobilalternativ att jämföra', forsakring: 'Aktiva försäkringsalternativ att jämföra', ekonomi: 'Tjänster för att jämföra privatlån' };
   const categoryPath = categoryPaths[category];
   const hasPartnerOutput = getActivePartners(category,intent,1).length>0;
@@ -79,18 +84,23 @@ export default function IntentGuide({ title, description, kicker, canonical, cat
         <nav><Link href='/bredband/'>Bredband</Link><Link href='/elavtal/'>El</Link><Link href='/mobil/'>Mobil</Link><Link href='/forsakring/'>Försäkring</Link><Link href='/ekonomi/'>Ekonomi</Link></nav>
         {hasPartnerOutput?<a className='topbarCta' href='#guide-partners'>Jämför här →</a>:<Link className='topbarCta' href={categoryPath}>Till översikten →</Link>}
       </header>
-      <main>
-        <section className={`guideHero guideHero-${category}`}>
-          <div className='guideWrap'>
-            <nav className='breadcrumbs' aria-label='Brödsmulor'><Link href='/'>Start</Link><span>›</span><Link href={categoryPath}>{categoryLabel}</Link><span>›</span><span aria-current='page'>{kicker}</span></nav>
-            <p className='kicker' style={{ marginTop: 32 }}>{kicker}</p>
-            <h1>{title}</h1>
-            <p className='lead'>{description}</p>
-          </div>
-        </section>
-        <article className='article guideWrap'>
+      <main className={observeQuarterPrice ? undefined : styles.page}>
+        {observeQuarterPrice ? (
+          <section className={`guideHero guideHero-${category}`}>
+            <div className='guideWrap'>
+              <nav className='breadcrumbs' aria-label='Brödsmulor'><Link href='/'>Start</Link><span>›</span><Link href={categoryPath}>{categoryLabel}</Link><span>›</span><span aria-current='page'>{kicker}</span></nav>
+              <p className='kicker' style={{ marginTop: 32 }}>{kicker}</p>
+              <h1>{title}</h1>
+              <p className='lead'>{description}</p>
+            </div>
+          </section>
+        ) : (
+          <EditorialGuideHero category={category} categoryLabel={categoryLabel} categoryPath={categoryPath}
+            kicker={kicker} title={title} description={description} hasPartnerOutput={hasPartnerOutput}/>
+        )}
+        <article className={observeQuarterPrice ? 'article guideWrap' : `article ${styles.editorialArticle}`}>
           <DecisionGateway category={category} intent={intent} currentPath={new URL(canonical).pathname} onPagePartners={elevatePartnerBlock} compact />
-          <GuideReadingFlow bullets={bullets} sections={sections} />
+          {observeQuarterPrice ? <GuideReadingFlow bullets={bullets} sections={sections} /> : <div id='guide-summary' className={styles.reading}><GuideReadingFlow bullets={bullets} sections={sections} /></div>}
           {utility && <aside className='utilityToolCard'><div><p>{utility.eyebrow}</p><h2>{utility.title}</h2><span>{utility.body}</span></div><Link href={utility.href}>{utility.cta}<ArrowRight size={17}/></Link></aside>}
           {extraUtility}
           {elevatePartnerBlock && <div id='guide-partners'><PartnerDirectory category={category} intent={intent} heading={category==='forsakring'&&intent==='home'?'Jämför hemförsäkring hos våra partners':compareHeadings[category]} /></div>}
