@@ -402,3 +402,19 @@
  .hero:global(.categoryHero){padding:26px 16px 43px!important}
  .heroArtwork{width:86%;height:320px!important}
 }
+
+/* P0P / 13 Oct 2026: The real responsive CategoryHeroPhoto <img> already
+   occupies each of these five visual surfaces. P0O real Chromium resource
+   logging confirmed five extra CSS photographs were ALSO downloaded at both
+   390px and 1440px (ten redundant image requests, one different motif).
+   Preserve all existing photographic <img>, srcset, fade scrims and mobile
+   positioning. Keep the warm neutral background as a graceful fallback if
+   the real image cannot load, not a second downloaded stock photograph. */
+.hero:global(.guideHero-bredband) .heroArtwork,
+.hero:global(.guideHero-el) .heroArtwork,
+.hero:global(.guideHero-mobil) .heroArtwork,
+.hero:global(.guideHero-forsakring) .heroArtwork,
+.hero:global(.guideHero-ekonomi) .heroArtwork{
+ background-image:none!important;
+ background-color:#e9e1d5;
+}
