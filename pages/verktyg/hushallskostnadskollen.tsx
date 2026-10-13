@@ -80,10 +80,9 @@ export default function Hushallskostnadskoll(){
     <header className='topbar'><Link className='brand' href='/'><span className='brandMark'><PiggyBank size={22}/></span><span>Sänk Kostnaden</span></Link></header>
 
     <main>
-      <section className={'guideHero '+legacyStyles.hero}><div className='guideWrap'><Link className='back' href='/'><ArrowLeft size={16}/> Startsidan</Link><div className='guideIcon'><Calculator size={25}/></div><p className='kicker'>GRATIS VERKTYG • 2026</p><h1>Hushållskostnadskollen</h1><p className='lead'>Se vad dina återkommande kostnader faktiskt blir på ett år. Fyll i det du betalar i dag – verktyget jämför inte mot ett påhittat normalhushåll.</p></div></section>
+      <section className={'guideHero '+legacyStyles.hero}><div className='guideWrap'><Link className='back' href='/'><ArrowLeft size={16}/> Startsidan</Link><div className='guideIcon'><Calculator size={25}/></div><p className='kicker'>GRATIS VERKTYG • 2026</p><h1>Hushålls<wbr/>kostnadskollen</h1><p className='lead'>Se vad dina återkommande kostnader faktiskt blir på ett år. Fyll i det du betalar i dag – verktyget jämför inte mot ett påhittat normalhushåll.</p></div></section>
 
       <article className={'article guideWrap '+legacyStyles.content+' '+legacyStyles.tool}>
-        <div className='note'><strong>Börja med en kostnad du vill kontrollera.</strong> Det går bra att välja ett område även om du inte vet vad du betalar. Inga belopp behöver anges för att följa länkarna till jämförelsen.</div>
 
         <section data-testid='household-category-picker' className={legacyStyles.picker}>
           <h2>Vad vill du börja med?</h2>
@@ -95,6 +94,7 @@ export default function Hushallskostnadskoll(){
           </div>
           {!showMore&&<button type='button' onClick={()=>setShowMore(true)} className={legacyStyles.moreButton}>Visa fler kostnadskategorier +</button>}
         </section>
+        <div className='note'><strong>Börja med en kostnad du vill kontrollera.</strong> Det går bra att välja ett område även om du inte vet vad du betalar. Inga belopp behöver anges för att följa länkarna till jämförelsen.</div>
         {selectedRows.length===0&&<p data-testid='household-start-help' className={legacyStyles.startHint}>Välj exempelvis el, mobil eller bredband för att få en första kontrollväg – utan något formulär.</p>}
         {selectedRows.length>0&&<div data-testid='household-selected-costs' style={{display:'grid',gap:12,margin:'18px 0 22px'}}>
           {selectedRows.map(([label,key,help])=><label key={key} style={{display:'grid',gridTemplateColumns:'minmax(0,1fr) minmax(110px,150px)',gap:14,alignItems:'center',padding:'14px 0',borderBottom:'1px solid #e1e5df'}}>
