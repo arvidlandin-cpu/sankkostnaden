@@ -12,6 +12,9 @@ on:
       - 'styles/CategoryPremium.module.css'
       - 'pages/index.tsx'
       - 'styles/HomeHero.module.css'
+      - 'components/HomeHero.tsx'
+      - 'styles/Home.module.css'
+      - 'styles/CategorySpotlight.module.css'
   workflow_dispatch:
 
 permissions:
