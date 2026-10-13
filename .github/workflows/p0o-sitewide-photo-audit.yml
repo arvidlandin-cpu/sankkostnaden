@@ -1,0 +1,57 @@
+name: P0O complete sitewide photographic quality audit
+
+on:
+  pull_request:
+    paths:
+      - 'tests/p0o-sitewide-photo-audit.spec.ts'
+      - 'styles/CategoryPremium.module.css'
+      - 'tests/p0g-visual-journeys.spec.ts'
+      - 'tests/p0h-warm-editorial.spec.ts'
+      - '.github/workflows/p0o-sitewide-photo-audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  image-census:
+    if: ${{ github.event_name == 'workflow_dispatch' || startsWith(github.head_ref, 'qa/p0o-') || startsWith(github.head_ref, 'fix/p0p-') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 32
+    env:
+      QA_BASE_URL: http://127.0.0.1:3000
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0'
+      - name: Verify exact current source and export
+        run: |
+          npm install --progress=false
+          npm run check
+          npm run check:integrity
+          npx next build
+          npm run check:export
+      - name: Install real Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Serve exact static build
+        run: |
+          python3 -m http.server 3000 --directory out > /tmp/p0o-audit-http.log 2>&1 &
+          for i in $(seq 1 40); do
+            if curl -fsS http://127.0.0.1:3000/ >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/p0o-audit-http.log
+          exit 1
+      - name: Census every ordinary page at phone and desktop widths
+        run: npx playwright test tests/p0o-sitewide-photo-audit.spec.ts --project=chromium --workers=1
+      - name: Persist manifest and genuine screenshot evidence including failure state
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: p0o-sitewide-photo-inventory-and-visuals
+          path: |
+            test-results/p0o-sitewide-image-evidence/
+            playwright-report/
+          retention-days: 14
+          if-no-files-found: warn
