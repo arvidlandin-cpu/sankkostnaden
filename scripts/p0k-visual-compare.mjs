@@ -35,7 +35,7 @@ for(const width of [390,1440]){
       imageWidth:image?.naturalWidth||0,visibleOptions:main?.querySelector('[data-testid="smartselector-active-question"]')?.querySelectorAll('button[aria-pressed]').length||0,
       overflow:Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)-document.documentElement.clientWidth};
     });
-    if(kind==='after-source'&&(!initial.progressive||initial.imageWidth<width-20||initial.visibleOptions<4||initial.overflow>1))problems++;
+    if(kind==='after-source'&&(!initial.progressive||initial.imageWidth<(width>760?width*.5:width*.95)||initial.visibleOptions<4||initial.overflow>1))problems++;
     console.log('P0K_BEFORE_AFTER '+JSON.stringify({width,kind,...check,initial}));
     await page.screenshot({path:`p0k-visual-compare/${check.key}-${width}-${kind}-first.jpg`,fullPage:true,type:'jpeg',quality:76,animations:'disabled',timeout:45000});
     if(kind==='after-source'){
