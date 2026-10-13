@@ -1,3 +1,5 @@
+> **Status uppdaterad 2026-10-13:** Detta dokument är ägarens visuella målbild och implementationens historik. P0I är numera mergad och live med 7/7 egen-domäns produkt-CSS/JS-bevis. Senaste verifierade status, kvarstående UNKNOWN och operatörsinstruktioner finns i [P0I_RELEASE_AUDIT_2026-10-13.md](P0I_RELEASE_AUDIT_2026-10-13.md). Ägarens slutgiltiga visuella godkännande av den publicerade sidan är fortsatt PENDING.
+
 # P0I — Approved image treatment / seamless photographic fade (12 Oct 2026)
 
 ## Later owner approval, precisely scoped
