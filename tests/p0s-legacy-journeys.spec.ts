@@ -32,8 +32,8 @@ for(const width of [390,1440]){
    if(kind==='bredband'||kind==='el'){
      await expect(photo).toHaveCount(1);
      await expect(photo).toHaveAttribute('srcset',/640w/);
+     await expect.poll(()=>photo.evaluate((e:HTMLImageElement)=>e.complete&&e.naturalWidth>0),{timeout:20000,message:name+' real image should decode'}).toBeTruthy();
      const meta=await photo.evaluate((e:HTMLImageElement)=>({complete:e.complete,width:e.naturalWidth,src:e.currentSrc}));
-     expect(meta.complete&&meta.width>0,name+' must decode real image '+meta.src).toBeTruthy();
      expect(meta.src).toContain(kind==='bredband'?'4260743':'8055828');
    }else{
      await expect(photo).toHaveCount(0);
