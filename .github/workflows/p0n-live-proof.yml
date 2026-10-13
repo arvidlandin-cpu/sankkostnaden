@@ -1,0 +1,45 @@
+name: P0N independent public mobile first-action release proof
+
+on:
+  push:
+    branches: ['ops/p0n-live-client-parity-20261013']
+    paths:
+      - 'scripts/check-p0n-live.mjs'
+      - '.github/workflows/p0n-live-proof.yml'
+  pull_request:
+    paths:
+      - 'scripts/check-p0n-live.mjs'
+      - '.github/workflows/p0n-live-proof.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-live:
+    runs-on: ubuntu-latest
+    timeout-minutes: 17
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0'
+      - name: Build exact merged source without collecting traffic
+        run: |
+          npm install --progress=false
+          npx next build
+          npm run check:export
+      - name: Compare actual own-domain client bundle fingerprints on ten routes
+        shell: bash
+        run: |
+          set -u
+          for attempt in $(seq 1 8); do
+            echo "P0N live first-screen release check $attempt/8"
+            if node scripts/check-p0n-live.mjs; then
+              echo "P0N source CSS/JS live on ten routes."
+              exit 0
+            fi
+            sleep 20
+          done
+          echo "::error::P0N source asset identity on the public domain still unverified."
+          exit 1
