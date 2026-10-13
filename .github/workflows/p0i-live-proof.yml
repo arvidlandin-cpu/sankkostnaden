@@ -1,0 +1,41 @@
+name: P0I independent production release audit
+
+on:
+  push:
+    branches: ['ops/p0i-live-proof-20261013']
+    paths:
+      - 'scripts/check-p0i-live.mjs'
+      - '.github/workflows/p0i-live-proof.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  live-proof:
+    runs-on: ubuntu-latest
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0'
+      - name: Build exact source code snapshot
+        run: |
+          npm install --progress=false
+          npx next build
+          npm run check:export
+      - name: Wait until own domain serves matching product CSS and JS
+        shell: bash
+        run: |
+          set -u
+          for attempt in $(seq 1 11); do
+            echo "Checking public P0I release identity, attempt $attempt/11"
+            if node scripts/check-p0i-live.mjs; then
+              echo "Seven routes verified as delivered publicly."
+              exit 0
+            fi
+            sleep 25
+          done
+          echo "::error::Own-domain P0I client parity not verified after waiting."
+          exit 1
