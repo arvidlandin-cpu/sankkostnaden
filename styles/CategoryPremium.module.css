@@ -342,7 +342,7 @@
 }
 @media(max-width:390px){
  .hero:global(.categoryHero){padding:26px 16px 183px!important}
- .heroArtwork{height:157px}
+ .heroArtwork{height:165px}
  .hero :global(h1){font-size:36px!important}
 }
 
