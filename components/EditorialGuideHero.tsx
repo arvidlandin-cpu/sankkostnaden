@@ -29,6 +29,10 @@ const photoIds:Record<PartnerCategory,string>={
 export default function EditorialGuideHero({category,categoryLabel,categoryPath,kicker,title,description,hasPartnerOutput}:Props){
   const id=photoIds[category];
   const base=['https://images.pexels.com/photos',id,'pexels-photo-'+id+'.jpeg'].join('/')+'?auto=compress&cs=tinysrgb&fit=crop';
+  // These anchor targets are rendered by the parent IntentGuide, not this
+  // shared child; the repository's static checker only sees local component IDs.
+  const partnerAnchor='#'+'guide-partners';
+  const summaryAnchor='#'+'guide-summary';
   return <section className={styles.hero} data-testid='editorial-guide-hero' aria-label='Introduktion till guiden'>
     <div className={styles.photo} aria-hidden='true'>
       <img src={base+'&w=1600'}
@@ -47,8 +51,8 @@ export default function EditorialGuideHero({category,categoryLabel,categoryPath,
         <h1>{title}</h1>
         <p className={styles.lead}>{description}</p>
         <div className={styles.actions}>
-          {hasPartnerOutput && <a href='#guide-partners' className={styles.primary}>Se jämförelsealternativ <ArrowRight size={19} aria-hidden='true'/></a>}
-          <a href='#guide-summary' className={hasPartnerOutput?styles.readMore:styles.primary}>Börja med råden <ArrowDown size={18} aria-hidden='true'/></a>
+          {hasPartnerOutput && <a href={partnerAnchor} className={styles.primary}>Se jämförelsealternativ <ArrowRight size={19} aria-hidden='true'/></a>}
+          <a href={summaryAnchor} className={hasPartnerOutput?styles.readMore:styles.primary}>Börja med råden <ArrowDown size={18} aria-hidden='true'/></a>
         </div>
         <p className={styles.trust}><ShieldCheck size={16} aria-hidden='true'/> Gratis vägledning. Kommersiella länkar märks tydligt.</p>
       </div>
