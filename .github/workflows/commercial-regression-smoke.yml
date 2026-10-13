@@ -130,6 +130,7 @@ jobs:
             tests/p0h-warm-editorial.spec.ts \
             tests/p0i-visual-direction.spec.ts \
             tests/p0j-editorial-guide-system.spec.ts \
+            tests/p0k-progressive-smartselector.spec.ts \
             --project=chromium
 
       - name: Preserve real Chromium screenshots before WebKit clears the Playwright output folder
