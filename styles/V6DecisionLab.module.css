@@ -53,4 +53,19 @@
 .reviewNote{font-size:12px;color:#788985;text-align:center;margin:23px auto 0}
 .goal:focus-visible,.area:focus-visible,.refineToggle:focus-visible,.refineOption:focus-visible,.refineSelected:focus-visible,.mainCta:focus-visible,.back:focus-visible,.reset:focus-visible{outline:3px solid #315ce0;outline-offset:3px}
 @media(max-width:760px){.header{width:calc(100% - 34px);height:66px}.brand{font-size:15px}.prototype{font-size:9px;max-width:130px;text-align:right}.content{width:calc(100% - 22px)}.top{padding:34px 11px 23px}.top h1{font-size:clamp(34px,8.5vw,48px)}.subtitle{font-size:15px}.panel{border-radius:19px}.panelHead{padding:16px;align-items:flex-start}.panelHead p{font-size:12px}.progress{min-width:105px}.stage{padding:23px 17px 27px}.stage h2{font-size:27px!important}.goal{min-height:92px;padding:16px;gap:9px}.goalCopy strong{font-size:17px}.goalCopy small{font-size:12px}.go{flex-basis:35px;height:35px}.areas{grid-template-columns:1fr;gap:9px}.area{min-height:79px;padding:13px}.areaIcon{flex-basis:43px;height:43px}.area strong{font-size:16px}.area small{font-size:12px}.resultToolbar{margin:-4px 0 22px}.explanation{font-size:16px}.suggestion{grid-template-columns:1fr;padding:18px;gap:16px}.mainCta{max-width:none;width:100%}.refineToggle{padding:16px}.refineToggle strong{font-size:13px}.optional{font-size:11px}.refineOptions{grid-template-columns:1fr}.refineOption,.refineSelected{min-height:52px}.reviewNote{padding:0 12px;font-size:11px}}
+/* The actual 390px capture showed the original introductory masthead pushed
+   the first actionable options down. Keep at least two large touch targets
+   in the initial mobile viewport and let users reach all three by scrolling. */
+@media(max-width:760px){
+ .top{padding:21px 9px 18px}
+ .top h1{font-size:clamp(30px,7.6vw,42px);margin:8px auto 10px;line-height:1.06}
+ .subtitle{font-size:14px;line-height:1.45}
+ .panelHead{padding:13px 16px}
+ .stage{padding:17px 16px 24px}
+ .hint{margin-bottom:17px}
+ .goals{gap:8px}
+ .goal{min-height:78px;padding:13px 14px}
+ .goalCopy strong{font-size:16px}
+ .goalCopy small{font-size:12px;line-height:1.3}
+}
 @media(prefers-reduced-motion:reduce){.goal,.area,.progress i{transition:none}}
