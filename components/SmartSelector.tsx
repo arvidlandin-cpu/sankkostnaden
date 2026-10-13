@@ -88,7 +88,9 @@ export default function SmartSelector({ eyebrow, title, intro, questions, result
         <div className={styles.heroInner}>
           <Link className={styles.back} href={backHref}><ArrowLeft size={15}/> {backLabel}</Link>
           <span className={styles.eyebrow}><Sparkles size={16} aria-hidden='true'/> {eyebrow}</span>
-          <h1>{title}</h1>
+          <h1>{title.includes('bredbandshastighet')?<>
+            {title.split('bredbandshastighet')[0]}bredbands<wbr/>hastighet{title.split('bredbandshastighet')[1]}
+          </>:title}</h1>
           <p className={styles.intro}>{intro}</p>
           <p className={styles.valueLine}><ShieldCheck size={17} aria-hidden='true'/> {partnerCategory?introCopy[partnerCategory]||'Ett val i taget, helt utan konto.':'Ett val i taget, helt utan konto.'}</p>
         </div>
