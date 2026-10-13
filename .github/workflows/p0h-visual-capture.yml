@@ -4,12 +4,17 @@ on:
   push:
     branches:
       - 'design/p0h-*'
+      - 'design/p0i-*'
     paths:
       - '.github/workflows/p0h-visual-capture.yml'
       - 'scripts/p0h-visual-capture.mjs'
       - 'components/CategoryHeroPhoto.tsx'
       - 'styles/CategoryPremium.module.css'
       - 'pages/index.tsx'
+      - 'styles/HomeHero.module.css'
+      - 'components/HomeHero.tsx'
+      - 'styles/Home.module.css'
+      - 'styles/CategorySpotlight.module.css'
   workflow_dispatch:
 
 permissions:

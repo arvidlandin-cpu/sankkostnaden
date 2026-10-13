@@ -5,7 +5,7 @@
  */
 type Category='bredband'|'el'|'mobil'|'forsakring'|'ekonomi';
 const sources:Record<Category,string>={
- bredband:'8055076',el:'8055828',mobil:'5901387',forsakring:'28949489',ekonomi:'6964105'
+ bredband:'4008771',el:'8055828',mobil:'5901387',forsakring:'28949489',ekonomi:'6964105'
 };
 export default function CategoryHeroPhoto({category}:{category:Category}){
  const id=sources[category];

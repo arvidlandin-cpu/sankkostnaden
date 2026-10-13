@@ -48,7 +48,7 @@ for(const width of [390,1440,1920]){
   });
   const data=await page.evaluate(()=>{
    const h1=document.querySelector('h1');
-   const heroPhoto=document.querySelector('section[aria-label="Hitta rätt jämförelse"] img[src*="3875141"]');
+   const heroPhoto=document.querySelector('section[aria-label="Hitta rätt jämförelse"] img[src*="39997379"]');
    const main=document.querySelector('main');
    const box=(node)=>node?.getBoundingClientRect().toJSON();
    const bg=main?getComputedStyle(main).backgroundColor:'';

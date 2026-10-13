@@ -1,8 +1,8 @@
-import { ArrowRight, Check, ShieldCheck, Sparkles, Heart, ChevronDown } from 'lucide-react';
+import { ArrowRight, Check, ShieldCheck, Sparkles, ChevronDown } from 'lucide-react';
 import styles from '../styles/HomeHero.module.css';
 import HomeDecisionExplorer from './HomeDecisionExplorer';
 
-const familyPhoto='https://images.pexels.com/photos/3875141/pexels-photo-3875141.jpeg?auto=compress&cs=tinysrgb&fit=crop';
+const familyPhoto='https://images.pexels.com/photos/39997379/pexels-photo-39997379.jpeg?auto=compress&cs=tinysrgb&fit=crop';
 
 /**
  * Owner direction P0H: the product must feel like a real household,
@@ -31,9 +31,8 @@ export default function HomeHero(){
    </div>
    <div className={styles.photo} aria-hidden='true'>
      <img src={familyPhoto+'&w=1600'} srcSet={familyPhoto+'&w=900 900w, '+familyPhoto+'&w=1600 1600w, '+familyPhoto+'&w=2200 2200w'}
-       sizes='(max-width:850px) 100vw, 48vw' loading='eager' decoding='async' alt=''/>
+       sizes='(max-width:850px) 100vw, 68vw' loading='eager' decoding='async' alt=''/>
      <div className={styles.photoShade}/>
-     <div className={styles.photoLabel}><span className={styles.heart}><Heart size={21} fill='currentColor'/></span><span><strong>För ett enklare vardagsliv</strong><small>Smarta val börjar hemma.</small></span></div>
    </div>
   </div>
   <div className={styles.nextPrompt}><ChevronDown size={17}/> ETT ENKLARE SÄTT ATT KOMMA IGÅNG</div>

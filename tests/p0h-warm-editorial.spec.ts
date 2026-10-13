@@ -19,7 +19,7 @@ for(const width of [360,390,430,1024,1440,1920]){
   await page.goto('/?qa=1',{waitUntil:'domcontentloaded'});
   const hero=page.locator('section[aria-label="Hitta rätt jämförelse"]');
   await expect(hero.getByRole('heading',{level:1,name:/Sänk dina fasta kostnader/})).toBeVisible();
-  const photo=hero.locator('img[src*="3875141"]');
+  const photo=hero.locator('img[src*="39997379"]');
   await expect(photo).toBeVisible();
   const picture=await photo.evaluate(el=>({width:el.getBoundingClientRect().width,height:el.getBoundingClientRect().height,naturalWidth:(el as HTMLImageElement).naturalWidth}));
   expect(picture.width).toBeGreaterThan(width<500?280:width<850?500:400);
@@ -39,13 +39,13 @@ for(const width of [360,390,430,1024,1440,1920]){
 test('P0H desktop warm family hero actually loads at readable source resolution',async({page})=>{
  await page.setViewportSize({width:1440,height:900});
  await page.goto('/?qa=1',{waitUntil:'domcontentloaded'});
- const img=page.locator('section[aria-label="Hitta rätt jämförelse"] img[src*="3875141"]');
+ const img=page.locator('section[aria-label="Hitta rätt jämförelse"] img[src*="39997379"]');
  await expect.poll(()=>img.evaluate((node:HTMLImageElement)=>{
   const chosen=Number(new URL(node.currentSrc).searchParams.get('w'))||0;
   return node.complete&&node.naturalWidth>0&&chosen>=node.getBoundingClientRect().width*window.devicePixelRatio*.95;
  }),{timeout:20000}).toBeTruthy();
  const url=await img.getAttribute('src');
- expect(url).toContain('images.pexels.com/photos/3875141');
+ expect(url).toContain('images.pexels.com/photos/39997379');
 });
 
 for(const width of [390,1440]){
@@ -86,8 +86,8 @@ for(const width of [390,1440]){
 test('P0H new photos are not represented as testimonials or fabricated outcomes',async({page})=>{
  await page.goto('/?qa=1');
  const hero=page.locator('section[aria-label="Hitta rätt jämförelse"]');
- await expect(hero.getByText('För ett enklare vardagsliv')).toBeVisible();
- await expect(hero.locator('img[src*="3875141"]')).toHaveAttribute('alt','');
+ await expect(hero.getByRole('heading',{level:1,name:/Sänk dina fasta kostnader/})).toBeVisible();
+ await expect(hero.locator('img[src*="39997379"]')).toHaveAttribute('alt','');
  const claims=await hero.textContent();
  expect(claims).not.toMatch(/\d+[.,]?\d*\s?%\s?bespar|våra kunder sparar|garanterad bespar/i);
 });

@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - 'design/p0h-*'
+      - 'design/p0i-*'
     paths:
       - '.github/workflows/p0h-warm-assets.yml'
       - 'components/HomeHero.tsx'
@@ -24,7 +25,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          for id in 3875141 8055076 8055828 8067709 28949489 16098002 4473625 5901387 6964105 4474041 4254149 27177239; do
+          for id in 39997379 4008771 4260743 7117518 8055828 8067709 28949489 16098002 4473625 5901387 6964105 4254149 27177239; do
             url="https://images.pexels.com/photos/$id/pexels-photo-$id.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1600"
             file="/tmp/p0h-$id.jpeg"
             curl --fail --location --silent --show-error --retry 2 --retry-all-errors --connect-timeout 10 --max-time 25 --output "$file" "$url"
