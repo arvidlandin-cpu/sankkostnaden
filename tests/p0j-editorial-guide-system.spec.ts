@@ -3,6 +3,7 @@ import { test, expect } from '@playwright/test';
 const leafGuides=[
  {route:'/bredband/fiber/',category:'bredband',photo:'4260743'},
  {route:'/elavtal/rorligt-elpris/',category:'el',photo:'8055828'},
+ {route:'/mobil/5g-abonnemang/',category:'mobil',photo:'4254149'},
  {route:'/forsakring/jamfor-hemforsakring/',category:'forsakring',photo:'27177239'},
  {route:'/ekonomi/samlingslan/',category:'ekonomi',photo:'6964105'},
 ];
