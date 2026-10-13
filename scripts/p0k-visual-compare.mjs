@@ -32,10 +32,10 @@ for(const width of [390,1440]){
      const hero=main?.querySelector('h1');
      const image=main?.querySelector('img[data-testid="smartselector-hero-photo"]');
      return {h1:hero?.textContent,heroFont:hero?getComputedStyle(hero).fontSize:null,progressive:!!main?.querySelector('[data-testid="smartselector-active-question"]'),
-      imageWidth:image?.naturalWidth||0,visibleOptions:main?.querySelectorAll('[data-testid="smartselector-active-question"] .options button').length||0,
+      imageWidth:image?.naturalWidth||0,visibleOptions:main?.querySelector('[data-testid="smartselector-active-question"]')?.querySelectorAll('button[aria-pressed]').length||0,
       overflow:Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)-document.documentElement.clientWidth};
     });
-    if(kind==='after-source'&&(!initial.progressive||initial.imageWidth<500||initial.overflow>1))problems++;
+    if(kind==='after-source'&&(!initial.progressive||initial.imageWidth<width-20||initial.visibleOptions<4||initial.overflow>1))problems++;
     console.log('P0K_BEFORE_AFTER '+JSON.stringify({width,kind,...check,initial}));
     await page.screenshot({path:`p0k-visual-compare/${check.key}-${width}-${kind}-first.jpg`,fullPage:true,type:'jpeg',quality:76,animations:'disabled',timeout:45000});
     if(kind==='after-source'){
