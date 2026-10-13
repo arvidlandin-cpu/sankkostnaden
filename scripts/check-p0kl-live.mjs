@@ -18,6 +18,7 @@ function collect(html){
  return {css:[...new Set(all.filter(s=>s.endsWith('.css')))].sort(),
          js:[...new Set(all.filter(s=>s.endsWith('.js')&&!/_buildManifest\.js$|_ssgManifest\.js$/.test(s)))].sort()};
 }
+const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
 let pass=0;
 for(const x of checks){
  let local='',live='';
