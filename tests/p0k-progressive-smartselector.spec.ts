@@ -3,7 +3,7 @@ import {test,expect} from '@playwright/test';
 const pages=[
  {url:'/bredband/vilken-hastighet-behover-jag/',photo:'4008771',steps:3,area:'bredband'},
  {url:'/mobil/hur-mycket-surf-behover-jag/',photo:'4254149',steps:3,area:'mobil'},
- {url:'/elavtal/vilket-elavtal-passar-mig/',photo:'8055828',steps:5,area:'el'}
+ {url:'/elavtal/vilket-elavtal-passar-mig/',photo:'3875160',steps:5,area:'el'}
 ] as const;
 
 for(const width of [390,1440]){
