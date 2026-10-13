@@ -86,7 +86,7 @@ for(const width of [390,1440]){
 test('P0H new photos are not represented as testimonials or fabricated outcomes',async({page})=>{
  await page.goto('/?qa=1');
  const hero=page.locator('section[aria-label="Hitta rätt jämförelse"]');
- await expect(hero.getByText('För ett enklare vardagsliv')).toBeVisible();
+ await expect(hero.getByRole('heading',{level:1,name:/Sänk dina fasta kostnader/})).toBeVisible();
  await expect(hero.locator('img[src*="39997379"]')).toHaveAttribute('alt','');
  const claims=await hero.textContent();
  expect(claims).not.toMatch(/\d+[.,]?\d*\s?%\s?bespar|våra kunder sparar|garanterad bespar/i);
