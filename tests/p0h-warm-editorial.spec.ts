@@ -72,7 +72,7 @@ for(const width of [390,1440]){
    const hero=page.locator('section.guideHero');
    const image=hero.locator('[class*=heroArtwork]');
    const bg=await image.evaluate(el=>getComputedStyle(el).backgroundImage);
-   expect(bg).toContain('images.pexels.com/photos/');
+   expect(bg,'P0P prevents double image download beneath the real hero img').toBe('none');
    const rect=await image.boundingBox();
    const source=hero.getByTestId('p0h-hero-photo-'+route.category);
    await expect(source).toBeVisible();
