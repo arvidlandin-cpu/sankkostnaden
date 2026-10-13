@@ -110,12 +110,14 @@ test('P0P category hero loads ONE responsive photo without requesting hidden CSS
     // commercial suite (which previously failed twice on one 18s wait).
     await expect(photo).toHaveAttribute('srcset',/2400w/);
     expect(await photo.evaluate((img:HTMLImageElement)=>img.getAttribute('loading'))).toBe('eager');
-    const id=await photo.evaluate((im:HTMLImageElement)=>im.currentSrc.match(/photos\/(\d+)/)?.[1]||'');
-    const ids=[...new Set(imageNetworkRequests.map(url=>url.match(/photos\/(\d+)/)?.[1]).filter(Boolean))];
-    expect(ids.filter(photoId=>photoId===id).length,
-      route.name+' source photo never produces two distinct loaded network identities').toBeLessThanOrEqual(1);
-    // Other category insight images may have their own distinct photo IDs.
-    if(route.name==='bredband')expect(ids,'no old mismatched #8055076 hidden broadband hero').not.toContain('8055076');
+    const expectedPhotoIds={bredband:'4008771',el:'3875141',mobil:'5901387',forsakring:'28949489',ekonomi:'6964105'} as const;
+    const photoSrc=(await photo.getAttribute('src'))||'';
+    expect(photoSrc,route.name+' keeps the owner-approved true responsive hero photograph')
+      .toContain('/photos/'+expectedPhotoIds[route.name]+'/');
+    const requestedIds=[...new Set(imageNetworkRequests.map(url=>url.match(/photos\/(\d+)/)?.[1]).filter(Boolean))];
+    // Other category-insight photographs are allowed, but broadband's
+    // hidden CSS-only duplicate #8055076 must never be fetched again.
+    if(route.name==='bredband')expect(requestedIds,'no old hidden #8055076 broadband photo request').not.toContain('8055076');
     page.off('request',handler);
   }
 });
