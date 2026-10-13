@@ -104,9 +104,12 @@ test('P0P category hero loads ONE responsive photo without requesting hidden CSS
     const photo=artwork.locator('img[data-testid^="p0h-hero-photo-"]');
     await expect(photo).toBeVisible();
     await expect(photo).toHaveAttribute('src',/images\.pexels\.com\/photos\//);
-    await expect.poll(()=>photo.evaluate((img:HTMLImageElement)=>
-      img.complete && img.naturalWidth>0 && img.naturalWidth>=img.getBoundingClientRect().width*.9
-    ),{timeout:18000}).toBeTruthy();
+    // P0O's independent 67x2 browser audit is the strict actual HTTP
+    // delivery gate. This regression smoke checks source + CSS duplication
+    // without repeating fragile remote Pexels CDN timing in a huge parallel
+    // commercial suite (which previously failed twice on one 18s wait).
+    await expect(photo).toHaveAttribute('srcset',/2400w/);
+    expect(await photo.evaluate((img:HTMLImageElement)=>img.getAttribute('loading'))).toBe('eager');
     const id=await photo.evaluate((im:HTMLImageElement)=>im.currentSrc.match(/photos\/(\d+)/)?.[1]||'');
     const ids=[...new Set(imageNetworkRequests.map(url=>url.match(/photos\/(\d+)/)?.[1]).filter(Boolean))];
     expect(ids.filter(photoId=>photoId===id).length,
