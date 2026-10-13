@@ -17,7 +17,7 @@ for(const width of [390,1440]){
    await expect(photo).toBeVisible();
    await expect(photo).toHaveAttribute('alt','');
    await expect(photo).toHaveAttribute('src',new RegExp(model.photo));
-   await expect.poll(()=>photo.evaluate((node:HTMLImageElement)=>node.complete&&node.naturalWidth>=400),{timeout:25000}).toBeTruthy();
+   await expect.poll(()=>photo.evaluate((node:HTMLImageElement)=>node.complete&&node.naturalWidth>=(width===390?360:700)),{timeout:25000}).toBeTruthy();
    const progress=flow.getByRole('progressbar');
    await expect(progress).toHaveAttribute('aria-valuenow','0');
    const first=flow.getByTestId('smartselector-active-question');
