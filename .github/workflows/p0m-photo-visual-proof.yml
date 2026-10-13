@@ -1,0 +1,56 @@
+name: P0M electricity family imagery actual browser review
+
+on:
+  pull_request:
+    paths:
+      - 'components/CategoryHeroPhoto.tsx'
+      - 'components/SmartSelector.tsx'
+      - 'pages/index.tsx'
+      - 'styles/CategoryPremium.module.css'
+      - 'tests/p0m-electricity-photo-consistency.spec.ts'
+      - '.github/workflows/p0m-photo-visual-proof.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source-visuals:
+    if: ${{ github.event_name == 'workflow_dispatch' || startsWith(github.head_ref, 'design/p0m-') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 16
+    env:
+      QA_BASE_URL: http://127.0.0.1:3000
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0'
+      - name: Build exact source
+        run: |
+          npm install --progress=false
+          npm run check
+          npm run check:integrity
+          npx next build
+          npm run check:export
+      - name: Install Chromium for real photo review
+        run: npx playwright install --with-deps chromium
+      - name: Start candidate site
+        run: |
+          python3 -m http.server 3000 --directory out >/tmp/p0m.log 2>&1 &
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:3000/ >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/p0m.log
+          exit 1
+      - name: Verify images load and capture six normal-zoom source screenshots
+        run: npx playwright test tests/p0m-electricity-photo-consistency.spec.ts --project=chromium
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: p0m-electricity-photographic-journey-six-screens
+          path: |
+            test-results/
+          retention-days: 7
+          if-no-files-found: error

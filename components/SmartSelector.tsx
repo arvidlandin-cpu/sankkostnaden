@@ -27,7 +27,7 @@ type Props = {
 const categoryHome:Partial<Record<PartnerCategory,string>>={
  bredband:'/bredband/',el:'/elavtal/',mobil:'/mobil/',forsakring:'/forsakring/',ekonomi:'/ekonomi/'
 };
-const photography:Partial<Record<PartnerCategory,string>>={bredband:'4008771',el:'8055828',mobil:'4254149'};
+const photography:Partial<Record<PartnerCategory,string>>={bredband:'4008771',el:'3875160',mobil:'4254149'};
 const introCopy:Partial<Record<PartnerCategory,string>>={
  bredband:'Hela hemmets uppkoppling börjar med rätt behov.',
  mobil:'Betala för surf du använder, inte en större siffra.',

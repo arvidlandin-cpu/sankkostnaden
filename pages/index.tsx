@@ -8,7 +8,7 @@ import HomeHero from '../components/HomeHero';
    No pre-rendered text or logos in imagery; the overlay icons are vector UI. */
 const categories=[
   {title:'Bredband',subtitle:'Pris, fart & adress',href:'/bredband/',icon:Wifi,image:'https://images.pexels.com/photos/4260743/pexels-photo-4260743.jpeg?auto=compress&cs=tinysrgb&fit=crop'},
-  {title:'El',subtitle:'Avtal & elpriser',href:'/elavtal/',icon:Zap,image:'https://images.pexels.com/photos/8055828/pexels-photo-8055828.jpeg?auto=compress&cs=tinysrgb&fit=crop'},
+  {title:'El',subtitle:'Avtal & elpriser',href:'/elavtal/',icon:Zap,image:'https://images.pexels.com/photos/3875175/pexels-photo-3875175.jpeg?auto=compress&cs=tinysrgb&fit=crop'},
   {title:'Mobil',subtitle:'Surf & abonnemang',href:'/mobil/',icon:Smartphone,image:'https://images.pexels.com/photos/8067709/pexels-photo-8067709.jpeg?auto=compress&cs=tinysrgb&fit=crop'},
   {title:'Försäkring',subtitle:'Hem, djur & resa',href:'/forsakring/',icon:ShieldCheck,image:'https://images.pexels.com/photos/28949489/pexels-photo-28949489.jpeg?auto=compress&cs=tinysrgb&fit=crop'},
   {title:'Lån & ekonomi',subtitle:'Ränta & totalkostnad',href:'/ekonomi/',icon:WalletCards,image:'https://images.pexels.com/photos/16098002/pexels-photo-16098002.jpeg?auto=compress&cs=tinysrgb&fit=crop'},
