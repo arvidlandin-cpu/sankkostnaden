@@ -400,5 +400,5 @@
 }
 @media(max-width:390px){
  .hero:global(.categoryHero){padding:26px 16px 43px!important}
- .heroArtwork{width:78%;height:320px!important}
+ .heroArtwork{width:86%;height:320px!important}
 }
