@@ -24,6 +24,8 @@ for(const width of [390,1440]){
    const resp=await page.goto(path+'?qa=1',{waitUntil:'domcontentloaded'});
    expect(resp?.ok(),name+' HTTP').toBeTruthy();
    await expect(page.locator('main h1')).toHaveCount(1);
+   const h1Width=await page.locator('main h1').evaluate(el=>({client:el.clientWidth,scroll:el.scrollWidth}));
+   expect(h1Width.scroll,name+' heading must fit its own box').toBeLessThanOrEqual(h1Width.client+1);
    const hero=page.locator('main section.guideHero').first();
    await expect(hero).toBeVisible();
    const bg=await hero.evaluate(el=>getComputedStyle(el).backgroundImage);
@@ -45,6 +47,10 @@ for(const width of [390,1440]){
    if(kind==='tool'){
      const picker=page.getByTestId('household-category-picker');
      await expect(picker).toBeVisible();
+     if(width===390){
+       const firstChoiceTop=await picker.getByRole('button',{name:'El',exact:true}).evaluate(el=>el.getBoundingClientRect().top);
+       expect(firstChoiceTop,'first usable choice must appear before the phone dock').toBeLessThan(755);
+     }
      await picker.getByRole('button',{name:'El',exact:true}).click();
      await expect(page.getByRole('textbox',{name:/El, kronor per månad/})).toBeVisible();
      await page.getByRole('textbox',{name:/El, kronor per månad/}).fill('500');
