@@ -1,0 +1,61 @@
+/* P0S. One responsive editorial system for six older comparison guides,
+   four household guides and the household calculator. Fully scoped. */
+.hero:global(.guideHero){
+  position:relative;isolation:isolate;overflow:hidden;display:block!important;
+  min-height:0!important;padding:clamp(33px,5.2vw,65px) 24px clamp(51px,5.9vw,78px)!important;
+  background:radial-gradient(ellipse 68% 125% at 96% 8%,rgba(218,230,225,.42),transparent 70%),linear-gradient(130deg,#f9f5ed,#f4f7f5)!important;
+  border-bottom:1px solid #dce5dc;color:#172946!important;
+}
+.hero:global(.guideHero)::before,.hero:global(.guideHero)::after{content:none!important;display:none!important}
+.hero:global(.guideHero) :global(.guideWrap){position:relative;z-index:2;width:min(100%,1100px);max-width:1100px!important;margin:0 auto!important}
+.hero:global(.guideHero) :global(.back){display:inline-flex;align-items:center;gap:7px;color:#486879!important;font-size:13px;font-weight:740;text-decoration:none;margin-bottom:19px}
+.hero:global(.guideHero) :global(.back:hover){text-decoration:underline}
+.hero:global(.guideHero) :global(.guideIcon){width:43px;height:43px;border-radius:14px;background:#e4ece5!important;color:#416d56!important;border:1px solid #d2e0d3;margin-bottom:16px}
+.hero:global(.guideHero) :global(.kicker){margin:0 0 12px!important;color:#527962!important;font-size:12px!important;letter-spacing:.11em!important;line-height:1.5}
+.hero:global(.guideHero) :global(h1){max-width:870px;margin:0!important;color:#172946!important;font-size:clamp(43px,5vw,67px)!important;letter-spacing:-.055em!important;line-height:1.085!important;text-shadow:none!important;text-wrap:balance}
+.hero:global(.guideHero) :global(.lead){max-width:730px;color:#40565b!important;margin:21px 0 0!important;font-size:clamp(17px,1.4vw,20px)!important;line-height:1.63!important}
+.hero:global(.guideHero) :global(.fine){color:#4e6269!important;font-size:12px}
+.photoHero:global(.guideHero){display:flex!important;align-items:center;min-height:440px!important}
+.photoHero:global(.guideHero) :global(.guideWrap){padding:12px 0}
+.photoHero:global(.guideHero) :global(h1){max-width:710px}
+.photoHero:global(.guideHero) :global(.lead){max-width:665px}
+.photo{position:absolute;z-index:0;inset:0 0 0 40%;pointer-events:none}
+.photo img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 49%}
+.photoWash{position:absolute;z-index:1;inset:0;pointer-events:none;background:linear-gradient(90deg,#f9f5ed 0%,rgba(249,245,237,.99) 28%,rgba(249,245,237,.91) 47%,rgba(249,245,237,.43) 69%,rgba(249,245,237,.13) 100%),linear-gradient(0deg,#f9f5ed 0%,transparent 17%)}
+.hero:global(.guideHero) :global(.heroPartnerActions .secondaryLight){color:#214e62!important;border:1px solid #bdcfc9!important;background:rgba(255,255,255,.79)!important}
+.content:global(.article){position:relative;width:min(1020px,calc(100% - 36px));max-width:1020px!important;margin:-18px auto 65px!important;padding:clamp(25px,3.6vw,52px)!important;background:#fff;border:1px solid #e5e8df;border-radius:25px;box-shadow:0 13px 33px rgba(28,51,67,.045);color:#45566a}
+.content:global(.article) :global(h2){color:#172946!important;line-height:1.2;letter-spacing:-.035em}
+.content:global(.article) :global(.note){border-radius:17px}
+.content:global(.article) :global(.intentActions){gap:10px}
+.content:global(.article) :global(.checkList){border-color:#dfe8e1;border-radius:19px}
+.tool:global(.article){margin-top:-21px!important}
+.picker{margin:21px 0 28px;padding:clamp(19px,3vw,28px);background:linear-gradient(140deg,#f2f6f1,#f8faf9);border:1px solid #dfe9e2;border-radius:23px}
+.picker h2{margin:0 0 8px!important;font-size:clamp(25px,3vw,31px)!important}
+.picker p{margin:0 0 19px;color:#51696a;font-size:15px;line-height:1.5}
+.categoryGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.categoryButton{display:flex;align-items:center;min-height:60px;text-align:left;padding:13px 17px;border-radius:14px;border:1px solid #d5e0dd;background:#fff;color:#243f52;font:inherit;font-size:15px;font-weight:800;cursor:pointer;transition:background .15s,border-color .15s,box-shadow .15s}
+.categoryButton:hover{border-color:#91b1a4;box-shadow:0 5px 13px rgba(35,64,59,.045)}
+.categoryButton[aria-pressed="true"]{background:#e5eee8;border:2px solid #477d68;color:#203e33}
+.categoryButton:focus-visible,.moreButton:focus-visible{outline:3px solid #315ce0;outline-offset:3px}
+.moreButton{display:inline-flex;border:0;padding:13px 0 0;background:transparent;color:#315c60;font:inherit;font-weight:800;font-size:14px;cursor:pointer}
+.moreButton:hover{text-decoration:underline}
+.startHint{margin:8px 0 24px;color:#566e68;font-size:14px}
+@media(max-width:760px){
+ .hero:global(.guideHero){padding:27px 19px 36px!important}
+ .hero:global(.guideHero) :global(.back){margin-bottom:16px}
+ .hero:global(.guideHero) :global(.guideIcon){width:39px;height:39px;margin-bottom:12px}
+ .hero:global(.guideHero) :global(h1){font-size:clamp(37px,9.2vw,48px)!important;line-height:1.09!important}
+ .hero:global(.guideHero) :global(.lead){margin-top:14px!important;font-size:16px!important;line-height:1.55!important}
+ .photoHero:global(.guideHero){display:block!important;min-height:0!important;padding-bottom:216px!important}
+ .photoHero:global(.guideHero) :global(.guideWrap){padding:0}
+ .photo{inset:auto 0 0;height:184px}
+ .photo img{object-position:center 45%}
+ .photoWash{background:linear-gradient(180deg,#f9f5ed 0%,#f9f5ed 55%,rgba(249,245,237,.92) 66%,rgba(249,245,237,.12) 86%),linear-gradient(0deg,rgba(249,245,237,.88) 0%,transparent 13%)}
+ .content:global(.article){width:calc(100% - 22px);margin:-14px auto 44px!important;padding:23px 17px 37px!important;border-radius:18px}
+ .tool:global(.article){margin-top:-12px!important}
+ .picker{margin:15px 0 22px;padding:17px 13px;border-radius:18px}
+ .categoryGrid{gap:8px}
+ .categoryButton{min-height:56px;padding:10px 12px;font-size:14px}
+}
+@media(max-width:350px){.categoryGrid{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.categoryButton{transition:none}}
