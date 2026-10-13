@@ -385,3 +385,20 @@
  .heroArtwork:before{background:linear-gradient(180deg,#faf6ef 0%,rgba(250,246,239,.65) 13%,transparent 48%)!important}
  .heroArtwork:after{background:linear-gradient(0deg,#faf6ef 0%,transparent 25%)!important}
 }
+
+
+/* P0L 2026-10-13: mobile gets the same integrated photo fade as desktop/home.
+   We retain the genuine sourced <img> but not a separate photograph band
+   between the explanation and a useful decision. Specialist imagery remains
+   prominent in each category's immediately following insight feature. */
+@media(max-width:760px){
+ .hero:global(.categoryHero){padding:28px 19px 47px!important;overflow:hidden}
+ .heroArtwork{display:block!important;inset:0 0 auto auto!important;width:72%;height:355px!important;opacity:1!important;overflow:hidden}
+ .heroArtwork>img{display:block;opacity:.61;object-fit:cover;object-position:58% center}
+ .heroArtwork:before{background:linear-gradient(90deg,#faf6ef 0%,rgba(250,246,239,.95) 15%,rgba(250,246,239,.68) 70%,rgba(250,246,239,.42) 100%)!important}
+ .heroArtwork:after{background:linear-gradient(0deg,#faf6ef 0%,rgba(250,246,239,.38) 30%,transparent 80%)!important}
+}
+@media(max-width:390px){
+ .hero:global(.categoryHero){padding:26px 16px 43px!important}
+ .heroArtwork{width:78%;height:320px!important}
+}
