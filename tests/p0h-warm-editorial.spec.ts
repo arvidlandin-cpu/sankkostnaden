@@ -30,7 +30,7 @@ for(const width of [360,390,430,1024,1440,1920]){
   // P0N: bottom category dock supplies direct category navigation on phones;
   // only one filled-blue primary action competes on the opening mobile view.
   if(width<=700){
-   await expect(page.locator('header a[href="#jamfor"]')).toBeHidden();
+   await expect(page.locator('header a[href="#jamfor"]')).toBeVisible();
    await expect(hero.locator('a[href="/#jamfor"]')).toBeHidden();
    await expect(hero.locator('a[href="/app/"]')).toBeVisible();
    await expect(page.locator('nav[aria-label="Snabbnavigering"]')).toBeVisible();
