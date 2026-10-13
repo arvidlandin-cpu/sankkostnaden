@@ -20,6 +20,7 @@ export default function MobileQuickBar(){
     '/bredband/vilken-hastighet-behover-jag',
     '/mobil/hur-mycket-surf-behover-jag',
     '/elavtal/vilket-elavtal-passar-mig',
+    '/experiments/beslutsresa-v6',
   ]);
   if(router.pathname==='/app'||focusedQuestionTools.has(router.pathname))return null;
   return <nav className='mobileQuickBar' aria-label='Snabbnavigering'>
