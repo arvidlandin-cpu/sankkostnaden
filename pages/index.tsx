@@ -1,19 +1,8 @@
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
-import { ArrowRight, PiggyBank, Wifi, Zap, Smartphone, ShieldCheck, WalletCards } from 'lucide-react';
-import styles from '../styles/Home.module.css';
-import { V10Experience } from '../components/V10Experience';
-
-/* Licensed Pexels originals in responsive 700/1200/1800px variants. 
-   No pre-rendered text or logos in imagery; the overlay icons are vector UI. */
-/* The large editorial category gallery remains below the one-tap V10 start. */
-const categories=[
-  {title:'Bredband',subtitle:'Pris, fart & adress',href:'/bredband/',icon:Wifi,image:'https://images.pexels.com/photos/4260743/pexels-photo-4260743.jpeg?auto=compress&cs=tinysrgb&fit=crop'},
-  {title:'El',subtitle:'Avtal & elpriser',href:'/elavtal/',icon:Zap,image:'https://images.pexels.com/photos/3875175/pexels-photo-3875175.jpeg?auto=compress&cs=tinysrgb&fit=crop'},
-  {title:'Mobil',subtitle:'Surf & abonnemang',href:'/mobil/',icon:Smartphone,image:'https://images.pexels.com/photos/8067709/pexels-photo-8067709.jpeg?auto=compress&cs=tinysrgb&fit=crop'},
-  {title:'Försäkring',subtitle:'Hem, djur & resa',href:'/forsakring/',icon:ShieldCheck,image:'https://images.pexels.com/photos/28949489/pexels-photo-28949489.jpeg?auto=compress&cs=tinysrgb&fit=crop'},
-  {title:'Lån & ekonomi',subtitle:'Ränta & totalkostnad',href:'/ekonomi/',icon:WalletCards,image:'https://images.pexels.com/photos/16098002/pexels-photo-16098002.jpeg?auto=compress&cs=tinysrgb&fit=crop'},
-];
+import { ArrowRight, BookOpen, Home as HomeIcon, ShieldCheck } from 'lucide-react';
+import styles from '../styles/CostMapExperience.module.css';
+import { CostMapExperience } from '../components/CostMapExperience';
 
 const guideGroups=[
   {title:'Bredband',links:[
@@ -83,7 +72,7 @@ export default function Home(){
       <meta name='publisher' content='Sänk Kostnaden'/>
       <meta name='author' content='Sänk Kostnaden'/>
       <link rel='canonical' href='https://sankkostnaden.se/'/>
-      <link rel='preconnect' href='https://images.pexels.com' crossOrigin=''/>
+      <link rel='preload' as='image' href='/design/cost-map-home.webp' media='(min-width: 761px)'/>
       <meta property='og:title' content='Sänk dina fasta kostnader – jämför avtal | Sänk Kostnaden'/>
       <meta property='og:description' content='Gratis guider och verktyg för att jämföra hushållets återkommande kostnader.'/>
       <meta property='og:type' content='website'/><meta property='og:url' content='https://sankkostnaden.se/'/>
@@ -92,66 +81,49 @@ export default function Home(){
       <script type='application/ld+json' dangerouslySetInnerHTML={{__html:JSON.stringify(schema)}}/>
     </Head>
 
-    <header className={styles.nav}>
-      <a className={styles.brand} href='/'><span className={styles.brandMark}><PiggyBank size={21}/></span><span>Sänk Kostnaden</span></a>
-      <nav><a href='/bredband/'>Bredband</a><a href='/elavtal/'>El</a><a href='/mobil/'>Mobil</a><a href='/forsakring/'>Försäkring</a><a href='/ekonomi/'>Ekonomi</a></nav>
-      <a className={styles.navCta} href='#jamfor'>Jämför direkt <ArrowRight size={15}/></a>
-    </header>
+    <div className={styles.page}>
+      <header className={styles.nav}>
+        <a className={styles.brand} href='/' aria-label='Sänk Kostnaden – startsida'>
+          <span className={styles.brandMark}><HomeIcon size={24} strokeWidth={2.4}/></span><span>Sänk Kostnaden</span>
+        </a>
+        <nav className={styles.navLinks} aria-label='Huvudmeny'>
+          <a href='/elavtal/'>El</a><a href='/bredband/'>Bredband</a><a href='/mobil/'>Mobil</a><a href='/forsakring/'>Försäkring</a><a href='/ekonomi/'>Ekonomi</a>
+        </nav>
+        <a className={styles.navCta} href='#guider'>Guider & verktyg <ArrowRight size={16}/></a>
+      </header>
 
-    <main>
-      <div id='jamfor'><V10Experience/></div>
-
-      <section className={`${styles.section} ${styles.popularSection}`} id='fler-omraden'>
-        <div className={styles.popularHeader}>
-          <div><p>VÄLJ OMRÅDE</p><h2>Fler sätt att få koll, när du vill.</h2><span>Utforska våra områden och guider i din egen takt. Du kan alltid jämföra direkt ovanför.</span></div>
-        </div>
-        <div className={styles.popularGrid}>
-          {categories.map(({title,subtitle,href,image,icon:Icon},index)=><a className={styles.popularCard} href={href} key={title}>
-            <div className={styles.popularPhoto}>
-              <img className={styles.popularImageExact}
-                src={image+'&w=1200'}
-                srcSet={image+'&w=700 700w, '+image+'&w=1200 1200w, '+image+'&w=1800 1800w'}
-                sizes={index===4?'(max-width:760px) 95vw, (max-width:1100px) 32vw, 33vw':index<2?'(max-width:760px) 50vw, (max-width:1100px) 48vw, 50vw':'(max-width:760px) 50vw, (max-width:1100px) 32vw, 33vw'}
-                alt='' loading='eager' fetchPriority={index<2?'high':'low'} decoding='async'/>
-              <span className={styles.popularBadge} aria-hidden='true'><Icon size={27} strokeWidth={2.1}/></span>
-            </div>
-            <div className={styles.popularBody}><div><strong>{title}</strong><small>{subtitle}</small></div><ArrowRight size={17}/></div>
-          </a>)}
-        </div>
-      </section>
-
-      <section className={`${styles.section} ${styles.toolsSection}`}>
-        <details className={styles.progressiveTools} data-testid='home-household-tools'>
-          <summary><span><small>FÖR DIG SOM VILL FÖRDJUPA DIG</small><strong>Vill du få koll på hela hushållet?</strong><em>Öppna våra kostnadsverktyg och checklistor.</em></span><ArrowRight size={20} aria-hidden='true'/></summary>
-          <div className={styles.toolGrid}>
-            <a href='/verktyg/hushallskostnadskollen/'><span>HUSHÅLLSKOLL</span><strong>Vad kostar ditt hushåll?</strong><p>Fyll i de kostnader du känner till och se summan per månad och år.</p><b>Räkna hushållets kostnader <ArrowRight size={16}/></b></a>
-            <a href='/app/'><span>KOSTNADSKOLLEN</span><strong>Var ska jag börja?</strong><p>Få hjälp att välja vilken kostnad du vill undersöka först.</p><b>Starta Kostnadskollen <ArrowRight size={16}/></b></a>
-            <a href='/guide/arskoll-fasta-kostnader/'><span>CHECKLISTA</span><strong>Årskoll av fasta kostnader</strong><p>Gå igenom återkommande avtal i din egen takt.</p><b>Se årskollen <ArrowRight size={16}/></b></a>
+      <main>
+        <div id='kostnadskartan'><CostMapExperience/></div>
+        <section className={styles.contentSection} id='guider'>
+          <div className={styles.sectionHeading}><div><p className={styles.kicker}>ETT KLOKARE NÄSTA STEG</p><h2>Lite mer koll.<br/>Ett enklare val.</h2></div><p>Förstå det som faktiskt påverkar ditt avtal. Våra guider hjälper dig att ställa rätt frågor.</p></div>
+          <div className={styles.guideGrid}>
+            {[
+              {href:'/bredband/vilken-hastighet-behover-jag/',title:'Hur snabbt behöver ditt bredband vara?',text:'Utgå från hur ni använder nätet hemma. Mer hastighet är inte alltid det du behöver.',label:'Hitta rätt hastighet'},
+              {href:'/elavtal/sa-laser-du-elfakturan/',title:'Vad betalar du för på elfakturan?',text:'Skilj elhandel från elnät. Få koll på påslag, fasta avgifter och vad du kan jämföra.',label:'Förstå elfakturan'},
+              {href:'/forsakring/hemforsakring-skyddskoll/',title:'Vilket skydd behöver ditt hem?',text:'Börja med boendeformen och dina behov. Jämför skydd och självrisk tillsammans med priset.',label:'Prova skyddskollen'},
+            ].map((guide,index)=><a className={styles.guideCard} key={guide.href} href={guide.href}><span className={styles.guideIndex}>0{index+1}</span><div className={styles.guideCardBody}><BookOpen size={24} aria-hidden='true'/><h3>{guide.title}</h3><p>{guide.text}</p><span className={styles.guideLink}>{guide.label} <ArrowRight size={17}/></span></div></a>)}
           </div>
-        </details>
-      </section>
+        </section>
 
-      <section className={styles.guideLibrarySection}>
-        <details className={styles.guideLibrary}>
-          <summary>Fler guider och jämförelser <ArrowRight size={16}/></summary>
-          <div className={styles.guideGroups}>
-            {guideGroups.map(group=><div key={group.title}><strong>{group.title}</strong>{group.links.map(([href,label])=><a href={href} key={href}>{label}<ArrowRight size={14}/></a>)}</div>)}
+        <section className={styles.toolSection} aria-labelledby='household-title' data-testid='home-household-tools'>
+          <div className={styles.toolCopy}><p className={styles.kicker}>HELA HUSHÅLLET, NÄR DU VILL</p><h2 id='household-title'>Börja där du är.<br/>Räkna på det du vet.</h2><p>Samla kända kostnader eller få hjälp att välja vad du vill undersöka först. Egna siffror är alltid frivilliga.</p><span><ShieldCheck size={17}/> Dina verktygssvar används inte som personliga offerter.</span></div>
+          <div className={styles.toolActions}>
+            <a className={styles.toolLink} href='/verktyg/hushallskostnadskollen/'><span><strong>Vad kostar ditt hushåll?</strong><small>Se summan av de kostnader du känner till.</small></span><ArrowRight size={21}/></a>
+            <a className={styles.toolLink} href='/app/'><span><strong>Var ska jag börja?</strong><small>Ta ett steg i taget med Kostnadskollen.</small></span><ArrowRight size={21}/></a>
+            <a className={styles.toolLink} href='/guide/arskoll-fasta-kostnader/'><span><strong>Ge avtalen en årskoll.</strong><small>En checklista att gå igenom i din egen takt.</small></span><ArrowRight size={21}/></a>
           </div>
-        </details>
-      </section>
+        </section>
 
-      <section className={styles.section}>
-        <div className={styles.principle}>
-          <div><div className={styles.principleImage} aria-hidden='true'><img src='https://images.pexels.com/photos/4473625/pexels-photo-4473625.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1600' alt='' loading='lazy'/></div><p>VARFÖR VI FINNS</p><h2>Besparing först.<br/>Enklare val sedan.</h2></div>
-          <div><p>Vi vill att du ska ha mer kvar till det som gör vardagen bra. Vi hjälper dig förstå dina återkommande kostnader och hitta jämförelser som faktiskt passar ditt hem – utan att du behöver bli expert.</p><p>Guiderna är gratis. När vi länkar till en partner märker vi det tydligt. Vi jämför inte hela marknaden och lovar inga besparingar.</p><a href='/sa-jamfor-vi/'>Läs hur vi jämför →</a></div>
-        </div>
-      </section>
-    </main>
+        <section className={styles.contentSection}>
+          <details className={styles.library}><summary>Fler guider och jämförelser <ArrowRight size={19}/></summary><div className={styles.libraryGroups}>{guideGroups.map(group=><div key={group.title}><h3>{group.title}</h3>{group.links.map(([href,label])=><a href={href} key={href}>{label}<ArrowRight size={14}/></a>)}</div>)}</div></details>
+        </section>
+      </main>
 
-    <footer className={styles.footer}>
-      <div><a className={styles.brand} href='/'><span className={styles.brandMark}><PiggyBank size={19}/></span><span>Sänk Kostnaden</span></a><p><strong>sankkostnaden.se</strong> – praktiska guider för lägre hushållskostnader.</p></div>
-      <div><a href='/sa-jamfor-vi/'>Så jämför vi</a><a href='/affiliate/'>Affiliateinformation</a><a href='/cookies/'>Cookiepolicy</a><a href='/integritet/'>Integritet</a><a href='/om/'>Om oss</a><ProtectedEmailLink/></div>
-      <p>© 2026 Sänk Kostnaden. Informationen är generell och utgör inte individuell finansiell rådgivning.</p>
-    </footer>
+      <footer className={styles.footer}>
+        <div className={styles.footerMain}><div className={styles.footerBrand}><a className={styles.brand} href='/'><span className={styles.brandMark}><HomeIcon size={22}/></span><span>Sänk Kostnaden</span></a><p>Praktisk vägledning för hushållets återkommande kostnader.</p><a href='/sa-jamfor-vi/'>Så fungerar våra jämförelser <ArrowRight size={15}/></a></div>
+          <nav className={styles.footerLinks} aria-label='Om Sänk Kostnaden'><a href='/affiliate/'>Affiliateinformation</a><a href='/cookies/'>Cookiepolicy</a><a href='/integritet/'>Integritet</a><a href='/om/'>Om oss</a><ProtectedEmailLink/></nav></div>
+        <p className={styles.footerLegal}>© 2026 Sänk Kostnaden. Informationen är generell och utgör inte individuell finansiell rådgivning. Vi kan få ersättning via annonslänkar och visar ett urval av partners, inte hela marknaden.</p>
+      </footer>
+    </div>
   </>;
 }
