@@ -50,7 +50,8 @@ export default function Bredband(){
      </div>
      <p className='fine'><ShieldCheck size={13}/> {addressComparison?'Partnerlänk · kontroll och adressuppgifter hos Bredbandsval · vi får eventuell provision':'Gratis vägledning · adresser och priser kontrolleras hos operatören'}</p>
     </div>
-   </section>\n   <div id='v10-category-lane'><V10CategoryFastLane category='bredband'/></div>
+   </section>
+   <div id='v10-category-lane'><V10CategoryFastLane category='bredband'/></div>
    <article className={`article guideWrap categoryArticle ${premium.article}`}>
     <div id='category-partners' style={{scrollMarginTop:90}}><BroadbandMarketGateway/></div>
     <section className={`categoryIntro ${premium.intro}`}>

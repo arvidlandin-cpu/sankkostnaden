@@ -48,7 +48,8 @@ export default function Elavtal(){
      </div>
      <p className='fine'><ShieldCheck size={13}/> Gratis att använda · märkta partnerlänkar · aktuella erbjudanden hos bolagen</p>
     </div>
-   </section>\n   <div id='v10-category-lane'><V10CategoryFastLane category='el'/></div>
+   </section>
+   <div id='v10-category-lane'><V10CategoryFastLane category='el'/></div>
    <CategorySpotlight category='el'/>
    <article className={`article guideWrap categoryArticle ${pageStyles.article}`}>
     <div id='jamfor-elavtal' style={{scrollMarginTop:90}}><ElectricityMarketGateway/></div>
