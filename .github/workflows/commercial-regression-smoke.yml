@@ -98,24 +98,24 @@ jobs:
       # Legacy V5 suites stay in GitHub for archived baseline comparison.
       - name: Run commercial and V10 production-facing regressions
         run: |
-          npx playwright test \\
-            tests/funnel-attribution.spec.ts \\
-            tests/first-year-cost.spec.ts \\
-            tests/switch-calendar.spec.ts \\
-            tests/family-mobile-cost.spec.ts \\
-            tests/cost-prioritizer.spec.ts \\
-            tests/electricity-cost.spec.ts \\
-            tests/electricity-spot-prices.spec.ts \\
-            tests/quoted-loan-totals.spec.ts \\
-            tests/family-result-contrast.spec.ts \\
-            tests/trust-footer-insurance.spec.ts \\
-            tests/experience-savings-checklists.spec.ts \\
-            tests/experience-guide-reading.spec.ts \\
-            tests/experience-guide-entry.spec.ts \\
-            tests/p0k-progressive-smartselector.spec.ts \\
-            tests/p0m-electricity-photo-consistency.spec.ts \\
-            tests/p0s-legacy-journeys.spec.ts \\
-            tests/v10-unified-journey.spec.ts
+          npx playwright test \
+            tests/funnel-attribution.spec.ts \
+            tests/first-year-cost.spec.ts \
+            tests/switch-calendar.spec.ts \
+            tests/family-mobile-cost.spec.ts \
+            tests/cost-prioritizer.spec.ts \
+            tests/electricity-cost.spec.ts \
+            tests/electricity-spot-prices.spec.ts \
+            tests/quoted-loan-totals.spec.ts \
+            tests/family-result-contrast.spec.ts \
+            tests/trust-footer-insurance.spec.ts \
+            tests/experience-savings-checklists.spec.ts \
+            tests/experience-guide-reading.spec.ts \
+            tests/experience-guide-entry.spec.ts \
+            tests/p0k-progressive-smartselector.spec.ts \
+            tests/p0m-electricity-photo-consistency.spec.ts \
+            tests/p0s-legacy-journeys.spec.ts \
+            tests/v10-unified-journey.spec.ts \
             --project=chromium
 
       - name: Preserve real Chromium screenshots before WebKit clears the Playwright output folder
