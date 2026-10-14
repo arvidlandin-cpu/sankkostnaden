@@ -1,4 +1,4 @@
-name: Sänk Kostnaden autopilot
+name: Sänk Kostnaden dygnsrapport
 
 on:
   push:
@@ -19,26 +19,57 @@ on:
       - 'scripts/adtraction-performance-report.mjs'
       - 'scripts/partner-health.mjs'
       - 'scripts/lib/autopilotDecision.mjs'
+      - 'scripts/lib/dailyReport.mjs'
+      - 'scripts/verify-production-release.py'
       - 'scripts/lib/googleServiceAccount.mjs'
       - 'scripts/lib/googleOrganicPerformance.mjs'
       - 'scripts/lib/affiliateRevenue.mjs'
       - 'scripts/lib/addrevenuePerformance.mjs'
       - 'scripts/lib/adtractionPerformance.mjs'
       - 'tests/autopilot-control.test.mjs'
+      - 'tests/daily-report.test.mjs'
   workflow_dispatch:
   schedule:
-    - cron: '20 6 * * *'
+    # One report at 09:00 Europe/Stockholm across summer/winter time.
+    # GitHub may start scheduled jobs late; the gate selects the correct UTC slot.
+    - cron: '0 7 * * *'
+    - cron: '0 8 * * *'
 
 permissions:
   contents: read
+  checks: read
 
 concurrency:
   group: sankkostnaden-autopilot
   cancel-in-progress: false
 
 jobs:
-  decide:
+  schedule:
     runs-on: ubuntu-latest
+    outputs:
+      run: ${{ steps.slot.outputs.run }}
+    steps:
+      - id: slot
+        name: Select one Stockholm daily slot
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          SCHEDULE_CRON: ${{ github.event.schedule }}
+        run: |
+          python3 - <<'PY'
+          import datetime, os
+          from zoneinfo import ZoneInfo
+          now = datetime.datetime.now(ZoneInfo('Europe/Stockholm'))
+          slot = '0 7 * * *' if now.utcoffset().total_seconds() == 7200 else '0 8 * * *'
+          run = os.environ['EVENT_NAME'] != 'schedule' or os.environ.get('SCHEDULE_CRON') == slot
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+              output.write('run=' + str(run).lower() + '\n')
+          print('Collect daily report' if run else 'Skip alternate DST slot; no data collection')
+          PY
+  decide:
+    needs: schedule
+    if: needs.schedule.outputs.run == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
     env:
       GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
       ADTRACTION_API_TOKEN: ${{ secrets.ADTRACTION_API_TOKEN }}
@@ -50,6 +81,8 @@ jobs:
       ATTRIBUTION_TRACKING_SINCE_ADDREVENUE: '2026-10-06T14:37:00Z'
       AUTOPILOT_INPUT_ROOT: 'autopilot-input'
       AUTOPILOT_OUT_DIR: 'autopilot-report'
+      SEO_REPORT_PATH: 'autopilot-input/live/production-verification.json'
+      GITHUB_TOKEN: ${{ github.token }}
 
     steps:
       - name: Checkout
@@ -68,18 +101,18 @@ jobs:
           node --test tests/addrevenue-performance-report.test.mjs
           node --test tests/adtraction-performance-report.test.mjs
           node --test tests/partner-health.test.mjs
+          node --test tests/daily-report.test.mjs
+
+      - name: Verify the currently published main release and SEO
+        continue-on-error: true
+        run: |
+          VERIFY_COMMIT="$(git ls-remote origin refs/heads/main | cut -f1)" python3 scripts/verify-production-release.py --mode production
 
       - name: Collect Google and GA4
         continue-on-error: true
         env:
           REPORT_OUT_DIR: autopilot-input/google
         run: node scripts/google-organic-performance-report.mjs
-
-      - name: Collect aggregate affiliate revenue
-        continue-on-error: true
-        env:
-          REPORT_OUT_DIR: autopilot-input/affiliate
-        run: node scripts/affiliate-revenue-report.mjs
 
       - name: Collect Addrevenue performance
         continue-on-error: true
@@ -105,11 +138,11 @@ jobs:
       - name: Build guarded decision packet
         run: node scripts/autopilot-control.mjs
 
-      - name: Publish autopilot summary
+      - name: Publish the single daily report
         if: always()
         run: |
-          if [ -f autopilot-report/summary.md ]; then
-            cat autopilot-report/summary.md >> "$GITHUB_STEP_SUMMARY"
+          if [ -f autopilot-report/daily-report.md ]; then
+            cat autopilot-report/daily-report.md >> "$GITHUB_STEP_SUMMARY"
           fi
 
       - name: Upload autopilot decision packet
@@ -124,5 +157,6 @@ jobs:
             autopilot-input/addrevenue/
             autopilot-input/adtraction/
             autopilot-input/partner-health/
+            autopilot-input/live/
           retention-days: 30
           if-no-files-found: ignore

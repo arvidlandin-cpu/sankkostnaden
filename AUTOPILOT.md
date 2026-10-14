@@ -1,5 +1,17 @@
 # Sänk Kostnaden – Autopilot
 
+## Ägarbeslut 14 oktober 2026: en samlad dygnsrapport
+
+Ägaren har godkänt skarp publicering av Kostnadskartan och beställt en enda daglig rapport med underbyggda agentuppdrag vid behov. `.github/workflows/autopilot-control.yml` är huvudjobbet **Sänk Kostnaden dygnsrapport**. Det är planerat till **09:00 Europe/Stockholm**; två UTC-slots med tidszonsgrind ger en insamling per dygn även vid vintertid. GitHub kan starta scheman försenat.
+
+Huvudjobbet verifierar den aktuella main-release som egen domän faktiskt serverar, kontrollerar 63 etablerade sidors SEO, hämtar GA4/Search Console och respektive affiliatenätverk en gång samt granskar partnerhälsa. Aggregerad provision härleds från dessa redan hämtade rapporter. De fem fristående datarapporternas överlappande scheman har tagits bort; manuell diagnostik och separata tekniska tester/prisfeeds finns kvar.
+
+Ägarens enda rapport publiceras i jobbets GitHub-sammanfattning och som `daily-report.md`/`daily-report.json` i artefakten `sankkostnaden-autopilot`. Legacy `decision.json` och `summary.md` behålls för kompatibilitet. Rapporten skiljer organisk trafik, inkommande Google-klick, utgående partnerklick och nätverksgodkänd provision; visar verkliga källperioder/aktualitet och markerar saknad data som UNKNOWN. Rullande 30-dagarstal är inte gårdagens förändring. Full provision är UNKNOWN när ett aktivt nätverk saknar verifierad rapport.
+
+**GitHub-jobbet kör automatiska kontroller och en regelstyrd rapport, inte självstartande AI-agenter.** Den gamla ChatGPT-uppgiften omkring kl. 09 kan inte läsas, ändras eller stängas av med verktygen i denna session. För faktisk schemalagd AI-uppföljning ska en enda sådan operatör använda [det färdiga dagliga operatörsbriefet](autopilot/DAILY_OPERATING_BRIEF_2026-10-14.md), läsa huvudrapporten och därefter delegera endast motiverade uppdrag. Den gamla chattuppgiften är inte bevisat ersatt förrän dess schema/instruktion faktiskt har uppdaterats i tjänsten som äger den.
+
+Senare ägarbeslut om Kostnadskartan och marinblå/varmvit/blå identitet gäller framför historiska fotografiska designstatusar nedan. Se `autopilot/decisions/2026-10-14-cost-map-implementation.md` och `autopilot/decisions/2026-10-14-seo-continuity.md`. Produktens visuella godkännande, verifierad egen domän och faktisk trafik/intäkt är skilda bevis.
+
 ## HÖGSTA PRIORITET – DESIGN-ÄGARÖVERSTYRNING 2026-10-10
 Läs **alltid först** `autopilot/UNIFIED_PRODUCT_DESIGN_2026-10-10.md`. Ägaren rapporterade att nuvarande blå huvudsidor och gröna undersidor/verktyg känns som en sönderhackad, ofärdig produkt långt från det godkända premiumkonceptet. Detta är ett **verifierat, ännu öppet P0D-kvalitetsproblem**. Kör inte fler fristående mikro-UX-widgetar i stället för helhetlig sammanhängande design; en förberedd BRF-meddelandefunktion på `growth/brf-insurance-board-template-20261010` är PAUSAD och inte publicerad. Godkänd identitet: varmvit, marinblå rubriker, klarblå primär handling, sparsamma pasteller; inte gamla skogsgrön/lime. Dela upp designfamiljer i reversibla PR med faktiskt granskade skärmbilder 360/390/430/1024/1440, Build, full Chromium+WebKit, kontrast, SEO och korrekt affiliate. Rapportera aldrig att sajten är sammanhållen enbart för att några PR är mergade. Tillväxtintäktsmålet är oförändrat och gratisanskaffning fortsätter parallellt.
 
