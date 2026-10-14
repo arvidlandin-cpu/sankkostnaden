@@ -214,11 +214,18 @@ test('four reassuring answers never create a fabricated affiliate priority or sa
 });
 
 test('saved one-safe-answer session cannot masquerade as a completed result',async({page})=>{
+ // Seed a returning session before React restores/persists its initial answers.
+ // A post-goto write can race the mount persistence effect and lose the fixture.
+ await page.addInitScript(()=>{
+   const key='sankkostnaden-cost-check-v5';
+   if(!localStorage.getItem(key))localStorage.setItem(key,JSON.stringify({
+     answers:{el:{fit:0,monthly:0},bredband:{fit:-1,monthly:0},mobil:{fit:-1,monthly:0},forsakring:{fit:-1,monthly:0}},
+     scenarioPct:10
+   }));
+ });
  await page.goto('/app/?qa=1');
- await page.evaluate(()=>localStorage.setItem('sankkostnaden-cost-check-v5',JSON.stringify({
-    answers:{el:{fit:0,monthly:0},bredband:{fit:-1,monthly:0},mobil:{fit:-1,monthly:0},forsakring:{fit:-1,monthly:0}},
-    scenarioPct:10
- })));
+ await expect(page.getByText('1 av 4 områden klara')).toBeVisible();
+ await expect.poll(()=>page.evaluate(()=>JSON.parse(localStorage.getItem('sankkostnaden-cost-check-v5')||'{}').answers?.el?.fit)).toBe(0);
  await page.reload();
  await expect(page.locator('#resultat')).toHaveCount(0);
  await expect(page.getByText('1 av 4 områden klara')).toBeVisible();

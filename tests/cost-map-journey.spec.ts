@@ -66,6 +66,7 @@ async function tapTarget(locator:Locator){
 }
 
 test('Starts without a fabricated quote; all five categories yield genuine, discoverable partners',async({page})=>{
+ test.setTimeout(90_000); // Five categories and every active partner are verified in this one journey.
  await open(page);
  await expect(journey(page)).toHaveAttribute('data-selected','false');
  await expect(cards(page)).toHaveCount(0);
@@ -95,6 +96,52 @@ test('Need filters change the actual partner set and preserve intent-specific de
   }
   expect(new Set(sets.map(set=>JSON.stringify(set))).size).toBe(filters.length);
  }
+});
+
+test('Cost Map preserves one funnel, fresh network click references and the new intent after filtering',async({page})=>{
+ await page.addInitScript(()=>{(window as any).dataLayer=[];});
+ await open(page);
+ const clickWithoutLeaving=async(name:string)=>{
+  const link=cards(page).filter({has:page.locator('strong',{hasText:new RegExp('^'+name+'$')})});
+  await expect(link).toHaveCount(1);
+  await expect(link).toBeVisible();
+  // Exercise the real capture/React handlers without contacting an affiliate network.
+  await link.evaluate(node=>{
+   node.addEventListener('click',event=>event.preventDefault(),{once:true});
+   (node as HTMLAnchorElement).click();
+  });
+  return new URL((await link.getAttribute('href'))!);
+ };
+ await select(page,'el');
+ const electricity=await clickWithoutLeaving('Elskling');
+ await reset(page);
+ await select(page,'forsakring');
+ await journey(page).getByTestId('v10-filter-home').click();
+ await journey(page).getByTestId('cost-map-more').locator('summary').click();
+ const home=await clickWithoutLeaving('Hedvig');
+ await journey(page).getByTestId('v10-filter-pet').click();
+ const petLink=cards(page).filter({has:page.locator('strong',{hasText:/^Hedvig$/})});
+ expect(new URL((await petLink.getAttribute('href'))!).searchParams.has('r')).toBe(false);
+ const pet=await clickWithoutLeaving('Hedvig');
+ const events=await page.evaluate(()=>(window as any).dataLayer||[]);
+ const clicks=events.filter((event:any)=>event.event==='affiliate_click');
+ expect(clicks).toHaveLength(3);
+ const [elClick,homeClick,petClick]=clicks;
+ expect(elClick.funnel_session_id).toMatch(/^fs_/);
+ for(const click of clicks){
+  expect(click.funnel_session_id).toBe(elClick.funnel_session_id);
+  expect(click.local_click_id).toMatch(/^clk_/);
+  expect(click.network_click_tagged).toBe(1);
+  expect(click.placement).toMatch(/^cost_map_/);
+ }
+ expect(electricity.searchParams.get('epi')).toBe(elClick.local_click_id);
+ expect(electricity.searchParams.get('epi2')).toBe(elClick.funnel_session_id);
+ expect(home.searchParams.get('r')).toBe(homeClick.local_click_id);
+ expect(pet.searchParams.get('r')).toBe(petClick.local_click_id);
+ expect(petClick.local_click_id).not.toBe(homeClick.local_click_id);
+ expect([elClick.intent,homeClick.intent,petClick.intent]).toEqual(['electricity','home','pet']);
+ expect(events.filter((event:any)=>event.event==='v10_partner_selected')).toHaveLength(3);
+ await expect(page).toHaveURL(/\/?\?qa=1$/);
 });
 
 test('Mobile keyboard selection moves focus to results and reset returns to the selected category',async({page})=>{
@@ -133,6 +180,7 @@ test('Every category exposes working internal guide and voluntary tool routes',a
 
 for(const width of widths){
  test('Responsive journey keeps controls reachable and does not overflow at '+width,async({page})=>{
+  test.setTimeout(90_000); // Five complete category/reset journeys, including mobile focus and scrolling.
   await page.setViewportSize({width,height:width<600?844:960});
   await open(page);
   for(const category of categories){
