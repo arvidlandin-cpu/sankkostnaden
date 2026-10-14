@@ -57,6 +57,7 @@ for(const [path,category] of hubs){
   await expect(lane).toHaveCount(1);
   await expect(lane.getByRole('heading',{name:/Vill du jämföra redan nu/})).toBeVisible();
   await expect(lane.getByTestId('v10-partner-card').first()).toBeVisible();
+  if(category==='el')await expect(page.getByTestId('electricity-spot-prices')).toBeVisible();
   for(const card of await lane.getByTestId('v10-partner-card').all()){
    await expect(card).toHaveAttribute('href',/^https?:\/\//);
    await expect(card).toHaveAttribute('rel',/sponsored/);
