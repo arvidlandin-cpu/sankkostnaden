@@ -19,7 +19,7 @@ export default function Mobil(){
  const canonical='https://sankkostnaden.se/mobil/';
  return <>
   <Head>
-   <title>{title} | Sänk Kostnaden</title>
+   <title>{`${title} | Sänk Kostnaden`}</title>
    <meta name='description' content={description}/>
    <meta name='robots' content='index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1'/>
    <meta property='og:type' content='website'/><meta property='og:locale' content='sv_SE'/>
