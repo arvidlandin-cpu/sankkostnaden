@@ -144,6 +144,15 @@ jobs:
           if [ -f autopilot-report/daily-report.md ]; then
             cat autopilot-report/daily-report.md >> "$GITHUB_STEP_SUMMARY"
           fi
+          node --input-type=module <<'JS'
+          import fs from 'node:fs';
+          const file='autopilot-report/daily-report.json';
+          if(fs.existsSync(file)){
+            const report=JSON.parse(fs.readFileSync(file,'utf8'));
+            const sources=report.sources.map(source=>`${source.name}=${source.status}`).join(', ');
+            console.log(`::notice title=Dygnsrapportens källstatus::${sources}; production=${report.release.status}; organicSessions=${report.traffic.organicSessions??'UNKNOWN'}; organicPartnerClicks=${report.traffic.organicOutgoingPartnerClicks??'UNKNOWN'}; totalRevenue=${report.revenue.status}`);
+          }
+          JS
 
       - name: Upload autopilot decision packet
         if: always()
