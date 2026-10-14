@@ -1,0 +1,58 @@
+name: V10 unified experience pre-release browser QA
+on:
+  pull_request:
+    paths:
+      - 'components/V10Experience.tsx'
+      - 'styles/V10Experience.module.css'
+      - 'pages/index.tsx'
+      - 'pages/bredband.tsx'
+      - 'pages/elavtal.tsx'
+      - 'pages/mobil.tsx'
+      - 'pages/forsakring.tsx'
+      - 'components/CategoryLanding.tsx'
+      - 'components/MobileQuickBar.tsx'
+      - 'tests/v10-unified-journey.spec.ts'
+      - '.github/workflows/v10-unified-journey.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  v10-browser-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      QA_BASE_URL: http://127.0.0.1:3000
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0'
+      - name: Install and validate all routes
+        run: |
+          npm install --progress=false
+          npm run check
+          npm run check:integrity
+          npx next build
+          npm run check:export
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Serve static site
+        run: |
+          python3 -m http.server 3000 --directory out >/tmp/v10-static.log 2>&1 &
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:3000/ >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          exit 1
+      - name: Check homepage, all five commercial hubs, 360/390/768/1440 screenshots and contracts
+        run: npx playwright test tests/v10-unified-journey.spec.ts --project=chromium --workers=1
+      - name: Preserve visual evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v10-unified-journey-evidence
+          path: |
+            test-results/v10/
+            playwright-report/
+          if-no-files-found: warn
+          retention-days: 21

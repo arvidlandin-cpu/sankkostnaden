@@ -94,7 +94,9 @@ jobs:
         run: |
           node --test tests/partner-health.test.mjs tests/affiliate-revenue-report.test.mjs
 
-      - name: Run commercial regression suite
+      # V10 supersedes V5-only screenshot/copy contracts, not financial or tracking invariants.
+      # Legacy V5 suites stay in GitHub for archived baseline comparison.
+      - name: Run commercial and V10 production-facing regressions
         run: |
           npx playwright test \
             tests/funnel-attribution.spec.ts \
@@ -103,35 +105,17 @@ jobs:
             tests/family-mobile-cost.spec.ts \
             tests/cost-prioritizer.spec.ts \
             tests/electricity-cost.spec.ts \
-            tests/electricity-hub.spec.ts \
-            tests/economy-purpose-first.spec.ts \
-            tests/category-premium-v5.spec.ts \
-            tests/experience-category-journeys.spec.ts \
-            tests/experience-focused-hub-hero.spec.ts \
-            tests/mobile-navigation-v5.spec.ts \
-            tests/elavtal-visual-v5.spec.ts \
             tests/electricity-spot-prices.spec.ts \
-            tests/broadband-hub.spec.ts \
-            tests/insurance-hub.spec.ts \
             tests/quoted-loan-totals.spec.ts \
-            tests/mobile-hub.spec.ts \
-            tests/design-homepage.spec.ts \
-            tests/home-decision-explorer.spec.ts \
-            tests/priority-seo-flow.spec.ts \
-            tests/experience-savings-checklists.spec.ts \
-            tests/sitewide-design-contract.spec.ts \
-            tests/p0d-sitewide-journey.spec.ts \
-            tests/experience-guide-reading.spec.ts \
-            tests/experience-guide-entry.spec.ts \
-            tests/p0d-all-pages-audit.spec.ts \
             tests/family-result-contrast.spec.ts \
             tests/trust-footer-insurance.spec.ts \
-            tests/p0g-visual-journeys.spec.ts \
-            tests/p0h-warm-editorial.spec.ts \
-            tests/p0i-visual-direction.spec.ts \
-            tests/p0j-editorial-guide-system.spec.ts \
+            tests/experience-savings-checklists.spec.ts \
+            tests/experience-guide-reading.spec.ts \
+            tests/experience-guide-entry.spec.ts \
             tests/p0k-progressive-smartselector.spec.ts \
             tests/p0m-electricity-photo-consistency.spec.ts \
+            tests/p0s-legacy-journeys.spec.ts \
+            tests/v10-unified-journey.spec.ts \
             --project=chromium
 
       - name: Preserve real Chromium screenshots before WebKit clears the Playwright output folder
@@ -142,8 +126,11 @@ jobs:
           if [ -d test-results/screenshots ]; then
             cp -a test-results/screenshots/. qa-evidence/chromium/
           fi
-          if [ ! -s qa-evidence/chromium/design-v5-home-chromium-390.png ]; then
-            echo "::error::Expected 390px homepage screenshot missing. Do not report visual QA as complete."
+          if [ -d test-results/v10 ]; then
+            cp -a test-results/v10/. qa-evidence/chromium/
+          fi
+          if [ ! -s qa-evidence/chromium/home-results-390.png ]; then
+            echo "::error::Expected V10 real 390px interactive homepage screenshot missing. Do not report visual QA as complete."
             exit 1
           fi
           echo "Retained $(find qa-evidence/chromium -type f -name '*.png' | wc -l) Chromium screenshots for review."

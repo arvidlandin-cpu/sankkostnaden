@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 // Runs against Playwright WebKit on Linux with narrow iPhone-like viewports.
 // This is useful Safari-engine regression, NOT a real iPhone / BrowserStack pass.
 const pages=[
- {href:'/',heading:/Sänk dina fasta kostnader/},
+ {href:'/',heading:/Sänk kostnaden/},
  {href:'/elavtal/',heading:/Jämför elavtal\. Välj med bättre koll/},
  {href:'/bredband/',heading:/Hitta bredband som passar ditt hem/},
  {href:'/mobil/',heading:/Jämför mobilabonnemang utan att betala/},

@@ -21,7 +21,7 @@ export default function MobileQuickBar(){
     '/mobil/hur-mycket-surf-behover-jag',
     '/elavtal/vilket-elavtal-passar-mig',
   ]);
-  if(router.pathname==='/app'||focusedQuestionTools.has(router.pathname))return null;
+  if(router.pathname==='/'||router.pathname==='/app'||focusedQuestionTools.has(router.pathname))return null;
   return <nav className='mobileQuickBar' aria-label='Snabbnavigering'>
     {items.map(({href,match,label,Icon})=>{
       const active=router.pathname.startsWith(match);

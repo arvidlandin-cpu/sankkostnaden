@@ -1,11 +1,10 @@
+import { V10CategoryFastLane } from './V10Experience';
 import CategoryHeroPhoto from './CategoryHeroPhoto';
 import Head from 'next/head';
 import premium from '../styles/CategoryPremium.module.css';
 import Link from 'next/link';
 import { ArrowLeft, ArrowRight, Check, PiggyBank } from 'lucide-react';
 import PartnerDirectory from './PartnerDirectory';
-import CategoryJourney from './CategoryJourney';
-import CategorySpotlight from './CategorySpotlight';
 import type { ReactNode } from 'react';
 import type { PartnerCategory, PartnerIntent } from '../lib/partners';
 
@@ -65,7 +64,7 @@ export default function CategoryLanding({
     <header className={`topbar ${premium.topbar}`}>
       <Link className='brand' href='/'><span className='brandMark'><PiggyBank size={22}/></span><span>Sänk Kostnaden</span></Link>
       <nav><Link href='/bredband/'>Bredband</Link><Link href='/elavtal/'>El</Link><Link href='/mobil/'>Mobil</Link><Link href='/forsakring/'>Försäkring</Link><Link href='/ekonomi/'>Ekonomi</Link></nav>
-      <a className='topbarCta' href='#category-partners'>Jämför {labels[category].toLowerCase()} →</a>
+      <a className='topbarCta' href='#v10-category-lane'>Jämför {labels[category].toLowerCase()} →</a>
     </header>
 
     <main className={premium.main}>
@@ -78,14 +77,13 @@ export default function CategoryLanding({
           <h1>{heading}</h1>
           <p className='lead'>{lead}</p>
           <div className='categoryHeroActions'>
-            <a className='primary' href='#category-partners'>{compareLabel} <ArrowRight size={17}/></a>
+            <a className='primary' href='#v10-category-lane'>{compareLabel} <ArrowRight size={17}/></a>
 
           </div>
           <p className='fine'>Inga kontaktuppgifter behövs för att börja.</p>
         </div>
       </section>
-      <CategoryJourney category={category} compareHref='#category-partners' helpHref={helpHref} understandHref='/ekonomi/samlingslan/'/>
-      <CategorySpotlight category={category}/>
+      <div id='v10-category-lane'><V10CategoryFastLane category={category}/></div>
 
       <article className={`article guideWrap categoryArticle ${premium.article}`}>
         {!comparisonFirst&&<>

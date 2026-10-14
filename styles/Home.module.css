@@ -88,3 +88,6 @@
    homepage header comparison escape becomes a subtle text link rather than a second filled-blue CTA.
    Desktop/tablet header comparison CTA remains visible. */
 @media(max-width:700px){.navCta{background:transparent;color:#2c4976;box-shadow:none;min-height:44px;padding:0 7px;gap:5px;font-size:11px}.navCta:hover{text-decoration:underline;text-underline-offset:3px}.navCta:focus-visible{outline:3px solid #315ce0;outline-offset:2px}}
+
+/* V10 visual QA: tablet navigation must not force 19px horizontal scroll at 768px. */
+@media(min-width:761px) and (max-width:900px){.nav{width:calc(100% - 24px);gap:10px;padding:0 2px}.nav nav{gap:10px}.nav nav a{font-size:12px}.brand{font-size:15px}.navCta{font-size:12px;min-height:42px;padding:0 11px;gap:6px}}

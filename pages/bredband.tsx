@@ -1,10 +1,9 @@
+import { V10CategoryFastLane } from '../components/V10Experience';
 import CategoryHeroPhoto from '../components/CategoryHeroPhoto';
 import Head from 'next/head';
 import premium from '../styles/CategoryPremium.module.css';
 import Link from 'next/link';
 import { ArrowRight, Check, PiggyBank, ShieldCheck, Wifi } from 'lucide-react';
-import CategoryJourney from '../components/CategoryJourney';
-import CategorySpotlight from '../components/CategorySpotlight';
 import BroadbandMarketGateway from '../components/BroadbandMarketGateway';
 import { getActivePartners } from '../lib/partners';
 import { emitAnalyticsEvent } from '../lib/clientAttribution';
@@ -34,7 +33,7 @@ export default function Bredband(){
   <header className={`topbar ${premium.topbar}`}>
    <Link className='brand' href='/'><span className='brandMark'><PiggyBank size={22}/></span><span>Sänk Kostnaden</span></Link>
    <nav><Link href='/bredband/'>Bredband</Link><Link href='/elavtal/'>El</Link><Link href='/mobil/'>Mobil</Link><Link href='/forsakring/'>Försäkring</Link><Link href='/ekonomi/'>Ekonomi</Link></nav>
-   <a className='topbarCta' href='#category-partners'>Jämför bredband →</a>
+   <a className='topbarCta' href='#v10-category-lane'>Jämför bredband →</a>
   </header>
   <main className={premium.main}>
    <section className={`guideHero categoryHero guideHero-bredband ${premium.hero}`}>
@@ -46,14 +45,12 @@ export default function Bredband(){
      <h1>Hitta bredband som passar ditt hem – inte bara ett lockpris.</h1>
      <p className='lead'>Börja med att kontrollera vilka operatörer som finns på din adress. Välj sedan en lämplig hastighet och jämför hela kostnaden, även efter kampanjen.</p>
      <div className='categoryHeroActions'>
-      {addressComparison?<a className='primary' href={addressComparison.trackingUrl} data-partner={addressComparison.name} data-category='bredband' data-intent='compare' data-placement='broadband_hero_comparison' data-partner-position='1' onClick={()=>emitAnalyticsEvent('broadband_hub_path',{source:'broadband_hero',path:'address_compare'})} target='_blank' rel='sponsored nofollow noopener'>Kontrollera utbud på min adress <ArrowRight size={17}/></a>:<a className='primary' href='#category-partners'>Se våra bredbandsalternativ <ArrowRight size={17}/></a>}
+      {addressComparison?<a className='primary' href={addressComparison.trackingUrl} data-partner={addressComparison.name} data-category='bredband' data-intent='compare' data-placement='broadband_hero_comparison' data-partner-position='1' onClick={()=>emitAnalyticsEvent('broadband_hub_path',{source:'broadband_hero',path:'address_compare'})} target='_blank' rel='sponsored nofollow noopener'>Kontrollera utbud på min adress <ArrowRight size={17}/></a>:<a className='primary' href='#v10-category-lane'>Se våra bredbandsalternativ <ArrowRight size={17}/></a>}
 
      </div>
      <p className='fine'><ShieldCheck size={13}/> {addressComparison?'Partnerlänk · kontroll och adressuppgifter hos Bredbandsval · vi får eventuell provision':'Gratis vägledning · adresser och priser kontrolleras hos operatören'}</p>
     </div>
-   </section>
-   <CategoryJourney category='bredband' compareHref='#category-partners' helpHref='/bredband/vilken-hastighet-behover-jag/' understandHref='/bredband/bredband-pa-min-adress/'/>
-   <CategorySpotlight category='bredband'/>
+   </section>\n   <div id='v10-category-lane'><V10CategoryFastLane category='bredband'/></div>
    <article className={`article guideWrap categoryArticle ${premium.article}`}>
     <div id='category-partners' style={{scrollMarginTop:90}}><BroadbandMarketGateway/></div>
     <section className={`categoryIntro ${premium.intro}`}>
