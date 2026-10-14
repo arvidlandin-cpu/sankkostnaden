@@ -4,6 +4,8 @@ Riktiga skärmbilder av den fungerande webbplatsen, tagna 14 oktober 2026 i Chro
 
 Fem kostnadsområden leder till relevanta, annonsmärkta partners och befintliga guider och verktyg. Mobilen visar de fem valen först och flyttar sedan fokus till nästa steg. Samma illustration och färger följer med till kategorierna och behovsguiderna.
 
+[Prova den interaktiva förhandsversionen](https://feat-kostnadskartan-20261014.sankkostnaden.pages.dev/?qa=1). Cloudflare Pages rapporterar lyckad deploy; molnmiljöns proxy blockerar direktläsning av förhandsadressen. Bilderna nedan kommer från det kontrollerade lokala produktionsbygget. Huvuddomänen är ännu inte uppdaterad med denna version.
+
 ## Dator: välj ett område
 
 ![Startsidan på dator](desktop-start.png)

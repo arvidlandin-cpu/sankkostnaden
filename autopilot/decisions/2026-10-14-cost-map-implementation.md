@@ -1,6 +1,6 @@
 # Kostnadskartan — första sammanhängande implementationen
 
-Beslutsdatum: 2026-10-14, Europe/Stockholm. Utgångspunkt: main `c8c20b2`, enligt koordinatorns kontroll. Ägaren har uttryckligen valt alternativ 03 och begärt en minnesvärd upplevelse som kan bidra till relevanta besök och partneraffärer. Konceptunderlag: `/workspace/visual-proposal-v3/github-delivery/UNDERLAG.md`. Detta dokument skiljer godkänd designriktning från ännu obevisad affärseffekt.
+Beslutsdatum: 2026-10-14, Europe/Stockholm. Utgångspunkt: main `c8c20b2`, enligt koordinatorns kontroll. Ägaren har uttryckligen valt alternativ 03 och begärt en minnesvärd upplevelse som kan bidra till relevanta besök och partneraffärer. [Godkänt koncept 03](https://github.com/arvidlandin-cpu/sankkostnaden/blob/a0f90a13dec19d333f3ece4d6fffbb873929d29c/design/proposals/visuellt-forslag-03/koncept-v3.png). Detta dokument skiljer godkänd designriktning från ännu obevisad affärseffekt.
 
 ## 1. Målgrupp och uppgift
 
@@ -66,7 +66,7 @@ GENOMFÖR den första sammanhängande startsidedelen enligt ägarens uttryckliga
 
 ## 13. Verifiering och beslut efter release
 
-Status när detta beslut skrivs: implementation, QA, merge, Pages-deploy, verifierad egen domän och kommersiellt utfall är PENDING. Koordinatorn kompletterar med faktiskt körda resultat; detta dokument påstår inga ännu osedda kontroller.
+Vid beslutets upprättande var implementation, QA, merge, Pages-deploy, egen domän och kommersiellt utfall PENDING. Faktiskt verifierade utfall och återstående begränsningar anges i slutavsnittet nedan.
 
 Kör `npm run check`, `npm run check:integrity`, `npm run build` och `npm run check:export`. Testa meningsfullt kategori → uppdaterad panel → befintlig guide/verktyg → korrekt resultat → relevant märkt partnerdestination, utan ett verkligt annonsklick. Kontrollera ändrat val, tangentbord/fokus, sponsormärkning, attribut och event. Granska riktiga skärmbilder på 360, 390, 430, 1024, 1440 och 1920 px samt relevanta Chromium-/WebKit-/kommersiella regressioner. Bekräfta att startsidans metadata, schema och interna länkar består och att det skyddade försöket inte ändrats.
 
@@ -83,3 +83,32 @@ De här sidfamiljerna används inte av den skyddade kvartsprisguiden. Inga globa
 Build, check och check:integrity passerade. Den första statiska exportens nya Chromium-svit passerade 12/12 testfall inklusive verkliga intentresultat, alla aktiva partnerlänkar, sponsormärkning, exakta djuplänkar, intern navigation, tangentbord/fokus, utan JavaScript och sex skärmbredder. Bildgranskningen hittade en för lång desktop-panel; partnerlistan har därför gjorts progressiv och layouten har korrigerats. Mobilens illustration läggs efter de fem primära kostnadsvalen. Dessa sista ändringar och fortsättningen till kategorier/guider ska verifieras i slutbygget.
 
 WebKit-nedladdning stoppades av miljöns nätverksproxy med HTTP403 även vid utökat nätverkstest. TLS- och paketverifiering har bevarats. WebKit ska köras i befintlig GitHub Actions-miljö där Playwright redan installeras; lokalt Chromium ersätter inte detta resultat.
+
+## Slutverifiering och granskbar leverans
+
+Implementationens tre sammanhängande delar är startsidan, kategorier/faktaguider och behovsguider/äldre verktygsingångar. Varje separat ändringsdel omfattar högst sex filer. SmartSelector behåller frågorna, poängen och resultaten; guider och kalkylatorer behåller beräkningarna. Kategorier och guider återanvänder den lokala illustrationen på 177 304 byte. På mobil prioriteras val, läsning och verktyg framför dekor. Det äldre `/#jamfor`-ankaret fungerar fortfarande, tillsammans med `/#kostnadskartan`.
+
+| Kontroll | Faktiskt utfall |
+| --- | --- |
+| `npm run check` | Godkänd: 69 rutter och 13 palettmoduler. |
+| `npm run check:integrity` | Godkänd: metadata, GA4 och 38 aktiva partners; 63 indexerbara sidor, fyra noindex och två experiment. |
+| `npm run build` | Godkänd: 71 statiska sidor; startsidans redovisade första JS-laddning 126 kB. |
+| `npm run check:export` | Godkänd: 71 HTML-filer och 2 029 interna länkar/ankare. |
+| Fyra befintliga Node-sviter | 34 godkända, inga misslyckade eller hoppade över: prisdata, autopilotskydd, partnerhälsa och intäktsrapportering. |
+| `tsc --noEmit --incremental false` | Godkänd efter de nya testerna. |
+| Stor lokal Chromium-körning | 247 körda: 245 godkända och två testharnessfel; inga hoppade över. Felen diagnostiserades och korrigerades enligt nedan. |
+| Riktad omkörning | Båda tidigare felande fallen godkända. Den nya kontrollen av två affiliatenätverk och ändrat försäkringsbehov är också godkänd. |
+| GitHub Actions `54cd670` | [Build check](https://github.com/arvidlandin-cpu/sankkostnaden/actions/runs/38614864732) och [Commercial regression smoke](https://github.com/arvidlandin-cpu/sankkostnaden/actions/runs/38614864654) godkända, inklusive obligatoriska Chromium- och WebKit-steg. |
+| GitHub Actions `8c9a901` | [Build check](https://github.com/arvidlandin-cpu/sankkostnaden/actions/runs/38616151554) och [slutlig Commercial regression smoke](https://github.com/arvidlandin-cpu/sankkostnaden/actions/runs/38616151806) godkända. Den senare slutfördes med Success på 5 min 41 s och omfattar obligatoriska Chromium- och WebKit-steg, inklusive den nya spårningskontrollen. Produktionsjobbet är avsiktligt hoppat över på granskningsgrenen. |
+
+Det första lokala felet var hela testets 45-sekundersgräns när fem mobilresor kördes i samma fall under samtidig bildfångst. Dessa flerstegsfall får nu 90 sekunder; alla ursprungliga funktions-, pekyte- och overflow-assertioner finns kvar. Det andra var en race i testfixturen: en artificiell localStorage-skrivning efter sidladdning kunde ersättas av appens första persistens. Fixturen skapas nu före appstart och måste klara både återställning och omladdning. Appens lagringskod är oförändrad.
+
+Den nya spårningskontrollen verifierar EPI/EPI2 för Adtraction, `r` för Addrevenue, samma funnel-session, nya klick-id:n och ett korrekt byte från `home` till `pet`. Verklig utgående navigation stoppas. Ett initialt fel i den nya assertionen (`electricity` i stället för partnerkonfigurationens befintliga `compare`) rättades i testet; den kommersiella avsikten eller länkkonfigurationen ändrades inte för att få ett grönt test.
+
+Riktiga fullsidebilder och första vyer har fångats vid 360, 390, 430, 1024, 1440 och 1920 pixlar. Startsida, valt område, kategori, faktaguide, behovsguide och verktygsingång har bildgranskats, inklusive separat agentgranskning. Ingen horisontell overflow uppmättes i de sex kartlägena. [Samlad bildgranskning på GitHub](../evidence/cost-map-2026-10-14/README.md) innehåller faktiska renderingar för mobil och dator. Bilder och automatiska tester ersätter inte ägarens återkoppling eller fysisk iPhone-/skärmläsartestning.
+
+En riktad diff mot `c8c20b2` bekräftar att `lib/partners.ts`, `lib/clientAttribution.ts`, `components/AffiliateTracking.tsx`, kvartsprissidans tre specialistfiler och senaste spotprisfilen är oförändrade. Globala stilar och design tokens är också oförändrade. Varken experimentstate eller kommersiell baseline har skrivits om.
+
+Leveransen ligger på `feat/kostnadskartan-20261014`. Källkod och skärmbilder är uppladdade via Git och bildgranskningssidan har kontrollerats med HTTP200. Cloudflare Pages rapporterar lyckad förhandsdeploy för `8c9a901`: [checkens faktiska deploybevis](https://github.com/arvidlandin-cpu/sankkostnaden/runs/116032302842), [grenens förhandsadress](https://feat-kostnadskartan-20261014.sankkostnaden.pages.dev/?qa=1). Miljöns nätverksproxy stoppar direktläsning av denna adress med CONNECT403, även med utökat nätverkstest; den serverade preview-koden är därför inte självständigt verifierad här. Det separata Workers Builds-felet är inte Pages-resultatet.
+
+Main har inte ändrats av denna leverans. Merge, verifierad ny kod på `sankkostnaden.se`, slutligt visuellt ägargodkännande och affärseffekt är fortfarande separata och ännu inte verifierade tillstånd. Organisk trafik och nätverksgodkänd provision har inte uppmätts som resultat av denna implementation.
