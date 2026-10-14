@@ -75,13 +75,14 @@ jobs:
               lines += ['', 'This verifies HTTP metadata, discovery and release identity. It does not establish Google indexing or rankings.',
                         'Full machine-readable details: the seo-release-continuity artifact.']
               notice = ('passed=' + str(report.get('passed') is True).lower()
+                        + '; mode=' + safe(report.get('mode'), 32)
                         + '; expectedCommit=' + safe(report.get('expectedCommit'), 64)
                         + '; metadata=' + str(len(metadata)) + '/63'
                         + '; assets=' + str(len(report.get('assets', [])))
                         + '; verifiedAt=' + safe(report.get('verifiedAt'), 64))
               # Escape workflow-command payload syntax; expose only the whitelist.
               notice = notice.replace('%', '%25').replace('\r', '%0D').replace('\n', '%0A')
-              print('::notice title=Production release verification::' + notice, flush=True)
+              print('::notice title=Release verification::' + notice, flush=True)
               with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as output:
                   output.write('\n'.join(lines) + '\n')
           PY_SUMMARY

@@ -228,3 +228,7 @@ Daily operations (~09:00 local): read this file, check fresh reports and green p
 - Never describe **planned** or **partly deployed** phases as complete. Every merged release is a quality milestone, not an approved-revenue milestone.
 
 Se [EXPERIENCE_FIRST_2026-10-11.md](EXPERIENCE_FIRST_2026-10-11.md) för senare verifierade PR #134–136 och #139, samt Pages/live-kontroll Actions #38172132736 (11/11 rutter).
+
+## Leveransjournal 14 oktober 2026 – Kostnadskartan och en dygnsrapport
+
+Ägaren valde koncept03 och godkände skarp publicering. Main `2ce912d` är publicerad via Cloudflare Pages; main Build och kommersiell Chromium/WebKit samt skarpa kalkylflöden passerade. Den första samlade datakörningen verifierade aktuell main på egen domän med 63 SEO-rutter och jämförelse av JS/CSS/illustration mot oföränderlig Pages-deploy. Google, Addrevenue, Adtraction och partnerhälsa svarar; 30 organiska sessioner och 10 organiska partnerutgångar avser den rullande källperioden, inte ett dygn eller bevisad förbättring. Full provision UNKNOWN. Fem överlappande källrapportscheman ersätts av ett huvudjobb vid 09 Europe/Stockholm. AI-uppföljning kräver separat aktiverad operatör; befintliga ChatGPT-uppgifter kunde inte ändras här. Se [leverans- och rapportbeslut](decisions/2026-10-14-single-daily-report.md), [SEO-beslut](decisions/2026-10-14-seo-continuity.md) och aktuell `release-context.json`. Kvartsprisförsökets body/events/state bevaras; titelreparation annoteras som möjlig störfaktor.

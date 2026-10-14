@@ -1,18 +1,18 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-13",
+  "updatedAt": "2026-10-14",
   "purpose": "Verified code-release snapshot for the AI operator and autopilot decision packet. Historical baseline reports remain dated snapshots, not live inventory.",
-  "latestVerifiedMainCommit": "eb22fdc8dbf6c2e534b5c1846dd11b5032771d00",
+  "latestVerifiedMainCommit": "2ce912d596275e809b4ec12e2e6749a0d61acc42",
   "decisionContext": {
     "northStar": "Long-term approved affiliate revenue per relevant visitor; truthful consumer value and SEO trust first.",
-    "design": "P0J: new warm photographed and readable editorial factual guide template is LIVE on own domain after product PR #147 main squash SHA 60a2021. Build successful #38363746789; final PR-head full commercial Chromium 679 PASS and Linux WebKit 22 PASS, 1 transient CDN image flaky retry recovered #38363746813. Real baseline vs source 24 full-page captures 390/1440 before/after #38363740584 PASS; 0 overflow, source photos loaded; own-domain read-only exact CSS+product JS identity on 6/6 representative routes #38367645430 PASS 2026-10-13T08:13Z, five photo markers and internal anchor endpoints live, /elavtal/kvartspris/ actively exempt from redesigned DOM. Stronger contrast #3f674b checked by build and visual screenshot, physical iPhone not tested. This means CODE/ASSET DELIVERY live, NOT owner visual final signoff or conversion/revenue gain. Read autopilot/P0J_RELEASE_AUDIT_2026-10-13.md.",
+    "design": "Latest owner-approved direction: concept03 Kostnadskartan, navy/warm white-sand/clear action blue. Implemented across home, categories, guides and key tool entrances. Real rendered 360/390/430/1024/1440/1920 screenshot review and commercial Chromium/WebKit pass are documented in decisions/2026-10-14-cost-map-implementation.md. Pages, production smoke and own-domain immutable asset verification passed for 2ce912d. Old P0I–P0M photographic snapshots below are history, not current visual instructions. No physical iPhone or business uplift claim.",
     "conversion": "Keep real comparison-service vs individual-supplier distinctions, partner visibility and clearly labeled affiliate links; user need not know consumption to reach legitimate partner options.",
     "pricing": "Electricity quarter-hour spot feed SE1-SE4 is real, but NOT a per-provider offer feed. No fabricated cheapest provider, 'best choice', monthly quote, ratings, guaranteed saving or extrapolated shift savings.",
     "experimentStatus": "As of 2026-10-10 one active scoped CONTENT_UTILITY_UPGRADE for /elavtal/kvartspris/ (PR #103), awaiting qualified organic measurements; cancelled Oct 7 insurance snippet remains inactive, no Oct 15 gate. Up to two fully independent initiatives subject to policy.",
     "capacity": "Independent non-paid traffic acquisition remains the highest commercial constraint; continue alongside design. No paid media or contracts without owner approval.",
     "finishStandard": "Read autopilot/PRODUCT_FINISHING_STANDARD_2026-10-09.md. Every screen, field, sentence and CTA must serve the user's immediate job, with premium consistent UX, real price data and QA. Do not call project finished from isolated feature PRs.",
-    "nextExecution": "P0M family-photo electricity journey #153 is MERGED + PUBLIC CSS and real product-JS verified on 10/10 paths with approved photo HTML identifiers. Existing P0K #149 and P0L #150 also included in this parity check. Do NOT recreate P0I–P0M or rework same hero/photo without newly observed deficiency. The 08:00 operator should inspect actual 390/1440 entire journey and any remaining objectively weak leaf/tool result and partner handoff; 09:00 datapilot must keep qualified ORGANIC traffic, sponsor tagged clickrefs/EPI/subIDs and network-authoritative APPROVED SEK strictly separate. Protect /elavtal/kvartspris/ cohort, cancelled insurance snippet, no new expenses or mass outreach; any new material UX scope needs 13-field evidence and screenshots. Real physical iPhone UNTESTED, owner's LIVE visual final acceptance PENDING, approved commission UNKNOWN.",
-    "strategySourceOfTruth": "P0J_RELEASE_AUDIT_2026-10-13.md > P0I_RELEASE_AUDIT_2026-10-13.md > P0I_APPROVED_PHOTO_DIRECTION_2026-10-12.md > UNIFIED_PRODUCT_DESIGN_2026-10-10.md/MASTERPLAN_EXECUTION/PRODUCT_FINISHING_STANDARD, partner/legal/SEO policies."
+    "nextExecution": "One daily GitHub report at 09:00 Europe/Stockholm is being consolidated under autopilot-control.yml, including live release/SEO verification and one fetch per existing source. Read the latest completed run before acting. Follow DAILY_OPERATING_BRIEF_2026-10-14.md for evidence-driven agent delegation; a separate scheduled AI operator must actually be activated. This session cannot inspect or disable existing ChatGPT tasks. Protect kvartspris until its review gate; never claim missing network totals or scheduled AI activation.",
+    "strategySourceOfTruth": "Latest owner approval of concept03 > OWNER_VISUAL_DIRECTION_2026-10-14.md > decisions/2026-10-14-cost-map-implementation.md and decisions/2026-10-14-seo-continuity.md > historical P0 photographic records; retain product, partner, SEO and experiment policies."
   },
   "shipped": [
     {
@@ -571,5 +571,37 @@
       "ownerLiveVisualSignoff": "PENDING",
       "networkApprovedCommission": "UNKNOWN"
     }
+  },
+  "latestRelease": {
+    "name": "Kostnadskartan – approved concept 03",
+    "mainCommit": "2ce912d596275e809b4ec12e2e6749a0d61acc42",
+    "pagesCheck": "https://github.com/arvidlandin-cpu/sankkostnaden/runs/116052965669",
+    "immutablePagesUrl": "https://e44d0165.sankkostnaden.pages.dev",
+    "mainBuild": "https://github.com/arvidlandin-cpu/sankkostnaden/actions/runs/38622232817",
+    "commercialRegressionAndProductionSmoke": "https://github.com/arvidlandin-cpu/sankkostnaden/actions/runs/38622231424",
+    "ownDomainVerification": {
+      "status": "verified",
+      "run": "https://github.com/arvidlandin-cpu/sankkostnaden/actions/runs/38624285580",
+      "runnerCheckout": "15c243b54e26903db8ad31f5b5cc3592aa77c1cf",
+      "target": "https://sankkostnaden.se",
+      "metadataBaselineRoutes": 63,
+      "method": "Read-only Python verifier discovers successful Pages check for current main, verifies all baseline metadata plus robots/sitemap, compares homepage JS/CSS asset SHA256 and source illustration to immutable Pages deployment."
+    },
+    "measurementSnapshot": {
+      "sourceRun": "https://github.com/arvidlandin-cpu/sankkostnaden/actions/runs/38624285580",
+      "google": "ok",
+      "addrevenue": "ok",
+      "adtraction": "ok",
+      "partnerHealth": "ok",
+      "organicSessions": 30,
+      "organicOutgoingPartnerClicks": 10,
+      "periodNotice": "Rolling 30-day source period; not daily totals or evidence of uplift.",
+      "totalApprovedCommission": "UNKNOWN; not all active networks have authoritative reports."
+    },
+    "physicalIphone": "UNVERIFIED",
+    "businessUplift": "UNKNOWN",
+    "indexingNotice": "HTTP indexability and preserved SEO do not prove Google indexing or ranking stability.",
+    "quarterPriceExperimentNotice": "Body/events/cohort/state preserved. Technical title serialization repaired; annotate release as possible SEO confounder, no early experiment verdict before 18 Oct 2026 11:00 Europe/Stockholm.",
+    "mainPushMinuteUtc": "2026-10-14T19:16Z"
   }
 }

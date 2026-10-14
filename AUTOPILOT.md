@@ -12,8 +12,8 @@ Huvudjobbet verifierar den aktuella main-release som egen domän faktiskt server
 
 Senare ägarbeslut om Kostnadskartan och marinblå/varmvit/blå identitet gäller framför historiska fotografiska designstatusar nedan. Se `autopilot/decisions/2026-10-14-cost-map-implementation.md` och `autopilot/decisions/2026-10-14-seo-continuity.md`. Produktens visuella godkännande, verifierad egen domän och faktisk trafik/intäkt är skilda bevis.
 
-## HÖGSTA PRIORITET – DESIGN-ÄGARÖVERSTYRNING 2026-10-10
-Läs **alltid först** `autopilot/UNIFIED_PRODUCT_DESIGN_2026-10-10.md`. Ägaren rapporterade att nuvarande blå huvudsidor och gröna undersidor/verktyg känns som en sönderhackad, ofärdig produkt långt från det godkända premiumkonceptet. Detta är ett **verifierat, ännu öppet P0D-kvalitetsproblem**. Kör inte fler fristående mikro-UX-widgetar i stället för helhetlig sammanhängande design; en förberedd BRF-meddelandefunktion på `growth/brf-insurance-board-template-20261010` är PAUSAD och inte publicerad. Godkänd identitet: varmvit, marinblå rubriker, klarblå primär handling, sparsamma pasteller; inte gamla skogsgrön/lime. Dela upp designfamiljer i reversibla PR med faktiskt granskade skärmbilder 360/390/430/1024/1440, Build, full Chromium+WebKit, kontrast, SEO och korrekt affiliate. Rapportera aldrig att sajten är sammanhållen enbart för att några PR är mergade. Tillväxtintäktsmålet är oförändrat och gratisanskaffning fortsätter parallellt.
+## Historiskt designbeslut 2026-10-10
+Detta är tidigare problem- och beslutshistorik. Aktuell riktning och leveransstatus ovan samt `OWNER_VISUAL_DIRECTION_2026-10-14.md` gäller före äldre prioriteringar. Läs `autopilot/UNIFIED_PRODUCT_DESIGN_2026-10-10.md`. Ägaren rapporterade att nuvarande blå huvudsidor och gröna undersidor/verktyg känns som en sönderhackad, ofärdig produkt långt från det godkända premiumkonceptet. Detta är ett **verifierat, ännu öppet P0D-kvalitetsproblem**. Kör inte fler fristående mikro-UX-widgetar i stället för helhetlig sammanhängande design; en förberedd BRF-meddelandefunktion på `growth/brf-insurance-board-template-20261010` är PAUSAD och inte publicerad. Godkänd identitet: varmvit, marinblå rubriker, klarblå primär handling, sparsamma pasteller; inte gamla skogsgrön/lime. Dela upp designfamiljer i reversibla PR med faktiskt granskade skärmbilder 360/390/430/1024/1440, Build, full Chromium+WebKit, kontrast, SEO och korrekt affiliate. Rapportera aldrig att sajten är sammanhållen enbart för att några PR är mergade. Tillväxtintäktsmålet är oförändrat och gratisanskaffning fortsätter parallellt.
 
 
 ## North star
@@ -29,7 +29,7 @@ Varje operativ AI-genomgång ska läsa `autopilot/release-context.json`, aktuell
 ## Två lager
 
 1. **GitHub Actions = sensorer + skyddsräcken.** Den hämtar GA4, Search Console, Adtraction, Addrevenue och partnerhälsa, reducerar allt till ett maskinläsbart beslutspaket och stoppar aggressiva ändringar när signalen är för svag.
-2. **ChatGPT = operativ projektledare.** Den läser senaste beslutspaketet, kontrollerar aktuell kod och pågående experiment och får genomföra lågriskåtgärder utan att fråga ägaren mellan varje steg.
+2. **Schemalagd AI-operatör = operativ projektledare när en sådan uppgift faktiskt är aktiverad.** Den läser senaste beslutspaketet, kontrollerar aktuell kod och pågående experiment och får genomföra tillåtna lågriskåtgärder utan att fråga ägaren mellan varje steg. GitHub-schemat startar inte denna operatör.
 
 Ingen extern AI-API-nyckel behövs i GitHub och ingen ny betald SaaS krävs.
 
@@ -56,7 +56,7 @@ Nya betaltjänster, betald annonsering, nya partneravtal, större borttagning av
 
 ## Daglig rytm
 
-GitHub kör kontrollen dagligen efter nattens datainsamling. ChatGPT granskar därefter senaste kontrollen. Om inget passerar en åtgärdströskel görs ingenting. Ägaren ska inte få en daglig störning bara för att systemet har tittat på data.
+GitHub samlar källorna och publicerar en rapport enligt schemat 09:00 Europe/Stockholm ovan. En separat aktiverad AI-operatör läser därefter den färdiga rapporten och skickar en enda daglig sammanfattning enligt ägarens senaste instruktion. Motiverade tillåtna åtgärder följer evidensen; om underlag saknas anges det öppet. Kritiska verifierade fel larmas separat. Denna session har inte aktiverat eller ersatt någon ChatGPT-uppgift.
 
 ## Tillstånd
 
