@@ -75,7 +75,47 @@
     ],
     "restoredExportPassed": true
   },
-  "liveVerification": "PENDING GitHub runner; local proxy returns CONNECT403",
+  "liveVerification": {
+    "source": "GitHub Actions independent runner; HTTP reads only",
+    "workflowRun": "https://github.com/arvidlandin-cpu/sankkostnaden/actions/runs/38619795150",
+    "commit": "151c120",
+    "result": "Success",
+    "previewPagesMatchingExpectedTitleDescriptionCanonical": 63,
+    "previewNoindexHttpHeaderVerified": true,
+    "productionPagesCheckedForStatusCanonicalAndNoNoindex": 4,
+    "productionSitemapContainsAll63BaselineUrls": true,
+    "productionRobotsAllowsGooglebotOnBaselineRoutes": true,
+    "provesGoogleIndexingOrRanking": false
+  },
   "productionPublication": "NOT PERFORMED",
-  "googleIndexAndRankingEffect": "UNVERIFIED"
+  "googleIndexAndRankingEffect": "UNVERIFIED",
+  "focusedChromiumRegression": {
+    "passed": 6,
+    "failed": 0,
+    "skipped": 0,
+    "scope": [
+      "all five categories and real partner destinations",
+      "fresh partner attribution after intent filtering",
+      "category fallback without JavaScript",
+      "bostadsrätt guide metadata and links",
+      "100/100 guide metadata and calculator link",
+      "kvartspris real decision behavior and events"
+    ]
+  },
+  "buildCheck": {
+    "workflowRun": "https://github.com/arvidlandin-cpu/sankkostnaden/actions/runs/38619795126",
+    "commit": "151c120",
+    "result": "Success"
+  },
+  "commercialRegression": {
+    "workflowRun": "https://github.com/arvidlandin-cpu/sankkostnaden/actions/runs/38619795033",
+    "commit": "151c120",
+    "result": "Success",
+    "engines": [
+      "Chromium",
+      "WebKit"
+    ],
+    "duration": "5m 48s",
+    "productionJob": "intentionally skipped on feature branch"
+  }
 }
