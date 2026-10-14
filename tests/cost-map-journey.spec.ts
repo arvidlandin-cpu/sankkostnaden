@@ -139,7 +139,8 @@ test('Cost Map preserves one funnel, fresh network click references and the new 
  expect(home.searchParams.get('r')).toBe(homeClick.local_click_id);
  expect(pet.searchParams.get('r')).toBe(petClick.local_click_id);
  expect(petClick.local_click_id).not.toBe(homeClick.local_click_id);
- expect([elClick.intent,homeClick.intent,petClick.intent]).toEqual(['electricity','home','pet']);
+ expect([elClick.category,homeClick.category,petClick.category]).toEqual(['el','forsakring','forsakring']);
+ expect([elClick.intent,homeClick.intent,petClick.intent]).toEqual(['compare','home','pet']);
  expect(events.filter((event:any)=>event.event==='v10_partner_selected')).toHaveLength(3);
  await expect(page).toHaveURL(/\/?\?qa=1$/);
 });
