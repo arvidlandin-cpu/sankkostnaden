@@ -99,7 +99,7 @@ export function V10Experience(){
       <div className={s.filters} aria-label='Förfina alternativen'>
        {track.filters.map((f,i)=><button type='button' key={f.id} className={i===choiceIndex?s.chipActive:s.chip} aria-pressed={i===choiceIndex} onClick={()=>filter(i)} data-testid={'v10-filter-'+f.id}>{i===choiceIndex&&<Check size={13}/>} {f.label}</button>)}
       </div>
-      <div className={s.matchesHead}><span>{matches.length?'JÄMFÖR HOS AKTIVA PARTNERS':'INGA AKTIVA PARTNERALTERNATIV'}</span><span>{matches.length} alternativ · ingen prisranking</span></div>
+      <div className={s.matchesHead}><span>{matches.length?'JÄMFÖR HOS AKTIVA PARTNERS':'INGA AKTIVA PARTNERALTERNATIV'}</span><span>{Math.min(matches.length,3)} av {matches.length} visas · ingen prisranking</span></div>
       {matches.length?<div className={s.partnerList}>{matches.slice(0,3).map((p,i)=><PartnerLink key={p.name} p={p} category={category!} intent={choice.intent} index={i} placement='v10_home_results'/>)}</div>:
        <div className={s.noMatches}>Vi har inga aktiva partnerlänkar för detta val. <Link href={track.href}>Se våra guider i stället <ArrowRight size={15}/></Link></div>}
       <div className={s.resultRoutes} aria-label='Fördjupa din jämförelse' data-testid='v11-result-routes'>
@@ -110,7 +110,7 @@ export function V10Experience(){
        </div>
       </div>
       <div className={s.whyBlock}><button type='button' aria-expanded={showReason} onClick={()=>setShowReason(v=>!v)}><Info size={16}/> Varför visas dessa alternativ? <ChevronDown size={16}/></button>{showReason&&<p>{choice.why} Urvalet omfattar bara våra aktiva partners, inte hela marknaden. Det är inte en prisranking.</p>}</div>
-      <div className={s.nextLine}><Link href={track.href}>Fler guider inom {track.name} <ArrowRight size={15}/></Link><button type='button' onClick={()=>{setCategory(null);setChoiceIndex(0)}}><RotateCcw size={14}/> Välj annat</button></div>
+      <div className={s.nextLine}><Link href={track.href}>Fler alternativ och guider inom {track.name} <ArrowRight size={15}/></Link><button type='button' onClick={()=>{setCategory(null);setChoiceIndex(0)}}><RotateCcw size={14}/> Välj annat</button></div>
      </div>:<div className={s.blank} data-testid='v11-empty-state'>
        <div className={s.blankEyebrow}><Sparkles size={17}/> ETT BRA BESLUT BÖRJAR HÄR</div>
        <h2>Du väljer vad som spelar roll.<br/><em>Vi visar vad du kan göra.</em></h2>

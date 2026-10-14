@@ -76,3 +76,50 @@ test('V10 no unsupported price promise and no inactive partner link in home jour
  await journey.getByTestId('v10-filter-mobile').click();
  await expect(journey.getByTestId('v10-partner-card').first()).toBeVisible();
 });
+
+test('Unified home: meaningful category result plus true guide and calculation exits at six widths', async ({page})=>{
+ for(const width of [360,390,430,1024,1440,1920]){
+  await page.setViewportSize({width,height:width<600?844:960});
+  await page.goto('/?qa=1',{waitUntil:'domcontentloaded'});
+  const journey=page.getByTestId('v10-journey');
+  await expect(journey.getByTestId('v11-empty-state')).toBeVisible();
+  for(const [category,guide,tool] of [
+   ['el','/elavtal/vilket-elavtal-passar-mig/','/verktyg/elavtalskostnad/'],
+   ['bredband','/bredband/vilken-hastighet-behover-jag/','/verktyg/forstaarskostnad-bredband/'],
+   ['mobil','/mobil/hur-mycket-surf-behover-jag/','/verktyg/forstaarskostnad/'],
+   ['forsakring','/forsakring/hemforsakring-skyddskoll/','/forsakring/hemforsakring-bostadsratt/'],
+   ['ekonomi','/ekonomi/kostnadskontroll-och-sparande/','/verktyg/hushallskostnadskollen/']
+  ] as const){
+   await journey.getByTestId('v10-category-'+category).click();
+   await expect(journey.getByTestId('v11-result-routes')).toBeVisible();
+   await expect(journey.getByTestId('v11-route-guide')).toHaveAttribute('href',guide);
+   await expect(journey.getByTestId('v11-route-tool')).toHaveAttribute('href',tool);
+   const link=journey.getByTestId('v10-partner-card').first();
+   await expect(link).toBeVisible();
+   await expect(link).toHaveAttribute('rel',/sponsored/);
+   await expect(link).toHaveAttribute('data-category',category);
+  }
+  expect(await page.evaluate(()=>Math.max(document.body.scrollWidth,document.documentElement.scrollWidth)-document.documentElement.clientWidth)).toBeLessThanOrEqual(1);
+  await page.screenshot({path:'test-results/v10/unified-journey-'+width+'.png',fullPage:true,animations:'disabled'});
+ }
+});
+for(const [path,category,guide,tool] of [
+ ['/elavtal/','el','/elavtal/vilket-elavtal-passar-mig/','/verktyg/elavtalskostnad/'],
+ ['/bredband/','bredband','/bredband/vilken-hastighet-behover-jag/','/verktyg/forstaarskostnad-bredband/'],
+ ['/mobil/','mobil','/mobil/hur-mycket-surf-behover-jag/','/verktyg/forstaarskostnad/'],
+ ['/forsakring/','forsakring','/forsakring/hemforsakring-skyddskoll/','/forsakring/hemforsakring-bostadsratt/'],
+ ['/ekonomi/','ekonomi','/ekonomi/kostnadskontroll-och-sparande/','/verktyg/hushallskostnadskollen/']
+] as const){
+ test('Unified category integrates partner, guide and detailed tool: '+category,async({page})=>{
+  await page.setViewportSize({width:390,height:844});
+  await page.goto(path+'?qa=1',{waitUntil:'domcontentloaded'});
+  const lane=page.getByTestId('v10-category-lane');
+  await expect(lane.getByTestId('v11-lane-tool')).toHaveAttribute('href',tool);
+  await expect(lane.getByTestId('v11-lane-guide')).toHaveAttribute('href',guide);
+  const link=lane.getByTestId('v10-partner-card').first();
+  await expect(link).toHaveAttribute('rel',/sponsored/);
+  await expect(link).toBeVisible();
+  expect(await page.evaluate(()=>Math.max(document.body.scrollWidth,document.documentElement.scrollWidth)-document.documentElement.clientWidth)).toBeLessThanOrEqual(1);
+  await page.screenshot({path:'test-results/v10/unified-category-'+category+'.png',fullPage:true,animations:'disabled'});
+ });
+}
