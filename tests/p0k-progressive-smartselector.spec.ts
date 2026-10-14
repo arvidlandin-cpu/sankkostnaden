@@ -1,9 +1,9 @@
 import {test,expect} from '@playwright/test';
 
 const pages=[
- {url:'/bredband/vilken-hastighet-behover-jag/',photo:'4008771',steps:3,area:'bredband'},
- {url:'/mobil/hur-mycket-surf-behover-jag/',photo:'4254149',steps:3,area:'mobil'},
- {url:'/elavtal/vilket-elavtal-passar-mig/',photo:'3875160',steps:5,area:'el'}
+ {url:'/bredband/vilken-hastighet-behover-jag/',steps:3,area:'bredband'},
+ {url:'/mobil/hur-mycket-surf-behover-jag/',steps:3,area:'mobil'},
+ {url:'/elavtal/vilket-elavtal-passar-mig/',steps:5,area:'el'}
 ] as const;
 
 for(const width of [390,1440]){
@@ -14,10 +14,21 @@ for(const width of [390,1440]){
    const flow=page.getByTestId('smartselector-flow');
    await expect(flow.getByRole('heading',{level:1})).toBeVisible();
    const photo=flow.getByTestId('smartselector-hero-photo');
-   await expect(photo).toBeVisible();
    await expect(photo).toHaveAttribute('alt','');
-   await expect(photo).toHaveAttribute('src',new RegExp(model.photo));
-   await expect.poll(()=>photo.evaluate((node:HTMLImageElement,minWidth:number)=>node.complete&&node.naturalWidth>=minWidth,width===390?360:700),{timeout:25000}).toBeTruthy();
+   await expect(photo).toHaveAttribute('src','/design/cost-map-home.webp');
+   await expect(flow.locator('img[src*="images.pexels.com"],img[srcset*="images.pexels.com"]')).toHaveCount(0);
+   if(width===390){
+    // Keep the first question ahead of decorative art on a narrow screen.
+    await expect(photo).toBeHidden();
+   }else{
+    await expect(photo).toBeVisible();
+    await expect.poll(()=>photo.evaluate((node:HTMLImageElement)=>node.complete&&node.naturalWidth>=1200),{timeout:25000}).toBeTruthy();
+    expect(await photo.evaluate(async(node:HTMLImageElement)=>{
+     await node.decode();
+     const source=new URL(node.currentSrc,window.location.href);
+     return source.origin===window.location.origin&&source.pathname==='/design/cost-map-home.webp';
+    })).toBe(true);
+   }
    const progress=flow.getByRole('progressbar');
    await expect(progress).toHaveAttribute('aria-valuenow','0');
    const first=flow.getByTestId('smartselector-active-question');

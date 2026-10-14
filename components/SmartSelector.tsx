@@ -27,7 +27,6 @@ type Props = {
 const categoryHome:Partial<Record<PartnerCategory,string>>={
  bredband:'/bredband/',el:'/elavtal/',mobil:'/mobil/',forsakring:'/forsakring/',ekonomi:'/ekonomi/'
 };
-const photography:Partial<Record<PartnerCategory,string>>={bredband:'4008771',el:'3875160',mobil:'4254149'};
 const introCopy:Partial<Record<PartnerCategory,string>>={
  bredband:'Hela hemmets uppkoppling börjar med rätt behov.',
  mobil:'Betala för surf du använder, inte en större siffra.',
@@ -50,9 +49,7 @@ export default function SmartSelector({ eyebrow, title, intro, questions, result
   const firstPartner=partnerCategory?getActivePartners(partnerCategory,partnerIntent,1)[0]:undefined;
   const directPartner=partnerCategory==='bredband'||partnerCategory==='el'?firstPartner:undefined;
   const current=questions[step];
-  const imageId=partnerCategory?photography[partnerCategory]:undefined;
-  const imgBase=imageId?`https://images.pexels.com/photos/${imageId}/pexels-photo-${imageId}.jpeg?auto=compress&cs=tinysrgb&fit=crop`:null;
-  const categoryTarget=partnerCategory?categoryHome[partnerCategory]||'/#jamfor':'/#jamfor';
+  const categoryTarget=partnerCategory?categoryHome[partnerCategory]||'/#kostnadskartan':'/#kostnadskartan';
 
   // Move keyboard focus to the new question/result once a person has made a choice.
   // Initial hydration keeps ordinary tab order; no forced focus on first load.
@@ -78,13 +75,10 @@ export default function SmartSelector({ eyebrow, title, intro, questions, result
     </header>
     <main className={styles.shell} data-testid='smartselector-flow'>
       <section className={styles.hero} data-category={partnerCategory||'other'}>
-        {imgBase&&<div className={styles.heroPhoto} aria-hidden='true'>
-          <img src={imgBase+'&w=1400'}
-            srcSet={imgBase+'&w=700 700w, '+imgBase+'&w=1100 1100w, '+imgBase+'&w=1800 1800w'}
-            sizes='(max-width:760px) 100vw, 55vw' alt='' loading='eager' decoding='async'
-            data-testid='smartselector-hero-photo'/>
-        </div>}
-        <div className={styles.heroFade} aria-hidden='true'/>
+        <div className={styles.heroPhoto} aria-hidden='true'>
+          <img src='/design/cost-map-home.webp' width={1200} height={1200}
+            alt='' decoding='async' data-testid='smartselector-hero-photo'/>
+        </div>
         <div className={styles.heroInner}>
           <Link className={styles.back} href={backHref}><ArrowLeft size={15}/> {backLabel}</Link>
           <span className={styles.eyebrow}><Sparkles size={16} aria-hidden='true'/> {eyebrow}</span>

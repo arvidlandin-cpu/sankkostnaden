@@ -93,7 +93,7 @@ export default function Home(){
       </header>
 
       <main>
-        <div id='kostnadskartan'><CostMapExperience/></div>
+        <div id='jamfor'><div id='kostnadskartan'><CostMapExperience/></div></div>
         <section className={styles.contentSection} id='guider'>
           <div className={styles.sectionHeading}><div><p className={styles.kicker}>ETT KLOKARE NÄSTA STEG</p><h2>Lite mer koll.<br/>Ett enklare val.</h2></div><p>Förstå det som faktiskt påverkar ditt avtal. Våra guider hjälper dig att ställa rätt frågor.</p></div>
           <div className={styles.guideGrid}>
