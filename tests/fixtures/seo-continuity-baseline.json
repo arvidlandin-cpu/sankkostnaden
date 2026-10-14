@@ -1,0 +1,2670 @@
+{
+  "baselineCommit": "c8c20b2bdc041fff1e22d5ceed4d2551d8f07cab",
+  "baselineBuild": {
+    "node": "22.16.0",
+    "next": "15.5.27",
+    "react": "19.3.0"
+  },
+  "purpose": "Preserve established URLs and intended metadata across the Cost Map release. Empty baseline titles are restored from the unchanged og:title and original brand suffix. Homepage H1 is intentionally redesigned. New indexable pages may be added without deleting this baseline.",
+  "redirects": [
+    "/bredband/hur-snabbt-bredband-behover-du/ /bredband/vilken-hastighet-behover-jag/ 301",
+    "/bredband/hur-snabbt-bredband-behover-du /bredband/vilken-hastighet-behover-jag/ 301",
+    "/mobil/hur-mycket-surf-behover-du/ /mobil/hur-mycket-surf-behover-jag/ 301",
+    "/mobil/hur-mycket-surf-behover-du /mobil/hur-mycket-surf-behover-jag/ 301",
+    "/bredband/mobilt-bredband /bredband/mobilt-bredband/ 301",
+    "/forsakring/hemforsakring-bostadsratt /forsakring/hemforsakring-bostadsratt/ 301",
+    "/mobil/5g-abonnemang /mobil/5g-abonnemang/ 301"
+  ],
+  "pages": [
+    {
+      "path": "/",
+      "canonical": "https://sankkostnaden.se/",
+      "title": "Sänk dina fasta kostnader 2026 | Jämför avtal – Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": false,
+      "description": "Sänk dina fasta kostnader. Jämför bredband, el, mobil, försäkring och lån med gratis guider och verktyg som hjälper dig hitta kostnader att se över.",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+      "h1": null,
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Organization",
+              "@id": "https://sankkostnaden.se/#organization",
+              "name": "Sänk Kostnaden",
+              "alternateName": "sankkostnaden.se",
+              "url": "https://sankkostnaden.se/",
+              "logo": "https://sankkostnaden.se/app-icon.svg",
+              "description": "Svensk guidesajt för att jämföra och sänka hushållets återkommande kostnader inom bredband, el, mobil, försäkring och privatekonomi."
+            },
+            {
+              "@type": "WebSite",
+              "@id": "https://sankkostnaden.se/#website",
+              "name": "Sänk Kostnaden",
+              "alternateName": "sankkostnaden.se",
+              "url": "https://sankkostnaden.se/",
+              "inLanguage": "sv-SE",
+              "publisher": {
+                "@id": "https://sankkostnaden.se/#organization"
+              },
+              "description": "En samlad startpunkt för att sänka hushållets återkommande kostnader. Jämför el, bredband, mobil, försäkring och privatekonomi på samma ställe."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/ekonomi/",
+      "canonical": "https://sankkostnaden.se/ekonomi/",
+      "title": "Jämför privatlån & samlingslån 2026 | Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": true,
+      "description": "Jämför privatlån och samlingslån. Kontrollera effektiv ränta, avgifter, löptid och total kostnad innan du väljer.",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+      "h1": "Jämför hela lånekostnaden – inte bara månadsbeloppet.",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebPage",
+              "name": "Jämför privatlån & samlingslån 2026",
+              "description": "Jämför privatlån och samlingslån. Kontrollera effektiv ränta, avgifter, löptid och total kostnad innan du väljer.",
+              "url": "https://sankkostnaden.se/ekonomi/",
+              "isPartOf": {
+                "@type": "WebSite",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Sänk Kostnaden",
+                  "item": "https://sankkostnaden.se/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Ekonomi",
+                  "item": "https://sankkostnaden.se/ekonomi/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/ekonomi/jamfor-privatlan/",
+      "canonical": "https://sankkostnaden.se/ekonomi/jamfor-privatlan/",
+      "title": "Jämför privatlån 2026 – effektiv ränta och total kostnad | Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": true,
+      "description": "Jämför privatlån på samma grund. Kontrollera effektiv ränta, avgifter, löptid och total återbetalning i de erbjudanden du faktiskt får.",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+      "h1": "Jämför privatlån 2026 – effektiv ränta och total kostnad",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Article",
+              "url": "https://sankkostnaden.se/ekonomi/jamfor-privatlan/",
+              "headline": "Jämför privatlån 2026 – effektiv ränta och total kostnad",
+              "description": "Jämför privatlån på samma grund. Kontrollera effektiv ränta, avgifter, löptid och total återbetalning i de erbjudanden du faktiskt får.",
+              "author": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "mainEntityOfPage": "https://sankkostnaden.se/ekonomi/jamfor-privatlan/",
+              "inLanguage": "sv-SE",
+              "isPartOf": {
+                "@type": "WebSite",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Sänk Kostnaden",
+                  "item": "https://sankkostnaden.se/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Lån & ekonomi",
+                  "item": "https://sankkostnaden.se/ekonomi/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Jämför privatlån 2026 – effektiv ränta och total kostnad",
+                  "item": "https://sankkostnaden.se/ekonomi/jamfor-privatlan/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/ekonomi/samlingslan/",
+      "canonical": "https://sankkostnaden.se/ekonomi/samlingslan/",
+      "title": "Samlingslån 2026 – när kan det sänka kostnaden? | Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": true,
+      "description": "Se när ett samlingslån kan sänka den totala kostnaden. Jämför effektiv ränta, avgifter, löptid och total återbetalning före och efter.",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+      "h1": "Samlingslån 2026 – när kan det sänka kostnaden?",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Article",
+              "url": "https://sankkostnaden.se/ekonomi/samlingslan/",
+              "headline": "Samlingslån 2026 – när kan det sänka kostnaden?",
+              "description": "Se när ett samlingslån kan sänka den totala kostnaden. Jämför effektiv ränta, avgifter, löptid och total återbetalning före och efter.",
+              "author": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "mainEntityOfPage": "https://sankkostnaden.se/ekonomi/samlingslan/",
+              "inLanguage": "sv-SE",
+              "isPartOf": {
+                "@type": "WebSite",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Sänk Kostnaden",
+                  "item": "https://sankkostnaden.se/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Lån & ekonomi",
+                  "item": "https://sankkostnaden.se/ekonomi/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Samlingslån 2026 – när kan det sänka kostnaden?",
+                  "item": "https://sankkostnaden.se/ekonomi/samlingslan/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/elavtal/",
+      "canonical": "https://sankkostnaden.se/elavtal/",
+      "title": "Jämför elavtal 2026 – pris, påslag & avtalsform | Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": true,
+      "description": "Jämför elavtal 2026 efter pris, påslag, fasta avgifter, avtalsform och villkor. Se vad som passar ditt hushåll.",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+      "h1": "Jämför elavtal. Välj med bättre koll.",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebPage",
+              "name": "Jämför elavtal 2026 – pris, påslag & avtalsform",
+              "description": "Jämför elavtal 2026 efter pris, påslag, fasta avgifter, avtalsform och villkor. Se vad som passar ditt hushåll.",
+              "url": "https://sankkostnaden.se/elavtal/",
+              "isPartOf": {
+                "@type": "WebSite",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Sänk Kostnaden",
+                  "item": "https://sankkostnaden.se/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Elavtal",
+                  "item": "https://sankkostnaden.se/elavtal/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/elavtal/jamfor-elavtal/",
+      "canonical": "https://sankkostnaden.se/elavtal/jamfor-elavtal/",
+      "title": "Jämför elavtal 2026 – pris, påslag och avtalsform | Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": true,
+      "description": "Jämför elavtal på ett sätt som tar hänsyn till påslag, fasta avgifter, avtalsform, uppsägningstid och din egen årsförbrukning.",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+      "h1": "Jämför elavtal 2026 – pris, påslag och avtalsform",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Article",
+              "url": "https://sankkostnaden.se/elavtal/jamfor-elavtal/",
+              "headline": "Jämför elavtal 2026 – pris, påslag och avtalsform",
+              "description": "Jämför elavtal på ett sätt som tar hänsyn till påslag, fasta avgifter, avtalsform, uppsägningstid och din egen årsförbrukning.",
+              "author": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "mainEntityOfPage": "https://sankkostnaden.se/elavtal/jamfor-elavtal/",
+              "inLanguage": "sv-SE",
+              "isPartOf": {
+                "@type": "WebSite",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Sänk Kostnaden",
+                  "item": "https://sankkostnaden.se/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Elavtal",
+                  "item": "https://sankkostnaden.se/elavtal/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Jämför elavtal 2026 – pris, påslag och avtalsform",
+                  "item": "https://sankkostnaden.se/elavtal/jamfor-elavtal/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/elavtal/billigaste-elavtalet/",
+      "canonical": "https://sankkostnaden.se/elavtal/billigaste-elavtalet/",
+      "title": "Billigaste elavtalet 2026 – så jämför du rätt | Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": false,
+      "description": "Så hittar du ett billigare elavtal 2026. Jämför påslag, fasta avgifter, kampanjer och avtalsform utifrån din årsförbrukning.",
+      "robots": null,
+      "h1": "Billigaste elavtalet – räkna på hela kostnaden",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          "name": "Billigaste elavtalet 2026 – så jämför du rätt",
+          "description": "Så hittar du ett billigare elavtal 2026. Jämför påslag, fasta avgifter, kampanjer och avtalsform utifrån din årsförbrukning.",
+          "url": "https://sankkostnaden.se/elavtal/billigaste-elavtalet/",
+          "isPartOf": {
+            "@type": "WebSite",
+            "name": "Sänk Kostnaden",
+            "url": "https://sankkostnaden.se/"
+          }
+        }
+      ]
+    },
+    {
+      "path": "/elavtal/byta-elavtal/",
+      "canonical": "https://sankkostnaden.se/elavtal/byta-elavtal/",
+      "title": "Byta elavtal 2026 – så gör du steg för steg | Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": true,
+      "description": "Byta elavtal? Se hur ett byte går till och jämför elpris, påslag, månadsavgift, bindningstid och avtalsform innan du väljer nytt avtal.",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+      "h1": "Byta elavtal 2026 – så gör du steg för steg",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Article",
+              "url": "https://sankkostnaden.se/elavtal/byta-elavtal/",
+              "headline": "Byta elavtal 2026 – så gör du steg för steg",
+              "description": "Byta elavtal? Se hur ett byte går till och jämför elpris, påslag, månadsavgift, bindningstid och avtalsform innan du väljer nytt avtal.",
+              "author": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "mainEntityOfPage": "https://sankkostnaden.se/elavtal/byta-elavtal/",
+              "inLanguage": "sv-SE",
+              "isPartOf": {
+                "@type": "WebSite",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Sänk Kostnaden",
+                  "item": "https://sankkostnaden.se/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Elavtal",
+                  "item": "https://sankkostnaden.se/elavtal/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Byta elavtal 2026 – så gör du steg för steg",
+                  "item": "https://sankkostnaden.se/elavtal/byta-elavtal/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/elavtal/elavtal-utan-bindningstid/",
+      "canonical": "https://sankkostnaden.se/elavtal/elavtal-utan-bindningstid/",
+      "title": "Elavtal utan bindningstid 2026 – vad ska du jämföra? | Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": true,
+      "description": "Så jämför du elavtal utan bindningstid utifrån uppsägningstid, påslag, fasta avgifter, kampanjvillkor och din årsförbrukning.",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+      "h1": "Elavtal utan bindningstid 2026 – vad ska du jämföra?",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Article",
+              "url": "https://sankkostnaden.se/elavtal/elavtal-utan-bindningstid/",
+              "headline": "Elavtal utan bindningstid 2026 – vad ska du jämföra?",
+              "description": "Så jämför du elavtal utan bindningstid utifrån uppsägningstid, påslag, fasta avgifter, kampanjvillkor och din årsförbrukning.",
+              "author": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "mainEntityOfPage": "https://sankkostnaden.se/elavtal/elavtal-utan-bindningstid/",
+              "inLanguage": "sv-SE",
+              "isPartOf": {
+                "@type": "WebSite",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Sänk Kostnaden",
+                  "item": "https://sankkostnaden.se/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Elavtal",
+                  "item": "https://sankkostnaden.se/elavtal/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Elavtal utan bindningstid 2026 – vad ska du jämföra?",
+                  "item": "https://sankkostnaden.se/elavtal/elavtal-utan-bindningstid/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/elavtal/rorligt-elpris/",
+      "canonical": "https://sankkostnaden.se/elavtal/rorligt-elpris/",
+      "title": "Rörligt elpris 2026 – så fungerar rörligt elavtal | Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": true,
+      "description": "Förstå rörligt elpris och jämför rörliga elavtal efter påslag, fast avgift, uppsägningstid och total kostnad för din förbrukning.",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+      "h1": "Rörligt elpris 2026 – så fungerar rörligt elavtal",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Article",
+              "url": "https://sankkostnaden.se/elavtal/rorligt-elpris/",
+              "headline": "Rörligt elpris 2026 – så fungerar rörligt elavtal",
+              "description": "Förstå rörligt elpris och jämför rörliga elavtal efter påslag, fast avgift, uppsägningstid och total kostnad för din förbrukning.",
+              "author": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "mainEntityOfPage": "https://sankkostnaden.se/elavtal/rorligt-elpris/",
+              "inLanguage": "sv-SE",
+              "isPartOf": {
+                "@type": "WebSite",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Sänk Kostnaden",
+                  "item": "https://sankkostnaden.se/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Elavtal",
+                  "item": "https://sankkostnaden.se/elavtal/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Rörligt elpris 2026 – så fungerar rörligt elavtal",
+                  "item": "https://sankkostnaden.se/elavtal/rorligt-elpris/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/elavtal/kvartspris/",
+      "canonical": "https://sankkostnaden.se/elavtal/kvartspris/",
+      "title": "Kvartspris på el 2026 – när kan det löna sig? | Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": true,
+      "description": "Guide till kvartspris på el: hur avtalsformen fungerar, vem som kan dra nytta av att styra förbrukningen och vad du bör jämföra.",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+      "h1": "Kvartspris på el 2026 – när kan det löna sig?",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Article",
+              "url": "https://sankkostnaden.se/elavtal/kvartspris/",
+              "headline": "Kvartspris på el 2026 – när kan det löna sig?",
+              "description": "Guide till kvartspris på el: hur avtalsformen fungerar, vem som kan dra nytta av att styra förbrukningen och vad du bör jämföra.",
+              "author": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "mainEntityOfPage": "https://sankkostnaden.se/elavtal/kvartspris/",
+              "inLanguage": "sv-SE",
+              "isPartOf": {
+                "@type": "WebSite",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Sänk Kostnaden",
+                  "item": "https://sankkostnaden.se/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Elavtal",
+                  "item": "https://sankkostnaden.se/elavtal/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Kvartspris på el 2026 – när kan det löna sig?",
+                  "item": "https://sankkostnaden.se/elavtal/kvartspris/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/elavtal/rorligt-fast-kvartspris/",
+      "canonical": "https://sankkostnaden.se/elavtal/rorligt-fast-kvartspris/",
+      "title": "Rörligt, fast eller kvartspris på el 2026? | Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": false,
+      "description": "Rörligt, fast eller kvartspris på el 2026? Jämför avtalsformerna utifrån prisrisk, styrbar förbrukning, avgifter och bindningstid innan du väljer.",
+      "robots": "index,follow,max-image-preview:large",
+      "h1": "Rörligt, fast eller kvartspris?",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "headline": "Rörligt, fast eller kvartspris på el 2026?",
+          "description": "Jämför rörligt elpris, fast elpris och kvartspris utifrån prisrisk, styrbar förbrukning, avgifter och bindningstid.",
+          "url": "https://sankkostnaden.se/elavtal/rorligt-fast-kvartspris/",
+          "dateModified": "2026-09-19",
+          "publisher": {
+            "@type": "Organization",
+            "name": "Sänk Kostnaden",
+            "url": "https://sankkostnaden.se/"
+          }
+        }
+      ]
+    },
+    {
+      "path": "/elavtal/sa-laser-du-elfakturan/",
+      "canonical": "https://sankkostnaden.se/elavtal/sa-laser-du-elfakturan/",
+      "title": "Så läser du elfakturan – Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": false,
+      "description": "Förstå skillnaden mellan elhandel och elnät och hitta uppgifterna du behöver för att jämföra elavtal.",
+      "robots": "index,follow,max-image-preview:large",
+      "h1": "Så läser du elfakturan",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          "name": "Så läser du elfakturan",
+          "description": "Förstå skillnaden mellan elhandel och elnät och hitta uppgifterna du behöver för att jämföra elavtal.",
+          "url": "https://sankkostnaden.se/elavtal/sa-laser-du-elfakturan/",
+          "isPartOf": {
+            "@type": "WebSite",
+            "name": "Sänk Kostnaden",
+            "url": "https://sankkostnaden.se/"
+          }
+        }
+      ]
+    },
+    {
+      "path": "/bredband/",
+      "canonical": "https://sankkostnaden.se/bredband/",
+      "title": "Jämför bredband 2026 – pris & hastighet | Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": true,
+      "description": "Jämför bredband 2026 efter pris, hastighet och bindningstid. Se vilken fart du behöver och kontrollera vad som finns på din adress.",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+      "h1": "Hitta bredband som passar ditt hem – inte bara ett lockpris.",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebPage",
+              "name": "Jämför bredband 2026 – pris & hastighet",
+              "description": "Jämför bredband 2026 efter pris, hastighet och bindningstid. Se vilken fart du behöver och kontrollera vad som finns på din adress.",
+              "url": "https://sankkostnaden.se/bredband/",
+              "isPartOf": {
+                "@type": "WebSite",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Sänk Kostnaden",
+                  "item": "https://sankkostnaden.se/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Bredband",
+                  "item": "https://sankkostnaden.se/bredband/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/bredband/fiber/",
+      "canonical": "https://sankkostnaden.se/bredband/fiber/",
+      "title": "Fiberbredband 2026 – jämför hastighet och pris | Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": true,
+      "description": "Så jämför du fiberbredband efter tillgängliga operatörer, hastighet, kampanjpris, ordinarie pris, router och bindningstid.",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+      "h1": "Fiberbredband 2026 – jämför hastighet och pris",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Article",
+              "url": "https://sankkostnaden.se/bredband/fiber/",
+              "headline": "Fiberbredband 2026 – jämför hastighet och pris",
+              "description": "Så jämför du fiberbredband efter tillgängliga operatörer, hastighet, kampanjpris, ordinarie pris, router och bindningstid.",
+              "author": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "mainEntityOfPage": "https://sankkostnaden.se/bredband/fiber/",
+              "inLanguage": "sv-SE",
+              "isPartOf": {
+                "@type": "WebSite",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Sänk Kostnaden",
+                  "item": "https://sankkostnaden.se/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Bredband",
+                  "item": "https://sankkostnaden.se/bredband/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Fiberbredband 2026 – jämför hastighet och pris",
+                  "item": "https://sankkostnaden.se/bredband/fiber/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/bredband/5g-bredband/",
+      "canonical": "https://sankkostnaden.se/bredband/5g-bredband/",
+      "title": "5G-bredband 2026 – när kan det ersätta fiber? | Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": true,
+      "description": "Guide till 5G-bredband: jämför täckning, normal hastighet, datavillkor, router, stabilitet och kostnad mot fiber.",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+      "h1": "5G-bredband 2026 – när kan det ersätta fiber?",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Article",
+              "url": "https://sankkostnaden.se/bredband/5g-bredband/",
+              "headline": "5G-bredband 2026 – när kan det ersätta fiber?",
+              "description": "Guide till 5G-bredband: jämför täckning, normal hastighet, datavillkor, router, stabilitet och kostnad mot fiber.",
+              "author": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "mainEntityOfPage": "https://sankkostnaden.se/bredband/5g-bredband/",
+              "inLanguage": "sv-SE",
+              "isPartOf": {
+                "@type": "WebSite",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Sänk Kostnaden",
+                  "item": "https://sankkostnaden.se/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Bredband",
+                  "item": "https://sankkostnaden.se/bredband/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "5G-bredband 2026 – när kan det ersätta fiber?",
+                  "item": "https://sankkostnaden.se/bredband/5g-bredband/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/bredband/billigaste-bredbandet/",
+      "canonical": "https://sankkostnaden.se/bredband/billigaste-bredbandet/",
+      "title": "Billigaste bredbandet 2026 – så jämför du rätt | Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": false,
+      "description": "Hitta billigaste bredbandet genom att jämföra pris första året, hastighet, router, bindningstid och vad som faktiskt finns på din adress.",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+      "h1": "Billigaste bredbandet – jämför verklig kostnad",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          "name": "Billigaste bredbandet 2026 – så jämför du rätt",
+          "description": "Hitta billigaste bredbandet genom att jämföra pris första året, hastighet, router, bindningstid och vad som faktiskt finns på din adress.",
+          "url": "https://sankkostnaden.se/bredband/billigaste-bredbandet/",
+          "isPartOf": {
+            "@type": "WebSite",
+            "name": "Sänk Kostnaden",
+            "url": "https://sankkostnaden.se/"
+          }
+        }
+      ]
+    },
+    {
+      "path": "/bredband/basta-bredbandet/",
+      "canonical": "https://sankkostnaden.se/bredband/basta-bredbandet/",
+      "title": "Bästa bredbandet 2026 – vad ska du välja? | Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": false,
+      "description": "Så väljer du bästa bredbandet utifrån adress, pris, hastighet, teknik, wifi och bindningstid.",
+      "robots": null,
+      "h1": "Bästa bredbandet är det som passar din adress",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          "name": "Bästa bredbandet 2026 – vad ska du välja?",
+          "description": "Så väljer du bästa bredbandet utifrån adress, pris, hastighet, teknik, wifi och bindningstid.",
+          "url": "https://sankkostnaden.se/bredband/basta-bredbandet/",
+          "isPartOf": {
+            "@type": "WebSite",
+            "name": "Sänk Kostnaden",
+            "url": "https://sankkostnaden.se/"
+          }
+        }
+      ]
+    },
+    {
+      "path": "/bredband/bredband-pa-min-adress/",
+      "canonical": "https://sankkostnaden.se/bredband/bredband-pa-min-adress/",
+      "title": "Bredband på min adress 2026 – jämför alternativ | Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": false,
+      "description": "Så kontrollerar du vilket bredband som finns på din adress och jämför fiber, kabel och mobilt bredband på pris, hastighet och villkor.",
+      "robots": null,
+      "h1": "Bredband på min adress – se vad som finns",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          "name": "Bredband på min adress 2026 – jämför alternativ",
+          "description": "Så kontrollerar du vilket bredband som finns på din adress och jämför fiber, kabel och mobilt bredband på pris, hastighet och villkor.",
+          "url": "https://sankkostnaden.se/bredband/bredband-pa-min-adress/",
+          "isPartOf": {
+            "@type": "WebSite",
+            "name": "Sänk Kostnaden",
+            "url": "https://sankkostnaden.se/"
+          }
+        }
+      ]
+    },
+    {
+      "path": "/bredband/utan-bindningstid/",
+      "canonical": "https://sankkostnaden.se/bredband/utan-bindningstid/",
+      "title": "Bredband utan bindningstid 2026 – så jämför du rätt | Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": true,
+      "description": "Så jämför du bredband utan bindningstid utifrån totalpris, uppsägningstid, router, startavgift och hastighet.",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+      "h1": "Bredband utan bindningstid 2026 – så jämför du rätt",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Article",
+              "url": "https://sankkostnaden.se/bredband/utan-bindningstid/",
+              "headline": "Bredband utan bindningstid 2026 – så jämför du rätt",
+              "description": "Så jämför du bredband utan bindningstid utifrån totalpris, uppsägningstid, router, startavgift och hastighet.",
+              "author": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "mainEntityOfPage": "https://sankkostnaden.se/bredband/utan-bindningstid/",
+              "inLanguage": "sv-SE",
+              "isPartOf": {
+                "@type": "WebSite",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Sänk Kostnaden",
+                  "item": "https://sankkostnaden.se/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Bredband",
+                  "item": "https://sankkostnaden.se/bredband/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Bredband utan bindningstid 2026 – så jämför du rätt",
+                  "item": "https://sankkostnaden.se/bredband/utan-bindningstid/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/bredband/100-100/",
+      "canonical": "https://sankkostnaden.se/bredband/100-100/",
+      "title": "Bredband 100/100 – räcker 100 Mbit/s 2026? | Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": true,
+      "description": "Bredband 100/100: se vad 100 Mbit/s räcker till för streaming, gaming och familjen och hur du jämför pris och bindningstid.",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+      "h1": "Bredband 100/100 – räcker 100 Mbit/s 2026?",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Article",
+              "url": "https://sankkostnaden.se/bredband/100-100/",
+              "headline": "Bredband 100/100 – räcker 100 Mbit/s 2026?",
+              "description": "Bredband 100/100: se vad 100 Mbit/s räcker till för streaming, gaming och familjen och hur du jämför pris och bindningstid.",
+              "author": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "mainEntityOfPage": "https://sankkostnaden.se/bredband/100-100/",
+              "inLanguage": "sv-SE",
+              "isPartOf": {
+                "@type": "WebSite",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Sänk Kostnaden",
+                  "item": "https://sankkostnaden.se/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Bredband",
+                  "item": "https://sankkostnaden.se/bredband/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Bredband 100/100 – räcker 100 Mbit/s 2026?",
+                  "item": "https://sankkostnaden.se/bredband/100-100/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/bredband/250-250/",
+      "canonical": "https://sankkostnaden.se/bredband/250-250/",
+      "title": "Bredband 250/250 2026 – när är 250 Mbit/s värt priset? | Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": true,
+      "description": "Guide till bredband 250/250 Mbit/s: vilka hushåll som har nytta av hastigheten och hur du jämför pris, wifi och årskostnad.",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+      "h1": "Bredband 250/250 2026 – när är 250 Mbit/s värt priset?",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Article",
+              "url": "https://sankkostnaden.se/bredband/250-250/",
+              "headline": "Bredband 250/250 2026 – när är 250 Mbit/s värt priset?",
+              "description": "Guide till bredband 250/250 Mbit/s: vilka hushåll som har nytta av hastigheten och hur du jämför pris, wifi och årskostnad.",
+              "author": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "mainEntityOfPage": "https://sankkostnaden.se/bredband/250-250/",
+              "inLanguage": "sv-SE",
+              "isPartOf": {
+                "@type": "WebSite",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Sänk Kostnaden",
+                  "item": "https://sankkostnaden.se/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Bredband",
+                  "item": "https://sankkostnaden.se/bredband/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Bredband 250/250 2026 – när är 250 Mbit/s värt priset?",
+                  "item": "https://sankkostnaden.se/bredband/250-250/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/bredband/500-500/",
+      "canonical": "https://sankkostnaden.se/bredband/500-500/",
+      "title": "Bredband 500/500 2026 – behöver du 500 Mbit/s? | Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": true,
+      "description": "Guide till bredband 500/500 Mbit/s: när hastigheten gör skillnad och hur du jämför 500 Mbit/s med billigare alternativ.",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+      "h1": "Bredband 500/500 2026 – behöver du 500 Mbit/s?",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Article",
+              "url": "https://sankkostnaden.se/bredband/500-500/",
+              "headline": "Bredband 500/500 2026 – behöver du 500 Mbit/s?",
+              "description": "Guide till bredband 500/500 Mbit/s: när hastigheten gör skillnad och hur du jämför 500 Mbit/s med billigare alternativ.",
+              "author": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "mainEntityOfPage": "https://sankkostnaden.se/bredband/500-500/",
+              "inLanguage": "sv-SE",
+              "isPartOf": {
+                "@type": "WebSite",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Sänk Kostnaden",
+                  "item": "https://sankkostnaden.se/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Bredband",
+                  "item": "https://sankkostnaden.se/bredband/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Bredband 500/500 2026 – behöver du 500 Mbit/s?",
+                  "item": "https://sankkostnaden.se/bredband/500-500/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/bredband/1000-1000/",
+      "canonical": "https://sankkostnaden.se/bredband/1000-1000/",
+      "title": "Bredband 1000/1000 2026 – behöver du 1 Gbit/s? | Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": true,
+      "description": "Guide till bredband 1000/1000 Mbit/s: när gigabitbredband är motiverat och när en billigare hastighet sannolikt räcker.",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+      "h1": "Bredband 1000/1000 2026 – behöver du 1 Gbit/s?",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Article",
+              "url": "https://sankkostnaden.se/bredband/1000-1000/",
+              "headline": "Bredband 1000/1000 2026 – behöver du 1 Gbit/s?",
+              "description": "Guide till bredband 1000/1000 Mbit/s: när gigabitbredband är motiverat och när en billigare hastighet sannolikt räcker.",
+              "author": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "mainEntityOfPage": "https://sankkostnaden.se/bredband/1000-1000/",
+              "inLanguage": "sv-SE",
+              "isPartOf": {
+                "@type": "WebSite",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Sänk Kostnaden",
+                  "item": "https://sankkostnaden.se/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Bredband",
+                  "item": "https://sankkostnaden.se/bredband/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Bredband 1000/1000 2026 – behöver du 1 Gbit/s?",
+                  "item": "https://sankkostnaden.se/bredband/1000-1000/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/bredband/mobilt-bredband/",
+      "canonical": "https://sankkostnaden.se/bredband/mobilt-bredband/",
+      "title": "Mobilt bredband 2026 – så jämför du pris, 5G och surf | Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": true,
+      "description": "Jämför mobilt bredband efter täckning, 4G/5G, datamängd, router, bindningstid och verklig månadskostnad.",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+      "h1": "Mobilt bredband 2026 – så jämför du pris, 5G och surf",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Article",
+              "url": "https://sankkostnaden.se/bredband/mobilt-bredband/",
+              "headline": "Mobilt bredband 2026 – så jämför du pris, 5G och surf",
+              "description": "Jämför mobilt bredband efter täckning, 4G/5G, datamängd, router, bindningstid och verklig månadskostnad.",
+              "author": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "mainEntityOfPage": "https://sankkostnaden.se/bredband/mobilt-bredband/",
+              "inLanguage": "sv-SE",
+              "isPartOf": {
+                "@type": "WebSite",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Sänk Kostnaden",
+                  "item": "https://sankkostnaden.se/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Bredband",
+                  "item": "https://sankkostnaden.se/bredband/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Mobilt bredband 2026 – så jämför du pris, 5G och surf",
+                  "item": "https://sankkostnaden.se/bredband/mobilt-bredband/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/bredband/fiber-eller-mobilt-bredband/",
+      "canonical": "https://sankkostnaden.se/bredband/fiber-eller-mobilt-bredband/",
+      "title": "Fiber eller 5G/mobilt bredband? Test 2026 | Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": false,
+      "description": "Gör testet: fiber eller 5G/mobilt bredband? Jämför hushåll, stabilitetskrav, användning och mobil signal och få en personlig uppkopplingsprofil.",
+      "robots": "index,follow",
+      "h1": "Fiber eller 5G – vad passar ditt hem?",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          "name": "Fiber eller 5G/mobilt bredband? Test 2026",
+          "description": "Gör testet: fiber eller 5G/mobilt bredband? Jämför hushåll, stabilitetskrav, användning och mobil signal och få en personlig uppkopplingsprofil.",
+          "url": "https://sankkostnaden.se/bredband/fiber-eller-mobilt-bredband/",
+          "isPartOf": {
+            "@type": "WebSite",
+            "name": "Sänk Kostnaden",
+            "url": "https://sankkostnaden.se/"
+          }
+        }
+      ]
+    },
+    {
+      "path": "/mobil/",
+      "canonical": "https://sankkostnaden.se/mobil/",
+      "title": "Jämför mobilabonnemang 2026 – pris & surf | Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": true,
+      "description": "Jämför mobilabonnemang 2026 efter pris, surf, nät och bindningstid. Räkna på verklig årskostnad för en person eller familj.",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+      "h1": "Jämför mobilabonnemang utan att betala för surf du inte behöver.",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebPage",
+              "name": "Jämför mobilabonnemang 2026 – pris & surf",
+              "description": "Jämför mobilabonnemang 2026 efter pris, surf, nät och bindningstid. Räkna på verklig årskostnad för en person eller familj.",
+              "url": "https://sankkostnaden.se/mobil/",
+              "isPartOf": {
+                "@type": "WebSite",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Sänk Kostnaden",
+                  "item": "https://sankkostnaden.se/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Mobil",
+                  "item": "https://sankkostnaden.se/mobil/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/mobil/5g-abonnemang/",
+      "canonical": "https://sankkostnaden.se/mobil/5g-abonnemang/",
+      "title": "5G-abonnemang 2026 – behöver du betala extra för 5G? | Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": true,
+      "description": "Jämför mobilabonnemang med 5G efter nät, täckning, hastighetsvillkor, surfmängd och total månadskostnad.",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+      "h1": "5G-abonnemang 2026 – behöver du betala extra för 5G?",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Article",
+              "url": "https://sankkostnaden.se/mobil/5g-abonnemang/",
+              "headline": "5G-abonnemang 2026 – behöver du betala extra för 5G?",
+              "description": "Jämför mobilabonnemang med 5G efter nät, täckning, hastighetsvillkor, surfmängd och total månadskostnad.",
+              "author": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "mainEntityOfPage": "https://sankkostnaden.se/mobil/5g-abonnemang/",
+              "inLanguage": "sv-SE",
+              "isPartOf": {
+                "@type": "WebSite",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Sänk Kostnaden",
+                  "item": "https://sankkostnaden.se/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Mobil",
+                  "item": "https://sankkostnaden.se/mobil/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "5G-abonnemang 2026 – behöver du betala extra för 5G?",
+                  "item": "https://sankkostnaden.se/mobil/5g-abonnemang/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/mobil/mobilabonnemang-55-plus/",
+      "canonical": "https://sankkostnaden.se/mobil/mobilabonnemang-55-plus/",
+      "title": "Mobilabonnemang 55+ 2026 – jämför pris och seniorrabatt | Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": true,
+      "description": "Mobilabonnemang 55+: jämför seniorrabatt med vanliga abonnemang utifrån pris, surf, nät, bindningstid och verklig årskostnad.",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+      "h1": "Mobilabonnemang 55+ 2026 – jämför pris och seniorrabatt",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Article",
+              "url": "https://sankkostnaden.se/mobil/mobilabonnemang-55-plus/",
+              "headline": "Mobilabonnemang 55+ 2026 – jämför pris och seniorrabatt",
+              "description": "Mobilabonnemang 55+: jämför seniorrabatt med vanliga abonnemang utifrån pris, surf, nät, bindningstid och verklig årskostnad.",
+              "author": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "mainEntityOfPage": "https://sankkostnaden.se/mobil/mobilabonnemang-55-plus/",
+              "inLanguage": "sv-SE",
+              "isPartOf": {
+                "@type": "WebSite",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Sänk Kostnaden",
+                  "item": "https://sankkostnaden.se/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Mobil",
+                  "item": "https://sankkostnaden.se/mobil/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Mobilabonnemang 55+ 2026 – jämför pris och seniorrabatt",
+                  "item": "https://sankkostnaden.se/mobil/mobilabonnemang-55-plus/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/mobil/billigaste-mobilabonnemanget/",
+      "canonical": "https://sankkostnaden.se/mobil/billigaste-mobilabonnemanget/",
+      "title": "Billigaste mobilabonnemanget 2026 – jämför rätt | Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": false,
+      "description": "Jämför billiga mobilabonnemang efter surf, nät, kampanjpris, ordinarie pris och verklig kostnad första året.",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+      "h1": "Billigaste mobilabonnemanget – räkna hela året",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          "name": "Billigaste mobilabonnemanget 2026 – jämför rätt",
+          "description": "Jämför billiga mobilabonnemang efter surf, nät, kampanjpris, ordinarie pris och verklig kostnad första året.",
+          "url": "https://sankkostnaden.se/mobil/billigaste-mobilabonnemanget/",
+          "isPartOf": {
+            "@type": "WebSite",
+            "name": "Sänk Kostnaden",
+            "url": "https://sankkostnaden.se/"
+          }
+        }
+      ]
+    },
+    {
+      "path": "/mobil/basta-mobilabonnemanget/",
+      "canonical": "https://sankkostnaden.se/mobil/basta-mobilabonnemanget/",
+      "title": "Bästa mobilabonnemanget 2026 – så väljer du rätt för dig | Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": true,
+      "description": "Så jämför du mobilabonnemang 2026 efter täckning, surf, pris, bindningstid och familjebehov utan att fastna i en generell topplista.",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+      "h1": "Bästa mobilabonnemanget 2026 – så väljer du rätt för dig",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Article",
+              "url": "https://sankkostnaden.se/mobil/basta-mobilabonnemanget/",
+              "headline": "Bästa mobilabonnemanget 2026 – så väljer du rätt för dig",
+              "description": "Så jämför du mobilabonnemang 2026 efter täckning, surf, pris, bindningstid och familjebehov utan att fastna i en generell topplista.",
+              "author": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "mainEntityOfPage": "https://sankkostnaden.se/mobil/basta-mobilabonnemanget/",
+              "inLanguage": "sv-SE",
+              "isPartOf": {
+                "@type": "WebSite",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Sänk Kostnaden",
+                  "item": "https://sankkostnaden.se/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Mobil",
+                  "item": "https://sankkostnaden.se/mobil/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Bästa mobilabonnemanget 2026 – så väljer du rätt för dig",
+                  "item": "https://sankkostnaden.se/mobil/basta-mobilabonnemanget/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/mobil/fri-surf/",
+      "canonical": "https://sankkostnaden.se/mobil/fri-surf/",
+      "title": "Är fri surf värt det? Test 2026 | Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": false,
+      "description": "Är fri surf värt priset? Svara på fem frågor om data, streaming, hotspot och wifi och få en personlig fri-surf-profil.",
+      "robots": "index,follow",
+      "h1": "Är fri surf faktiskt värt det för dig?",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          "name": "Är fri surf värt det? Test 2026",
+          "description": "Är fri surf värt priset? Svara på fem frågor om data, streaming, hotspot och wifi och få en personlig fri-surf-profil.",
+          "url": "https://sankkostnaden.se/mobil/fri-surf/",
+          "isPartOf": {
+            "@type": "WebSite",
+            "name": "Sänk Kostnaden",
+            "url": "https://sankkostnaden.se/"
+          }
+        }
+      ]
+    },
+    {
+      "path": "/mobil/familjeabonnemang/",
+      "canonical": "https://sankkostnaden.se/mobil/familjeabonnemang/",
+      "title": "Familjeabonnemang mobil 2026 – jämför pris för hela familjen | Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": true,
+      "description": "Jämför familjeabonnemang för mobil: totalpris för familjen, surf, nät, kostnad per extra användare och verklig årskostnad.",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+      "h1": "Familjeabonnemang mobil 2026 – jämför pris för hela familjen",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Article",
+              "url": "https://sankkostnaden.se/mobil/familjeabonnemang/",
+              "headline": "Familjeabonnemang mobil 2026 – jämför pris för hela familjen",
+              "description": "Jämför familjeabonnemang för mobil: totalpris för familjen, surf, nät, kostnad per extra användare och verklig årskostnad.",
+              "author": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "mainEntityOfPage": "https://sankkostnaden.se/mobil/familjeabonnemang/",
+              "inLanguage": "sv-SE",
+              "isPartOf": {
+                "@type": "WebSite",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Sänk Kostnaden",
+                  "item": "https://sankkostnaden.se/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Mobil",
+                  "item": "https://sankkostnaden.se/mobil/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Familjeabonnemang mobil 2026 – jämför pris för hela familjen",
+                  "item": "https://sankkostnaden.se/mobil/familjeabonnemang/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/mobil/utan-bindningstid/",
+      "canonical": "https://sankkostnaden.se/mobil/utan-bindningstid/",
+      "title": "Mobilabonnemang utan bindningstid 2026 – vad ska du jämföra? | Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": true,
+      "description": "Så jämför du mobilabonnemang utan bindningstid: surf, nät, kampanjpris, uppsägningstid och kostnad under första året.",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+      "h1": "Mobilabonnemang utan bindningstid 2026 – vad ska du jämföra?",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Article",
+              "url": "https://sankkostnaden.se/mobil/utan-bindningstid/",
+              "headline": "Mobilabonnemang utan bindningstid 2026 – vad ska du jämföra?",
+              "description": "Så jämför du mobilabonnemang utan bindningstid: surf, nät, kampanjpris, uppsägningstid och kostnad under första året.",
+              "author": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "mainEntityOfPage": "https://sankkostnaden.se/mobil/utan-bindningstid/",
+              "inLanguage": "sv-SE",
+              "isPartOf": {
+                "@type": "WebSite",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Sänk Kostnaden",
+                  "item": "https://sankkostnaden.se/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Mobil",
+                  "item": "https://sankkostnaden.se/mobil/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Mobilabonnemang utan bindningstid 2026 – vad ska du jämföra?",
+                  "item": "https://sankkostnaden.se/mobil/utan-bindningstid/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/mobil/refurbished-mobil/",
+      "canonical": "https://sankkostnaden.se/mobil/refurbished-mobil/",
+      "title": "Refurbished mobil 2026 – spara pengar på begagnad iPhone | Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": false,
+      "description": "Refurbished mobil kan sänka kostnaden jämfört med att köpa nytt. Jämför skick, batteri, garanti, lagring och totalpris innan du köper.",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+      "h1": "Sänk mobilkostnaden genom att köpa refurbished",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Article",
+              "url": "https://sankkostnaden.se/mobil/refurbished-mobil/",
+              "headline": "Refurbished mobil 2026 – spara pengar på begagnad iPhone",
+              "description": "Så jämför du refurbished mobil på skick, batteri, garanti och totalpris.",
+              "author": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "inLanguage": "sv-SE"
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Sänk Kostnaden",
+                  "item": "https://sankkostnaden.se/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Mobil",
+                  "item": "https://sankkostnaden.se/mobil/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Refurbished mobil",
+                  "item": "https://sankkostnaden.se/mobil/refurbished-mobil/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/forsakring/",
+      "canonical": "https://sankkostnaden.se/forsakring/",
+      "title": "Försäkringsguider 2026 – hem, djur & jämförelse | Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": true,
+      "description": "Jämför hemförsäkring och djurförsäkring efter premie, självrisk, omfattning och villkor.",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+      "h1": "Välj rätt försäkringsskydd innan du jämför priset.",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebPage",
+              "name": "Försäkringsguider 2026 – hem, djur & jämförelse",
+              "description": "Jämför hemförsäkring och djurförsäkring efter premie, självrisk, omfattning och villkor.",
+              "url": "https://sankkostnaden.se/forsakring/",
+              "isPartOf": {
+                "@type": "WebSite",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Sänk Kostnaden",
+                  "item": "https://sankkostnaden.se/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Försäkring",
+                  "item": "https://sankkostnaden.se/forsakring/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/forsakring/djurforsakring/",
+      "canonical": "https://sankkostnaden.se/forsakring/djurforsakring/",
+      "title": "Jämför djurförsäkring 2026 – pris, självrisk och skydd | Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": true,
+      "description": "Jämför djurförsäkring 2026 för hund eller katt. Kontrollera premie, självrisk, veterinärvårdsbelopp, ersättningstak, karens och viktiga undantag.",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+      "h1": "Jämför djurförsäkring 2026 – pris, självrisk och skydd",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Article",
+              "url": "https://sankkostnaden.se/forsakring/djurforsakring/",
+              "headline": "Jämför djurförsäkring 2026 – pris, självrisk och skydd",
+              "description": "Jämför djurförsäkring 2026 för hund eller katt. Kontrollera premie, självrisk, veterinärvårdsbelopp, ersättningstak, karens och viktiga undantag.",
+              "author": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "mainEntityOfPage": "https://sankkostnaden.se/forsakring/djurforsakring/",
+              "inLanguage": "sv-SE",
+              "isPartOf": {
+                "@type": "WebSite",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Sänk Kostnaden",
+                  "item": "https://sankkostnaden.se/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Försäkring",
+                  "item": "https://sankkostnaden.se/forsakring/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Jämför djurförsäkring 2026 – pris, självrisk och skydd",
+                  "item": "https://sankkostnaden.se/forsakring/djurforsakring/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/forsakring/hemforsakring-hyresratt/",
+      "canonical": "https://sankkostnaden.se/forsakring/hemforsakring-hyresratt/",
+      "title": "Vad kostar hemförsäkring hyresrätt 2026? Pris per månad & skydd | Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": true,
+      "description": "Vad kostar hemförsäkring för hyresrätt 2026? Se vad som påverkar pris per månad och jämför självrisk, lösöre, reseskydd och allrisk.",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+      "h1": "Vad kostar hemförsäkring hyresrätt 2026? Pris per månad & skydd",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Article",
+              "url": "https://sankkostnaden.se/forsakring/hemforsakring-hyresratt/",
+              "headline": "Vad kostar hemförsäkring hyresrätt 2026? Pris per månad & skydd",
+              "description": "Vad kostar hemförsäkring för hyresrätt 2026? Se vad som påverkar pris per månad och jämför självrisk, lösöre, reseskydd och allrisk.",
+              "author": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "mainEntityOfPage": "https://sankkostnaden.se/forsakring/hemforsakring-hyresratt/",
+              "inLanguage": "sv-SE",
+              "isPartOf": {
+                "@type": "WebSite",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Sänk Kostnaden",
+                  "item": "https://sankkostnaden.se/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Försäkring",
+                  "item": "https://sankkostnaden.se/forsakring/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Vad kostar hemförsäkring hyresrätt 2026? Pris per månad & skydd",
+                  "item": "https://sankkostnaden.se/forsakring/hemforsakring-hyresratt/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/forsakring/hemforsakring-bostadsratt/",
+      "canonical": "https://sankkostnaden.se/forsakring/hemforsakring-bostadsratt/",
+      "title": "Hemförsäkring bostadsrätt 2026 – pris, skydd och självrisk | Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": true,
+      "description": "Hemförsäkring bostadsrätt 2026: se vad som påverkar priset och jämför självrisk, bostadsrättstillägg, lösöre, allrisk och andra viktiga villkor.",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+      "h1": "Hemförsäkring bostadsrätt 2026 – pris, skydd och självrisk",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Article",
+              "url": "https://sankkostnaden.se/forsakring/hemforsakring-bostadsratt/",
+              "headline": "Hemförsäkring bostadsrätt 2026 – pris, skydd och självrisk",
+              "description": "Hemförsäkring bostadsrätt 2026: se vad som påverkar priset och jämför självrisk, bostadsrättstillägg, lösöre, allrisk och andra viktiga villkor.",
+              "author": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "mainEntityOfPage": "https://sankkostnaden.se/forsakring/hemforsakring-bostadsratt/",
+              "inLanguage": "sv-SE",
+              "isPartOf": {
+                "@type": "WebSite",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Sänk Kostnaden",
+                  "item": "https://sankkostnaden.se/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Försäkring",
+                  "item": "https://sankkostnaden.se/forsakring/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Hemförsäkring bostadsrätt 2026 – pris, skydd och självrisk",
+                  "item": "https://sankkostnaden.se/forsakring/hemforsakring-bostadsratt/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/forsakring/jamfor-hemforsakring/",
+      "canonical": "https://sankkostnaden.se/forsakring/jamfor-hemforsakring/",
+      "title": "Jämför hemförsäkring 2026 – premie, självrisk och skydd | Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": true,
+      "description": "Jämför hemförsäkring 2026 efter premie, självrisk och skydd. Kontrollera allrisk, reseskydd, ersättningsgränser och vilka personer som omfattas.",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+      "h1": "Jämför hemförsäkring 2026 – premie, självrisk och skydd",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Article",
+              "url": "https://sankkostnaden.se/forsakring/jamfor-hemforsakring/",
+              "headline": "Jämför hemförsäkring 2026 – premie, självrisk och skydd",
+              "description": "Jämför hemförsäkring 2026 efter premie, självrisk och skydd. Kontrollera allrisk, reseskydd, ersättningsgränser och vilka personer som omfattas.",
+              "author": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "mainEntityOfPage": "https://sankkostnaden.se/forsakring/jamfor-hemforsakring/",
+              "inLanguage": "sv-SE",
+              "isPartOf": {
+                "@type": "WebSite",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Sänk Kostnaden",
+                  "item": "https://sankkostnaden.se/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Försäkring",
+                  "item": "https://sankkostnaden.se/forsakring/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Jämför hemförsäkring 2026 – premie, självrisk och skydd",
+                  "item": "https://sankkostnaden.se/forsakring/jamfor-hemforsakring/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/forsakring/vad-kostar-hemforsakring/",
+      "canonical": "https://sankkostnaden.se/forsakring/vad-kostar-hemforsakring/",
+      "title": "Vad kostar hemförsäkring 2026? Pris per månad och självrisk | Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": true,
+      "description": "Vad kostar hemförsäkring 2026? Se vad som påverkar pris per månad och hur du jämför premie, självrisk och samma skydd mellan försäkringar.",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+      "h1": "Vad kostar hemförsäkring 2026? Pris per månad och självrisk",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Article",
+              "url": "https://sankkostnaden.se/forsakring/vad-kostar-hemforsakring/",
+              "headline": "Vad kostar hemförsäkring 2026? Pris per månad och självrisk",
+              "description": "Vad kostar hemförsäkring 2026? Se vad som påverkar pris per månad och hur du jämför premie, självrisk och samma skydd mellan försäkringar.",
+              "author": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "mainEntityOfPage": "https://sankkostnaden.se/forsakring/vad-kostar-hemforsakring/",
+              "inLanguage": "sv-SE",
+              "isPartOf": {
+                "@type": "WebSite",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Sänk Kostnaden",
+                  "item": "https://sankkostnaden.se/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Försäkring",
+                  "item": "https://sankkostnaden.se/forsakring/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Vad kostar hemförsäkring 2026? Pris per månad och självrisk",
+                  "item": "https://sankkostnaden.se/forsakring/vad-kostar-hemforsakring/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/forsakring/jamfor-forsakring/",
+      "canonical": "https://sankkostnaden.se/forsakring/jamfor-forsakring/",
+      "title": "Jämför försäkring 2026 – pris, självrisk & skydd | Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": false,
+      "description": "Jämför försäkring utifrån pris, självrisk, omfattning och villkor. Välj försäkringstyp och se vad du bör kontrollera innan du byter.",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+      "h1": "Jämför försäkring – börja med likvärdigt skydd",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebPage",
+              "name": "Jämför försäkring 2026 – pris, skydd och självrisk",
+              "description": "Så jämför du försäkring på ett sakligt sätt: premie, självrisk, omfattning och villkor. Undvik att välja enbart efter pris.",
+              "url": "https://sankkostnaden.se/forsakring/jamfor-forsakring/",
+              "isPartOf": {
+                "@type": "WebSite",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Sänk Kostnaden",
+                  "item": "https://sankkostnaden.se/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Försäkring",
+                  "item": "https://sankkostnaden.se/forsakring/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Jämför försäkring",
+                  "item": "https://sankkostnaden.se/forsakring/jamfor-forsakring/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/forsakring/forsakringsersattning/",
+      "canonical": "https://sankkostnaden.se/forsakring/forsakringsersattning/",
+      "title": "Försäkringsersättning 2026 – har du pengar att hämta? | Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": false,
+      "description": "Har du missat försäkringsersättning efter en skada eller olycka? Se vad du bör kontrollera i dina försäkringar och hur en ersättningstjänst kan hjälpa.",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+      "h1": "Har du pengar att hämta från en försäkring?",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Article",
+              "url": "https://sankkostnaden.se/forsakring/forsakringsersattning/",
+              "headline": "Försäkringsersättning 2026 – har du pengar att hämta?",
+              "description": "Kontrollera om en skada eller olycka kan ge ersättning från en eller flera försäkringar.",
+              "author": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "inLanguage": "sv-SE"
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Sänk Kostnaden",
+                  "item": "https://sankkostnaden.se/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Försäkring",
+                  "item": "https://sankkostnaden.se/forsakring/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Försäkringsersättning",
+                  "item": "https://sankkostnaden.se/forsakring/forsakringsersattning/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/guide/sank-fasta-kostnader/",
+      "canonical": "https://sankkostnaden.se/guide/sank-fasta-kostnader/",
+      "title": "Sänk fasta kostnader – årlig checklista – Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": false,
+      "description": "En praktisk årlig checklista för att sänka hushållets fasta kostnader utan att kapa sådant du faktiskt använder.",
+      "robots": null,
+      "h1": "Sänk fasta kostnader på en timme",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "headline": "Sänk fasta kostnader – årlig checklista – Sänk Kostnaden",
+          "description": "En praktisk årlig checklista för att sänka hushållets fasta kostnader utan att kapa sådant du faktiskt använder.",
+          "url": "https://sankkostnaden.se/guide/sank-fasta-kostnader/",
+          "dateModified": "2026-09-19",
+          "publisher": {
+            "@type": "Organization",
+            "name": "Sänk Kostnaden",
+            "url": "https://sankkostnaden.se/"
+          }
+        }
+      ]
+    },
+    {
+      "path": "/app/",
+      "canonical": "https://sankkostnaden.se/app/",
+      "title": "Kostnadskollen – se vilka avtal du bör jämföra först | Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": false,
+      "description": "Använd Kostnadskollen för att se vilka fasta kostnader som är mest rimliga att kontrollera först: el, bredband, mobil eller försäkring.",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "h1": "Vilket avtal bör du kontrollera först?",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          "name": "Kostnadskollen",
+          "description": "Ett gratis verktyg som hjälper hushåll prioritera vilka återkommande avtal som är mest värda att granska först.",
+          "url": "https://sankkostnaden.se/app/",
+          "applicationCategory": "FinanceApplication",
+          "operatingSystem": "Web",
+          "isAccessibleForFree": true
+        }
+      ]
+    },
+    {
+      "path": "/guide/hushallets-fasta-kostnader-2026/",
+      "canonical": "https://sankkostnaden.se/guide/hushallets-fasta-kostnader-2026/",
+      "title": "Hushållets fasta kostnader 2026 – checklista & kostnadskoll",
+      "restoresEmptyBaselineTitle": false,
+      "description": "Kostnadsfri checklista för hushållets fasta kostnader 2026. Kartlägg el, bredband, mobil, försäkring och andra återkommande avtal och prioritera rätt.",
+      "robots": "index,follow,max-image-preview:large",
+      "h1": "Hushållets fasta kostnader 2026",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "headline": "Hushållets fasta kostnader 2026 – checklista & kostnadskoll",
+          "description": "Kostnadsfri checklista för hushållets fasta kostnader 2026. Kartlägg el, bredband, mobil, försäkring och andra återkommande avtal och prioritera rätt.",
+          "url": "https://sankkostnaden.se/guide/hushallets-fasta-kostnader-2026/",
+          "dateModified": "2026-09-19",
+          "publisher": {
+            "@type": "Organization",
+            "name": "Sänk Kostnaden",
+            "url": "https://sankkostnaden.se/"
+          }
+        }
+      ]
+    },
+    {
+      "path": "/guide/arskoll-fasta-kostnader/",
+      "canonical": "https://sankkostnaden.se/guide/arskoll-fasta-kostnader/",
+      "title": "Årskoll av fasta kostnader – checklista för hushållet 2026",
+      "restoresEmptyBaselineTitle": false,
+      "description": "Gratis årskoll för hushållets fasta kostnader. Gå igenom el, bredband, mobil och försäkring steg för steg och hitta avtal som är värda att jämföra.",
+      "robots": null,
+      "h1": "Årskoll av hushållets fasta kostnader",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "headline": "Årskoll av fasta kostnader – checklista för hushållet 2026",
+          "description": "Gratis årskoll för hushållets fasta kostnader. Gå igenom el, bredband, mobil och försäkring steg för steg och hitta avtal som är värda att jämföra.",
+          "url": "https://sankkostnaden.se/guide/arskoll-fasta-kostnader/",
+          "dateModified": "2026-09-19",
+          "publisher": {
+            "@type": "Organization",
+            "name": "Sänk Kostnaden",
+            "url": "https://sankkostnaden.se/"
+          }
+        }
+      ]
+    },
+    {
+      "path": "/guide/sank-kostnader-automatiskt/",
+      "canonical": "https://sankkostnaden.se/guide/sank-kostnader-automatiskt/",
+      "title": "Sänk abonnemang och avtal – så ser du över kostnaderna | Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": false,
+      "description": "Guide för att sänka återkommande kostnader för el, bredband, mobil och försäkring utan att missa bindningstider och villkor.",
+      "robots": null,
+      "h1": "Sänk kostnaden på avtal du redan har",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "headline": "Sänk abonnemang och avtal – så ser du över kostnaderna",
+          "description": "Guide för att sänka återkommande kostnader för el, bredband, mobil och försäkring utan att missa bindningstider och villkor.",
+          "url": "https://sankkostnaden.se/guide/sank-kostnader-automatiskt/",
+          "dateModified": "2026-09-19",
+          "publisher": {
+            "@type": "Organization",
+            "name": "Sänk Kostnaden",
+            "url": "https://sankkostnaden.se/"
+          }
+        }
+      ]
+    },
+    {
+      "path": "/bredband/vilken-hastighet-behover-jag/",
+      "canonical": "https://sankkostnaden.se/bredband/vilken-hastighet-behover-jag/",
+      "title": "Vilken bredbandshastighet behöver jag? Test 2026 | Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": false,
+      "description": "Svara på tre frågor och få en behovsprofil för 100, 250, 500 eller 1000 Mbit/s. Gratis test utan inloggning. Jämför 100, 250, 500 och 1000 Mbit/s utifrån hushållets användning.",
+      "robots": "index,follow",
+      "h1": "Vilken bredbandshastighet behöver du egentligen?",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          "name": "Vilken bredbandshastighet behöver jag? Test 2026",
+          "description": "Svara på tre frågor och få en behovsprofil för 100, 250, 500 eller 1000 Mbit/s. Gratis test utan inloggning. Jämför 100, 250, 500 och 1000 Mbit/s utifrån hushållets användning.",
+          "url": "https://sankkostnaden.se/bredband/vilken-hastighet-behover-jag/",
+          "isPartOf": {
+            "@type": "WebSite",
+            "name": "Sänk Kostnaden",
+            "url": "https://sankkostnaden.se/"
+          }
+        }
+      ]
+    },
+    {
+      "path": "/mobil/hur-mycket-surf-behover-jag/",
+      "canonical": "https://sankkostnaden.se/mobil/hur-mycket-surf-behover-jag/",
+      "title": "Hur mycket surf behöver jag? Test för mobilabonnemang 2026",
+      "restoresEmptyBaselineTitle": false,
+      "description": "Hur mycket surf behöver du per månad? Gör ett snabbt test för mobilabonnemang och se om liten datapott, normal surf eller fri surf passar din användning. Gratis och utan inloggning.",
+      "robots": "index,follow",
+      "h1": "Hur mycket surf behöver du – på riktigt?",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          "name": "Hur mycket surf behöver jag? Test för mobilabonnemang 2026",
+          "description": "Hur mycket surf behöver du per månad? Gör ett snabbt test för mobilabonnemang och se om liten datapott, normal surf eller fri surf passar din användning. Gratis och utan inloggning.",
+          "url": "https://sankkostnaden.se/mobil/hur-mycket-surf-behover-jag/",
+          "isPartOf": {
+            "@type": "WebSite",
+            "name": "Sänk Kostnaden",
+            "url": "https://sankkostnaden.se/"
+          }
+        }
+      ]
+    },
+    {
+      "path": "/elavtal/vilket-elavtal-passar-mig/",
+      "canonical": "https://sankkostnaden.se/elavtal/vilket-elavtal-passar-mig/",
+      "title": "Fast, rörligt eller kvartspris 2026? Testa vilket elavtal som passar",
+      "restoresEmptyBaselineTitle": false,
+      "description": "Fast, rörligt eller kvartspris? Svara på fem frågor om förutsägbarhet, elanvändning och styrning och se vilken avtalsform som passar din profil.",
+      "robots": "index,follow",
+      "h1": "Fast, rörligt eller kvartspris – vad passar dig?",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          "name": "Fast, rörligt eller kvartspris 2026? Testa vilket elavtal som passar",
+          "description": "Fast, rörligt eller kvartspris? Svara på fem frågor om förutsägbarhet, elanvändning och styrning och se vilken avtalsform som passar din profil.",
+          "url": "https://sankkostnaden.se/elavtal/vilket-elavtal-passar-mig/",
+          "isPartOf": {
+            "@type": "WebSite",
+            "name": "Sänk Kostnaden",
+            "url": "https://sankkostnaden.se/"
+          }
+        }
+      ]
+    },
+    {
+      "path": "/forsakring/hemforsakring-skyddskoll/",
+      "canonical": "https://sankkostnaden.se/forsakring/hemforsakring-skyddskoll/",
+      "title": "Hemförsäkring 2026 – skyddskoll före du jämför pris",
+      "restoresEmptyBaselineTitle": false,
+      "description": "Jämför hemförsäkring smartare. Gör en snabb skyddskoll före du jämför pris och se vilka villkor, självrisker och skydd som är viktiga för ditt hushåll. Se vilka villkor du behöver kontrollera utifrån boende och hushåll.",
+      "robots": "index,follow",
+      "h1": "Vad behöver du kontrollera i hemförsäkringen?",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          "name": "Hemförsäkring 2026 – skyddskoll före du jämför pris",
+          "description": "Jämför hemförsäkring smartare. Gör en snabb skyddskoll före du jämför pris och se vilka villkor, självrisker och skydd som är viktiga för ditt hushåll. Se vilka villkor du behöver kontrollera utifrån boende och hushåll.",
+          "url": "https://sankkostnaden.se/forsakring/hemforsakring-skyddskoll/",
+          "isPartOf": {
+            "@type": "WebSite",
+            "name": "Sänk Kostnaden",
+            "url": "https://sankkostnaden.se/"
+          }
+        }
+      ]
+    },
+    {
+      "path": "/elavtal/hur-mycket-el-drar-mitt-hus/",
+      "canonical": "https://sankkostnaden.se/elavtal/hur-mycket-el-drar-mitt-hus/",
+      "title": "Hur mycket el drar ett hus? Räkna kWh per år 2026",
+      "restoresEmptyBaselineTitle": false,
+      "description": "Hur mycket el drar ett hus? Räkna uppskattad årsförbrukning i kWh utifrån boyta, uppvärmning, hushåll, elbil och spa. Se uppskattad kWh per år och vad som driver elanvändningen.",
+      "robots": "index,follow",
+      "h1": "Hur mycket el drar ditt hus?",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          "name": "Hur mycket el drar ett hus? Räkna kWh per år 2026",
+          "description": "Hur mycket el drar ett hus? Räkna uppskattad årsförbrukning i kWh utifrån boyta, uppvärmning, hushåll, elbil och spa. Se uppskattad kWh per år och vad som driver elanvändningen.",
+          "url": "https://sankkostnaden.se/elavtal/hur-mycket-el-drar-mitt-hus/",
+          "isPartOf": {
+            "@type": "WebSite",
+            "name": "Sänk Kostnaden",
+            "url": "https://sankkostnaden.se/"
+          }
+        }
+      ]
+    },
+    {
+      "path": "/mobil/lonar-sig-familjeabonnemang/",
+      "canonical": "https://sankkostnaden.se/mobil/lonar-sig-familjeabonnemang/",
+      "title": "Lönar sig familjeabonnemang? Kalkyl 2026 | Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": false,
+      "description": "Räkna om familjeabonnemang blir billigare än separata mobilabonnemang. Jämför total månadskostnad, årskostnad och brytpunkt per extra användare.",
+      "robots": "index,follow",
+      "h1": "Lönar sig familjeabonnemang för er?",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          "name": "Lönar sig familjeabonnemang? Kalkyl 2026",
+          "description": "Räkna om familjeabonnemang blir billigare än separata mobilabonnemang. Jämför total månadskostnad, årskostnad och brytpunkt per extra användare.",
+          "url": "https://sankkostnaden.se/mobil/lonar-sig-familjeabonnemang/",
+          "isPartOf": {
+            "@type": "WebSite",
+            "name": "Sänk Kostnaden",
+            "url": "https://sankkostnaden.se/"
+          }
+        }
+      ]
+    },
+    {
+      "path": "/verktyg/hushallskostnadskollen/",
+      "canonical": "https://sankkostnaden.se/verktyg/hushallskostnadskollen/",
+      "title": "Hushållskostnadskollen 2026 – räkna dina fasta kostnader",
+      "restoresEmptyBaselineTitle": false,
+      "description": "Gratis hushållskostnadskoll. Fyll i dina verkliga månadskostnader och se total årskostnad samt vilka återkommande avtal som är mest värda att kontrollera.",
+      "robots": "index,follow,max-image-preview:large",
+      "h1": "Hushållskostnadskollen",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          "name": "Hushållskostnadskollen",
+          "description": "Gratis verktyg för att summera hushållets verkliga månadskostnader och se totalen per månad och år.",
+          "url": "https://sankkostnaden.se/verktyg/hushallskostnadskollen/",
+          "applicationCategory": "FinanceApplication",
+          "operatingSystem": "Web",
+          "isAccessibleForFree": true
+        }
+      ]
+    },
+    {
+      "path": "/sa-jamfor-vi/",
+      "canonical": "https://sankkostnaden.se/sa-jamfor-vi/",
+      "title": "Så jämför vi – Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": false,
+      "description": "Så arbetar Sänk Kostnaden med jämförelser, urval, årskostnad och kommersiella länkar.",
+      "robots": null,
+      "h1": "Så jämför vi",
+      "structuredData": []
+    },
+    {
+      "path": "/affiliate/",
+      "canonical": "https://sankkostnaden.se/affiliate/",
+      "title": "Affiliateinformation – Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": false,
+      "description": "Information om hur Sänk Kostnaden finansieras med affiliatelänkar och hur det påverkar urvalet.",
+      "robots": null,
+      "h1": "Så fungerar affiliatelänkar",
+      "structuredData": []
+    },
+    {
+      "path": "/integritet/",
+      "canonical": "https://sankkostnaden.se/integritet/",
+      "title": "Integritet – Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": false,
+      "description": "Integritetsinformation för Sänk Kostnaden.",
+      "robots": null,
+      "h1": "Integritet",
+      "structuredData": []
+    },
+    {
+      "path": "/om/",
+      "canonical": "https://sankkostnaden.se/om/",
+      "title": "Om Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": false,
+      "description": "Om Sänk Kostnaden och sajtens idé: praktiska guider för lägre återkommande hushållskostnader.",
+      "robots": null,
+      "h1": "Om Sänk Kostnaden",
+      "structuredData": []
+    },
+    {
+      "path": "/cookies/",
+      "canonical": "https://sankkostnaden.se/cookies/",
+      "title": "Cookiepolicy – Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": false,
+      "description": "Information om cookies och mätning på Sänk Kostnaden.",
+      "robots": null,
+      "h1": "Cookiepolicy",
+      "structuredData": []
+    },
+    {
+      "path": "/forsakring/reseforsakring/",
+      "canonical": "https://sankkostnaden.se/forsakring/reseforsakring/",
+      "title": "Reseförsäkring 2026 – kontrollera skydd innan du tecknar | Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": true,
+      "description": "Kontrollera vilket reseskydd du redan har och jämför sedan omfattning, självrisk, avbeställningsskydd, tidsgränser och viktiga undantag innan du tecknar extra reseförsäkring.",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+      "h1": "Reseförsäkring 2026 – kontrollera skydd innan du tecknar",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Article",
+              "url": "https://sankkostnaden.se/forsakring/reseforsakring/",
+              "headline": "Reseförsäkring 2026 – kontrollera skydd innan du tecknar",
+              "description": "Kontrollera vilket reseskydd du redan har och jämför sedan omfattning, självrisk, avbeställningsskydd, tidsgränser och viktiga undantag innan du tecknar extra reseförsäkring.",
+              "author": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "mainEntityOfPage": "https://sankkostnaden.se/forsakring/reseforsakring/",
+              "inLanguage": "sv-SE",
+              "isPartOf": {
+                "@type": "WebSite",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Sänk Kostnaden",
+                  "item": "https://sankkostnaden.se/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Försäkring",
+                  "item": "https://sankkostnaden.se/forsakring/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Reseförsäkring 2026 – kontrollera skydd innan du tecknar",
+                  "item": "https://sankkostnaden.se/forsakring/reseforsakring/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/forsakring/trygghetsforsakring/",
+      "canonical": "https://sankkostnaden.se/forsakring/trygghetsforsakring/",
+      "title": "Trygghetsförsäkring 2026 – skydd för fasta kostnader | Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": false,
+      "description": "Så fungerar Hedvigs Trygghetsförsäkring för fasta kostnader vid arbetslöshet eller sjukskrivning. Kontrollera ersättning, kvalificering, karens, premie och villkor innan du tecknar.",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "h1": "Skydd för fasta kostnader om inkomsten försvinner",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          "name": "Trygghetsförsäkring 2026 – skydd för fasta kostnader",
+          "description": "Guide till trygghetsförsäkring för fasta kostnader vid arbetslöshet eller sjukskrivning.",
+          "url": "https://sankkostnaden.se/forsakring/trygghetsforsakring/",
+          "isPartOf": {
+            "@type": "WebSite",
+            "name": "Sänk Kostnaden",
+            "url": "https://sankkostnaden.se/"
+          }
+        }
+      ]
+    },
+    {
+      "path": "/ekonomi/kostnadskontroll-och-sparande/",
+      "canonical": "https://sankkostnaden.se/ekonomi/kostnadskontroll-och-sparande/",
+      "title": "Kostnadskontroll och sparande 2026 – få bättre överblick | Sänk Kostnaden",
+      "restoresEmptyBaselineTitle": true,
+      "description": "Skapa bättre överblick över återkommande utgifter och sparande. Börja med verkliga kostnader, prioritera stora poster och följ upp förändringen över tid.",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+      "h1": "Kostnadskontroll och sparande 2026 – få bättre överblick",
+      "structuredData": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Article",
+              "url": "https://sankkostnaden.se/ekonomi/kostnadskontroll-och-sparande/",
+              "headline": "Kostnadskontroll och sparande 2026 – få bättre överblick",
+              "description": "Skapa bättre överblick över återkommande utgifter och sparande. Börja med verkliga kostnader, prioritera stora poster och följ upp förändringen över tid.",
+              "author": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              },
+              "mainEntityOfPage": "https://sankkostnaden.se/ekonomi/kostnadskontroll-och-sparande/",
+              "inLanguage": "sv-SE",
+              "isPartOf": {
+                "@type": "WebSite",
+                "name": "Sänk Kostnaden",
+                "url": "https://sankkostnaden.se/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Sänk Kostnaden",
+                  "item": "https://sankkostnaden.se/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Lån & ekonomi",
+                  "item": "https://sankkostnaden.se/ekonomi/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Kostnadskontroll och sparande 2026 – få bättre överblick",
+                  "item": "https://sankkostnaden.se/ekonomi/kostnadskontroll-och-sparande/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -6,7 +6,7 @@ Datum: 2026-10-14, Europe/Stockholm. Typ: TECHNICAL_FIX. Detta avgränsade beslu
 
 Ägaren vill behålla befintlig Google-indexering när den godkända designen publiceras. En läsande kontroll av faktisk `out/` hittade 32 av 71 HTML-filer med tom `<title>`, bland annat alla fem kategoriindex och flera guider. Startsidan har korrekt titel. De tomma titlarna finns också i `.next/server/pages/`, alltså före kopieringen till statisk export. Källkodens avsedda titlar finns kvar; source-baserade kontroller kunde därför passera trots den felaktiga HTML-utmatningen.
 
-Jämförelsebygge av basversion `c8c20b2`: PENDING när detta beslut skrivs. Defektens existens i aktuell export är verifierad; det är ännu inte fastställt här om redesignen introducerade den eller om den redan fanns i basversionen. Basbyggets plats dokumenteras i `/workspace/cost-map-evidence/seo-baseline-path.txt`.
+Jämförelsebygget av basversion `c8c20b2` är genomfört med samma Node 22.16.0, Next 15.5.27 och React 19.3.0 som redesignen. Även det innehåller exakt 32 tomma titlar av 71 HTML-filer. Felet kan alltså reproduceras utan redesignen med dessa installerade beroenden; detta bevisar inte vilken React-version eller HTML produktionen tidigare serverade. Basbygget gjordes i en lokal arkivkopia, utan att byta checkout eller skapa worktree.
 
 ## Orsak och vald reparation
 
@@ -26,4 +26,18 @@ Basversionens faktiska export ska jämföras med den reparerade exporten. Kontro
 
 Produktionshämtning, GSC-åtkomst och försök att nå Googles dokumentation har blockerats av miljöns nätverksproxy med CONNECT403 enligt koordinatorns kontroll. Aktuell Google-indexeringsstatus, live-serverad titel och trafik-/rankingeffekt är därför inte verifierade här. Ingen ranking- eller indexeringsgaranti ges. Att avsedda metadata återställs är ett tekniskt utfall, inte bevis för mer trafik eller godkänd provision.
 
-Status vid upprättande: baselinejämförelse, slutlig QA, release och verifierad egen domän PENDING. Koordinatorn kompletterar med faktiska resultat och releasetid innan affärs- eller experimentuppföljning.
+## Genomförda skydd och faktiska kontroller
+
+`tests/fixtures/seo-continuity-baseline.json` lagrar de 63 etablerade indexerbara adressernas canonical, avsedda titel, description, robots, guide-H1 och strukturerade data från basbygget. De 32 titelåterställningarna har kontrollerats oberoende mot ursprunglig og:title och befintligt varumärkessuffix; övriga 31 titlar matchar basversionens HTML. Startsides-H1 undantas uttryckligen eftersom koncept 03 avsiktligt ändrar den synliga rubriken.
+
+`npm run check:export` kontrollerar nu den faktiska HTML-utmatningen, inklusive metadatajämförelse, bevarade redirects, robots.txt, eventuella blockerande exporterade HTTP-headerregler och statisk nåbarhet från startsidan. Ett bortfall ger felkod och stoppar befintliga bygg-/regressionsjobb. Kontrollens underlag är bevarade källor och byggd HTML, inte Googles aktuella index.
+
+Basbygget hade också tre etablerade guider som inte gick att nå via vanliga HTML-länkar från startsidan: fiber, sänk fasta kostnader och se över abonnemang/avtal. De får tre relevanta länkar i befintligt guidebibliotek. Inga nya sidor eller URL:er skapades och ingen artikelcopy ändrades.
+
+Faktiska lokala resultat: check, integrity och slutbygge passerar. Exportkontrollen passerar för 71 HTML-sidor, 2 032 interna länkar/ankare och samtliga 63 indexerbara adresser. Inga tomma titlar återstår. Kvartsprisguidens renderade body före första script är identisk med basbygget; endast avsedd head-titel repareras.
+
+Gaten har dessutom utsatts för tio verkliga skador i en tillfällig exportkopia: tom titel, fel canonical-domän, noindex, borttagen sitemapadress, borttagen internlänk, saknad JSON-LD, ändrad guide-H1, global robots-blockering, global X-Robots-Tag noindex och förlorad redirect. Alla tio stoppades; giltig export passerade både före och efter. [Maskinläsbart lokalt underlag](../evidence/cost-map-2026-10-14/seo-preflight.json).
+
+Den nya läsande GitHub-kontrollen `SEO release continuity` ska separat kontrollera previewens 63 adresser, dess noindex-header samt produktionssidors HTTP-status, canonical, indexeringsregler, robots och sitemap. Nätfel ska ge synligt fel, inte rapporteras som lyckad kontroll. Den publicerar ingenting. Browseromkörning, nya CI-jobb och denna externa läsning är PENDING vid denna uppdatering.
+
+Main och produktionsdomänen är inte ändrade. En eventuell kommande skarp publicering ska få en daterad uppföljning i befintlig GSC/GA4-process. Ingen massbegäran om omindexering, inga nya parallella SEO-experiment och inget antagande om garanterat oförändrade positioner följer av designbytet.

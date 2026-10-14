@@ -8,6 +8,7 @@ const guideGroups=[
   {title:'Bredband',links:[
     ['/bredband/billigaste-bredbandet/','Billigaste bredbandet 2026'],
     ['/bredband/utan-bindningstid/','Bredband utan bindningstid'],
+    ['/bredband/fiber/','Fiber – vad behöver du jämföra?'],
     ['/bredband/fiber-eller-mobilt-bredband/','Fiber eller mobilt bredband?'],
     ['/bredband/5g-bredband/','5G-bredband 2026'],
   ]},
@@ -27,6 +28,8 @@ const guideGroups=[
     ['/ekonomi/','Jämför privatlån & samlingslån'],
     ['/guide/hushallets-fasta-kostnader-2026/','Hushållets fasta kostnader'],
     ['/guide/arskoll-fasta-kostnader/','Årskoll av fasta kostnader'],
+    ['/guide/sank-fasta-kostnader/','Sänk fasta kostnader steg för steg'],
+    ['/guide/sank-kostnader-automatiskt/','Se över abonnemang och avtal'],
     ['/verktyg/hushallskostnadskollen/','Hushållskostnadskollen'],
   ]},
 ];

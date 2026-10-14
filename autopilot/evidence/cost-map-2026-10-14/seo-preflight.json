@@ -1,0 +1,81 @@
+{
+  "checkedAtUTC": "2026-10-14T18:58:48.360343+00:00",
+  "baselineCommit": "c8c20b2bdc041fff1e22d5ceed4d2551d8f07cab",
+  "titleRepairCommit": "ff0cf7e",
+  "runtime": {
+    "node": "22.16.0",
+    "next": "15.5.27",
+    "react": "19.3.0"
+  },
+  "baselineHtmlPages": 71,
+  "baselineEmptyTitles": 32,
+  "repairedEmptyTitles": 0,
+  "establishedIndexableRoutesPreserved": 63,
+  "allEstablishedRoutesReachableViaServerHtml": true,
+  "baselineUnreachableRoutes": [
+    "/bredband/fiber/",
+    "/guide/sank-fasta-kostnader/",
+    "/guide/sank-kostnader-automatiskt/"
+  ],
+  "exportInternalLinksAndAnchorsChecked": 2032,
+  "quarterPriceRenderedBodyUnchanged": true,
+  "guardMutationVerification": {
+    "validExportPassed": true,
+    "cases": [
+      {
+        "case": "empty-title",
+        "rejected": true,
+        "exitCode": 1
+      },
+      {
+        "case": "canonical-domain",
+        "rejected": true,
+        "exitCode": 1
+      },
+      {
+        "case": "accidental-noindex",
+        "rejected": true,
+        "exitCode": 1
+      },
+      {
+        "case": "lost-sitemap-route",
+        "rejected": true,
+        "exitCode": 1
+      },
+      {
+        "case": "orphaned-guide",
+        "rejected": true,
+        "exitCode": 1
+      },
+      {
+        "case": "lost-jsonld",
+        "rejected": true,
+        "exitCode": 1
+      },
+      {
+        "case": "changed-guide-h1",
+        "rejected": true,
+        "exitCode": 1
+      },
+      {
+        "case": "global-robots-block",
+        "rejected": true,
+        "exitCode": 1
+      },
+      {
+        "case": "global-header-noindex",
+        "rejected": true,
+        "exitCode": 1
+      },
+      {
+        "case": "lost-redirect",
+        "rejected": true,
+        "exitCode": 1
+      }
+    ],
+    "restoredExportPassed": true
+  },
+  "liveVerification": "PENDING GitHub runner; local proxy returns CONNECT403",
+  "productionPublication": "NOT PERFORMED",
+  "googleIndexAndRankingEffect": "UNVERIFIED"
+}
