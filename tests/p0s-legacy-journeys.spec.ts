@@ -33,10 +33,16 @@ for(const width of [390,1440]){
    const photo=hero.locator('[data-testid^="legacy-photo-"]');
    if(kind==='bredband'||kind==='el'){
      await expect(photo).toHaveCount(1);
-     await expect(photo).toHaveAttribute('srcset',/640w/);
-     await expect.poll(()=>photo.evaluate((e:HTMLImageElement)=>e.complete&&e.naturalWidth>0),{timeout:20000,message:name+' real image should decode'}).toBeTruthy();
-     const meta=await photo.evaluate((e:HTMLImageElement)=>({complete:e.complete,width:e.naturalWidth,src:e.currentSrc}));
-     expect(meta.src).toContain(kind==='bredband'?'4260743':'8055828');
+     await expect(photo).toHaveAttribute('src','/design/cost-map-home.webp');
+     if(width<761){
+       await expect(photo).toBeHidden();
+     }else{
+       await expect(photo).toBeVisible();
+       await expect.poll(()=>photo.evaluate((e:HTMLImageElement)=>e.complete&&e.naturalWidth>=1200),{timeout:20000,message:name+' local illustration should decode'}).toBeTruthy();
+       await photo.evaluate((e:HTMLImageElement)=>e.decode());
+       const src=await photo.evaluate((e:HTMLImageElement)=>e.currentSrc);
+       expect(new URL(src).pathname).toBe('/design/cost-map-home.webp');
+     }
    }else{
      await expect(photo).toHaveCount(0);
    }
