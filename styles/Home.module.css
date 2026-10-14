@@ -91,3 +91,13 @@
 
 /* V10 visual QA: tablet navigation must not force 19px horizontal scroll at 768px. */
 @media(min-width:761px) and (max-width:900px){.nav{width:calc(100% - 24px);gap:10px;padding:0 2px}.nav nav{gap:10px}.nav nav a{font-size:12px}.brand{font-size:15px}.navCta{font-size:12px;min-height:42px;padding:0 11px;gap:6px}}
+
+/* Unified journey: editorial follow-up sections use the same warm-neutral/navy
+   stage rather than an unrelated green-tinted app chapter. */
+.popularSection{background:#faf9f5}
+.popularHeader p,.guideGroups strong{color:#3156a2}
+.toolsSection{background:#edf2fb}
+.progressiveTools{border-color:#d6e1ef;box-shadow:0 11px 30px #193b6a0d}
+.principle{background:#f4f3f0}
+.principle>div:first-child{background:#132a4e}
+.guideLibrarySection{background:#edf2fb}

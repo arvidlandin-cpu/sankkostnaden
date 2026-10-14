@@ -7,29 +7,29 @@ import s from '../styles/V10Experience.module.css';
 
 export type JourneyCategory=PartnerCategory;
 type Choice={id:string;label:string;intent:PartnerIntent;why:string};
-type Track={id:JourneyCategory;name:string;question:string;subtitle:string;hint:string;href:string;icon:typeof Wifi;filters:Choice[];accent:string};
+type Track={id:JourneyCategory;name:string;question:string;subtitle:string;hint:string;href:string;guideHref:string;guideText:string;toolHref:string;toolText:string;icon:typeof Wifi;filters:Choice[];accent:string};
 const tracks:Track[]=[
- {id:'el',name:'El',question:'Vill du se över elavtalet?',subtitle:'Förbrukning, påslag och avgifter',hint:'Jämför samma årsförbrukning, avtalsform och fasta avgifter.',href:'/elavtal/',icon:Zap,accent:'gold',filters:[
+ {id:'el',name:'El',question:'Vill du se över elavtalet?',subtitle:'Förbrukning, påslag och avgifter',hint:'Jämför samma årsförbrukning, avtalsform och fasta avgifter.',href:'/elavtal/',guideHref:'/elavtal/vilket-elavtal-passar-mig/',guideText:'Hjälp att välja avtalsform',toolHref:'/verktyg/elavtalskostnad/',toolText:'Räkna på två verkliga elerbjudanden',icon:Zap,accent:'gold',filters:[
   {id:'all',label:'Jämför flera',intent:'compare',why:'Jämförelsetjänster och elpartners är en startpunkt; aktuella prisuppgifter kontrolleras hos dem.'},
   {id:'direct',label:'Se elbolag',intent:'electricity',why:'Visar aktiva elhandelspartners, inte en ranking av lägsta elpris.'}
  ]},
- {id:'bredband',name:'Bredband',question:'Vad finns på din adress?',subtitle:'Hastighet, adress och totalpris',hint:'Bredband kan bara jämföras rättvist där leverans är möjlig.',href:'/bredband/',icon:Wifi,accent:'blue',filters:[
+ {id:'bredband',name:'Bredband',question:'Vad finns på din adress?',subtitle:'Hastighet, adress och totalpris',hint:'Bredband kan bara jämföras rättvist där leverans är möjlig.',href:'/bredband/',guideHref:'/bredband/vilken-hastighet-behover-jag/',guideText:'Vilken hastighet behöver jag?',toolHref:'/verktyg/forstaarskostnad-bredband/',toolText:'Räkna första årets totalkostnad',icon:Wifi,accent:'blue',filters:[
   {id:'all',label:'Jämför flera',intent:'compare',why:'Utbud och priser är adressberoende; kontrollera dem hos partnern.'},
   {id:'fiber',label:'Fiber',intent:'fiber',why:'Kontrollera om fiber erbjuds på din specifika adress.'},
   {id:'mobile',label:'Mobilt / 5G',intent:'mobile-broadband',why:'Kontrollera täckning, databegränsningar och hastighet på platsen.'}
  ]},
- {id:'mobil',name:'Mobil',question:'Hur använder du mobilen?',subtitle:'Surf, nät och familjeabonnemang',hint:'Kontrollera täckning, surfmängd och priset efter kampanjen.',href:'/mobil/',icon:Smartphone,accent:'lavender',filters:[
+ {id:'mobil',name:'Mobil',question:'Hur använder du mobilen?',subtitle:'Surf, nät och familjeabonnemang',hint:'Kontrollera täckning, surfmängd och priset efter kampanjen.',href:'/mobil/',guideHref:'/mobil/hur-mycket-surf-behover-jag/',guideText:'Hur mycket surf behöver jag?',toolHref:'/verktyg/forstaarskostnad/',toolText:'Räkna första årets abonnemangskostnad',icon:Smartphone,accent:'lavender',filters:[
   {id:'all',label:'Se operatörer',intent:'compare',why:'Utvalda mobilpartners. Jämför likvärdig surf, nät och bindningstid.'},
   {id:'family',label:'Familj',intent:'family',why:'Jämför totalpriset för alla abonnemang, inte bara huvudnumret.'},
   {id:'data',label:'Mer surf',intent:'data',why:'Välj efter hur mycket mobildata du faktiskt använder.'},
   {id:'flex',label:'Utan bindningstid',intent:'no-binding',why:'Kontrollera bindningstid och uppsägningsvillkor innan du byter.'}
  ]},
- {id:'forsakring',name:'Försäkring',question:'Vad vill du försäkra?',subtitle:'Skydd, självrisk och villkor',hint:'Jämför lika omfattning och självrisk – inte bara premie.',href:'/forsakring/',icon:HeartHandshake,accent:'rose',filters:[
+ {id:'forsakring',name:'Försäkring',question:'Vad vill du försäkra?',subtitle:'Skydd, självrisk och villkor',hint:'Jämför lika omfattning och självrisk – inte bara premie.',href:'/forsakring/',guideHref:'/forsakring/jamfor-hemforsakring/',guideText:'Så jämför du skydd och självrisk',toolHref:'/forsakring/hemforsakring-skyddskoll/',toolText:'Gör skyddskollen för ditt hem',icon:HeartHandshake,accent:'rose',filters:[
   {id:'home',label:'Hem',intent:'home',why:'Välj hemförsäkring efter boendeform och rätt skyddsnivå.'},
   {id:'pet',label:'Djur',intent:'pet',why:'Jämför ersättningstak, självrisken och undantag.'},
   {id:'travel',label:'Resa',intent:'travel',why:'Kontrollera reseskydd, självrisk och vilka situationer som omfattas.'}
  ]},
- {id:'ekonomi',name:'Lån & ekonomi',question:'Vill du jämföra lånekostnad?',subtitle:'Effektiv ränta och total kostnad',hint:'Att samla eller ta lån är inte alltid billigare. Jämför effektiv ränta, avgifter och total återbetalning.',href:'/ekonomi/',icon:WalletCards,accent:'sage',filters:[
+ {id:'ekonomi',name:'Lån & ekonomi',question:'Vill du jämföra lånekostnad?',subtitle:'Effektiv ränta och total kostnad',hint:'Att samla eller ta lån är inte alltid billigare. Jämför effektiv ränta, avgifter och total återbetalning.',href:'/ekonomi/',guideHref:'/ekonomi/kostnadskontroll-och-sparande/',guideText:'Börja med dina fasta utgifter',toolHref:'/verktyg/hushallskostnadskollen/',toolText:'Räkna på kända hushållskostnader',icon:WalletCards,accent:'sage',filters:[
   {id:'loan',label:'Jämför privatlån',intent:'loan',why:'Ett lägre månadsbelopp kan bero på längre återbetalningstid och bli dyrare totalt.'}
  ]}
 ];
@@ -72,15 +72,15 @@ export function V10Experience(){
   <div className={s.wrapper}>
    <div className={s.intro}>
     <div className={s.eyebrow}><Sparkles size={16}/> DET SKA VARA LÄTT ATT VÄLJA SMARTARE</div>
-    <h1>Sänk kostnaden.<br/><em>Höj känslan.</em></h1>
-    <p>Vad vill du betala mindre för? Ett tryck visar verkliga alternativ. Inga långa formulär – utforska bara om du vill.</p>
+    <h1>Sänk kostnaden.<br/><em>Få mer kvar till livet.</em></h1>
+    <p>Välj en kostnad. Se relevanta jämförelsevägar direkt, eller räkna på dina egna siffror när du vill. Utan inloggning.</p>
     <div className={s.introProof}><span><Check size={15}/> Gratis</span><span><Check size={15}/> Ingen inloggning</span><span><ShieldCheck size={15}/> Tydliga annonslänkar</span></div>
    </div>
    <div className={s.playground} data-testid='v10-playground'>
     <div className={s.pickSide}>
      <div className={s.sectionEyebrow}><span className={s.pulse}/> BÖRJA HÄR <span>01 / 02</span></div>
-     <h2>Vad vill du sänka idag?</h2>
-     <p>Tryck på en kostnad. Se hur alternativen ändras.</p>
+     <h2>Var vill du börja?</h2>
+     <p>Välj ett område – nästa steg visas direkt till höger.</p>
      <div className={s.categoryGrid} role='group' aria-label='Välj kostnadsområde'>
       {tracks.map((t)=>{const Icon=t.icon;return <button type='button' key={t.id} aria-pressed={category===t.id}
        className={[s.categoryTile,s[t.accent],category===t.id?s.categoryActive:''].join(' ')}
@@ -90,7 +90,7 @@ export function V10Experience(){
         <span className={s.categoryArrow}><ChevronRight size={20}/></span>
        </button>})}
      </div>
-     <div className={s.pickFooter}><Compass size={17}/> Inget pris att fylla i. Du bestämmer tempot.</div>
+     <div className={s.pickFooter}><Compass size={17}/> Du kan börja utan att veta ditt nuvarande pris.</div>
     </div>
     <div className={s.resultSide} ref={result} data-testid='v10-result'>
      {track&&choice?<div className={s.resultLoaded} key={category}>
@@ -99,17 +99,28 @@ export function V10Experience(){
       <div className={s.filters} aria-label='Förfina alternativen'>
        {track.filters.map((f,i)=><button type='button' key={f.id} className={i===choiceIndex?s.chipActive:s.chip} aria-pressed={i===choiceIndex} onClick={()=>filter(i)} data-testid={'v10-filter-'+f.id}>{i===choiceIndex&&<Check size={13}/>} {f.label}</button>)}
       </div>
-      <div className={s.matchesHead}><span>{matches.length?'AKTIVA PARTNERALTERNATIV':'INGA AKTIVA PARTNERALTERNATIV'}</span><span>{matches.length} val</span></div>
+      <div className={s.matchesHead}><span>{matches.length?'JÄMFÖR HOS AKTIVA PARTNERS':'INGA AKTIVA PARTNERALTERNATIV'}</span><span>{Math.min(matches.length,3)} av {matches.length} visas · ingen prisranking</span></div>
       {matches.length?<div className={s.partnerList}>{matches.slice(0,3).map((p,i)=><PartnerLink key={p.name} p={p} category={category!} intent={choice.intent} index={i} placement='v10_home_results'/>)}</div>:
        <div className={s.noMatches}>Vi har inga aktiva partnerlänkar för detta val. <Link href={track.href}>Se våra guider i stället <ArrowRight size={15}/></Link></div>}
+      <div className={s.resultRoutes} aria-label='Fördjupa din jämförelse' data-testid='v11-result-routes'>
+       <div><span className={s.routesEyebrow}>MER PRECISION NÄR DU VILL</span><strong>Vill du förstå eller räkna först?</strong></div>
+       <div className={s.routeLinks}>
+        <Link data-testid='v11-route-guide' href={track.guideHref}><Compass size={18}/><span>{track.guideText}<small>Hjälp utan prisuppgifter</small></span><ArrowRight size={17}/></Link>
+        <Link data-testid='v11-route-tool' href={track.toolHref}><SlidersHorizontal size={18}/><span>{track.toolText}<small>Frivilligt verktyg eller beräkning</small></span><ArrowRight size={17}/></Link>
+       </div>
+      </div>
       <div className={s.whyBlock}><button type='button' aria-expanded={showReason} onClick={()=>setShowReason(v=>!v)}><Info size={16}/> Varför visas dessa alternativ? <ChevronDown size={16}/></button>{showReason&&<p>{choice.why} Urvalet omfattar bara våra aktiva partners, inte hela marknaden. Det är inte en prisranking.</p>}</div>
-      <div className={s.nextLine}><Link href={track.href}>Jag vill läsa mer först <ArrowRight size={15}/></Link><button type='button' onClick={()=>{setCategory(null);setChoiceIndex(0)}}><RotateCcw size={14}/> Välj annat</button></div>
-     </div>:<div className={s.blank}>
-       <div className={s.blankArtwork}><span className={s.blankCircle}><Sparkles size={32}/></span><span className={s.blankSparkle}>✳</span><span className={s.blankBadge}><Check size={13}/> Du bestämmer</span></div>
-       <span className={s.blankKicker}>SNABBARE ÄN ETT FORMULÄR</span>
-       <h2>Välj en kostnad.<br/>Vi visar vägen.</h2>
-       <p>Dina nästa alternativ dyker upp här direkt när du trycker. Vill du jämföra direkt? Då kan du göra det utan fler frågor.</p>
-       <div className={s.blankSteps}><span>1. Välj</span><ArrowRight size={14}/><span>2. Jämför</span><ArrowRight size={14}/><span>3. Gå vidare</span></div>
+      <div className={s.nextLine}><Link href={track.href}>Fler alternativ och guider inom {track.name} <ArrowRight size={15}/></Link><button type='button' onClick={()=>{setCategory(null);setChoiceIndex(0)}}><RotateCcw size={14}/> Välj annat</button></div>
+     </div>:<div className={s.blank} data-testid='v11-empty-state'>
+       <div className={s.blankEyebrow}><Sparkles size={17}/> ETT BRA BESLUT BÖRJAR HÄR</div>
+       <h2>Du väljer vad som spelar roll.<br/><em>Vi visar vad du kan göra.</em></h2>
+       <p>Du behöver inte leta efter rätt guide först. Välj exempelvis el eller bredband och få verkliga nästa steg utan formulär.</p>
+       <div className={s.blankPreview} aria-label='Så fungerar jämförelsen'>
+        <span><Check size={17}/> Välj ett område</span>
+        <span><ArrowRight size={17}/> Se utvalda jämförelsevägar</span>
+        <span><SlidersHorizontal size={17}/> Räkna exakt om du har uppgifterna</span>
+       </div>
+       <Link className={s.blankHelper} href='/verktyg/hushallskostnadskollen/'>Har du redan koll på dina kostnader? Räkna här <ArrowRight size={18}/></Link>
      </div>}
     </div>
    </div>
@@ -128,11 +139,29 @@ export function V10CategoryFastLane({category}:{category:JourneyCategory}){
  const [reason,setReason]=useState(false);
  const {choice,matches}=useMatches(category,choiceIndex);
  return <section className={s.lane} aria-label={'Snabbjämför '+track.name} data-testid='v10-category-lane'>
-  <div className={s.laneHeader}><span className={s.laneKicker}><Sparkles size={16}/> SNABBVÄGEN · VERSION 10.0</span><h2>Vill du jämföra redan nu?</h2><p>Välj vad som passar. Aktiva partners visas direkt – resten är valfritt.</p></div>
-  <div className={s.laneFilters} aria-label='Välj jämförelsebehov'>{track.filters.map((f,i)=><button type='button' aria-pressed={i===choiceIndex} key={f.id} onClick={()=>{setChoiceIndex(i);setReason(false)}} className={i===choiceIndex?s.chipActive:s.chip}>{f.label}{i===choiceIndex&&<Check size={14}/>}</button>)}</div>
-  <div className={s.laneGrid}>{matches.length?matches.slice(0,3).map((p,i)=><PartnerLink key={p.name} p={p} category={category} intent={choice!.intent} index={i} placement='v10_category_lane' compact/>):
-    <div className={s.laneEmpty}>Inga aktiva partneralternativ för valet. <Link href={track.href}>Se kategoriguiden <ArrowRight size={15}/></Link></div>}</div>
-  <div className={s.laneTrust}><span><ShieldCheck size={16}/> Annonserade partnerlänkar · inte hela marknaden</span><button type='button' aria-expanded={reason} onClick={()=>setReason(v=>!v)}><Info size={15}/> Så väljs alternativen</button></div>
-  {reason&&<p className={s.laneWhy}>{choice?.why} Vi visar bara partners som är markerade som aktiva i vår partnerförteckning. Jämför erbjudandets villkor hos leverantören.</p>}
+  <div className={s.laneIntro}>
+   <div className={s.laneHeader}>
+    <span className={s.laneKicker}><Sparkles size={17}/> DIN VÄG VIDARE</span>
+    <h2>Vill du jämföra redan nu?</h2>
+    <p>Här börjar du utan en enda uppgift. Se aktiva samarbetspartner, läs på i lugn och ro eller prova ett relevant verktyg.</p>
+   </div>
+   <div className={s.laneDecision}>
+    <span><Check size={17}/> Inga påhittade offerter</span>
+    <span><Check size={17}/> Egen beräkning är frivillig</span>
+    <span><Check size={17}/> Annonslänkar är markerade</span>
+   </div>
+   <div className={s.laneExplore} aria-label='Välj hjälp eller egna beräkningar'>
+    <Link data-testid='v11-lane-tool' href={track.toolHref}><SlidersHorizontal size={20}/><span><strong>{track.toolText}</strong><small>Jag vill prova ett verktyg</small></span><ArrowRight size={18}/></Link>
+    <Link data-testid='v11-lane-guide' href={track.guideHref}><Compass size={20}/><span><strong>{track.guideText}</strong><small>Jag vill förstå först</small></span><ArrowRight size={18}/></Link>
+   </div>
+  </div>
+  <div className={s.lanePanel}>
+   <div className={s.lanePanelHeading}><span>AKTIVA ALTERNATIV</span><strong>Utvalda partnerlänkar – inte hela marknaden</strong></div>
+   <div className={s.laneFilters} aria-label='Välj jämförelsebehov'>{track.filters.map((f,i)=><button type='button' aria-pressed={i===choiceIndex} key={f.id} onClick={()=>{setChoiceIndex(i);setReason(false)}} className={i===choiceIndex?s.chipActive:s.chip}>{f.label}{i===choiceIndex&&<Check size={15}/>}</button>)}</div>
+   <div className={s.laneGrid}>{matches.length?matches.slice(0,3).map((p,i)=><PartnerLink key={p.name} p={p} category={category} intent={choice!.intent} index={i} placement='v10_category_lane' compact/>):
+    <div className={s.laneEmpty}>Inga aktiva partneralternativ för valet. <Link href={track.guideHref}>Få hjälp i guiden <ArrowRight size={15}/></Link></div>}</div>
+   <div className={s.laneTrust}><span><ShieldCheck size={17}/> Kontrollera aktuellt pris, villkor och tillgänglighet hos partnern.</span><button type='button' aria-expanded={reason} onClick={()=>setReason(v=>!v)}><Info size={17}/> Så väljs alternativen</button></div>
+   {reason&&<p className={s.laneWhy}>{choice?.why} Vi visar bara partners som är markerade som aktiva i vår partnerförteckning, inte en prisranking. En jämförelsetjänst skiljer sig från en enskild leverantör.</p>}
+  </div>
  </section>;
 }
