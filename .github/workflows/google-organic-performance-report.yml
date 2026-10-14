@@ -17,8 +17,7 @@ on:
         description: 'Number of inclusive days to report'
         required: false
         default: '30'
-  schedule:
-    - cron: '57 5 * * *'
+  # Scheduled collection is consolidated in autopilot-control.yml.
 
 permissions:
   contents: read

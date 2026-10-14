@@ -11,8 +11,7 @@ on:
       - 'scripts/partner-health.mjs'
       - 'tests/partner-health.test.mjs'
       - 'lib/partners.ts'
-  schedule:
-    - cron: '41 4 * * 1'
+  # Scheduled collection is consolidated in autopilot-control.yml.
   workflow_dispatch:
 
 permissions:
