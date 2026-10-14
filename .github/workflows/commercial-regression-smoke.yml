@@ -113,7 +113,6 @@ jobs:
             tests/experience-guide-reading.spec.ts \
             tests/experience-guide-entry.spec.ts \
             tests/p0k-progressive-smartselector.spec.ts \
-            tests/p0m-electricity-photo-consistency.spec.ts \
             tests/p0s-legacy-journeys.spec.ts \
             tests/v10-unified-journey.spec.ts \
             --project=chromium

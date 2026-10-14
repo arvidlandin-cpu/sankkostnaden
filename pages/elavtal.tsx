@@ -4,6 +4,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { ArrowRight, Check, PiggyBank, ShieldCheck, Zap } from 'lucide-react';
 import ElectricityMarketGateway from '../components/ElectricityMarketGateway';
+import CategorySpotlight from '../components/CategorySpotlight';
 import pageStyles from '../styles/CategoryPremium.module.css';
 
 const guides=[
@@ -48,6 +49,7 @@ export default function Elavtal(){
      <p className='fine'><ShieldCheck size={13}/> Gratis att använda · märkta partnerlänkar · aktuella erbjudanden hos bolagen</p>
     </div>
    </section>\n   <div id='v10-category-lane'><V10CategoryFastLane category='el'/></div>
+   <CategorySpotlight category='el'/>
    <article className={`article guideWrap categoryArticle ${pageStyles.article}`}>
     <div id='jamfor-elavtal' style={{scrollMarginTop:90}}><ElectricityMarketGateway/></div>
     <section className={`categoryIntro ${pageStyles.intro}`}>
