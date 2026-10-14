@@ -1,10 +1,9 @@
+import { V10CategoryFastLane } from '../components/V10Experience';
 import CategoryHeroPhoto from '../components/CategoryHeroPhoto';
 import Head from 'next/head';
 import Link from 'next/link';
 import { ArrowRight, Check, PiggyBank, ShieldCheck, Zap } from 'lucide-react';
 import ElectricityMarketGateway from '../components/ElectricityMarketGateway';
-import CategoryJourney from '../components/CategoryJourney';
-import CategorySpotlight from '../components/CategorySpotlight';
 import pageStyles from '../styles/CategoryPremium.module.css';
 
 const guides=[
@@ -31,7 +30,7 @@ export default function Elavtal(){
   <header className={`topbar ${pageStyles.topbar}`}>
    <Link className='brand' href='/'><span className='brandMark'><PiggyBank size={22}/></span>Sänk Kostnaden</Link>
    <nav><Link href='/bredband/'>Bredband</Link><Link href='/elavtal/'>El</Link><Link href='/mobil/'>Mobil</Link><Link href='/forsakring/'>Försäkring</Link><Link href='/ekonomi/'>Ekonomi</Link></nav>
-   <a className='topbarCta' href='#jamfor-elavtal'>Se elalternativen →</a>
+   <a className='topbarCta' href='#v10-category-lane'>Se elalternativen →</a>
   </header>
   <main className={pageStyles.main}>
    <section className={`guideHero categoryHero guideHero-el ${pageStyles.hero}`}>
@@ -43,14 +42,12 @@ export default function Elavtal(){
      <h1>Jämför elavtal. Välj med bättre koll.</h1>
      <p className='lead'>Jämför flera bolag hos Elskling, gå direkt till ett elbolag eller räkna på två erbjudanden. Du behöver inte veta din förbrukning för att börja.</p>
      <div className='categoryHeroActions'>
-      <a className='primary' href='#jamfor-elavtal'>Jämför elavtal <ArrowRight size={17}/></a>
+      <a className='primary' href='#v10-category-lane'>Jämför elavtal <ArrowRight size={17}/></a>
 
      </div>
      <p className='fine'><ShieldCheck size={13}/> Gratis att använda · märkta partnerlänkar · aktuella erbjudanden hos bolagen</p>
     </div>
-   </section>
-   <CategoryJourney category='el' compareHref='#jamfor-elavtal' helpHref='/elavtal/vilket-elavtal-passar-mig/' understandHref='/elavtal/sa-laser-du-elfakturan/'/>
-   <CategorySpotlight category='el'/>
+   </section>\n   <V10CategoryFastLane category='el'/>
    <article className={`article guideWrap categoryArticle ${pageStyles.article}`}>
     <div id='jamfor-elavtal' style={{scrollMarginTop:90}}><ElectricityMarketGateway/></div>
     <section className={`categoryIntro ${pageStyles.intro}`}>

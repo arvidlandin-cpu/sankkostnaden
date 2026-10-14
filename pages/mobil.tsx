@@ -1,10 +1,9 @@
+import { V10CategoryFastLane } from '../components/V10Experience';
 import CategoryHeroPhoto from '../components/CategoryHeroPhoto';
 import Head from 'next/head';
 import premium from '../styles/CategoryPremium.module.css';
 import Link from 'next/link';
 import { ArrowRight, Check, PiggyBank, ShieldCheck, Smartphone } from 'lucide-react';
-import CategoryJourney from '../components/CategoryJourney';
-import CategorySpotlight from '../components/CategorySpotlight';
 import MobileMarketGateway from '../components/MobileMarketGateway';
 
 const guides=[
@@ -31,7 +30,7 @@ export default function Mobil(){
   <header className={`topbar ${premium.topbar}`}>
    <Link className='brand' href='/'><span className='brandMark'><PiggyBank size={22}/></span><span>Sänk Kostnaden</span></Link>
    <nav><Link href='/bredband/'>Bredband</Link><Link href='/elavtal/'>El</Link><Link href='/mobil/'>Mobil</Link><Link href='/forsakring/'>Försäkring</Link><Link href='/ekonomi/'>Ekonomi</Link></nav>
-   <a className='topbarCta' href='#category-partners'>Se mobilalternativ →</a>
+   <a className='topbarCta' href='#v10-category-lane'>Se mobilalternativ →</a>
   </header>
   <main className={premium.main}>
    <section className={`guideHero categoryHero guideHero-mobil ${premium.hero}`}>
@@ -43,14 +42,12 @@ export default function Mobil(){
      <h1>Jämför mobilabonnemang utan att betala för surf du inte behöver.</h1>
      <p className='lead'>Börja med dina surfvanor eller familjens totalkostnad. Se sedan alla våra mobiloperatörer och kontrollera aktuella erbjudanden hos dem.</p>
      <div className='categoryHeroActions'>
-      <a className='primary' href='#category-partners'>Se mobilalternativ <ArrowRight size={17}/></a>
+      <a className='primary' href='#v10-category-lane'>Se mobilalternativ <ArrowRight size={17}/></a>
 
      </div>
      <p className='fine'><ShieldCheck size={13}/> Gratis vägledning · tydliga partnerlänkar · ingen påhittad prisranking</p>
     </div>
-   </section>
-   <CategoryJourney category='mobil' compareHref='#category-partners' helpHref='/mobil/hur-mycket-surf-behover-jag/' understandHref='/mobil/familjeabonnemang/'/>
-   <CategorySpotlight category='mobil'/>
+   </section>\n   <V10CategoryFastLane category='mobil'/>
    <article className={`article guideWrap categoryArticle ${premium.article}`}>
     <div id='category-partners' style={{scrollMarginTop:90}}><MobileMarketGateway/></div>
     <section className={`categoryIntro ${premium.intro}`}>

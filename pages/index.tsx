@@ -2,10 +2,11 @@ import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import { ArrowRight, PiggyBank, Wifi, Zap, Smartphone, ShieldCheck, WalletCards } from 'lucide-react';
 import styles from '../styles/Home.module.css';
-import HomeHero from '../components/HomeHero';
+import { V10Experience } from '../components/V10Experience';
 
 /* Licensed Pexels originals in responsive 700/1200/1800px variants. 
    No pre-rendered text or logos in imagery; the overlay icons are vector UI. */
+/* The large editorial category gallery remains below the one-tap V10 start. */
 const categories=[
   {title:'Bredband',subtitle:'Pris, fart & adress',href:'/bredband/',icon:Wifi,image:'https://images.pexels.com/photos/4260743/pexels-photo-4260743.jpeg?auto=compress&cs=tinysrgb&fit=crop'},
   {title:'El',subtitle:'Avtal & elpriser',href:'/elavtal/',icon:Zap,image:'https://images.pexels.com/photos/3875175/pexels-photo-3875175.jpeg?auto=compress&cs=tinysrgb&fit=crop'},
@@ -94,15 +95,15 @@ export default function Home(){
     <header className={styles.nav}>
       <a className={styles.brand} href='/'><span className={styles.brandMark}><PiggyBank size={21}/></span><span>Sänk Kostnaden</span></a>
       <nav><a href='/bredband/'>Bredband</a><a href='/elavtal/'>El</a><a href='/mobil/'>Mobil</a><a href='/forsakring/'>Försäkring</a><a href='/ekonomi/'>Ekonomi</a></nav>
-      <a className={styles.navCta} href='#jamfor'>Börja jämföra <ArrowRight size={15}/></a>
+      <a className={styles.navCta} href='#jamfor'>Jämför direkt <ArrowRight size={15}/></a>
     </header>
 
     <main>
-      <HomeHero/>
+      <V10Experience/>
 
-      <section className={`${styles.section} ${styles.popularSection}`} id='jamfor'>
+      <section className={`${styles.section} ${styles.popularSection}`} id='fler-omraden'>
         <div className={styles.popularHeader}>
-          <div><p>VÄLJ OMRÅDE</p><h2>Dina kostnader. Ditt liv. Dina val.</h2><span>Det är här du börjar. Välj det som spelar störst roll i din vardag.</span></div>
+          <div><p>VÄLJ OMRÅDE</p><h2>Fler sätt att få koll, när du vill.</h2><span>Utforska våra områden och guider i din egen takt. Du kan alltid jämföra direkt ovanför.</span></div>
         </div>
         <div className={styles.popularGrid}>
           {categories.map(({title,subtitle,href,image,icon:Icon},index)=><a className={styles.popularCard} href={href} key={title}>

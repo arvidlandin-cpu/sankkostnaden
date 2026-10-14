@@ -1,10 +1,9 @@
+import { V10CategoryFastLane } from '../components/V10Experience';
 import CategoryHeroPhoto from '../components/CategoryHeroPhoto';
 import Head from 'next/head';
 import premium from '../styles/CategoryPremium.module.css';
 import Link from 'next/link';
 import { ArrowRight, Check, PiggyBank, ShieldCheck } from 'lucide-react';
-import CategoryJourney from '../components/CategoryJourney';
-import CategorySpotlight from '../components/CategorySpotlight';
 import InsuranceMarketGateway from '../components/InsuranceMarketGateway';
 
 const guides=[
@@ -31,7 +30,7 @@ export default function Forsakring(){
    <header className={`topbar ${premium.topbar}`}>
      <Link className='brand' href='/'><span className='brandMark'><PiggyBank size={22}/></span><span>Sänk Kostnaden</span></Link>
      <nav><Link href='/bredband/'>Bredband</Link><Link href='/elavtal/'>El</Link><Link href='/mobil/'>Mobil</Link><Link href='/forsakring/'>Försäkring</Link><Link href='/ekonomi/'>Ekonomi</Link></nav>
-     <a className='topbarCta' href='#category-partners'>Se försäkringsalternativ →</a>
+     <a className='topbarCta' href='#v10-category-lane'>Se försäkringsalternativ →</a>
    </header>
    <main className={premium.main}>
      <section className={`guideHero categoryHero guideHero-forsakring ${premium.hero}`}>
@@ -43,14 +42,12 @@ export default function Forsakring(){
          <h1>Välj rätt försäkringsskydd innan du jämför priset.</h1>
          <p className='lead'>Hem, djur, resa och ersättningsärenden är olika behov. Vi hjälper dig hitta rätt väg och synliggör våra relevanta partners utan att låtsas ha dina personliga premier.</p>
          <div className='categoryHeroActions'>
-           <a className='primary' href='#category-partners'>Se försäkringsalternativen <ArrowRight size={17}/></a>
+           <a className='primary' href='#v10-category-lane'>Se försäkringsalternativen <ArrowRight size={17}/></a>
 
          </div>
          <p className='fine'>Gratis vägledning · aktuella premier och villkor hos försäkringsbolagen · tydligt märkta partnerlänkar</p>
        </div>
-     </section>
-   <CategoryJourney category='forsakring' compareHref='#category-partners' helpHref='/forsakring/hemforsakring-skyddskoll/' understandHref='/forsakring/hemforsakring-bostadsratt/'/>
-   <CategorySpotlight category='forsakring'/>
+     </section>\n   <V10CategoryFastLane category='forsakring'/>
    <article className={`article guideWrap categoryArticle ${premium.article}`}>
        <div id='category-partners' style={{scrollMarginTop:90}}><InsuranceMarketGateway/></div>
        <section className={`categoryIntro ${premium.intro}`}>
