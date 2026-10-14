@@ -47,7 +47,7 @@ export default function Forsakring(){
          </div>
          <p className='fine'>Gratis vägledning · aktuella premier och villkor hos försäkringsbolagen · tydligt märkta partnerlänkar</p>
        </div>
-     </section>\n   <V10CategoryFastLane category='forsakring'/>
+     </section>\n   <div id='v10-category-lane'><V10CategoryFastLane category='forsakring'/></div>
    <article className={`article guideWrap categoryArticle ${premium.article}`}>
        <div id='category-partners' style={{scrollMarginTop:90}}><InsuranceMarketGateway/></div>
        <section className={`categoryIntro ${premium.intro}`}>

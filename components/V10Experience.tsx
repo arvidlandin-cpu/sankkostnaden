@@ -67,7 +67,7 @@ export function V10Experience(){
    window.requestAnimationFrame(()=>result.current?.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'}));
  }
  function filter(index:number){setChoiceIndex(index);setShowReason(false);if(category)emitAnalyticsEvent('v10_filter_selected',{category,filter:findTrack(category).filters[index].id});}
- return <section className={s.home} id='jamfor' aria-label='Hitta rätt jämförelse' data-testid='v10-journey'>
+ return <section className={s.home} aria-label='Hitta rätt jämförelse' data-testid='v10-journey'>
   <div className={s.lightOrb} aria-hidden='true'/>
   <div className={s.wrapper}>
    <div className={s.intro}>

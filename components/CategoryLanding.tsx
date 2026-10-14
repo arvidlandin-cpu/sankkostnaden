@@ -83,7 +83,7 @@ export default function CategoryLanding({
           <p className='fine'>Inga kontaktuppgifter behövs för att börja.</p>
         </div>
       </section>
-      <V10CategoryFastLane category={category}/>
+      <div id='v10-category-lane'><V10CategoryFastLane category={category}/></div>
 
       <article className={`article guideWrap categoryArticle ${premium.article}`}>
         {!comparisonFirst&&<>

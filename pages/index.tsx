@@ -99,7 +99,7 @@ export default function Home(){
     </header>
 
     <main>
-      <V10Experience/>
+      <div id='jamfor'><V10Experience/></div>
 
       <section className={`${styles.section} ${styles.popularSection}`} id='fler-omraden'>
         <div className={styles.popularHeader}>

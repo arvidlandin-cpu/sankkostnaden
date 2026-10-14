@@ -47,7 +47,7 @@ export default function Mobil(){
      </div>
      <p className='fine'><ShieldCheck size={13}/> Gratis vägledning · tydliga partnerlänkar · ingen påhittad prisranking</p>
     </div>
-   </section>\n   <V10CategoryFastLane category='mobil'/>
+   </section>\n   <div id='v10-category-lane'><V10CategoryFastLane category='mobil'/></div>
    <article className={`article guideWrap categoryArticle ${premium.article}`}>
     <div id='category-partners' style={{scrollMarginTop:90}}><MobileMarketGateway/></div>
     <section className={`categoryIntro ${premium.intro}`}>
