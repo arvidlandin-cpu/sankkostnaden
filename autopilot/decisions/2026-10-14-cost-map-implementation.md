@@ -71,3 +71,15 @@ Status när detta beslut skrivs: implementation, QA, merge, Pages-deploy, verifi
 Kör `npm run check`, `npm run check:integrity`, `npm run build` och `npm run check:export`. Testa meningsfullt kategori → uppdaterad panel → befintlig guide/verktyg → korrekt resultat → relevant märkt partnerdestination, utan ett verkligt annonsklick. Kontrollera ändrat val, tangentbord/fokus, sponsormärkning, attribut och event. Granska riktiga skärmbilder på 360, 390, 430, 1024, 1440 och 1920 px samt relevanta Chromium-/WebKit-/kommersiella regressioner. Bekräfta att startsidans metadata, schema och interna länkar består och att det skyddade försöket inte ändrats.
 
 Efter godkänd QA ska merge, Cloudflare Pages och vad egen domän faktiskt serverar redovisas som separata verifierade tillstånd. Linux WebKit är inte fysisk iPhone. Fortsätt observera nyttan och verklig trafik; behåll om sant, tillgängligt och användbart, reversera vid materiell regression. Uppdatera learning ledger först med faktiska resultat och avstå vinnarpåståenden från små klicktal eller avsaknad av jämförbar baseline.
+
+## Sammanhängande fortsättning: kategorier och guider
+
+Efter den första sexfilsdelen förs samma godkända identitet vidare i en separat avgränsad ändring av CategoryHeroPhoto, CategoryPremium och EditorialGuideHero/EditorialGuide samt detta beslut. Kategorierna återanvänder den lokala illustrationen; fakta- och beslutsstödsrutter får en textledd introduktion utan generiska personbilder. Originalrubriker, kanoniska adresser, brödtext, kalkyllogik och partnerdestinationer bevaras. Inga nya kategorier, affiliatenätverk eller SEO-sidor införs. Ändringen ska göra hela den valda resan sammanhängande och minska onödig bildnedladdning före den första användbara handlingen.
+
+De här sidfamiljerna används inte av den skyddade kvartsprisguiden. Inga globala stilmallar, experimentdata eller kvartsprisfiler ändras. CategoryPremium.topbar används även av /app/ och harmoniserar där endast sidhuvudet. Före leverans ska de slutliga renderingarna och relevanta befintliga användarflödena verifieras; teknisk QA är skild från faktisk trafiktillväxt och nätverksgodkänd provision.
+
+### Första verifieringsomgången
+
+Build, check och check:integrity passerade. Den första statiska exportens nya Chromium-svit passerade 12/12 testfall inklusive verkliga intentresultat, alla aktiva partnerlänkar, sponsormärkning, exakta djuplänkar, intern navigation, tangentbord/fokus, utan JavaScript och sex skärmbredder. Bildgranskningen hittade en för lång desktop-panel; partnerlistan har därför gjorts progressiv och layouten har korrigerats. Mobilens illustration läggs efter de fem primära kostnadsvalen. Dessa sista ändringar och fortsättningen till kategorier/guider ska verifieras i slutbygget.
+
+WebKit-nedladdning stoppades av miljöns nätverksproxy med HTTP403 även vid utökat nätverkstest. TLS- och paketverifiering har bevarats. WebKit ska köras i befintlig GitHub Actions-miljö där Playwright redan installeras; lokalt Chromium ersätter inte detta resultat.

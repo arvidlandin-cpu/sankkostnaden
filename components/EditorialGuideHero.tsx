@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowDown, ArrowRight, ShieldCheck } from 'lucide-react';
+import { ArrowDown, ArrowRight, KeyRound, LampDesk, ShieldCheck, Smartphone, WalletCards, Wifi } from 'lucide-react';
 import type { PartnerCategory } from '../lib/partners';
 import styles from '../styles/EditorialGuide.module.css';
 
@@ -13,41 +13,22 @@ type Props = {
   hasPartnerOutput: boolean;
 };
 
-/**
- * A single photographic/editorial masthead for factual category guides.
- * All copy, CTAs, and breadcrumbs remain genuine crawlable accessible HTML.
- * Photographs illustrate everyday contexts, not customers or partners.
- */
-const photoIds:Record<PartnerCategory,string>={
-  bredband:'4260743',
-  el:'8055828',
-  mobil:'4254149',
-  forsakring:'27177239',
-  ekonomi:'6964105',
-};
+/** Compact category context and crawlable actions, without decorative photos. */
+const categoryIcons:Record<PartnerCategory,typeof Wifi>={bredband:Wifi,el:LampDesk,mobil:Smartphone,forsakring:KeyRound,ekonomi:WalletCards};
 
 export default function EditorialGuideHero({category,categoryLabel,categoryPath,kicker,title,description,hasPartnerOutput}:Props){
-  const id=photoIds[category];
-  const base=['https://images.pexels.com/photos',id,'pexels-photo-'+id+'.jpeg'].join('/')+'?auto=compress&cs=tinysrgb&fit=crop';
+  const CategoryIcon=categoryIcons[category];
   // These anchor targets are rendered by the parent IntentGuide, not this
   // shared child; the repository's static checker only sees local component IDs.
   const partnerAnchor='#'+'guide-partners';
   const summaryAnchor='#'+'guide-summary';
   return <section className={styles.hero} data-testid='editorial-guide-hero' aria-label='Introduktion till guiden'>
-    <div className={styles.photo} aria-hidden='true'>
-      <img src={base+'&w=1600'}
-        srcSet={base+'&w=700 700w, '+base+'&w=1200 1200w, '+base+'&w=1600 1600w, '+base+'&w=2400 2400w'}
-        sizes='(max-width:760px) 100vw, 65vw'
-        alt='' loading='eager' decoding='async' fetchPriority='high'
-        data-testid={'editorial-guide-image-'+category}/>
-    </div>
-    <div className={styles.scrim} aria-hidden='true'/>
     <div className={styles.heroInner}>
       <div className={styles.copy}>
         <nav className={styles.breadcrumbs} aria-label='Brödsmulor'>
           <Link href='/'>Start</Link><span aria-hidden='true'>›</span><Link href={categoryPath}>{categoryLabel}</Link><span aria-hidden='true'>›</span><span aria-current='page'>{kicker}</span>
         </nav>
-        <p className={styles.kicker}>{kicker}</p>
+        <p className={styles.kicker}><CategoryIcon size={23} strokeWidth={1.8} aria-hidden='true'/>{kicker}</p>
         <h1>{title}</h1>
         <p className={styles.lead}>{description}</p>
         <div className={styles.actions}>
