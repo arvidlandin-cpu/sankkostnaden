@@ -24,7 +24,7 @@ const tracks:Track[]=[
   {id:'data',label:'Mer surf',intent:'data',why:'Välj efter hur mycket mobildata du faktiskt använder.'},
   {id:'flex',label:'Utan bindningstid',intent:'no-binding',why:'Kontrollera bindningstid och uppsägningsvillkor innan du byter.'}
  ]},
- {id:'forsakring',name:'Försäkring',question:'Vad vill du försäkra?',subtitle:'Skydd, självrisk och villkor',hint:'Jämför lika omfattning och självrisk – inte bara premie.',href:'/forsakring/',guideHref:'/forsakring/hemforsakring-skyddskoll/',guideText:'Kontrollera mitt försäkringsskydd',toolHref:'/forsakring/hemforsakring-bostadsratt/',toolText:'Fördjupa dig i bostadsrättsskydd',icon:HeartHandshake,accent:'rose',filters:[
+ {id:'forsakring',name:'Försäkring',question:'Vad vill du försäkra?',subtitle:'Skydd, självrisk och villkor',hint:'Jämför lika omfattning och självrisk – inte bara premie.',href:'/forsakring/',guideHref:'/forsakring/jamfor-hemforsakring/',guideText:'Så jämför du skydd och självrisk',toolHref:'/forsakring/hemforsakring-skyddskoll/',toolText:'Gör skyddskollen för ditt hem',icon:HeartHandshake,accent:'rose',filters:[
   {id:'home',label:'Hem',intent:'home',why:'Välj hemförsäkring efter boendeform och rätt skyddsnivå.'},
   {id:'pet',label:'Djur',intent:'pet',why:'Jämför ersättningstak, självrisken och undantag.'},
   {id:'travel',label:'Resa',intent:'travel',why:'Kontrollera reseskydd, självrisk och vilka situationer som omfattas.'}
@@ -106,7 +106,7 @@ export function V10Experience(){
        <div><span className={s.routesEyebrow}>MER PRECISION NÄR DU VILL</span><strong>Vill du förstå eller räkna först?</strong></div>
        <div className={s.routeLinks}>
         <Link data-testid='v11-route-guide' href={track.guideHref}><Compass size={18}/><span>{track.guideText}<small>Hjälp utan prisuppgifter</small></span><ArrowRight size={17}/></Link>
-        <Link data-testid='v11-route-tool' href={track.toolHref}><SlidersHorizontal size={18}/><span>{track.toolText}<small>Frivillig fördjupning med egna uppgifter</small></span><ArrowRight size={17}/></Link>
+        <Link data-testid='v11-route-tool' href={track.toolHref}><SlidersHorizontal size={18}/><span>{track.toolText}<small>Frivilligt verktyg eller beräkning</small></span><ArrowRight size={17}/></Link>
        </div>
       </div>
       <div className={s.whyBlock}><button type='button' aria-expanded={showReason} onClick={()=>setShowReason(v=>!v)}><Info size={16}/> Varför visas dessa alternativ? <ChevronDown size={16}/></button>{showReason&&<p>{choice.why} Urvalet omfattar bara våra aktiva partners, inte hela marknaden. Det är inte en prisranking.</p>}</div>
@@ -143,7 +143,7 @@ export function V10CategoryFastLane({category}:{category:JourneyCategory}){
    <div className={s.laneHeader}>
     <span className={s.laneKicker}><Sparkles size={17}/> DIN VÄG VIDARE</span>
     <h2>Vill du jämföra redan nu?</h2>
-    <p>Här börjar du utan en enda uppgift. Se aktiva samarbetspartner eller välj ett eget verktyg för en mer exakt jämförelse.</p>
+    <p>Här börjar du utan en enda uppgift. Se aktiva samarbetspartner, läs på i lugn och ro eller prova ett relevant verktyg.</p>
    </div>
    <div className={s.laneDecision}>
     <span><Check size={17}/> Inga påhittade offerter</span>
@@ -151,7 +151,7 @@ export function V10CategoryFastLane({category}:{category:JourneyCategory}){
     <span><Check size={17}/> Annonslänkar är markerade</span>
    </div>
    <div className={s.laneExplore} aria-label='Välj hjälp eller egna beräkningar'>
-    <Link data-testid='v11-lane-tool' href={track.toolHref}><SlidersHorizontal size={20}/><span><strong>{track.toolText}</strong><small>Jag har egna uppgifter</small></span><ArrowRight size={18}/></Link>
+    <Link data-testid='v11-lane-tool' href={track.toolHref}><SlidersHorizontal size={20}/><span><strong>{track.toolText}</strong><small>Jag vill prova ett verktyg</small></span><ArrowRight size={18}/></Link>
     <Link data-testid='v11-lane-guide' href={track.guideHref}><Compass size={20}/><span><strong>{track.guideText}</strong><small>Jag vill förstå först</small></span><ArrowRight size={18}/></Link>
    </div>
   </div>

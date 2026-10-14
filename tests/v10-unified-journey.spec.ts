@@ -87,7 +87,7 @@ test('Unified home: meaningful category result plus true guide and calculation e
    ['el','/elavtal/vilket-elavtal-passar-mig/','/verktyg/elavtalskostnad/'],
    ['bredband','/bredband/vilken-hastighet-behover-jag/','/verktyg/forstaarskostnad-bredband/'],
    ['mobil','/mobil/hur-mycket-surf-behover-jag/','/verktyg/forstaarskostnad/'],
-   ['forsakring','/forsakring/hemforsakring-skyddskoll/','/forsakring/hemforsakring-bostadsratt/'],
+   ['forsakring','/forsakring/jamfor-hemforsakring/','/forsakring/hemforsakring-skyddskoll/'],
    ['ekonomi','/ekonomi/kostnadskontroll-och-sparande/','/verktyg/hushallskostnadskollen/']
   ] as const){
    await journey.getByTestId('v10-category-'+category).click();
@@ -107,7 +107,7 @@ for(const [path,category,guide,tool] of [
  ['/elavtal/','el','/elavtal/vilket-elavtal-passar-mig/','/verktyg/elavtalskostnad/'],
  ['/bredband/','bredband','/bredband/vilken-hastighet-behover-jag/','/verktyg/forstaarskostnad-bredband/'],
  ['/mobil/','mobil','/mobil/hur-mycket-surf-behover-jag/','/verktyg/forstaarskostnad/'],
- ['/forsakring/','forsakring','/forsakring/hemforsakring-skyddskoll/','/forsakring/hemforsakring-bostadsratt/'],
+ ['/forsakring/','forsakring','/forsakring/jamfor-hemforsakring/','/forsakring/hemforsakring-skyddskoll/'],
  ['/ekonomi/','ekonomi','/ekonomi/kostnadskontroll-och-sparande/','/verktyg/hushallskostnadskollen/']
 ] as const){
  test('Unified category integrates partner, guide and detailed tool: '+category,async({page})=>{
