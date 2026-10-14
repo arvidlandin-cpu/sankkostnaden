@@ -150,7 +150,8 @@ jobs:
           if(fs.existsSync(file)){
             const report=JSON.parse(fs.readFileSync(file,'utf8'));
             const sources=report.sources.map(source=>`${source.name}=${source.status}`).join(', ');
-            console.log(`::notice title=Dygnsrapportens källstatus::${sources}; production=${report.release.status}; organicSessions=${report.traffic.organicSessions??'UNKNOWN'}; organicPartnerClicks=${report.traffic.organicOutgoingPartnerClicks??'UNKNOWN'}; totalRevenue=${report.revenue.status}`);
+            const period=report.traffic.ga4Period;
+            console.log(`::notice title=Dygnsrapportens källstatus::${sources}; production=${report.release.status}; verifiedCommit=${report.release.expectedCommit??'UNKNOWN'}; assets=${report.release.assetCount??'UNKNOWN'}; GA4period=${period?period.from+'..'+period.to:'UNKNOWN'}; organicSessions=${report.traffic.organicSessions??'UNKNOWN'}; organicPartnerClicks=${report.traffic.organicOutgoingPartnerClicks??'UNKNOWN'}; totalRevenue=${report.revenue.status}`);
           }
           JS
 
