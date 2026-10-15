@@ -66,6 +66,8 @@ for (const guide of [
     await expect(image).toHaveAttribute('src', getCategoryArtwork(guide.category).src);
     await expect(image).toBeVisible();
     await expect.poll(() => image.evaluate((node: HTMLImageElement) => node.complete && node.naturalWidth >= 1000)).toBe(true);
+    const gatewayHeading = page.locator('.gatewayHead h2');
+    if (await gatewayHeading.count()) await expect(gatewayHeading).toHaveCSS('color', 'rgb(255, 255, 255)');
     await page.setViewportSize({ width: 390, height: 844 });
     await expect(image).toBeHidden();
   });
