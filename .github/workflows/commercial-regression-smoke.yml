@@ -33,6 +33,7 @@ on:
       - 'design/p0d-*'
       - 'ux/mobile-insurance-purpose-first-*'
       - 'ux/broadband-direct-address-*'
+      - 'ux/journey-followups-*'
       - 'ux/kostnadskollen-neutral-quickpaths-*'
       - 'ux/kostnadskollen-svenska-svar-*'
       - 'ux/economy-comparison-first-*'
@@ -96,7 +97,7 @@ jobs:
 
       - name: Run non-browser commercial checks
         run: |
-          node --test tests/partner-health.test.mjs tests/affiliate-revenue-report.test.mjs
+          node --test tests/partner-health.test.mjs tests/affiliate-revenue-report.test.mjs tests/check-site-imported-anchors.test.mjs
 
       # V10 supersedes V5-only screenshot/copy contracts, not financial or tracking invariants.
       # Legacy V5 suites stay in GitHub for archived baseline comparison.
@@ -108,6 +109,11 @@ jobs:
             tests/first-year-timeline.spec.ts \
             tests/category-artwork.spec.ts \
             tests/smartselector-result-focus.spec.ts \
+            tests/insurance-intent-journey.spec.ts \
+            tests/journey-intent-continuity.spec.ts \
+            tests/direct-calculator-entry.spec.ts \
+            tests/house-electricity-method.spec.ts \
+            tests/broadband-hub.spec.ts \
             tests/switch-calendar.spec.ts \
             tests/family-mobile-cost.spec.ts \
             tests/cost-prioritizer.spec.ts \
@@ -143,7 +149,7 @@ jobs:
           echo "Retained $(find qa-evidence/chromium -type f -name '*.png' | wc -l) Chromium screenshots for review."
 
       - name: Run free Safari-engine mobile regression (not a physical iPhone)
-        run: npx playwright test tests/mobile-webkit-core.spec.ts tests/cost-map-journey.spec.ts tests/category-artwork.spec.ts tests/first-year-timeline.spec.ts tests/smartselector-result-focus.spec.ts --project=webkit
+        run: npx playwright test tests/mobile-webkit-core.spec.ts tests/cost-map-journey.spec.ts tests/category-artwork.spec.ts tests/first-year-timeline.spec.ts tests/smartselector-result-focus.spec.ts tests/insurance-intent-journey.spec.ts tests/journey-intent-continuity.spec.ts tests/direct-calculator-entry.spec.ts tests/house-electricity-method.spec.ts tests/broadband-hub.spec.ts tests/experience-guide-entry.spec.ts --project=webkit
 
       - name: Upload Playwright report
         if: always()
@@ -207,4 +213,4 @@ jobs:
         run: python3 scripts/verify-production-release.py --mode production
 
       - name: Run live commercial flows with analytics disabled
-        run: npx playwright test tests/production-commercial-smoke.spec.ts tests/category-artwork.spec.ts tests/first-year-timeline.spec.ts tests/smartselector-result-focus.spec.ts --project=chromium
+        run: npx playwright test tests/production-commercial-smoke.spec.ts tests/category-artwork.spec.ts tests/first-year-timeline.spec.ts tests/smartselector-result-focus.spec.ts tests/insurance-intent-journey.spec.ts tests/journey-intent-continuity.spec.ts tests/direct-calculator-entry.spec.ts tests/house-electricity-method.spec.ts tests/broadband-hub.spec.ts tests/cost-map-journey.spec.ts --project=chromium
