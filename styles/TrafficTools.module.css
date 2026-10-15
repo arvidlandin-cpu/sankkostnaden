@@ -262,3 +262,16 @@
 .hero{background:radial-gradient(circle at 85% 6%,rgba(96,139,250,.18),transparent 36%),linear-gradient(125deg,var(--sk-result),var(--sk-result-surface))}
 .result>a:hover{background:var(--sk-action-hover)}
 .choices button:focus-visible,.toggles button:focus-visible,.result>a:focus-visible{outline:3px solid var(--sk-focus);outline-offset:3px}
+
+/* House example methodology: scoped so other traffic tools keep their layout. */
+.housePage .measuredFirst{max-width:1120px;margin:24px auto 0;padding:22px;border:1px solid var(--sk-line);border-radius:18px;background:var(--sk-surface-raised)}
+.housePage .measuredFirst h2{margin:0 0 10px;font-size:22px}
+.housePage .measuredFirst p{line-height:1.65;color:var(--sk-ink-muted)}
+.housePage .measuredFirst a{display:inline-flex;align-items:center;gap:8px;min-height:44px;color:var(--sk-accent-ink);font-weight:800}
+.housePage .houseMethod{margin-top:20px;padding:16px;border:1px solid #ffffff50;border-radius:13px;font-size:14px;line-height:1.65;overflow-wrap:anywhere}
+.housePage .houseMethod summary{cursor:pointer;min-height:44px;font-weight:800}
+.housePage .houseMethod ul{padding-left:20px}
+.housePage .houseMethod dt{font-weight:750;margin-top:12px}
+.housePage .houseMethod dd{margin-left:0}
+.housePage input[type='range']{min-height:44px}
+.housePage input:focus-visible,.housePage summary:focus-visible,.housePage .measuredFirst a:focus-visible{outline:3px solid var(--sk-focus);outline-offset:3px}
