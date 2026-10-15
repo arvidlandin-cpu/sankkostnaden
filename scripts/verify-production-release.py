@@ -389,6 +389,15 @@ def main():
         output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n')
         for annotation in failure_annotations(report):
             print(annotation, flush=True)
+        commit = report.get('expectedCommit') or ''
+        commit = commit if re.fullmatch(r'[0-9a-fA-F]{40}', commit) else 'UNKNOWN'
+        reference = report.get('referenceUrl') or ''
+        reference = reference if re.fullmatch(r'https://[0-9a-f]{8,64}\.sankkostnaden\.pages\.dev', reference, re.I) else 'UNKNOWN'
+        routes = sum(row.get('kind') in ('production-metadata', 'preview-metadata') for row in report['checks'])
+        notice = (f"passed={str(report['passed']).lower()}; mode={args.mode}; expectedCommit={commit}"
+                  f"; metadata={routes}/63; assets={len(report['assets'])}; reference={reference}"
+                  f"; verifiedAt={report['verifiedAt']}")
+        print('::notice title=Release verification result::' + workflow_escape(notice), flush=True)
         print('Release verification: ' + ('PASS' if report['passed'] else 'FAIL'), flush=True)
     return 0 if report['passed'] else 1
 
