@@ -15,7 +15,7 @@ for(const width of [390,1440]){
    await expect(flow.getByRole('heading',{level:1})).toBeVisible();
    const photo=flow.getByTestId('smartselector-hero-photo');
    await expect(photo).toHaveAttribute('alt','');
-   await expect(photo).toHaveAttribute('src','/design/cost-map-home.webp');
+   await expect(photo).toHaveAttribute('src',`/design/category-${model.area}.webp`);
    await expect(flow.locator('img[src*="images.pexels.com"],img[srcset*="images.pexels.com"]')).toHaveCount(0);
    if(width===390){
     // Keep the first question ahead of decorative art on a narrow screen.
@@ -23,11 +23,11 @@ for(const width of [390,1440]){
    }else{
     await expect(photo).toBeVisible();
     await expect.poll(()=>photo.evaluate((node:HTMLImageElement)=>node.complete&&node.naturalWidth>=1200),{timeout:25000}).toBeTruthy();
-    expect(await photo.evaluate(async(node:HTMLImageElement)=>{
+    expect(await photo.evaluate(async(node:HTMLImageElement,expectedPath:string)=>{
      await node.decode();
      const source=new URL(node.currentSrc,window.location.href);
-     return source.origin===window.location.origin&&source.pathname==='/design/cost-map-home.webp';
-    })).toBe(true);
+     return source.origin===window.location.origin&&source.pathname===expectedPath;
+    },`/design/category-${model.area}.webp`)).toBe(true);
    }
    const progress=flow.getByRole('progressbar');
    await expect(progress).toHaveAttribute('aria-valuenow','0');
