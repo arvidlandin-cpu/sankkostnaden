@@ -1,7 +1,7 @@
 import {expect,test} from '@playwright/test';
 
-/** The user's first useful decision must no longer be buried behind a tall
- * paragraph-heavy gateway on 390px mobile. Preserve real commercial handoff. */
+/** Keep the protected quarter-price observation intact. Other guides deliver
+ * their factual answer before offering another decision, with commercial exits intact. */
 const pages=[
  {path:'/elavtal/kvartspris/',category:'el',label:'Hjälp mig välja avtalsform'},
  {path:'/mobil/familjeabonnemang/',category:'mobil',label:'Hjälp mig välja surf'},
@@ -25,7 +25,15 @@ for(const {path,label} of pages){
   const flow=page.getByTestId('guide-reading-flow');
   await expect(flow).toBeVisible();
   const contentAfter=await flow.boundingBox();
-  expect((contentAfter?.y||0)-(rect?.y||0)).toBeLessThan(365);
+  if(path==='/elavtal/kvartspris/'){
+   expect((contentAfter?.y||0)-(rect?.y||0)).toBeGreaterThan(0);
+   expect((contentAfter?.y||0)-(rect?.y||0)).toBeLessThan(365);
+  }else{
+   expect(contentAfter!.y).toBeLessThan(rect!.y);
+   const summary=page.locator('#guide-summary');
+   await expect(summary.getByTestId('guide-reading-flow')).toBeVisible();
+   await expect(page.getByTestId('editorial-guide-hero').getByRole('link',{name:'Börja med råden'})).toHaveAttribute('href','#guide-summary');
+  }
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href','https://sankkostnaden.se'+path);
   const overflow=await page.evaluate(()=>Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)-document.documentElement.clientWidth);
   expect(overflow).toBeLessThanOrEqual(1);

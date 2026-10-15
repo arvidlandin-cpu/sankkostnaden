@@ -4,7 +4,6 @@ import Head from 'next/head';
 import premium from '../styles/CategoryPremium.module.css';
 import Link from 'next/link';
 import { ArrowRight, Check, PiggyBank, ShieldCheck, Wifi } from 'lucide-react';
-import BroadbandMarketGateway from '../components/BroadbandMarketGateway';
 import { getActivePartners } from '../lib/partners';
 import { emitAnalyticsEvent } from '../lib/clientAttribution';
 
@@ -12,6 +11,7 @@ const guides=[
  {href:'/bredband/bredband-pa-min-adress/',title:'Bredband på min adress',text:'Varför utbud och priser skiljer sig mellan adresser.'},
  {href:'/bredband/billigaste-bredbandet/',title:'Vad avgör billigaste bredbandet?',text:'Kampanj, ordinarie pris och avgifter över ett år.'},
  {href:'/bredband/utan-bindningstid/',title:'Bredband utan bindningstid',text:'Räkna på flexibilitet och uppsägningstid.'},
+ {href:'/bredband/fiber-eller-mobilt-bredband/',title:'Fiber eller mobilt bredband?',text:'Jämför teknikens stabilitet, kapacitet och tillgänglighet.'},
  {href:'/bredband/100-100/',title:'Räcker 100/100 Mbit/s?',text:'Rätt hastighet för de flesta vardagsbehov.'},
 ];
 
@@ -51,9 +51,8 @@ export default function Bredband(){
      <p className='fine'><ShieldCheck size={13}/> {addressComparison?'Partnerlänk · kontroll och adressuppgifter hos Bredbandsval · vi får eventuell provision':'Gratis vägledning · adresser och priser kontrolleras hos operatören'}</p>
     </div>
    </section>
-   <div id='v10-category-lane'><V10CategoryFastLane category='bredband'/></div>
+   <div id='v10-category-lane'><div id='category-partners' style={{scrollMarginTop:90}}><V10CategoryFastLane category='bredband'/></div></div>
    <article className={`article guideWrap categoryArticle ${premium.article}`}>
-    <div id='category-partners' style={{scrollMarginTop:90}}><BroadbandMarketGateway/></div>
     <section className={`categoryIntro ${premium.intro}`}>
      <p className='kicker'>JÄMFÖR PÅ LIKA VILLKOR</p>
      <h2>Så undviker du att lockpriset styr valet</h2>

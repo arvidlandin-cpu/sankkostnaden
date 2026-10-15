@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import {getActivePartners} from '../lib/partners';
 
 const route='/bredband/?qa=1';
 
@@ -6,10 +7,10 @@ test('broadband starts with a real address-checking partner rather than a fake l
  await page.goto(route);
  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href','https://sankkostnaden.se/bredband/');
  await expect(page.getByRole('heading',{level:1,name:/Hitta bredband som passar ditt hem/})).toBeVisible();
- const section=page.getByTestId('broadband-market');
- await expect(section.getByRole('heading',{name:'Vad kan du faktiskt få på din adress?'})).toBeVisible();
- await expect(section).toContainText('Adresskontrollen görs hos Bredbandsval');
- await expect(section.getByText('3 aktiva bredbandspartners')).toBeVisible();
+ const section=page.getByTestId('v10-category-lane');
+ await expect(section).toHaveCount(1);
+ await expect(page.getByTestId('broadband-market')).toHaveCount(0);
+ await expect(section.getByRole('heading',{name:'Vill du jämföra redan nu?'})).toBeVisible();
  const heroComparison=page.locator('a[data-placement="broadband_hero_comparison"]');
  await expect(heroComparison).toHaveCount(1);
  await expect(heroComparison).toHaveAttribute('data-partner','Bredbandsval.se');
@@ -17,22 +18,23 @@ test('broadband starts with a real address-checking partner rather than a fake l
  await expect(heroComparison).toHaveAttribute('target','_blank');
  await expect(heroComparison).toHaveAttribute('href',/visit\.bredbandsval\.se/);
  await expect(page.getByText(/adressuppgifter hos Bredbandsval/)).toBeVisible();
- const comparison=page.locator('a[data-placement="broadband_hub_comparison"]');
- await expect(comparison).toHaveCount(1);
- await expect(comparison).toHaveAttribute('data-partner','Bredbandsval.se');
- await expect(comparison).toHaveAttribute('rel',/sponsored/);
- await expect(comparison).toHaveAttribute('target','_blank');
- const suppliers=page.locator('a[data-placement="broadband_hub_supplier"]');
- await expect(suppliers).toHaveCount(2);
- const names=await suppliers.evaluateAll(anchors=>anchors.map(a=>a.getAttribute('data-partner')));
- expect(names).toEqual(['Internetport','Ownit']);
- for(const supplier of await suppliers.all()){
-  await expect(supplier).toHaveAttribute('data-category','bredband');
-  await expect(supplier).toHaveAttribute('rel',/sponsored/);
+ const partners=section.getByTestId('v10-partner-card');
+ const active=getActivePartners('bredband','compare',Infinity);
+ await expect(partners).toHaveCount(active.length);
+ expect(await partners.evaluateAll(nodes=>nodes.map(n=>n.getAttribute('data-partner')).sort())).toEqual(active.map(p=>p.name).sort());
+ for(const partner of active){
+  const link=section.locator('a[data-partner="'+partner.name+'"]');
+  await expect(link).toHaveAttribute('href',partner.trackingUrl);
+  await expect(link).toHaveAttribute('data-category','bredband');
+  await expect(link).toHaveAttribute('data-intent','compare');
+  await expect(link).toHaveAttribute('data-placement','v10_category_lane');
+  await expect(link).toHaveAttribute('rel',/sponsored/);
+  await expect(link).toHaveAttribute('target','_blank');
  }
- await expect(section.getByRole('link',{name:/Räkna förstaårskostnaden/})).toHaveAttribute('href','/verktyg/forstaarskostnad-bredband/?src=bredband');
- await expect(section.getByRole('link',{name:/Hjälp mig välja hastighet/})).toHaveAttribute('href','/bredband/vilken-hastighet-behover-jag/');
- await expect(section).toContainText('inga priser är hämtade live');
+ await expect(section.getByTestId('v11-lane-tool')).toHaveAttribute('href','/verktyg/forstaarskostnad-bredband/');
+ await expect(section.getByTestId('v11-lane-guide')).toHaveAttribute('href','/bredband/vilken-hastighet-behover-jag/');
+ await expect(page.getByRole('link',{name:/Fiber eller mobilt bredband/})).toHaveAttribute('href','/bredband/fiber-eller-mobilt-bredband/');
+ await expect(section).toContainText('inte hela marknaden');
 });
 
 for(const viewport of [
@@ -48,7 +50,7 @@ for(const viewport of [
   await expect(start).toBeVisible();
   const partnerHref=await start.getAttribute('href');
   expect(partnerHref).toContain('visit.bredbandsval.se');
-  await expect(page.locator('a[data-placement="broadband_hub_comparison"]')).toBeVisible();
+  await expect(page.getByTestId('v10-category-lane').locator('a[data-partner="Bredbandsval.se"]')).toBeVisible();
   await page.screenshot({path:`test-results/screenshots/masterplan-broadband-${info.project.name}-${viewport.width}.png`,fullPage:true});
  });
 }
