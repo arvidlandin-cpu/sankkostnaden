@@ -218,3 +218,40 @@ test('Without JavaScript, category pages remain reachable through real links',as
   }
  }finally{await context.close();}
 });
+
+
+for(const width of widths){
+ test('Cost map category targets stay inside their navigation region at '+width,async({page})=>{
+  await page.setViewportSize({width,height:1000});
+  await open(page);
+  const navigation=page.getByTestId('cost-map-navigation');
+  const region=await navigation.boundingBox();
+  expect(region).not.toBeNull();
+  for(const category of categories){
+   const button=journey(page).getByTestId('v10-category-'+category);
+   await expect(button).toBeVisible();
+   await tapTarget(button);
+   const box=(await button.boundingBox())!;
+   expect(box.x,category+' left boundary').toBeGreaterThanOrEqual(region!.x-1);
+   expect(box.y,category+' top boundary').toBeGreaterThanOrEqual(region!.y-1);
+   expect(box.x+box.width,category+' right boundary').toBeLessThanOrEqual(region!.x+region!.width+1);
+   expect(box.y+box.height,category+' bottom boundary').toBeLessThanOrEqual(region!.y+region!.height+1);
+  }
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth)).toBeLessThanOrEqual(1);
+  const image=navigation.locator('img');
+  if(width>=1600){
+   const imageBox=(await image.boundingBox())!;
+   expect(imageBox.height).toBeLessThanOrEqual(660);
+   expect(imageBox.width).toBeLessThanOrEqual(region!.width+1);
+   const principles=journey(page).getByText('Jämför mer än månadspriset.',{exact:true}).locator('..');
+   const principlesBox=(await principles.boundingBox())!;
+   expect(principlesBox.y+principlesBox.height).toBeLessThanOrEqual(1000);
+  }
+  if(width<761){
+   const lastCategory=(await journey(page).getByTestId('v10-category-ekonomi').boundingBox())!;
+   const imageBox=(await image.boundingBox())!;
+   expect(imageBox.y).toBeGreaterThanOrEqual(lastCategory.y+lastCategory.height);
+   expect(imageBox.height).toBeCloseTo(195,0);
+  }
+ });
+}
