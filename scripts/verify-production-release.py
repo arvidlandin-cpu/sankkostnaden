@@ -105,6 +105,79 @@ def emit(report, row):
     print(json.dumps({'url': row['url'], 'status': row['status'], 'errors': row['errors']}), flush=True)
 
 
+def workflow_escape(value):
+    """Escape the data portion of a GitHub Actions workflow command."""
+    return str(value).replace('%', '%25').replace('\r', '%0D').replace('\n', '%0A')
+
+
+def failure_annotations(report):
+    """Public, bounded diagnostics; never include observed content or API bodies."""
+    controlled = {
+        'Expected HTTP 200', 'HTTP request failed',
+        'GITHUB_REPOSITORY must identify owner/repository',
+        'Expected commit must be a full 40-character SHA',
+        'Preview requires HTTP X-Robots-Tag noindex',
+        'Production noindex directive found', 'Googlebot blocked baseline routes',
+        'Global crawler disallow found', 'Sitemap missing baseline URLs',
+        'Cannot retrieve release homepage',
+        'Homepage JS/CSS path sets differ or are empty',
+        'Immutable deployment and served asset SHA256 differ or fetch failed',
+        'Cannot read illustration from expected commit source',
+        'Illustration differs from expected commit source',
+        'Expected 63 unique baseline routes',
+        'Preview URL must be an HTTPS sankkostnaden.pages.dev deployment',
+        'Expected release not ready',
+        'Deployment readiness timed out (maximum 180 seconds)',
+    }
+    controlled.update('Exact ' + key + ' mismatch (missing or duplicate elements also fail)'
+                      for key in ('title', 'description', 'canonical'))
+    exception_classes = {'ValueError', 'TypeError', 'KeyError', 'IndexError', 'OSError',
+                         'TimeoutError', 'URLError', 'HTTPError', 'ParseError',
+                         'JSONDecodeError', 'UnicodeDecodeError', 'RuntimeError'}
+
+    def error_text(error):
+        if not isinstance(error, str):
+            return 'Unclassified verifier error (see verification artifact)'
+        if error in controlled or error in exception_classes:
+            return error
+        for prefix in ('Fetch failed: ', 'HTML parse failed: '):
+            if error.startswith(prefix) and error[len(prefix):] in exception_classes:
+                return error
+        return 'Unclassified verifier error (see verification artifact)'
+
+    def safe_path(value):
+        try:
+            parsed = urllib.parse.urlsplit(value or '')
+            resource = parsed.path
+            if (parsed.netloc and parsed.hostname != 'sankkostnaden.se'
+                    and not re.fullmatch(r'[a-zA-Z0-9-]+\.sankkostnaden\.pages\.dev', parsed.hostname or '')):
+                return '(external resource)'
+            if resource.startswith('/') and len(resource) <= 240 and re.fullmatch(r'/[a-zA-Z0-9._~%/+-]*', resource):
+                return resource
+        except (ValueError, TypeError):
+            pass
+        return '(unavailable)'
+
+    rows = [{'kind': 'report', 'errors': report.get('errors', [])}]
+    rows.extend(row for row in report.get('checks', [])
+                if not str(row.get('kind', '')).startswith('readiness-'))
+    rows.extend({'kind': 'asset-identity', 'url': asset.get('path'), 'errors': asset.get('errors', [])}
+                for asset in report.get('assets', []))
+    output = []
+    for row in rows:
+        kind = row.get('kind', '')
+        kind = kind if isinstance(kind, str) and re.fullmatch(r'[a-z][a-z-]{0,63}', kind) else 'unknown'
+        status = row.get('status')
+        status = str(status) if type(status) is int and 100 <= status <= 599 else 'UNKNOWN'
+        for error in row.get('errors', []):
+            message = ('kind=' + kind + '; path=' + safe_path(row.get('url'))
+                       + '; status=' + status + '; error=' + error_text(error))
+            output.append('::error title=Release verification failure::' + workflow_escape(message))
+            if len(output) == 20:
+                return output
+    return output
+
+
 def discover_reference(commit, remaining, mode):
     repository = os.environ.get('GITHUB_REPOSITORY', '')
     if not re.fullmatch(r'[\w.-]+/[\w.-]+', repository):
@@ -314,6 +387,8 @@ def main():
         report['verifiedAt'] = datetime.datetime.now(datetime.timezone.utc).isoformat()
         output.parent.mkdir(parents=True, exist_ok=True)
         output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n')
+        for annotation in failure_annotations(report):
+            print(annotation, flush=True)
         print('Release verification: ' + ('PASS' if report['passed'] else 'FAIL'), flush=True)
     return 0 if report['passed'] else 1
 

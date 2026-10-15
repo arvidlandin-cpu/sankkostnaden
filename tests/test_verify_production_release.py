@@ -22,6 +22,68 @@ def check(identifier, branch, summary, started='2026-10-14T19:30:00Z', conclusio
             'output': {'summary': summary, 'text': ''}}
 
 
+class FailureAnnotationTests(unittest.TestCase):
+    def test_terminal_failures_include_report_metadata_and_asset_without_readiness(self):
+        report = {'errors': ['Homepage JS/CSS path sets differ or are empty'],
+                  'checks': [
+                      {'kind': 'readiness-deployment', 'url': verifier.PROD + '/', 'status': 503,
+                       'errors': ['Expected release not ready']},
+                      {'kind': 'production-metadata', 'url': verifier.PROD + '/mobil/?qa=1&token=private',
+                       'status': 200, 'errors': ['Exact title mismatch (missing or duplicate elements also fail)'],
+                       'observed': {'titles': ['private body']}},
+                  ],
+                  'assets': [{'path': '/design/category-mobil.webp',
+                              'errors': ['Illustration differs from expected commit source'],
+                              'sourceSha256': 'private-source-id'}]}
+        lines = verifier.failure_annotations(report)
+        self.assertEqual(len(lines), 3)
+        joined = '\n'.join(lines)
+        self.assertIn('kind=report', joined)
+        self.assertIn('kind=production-metadata; path=/mobil/; status=200', joined)
+        self.assertIn('kind=asset-identity; path=/design/category-mobil.webp', joined)
+        for forbidden in ('readiness', 'qa=1', 'token', 'private', 'sourceSha256'):
+            self.assertNotIn(forbidden, joined)
+
+    def test_annotations_are_bounded_and_do_not_emit_raw_error_messages_or_auth(self):
+        report = {'errors': ['raw API response with secret-token\n::error::injection'],
+                  'checks': [{'kind': 'production-metadata',
+                              'url': 'https://user:secret@sankkostnaden.se/bredband/?email=private@example.com',
+                              'status': 500, 'errors': ['HTTP request failed'] * 30}], 'assets': []}
+        lines = verifier.failure_annotations(report)
+        self.assertEqual(len(lines), 20)
+        joined = '\n'.join(lines)
+        self.assertIn('Unclassified verifier error', joined)
+        self.assertIn('path=/bredband/; status=500', joined)
+        for forbidden in ('secret', 'private@example', 'raw API response', 'injection', 'user:'):
+            self.assertNotIn(forbidden, joined)
+        self.assertTrue(all(len(line) < 700 for line in lines))
+
+    def test_workflow_command_escaping_and_invalid_fields(self):
+        self.assertEqual(verifier.workflow_escape('50%\r\n::error::'), '50%25%0D%0A::error::')
+        report = {'errors': [], 'assets': [], 'checks': [
+            {'kind': 'unsafe\n::error::', 'url': 'https://api.github.com/private-secret',
+             'status': '500\nprivate-secret', 'errors': ['Fetch failed: TimeoutError']},
+            {'kind': 'production-metadata', 'url': verifier.PROD + '/%0Aguide/',
+             'status': 404, 'errors': ['HTTP request failed']},
+        ]}
+        lines = verifier.failure_annotations(report)
+        self.assertIn('kind=unknown; path=(external resource); status=UNKNOWN', lines[0])
+        self.assertIn('Fetch failed: TimeoutError', lines[0])
+        self.assertIn('/%250Aguide/', lines[1])
+        self.assertNotIn('private-secret', '\n'.join(lines))
+
+    def test_successful_polling_history_creates_no_failure_annotations(self):
+        self.assertEqual(verifier.failure_annotations({
+            'passed': True, 'errors': [], 'assets': [{'path': '/design/cost-map-home.webp', 'errors': []}],
+            'checks': [{'kind': 'readiness-deployment', 'errors': ['HTTP request failed']},
+                       {'kind': 'production-metadata', 'errors': []}],
+        }), [])
+        timeout = verifier.failure_annotations({'errors': ['Deployment readiness timed out (maximum 180 seconds)']})
+        self.assertEqual(len(timeout), 1)
+        self.assertIn('kind=report', timeout[0])
+        self.assertIn('readiness timed out', timeout[0])
+
+
 class DeploymentDiscoveryTests(unittest.TestCase):
     def discover(self, checks, mode):
         requested = []
