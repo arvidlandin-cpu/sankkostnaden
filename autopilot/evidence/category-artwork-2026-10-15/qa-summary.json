@@ -1,0 +1,89 @@
+{
+  "date": "2026-10-15",
+  "sourceCommit": "8042d3f9f5316a690563fd79fe0c9721884db4c8",
+  "local": {
+    "check": "passed",
+    "integrity": "passed",
+    "build": "passed",
+    "export": {
+      "htmlPages": 71,
+      "linksAndAnchors": 2030,
+      "baselineIndexableRoutes": 63
+    },
+    "chromiumFunctionalTests": 42,
+    "targetedContrastRetest": 5,
+    "homeViewportWidths": [
+      360,
+      390,
+      430,
+      1024,
+      1440,
+      1920
+    ],
+    "nonBrowserGuardTests": 48,
+    "protectedSourcesUnchanged": 13,
+    "quarterPriceBodyUnchanged": true,
+    "physicalIphone": "UNVERIFIED",
+    "businessUplift": "UNKNOWN"
+  },
+  "ci": {
+    "build": {
+      "status": "success",
+      "run": "38705503752"
+    },
+    "commercialChromiumAndWebKit": {
+      "status": "success",
+      "run": "38705503721"
+    },
+    "preview": {
+      "status": "success",
+      "run": "38705503753",
+      "metadataRoutes": 63,
+      "assetProofs": 16,
+      "verifiedAt": "2026-10-15T08:26:28.157092+00:00"
+    }
+  },
+  "assets": [
+    {
+      "category": "bredband",
+      "destination": "public/design/category-bredband.webp",
+      "width": 1280,
+      "height": 853,
+      "bytes": 107328,
+      "sha256": "b61c67623ab32118353497abb672384b28169fdd17cd18f08d1a8660282595d6"
+    },
+    {
+      "category": "el",
+      "destination": "public/design/category-el.webp",
+      "width": 1280,
+      "height": 853,
+      "bytes": 74724,
+      "sha256": "3d58a7acf2d2986076ad48fcf7aea7791a20034f9ecbe11c721a5499b891a497"
+    },
+    {
+      "category": "mobil",
+      "destination": "public/design/category-mobil.webp",
+      "width": 1280,
+      "height": 853,
+      "bytes": 126564,
+      "sha256": "69cc0ee072b13ddbe241a9cb1b1527a2d09dafa0632215115d2136bdbac43e67"
+    },
+    {
+      "category": "forsakring",
+      "destination": "public/design/category-forsakring.webp",
+      "width": 1280,
+      "height": 853,
+      "bytes": 119284,
+      "sha256": "d1dbe4d081417b297f00d3bf7792e1437480a6cd8f3923529d22aa6c566ffcf6"
+    },
+    {
+      "category": "ekonomi",
+      "destination": "public/design/category-ekonomi.webp",
+      "width": 1280,
+      "height": 853,
+      "bytes": 113278,
+      "sha256": "4920037ae1cc8113fb4ad9b92ac16e68f21e8770c5228aac59f93893137935d6"
+    }
+  ],
+  "production": "PENDING separate main deployment and live browser/metadata checks at snapshot time"
+}

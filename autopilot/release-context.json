@@ -1,17 +1,17 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14",
+  "updatedAt": "2026-10-15",
   "purpose": "Verified code-release snapshot for the AI operator and autopilot decision packet. Historical baseline reports remain dated snapshots, not live inventory.",
   "latestVerifiedMainCommit": "2ce912d596275e809b4ec12e2e6749a0d61acc42",
   "decisionContext": {
     "northStar": "Long-term approved affiliate revenue per relevant visitor; truthful consumer value and SEO trust first.",
-    "design": "Latest owner-approved direction: concept03 Kostnadskartan, navy/warm white-sand/clear action blue. Implemented across home, categories, guides and key tool entrances. Real rendered 360/390/430/1024/1440/1920 screenshot review and commercial Chromium/WebKit pass are documented in decisions/2026-10-14-cost-map-implementation.md. Pages, production smoke and own-domain immutable asset verification passed for 2ce912d. Old P0I–P0M photographic snapshots below are history, not current visual instructions. No physical iPhone or business uplift claim.",
+    "design": "Owner-approved concept03 extended on15Oct with five own navy/sand/blue category close-ups, coherent legacy/need-check views, truthful first-year cost graphics, actual mobile profile focus and visible sponsored handoff. Source8042d3f passed full Chromium+WebKit and preview63/63metadata+16assetproofs. Read decisions/2026-10-15-category-artwork.md and real render gallery. Whole-home illustration remains homepage signature; do not reintroduce it as the sole image across all categories. Original sans typography and calculation math preserved. Verify currentmain/own-domain separately before claiming release.",
     "conversion": "Keep real comparison-service vs individual-supplier distinctions, partner visibility and clearly labeled affiliate links; user need not know consumption to reach legitimate partner options.",
     "pricing": "Electricity quarter-hour spot feed SE1-SE4 is real, but NOT a per-provider offer feed. No fabricated cheapest provider, 'best choice', monthly quote, ratings, guaranteed saving or extrapolated shift savings.",
     "experimentStatus": "As of 2026-10-10 one active scoped CONTENT_UTILITY_UPGRADE for /elavtal/kvartspris/ (PR #103), awaiting qualified organic measurements; cancelled Oct 7 insurance snippet remains inactive, no Oct 15 gate. Up to two fully independent initiatives subject to policy.",
     "capacity": "Independent non-paid traffic acquisition remains the highest commercial constraint; continue alongside design. No paid media or contracts without owner approval.",
     "finishStandard": "Read autopilot/PRODUCT_FINISHING_STANDARD_2026-10-09.md. Every screen, field, sentence and CTA must serve the user's immediate job, with premium consistent UX, real price data and QA. Do not call project finished from isolated feature PRs.",
-    "nextExecution": "One daily GitHub report at 09:00 Europe/Stockholm is being consolidated under autopilot-control.yml, including live release/SEO verification and one fetch per existing source. Read the latest completed run before acting. Follow DAILY_OPERATING_BRIEF_2026-10-14.md for evidence-driven agent delegation; a separate scheduled AI operator must actually be activated. This session cannot inspect or disable existing ChatGPT tasks. Protect kvartspris until its review gate; never claim missing network totals or scheduled AI activation.",
+    "nextExecution": "Preserve approved artwork direction and current product work. Inspect latest completed daily report and actual production verification before changing anything. Do not repeat already fixed profile focus, chart fee separation or breadcrumbs without new evidence. Insurance intent-routing mismatch and house-energy model methodology remain separate evidence-backed follow-ups. Protect kvartspris observation gate18Oct11Stockholm; no forcedwinner or extraAIcron claims. Follow DAILY_OPERATING_BRIEF_2026-10-14.md; ChatGPT task activation was not possible in this session.",
     "strategySourceOfTruth": "Latest owner approval of concept03 > OWNER_VISUAL_DIRECTION_2026-10-14.md > decisions/2026-10-14-cost-map-implementation.md and decisions/2026-10-14-seo-continuity.md > historical P0 photographic records; retain product, partner, SEO and experiment policies."
   },
   "shipped": [
@@ -603,5 +603,25 @@
     "indexingNotice": "HTTP indexability and preserved SEO do not prove Google indexing or ranking stability.",
     "quarterPriceExperimentNotice": "Body/events/cohort/state preserved. Technical title serialization repaired; annotate release as possible SEO confounder, no early experiment verdict before 18 Oct 2026 11:00 Europe/Stockholm.",
     "mainPushMinuteUtc": "2026-10-14T19:16Z"
+  },
+  "approvedArtworkDelivery": {
+    "date": "2026-10-15",
+    "sourceCommit": "8042d3f9f5316a690563fd79fe0c9721884db4c8",
+    "decision": "decisions/2026-10-15-category-artwork.md",
+    "renderEvidence": "evidence/category-artwork-2026-10-15/README.md",
+    "scope": [
+      "five original category illustrations",
+      "contextual category/legacy/need-check artwork",
+      "actual mobile need profile and visible sponsored CTA",
+      "normalized first-year cost chart and separate one-time fees",
+      "removed unexplained 01 marker"
+    ],
+    "build": "https://github.com/arvidlandin-cpu/sankkostnaden/actions/runs/38705503752",
+    "commercialChromiumAndWebKit": "https://github.com/arvidlandin-cpu/sankkostnaden/actions/runs/38705503721",
+    "previewMetadataAndAssets": "https://github.com/arvidlandin-cpu/sankkostnaden/actions/runs/38705503753",
+    "sourceQa": "passed",
+    "productionNotice": "Read current main, Pages and latest production browser/SEO checks for actual serving status. This source snapshot alone is not deployment proof.",
+    "physicalIphone": "UNVERIFIED",
+    "businessUplift": "UNKNOWN"
   }
 }
