@@ -178,7 +178,7 @@ export function CostMapExperience() {
         </div>}
       </div>
     </div>
-    <div className={s.trustStrip}><span className={s.trustNumber} aria-hidden='true'>01</span><strong className={s.trustTitle}>Jämför mer än månadspriset.</strong>{['Kampanjens längd', 'Ordinarie pris', 'Avgifter & bindningstid'].map(text => <span className={s.trustItem} key={text}><Check size={21} aria-hidden='true' />{text}</span>)}</div>
+    <div className={s.trustStrip}><strong className={s.trustTitle}>Jämför mer än månadspriset.</strong>{['Kampanjens längd', 'Ordinarie pris', 'Avgifter & bindningstid'].map(text => <span className={s.trustItem} key={text}><Check size={21} aria-hidden='true' />{text}</span>)}</div>
     <nav className={s.fallback} aria-label='Alla kostnadsområden'>{tracks.map(item => <Link key={item.id} href={item.href}>{item.name}</Link>)}</nav>
   </section>;
 }

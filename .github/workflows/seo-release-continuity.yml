@@ -2,7 +2,7 @@ name: SEO release continuity (read-only)
 
 on:
   push:
-    branches: ['main', 'feat/kostnadskartan-*', 'ops/autopilot-daily-*']
+    branches: ['main', 'feat/kostnadskartan-*', 'ops/autopilot-daily-*', 'design/category-artwork-*']
     paths:
       - 'tests/fixtures/seo-continuity-baseline.json'
       - 'tests/test_verify_production_release.py'
