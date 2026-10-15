@@ -100,7 +100,7 @@ def emit(report, row):
     print(json.dumps({'url': row['url'], 'status': row['status'], 'errors': row['errors']}), flush=True)
 
 
-def discover_reference(commit, remaining):
+def discover_reference(commit, remaining, mode):
     repository = os.environ.get('GITHUB_REPOSITORY', '')
     if not re.fullmatch(r'[\w.-]+/[\w.-]+', repository):
         raise ValueError('GITHUB_REPOSITORY must identify owner/repository')
@@ -108,7 +108,7 @@ def discover_reference(commit, remaining):
         raise ValueError('Expected commit must be a full 40-character SHA')
     rows, runs = [], []
     for page in range(1, 11):
-        url = f'https://api.github.com/repos/{repository}/commits/{commit}/check-runs?per_page=100&page={page}'
+        url = f'https://api.github.com/repos/{repository}/commits/{commit}/check-runs?filter=all&per_page=100&page={page}'
         row, body = fetch(url, timeout=max(.1, min(15, remaining())), api=True)
         row['kind'] = 'github-checks'
         rows.append(row)
@@ -121,12 +121,20 @@ def discover_reference(commit, remaining):
         if remaining() <= 0:
             return None, rows
     candidates = sorted((run for run in runs if run.get('name') == 'Cloudflare Pages'),
-                        key=lambda run: (run.get('started_at') or '', run.get('id', 0)), reverse=True)
+                        key=lambda run: (mode == 'production' and (run.get('check_suite') or {}).get('head_branch') == 'main',
+                                         run.get('started_at') or '', run.get('id', 0)), reverse=True)
     for run in candidates:
         if run.get('conclusion') != 'success' or run.get('head_sha', '').lower() != commit.lower():
             continue
         output = run.get('output') or {}
         text = (output.get('summary') or '') + '\n' + (output.get('text') or '')
+        branch = (run.get('check_suite') or {}).get('head_branch')
+        if mode == 'production':
+            # One SHA can have successful production AND branch-preview checks.
+            # Never use a known preview as production proof, even when it is newer.
+            is_preview = bool(re.search(r'branch[\s_*`-]*preview[\s_*`-]*url', text, re.I))
+            if is_preview or (branch is not None and branch != 'main'):
+                continue
         urls = re.findall(r'https://[0-9a-f]{8,64}\.sankkostnaden\.pages\.dev(?=[/\s)\]<>"\x27]|$)', text, re.I)
         if urls:
             rows[-1]['referenceCheckId'] = run.get('id')
@@ -251,7 +259,7 @@ def main():
         target = None
         ready = False
         while remaining() > 0:
-            reference, rows = discover_reference(report['expectedCommit'] or '', remaining)
+            reference, rows = discover_reference(report['expectedCommit'] or '', remaining, args.mode)
             for row in rows:
                 row['kind'] = 'readiness-' + row['kind']
                 emit(report, row)

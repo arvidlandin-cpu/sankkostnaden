@@ -28,6 +28,7 @@ on:
       - 'scripts/lib/adtractionPerformance.mjs'
       - 'tests/autopilot-control.test.mjs'
       - 'tests/daily-report.test.mjs'
+      - 'tests/test_verify_production_release.py'
   workflow_dispatch:
   schedule:
     # One report at 09:00 Europe/Stockholm across summer/winter time.
@@ -95,6 +96,7 @@ jobs:
 
       - name: Validate autopilot and source logic
         run: |
+          python3 -m unittest discover -s tests -p 'test_verify_production_release.py'
           node --test tests/autopilot-control.test.mjs
           node --test tests/google-organic-performance-report.test.mjs
           node --test tests/affiliate-revenue-report.test.mjs
