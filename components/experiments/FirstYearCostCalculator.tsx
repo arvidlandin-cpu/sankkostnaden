@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, Calculator, PiggyBank } from 'lucide-react';
 import { calculateFirstYearCost, type FirstYearCostInput } from '../../lib/firstYearCost';
 import { emitAnalyticsEvent } from '../../lib/clientAttribution';
 import styles from '../../styles/FirstYearCostCalculator.module.css';
+import FirstYearTimeline from '../FirstYearTimeline';
 
 type Offer = FirstYearCostInput & { name: string };
 
@@ -272,6 +273,7 @@ export default function FirstYearCostCalculator({
               {commercialLabel}<ArrowRight size={18}/>
             </a>
           )}
+          {readyToCompare && <FirstYearTimeline offers={[{name:a.name,result:resultA},{name:b.name,result:resultB}]}/>}
         </section>}
 
         <aside className={styles.note}>
