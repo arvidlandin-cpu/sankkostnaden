@@ -100,10 +100,14 @@ export function CostMapExperience() {
     });
   }
 
-  const guideHref = track?.id === 'forsakring' && choice?.intent === 'pet' ? '/forsakring/djurforsakring/'
+  const guideHref = track?.id === 'forsakring' && choice?.intent === 'home' ? '/forsakring/jamfor-hemforsakring/'
+    : track?.id === 'forsakring' && choice?.intent === 'income-protection' ? '/forsakring/trygghetsforsakring/'
+    : track?.id === 'forsakring' && choice?.intent === 'pet' ? '/forsakring/djurforsakring/'
     : track?.id === 'forsakring' && choice?.intent === 'travel' ? '/forsakring/reseforsakring/'
       : track?.id === 'forsakring' && choice?.intent === 'claims' ? '/forsakring/forsakringsersattning/' : track?.guideHref;
-  const guideText = track?.id === 'forsakring' && choice?.intent === 'pet' ? 'Så jämför du djurförsäkring'
+  const guideText = track?.id === 'forsakring' && choice?.intent === 'home' ? 'Så jämför du hemförsäkring'
+    : track?.id === 'forsakring' && choice?.intent === 'income-protection' ? 'Förstå trygghetsförsäkringens villkor'
+    : track?.id === 'forsakring' && choice?.intent === 'pet' ? 'Så jämför du djurförsäkring'
     : track?.id === 'forsakring' && choice?.intent === 'travel' ? 'Förstå reseskyddet'
       : track?.id === 'forsakring' && choice?.intent === 'claims' ? 'Förstå försäkringsersättning' : track?.guideText;
   const nonHomeInsurance = track?.id === 'forsakring' && choice?.intent !== 'home' && choice?.intent !== undefined;

@@ -17,9 +17,15 @@ export default function DecisionGateway({category,compact=false,intent,currentPa
   const active=getActivePartners(category,intent,3);
   const onePartner=active.length===1?active[0]:null;
   const directLabel=category==='forsakring'&&intent==='pet'?'Hitta relevanta djurförsäkringar':category==='forsakring'&&intent==='home'?'Hitta relevant hemförsäkring':cfg.direct;
-  const helpLabel=category==='forsakring'&&intent==='pet'?'Så jämför du djurskyddet':cfg.help;
-  const helpHref=category==='forsakring'&&intent==='pet'?'/forsakring/jamfor-forsakring/':cfg.helpHref;
-  const helpText=category==='forsakring'&&intent==='pet'?'Se vilka delar av skyddet du bör jämföra innan du tar in pris för ditt djur.':'Några snabba frågor hjälper dig att välja rätt nivå innan du jämför pris.';
+  const insuranceHelp=category==='forsakring'?{
+    pet:{label:'Så jämför du djurskyddet',href:'/forsakring/djurforsakring/#guide-summary',text:'Läs om omfattning, självrisk och undantag innan du jämför försäkring för ditt djur.'},
+    travel:{label:'Förstå reseskyddet',href:'/forsakring/reseforsakring/#guide-summary',text:'Kontrollera resans längd, befintligt skydd och undantag innan du väljer reseförsäkring.'},
+    'income-protection':{label:'Förstå trygghetsförsäkringens villkor',href:'/forsakring/trygghetsforsakring/',text:'Läs om kvalificering, karens och undantag innan du bedömer om skyddet passar dig.'},
+    claims:{label:'Förstå försäkringsersättning',href:'/forsakring/forsakringsersattning/',text:'Läs vad du behöver kontrollera om ditt ärende och villkoren för ersättningshjälp.'},
+  }[intent as 'pet'|'travel'|'income-protection'|'claims']:undefined;
+  const helpLabel=insuranceHelp?.label||cfg.help;
+  const helpHref=insuranceHelp?.href||cfg.helpHref;
+  const helpText=insuranceHelp?.text||'Några snabba frågor hjälper dig att välja rätt nivå innan du jämför pris.';
   const resolvedFallback=category==='forsakring'&&intent==='home'?'/forsakring/jamfor-hemforsakring/':category==='forsakring'&&intent==='pet'?'/forsakring/djurforsakring/':cfg.fallback;
   const fallbackPath=resolvedFallback.split('#')[0];
   const samePage=Boolean(currentPath&&fallbackPath===currentPath.split('#')[0]);
