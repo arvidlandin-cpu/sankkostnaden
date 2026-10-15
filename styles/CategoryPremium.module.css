@@ -21,6 +21,7 @@
 .hero :global(.breadcrumbs),.hero :global(.breadcrumbs a),.hero :global(.back){color:var(--hub-muted)!important;font-size:13px!important;line-height:1.5}
 .hero :global(.breadcrumbs a),.hero :global(.back){display:inline-flex;align-items:center;gap:7px;min-height:44px;text-underline-offset:4px}
 .hero :global(.breadcrumbs a:hover),.hero :global(.back:hover){color:var(--hub-blue)!important}
+.hero:global(.categoryHero) :global(.breadcrumbs span[aria-current='page']){color:var(--hub-muted)!important}
 .hero :global(.categoryHeroIcon){width:46px;height:46px;margin:18px 0 14px;border-radius:13px;background:#e6edff!important;color:var(--hub-blue)!important;box-shadow:none!important}
 .hero :global(.kicker){color:var(--hub-navy)!important;font-size:12px!important;letter-spacing:.12em!important;font-weight:800;margin:0 0 12px!important}
 .hero :global(h1){max-width:790px!important;color:var(--hub-navy)!important;font-size:clamp(44px,4.1vw,75px)!important;font-weight:800!important;line-height:1.045!important;letter-spacing:-.06em!important;text-shadow:none!important;margin:0 0 24px!important;overflow-wrap:break-word}

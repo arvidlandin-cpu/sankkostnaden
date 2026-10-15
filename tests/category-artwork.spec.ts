@@ -14,6 +14,22 @@ for (const hub of hubs) {
     await page.setViewportSize({ width: 1440, height: 1000 });
     await page.goto(`${hub.route}?qa=1`, { waitUntil: 'domcontentloaded' });
     const image = page.getByTestId(`p0h-hero-photo-${hub.category}`);
+    const currentBreadcrumb = page.locator('.categoryHero .breadcrumbs [aria-current="page"]');
+    if (await currentBreadcrumb.count()) {
+      const contrast = await currentBreadcrumb.evaluate(node => {
+        const luminance = (color: string) => {
+          const rgb = color.match(/[\d.]+/g)!.slice(0, 3).map(Number).map(channel => {
+            const value = channel / 255;
+            return value <= .04045 ? value / 12.92 : Math.pow((value + .055) / 1.055, 2.4);
+          });
+          return rgb[0] * .2126 + rgb[1] * .7152 + rgb[2] * .0722;
+        };
+        const foreground = luminance(getComputedStyle(node).color);
+        const background = luminance(getComputedStyle(node.closest('.categoryHero')!).backgroundColor);
+        return (Math.max(foreground, background) + .05) / (Math.min(foreground, background) + .05);
+      });
+      expect(contrast).toBeGreaterThanOrEqual(4.5);
+    }
     const artwork = getCategoryArtwork(hub.category);
     await expect(image).toHaveAttribute('src', artwork.src);
     await expect(image).toHaveAttribute('width', String(artwork.width));
