@@ -1,0 +1,51 @@
+{
+  "recordedAt": "2026-10-15T08:59:00Z",
+  "productSourceCommit": "0585f4980b81dce1cb0ebb86a9542df6378f8c51",
+  "type": "local static production export, real Chromium, qa=1",
+  "checks": {
+    "check": "PASS",
+    "integrity": "PASS",
+    "build": "PASS",
+    "export": {
+      "status": "PASS",
+      "html": 71,
+      "internalLinksAndAnchors": 2029,
+      "preservedIndexableRoutes": 63
+    },
+    "chromium": {
+      "status": "PASS",
+      "total": 93,
+      "insuranceIntent": 7,
+      "guideAndBroadband": 19,
+      "calculatorAndTimeline": 46,
+      "homeMap": 19,
+      "houseMethod": 2
+    },
+    "importedAnchorIntegration": 3,
+    "verifierOffline": 14,
+    "quarterPriceMain": {
+      "status": "BYTE_IDENTICAL",
+      "sha256": "b0b49af5e822912a73847a9d22fd5f3195c79b16e4aa0e137a2bede91a72c29d"
+    }
+  },
+  "visual": {
+    "widths": [
+      360,
+      390,
+      430,
+      1024,
+      1440,
+      1920
+    ],
+    "realImagesInspected": true,
+    "wideMapPixels": 660,
+    "wideComparisonBandTop": 846,
+    "wideComparisonBandBottom": 973,
+    "horizontalOverflow": false
+  },
+  "limits": {
+    "physicalIphone": "UNVERIFIED",
+    "approvedRevenueUplift": "UNKNOWN",
+    "production": "Separate exact-commit Actions verification required; historical6c82 verification initially failed for an unknown reason, diagnosis in progress."
+  }
+}

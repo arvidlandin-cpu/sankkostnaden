@@ -53,3 +53,11 @@ GENOMFÖR inom ägarens uppdrag. Testa gemensamt och publicera först efter godk
 ## 13. Verifiering och uppföljning
 
 Kör check, integrity, build, exportkontinuitet och meningsfulla Chromium/WebKit-resor. Jämför kvartsprisets renderade main byte för byte. Verifiera alla aktiva bredbandspartners, försäkringens sex val, kalkyl med/utan JavaScript och husverktygets tangentbord/aritmetik. Granska riktiga vyer vid relevanta sex bredder. Separera preview, Pages, exakt egen-domänkod och affärseffekt. Fyll på faktisk QA och skarp status när de är observerade.
+
+## Faktiskt lokalt utfall
+
+Check, integrity, full Next-build och exportkontroll passerar:71HTML,2029interna länkar/ankare och63bevarade indexerbara adresser. Samtliga93riktade Chromiumfall passerar:19guide/bredband,19startsida,46kalkyl/tidslinje,7försäkringsintent och2husmetod. Därtill3integrationstest av importerade ankaren och14offlinefall för releaseverifieraren. Verkliga fullsidebilder är granskade; [öppningsbart galleri](../evidence/journey-followups-2026-10-15/README.md) och [QA-sammanställning](../evidence/journey-followups-2026-10-15/qa-summary.json) finns i repo.
+
+Kvartsprisets renderade main är byteidentisk mot före-bygget:SHA256 `b0b49af5e822912a73847a9d22fd5f3195c79b16e4aa0e137a2bede91a72c29d`. Vid1920×1000 är kartan660×660 och jämförelsebandet ligger y846–973, jämfört med tidigare start y1045. Alla fem klickytor ryms i kartregionen vid samtliga sex bredder. Mobilbilden195px och desktop1440 är bevarade.
+
+Den första [previewkontrollen](https://github.com/arvidlandin-cpu/sankkostnaden/actions/runs/38709173000) för0585f49 passerar63/63metadata och16assetbevis. Produktionsdiagnosen publicerar nu avgränsade kontrollerade fel och ett entydigt slutresultat; den historiska6c82-felorsaken är okänd tills konkret underlag finns. Kontrollens krav är oförsvagade. Full WebKit och slutlig main-verifiering läses från respektive faktiska körning.
