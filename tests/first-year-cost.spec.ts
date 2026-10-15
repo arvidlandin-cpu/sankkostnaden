@@ -154,8 +154,10 @@ for (const [route, category] of [[commercialRoute,'mobil'],[broadbandRoute,'bred
   test('first useful result without any bill fields for '+category, async ({page}) => {
     await page.goto(route);
     await expect(page.getByTestId('first-year-start')).toBeVisible();
-    await expect(page.getByTestId('offer-a')).toHaveCount(0);
+    await expect(page.getByTestId('offer-a')).toBeVisible();
+    await expect(page.getByTestId('offer-b')).toBeVisible();
     await page.getByRole('button',{name:/Visa aktuella alternativ/}).click();
+    await expect(page.getByTestId('offer-a')).toHaveCount(0);
     await expect(page.getByTestId('first-year-no-prices')).toBeVisible();
     const early = page.getByTestId('first-year-early-partners');
     await expect(early).toHaveAttribute('href',category==='mobil'?'#commercial-mobile-options':'#commercial-broadband-options');

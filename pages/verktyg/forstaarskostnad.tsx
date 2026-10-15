@@ -13,6 +13,7 @@ export default function FirstYearCostCommercialPage() {
       </Head>
       <FirstYearCostCalculator
         commercial
+        initialJourney='prices'
         source='mobile_first_year_cost'
         commercialHref='#commercial-mobile-options'
         commercialLabel='Se aktiva mobilalternativ'

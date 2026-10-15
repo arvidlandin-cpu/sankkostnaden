@@ -12,6 +12,7 @@ export default function BroadbandFirstYearCostPage(){
     </Head>
     <FirstYearCostCalculator
       commercial
+      initialJourney='prices'
       category='bredband'
       source='broadband_first_year_cost'
       commercialHref='#commercial-broadband-options'

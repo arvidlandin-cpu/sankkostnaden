@@ -9,6 +9,7 @@ import FirstYearTimeline from '../FirstYearTimeline';
 type Offer = FirstYearCostInput & { name: string };
 
 type Props = {
+  initialJourney?: 'choose' | 'prices';
   commercial?: boolean;
   commercialHref?: string;
   commercialLabel?: string;
@@ -147,6 +148,7 @@ function OfferCard({
 }
 
 export default function FirstYearCostCalculator({
+  initialJourney = 'choose',
   commercial = false,
   commercialHref,
   commercialLabel = 'Se aktuella alternativ',
@@ -168,7 +170,7 @@ export default function FirstYearCostCalculator({
 
   const [a, setA] = useState<Offer>(emptyOffer('Alternativ A'));
   const [b, setB] = useState<Offer>(emptyOffer('Alternativ B'));
-  const [journey, setJourney] = useState<'choose' | 'prices' | 'partners'>('choose');
+  const [journey, setJourney] = useState<'choose' | 'prices' | 'partners'>(initialJourney);
   const [advanced, setAdvanced] = useState(false);
   const readyTracked = useRef(false);
 
@@ -213,11 +215,11 @@ export default function FirstYearCostCalculator({
           <div className={styles.icon}><Calculator size={24} /></div>
           <p className={styles.kicker}>{commercial ? 'KOSTNADSKALKYL · ' + categoryLabel : 'PROTOTYP · ABONNEMANG'}</p>
           <h1>Jämför vad två erbjudanden faktiskt kostar första året</h1>
-          <p>Välj om du vill se relevanta operatörer direkt eller jämföra två priser. Kampanjer och avgifter går att lägga till vid behov.</p>
+          <p>{initialJourney === 'prices' ? 'Fyll i två månadspriser för att jämföra första året. Kampanjer och avgifter kan du lägga till när du vill.' : 'Välj om du vill se relevanta operatörer direkt eller jämföra två priser. Kampanjer och avgifter går att lägga till vid behov.'}</p>
         </section>
 
-        <section className={styles.start} data-testid='first-year-start'>
-          <h2>Vad vill du göra?</h2>
+        <section className={initialJourney === 'prices' ? styles.startCompact : styles.start} data-testid='first-year-start' aria-label='Växla mellan prisberäkning och partneralternativ'>
+          {initialJourney === 'choose' && <h2>Vad vill du göra?</h2>}
           <div className={styles.startChoices}>
             <button type='button' aria-pressed={journey === 'partners'} onClick={() => {setJourney('partners');emitAnalyticsEvent('first_year_start_path',{source,category,path:'partners'});}}>Visa aktuella alternativ <ArrowRight size={18}/></button>
             <button type='button' aria-pressed={journey === 'prices'} onClick={() => {setJourney('prices');emitAnalyticsEvent('first_year_start_path',{source,category,path:'prices'});}}>Ja, jämför mina priser <ArrowRight size={18}/></button>
