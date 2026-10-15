@@ -35,6 +35,25 @@ function idsIn(source) {
   return ids;
 }
 
+// Page wrappers often render their anchors through local shared components.
+// Follow only default imports actually rendered as JSX, never unrelated imports.
+function renderedIds(file, seen = new Set()) {
+  if (seen.has(file)) return new Set();
+  seen.add(file);
+  const source = fs.readFileSync(file, 'utf8');
+  const ids = idsIn(source);
+  const imports = /\bimport\s+([A-Z][\w$]*)\s*(?:,\s*\{[^}]*\}\s*)?from\s*['"]([^'"]+)['"]/g;
+  for (const match of source.matchAll(imports)) {
+    const [, name, specifier] = match;
+    if (!specifier.startsWith('.') || !new RegExp('<' + name.replace(/\$/g, '\\$') + '(?:\\s|/?>)').test(source)) continue;
+    const base = path.resolve(path.dirname(file), specifier);
+    const candidates = [base, ...['.tsx', '.ts', '.jsx', '.js'].map(ext => base + ext), ...['.tsx', '.ts', '.jsx', '.js'].map(ext => path.join(base, 'index' + ext))];
+    const target = candidates.find(candidate => candidate.startsWith(root + path.sep) && /\.(tsx|ts|jsx|js)$/.test(candidate) && fs.existsSync(candidate) && fs.statSync(candidate).isFile());
+    if (target) for (const id of renderedIds(target, seen)) ids.add(id);
+  }
+  return ids;
+}
+
 const pageFiles = walk(pagesDir).filter(file => /\.(tsx|ts|jsx|js)$/.test(file));
 const routes = new Set(['/']);
 const routeFiles = new Map();
@@ -117,8 +136,7 @@ for (const file of sourceFiles) {
       const fragment = value.slice(hashIndex + 1).split('?')[0];
       const targetFile = routeFiles.get(pathname);
       if (fragment && targetFile) {
-        const targetSource = fs.readFileSync(targetFile, 'utf8');
-        if (!idsIn(targetSource).has(fragment)) {
+        if (!renderedIds(targetFile).has(fragment)) {
           errors.push(`${path.relative(root, file)}: missing target #${fragment} in ${pathname}`);
         }
       }
