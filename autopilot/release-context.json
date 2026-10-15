@@ -2,7 +2,7 @@
   "version": 1,
   "updatedAt": "2026-10-15",
   "purpose": "Verified code-release snapshot for the AI operator and autopilot decision packet. Historical baseline reports remain dated snapshots, not live inventory.",
-  "latestVerifiedMainCommit": "2ce912d596275e809b4ec12e2e6749a0d61acc42",
+  "latestVerifiedMainCommit": "6c82f1f7052fe3e8e2b9932270dbec715c441de6",
   "decisionContext": {
     "northStar": "Long-term approved affiliate revenue per relevant visitor; truthful consumer value and SEO trust first.",
     "design": "Owner-approved concept03 extended on15Oct with five own navy/sand/blue category close-ups, coherent legacy/need-check views, truthful first-year cost graphics, actual mobile profile focus and visible sponsored handoff. Source8042d3f passed full Chromium+WebKit and preview63/63metadata+16assetproofs. Read decisions/2026-10-15-category-artwork.md and real render gallery. Whole-home illustration remains homepage signature; do not reintroduce it as the sole image across all categories. Original sans typography and calculation math preserved. Verify currentmain/own-domain separately before claiming release.",
@@ -11,7 +11,7 @@
     "experimentStatus": "As of 2026-10-10 one active scoped CONTENT_UTILITY_UPGRADE for /elavtal/kvartspris/ (PR #103), awaiting qualified organic measurements; cancelled Oct 7 insurance snippet remains inactive, no Oct 15 gate. Up to two fully independent initiatives subject to policy.",
     "capacity": "Independent non-paid traffic acquisition remains the highest commercial constraint; continue alongside design. No paid media or contracts without owner approval.",
     "finishStandard": "Read autopilot/PRODUCT_FINISHING_STANDARD_2026-10-09.md. Every screen, field, sentence and CTA must serve the user's immediate job, with premium consistent UX, real price data and QA. Do not call project finished from isolated feature PRs.",
-    "nextExecution": "Preserve approved artwork direction and current product work. Inspect latest completed daily report and actual production verification before changing anything. Do not repeat already fixed profile focus, chart fee separation or breadcrumbs without new evidence. Insurance intent-routing mismatch and house-energy model methodology remain separate evidence-backed follow-ups. Protect kvartspris observation gate18Oct11Stockholm; no forcedwinner or extraAIcron claims. Follow DAILY_OPERATING_BRIEF_2026-10-14.md; ChatGPT task activation was not possible in this session.",
+    "nextExecution": "Read current main and its exact production notices before changes. Owner-requested follow-ups are implemented and locally verified: insurance intent destinations, a single broadband starting decision with all three category partners, guide facts before gateway, direct commercial-calculator inputs, bounded wide desktop map and disclosed house-electricity example assumptions. Do not redo these completed tasks. See decisions/2026-10-15-journey-followups.md and the actual render gallery. Keep approved artwork and truthful calculations. Next commercial work depends on fresh daily GA4/GSC/network evidence, not cosmetic churn. Protect kvartspris observation until18Oct11Stockholm. No automatic AI activation or old ChatGPT task deletion was possible; use DAILY_OPERATING_BRIEF_2026-10-14.md.",
     "strategySourceOfTruth": "Latest owner approval of concept03 > OWNER_VISUAL_DIRECTION_2026-10-14.md > decisions/2026-10-14-cost-map-implementation.md and decisions/2026-10-14-seo-continuity.md > historical P0 photographic records; retain product, partner, SEO and experiment policies."
   },
   "shipped": [
@@ -328,7 +328,7 @@
     "2026-10-13 P0K/P0L now independently live verified together with P0M on 10/10 public client CSS/JS assets #38401054369; prior unverified state is superseded. Physical iPhone UNTESTED, owner live design acceptance PENDING, approved affiliate SEK UNKNOWN.",
     "P0M #153 current own-domain CSS, real product JavaScript and warm electricity photos (#3875175 homepage tile, #3875141 category, #3875160 advisor) publicly verified on 10/10 routes, GitHub Actions #38401054369, 2026-10-13. This is NOT a unique origin SHA, physical device QA, objective consumer feedback or network-approved revenue. Separate legacy Cloudflare Workers build failures are unrelated to Pages deploy evidence unless proved otherwise."
   ],
-  "latestMergedMainCommit": "eb22fdc8dbf6c2e534b5c1846dd11b5032771d00",
+  "latestMergedMainCommit": "6c82f1f7052fe3e8e2b9932270dbec715c441de6",
   "designVerification": {
     "inspectedAt": "2026-10-11",
     "ownerDirection": "P0D 2026-10-10 navy/warm-white",
@@ -621,6 +621,27 @@
     "previewMetadataAndAssets": "https://github.com/arvidlandin-cpu/sankkostnaden/actions/runs/38705503753",
     "sourceQa": "passed",
     "productionNotice": "Read current main, Pages and latest production browser/SEO checks for actual serving status. This source snapshot alone is not deployment proof.",
+    "physicalIphone": "UNVERIFIED",
+    "businessUplift": "UNKNOWN"
+  },
+  "auditedJourneyFollowups": {
+    "date": "2026-10-15",
+    "productSourceCommit": "edc688eb4099669a973b9fb85030d273d62d79ba",
+    "decision": "decisions/2026-10-15-journey-followups.md",
+    "renderEvidence": "evidence/journey-followups-2026-10-15/README.md",
+    "localChromiumPassed": 93,
+    "sourceCheck": "PASS",
+    "integrity": "PASS",
+    "build": "PASS",
+    "preservedIndexableRoutes": 63,
+    "importedAnchorIntegrationPassed": 3,
+    "releaseVerifierOfflinePassed": 14,
+    "quarterPriceMain": "BYTE_IDENTICAL",
+    "previewAndPriorProductionVerification": "https://github.com/arvidlandin-cpu/sankkostnaden/actions/runs/38709454830",
+    "priorProductionMain": "6c82f1f7052fe3e8e2b9932270dbec715c441de6",
+    "priorProductionMetadataAndAssets": "PASS63/63and16 at2026-10-15T08:58:13Z",
+    "historicalInitialVerificationFailureCause": "UNKNOWN; not reproduced in explicit current-production rerun, verifier requirements preserved",
+    "releaseNotice": "Read final main Pages, SEO and commercial/live-browser Actions for actual serving status; source QA is not final production proof.",
     "physicalIphone": "UNVERIFIED",
     "businessUplift": "UNKNOWN"
   }
