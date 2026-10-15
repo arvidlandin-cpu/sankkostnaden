@@ -19,6 +19,11 @@ import xml.etree.ElementTree as ET
 
 PROD = 'https://sankkostnaden.se'
 MAX_BYTES = 5_000_000
+SOURCE_ROOT = Path(__file__).resolve().parents[1]
+ILLUSTRATION_PATHS = (
+    '/design/cost-map-home.webp',
+    *(f'/design/category-{category}.webp' for category in ('bredband', 'el', 'mobil', 'forsakring', 'ekonomi')),
+)
 
 
 class Metadata(HTMLParser):
@@ -210,10 +215,13 @@ def identity(report, reference, origin):
         pairs.append(metadata(body).assets)
     if not pairs[0] or pairs[0] != pairs[1]:
         report['errors'].append('Homepage JS/CSS path sets differ or are empty')
-    paths = sorted(pairs[0] | pairs[1])
-    paths.append('/design/cost-map-home.webp')
-    source = Path(__file__).resolve().parents[1] / 'public/design/cost-map-home.webp'
-    source_hash = hashlib.sha256(source.read_bytes()).hexdigest()
+    paths = sorted(pairs[0] | pairs[1] | set(ILLUSTRATION_PATHS))
+    source_hashes = {}
+    for path in ILLUSTRATION_PATHS:
+        try:
+            source_hashes[path] = hashlib.sha256((SOURCE_ROOT / 'public' / path.lstrip('/')).read_bytes()).hexdigest()
+        except OSError:
+            source_hashes[path] = None
 
     def compare(path):
         proof = {'path': path, 'errors': []}
@@ -225,9 +233,12 @@ def identity(report, reference, origin):
             proof[name + 'Sha256'] = hashlib.sha256(body).hexdigest() if body is not None else None
         if not proof['referenceSha256'] or proof['referenceSha256'] != proof['servedSha256']:
             proof['errors'].append('Immutable deployment and served asset SHA256 differ or fetch failed')
-        if path == '/design/cost-map-home.webp':
+        if path in source_hashes:
+            source_hash = source_hashes[path]
             proof['sourceSha256'] = source_hash
-            if proof['referenceSha256'] != source_hash:
+            if source_hash is None:
+                proof['errors'].append('Cannot read illustration from expected commit source')
+            elif proof['referenceSha256'] != source_hash:
                 proof['errors'].append('Illustration differs from expected commit source')
         return proof, rows
 

@@ -2,7 +2,9 @@
 import importlib.util
 import json
 import os
+import hashlib
 from pathlib import Path
+import tempfile
 import unittest
 from unittest.mock import patch
 
@@ -87,6 +89,63 @@ class DeploymentDiscoveryTests(unittest.TestCase):
                 else:
                     run['output']['summary'] = 'https://feat-kostnadskartan-20261014.sankkostnaden.pages.dev'
                 self.assertIsNone(self.discover([run], 'production'))
+
+
+class IllustrationIdentityTests(unittest.TestCase):
+    def identity(self, mutation=None):
+        report = {'errors': [], 'checks': [], 'assets': []}
+        expected = ('/design/cost-map-home.webp',) + tuple(
+            '/design/category-' + category + '.webp'
+            for category in ('bredband', 'el', 'mobil', 'forsakring', 'ekonomi'))
+        payloads = {path: ('source:' + path).encode() for path in expected}
+        requested = []
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            for path, body in payloads.items():
+                source = root / 'public' / path.lstrip('/')
+                source.parent.mkdir(parents=True, exist_ok=True)
+                if mutation != ('missing-source', path):
+                    source.write_bytes(body)
+
+            def fetch(url, **kwargs):
+                requested.append(url)
+                row = {'url': url, 'status': 200, 'errors': []}
+                if url.endswith('/?qa=1'):
+                    return row, b'<html><script src="/_next/static/test.js"></script></html>'
+                path = '/' + url.split('/', 3)[3]
+                body = payloads.get(path, b'compiled-js')
+                if mutation == ('served-mismatch', path) and url.startswith(verifier.PROD):
+                    body = b'old-served-image'
+                elif mutation == ('both-mismatch', path):
+                    body = b'wrong-image-on-both-hosts'
+                return row, body
+
+            with patch.object(verifier, 'SOURCE_ROOT', root), patch.object(verifier, 'fetch', fetch):
+                verifier.identity(report, 'https://11111111.sankkostnaden.pages.dev', verifier.PROD)
+        return report, payloads, requested
+
+    def test_all_six_illustrations_match_checkout_and_both_hosts(self):
+        report, payloads, requested = self.identity()
+        self.assertEqual(report['errors'], [])
+        proofs = {proof['path']: proof for proof in report['assets']}
+        self.assertIn('/_next/static/test.js', proofs)
+        for path, body in payloads.items():
+            with self.subTest(path=path):
+                proof = proofs[path]
+                self.assertEqual(proof['errors'], [])
+                expected_hash = hashlib.sha256(body).hexdigest()
+                for key in ('referenceSha256', 'servedSha256', 'sourceSha256'):
+                    self.assertEqual(proof[key], expected_hash)
+                self.assertEqual(sum(url.endswith(path) for url in requested), 2)
+        self.assertEqual(len(requested), 16)  # Two homepages, seven assets on each host.
+
+    def test_category_image_mismatch_or_missing_source_rejects_proof(self):
+        for mutation in ('served-mismatch', 'both-mismatch', 'missing-source'):
+            with self.subTest(mutation=mutation):
+                report, _, _ = self.identity((mutation, '/design/category-mobil.webp'))
+                proof = next(row for row in report['assets'] if row['path'] == '/design/category-mobil.webp')
+                self.assertTrue(proof['errors'])
+                self.assertTrue(any(row['errors'] for row in report['assets']))
 
 
 if __name__ == '__main__':
