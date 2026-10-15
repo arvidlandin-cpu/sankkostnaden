@@ -643,6 +643,8 @@
     "historicalInitialVerificationFailureCause": "UNKNOWN; not reproduced in explicit current-production rerun, verifier requirements preserved",
     "releaseNotice": "Read final main Pages, SEO and commercial/live-browser Actions for actual serving status; source QA is not final production proof.",
     "physicalIphone": "UNVERIFIED",
-    "businessUplift": "UNKNOWN"
+    "businessUplift": "UNKNOWN",
+    "commercialChromiumAndWebKit": "https://github.com/arvidlandin-cpu/sankkostnaden/actions/runs/38709454890",
+    "commercialStatus": "SUCCESS7m32s on edc688eb4099669a973b9fb85030d273d62d79ba"
   }
 }
