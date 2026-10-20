@@ -1,0 +1,134 @@
+name: Production spot-price delivery proof
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'public/spot-prices/latest.json'
+      - '.github/workflows/production-spot-price-health.yml'
+  pull_request:
+    paths:
+      - '.github/workflows/production-spot-price-health.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  checks: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate committed quarter-hour spot data and deployed file
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_REMOTE: ${{ github.event_name != 'pull_request' }}
+        run: |
+          python3 - <<'PY'
+          import datetime
+          import json
+          import os
+          from pathlib import Path
+          import re
+          import time
+          from urllib.request import Request, urlopen
+
+          SHA = os.environ['GITHUB_SHA']
+          REPO = os.environ['GITHUB_REPOSITORY']
+          EXPECTED = json.loads(Path('public/spot-prices/latest.json').read_text())
+          AREAS = ('SE1', 'SE2', 'SE3', 'SE4')
+
+          def validate(doc):
+              assert doc['unit'] == 'SEK/kWh' and doc['priceType'] == 'spot'
+              assert doc['zone'] == 'Europe/Stockholm'
+              assert doc['includesVat'] is False
+              assert doc['includesGridFee'] is False
+              assert doc['includesSupplierFees'] is False
+              assert doc['includesElectricityTax'] is False
+              assert isinstance(doc['days'], dict) and doc['days']
+              for date, zones in doc['days'].items():
+                  datetime.date.fromisoformat(date)
+                  assert isinstance(zones, dict) and zones
+                  assert set(zones).issubset(AREAS)
+                  for area, rows in zones.items():
+                      assert len(rows) in (92, 96, 100), (date, area, len(rows))
+                      previous = None
+                      for row in rows:
+                          start = datetime.datetime.fromisoformat(row['start'])
+                          end = datetime.datetime.fromisoformat(row['end'])
+                          assert end - start == datetime.timedelta(minutes=15)
+                          assert row['start'].startswith(date + 'T')
+                          assert isinstance(row['sekPerKwh'], (int, float))
+                          assert not isinstance(row['sekPerKwh'], bool)
+                          assert -100 <= row['sekPerKwh'] <= 100
+                          if previous is not None:
+                              assert start == previous, (date, area, 'gap/overlap')
+                          previous = end
+
+          def load(url, token=None):
+              headers = {'User-Agent': 'SankKostnaden-Production-Price-Proof/1.0',
+                         'Cache-Control': 'no-cache'}
+              if token:
+                  headers['Authorization'] = 'Bearer ' + token
+                  headers['Accept'] = 'application/vnd.github+json'
+              with urlopen(Request(url, headers=headers), timeout=15) as response:
+                  assert response.status == 200, (url, response.status)
+                  data = response.read(2_500_001)
+                  assert len(data) <= 2_500_000, 'Oversized response'
+                  return json.loads(data)
+
+          validate(EXPECTED)
+          print('SOURCE PASS: checked unit, cost exclusions, areas, 15-minute continuity')
+          if os.environ.get('RUN_REMOTE') != 'true':
+              print('PR CHECK: no live deployment required before merge')
+              raise SystemExit(0)
+
+          pages_url = None
+          for attempt in range(24):
+              checks = load(
+                  'https://api.github.com/repos/' + REPO +
+                  '/commits/' + SHA + '/check-runs?per_page=100',
+                  os.environ['GH_TOKEN'])['check_runs']
+              pages = [c for c in checks
+                       if c.get('name') == 'Cloudflare Pages'
+                       and c.get('head_sha') == SHA]
+              published = [c for c in pages if c.get('conclusion') == 'success']
+              if published:
+                  summaries = '\n'.join((c.get('output') or {}).get('summary') or ''
+                                        for c in published)
+                  matches = re.findall(
+                      r'https://[a-fA-F0-9]{8,64}\.sankkostnaden\.pages\.dev',
+                      summaries)
+                  if matches:
+                      pages_url = matches[0]
+                      break
+              if pages and all(c.get('status') == 'completed' for c in pages):
+                  raise RuntimeError('Cloudflare Pages FAILED for commit ' + SHA +
+                                     '; inspect Pages deployment logs, not Workers Builds')
+              time.sleep(10)
+          if not pages_url:
+              raise RuntimeError('No successful Cloudflare Pages proof for exact SHA ' + SHA)
+
+          print('PAGES CHECK PASS: ' + SHA + ' => ' + pages_url)
+          for attempt in range(18):
+              try:
+                  nonce = '?release_proof=' + SHA
+                  preview = load(pages_url + '/spot-prices/latest.json' + nonce)
+                  production = load('https://sankkostnaden.se/spot-prices/latest.json' + nonce)
+                  validate(preview)
+                  validate(production)
+                  if preview == EXPECTED and production == EXPECTED:
+                      print('LIVE PASS: exact quarter-hour prices served on immutable Pages preview and sankkostnaden.se')
+                      print('::notice title=Spot price production verified::Exact commit ' + SHA +
+                            ' has correct spot data on Pages preview and own domain')
+                      break
+                  print('Deployment propagation pending, attempt ' + str(attempt + 1))
+              except Exception as exc:
+                  print('Deployment read pending (' + type(exc).__name__ + '), attempt ' +
+                        str(attempt + 1))
+              if attempt == 17:
+                  raise RuntimeError('Published price data does not match exact main SHA on Pages and own domain')
+              time.sleep(10)
+          PY
