@@ -19,6 +19,8 @@ import {
   normalizeGscDateQueryRows,
   normalizeGscTotals,
   summarizeGscCompleteWindows,
+  gscObservationPeriod,
+  summarizeGscObservation,
   toMarkdown,
 } from './lib/googleOrganicPerformance.mjs';
 
@@ -77,10 +79,10 @@ async function runGa4(accessToken,propertyId,body){
   });
 }
 
-async function runGsc(accessToken,siteUrl,dimensions=[],dimensionFilters=[],dataState='all'){
+async function runGsc(accessToken,siteUrl,dimensions=[],dimensionFilters=[],dataState='all',queryPeriod=period){
   const body={
-    startDate:period.startDate,
-    endDate:period.endDate,
+    startDate:queryPeriod.startDate,
+    endDate:queryPeriod.endDate,
     type:'web',
     rowLimit:dimensions.length?25000:1,
     dataState,
@@ -92,6 +94,29 @@ async function runGsc(accessToken,siteUrl,dimensions=[],dimensionFilters=[],data
     accessToken,
     body
   );
+}
+
+async function collectQuarterObservation(accessToken,siteUrl,finalThroughDate){
+  try{
+    const state=JSON.parse(await fs.readFile('autopilot/state.json','utf8'));
+    const experiment=state.activeExperiments?.find(item=>item.target==='/elavtal/kvartspris/'&&item.status==='running');
+    if(!experiment)return null;
+    const observationPeriod=gscObservationPeriod(experiment.startedAt,finalThroughDate);
+    if(!observationPeriod)return {status:'UNKNOWN',reason:'No complete post-change Search Console period available.'};
+    const page=`https://${targetHostname}/elavtal/kvartspris/`;
+    const raw=await runGsc(accessToken,siteUrl,['date'],[{dimension:'page',operator:'equals',expression:page}],'final',observationPeriod);
+    if((raw.rows?.length||0)>=25000)return {status:'UNKNOWN',reason:'Observation rows may be truncated.'};
+    const daily=normalizeGscRows(raw,'date').sort((a,b)=>a.date.localeCompare(b.date));
+    const observation=summarizeGscObservation(daily,observationPeriod,{
+      minCompleteDays:experiment.measurement?.gscMinCompletePostDays??7,
+      minImpressions:experiment.measurement?.minPostPageImpressions??30,
+    });
+    if(!observation)return {status:'UNKNOWN',reason:'Observation counts or date coverage could not be validated.'};
+    return {status:'ok',experimentId:experiment.id,page,dataState:'final',reportTimezone:'America/Los_Angeles',
+      ...observation,daily};
+  }catch{
+    return {status:'UNKNOWN',reason:'The page-filtered final observation could not be verified.'};
+  }
 }
 
 async function inspectPriorityUrls(accessToken,siteUrl){
@@ -193,7 +218,7 @@ if(!rawServiceAccount){
       limit:500,
     }),
     runGa4(accessToken,propertyId,{
-      dimensions:[{name:'landingPagePlusQueryString'},{name:'sessionDefaultChannelGroup'}],
+      dimensions:[{name:'landingPage'},{name:'sessionDefaultChannelGroup'}],
       metrics:[{name:'sessions'},{name:'activeUsers'},{name:'newUsers'}],
       dimensionFilter:{filter:{fieldName:'sessionDefaultChannelGroup',stringFilter:{matchType:'EXACT',value:'Organic Search',caseSensitive:true}}},
       orderBys:[{metric:{metricName:'sessions'},desc:true}],
@@ -241,7 +266,11 @@ if(!rawServiceAccount){
   ]);
   const focusQueryDaily=normalizeGscDateQueryRows(gscDateQueriesRaw)
     .filter(row=>focusQueries.has(row.query.toLowerCase()));
-  const urlInspection=await inspectPriorityUrls(accessToken,siteUrl);
+  const finalDaily=normalizeGscRows(gscFinalDailyRaw,'date').sort((a,b)=>a.date.localeCompare(b.date));
+  const [urlInspection,quarterPriceObservation]=await Promise.all([
+    inspectPriorityUrls(accessToken,siteUrl),
+    collectQuarterObservation(accessToken,siteUrl,finalDaily.at(-1)?.date),
+  ]);
 
   report={
     generatedAt:new Date().toISOString(),
@@ -278,8 +307,9 @@ if(!rawServiceAccount){
       daily:normalizeGscRows(gscDailyRaw,'date').sort((a,b)=>a.date.localeCompare(b.date)),
       dataState:'all',
       firstIncompleteDate:gscDailyRaw?.metadata?.first_incomplete_date||null,
-      finalDaily:normalizeGscRows(gscFinalDailyRaw,'date').sort((a,b)=>a.date.localeCompare(b.date)),
-      completeSevenDayComparison:summarizeGscCompleteWindows(normalizeGscRows(gscFinalDailyRaw,'date'),7),
+      finalDaily,
+      completeSevenDayComparison:summarizeGscCompleteWindows(finalDaily,7,period),
+      quarterPriceObservation,
       urlInspection,
       appDaily:normalizeGscRows(gscAppDailyRaw,'date').sort((a,b)=>a.date.localeCompare(b.date)),
       appQueries:normalizeGscRows(gscAppQueriesRaw,'query'),

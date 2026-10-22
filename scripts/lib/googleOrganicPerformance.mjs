@@ -79,7 +79,9 @@ export function normalizeGa4LandingChannels(result){
 
 export function normalizeGa4ContentLandingChannels(result){
   return (result?.rows||[]).map(row=>({
-    landingPage:dimension(row,0)||'(not set)',
+    // Legacy inputs may contain query strings; preserve rows, never sum users
+    // across paths that become equal after removing private URL parameters.
+    landingPage:(dimension(row,0)||'(not set)').split(/[?#]/)[0]||'(not set)',
     channel:dimension(row,1)||'Unassigned',
     sessions:metric(row,0),
     activeUsers:metric(row,1),
@@ -164,14 +166,56 @@ export function normalizeGscDateQueryRows(result){
   })).sort((a,b)=>a.date.localeCompare(b.date)||b.impressions-a.impressions);
 }
 
-export function summarizeGscCompleteWindows(rows,days=7){
+export function gscObservationPeriod(startedAt,finalThroughDate){
+  if(typeof startedAt!=='string'||!/(?:Z|[+-]\d{2}:?\d{2})$/.test(startedAt))return null;
+  const start=new Date(startedAt);
+  if(!Number.isFinite(start.getTime())||!/^\d{4}-\d{2}-\d{2}$/.test(finalThroughDate||''))return null;
+  const parts=new Intl.DateTimeFormat('en-US',{timeZone:'America/Los_Angeles',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(start);
+  const part=type=>parts.find(item=>item.type===type).value;
+  const first=new Date(`${part('year')}-${part('month')}-${part('day')}T00:00:00Z`);
+  first.setUTCDate(first.getUTCDate()+1);
+  const end=new Date(finalThroughDate+'T00:00:00Z');
+  if(!Number.isFinite(end.getTime())||end.toISOString().slice(0,10)!==finalThroughDate||end<first)return null;
+  return {startDate:first.toISOString().slice(0,10),endDate:finalThroughDate,days:Math.round((end-first)/86400000)+1};
+}
+
+// Caller must supply final daily rows filtered to one exact page. This is a
+// descriptive post-observation cohort, never a causal experiment verdict.
+export function summarizeGscObservation(rows,period,{minCompleteDays=7,minImpressions=30}={}){
+  if(!period)return null;
+  // Validate the supplied period itself, without advancing its first day.
+  const start=Date.parse(period.startDate+'T00:00:00Z'),end=Date.parse(period.endDate+'T00:00:00Z');
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(period.startDate||'')||!/^\d{4}-\d{2}-\d{2}$/.test(period.endDate||'')||!Number.isFinite(start)||!Number.isFinite(end)||new Date(start).toISOString().slice(0,10)!==period.startDate||new Date(end).toISOString().slice(0,10)!==period.endDate||end<start)return null;
+  const completeDays=Math.round((end-start)/86400000)+1;
+  if(period.days!==completeDays||!Array.isArray(rows))return null;
+  let clicks=0,impressions=0,weightedPosition=0;
+  const dates=new Set();
+  for(const row of rows){
+    if(!/^\d{4}-\d{2}-\d{2}$/.test(row?.date||'')||!Number.isFinite(Date.parse(row.date+'T00:00:00Z'))||new Date(row.date+'T00:00:00Z').toISOString().slice(0,10)!==row.date||row.date<period.startDate||row.date>period.endDate||dates.has(row.date))return null;
+    dates.add(row.date);
+    if(!Number.isFinite(row.clicks)||row.clicks<0||!Number.isFinite(row.impressions)||row.impressions<0||(row.impressions>0&&(!Number.isFinite(row.position)||row.position<0)))return null;
+    clicks+=row.clicks;impressions+=row.impressions;
+    if(row.impressions)weightedPosition+=row.position*row.impressions;
+  }
+  return {scope:'page_post_observation',period,completeDays,clicks,impressions,ctr:impressions?clicks/impressions:null,position:impressions?weightedPosition/impressions:null,minCompleteDays,minImpressions,eligibleForReview:completeDays>=minCompleteDays&&impressions>=minImpressions};
+}
+
+export function summarizeGscCompleteWindows(rows,days=7,period){
   const width=Math.max(1,Math.round(Number(days)||7));
-  const valid=(rows||[]).filter(row=>/^\d{4}-\d{2}-\d{2}$/.test(row?.date||''));
+  const validDate=value=>typeof value==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(value)&&Number.isFinite(Date.parse(value+'T00:00:00Z'))&&new Date(value+'T00:00:00Z').toISOString().slice(0,10)===value;
+  const valid=(rows||[]).filter(row=>validDate(row?.date));
   if(!valid.length)return null;
+  const dates=valid.map(row=>row.date).sort();
+  const from=period?(period.startDate||period.from):dates[0];
+  const to=period?(period.endDate||period.to):dates.at(-1);
+  if(!validDate(from)||!validDate(to)||from>to)return null;
+  if(valid.some(row=>row.date<from||row.date>to))return null;
   const byDate=new Map(valid.map(row=>[row.date,row]));
-  const latestDate=valid.map(row=>row.date).sort().at(-1);
+  const latestDate=dates.at(-1);
   const dayMs=86400000;
   const end=new Date(latestDate+'T00:00:00Z');
+  // Do not manufacture an earlier comparison period outside the API request.
+  if(new Date(end.getTime()-(2*width-1)*dayMs).toISOString().slice(0,10)<from)return null;
   const summarize=(offset)=>{
     let clicks=0,impressions=0,weightedPosition=0;
     const windowEnd=new Date(end.getTime()-offset*width*dayMs);
@@ -190,8 +234,8 @@ export function summarizeGscCompleteWindows(rows,days=7){
       endDate:windowEnd.toISOString().slice(0,10),
       clicks,
       impressions,
-      ctr:impressions?clicks/impressions:0,
-      position:impressions?weightedPosition/impressions:0,
+      ctr:impressions?clicks/impressions:null,
+      position:impressions?weightedPosition/impressions:null,
     };
   };
   return {latest:summarize(0),previous:summarize(1)};
@@ -199,8 +243,8 @@ export function summarizeGscCompleteWindows(rows,days=7){
 
 export function toMarkdown(report){
   const int=value=>new Intl.NumberFormat('sv-SE',{maximumFractionDigits:0}).format(value||0);
-  const pct=value=>new Intl.NumberFormat('sv-SE',{style:'percent',maximumFractionDigits:1}).format(value||0);
-  const dec=value=>new Intl.NumberFormat('sv-SE',{maximumFractionDigits:1}).format(value||0);
+  const pct=value=>value==null?'UNKNOWN':new Intl.NumberFormat('sv-SE',{style:'percent',maximumFractionDigits:1}).format(value);
+  const dec=value=>value==null?'UNKNOWN':new Intl.NumberFormat('sv-SE',{maximumFractionDigits:1}).format(value);
   const lines=['# Organisk trafikrapport','',`Genererad: ${report.generatedAt}`,''];
 
   if(!report.configured){
@@ -243,6 +287,8 @@ export function toMarkdown(report){
     const previous=gsc.completeSevenDayComparison.previous;
     lines.push(
       '### GSC – senaste två färdigbehandlade sjudagarsperioder',
+      '',
+      'Jämförelsen gäller sökdata inom den efterfrågade perioden. Uteblivna dagsrader kan vara dagar utan rapporterad sökaktivitet; de bevisar inte ett trafikbortfall. Utan visningar är CTR och position UNKNOWN.',
       '',
       '| Period | Klick | Visningar | CTR | Position |',
       '| --- | ---: | ---: | ---: | ---: |',
