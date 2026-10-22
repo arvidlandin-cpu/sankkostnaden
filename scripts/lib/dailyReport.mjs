@@ -105,12 +105,20 @@ export function buildDailyReport({google,affiliate,addrevenue,adtraction,partner
   // These are sitewide commercial page events, not the app-only funnel.
   const commercial=ga?.commercialByPageChannel;
   const traffic={organicSessions:number(ga?.organic?.sessions),allChannelSessions:number(ga?.totals?.sessions),gscInboundClicks:number(gsc?.totals?.clicks),gscImpressions:number(gsc?.totals?.impressions),organicOutgoingPartnerClicks:clicks(commercial,'Organic Search'),allChannelOutgoingPartnerClicks:clicks(commercial),ga4Period:periodOf(ga),gscPeriod:periodOf(gsc),latestGscDailyDate:Array.isArray(gsc?.daily)?gsc.daily.map(row=>row.date).filter(value=>/^\d{4}-\d{2}-\d{2}$/.test(value||'')).sort().at(-1)||null:null,dataNotice:'Perioderna nedan är faktiska källperioder. Senaste dagarnas GA4/GSC-data och ännu ej godkända nätverkstransaktioner kan vara preliminära.'};
+  traffic.organicNewUsers=number(ga?.organic?.newUsers);
+  traffic.newUsersByChannel=Array.isArray(ga?.channels)?ga.channels.map(row=>({channel:safeText(row.channel)||'Unassigned',sessions:number(row.sessions),activeUsers:number(row.activeUsers),newUsers:number(row.newUsers)})):null;
+  traffic.organicContentLandings=Array.isArray(ga?.organicLandingPages)?ga.organicLandingPages.map(row=>({landingPage:safeText(row.landingPage),sessions:number(row.sessions),activeUsers:number(row.activeUsers),newUsers:number(row.newUsers)})):null;
+  traffic.affiliateClickUsers=ga?.affiliateClickUsers?.sitewide?{eventCount:number(ga.affiliateClickUsers.sitewide.eventCount),totalUsers:number(ga.affiliateClickUsers.sitewide.totalUsers),byChannel:Array.isArray(ga.affiliateClickUsers.byChannel)?ga.affiliateClickUsers.byChannel.map(row=>({channel:safeText(row.channel)||'Unassigned',eventCount:number(row.eventCount),totalUsers:number(row.totalUsers)})):null}:null;
+  traffic.brfReferralTraffic=Array.isArray(ga?.brfReferralTraffic)?ga.brfReferralTraffic.map(row=>({source:safeText(row.source),medium:safeText(row.medium),campaign:safeText(row.campaign),sessions:number(row.sessions),activeUsers:number(row.activeUsers),newUsers:number(row.newUsers)})):null;
+  traffic.firstIncompleteGscDate=/^\d{4}-\d{2}-\d{2}$/.test(gsc?.firstIncompleteDate||'')?gsc.firstIncompleteDate:null;
+  traffic.completeSevenDayComparison=gsc?.completeSevenDayComparison||null;
+  traffic.urlInspection=Array.isArray(gsc?.urlInspection)?gsc.urlInspection.map(row=>({url:safeText(row.url),status:safeText(row.status),verdict:safeText(row.verdict),coverageState:safeText(row.coverageState),lastCrawlTime:safeText(row.lastCrawlTime),googleCanonical:safeText(row.googleCanonical)})):null;
   traffic.gscCtr=ctr(gsc?.totals?.ctr);
   traffic.gscPosition=position(gsc?.totals?.position);
   traffic.topGscQueries=topSearchRows(gsc?.queries,'query');
   traffic.topGscLandingPages=topSearchRows(gsc?.pages,'page');
-  traffic.topGa4LandingPages=null;
-  traffic.ga4LandingPagesNotice='UNKNOWN – Google-källan saknar sajtövergripande GA4-landningssidor. appLandingChannels omfattar endast /app/; pages visar sidvisningar och används inte som landningssidor.';
+  traffic.topGa4LandingPages=traffic.organicContentLandings;
+  traffic.ga4LandingPagesNotice=traffic.organicContentLandings===null?'UNKNOWN – Google-källan saknar sajtövergripande GA4-landningssidor. appLandingChannels omfattar endast /app/; pages visar sidvisningar och används inte som landningssidor.':'Organiska GA4-landningar redovisas separat från startsidan och /app/.';
   const networkReports=Array.isArray(affiliate?.networks)?affiliate.networks:[];
   const counts=partnerHealth?.networkCounts;
   const activeNetworks=!failed(partnerHealth)&&counts&&typeof counts==='object'&&Object.values(counts).every(count=>number(count)!==null&&count>=0)?Object.entries(counts).filter(([,count])=>count>0).map(([name])=>name):null;
@@ -170,7 +178,7 @@ const percent=value=>value===null||value===undefined?'UNKNOWN':new Intl.NumberFo
 function periodText(period){return period?`${period.from} – ${period.to} (${period.days} dagar)`:'UNKNOWN';}
 export function dailyReportMarkdown(report){
   const t=report.traffic,r=report.revenue;
-  const lines=['# Daglig rapport – Sänk Kostnaden','',`Genererad: ${report.generatedAt}`,'',report.executiveSummary,'','## Trafik och partnerklick','',`- GA4-period: ${periodText(t.ga4Period)}`,`- Organiska sessioner (Organic Search): ${display(t.organicSessions)}`,`- Sessioner, alla kanaler: ${display(t.allChannelSessions)}`,`- Utgående partnerklick, Organic Search, hela sajten: ${display(t.organicOutgoingPartnerClicks)}`,`- Utgående partnerklick, alla kanaler, hela sajten: ${display(t.allChannelOutgoingPartnerClicks)}`,`- GSC-period: ${periodText(t.gscPeriod)}`,`- Inkommande Google-sökklick: ${display(t.gscInboundClicks)} · sökvisningar: ${display(t.gscImpressions)}`,`- Senaste GSC-datum med dagdata: ${display(t.latestGscDailyDate)}`,'',t.dataNotice,'','## Nätverksgodkänd provision','',`- TOTAL godkänd provision: ${display(r.grandTotal)}${r.currency?' '+r.currency:''}`,`- Gemensam nätverksperiod: ${periodText(r.period)}`,''];
+  const lines=['# Daglig rapport – Sänk Kostnaden','',`Genererad: ${report.generatedAt}`,'',report.executiveSummary,'','## Trafik och partnerklick','',`- GA4-period: ${periodText(t.ga4Period)}`,`- Organiska sessioner (Organic Search): ${display(t.organicSessions)}`,`- Nya organiska användare: ${display(t.organicNewUsers)}`,`- Sessioner, alla kanaler: ${display(t.allChannelSessions)}`,`- Utgående partnerklick, Organic Search, hela sajten: ${display(t.organicOutgoingPartnerClicks)}`,`- Unika användare med affiliate_click, hela sajten: ${display(t.affiliateClickUsers?.totalUsers)} (${display(t.affiliateClickUsers?.eventCount)} events)`,`- Utgående partnerklick, alla kanaler, hela sajten: ${display(t.allChannelOutgoingPartnerClicks)}`,`- GSC-period: ${periodText(t.gscPeriod)}`,`- Inkommande Google-sökklick: ${display(t.gscInboundClicks)} · sökvisningar: ${display(t.gscImpressions)}`,`- Senaste GSC-datum med dagdata: ${display(t.latestGscDailyDate)}`,`- Första ofullständiga GSC-datum: ${display(t.firstIncompleteGscDate)}`,'',t.dataNotice,'','## Nätverksgodkänd provision','',`- TOTAL godkänd provision: ${display(r.grandTotal)}${r.currency?' '+r.currency:''}`,`- Gemensam nätverksperiod: ${periodText(r.period)}`,''];
   // Keep search diagnostics together with the traffic section, ahead of revenue.
   const revenueHeading=lines.indexOf('## Nätverksgodkänd provision');
   const searchLines=[`- GSC CTR: ${percent(t.gscCtr)} · genomsnittlig position: ${display(t.gscPosition)}`,'','### GSC: högst 5 sökfrågor och landningssidor',''];
@@ -181,7 +189,26 @@ export function dailyReportMarkdown(report){
     else for(const row of rows)searchLines.push(`- ${row[key]}: ${display(row.clicks)} klick · ${display(row.impressions)} visningar · CTR ${percent(row.ctr)} · position ${display(row.position)}`);
     searchLines.push('');
   }
-  searchLines.push('GA4 topplandningssidor: '+t.ga4LandingPagesNotice,'');
+  if(t.completeSevenDayComparison){
+    const latest=t.completeSevenDayComparison.latest,previous=t.completeSevenDayComparison.previous;
+    searchLines.push('### Färdigbehandlad GSC: 7 dagar mot föregående 7','',`- ${latest.startDate} – ${latest.endDate}: ${display(latest.clicks)} klick · ${display(latest.impressions)} visningar · CTR ${percent(latest.ctr)} · position ${display(latest.position)}`,`- ${previous.startDate} – ${previous.endDate}: ${display(previous.clicks)} klick · ${display(previous.impressions)} visningar · CTR ${percent(previous.ctr)} · position ${display(previous.position)}`,'');
+  }
+  searchLines.push('GA4 landningssidor: '+t.ga4LandingPagesNotice,'');
+  if(Array.isArray(t.organicContentLandings)){
+    searchLines.push('Organiska innehållslandningar (exkl. start och /app/):');
+    if(!t.organicContentLandings.length)searchLines.push('- 0 registrerade.');
+    else for(const row of t.organicContentLandings.slice(0,10))searchLines.push(`- ${display(row.landingPage)}: ${display(row.sessions)} sessioner · ${display(row.newUsers)} nya användare`);
+    searchLines.push('');
+  }
+  searchLines.push('Källtaggad BRF/referraltrafik:');
+  if(!Array.isArray(t.brfReferralTraffic))searchLines.push('- UNKNOWN – mätfält saknas.');
+  else if(!t.brfReferralTraffic.length)searchLines.push('- 0 registrerade rader.');
+  else for(const row of t.brfReferralTraffic)searchLines.push(`- ${display(row.source)} / ${display(row.medium)} / ${display(row.campaign)}: ${display(row.sessions)} sessioner · ${display(row.newUsers)} nya användare`);
+  searchLines.push('');
+  searchLines.push('Google URL Inspection:');
+  if(!Array.isArray(t.urlInspection))searchLines.push('- UNKNOWN – inspektionsfält saknas.');
+  else for(const row of t.urlInspection)searchLines.push(`- ${display(row.url)}: ${display(row.status)} · ${display(row.verdict)} · ${display(row.coverageState)} · senast crawlad ${display(row.lastCrawlTime)}`);
+  searchLines.push('');
   lines.splice(revenueHeading,0,...searchLines);
   for(const row of r.byNetwork)lines.push(`- ${row.network}: ${row.status} · godkänt ${display(row.approvedCommission)} ${display(row.currency)} (${display(row.approvedTransactions)} affärer) · väntande ${display(row.pendingCommission)} ${display(row.currency)} (${display(row.pendingTransactions)} affärer) · ${periodText(row.period)}`);
   lines.push('','Väntande provision är inte godkänd intäkt. Partnerklick bevisar inte affärer. Ingen intäkt per organisk session beräknas.','','## Källstatus och aktualitet','');
