@@ -10,6 +10,10 @@ on:
     paths:
       - '.github/workflows/production-spot-price-health.yml'
   workflow_dispatch:
+  workflow_run:
+    workflows: [Swedish spot price refresh]
+    types: [completed]
+    branches: [main]
 
 permissions:
   contents: read
@@ -17,10 +21,23 @@ permissions:
 
 jobs:
   verify:
+    if: >-
+      ${{
+        github.event_name != 'workflow_run' ||
+        (
+          github.event.workflow_run.conclusion == 'success' &&
+          github.event.workflow_run.head_branch == 'main' &&
+          github.event.workflow_run.head_repository.full_name == github.repository
+        )
+      }}
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
+        with:
+          # The refresh run's head_sha predates its bot commit. Verify current trusted main.
+          ref: ${{ github.event_name == 'workflow_run' && 'refs/heads/main' || github.sha }}
+          persist-credentials: false
       - name: Validate committed quarter-hour spot data and deployed file
         env:
           GH_TOKEN: ${{ github.token }}
@@ -32,10 +49,12 @@ jobs:
           import os
           from pathlib import Path
           import re
+          import subprocess
           import time
           from urllib.request import Request, urlopen
 
-          SHA = os.environ['GITHUB_SHA']
+          SHA = subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()
+          assert re.fullmatch(r'[0-9a-f]{40}', SHA), 'Invalid checkout SHA'
           REPO = os.environ['GITHUB_REPOSITORY']
           EXPECTED = json.loads(Path('public/spot-prices/latest.json').read_text())
           AREAS = ('SE1', 'SE2', 'SE3', 'SE4')
