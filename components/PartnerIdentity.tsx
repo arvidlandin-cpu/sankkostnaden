@@ -124,7 +124,7 @@ export default function PartnerIdentity({partner,large=false,appearance='default
     style={{color:'inherit',gap:0,minHeight:showImage?maxHeight:undefined,...(background?{background,padding:'9px 12px',borderRadius:9}:null)}}>
     {showImage&&<img ref={image} src={brand.src} alt='' aria-hidden='true' width={Math.round(Math.min(maxWidth,maxHeight*brand.width/brand.height))} height={Math.round(Math.min(maxHeight,maxWidth*brand.height/brand.width))} decoding='async'
       data-testid='partner-original-logo' onError={()=>setFailedSource(brand.src)}
-      style={{display:'block',width:Math.min(maxWidth,maxHeight*brand.width/brand.height),maxWidth:'100%',height:Math.min(maxHeight,maxWidth*brand.height/brand.width),maxHeight,objectFit:'fill'}}/>}
+      style={{display:'block',width:Math.min(maxWidth,maxHeight*brand.width/brand.height),maxWidth:'100%',height:'auto',aspectRatio:`${brand.width} / ${brand.height}`,maxHeight,objectFit:'fill'}}/>}
     <span className={s.name} style={showImage?{position:'absolute',width:1,height:1,margin:-1,padding:0,overflow:'hidden',clipPath:'inset(50%)',whiteSpace:'nowrap',border:0}:undefined}>{partner.name}</span>
   </span>;
 }
