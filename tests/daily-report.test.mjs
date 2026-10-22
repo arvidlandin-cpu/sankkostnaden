@@ -107,6 +107,43 @@ test('output is aggregate-only and never copies raw identifiers, credentials or 
   for(const value of ['private-order','private-click','private-email','private-token','private-release','private-detail'])assert.equal(json.includes(value),false);
 });
 
+test('growth report uses dimensionless unique users and keeps channel cohorts separate',()=>{
+  const args=setup();
+  args.google.ga4.affiliateClickUsers={sitewide:{eventCount:74,totalUsers:15},byChannel:[{channel:'Organic Search',eventCount:10,totalUsers:2},{channel:'Direct',eventCount:55,totalUsers:13},{channel:'Referral',eventCount:2,totalUsers:2}]};
+  const report=buildDailyReport(args),md=dailyReportMarkdown(report);
+  assert.equal(report.traffic.affiliateClickUsers.totalUsers,15);
+  assert.match(md,/Organic Search: 2 användare · 10 klickhändelser/);
+  assert.match(md,/grupperna får inte summeras/);
+  assert.match(md,/hela sajten: 15 \(74 events\)/);
+});
+
+test('growth output strips private landing parameters and redacts private source labels',()=>{
+  const args=setup();
+  args.google.ga4.organicLandingPages=[{landingPage:'/forsakring/?email=private-person#private-fragment',sessions:2,activeUsers:1,newUsers:1},{landingPage:'(not set)',sessions:1},{landingPage:'https://external.example/private-path'}];
+  args.google.ga4.brfReferralTraffic=[{source:'private-person@example.com',medium:'referral',campaign:'brf_forsakringskoll_2026q4',sessions:1}];
+  const report=buildDailyReport(args),text=JSON.stringify(report)+dailyReportMarkdown(report);
+  assert.equal(report.traffic.organicContentLandings[0].landingPage,'/forsakring/');
+  assert.equal(report.traffic.organicContentLandings[1].landingPage,'(not set)');
+  assert.equal(report.traffic.organicContentLandings.length,2);
+  assert.equal(report.traffic.brfReferralTraffic[0].source,null);
+  assert.doesNotMatch(text,/private-person|private-fragment|private-path|email=/);
+});
+
+test('quarter observation is an exact page post-period, not the sitewide comparison or a winner',()=>{
+  const args=setup();
+  args.google.gsc.quarterPriceObservation={status:'ok',dataState:'final',scope:'page_post_observation',period:{startDate:'2026-10-11',endDate:'2026-10-20'},completeDays:10,clicks:0,impressions:29,ctr:0,position:24,eligibleForReview:false,minCompleteDays:7,minImpressions:30,daily:[{query:'private-raw'}]};
+  const report=buildDailyReport(args),md=dailyReportMarkdown(report);
+  assert.equal(report.traffic.quarterPriceObservation.status,'ok');
+  assert.equal(report.traffic.quarterPriceObservation.eligibleForReview,false);
+  assert.equal(report.traffic.quarterPriceObservation.period.days,10);
+  assert.match(md,/sidfiltrerad observation efter ändringen/);
+  assert.match(md,/uppfyllda: nej/);
+  assert.match(md,/inte en vinnare/);
+  assert.doesNotMatch(JSON.stringify(report),/private-raw/);
+  args.google.gsc.quarterPriceObservation.scope='sitewide';
+  assert.equal(buildDailyReport(args).traffic.quarterPriceObservation.status,'UNKNOWN');
+});
+
 test('missing or degraded production proof stays UNKNOWN and cannot imply physical-device approval',()=>{
   for(const release of [undefined,{passed:false},{...setup().release,mode:'preview'},{...setup().release,expectedCommit:'not-a-commit'},{...setup().release,checks:[{errors:['private-response']}]},{...setup().release,errors:['private-response']}]){
     const report=buildDailyReport({...setup(),release});
