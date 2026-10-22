@@ -86,7 +86,7 @@ export function normalizeGa4ContentLandingChannels(result){
     sessions:metric(row,0),
     activeUsers:metric(row,1),
     newUsers:metric(row,2),
-  })).sort((a,b)=>b.sessions-a.sessions);
+  })).filter(row=>!['/','/app','/app/'].includes(row.landingPage)).sort((a,b)=>b.sessions-a.sessions);
 }
 
 export function normalizeGa4CampaignSources(result){

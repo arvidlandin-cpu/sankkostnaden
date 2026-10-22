@@ -160,6 +160,11 @@ test('legacy landing query and fragment are removed without aggregating users',(
   assert.doesNotMatch(JSON.stringify(rows),/private|token|answer|other/);
 });
 
+test('content landing cohort excludes app and home with either GA4 trailing-slash form',()=>{
+  const rows=normalizeGa4ContentLandingChannels({rows:['/','/app','/app/','/app/?qa=1','/bredband','(not set)'].map(value=>({dimensionValues:[{value},{value:'Organic Search'}],metricValues:[{value:'1'},{value:'1'},{value:'0'}]}))});
+  assert.deepEqual(rows.map(row=>row.landingPage),['/bredband','(not set)']);
+});
+
 test('observation period starts after the experiment date in Search Console Pacific time',()=>{
   assert.deepEqual(gscObservationPeriod('2026-10-10T11:00:00+02:00','2026-10-17'),{startDate:'2026-10-11',endDate:'2026-10-17',days:7});
   // Before midnight Pacific, despite being the next calendar day in Sweden.

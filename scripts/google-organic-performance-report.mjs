@@ -285,8 +285,7 @@ if(!rawServiceAccount){
       channels,
       pages:normalizeGa4Pages(gaPagesRaw),
       sources:normalizeGa4Sources(gaSourcesRaw),
-      organicLandingPages:normalizeGa4ContentLandingChannels(gaContentLandingChannelsRaw)
-        .filter(row=>!['/','/app/'].includes(row.landingPage.split('?')[0])),
+      organicLandingPages:normalizeGa4ContentLandingChannels(gaContentLandingChannelsRaw),
       brfReferralTraffic:normalizeGa4CampaignSources(gaCampaignSourcesRaw),
       affiliateClickUsers:{
         sitewide:normalizeGa4EventTotals(gaAffiliateClickTotalsRaw),
