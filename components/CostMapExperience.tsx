@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { ArrowLeft, ArrowRight, ArrowUpRight, Check, Compass, KeyRound, LampDesk, Smartphone, SlidersHorizontal, WalletCards, Wifi } from 'lucide-react';
 import { getActivePartners, type ActivePartner, type PartnerCategory, type PartnerIntent } from '../lib/partners';
 import { emitAnalyticsEvent } from '../lib/clientAttribution';
+import PartnerIdentity from './PartnerIdentity';
+import { getCategoryArtwork } from '../lib/categoryArtwork';
 import s from '../styles/CostMapExperience.module.css';
 
 type Choice = { id: string; label: string; intent?: PartnerIntent };
@@ -44,6 +46,7 @@ const comparisonNames = new Set(['Bredbandsval.se', 'Elskling', 'Compricer']);
 const isComparison = (partner: ActivePartner) => comparisonNames.has(partner.name) || partner.category === 'ekonomi';
 
 function PartnerLink({ partner, intent, index, placement }: { partner: ActivePartner; intent?: PartnerIntent; index: number; placement: string }) {
+  const layout=placement==='cost_map_comparison'&&partner.category!=='ekonomi'?'feature':'row';
   const actualIntent = intent || (partner.intents.includes('compare') ? 'compare' : partner.intents[0]);
   const role = isComparison(partner) ? 'Jämförelsetjänst' : partner.name === 'Insurello' ? 'Hjälp med försäkringsersättning' : 'Direkt hos leverantören';
   const action = partner.name === 'Bredbandsval.se' ? 'Kontrollera din adress hos Bredbandsval.se'
@@ -52,10 +55,13 @@ function PartnerLink({ partner, intent, index, placement }: { partner: ActivePar
         : `Se villkor hos ${partner.name}`;
   return <a className={s.partnerLink} href={partner.trackingUrl} target='_blank' rel='sponsored nofollow noopener'
     data-testid='v10-partner-card' data-partner={partner.name} data-category={partner.category}
+    data-partner-type={isComparison(partner)?'comparison':'provider'}
+    data-partner-layout={layout}
     data-intent={actualIntent} data-placement={placement} data-partner-position={index + 1}
     onClick={() => emitAnalyticsEvent('v10_partner_selected', { category: partner.category, partner: partner.name, intent: actualIntent, placement })}>
-    <span className={s.partnerMeta}>Annons · partnerlänk</span>
-    <strong className={s.partnerName}>{partner.name}</strong>
+    <span className={s.partnerTop}><span className={s.partnerMeta}>Annons · partnerlänk</span><ArrowUpRight size={20} className={s.partnerArrow} aria-hidden='true'/></span>
+    <strong className={s.partnerName}><PartnerIdentity partner={partner} appearance={layout==='row'?'on-dark':'default'}/></strong>
+    {placement==='cost_map_comparison'&&partner.category!=='ekonomi'&&<span className={s.partnerArt} aria-hidden='true'><img src={getCategoryArtwork(partner.category).src} width={1280} height={853} alt='' loading='lazy'/></span>}
     <span className={s.partnerMeta}>{role}</span>
     <span className={s.partnerNote}>{partner.name === 'Bredbandsval.se' ? 'Utbud och pris kontrolleras för din adress.' : partner.note}</span>
     <span className={s.partnerAction}>{action} <ArrowUpRight size={17} aria-hidden='true' /></span>

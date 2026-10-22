@@ -3,6 +3,8 @@ import Link from 'next/link';
 import {ArrowRight,ArrowUpRight,Check,ChevronDown,ChevronRight,Compass,Info,PiggyBank,ShieldCheck,Sparkles,SlidersHorizontal,Wifi,Zap,Smartphone,HeartHandshake,WalletCards,RotateCcw} from 'lucide-react';
 import {getActivePartners,type PartnerCategory,type PartnerIntent,type ActivePartner} from '../lib/partners';
 import {emitAnalyticsEvent} from '../lib/clientAttribution';
+import PartnerIdentity from './PartnerIdentity';
+import {getCategoryArtwork} from '../lib/categoryArtwork';
 import s from '../styles/V10Experience.module.css';
 
 export type JourneyCategory=PartnerCategory;
@@ -35,13 +37,18 @@ const tracks:Track[]=[
 ];
 const findTrack=(category:JourneyCategory)=>tracks.find(t=>t.id===category)!;
 function PartnerLink({p,category,intent,index,compact=false,placement}: {p:ActivePartner;category:JourneyCategory;intent:PartnerIntent;index:number;compact?:boolean;placement:string}){
+ const comparison=['Bredbandsval.se','Elskling','Compricer'].includes(p.name)||p.category==='ekonomi';
+ const role=p.name==='Insurello'?'Hjälp med försäkringsersättning':comparison?'Jämförelsetjänst':'Direkt hos leverantören';
  return <a className={compact?s.partnerMini:s.partnerCard} href={p.trackingUrl}
+   data-partner-type={comparison?'comparison':'provider'}
+   data-partner-layout={comparison&&category!=='ekonomi'?'feature':'row'}
   data-partner={p.name} data-category={category} data-intent={intent} data-placement={placement} data-partner-position={index+1}
   target='_blank' rel='sponsored nofollow noopener' data-testid='v10-partner-card'
   onClick={()=>emitAnalyticsEvent('v10_partner_selected',{category,partner:p.name,intent,placement})}>
-   <span className={s.cardTop}><span className={s.partnerName}>{p.name}</span><span className={s.sponsored}>ANNONSLÄNK</span></span>
-   {!compact&&<span className={s.partnerDescription}>{p.note}</span>}
-   <span className={s.partnerAction}>{compact?'Visa hos partner':(p.cta||'Se aktuella erbjudanden & villkor')} <ArrowUpRight size={17}/></span>
+   <span className={s.cardTop}><span className={s.partnerName}><PartnerIdentity partner={p}/></span><span className={s.sponsored}>ANNONSLÄNK</span></span>
+   <span className={s.partnerDescription}><span className={s.partnerRole}>{role}</span>{p.note}</span>
+   {compact&&comparison&&p.category!=='ekonomi'&&<span className={s.partnerArtwork} aria-hidden='true'><img src={getCategoryArtwork(category).src} width={1280} height={853} alt='' loading='lazy'/></span>}
+   <span className={s.partnerAction}>{p.cta||'Se aktuella erbjudanden & villkor'} <ArrowUpRight size={20} aria-hidden='true'/></span>
  </a>;
 }
 function useMatches(category:JourneyCategory|null,choiceIndex:number){
@@ -139,6 +146,14 @@ export function V10CategoryFastLane({category}:{category:JourneyCategory}){
  const [reason,setReason]=useState(false);
  const {choice,matches}=useMatches(category,choiceIndex);
  return <section className={s.lane} aria-label={'Snabbjämför '+track.name} data-testid='v10-category-lane'>
+  <div className={s.lanePanel}>
+   <div className={s.lanePanelHeading}><span>AKTIVA ALTERNATIV</span><strong>Utvalda partnerlänkar – inte hela marknaden</strong></div>
+   <div className={s.laneFilters} aria-label='Välj jämförelsebehov'>{track.filters.map((f,i)=><button type='button' aria-pressed={i===choiceIndex} key={f.id} onClick={()=>{setChoiceIndex(i);setReason(false)}} className={i===choiceIndex?s.chipActive:s.chip}>{f.label}{i===choiceIndex&&<Check size={15}/>}</button>)}</div>
+   <div className={s.laneGrid}>{matches.length?matches.slice(0,3).map((p,i)=><PartnerLink key={p.name} p={p} category={category} intent={choice!.intent} index={i} placement='v10_category_lane' compact/>):
+    <div className={s.laneEmpty}>Inga aktiva partneralternativ för valet. <Link href={track.guideHref}>Få hjälp i guiden <ArrowRight size={15}/></Link></div>}</div>
+   <div className={s.laneTrust}><span><ShieldCheck size={17}/> Kontrollera aktuellt pris, villkor och tillgänglighet hos partnern.</span><button type='button' aria-expanded={reason} onClick={()=>setReason(v=>!v)}><Info size={17}/> Så väljs alternativen</button></div>
+   {reason&&<p className={s.laneWhy}>{choice?.why} Vi visar bara partners som är markerade som aktiva i vår partnerförteckning, inte en prisranking. En jämförelsetjänst skiljer sig från en enskild leverantör.</p>}
+  </div>
   <div className={s.laneIntro}>
    <div className={s.laneHeader}>
     <span className={s.laneKicker}><Sparkles size={17}/> DIN VÄG VIDARE</span>
@@ -154,14 +169,6 @@ export function V10CategoryFastLane({category}:{category:JourneyCategory}){
     <Link data-testid='v11-lane-tool' href={track.toolHref}><SlidersHorizontal size={20}/><span><strong>{track.toolText}</strong><small>Jag vill prova ett verktyg</small></span><ArrowRight size={18}/></Link>
     <Link data-testid='v11-lane-guide' href={track.guideHref}><Compass size={20}/><span><strong>{track.guideText}</strong><small>Jag vill förstå först</small></span><ArrowRight size={18}/></Link>
    </div>
-  </div>
-  <div className={s.lanePanel}>
-   <div className={s.lanePanelHeading}><span>AKTIVA ALTERNATIV</span><strong>Utvalda partnerlänkar – inte hela marknaden</strong></div>
-   <div className={s.laneFilters} aria-label='Välj jämförelsebehov'>{track.filters.map((f,i)=><button type='button' aria-pressed={i===choiceIndex} key={f.id} onClick={()=>{setChoiceIndex(i);setReason(false)}} className={i===choiceIndex?s.chipActive:s.chip}>{f.label}{i===choiceIndex&&<Check size={15}/>}</button>)}</div>
-   <div className={s.laneGrid}>{matches.length?matches.slice(0,3).map((p,i)=><PartnerLink key={p.name} p={p} category={category} intent={choice!.intent} index={i} placement='v10_category_lane' compact/>):
-    <div className={s.laneEmpty}>Inga aktiva partneralternativ för valet. <Link href={track.guideHref}>Få hjälp i guiden <ArrowRight size={15}/></Link></div>}</div>
-   <div className={s.laneTrust}><span><ShieldCheck size={17}/> Kontrollera aktuellt pris, villkor och tillgänglighet hos partnern.</span><button type='button' aria-expanded={reason} onClick={()=>setReason(v=>!v)}><Info size={17}/> Så väljs alternativen</button></div>
-   {reason&&<p className={s.laneWhy}>{choice?.why} Vi visar bara partners som är markerade som aktiva i vår partnerförteckning, inte en prisranking. En jämförelsetjänst skiljer sig från en enskild leverantör.</p>}
   </div>
  </section>;
 }
