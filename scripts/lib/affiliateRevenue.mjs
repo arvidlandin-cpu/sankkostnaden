@@ -22,7 +22,7 @@ export function normalizeAdtraction(transaction){
     status,
     commission:Number(transaction?.commission)||0,
     currency:String(transaction?.currency||'SEK'),
-    matchedLocalClick:LOCAL_CLICK.test(clickRef),
+    hasLocalClickFormat:LOCAL_CLICK.test(clickRef),
   };
 }
 
@@ -40,7 +40,7 @@ export function normalizeAddrevenue(transaction){
     status,
     commission,
     currency:String(transaction?.currency||'SEK'),
-    matchedLocalClick:LOCAL_CLICK.test(clickRef),
+    hasLocalClickFormat:LOCAL_CLICK.test(clickRef),
   };
 }
 
@@ -59,11 +59,14 @@ export function aggregateTransactions(items){
       otherTransactions:0,
       approvedCommission:0,
       pendingCommission:0,
-      matchedTransactions:0,
+      formatTaggedTransactions:0,
+      matchedTransactions:null,
+      attributionBasis:'reference_format_only',
+      firstPartyMatchStatus:'UNKNOWN',
       totalTransactions:0,
     };
     row.totalTransactions+=1;
-    if(item.matchedLocalClick) row.matchedTransactions+=1;
+    if(item.hasLocalClickFormat===true) row.formatTaggedTransactions+=1;
     if(item.status==='approved'){
       row.approvedTransactions+=1;
       row.approvedCommission+=item.commission;
@@ -99,10 +102,13 @@ export function networkTotals(rows){
       claims:0,
       approvedCommission:0,
       pendingCommission:0,
-      matchedTransactions:0,
+      formatTaggedTransactions:0,
+      matchedTransactions:null,
+      attributionBasis:'reference_format_only',
+      firstPartyMatchStatus:'UNKNOWN',
       totalTransactions:0,
     };
-    for(const field of ['approvedTransactions','pendingTransactions','deniedTransactions','claims','approvedCommission','pendingCommission','matchedTransactions','totalTransactions']){
+    for(const field of ['approvedTransactions','pendingTransactions','deniedTransactions','claims','approvedCommission','pendingCommission','formatTaggedTransactions','totalTransactions']){
       total[field]+=row[field]||0;
     }
     byNetwork.set(key,total);
@@ -111,11 +117,14 @@ export function networkTotals(rows){
 }
 
 export function toMarkdown(report){
-  const money=(value,currency)=>new Intl.NumberFormat('sv-SE',{style:'currency',currency,maximumFractionDigits:2}).format(value||0);
+  const money=(value,currency)=>typeof value==='number'&&Number.isFinite(value)?new Intl.NumberFormat('sv-SE',{style:'currency',currency,maximumFractionDigits:2}).format(value):'UNKNOWN';
   const lines=[
     '# Affiliateintäktsrapport',
     '',
     `Period: ${report.period.from} – ${report.period.to} (${report.period.days} dagar)`,
+    '',
+    'Klickreferenser kontrolleras endast mot lokalt ID-format. Formatgiltighet bevisar inte att ett faktiskt förstapartsklick eller dess trafikursprung har verifierats.',
+    'Verifierad förstapartsmatchning: **UNKNOWN**. Godkänd nätverksprovision redovisas separat från attribution.',
     '',
   ];
 
@@ -138,7 +147,7 @@ export function toMarkdown(report){
       lines.push(
         `- Godkända: **${total.approvedTransactions}** · ${money(total.approvedCommission,total.currency)}`,
         `- Väntande: **${total.pendingTransactions}** · ${money(total.pendingCommission,total.currency)}`,
-        `- Matchade till Sänk Kostnadens klick-ID: **${total.matchedTransactions}/${total.totalTransactions}**`,
+        `- Transaktioner med formatgiltig klickreferens: **${total.formatTaggedTransactions}/${total.totalTransactions}**`,
         ''
       );
     }
@@ -146,10 +155,10 @@ export function toMarkdown(report){
 
   if(report.rows.length){
     lines.push('## Partner/program','',
-      '| Nätverk | Partner/program | Godkända | Väntande | Godkänd provision | Matchade klick |',
+      '| Nätverk | Partner/program | Godkända | Väntande | Godkänd provision | Formatgiltiga referenser |',
       '| --- | --- | ---: | ---: | ---: | ---: |');
     for(const row of report.rows){
-      lines.push(`| ${row.network} | ${row.partner.replace(/\|/g,'/')} | ${row.approvedTransactions} | ${row.pendingTransactions} | ${money(row.approvedCommission,row.currency)} | ${row.matchedTransactions}/${row.totalTransactions} |`);
+      lines.push(`| ${row.network} | ${row.partner.replace(/\|/g,'/')} | ${row.approvedTransactions} | ${row.pendingTransactions} | ${money(row.approvedCommission,row.currency)} | ${row.formatTaggedTransactions}/${row.totalTransactions} |`);
     }
     lines.push('');
   }

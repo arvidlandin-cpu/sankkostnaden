@@ -22,7 +22,7 @@ export function normalizeAdtractionTransaction(transaction){
     currency:String(transaction?.currency||'SEK'),
     status,
     commission:Number(transaction?.commission)||0,
-    matchedLocalClick:LOCAL_CLICK.test(epi),
+    hasLocalClickFormat:LOCAL_CLICK.test(epi),
   };
 }
 
@@ -45,10 +45,12 @@ export function attributionCoverage(clicks,since){
     : clicks;
   const tagged=recent.filter(click=>click.localClickId);
   const sessions=new Set(tagged.map(click=>click.localSessionId).filter(Boolean));
-  const ratio=recent.length?tagged.length/recent.length:0;
+  const ratio=recent.length?tagged.length/recent.length:null;
   const status=recent.length<3?'no_signal':ratio>=0.9?'healthy':ratio>=0.5?'watch':'warning';
   return {
     since,
+    attributionBasis:'reference_format_only',
+    firstPartyMatchStatus:'UNKNOWN',
     clicks:recent.length,
     taggedClicks:tagged.length,
     distinctFunnelSessions:sessions.size,
@@ -76,14 +78,18 @@ export function aggregatePerformance(transactions,clicks){
         deniedTransactions:0,
         claims:0,
         otherTransactions:0,
-        matchedTransactions:0,
-        matchedApprovedTransactions:0,
+        matchedTransactions:null,
+        formatTaggedTransactions:0,
+        matchedApprovedTransactions:null,
+        formatTaggedApprovedTransactions:0,
+        attributionBasis:'reference_format_only',
+        firstPartyMatchStatus:'UNKNOWN',
         approvedCommission:0,
         pendingCommission:0,
         approvedRevenuePerClick:0,
-        approvedRevenuePerTaggedClick:0,
+        approvedRevenuePerTaggedClick:null,
         approvedConversionRate:0,
-        taggedApprovedConversionRate:0,
+        taggedApprovedConversionRate:null,
         tagCoverage:0,
         _clickIds:new Set(),
         _sessionIds:new Set(),
@@ -105,11 +111,11 @@ export function aggregatePerformance(transactions,clicks){
   for(const transaction of transactions){
     const row=getRow(transaction.partner,transaction.currency);
     row.totalTransactions+=1;
-    if(transaction.matchedLocalClick) row.matchedTransactions+=1;
+    if(transaction.hasLocalClickFormat) row.formatTaggedTransactions+=1;
     if(transaction.status==='approved'){
       row.approvedTransactions+=1;
       row.approvedCommission+=transaction.commission;
-      if(transaction.matchedLocalClick) row.matchedApprovedTransactions+=1;
+      if(transaction.hasLocalClickFormat) row.formatTaggedApprovedTransactions+=1;
     }else if(transaction.status==='pending'){
       row.pendingTransactions+=1;
       row.pendingCommission+=transaction.commission;
@@ -125,11 +131,12 @@ export function aggregatePerformance(transactions,clicks){
   return [...grouped.values()].map(row=>{
     row.distinctTaggedClicks=row._clickIds.size;
     row.distinctFunnelSessions=row._sessionIds.size;
-    row.tagCoverage=row.totalClicks?row.taggedClicks/row.totalClicks:0;
-    row.approvedRevenuePerClick=row.totalClicks?row.approvedCommission/row.totalClicks:0;
-    row.approvedRevenuePerTaggedClick=row.taggedClicks?row.approvedCommission/row.taggedClicks:0;
-    row.approvedConversionRate=row.totalClicks?row.approvedTransactions/row.totalClicks:0;
-    row.taggedApprovedConversionRate=row.taggedClicks?row.matchedApprovedTransactions/row.taggedClicks:0;
+    row.tagCoverage=row.totalClicks?row.taggedClicks/row.totalClicks:null;
+    row.approvedRevenuePerClick=row.totalClicks?row.approvedCommission/row.totalClicks:null;
+    // Network-period commission cannot be attributed to tagged clicks without a verified join.
+    row.approvedRevenuePerTaggedClick=null;
+    row.approvedConversionRate=row.totalClicks?row.approvedTransactions/row.totalClicks:null;
+    row.taggedApprovedConversionRate=null;
     delete row._clickIds;
     delete row._sessionIds;
     return row;
@@ -155,15 +162,19 @@ export function aggregateTotals(transactions,clicks){
     deniedTransactions:0,
     claims:0,
     otherTransactions:0,
-    matchedTransactions:0,
-    matchedApprovedTransactions:0,
+    matchedTransactions:null,
+    formatTaggedTransactions:0,
+    matchedApprovedTransactions:null,
+    formatTaggedApprovedTransactions:0,
+    attributionBasis:'reference_format_only',
+    firstPartyMatchStatus:'UNKNOWN',
     approvedCommission:0,
     pendingCommission:0,
     tagCoverage:0,
     approvedRevenuePerClick:0,
-    approvedRevenuePerTaggedClick:0,
+    approvedRevenuePerTaggedClick:null,
     approvedConversionRate:0,
-    taggedApprovedConversionRate:0,
+    taggedApprovedConversionRate:null,
   };
 
   for(const click of clicks){
@@ -176,11 +187,11 @@ export function aggregateTotals(transactions,clicks){
   }
   for(const transaction of transactions){
     total.totalTransactions+=1;
-    if(transaction.matchedLocalClick) total.matchedTransactions+=1;
+    if(transaction.hasLocalClickFormat) total.formatTaggedTransactions+=1;
     if(transaction.status==='approved'){
       total.approvedTransactions+=1;
       total.approvedCommission+=transaction.commission;
-      if(transaction.matchedLocalClick) total.matchedApprovedTransactions+=1;
+      if(transaction.hasLocalClickFormat) total.formatTaggedApprovedTransactions+=1;
     }else if(transaction.status==='pending'){
       total.pendingTransactions+=1;
       total.pendingCommission+=transaction.commission;
@@ -190,17 +201,18 @@ export function aggregateTotals(transactions,clicks){
   }
   total.distinctTaggedClicks=clickIds.size;
   total.distinctFunnelSessions=sessionIds.size;
-  total.tagCoverage=total.totalClicks?total.taggedClicks/total.totalClicks:0;
-  total.approvedRevenuePerClick=total.totalClicks?total.approvedCommission/total.totalClicks:0;
-  total.approvedRevenuePerTaggedClick=total.taggedClicks?total.approvedCommission/total.taggedClicks:0;
-  total.approvedConversionRate=total.totalClicks?total.approvedTransactions/total.totalClicks:0;
-  total.taggedApprovedConversionRate=total.taggedClicks?total.matchedApprovedTransactions/total.taggedClicks:0;
+  total.tagCoverage=total.totalClicks?total.taggedClicks/total.totalClicks:null;
+  total.approvedRevenuePerClick=total.totalClicks?total.approvedCommission/total.totalClicks:null;
+  // Keep join-dependent metrics unknown even when tagged network clicks exist.
+  total.approvedRevenuePerTaggedClick=null;
+  total.approvedConversionRate=total.totalClicks?total.approvedTransactions/total.totalClicks:null;
+  total.taggedApprovedConversionRate=null;
   return total;
 }
 
 export function toMarkdown(report){
-  const money=value=>new Intl.NumberFormat('sv-SE',{style:'currency',currency:'SEK',maximumFractionDigits:2}).format(value||0);
-  const pct=value=>new Intl.NumberFormat('sv-SE',{style:'percent',maximumFractionDigits:1}).format(value||0);
+  const money=value=>value==null||!Number.isFinite(value)?'UNKNOWN':new Intl.NumberFormat('sv-SE',{style:'currency',currency:'SEK',maximumFractionDigits:2}).format(value);
+  const pct=value=>value==null||!Number.isFinite(value)?'UNKNOWN':new Intl.NumberFormat('sv-SE',{style:'percent',maximumFractionDigits:1}).format(value);
   const t=report.totals;
   const a=report.attributionCoverage;
   const lines=[
@@ -209,22 +221,23 @@ export function toMarkdown(report){
     `Period: ${report.period.from} – ${report.period.to} (${report.period.days} dagar)`,
     '',
     `- Klick hos Adtraction: **${t.totalClicks}**`,
-    `- Klick med Sänk Kostnadens epi: **${t.taggedClicks}/${t.totalClicks}** (${pct(t.tagCoverage)})`,
-    `- Distinkta lokala klick-ID: **${t.distinctTaggedClicks}**`,
-    `- Distinkta funnel-sessioner via epi2: **${t.distinctFunnelSessions}**`,
+    `- Klick med EPI i lokalt ID-format: **${t.taggedClicks}/${t.totalClicks}** (${pct(t.tagCoverage)})`,
+    `- Distinkta referenser i lokalt klick-ID-format: **${t.distinctTaggedClicks}**`,
+    `- Distinkta EPI2-referenser i lokalt sessions-ID-format: **${t.distinctFunnelSessions}**`,
     `- Godkända transaktioner: **${t.approvedTransactions}** · ${money(t.approvedCommission)}`,
     `- Väntande transaktioner: **${t.pendingTransactions}** · ${money(t.pendingCommission)}`,
     `- Nekade transaktioner: **${t.deniedTransactions}**`,
-    `- Transaktioner matchade till lokalt klick-ID: **${t.matchedTransactions}/${t.totalTransactions}**`,
-    `- Godkänd intäkt per Adtraction-klick: **${money(t.approvedRevenuePerClick)}**`,
-    `- Godkänd konverteringsgrad per Adtraction-klick: **${pct(t.approvedConversionRate)}**`,
+    `- Transaktioner med referens i lokalt klick-ID-format: **${t.formatTaggedTransactions}/${t.totalTransactions}**`,
+    '- Verifierad förstapartsmatchning: **UNKNOWN**',
+    `- Godkänd provision per Adtraction-klick: **${money(t.approvedRevenuePerClick)}**`,
+    `- Godkända transaktioner per Adtraction-klick: **${pct(t.approvedConversionRate)}**`,
     '',
-    '## EPI-täckning efter driftsättning',
+    '## EPI-formattäckning efter driftsättning',
     '',
     `- Start: **${a.since}**`,
     `- Klick efter start: **${a.clicks}**`,
-    `- Klick med Sänk Kostnadens epi: **${a.taggedClicks}/${a.clicks}** (${pct(a.tagCoverage)})`,
-    `- Distinkta funnel-sessioner via epi2: **${a.distinctFunnelSessions}**`,
+    `- Klick med EPI i lokalt ID-format: **${a.taggedClicks}/${a.clicks}** (${pct(a.tagCoverage)})`,
+    `- Distinkta EPI2-referenser i lokalt sessions-ID-format: **${a.distinctFunnelSessions}**`,
     `- Signalstatus: **${a.status}**`,
     '',
   ];
@@ -233,7 +246,7 @@ export function toMarkdown(report){
     lines.push(
       '## Partner/program',
       '',
-      '| Partner | Klick | Taggade | Godkända | Väntande | Nekade | Godkänd provision | Intäkt/klick |',
+      '| Partner | Klick | Lokalt EPI-format | Godkända | Väntande | Nekade | Godkänd provision | Intäkt/klick |',
       '| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |'
     );
     for(const row of report.rows){
@@ -242,6 +255,7 @@ export function toMarkdown(report){
     lines.push('');
   }
 
+  lines.push('Referenserna har endast formatkontrollerats; de har inte matchats mot verifierade förstapartsklick eller trafikursprung. Periodkvoterna använder nätverkets klick och affärer under rapportperioden. Klick och affärer kan härröra från olika tidpunkter; kvoterna är inte en klickkohorts eller sajtbesökares konverteringsgrad.','');
   lines.push('Råa order-ID, klick-ID, EPI/EPI2-värden och andra person- eller transaktionsidentifierare sparas inte i artefakten. Endast aggregerade mätvärden lagras.','');
   return lines.join('\n');
 }

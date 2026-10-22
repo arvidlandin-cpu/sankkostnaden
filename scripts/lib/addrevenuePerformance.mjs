@@ -30,7 +30,7 @@ export function normalizeTransaction(transaction){
     status,
     commission:Number(transaction?.commission ?? 0)||0,
     currency:String(transaction?.currency||'SEK'),
-    matchedLocalClick:containsLocalClick(transaction?.clickRef)||containsLocalClick(transaction?.subids),
+    hasLocalClickFormat:containsLocalClick(transaction?.clickRef)||containsLocalClick(transaction?.subids),
     date:String(transaction?.date||transaction?.created||''),
   };
 }
@@ -77,14 +77,18 @@ export function aggregatePerformance(statsRows,transactions){
         pendingTransactions:0,
         deniedTransactions:0,
         otherTransactions:0,
-        matchedTransactions:0,
-        matchedApprovedTransactions:0,
+        matchedTransactions:null,
+        formatTaggedTransactions:0,
+        matchedApprovedTransactions:null,
+        formatTaggedApprovedTransactions:0,
+        attributionBasis:'reference_format_only',
+        firstPartyMatchStatus:'UNKNOWN',
         approvedCommission:0,
         pendingCommission:0,
         networkCommission:0,
         approvedRevenuePerClick:0,
         approvedConversionRate:0,
-        matchedApprovedConversionRate:0,
+        matchedApprovedConversionRate:null,
       });
     }
     const row=grouped.get(key);
@@ -103,11 +107,11 @@ export function aggregatePerformance(statsRows,transactions){
 
   for(const transaction of transactions){
     const row=rowFor(transaction);
-    if(transaction.matchedLocalClick) row.matchedTransactions+=1;
+    if(transaction.hasLocalClickFormat) row.formatTaggedTransactions+=1;
     if(transaction.status==='approved'){
       row.approvedTransactions+=1;
       row.approvedCommission+=transaction.commission;
-      if(transaction.matchedLocalClick) row.matchedApprovedTransactions+=1;
+      if(transaction.hasLocalClickFormat) row.formatTaggedApprovedTransactions+=1;
     }else if(transaction.status==='pending'){
       row.pendingTransactions+=1;
       row.pendingCommission+=transaction.commission;
@@ -119,9 +123,9 @@ export function aggregatePerformance(statsRows,transactions){
   }
 
   return [...grouped.values()].map(row=>{
-    row.approvedRevenuePerClick=row.clicks?row.approvedCommission/row.clicks:0;
-    row.approvedConversionRate=row.clicks?row.approvedTransactions/row.clicks:0;
-    row.matchedApprovedConversionRate=row.clicks?row.matchedApprovedTransactions/row.clicks:0;
+    row.approvedRevenuePerClick=row.clicks?row.approvedCommission/row.clicks:null;
+    row.approvedConversionRate=row.clicks?row.approvedTransactions/row.clicks:null;
+    row.matchedApprovedConversionRate=null;
     return row;
   }).sort((a,b)=>
     b.approvedCommission-a.approvedCommission||
@@ -140,23 +144,27 @@ export function aggregateTotals(rows){
     pendingTransactions:0,
     deniedTransactions:0,
     otherTransactions:0,
-    matchedTransactions:0,
-    matchedApprovedTransactions:0,
+    matchedTransactions:null,
+    formatTaggedTransactions:0,
+    matchedApprovedTransactions:null,
+    formatTaggedApprovedTransactions:0,
+    attributionBasis:'reference_format_only',
+    firstPartyMatchStatus:'UNKNOWN',
     approvedCommission:0,
     pendingCommission:0,
     networkCommission:0,
     approvedRevenuePerClick:0,
     approvedConversionRate:0,
-    matchedApprovedConversionRate:0,
+    matchedApprovedConversionRate:null,
   };
   for(const row of rows){
-    for(const field of ['clicks','impressions','networkTransactions','approvedTransactions','pendingTransactions','deniedTransactions','otherTransactions','matchedTransactions','matchedApprovedTransactions','approvedCommission','pendingCommission','networkCommission']){
+    for(const field of ['clicks','impressions','networkTransactions','approvedTransactions','pendingTransactions','deniedTransactions','otherTransactions','formatTaggedTransactions','formatTaggedApprovedTransactions','approvedCommission','pendingCommission','networkCommission']){
       total[field]+=Number(row[field])||0;
     }
   }
-  total.approvedRevenuePerClick=total.clicks?total.approvedCommission/total.clicks:0;
-  total.approvedConversionRate=total.clicks?total.approvedTransactions/total.clicks:0;
-  total.matchedApprovedConversionRate=total.clicks?total.matchedApprovedTransactions/total.clicks:0;
+  total.approvedRevenuePerClick=total.clicks?total.approvedCommission/total.clicks:null;
+  total.approvedConversionRate=total.clicks?total.approvedTransactions/total.clicks:null;
+  total.matchedApprovedConversionRate=null;
   return total;
 }
 
@@ -165,21 +173,24 @@ export function attributionCoverage(transactions,since){
   const recent=Number.isFinite(cutoff)
     ? transactions.filter(item=>Date.parse(item.date)>=cutoff)
     : transactions;
-  const matched=recent.filter(item=>item.matchedLocalClick);
-  const ratio=recent.length?matched.length/recent.length:0;
+  const matched=recent.filter(item=>item.hasLocalClickFormat);
+  const ratio=recent.length?matched.length/recent.length:null;
   const status=recent.length<3?'no_signal':ratio>=0.9?'healthy':ratio>=0.5?'watch':'warning';
   return {
     since,
+    attributionBasis:'reference_format_only',
+    firstPartyMatchStatus:'UNKNOWN',
     transactions:recent.length,
-    matchedTransactions:matched.length,
+    matchedTransactions:null,
+    formatTaggedTransactions:matched.length,
     coverage:ratio,
     status,
   };
 }
 
 export function toMarkdown(report){
-  const money=(value,currency='SEK')=>new Intl.NumberFormat('sv-SE',{style:'currency',currency,maximumFractionDigits:2}).format(value||0);
-  const pct=value=>new Intl.NumberFormat('sv-SE',{style:'percent',maximumFractionDigits:1}).format(value||0);
+  const money=(value,currency='SEK')=>value==null||!Number.isFinite(value)?'UNKNOWN':new Intl.NumberFormat('sv-SE',{style:'currency',currency,maximumFractionDigits:2}).format(value);
+  const pct=value=>value==null||!Number.isFinite(value)?'UNKNOWN':new Intl.NumberFormat('sv-SE',{style:'percent',maximumFractionDigits:1}).format(value);
   const lines=['# Addrevenue performance','',`Period: ${report.period.from} – ${report.period.to} (${report.period.days} dagar)`,''];
 
   if(!report.configured){
@@ -194,15 +205,16 @@ export function toMarkdown(report){
     `- Godkända transaktioner: **${t.approvedTransactions}** · ${money(t.approvedCommission,t.currency)}`,
     `- Väntande transaktioner: **${t.pendingTransactions}** · ${money(t.pendingCommission,t.currency)}`,
     `- Nekade transaktioner: **${t.deniedTransactions}**`,
-    `- Transaktioner matchade till Sänk Kostnadens klick-ID: **${t.matchedTransactions}/${t.approvedTransactions+t.pendingTransactions+t.deniedTransactions+t.otherTransactions}**`,
-    `- Godkänd intäkt per Addrevenue-klick: **${money(t.approvedRevenuePerClick,t.currency)}**`,
-    `- Godkänd konverteringsgrad per Addrevenue-klick: **${pct(t.approvedConversionRate)}**`,
+    `- Transaktioner med referens i lokalt klick-ID-format: **${t.formatTaggedTransactions}/${t.approvedTransactions+t.pendingTransactions+t.deniedTransactions+t.otherTransactions}**`,
+    '- Verifierad förstapartsmatchning: **UNKNOWN**',
+    `- Godkänd provision per Addrevenue-klick: **${money(t.approvedRevenuePerClick,t.currency)}**`,
+    `- Godkända transaktioner per Addrevenue-klick: **${pct(t.approvedConversionRate)}**`,
     '',
-    '## ClickRef-täckning efter driftsättning',
+    '## ClickRef-formattäckning efter driftsättning',
     '',
     `- Start: **${a.since}**`,
     `- Transaktioner efter start: **${a.transactions}**`,
-    `- Matchade till lokalt klick-ID: **${a.matchedTransactions}/${a.transactions}** (${pct(a.coverage)})`,
+    `- Referenser i lokalt klick-ID-format: **${a.formatTaggedTransactions}/${a.transactions}** (${pct(a.coverage)})`,
     `- Signalstatus: **${a.status}**`,
     ''
   );
@@ -211,16 +223,17 @@ export function toMarkdown(report){
     lines.push(
       '## Annonsör/program',
       '',
-      '| Annonsör | Program | Klick | Godkända | Väntande | Nekade | Godkänd provision | Intäkt/klick | Matchade |',
+      '| Annonsör | Program | Klick | Godkända | Väntande | Nekade | Godkänd provision | Intäkt/klick | Lokalt ID-format |',
       '| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |'
     );
     for(const row of report.rows){
       const tx=row.approvedTransactions+row.pendingTransactions+row.deniedTransactions+row.otherTransactions;
-      lines.push(`| ${row.advertiserName.replace(/\|/g,'/')} | ${row.programName.replace(/\|/g,'/')} | ${row.clicks} | ${row.approvedTransactions} | ${row.pendingTransactions} | ${row.deniedTransactions} | ${money(row.approvedCommission,row.currency)} | ${money(row.approvedRevenuePerClick,row.currency)} | ${row.matchedTransactions}/${tx} |`);
+      lines.push(`| ${row.advertiserName.replace(/\|/g,'/')} | ${row.programName.replace(/\|/g,'/')} | ${row.clicks} | ${row.approvedTransactions} | ${row.pendingTransactions} | ${row.deniedTransactions} | ${money(row.approvedCommission,row.currency)} | ${money(row.approvedRevenuePerClick,row.currency)} | ${row.formatTaggedTransactions}/${tx} |`);
     }
     lines.push('');
   }
 
+  lines.push('Referenserna har endast formatkontrollerats; de har inte matchats mot verifierade förstapartsklick eller trafikursprung. Periodkvoterna använder nätverkets klick och affärer under rapportperioden. Klick och affärer kan härröra från olika tidpunkter; kvoterna är inte en klickkohorts eller sajtbesökares konverteringsgrad.','');
   lines.push('Råa order-ID, clickRef, sub-ID:n, klick-ID:n och andra transaktionsidentifierare sparas inte i artefakten. Endast aggregerade mätvärden lagras.','');
   return lines.join('\n');
 }
