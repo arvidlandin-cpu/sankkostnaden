@@ -5,6 +5,9 @@ import {
   normalizeGa4Channels,
   normalizeGa4Events,
   normalizeGa4LandingChannels,
+  normalizeGa4ContentLandingChannels,
+  normalizeGa4CampaignSources,
+  normalizeGa4EventTotals,
   normalizeGa4EventChannels,
   normalizeGa4CommercialPageChannels,
   normalizeGa4Totals,
@@ -12,6 +15,7 @@ import {
   normalizeGscPairs,
   normalizeGscDateQueryRows,
   normalizeGscTotals,
+  summarizeGscCompleteWindows,
   toMarkdown,
 } from '../scripts/lib/googleOrganicPerformance.mjs';
 
@@ -92,4 +96,24 @@ test('normalizes commercial events by page and channel',()=>{
   assert.equal(rows[0].channel,'Organic Search');
   assert.equal(rows[0].eventCount,32);
   assert.equal(rows[1].eventName,'affiliate_click');
+});
+
+test('normalizes acquisition, campaign and sitewide click user metrics',()=>{
+  const landings=normalizeGa4ContentLandingChannels({rows:[
+    {dimensionValues:[{value:'/forsakring/hemforsakring-bostadsratt/'},{value:'Organic Search'}],metricValues:[{value:'4'},{value:'3'},{value:'2'}]},
+  ]});
+  assert.deepEqual(landings[0],{landingPage:'/forsakring/hemforsakring-bostadsratt/',channel:'Organic Search',sessions:4,activeUsers:3,newUsers:2});
+  const campaigns=normalizeGa4CampaignSources({rows:[
+    {dimensionValues:[{value:'hemma_i_hsb'},{value:'referral'},{value:'brf_forsakringskoll_2026q4'}],metricValues:[{value:'3'},{value:'2'},{value:'2'}]},
+  ]});
+  assert.equal(campaigns[0].campaign,'brf_forsakringskoll_2026q4');
+  assert.deepEqual(normalizeGa4EventTotals({rows:[{metricValues:[{value:'12'},{value:'5'}]}]}),{eventCount:12,totalUsers:5});
+});
+
+test('compares the latest two complete seven-day GSC windows',()=>{
+  const rows=[];
+  for(let day=1;day<=14;day++)rows.push({date:`2026-10-${String(day).padStart(2,'0')}`,clicks:day>7?1:0,impressions:10,position:day>7?8:10});
+  const comparison=summarizeGscCompleteWindows(rows,7);
+  assert.deepEqual(comparison.latest,{startDate:'2026-10-08',endDate:'2026-10-14',clicks:7,impressions:70,ctr:0.1,position:8});
+  assert.deepEqual(comparison.previous,{startDate:'2026-10-01',endDate:'2026-10-07',clicks:0,impressions:70,ctr:0,position:10});
 });
