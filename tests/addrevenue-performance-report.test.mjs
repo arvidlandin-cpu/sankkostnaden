@@ -17,14 +17,14 @@ test('normalizes transaction status and local click reference',()=>{
   });
   assert.equal(approved.status,'approved');
   assert.equal(approved.commission,500);
-  assert.equal(approved.matchedLocalClick,true);
+  assert.equal(approved.hasLocalClickFormat,true);
 
   const delayed=normalizeTransaction({
     advertiserId:10,advertiserName:'Hedvig',programId:20,programName:'Hemförsäkring',
     status:'delayed',commission:500,currency:'SEK',subids:{r:'clk_fromsubid'},date:'2026-10-07T10:00:00Z'
   });
   assert.equal(delayed.status,'pending');
-  assert.equal(delayed.matchedLocalClick,true);
+  assert.equal(delayed.hasLocalClickFormat,true);
 });
 
 test('combines Addrevenue stats with transaction status detail',()=>{
@@ -45,7 +45,7 @@ test('combines Addrevenue stats with transaction status detail',()=>{
   assert.equal(rows[0].pendingTransactions,1);
   assert.equal(rows[0].deniedTransactions,1);
   assert.equal(rows[0].approvedCommission,1000);
-  assert.equal(rows[0].matchedTransactions,2);
+  assert.equal(rows[0].formatTaggedTransactions,2);
   assert.equal(rows[0].approvedRevenuePerClick,10);
 
   const totals=aggregateTotals(rows);
@@ -60,7 +60,7 @@ test('post-rollout coverage stays no_signal on fewer than three transactions',()
   ];
   const coverage=attributionCoverage(transactions,'2026-10-06T14:37:00Z');
   assert.equal(coverage.transactions,1);
-  assert.equal(coverage.matchedTransactions,1);
+  assert.equal(coverage.formatTaggedTransactions,1);
   assert.equal(coverage.status,'no_signal');
 });
 
@@ -86,4 +86,56 @@ test('report never persists raw click references or subids',()=>{
 test('date range is inclusive and bounded',()=>{
   assert.deepEqual(dateRange(3,new Date('2026-10-07T12:00:00Z')),{from:'2026-10-05',to:'2026-10-07',days:3});
   assert.equal(dateRange(999,new Date('2026-10-07T12:00:00Z')).days,365);
+});
+
+test('format-valid clickRef and subids are not verified first-party joins',()=>{
+  const transactions=[normalizeTransaction({advertiserId:1,programId:1,status:'approved',commission:100,currency:'SEK',clickRef:'clk_unseen',date:'2026-10-07T12:00:00Z'})];
+  assert.equal(transactions[0].hasLocalClickFormat,true);
+  assert.equal(Object.hasOwn(transactions[0],'matchedLocalClick'),false);
+  const rows=aggregatePerformance([],transactions);
+  const total=aggregateTotals(rows);
+  for(const value of [rows[0],total]){
+    assert.equal(value.formatTaggedTransactions,1);
+    assert.equal(value.formatTaggedApprovedTransactions,1);
+    assert.equal(value.matchedTransactions,null);
+    assert.equal(value.matchedApprovedTransactions,null);
+    assert.equal(value.matchedApprovedConversionRate,null);
+    assert.equal(value.attributionBasis,'reference_format_only');
+    assert.equal(value.firstPartyMatchStatus,'UNKNOWN');
+    assert.equal(value.approvedCommission,100);
+    assert.equal(value.approvedRevenuePerClick,null);
+    assert.equal(value.approvedConversionRate,null);
+  }
+  const coverage=attributionCoverage(transactions,'2026-10-06T14:37:00Z');
+  assert.equal(coverage.coverage,1);
+  assert.equal(coverage.formatTaggedTransactions,1);
+  assert.equal(coverage.matchedTransactions,null);
+  assert.equal(coverage.firstPartyMatchStatus,'UNKNOWN');
+  assert.equal(coverage.attributionBasis,'reference_format_only');
+});
+
+test('zero clicks mean UNKNOWN while a positive denominator preserves genuine zero',()=>{
+  const empty=aggregateTotals([]);
+  const coverage=attributionCoverage([],'2026-10-06T14:37:00Z');
+  assert.equal(empty.approvedRevenuePerClick,null);
+  assert.equal(empty.approvedConversionRate,null);
+  assert.equal(coverage.coverage,null);
+  assert.equal(coverage.status,'no_signal');
+  const rows=aggregatePerformance([normalizeStats({advertiserId:1,programId:1,clicks:10,currency:'SEK'})],[]);
+  for(const value of [rows[0],aggregateTotals(rows)]){
+    assert.equal(value.approvedRevenuePerClick,0);
+    assert.equal(value.approvedConversionRate,0);
+    assert.equal(value.matchedApprovedConversionRate,null);
+  }
+  const report={configured:true,period:{from:'2026-10-01',to:'2026-10-07',days:7},totals:empty,attributionCoverage:coverage,rows:[]};
+  const markdown=toMarkdown(report);
+  assert.match(markdown,/Godkänd provision per Addrevenue-klick: \*\*UNKNOWN\*\*/);
+  assert.match(markdown,/Godkända transaktioner per Addrevenue-klick: \*\*UNKNOWN\*\*/);
+  assert.match(markdown,/Verifierad förstapartsmatchning: \*\*UNKNOWN\*\*/);
+  assert.match(markdown,/Referenser i lokalt klick-ID-format: \*\*0\/0\*\* \(UNKNOWN\)/);
+  assert.match(markdown,/inte en klickkohorts eller sajtbesökares konverteringsgrad/);
+  delete empty.approvedRevenuePerClick;
+  assert.match(toMarkdown(report),/Godkänd provision per Addrevenue-klick: \*\*UNKNOWN\*\*/);
+  const nonempty=toMarkdown({...report,totals:aggregateTotals(rows),rows});
+  assert.match(nonempty,/Godkända transaktioner per Addrevenue-klick: \*\*0\s?%\*\*/);
 });
