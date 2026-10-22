@@ -34,6 +34,7 @@ export function normalizeGa4Channels(result){
     channel:dimension(row,0)||'Unassigned',
     sessions:metric(row,0),
     activeUsers:metric(row,1),
+    newUsers:metric(row,2),
   })).sort((a,b)=>b.sessions-a.sessions);
 }
 
@@ -50,6 +51,7 @@ export function normalizeGa4Sources(result){
     sourceMedium:dimension(row,0)||'(not set)',
     sessions:metric(row,0),
     activeUsers:metric(row,1),
+    newUsers:metric(row,2),
   })).sort((a,b)=>b.sessions-a.sessions);
 }
 
@@ -71,7 +73,34 @@ export function normalizeGa4LandingChannels(result){
     engagedSessions:metric(row,2),
     engagementRate:metric(row,3),
     averageSessionDuration:metric(row,4),
+    newUsers:metric(row,5),
   })).sort((a,b)=>b.sessions-a.sessions);
+}
+
+export function normalizeGa4ContentLandingChannels(result){
+  return (result?.rows||[]).map(row=>({
+    landingPage:dimension(row,0)||'(not set)',
+    channel:dimension(row,1)||'Unassigned',
+    sessions:metric(row,0),
+    activeUsers:metric(row,1),
+    newUsers:metric(row,2),
+  })).sort((a,b)=>b.sessions-a.sessions);
+}
+
+export function normalizeGa4CampaignSources(result){
+  return (result?.rows||[]).map(row=>({
+    source:dimension(row,0)||'(not set)',
+    medium:dimension(row,1)||'(not set)',
+    campaign:dimension(row,2)||'(not set)',
+    sessions:metric(row,0),
+    activeUsers:metric(row,1),
+    newUsers:metric(row,2),
+  })).sort((a,b)=>b.sessions-a.sessions);
+}
+
+export function normalizeGa4EventTotals(result){
+  const row=result?.rows?.[0]||{};
+  return {eventCount:metric(row,0),totalUsers:metric(row,1)};
 }
 
 export function normalizeGa4EventChannels(result){
@@ -135,6 +164,39 @@ export function normalizeGscDateQueryRows(result){
   })).sort((a,b)=>a.date.localeCompare(b.date)||b.impressions-a.impressions);
 }
 
+export function summarizeGscCompleteWindows(rows,days=7){
+  const width=Math.max(1,Math.round(Number(days)||7));
+  const valid=(rows||[]).filter(row=>/^\d{4}-\d{2}-\d{2}$/.test(row?.date||''));
+  if(!valid.length)return null;
+  const byDate=new Map(valid.map(row=>[row.date,row]));
+  const latestDate=valid.map(row=>row.date).sort().at(-1);
+  const dayMs=86400000;
+  const end=new Date(latestDate+'T00:00:00Z');
+  const summarize=(offset)=>{
+    let clicks=0,impressions=0,weightedPosition=0;
+    const windowEnd=new Date(end.getTime()-offset*width*dayMs);
+    const windowStart=new Date(windowEnd.getTime()-(width-1)*dayMs);
+    for(let i=0;i<width;i++){
+      const date=new Date(windowStart.getTime()+i*dayMs).toISOString().slice(0,10);
+      const row=byDate.get(date);
+      if(!row)continue;
+      clicks+=Number(row.clicks)||0;
+      const rowImpressions=Number(row.impressions)||0;
+      impressions+=rowImpressions;
+      weightedPosition+=(Number(row.position)||0)*rowImpressions;
+    }
+    return {
+      startDate:windowStart.toISOString().slice(0,10),
+      endDate:windowEnd.toISOString().slice(0,10),
+      clicks,
+      impressions,
+      ctr:impressions?clicks/impressions:0,
+      position:impressions?weightedPosition/impressions:0,
+    };
+  };
+  return {latest:summarize(0),previous:summarize(1)};
+}
+
 export function toMarkdown(report){
   const int=value=>new Intl.NumberFormat('sv-SE',{maximumFractionDigits:0}).format(value||0);
   const pct=value=>new Intl.NumberFormat('sv-SE',{style:'percent',maximumFractionDigits:1}).format(value||0);
@@ -162,7 +224,7 @@ export function toMarkdown(report){
     `- Sessioner: **${int(ga.totals.sessions)}**`,
     `- Aktiva användare: **${int(ga.totals.activeUsers)}**`,
     `- Sidvisningar: **${int(ga.totals.pageViews)}**`,
-    `- Organisk Google/söktrafik: **${int(ga.organic.sessions)} sessioner** · **${int(ga.organic.activeUsers)} aktiva användare**`,
+    `- Organisk Google/söktrafik: **${int(ga.organic.sessions)} sessioner** · **${int(ga.organic.activeUsers)} aktiva användare** · **${int(ga.organic.newUsers)} nya användare**`,
     '',
     '## Google Search Console',
     '',
@@ -172,8 +234,36 @@ export function toMarkdown(report){
     `- CTR: **${pct(gsc.totals.ctr)}**`,
     `- Genomsnittlig position: **${dec(gsc.totals.position)}**`,
     `- Klick till innehållssidor exkl. startsidan och /app/: **${int(nonHubClicks)}** av ${int(nonHubImpressions)} visningar`,
+    `- GSC-dataläge: **${gsc.dataState||'UNKNOWN'}** · första ofullständiga datum: **${gsc.firstIncompleteDate||'inget rapporterat'}**`,
     ''
   );
+
+  if(gsc.completeSevenDayComparison){
+    const latest=gsc.completeSevenDayComparison.latest;
+    const previous=gsc.completeSevenDayComparison.previous;
+    lines.push(
+      '### GSC – senaste två färdigbehandlade sjudagarsperioder',
+      '',
+      '| Period | Klick | Visningar | CTR | Position |',
+      '| --- | ---: | ---: | ---: | ---: |',
+      `| ${latest.startDate} – ${latest.endDate} | ${int(latest.clicks)} | ${int(latest.impressions)} | ${pct(latest.ctr)} | ${dec(latest.position)} |`,
+      `| ${previous.startDate} – ${previous.endDate} | ${int(previous.clicks)} | ${int(previous.impressions)} | ${pct(previous.ctr)} | ${dec(previous.position)} |`,
+      ''
+    );
+  }
+
+  if(gsc.urlInspection?.length){
+    lines.push(
+      '### Google URL Inspection – prioriterade URL:er',
+      '',
+      '| URL | Status | Verdict | Täckning | Senast crawlad | Google canonical |',
+      '| --- | --- | --- | --- | --- | --- |'
+    );
+    for(const row of gsc.urlInspection){
+      lines.push(`| ${row.url.replace(/\|/g,'/')} | ${row.status} | ${row.verdict} | ${row.coverageState.replace(/\|/g,'/')} | ${row.lastCrawlTime} | ${row.googleCanonical.replace(/\|/g,'/')} |`);
+    }
+    lines.push('', 'URL Inspection visar status för versionen i Googles index, inte ett live-test av den publicerade sidan.', '');
+  }
 
   if(gsc.queries.length){
     lines.push(
@@ -321,11 +411,56 @@ export function toMarkdown(report){
     lines.push(
       '### /app/ som landningssida',
       '',
-      '| Kanal | Sessioner | Aktiva användare | Engagerade sessioner | Engagemang | Snittid |',
-      '| --- | ---: | ---: | ---: | ---: | ---: |'
+      '| Kanal | Sessioner | Aktiva användare | Nya användare | Engagerade sessioner | Engagemang | Snittid |',
+      '| --- | ---: | ---: | ---: | ---: | ---: | ---: |'
     );
     for(const row of ga.appLandingChannels){
-      lines.push(`| ${row.channel.replace(/\|/g,'/')} | ${int(row.sessions)} | ${int(row.activeUsers)} | ${int(row.engagedSessions)} | ${pct(row.engagementRate)} | ${dec(row.averageSessionDuration)} s |`);
+      lines.push(`| ${row.channel.replace(/\|/g,'/')} | ${int(row.sessions)} | ${int(row.activeUsers)} | ${int(row.newUsers)} | ${int(row.engagedSessions)} | ${pct(row.engagementRate)} | ${dec(row.averageSessionDuration)} s |`);
+    }
+    lines.push('');
+  }
+
+  if(ga.organicLandingPages?.length){
+    lines.push(
+      '### Organiska GA4-landningar på innehållssidor',
+      '',
+      '| Landningssida | Sessioner | Aktiva användare | Nya användare |',
+      '| --- | ---: | ---: | ---: |'
+    );
+    for(const row of ga.organicLandingPages.slice(0,30)){
+      lines.push(`| ${row.landingPage.replace(/\|/g,'/')} | ${int(row.sessions)} | ${int(row.activeUsers)} | ${int(row.newUsers)} |`);
+    }
+    lines.push('');
+  }
+
+  if(ga.affiliateClickUsers?.sitewide){
+    lines.push(
+      '### Affiliateklick – event och unika användare',
+      '',
+      `- Hela sajten: **${int(ga.affiliateClickUsers.sitewide.eventCount)} events** · **${int(ga.affiliateClickUsers.sitewide.totalUsers)} unika användare**`,
+      '',
+      '| Kanal | Events | Unika användare |',
+      '| --- | ---: | ---: |'
+    );
+    for(const row of ga.affiliateClickUsers.byChannel||[]){
+      lines.push(`| ${row.channel.replace(/\|/g,'/')} | ${int(row.eventCount)} | ${int(row.totalUsers)} |`);
+    }
+    lines.push('');
+  }
+
+  lines.push('### Källtaggad BRF/referraltrafik','');
+  if(ga.brfReferralTraffic?.length){
+    lines.push('| Källa | Medium | Kampanj | Sessioner | Aktiva användare | Nya användare |','| --- | --- | --- | ---: | ---: | ---: |');
+    for(const row of ga.brfReferralTraffic){
+      lines.push(`| ${row.source.replace(/\|/g,'/')} | ${row.medium.replace(/\|/g,'/')} | ${row.campaign.replace(/\|/g,'/')} | ${int(row.sessions)} | ${int(row.activeUsers)} | ${int(row.newUsers)} |`);
+    }
+  }else lines.push('Ingen källtaggad BRF-kampanjtrafik registrerad i perioden.');
+  lines.push('');
+
+  if(ga.channels.length){
+    lines.push('### Trafikkanaler i GA4','','| Kanal | Sessioner | Aktiva användare | Nya användare |','| --- | ---: | ---: | ---: |');
+    for(const row of ga.channels){
+      lines.push(`| ${row.channel.replace(/\|/g,'/')} | ${int(row.sessions)} | ${int(row.activeUsers)} | ${int(row.newUsers)} |`);
     }
     lines.push('');
   }
@@ -334,11 +469,11 @@ export function toMarkdown(report){
     lines.push(
       '### Trafikkällor i GA4',
       '',
-      '| Källa / medium | Sessioner | Aktiva användare |',
-      '| --- | ---: | ---: |'
+      '| Källa / medium | Sessioner | Aktiva användare | Nya användare |',
+      '| --- | ---: | ---: | ---: |'
     );
     for(const row of ga.sources.slice(0,12)){
-      lines.push(`| ${row.sourceMedium.replace(/\|/g,'/')} | ${int(row.sessions)} | ${int(row.activeUsers)} |`);
+      lines.push(`| ${row.sourceMedium.replace(/\|/g,'/')} | ${int(row.sessions)} | ${int(row.activeUsers)} | ${int(row.newUsers)} |`);
     }
     lines.push('');
   }
