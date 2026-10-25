@@ -166,6 +166,57 @@ test('review stays insufficient when post-change impressions are too few',()=>{
   assert.equal(packet.recommendedAction.details.evaluation.verdict,'INSUFFICIENT_DATA');
 });
 
+test('content utility waits when the verified page cohort is below its sample threshold',()=>{
+  const g=google('2026-10-24T12:00:00Z');
+  g.gsc.quarterPriceObservation={
+    status:'ok',
+    experimentId:'quarter-price',
+    page:'https://sankkostnaden.se/elavtal/kvartspris/',
+    dataState:'final',
+    scope:'page_post_observation',
+    completeDays:12,
+    impressions:15,
+    clicks:0,
+    eligibleForReview:false,
+    minCompleteDays:7,
+    minImpressions:30,
+  };
+  const packet=buildDecisionPacket({
+    google:g,
+    policy:{...policy,limits:{...policy.limits,maxConcurrentExperiments:2}},
+    state:{activeExperiment:{id:'quarter-price',type:'CONTENT_UTILITY_UPGRADE',target:'/elavtal/kvartspris/',startedAt:'2026-10-10T09:00:00Z',earliestReviewAt:'2026-10-18T09:00:00Z',status:'running'}},
+    now:new Date('2026-10-24T12:00:00Z'),
+  });
+  assert.equal(packet.recommendedAction.type,'WAITING_FOR_EXPERIMENT');
+  assert.equal(packet.recommendedAction.details.evaluation.verdict,'INSUFFICIENT_DATA');
+  assert.equal(packet.recommendedAction.details.evaluation.post.impressions,15);
+});
+
+test('content utility review unlocks only after the verified page cohort reaches both thresholds',()=>{
+  const g=google('2026-10-24T12:00:00Z');
+  g.gsc.quarterPriceObservation={
+    status:'ok',
+    experimentId:'quarter-price',
+    page:'https://sankkostnaden.se/elavtal/kvartspris/',
+    dataState:'final',
+    scope:'page_post_observation',
+    completeDays:12,
+    impressions:30,
+    clicks:0,
+    eligibleForReview:true,
+    minCompleteDays:7,
+    minImpressions:30,
+  };
+  const packet=buildDecisionPacket({
+    google:g,
+    policy:{...policy,limits:{...policy.limits,maxConcurrentExperiments:2}},
+    state:{activeExperiment:{id:'quarter-price',type:'CONTENT_UTILITY_UPGRADE',target:'/elavtal/kvartspris/',startedAt:'2026-10-10T09:00:00Z',earliestReviewAt:'2026-10-18T09:00:00Z',status:'running'}},
+    now:new Date('2026-10-24T12:00:00Z'),
+  });
+  assert.equal(packet.recommendedAction.type,'REVIEW_ACTIVE_EXPERIMENT');
+  assert.equal(packet.recommendedAction.details.evaluation.verdict,'READY_FOR_REVIEW');
+});
+
 
 test('early-stage repeated top-10 query can trigger a metadata experiment before 80 impressions',()=>{
   const g=google();
