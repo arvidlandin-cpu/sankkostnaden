@@ -388,6 +388,42 @@ function evaluateSeoExperiment(experiment,google,policy){
   };
 }
 
+function evaluateContentUtilityExperiment(experiment,google){
+  if(!experiment||experiment.type!=='CONTENT_UTILITY_UPGRADE') return null;
+  const observation=google?.gsc?.quarterPriceObservation;
+  if(!observation) return {verdict:'INSUFFICIENT_DATA',source:'missing_page_observation'};
+  const sameExperiment=observation.experimentId&&observation.experimentId===experiment.id;
+  let observationPath='';
+  try{ observationPath=new URL(observation.page).pathname; }catch{}
+  const sameTarget=observationPath&&observationPath===experiment.target;
+  if(!sameExperiment&&!sameTarget) return {verdict:'INSUFFICIENT_DATA',source:'unmatched_page_observation'};
+
+  const completeDays=num(observation.completeDays);
+  const impressions=num(observation.impressions);
+  const minCompleteDays=num(observation.minCompleteDays)||7;
+  const minImpressions=num(observation.minImpressions)||30;
+  const verified=observation.status==='ok'
+    && observation.dataState==='final'
+    && observation.scope==='page_post_observation';
+  const eligible=verified
+    && observation.eligibleForReview===true
+    && completeDays>=minCompleteDays
+    && impressions>=minImpressions;
+  return {
+    verdict:eligible?'READY_FOR_REVIEW':'INSUFFICIENT_DATA',
+    source:'gsc_page_post_observation',
+    verified,
+    post:{
+      completeDays,
+      impressions,
+      clicks:num(observation.clicks),
+      ctr:num(observation.ctr),
+      position:num(observation.position),
+    },
+    thresholds:{minCompleteDays,minImpressions},
+  };
+}
+
 function commercialObservations({addrevenue,adtraction,policy}){
   const minClicks=num(policy?.thresholds?.commercial?.minPartnerClicks)||25;
   const observations=[];
@@ -468,9 +504,13 @@ export function buildDecisionPacket({
     const experiment=experiments[i];
     const experimentGate=experimentGates[i];
     if(experimentGate.reviewDue){
-      const evaluation=evaluateSeoExperiment(experiment,google,policy);
+      const evaluation=experiment.type==='CONTENT_UTILITY_UPGRADE'
+        ?evaluateContentUtilityExperiment(experiment,google)
+        :evaluateSeoExperiment(experiment,google,policy);
+      const waitingForContentSample=experiment.type==='CONTENT_UTILITY_UPGRADE'
+        && evaluation?.verdict!=='READY_FOR_REVIEW';
       candidates.push(action(
-        'REVIEW_ACTIVE_EXPERIMENT',
+        waitingForContentSample?'WAITING_FOR_EXPERIMENT':'REVIEW_ACTIVE_EXPERIMENT',
         95,
         evaluation?.verdict==='INSUFFICIENT_DATA'
           ?'Observationstid har passerat men stickprovet är för litet för ett säkert beslut.'
