@@ -1,0 +1,186 @@
+name: IndexNow reviewed discovery
+
+on:
+  workflow_run:
+    workflows: ['SEO release continuity (read-only)']
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      base_sha:
+        description: 'Optional full ancestor commit SHA for a reviewed recovery batch'
+        required: false
+        type: string
+
+permissions:
+  contents: read
+  checks: read
+  actions: read
+
+concurrency:
+  group: indexnow-reviewed-main
+  cancel-in-progress: false
+
+jobs:
+  notify:
+    if: >-
+      (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') ||
+      (github.event.workflow_run.conclusion == 'success' &&
+       github.event.workflow_run.head_branch == 'main' &&
+       github.event.workflow_run.head_repository.full_name == github.repository)
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    env:
+      GITHUB_TOKEN: ${{ github.token }}
+      INDEXNOW_BASE_SHA: ${{ inputs.base_sha || '' }}
+      INDEXNOW_OUT_DIR: indexnow-report
+      SEO_REPORT_PATH: indexnow-production-proof.json
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.16.0
+      - name: Validate review policy and notification safeguards
+        run: |
+          node --test tests/indexnow.test.mjs tests/sitemap-lastmod.test.mjs
+          node scripts/check-sitemap-lastmod.mjs
+      - name: Verify this exact release is live before any notification
+        run: |
+          VERIFY_COMMIT="$(git rev-parse HEAD)" python3 scripts/verify-production-release.py --mode production
+      - name: Avoid resubmitting an acknowledged source commit
+        id: prior_submission
+        env:
+          RECOVERY_BASE_SHA: ${{ inputs.base_sha || '' }}
+        run: |
+          python3 - <<'PY'
+          import io, json, os, re, subprocess, urllib.error, urllib.request, zipfile
+          from pathlib import Path
+
+          def stop(message):
+              raise SystemExit(message)
+
+          if os.environ.get('RECOVERY_BASE_SHA'):
+              with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+                  output.write('skip=false\n')
+              print('Explicit reviewed recovery: prior-receipt deduplication bypassed.')
+              raise SystemExit(0)
+
+          repository = os.environ['GITHUB_REPOSITORY']
+          if not re.fullmatch(r'[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+', repository):
+              stop('Invalid repository context.')
+          head = subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()
+          if not re.fullmatch(r'[a-f0-9]{40}', head):
+              stop('Invalid checked-out source commit.')
+          api = 'https://api.github.com/repos/' + repository
+          headers = {'Authorization': 'Bearer ' + os.environ['GITHUB_TOKEN'],
+                     'Accept': 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28'}
+
+          def get_json(path):
+              try:
+                  with urllib.request.urlopen(urllib.request.Request(api + path, headers=headers), timeout=30) as response:
+                      return json.load(response)
+              except Exception:
+                  stop('Prior-receipt GitHub API verification failed; no submission allowed.')
+
+          listing = get_json('/actions/artifacts?name=indexnow-discovery-receipt&per_page=100')
+          artifacts = listing.get('artifacts')
+          if not isinstance(artifacts, list) or len(artifacts) > 100 or not isinstance(listing.get('total_count'), int):
+              stop('Invalid artifact listing; no submission allowed.')
+          acknowledged = None
+          checked_runs = {}
+          for artifact in artifacts:
+              if artifact.get('name') != 'indexnow-discovery-receipt' or artifact.get('expired'):
+                  continue
+              run_id = artifact.get('workflow_run', {}).get('id')
+              artifact_id = artifact.get('id')
+              if not isinstance(run_id, int) or not isinstance(artifact_id, int):
+                  stop('Invalid prior artifact metadata; no submission allowed.')
+              if run_id not in checked_runs:
+                  run = get_json('/actions/runs/' + str(run_id))
+                  checked_runs[run_id] = (
+                      run.get('path') == '.github/workflows/indexnow-discovery.yml'
+                      and run.get('head_branch') == 'main'
+                      and run.get('head_repository', {}).get('full_name') == repository
+                      and run.get('event') in ('workflow_run', 'workflow_dispatch'))
+              if not checked_runs[run_id]:
+                  continue
+              # workflow_run metadata can describe the default-branch revision,
+              # rather than our explicit checkout. The receipt's sourceCommit wins.
+              try:
+                  class NoRedirect(urllib.request.HTTPRedirectHandler):
+                      def redirect_request(self, request, fp, code, message, response_headers, new_url):
+                          return None
+                  try:
+                      response = urllib.request.build_opener(NoRedirect).open(urllib.request.Request(
+                          api + '/actions/artifacts/' + str(artifact_id) + '/zip', headers=headers), timeout=30)
+                  except urllib.error.HTTPError as error:
+                      if error.code not in (301, 302, 303, 307, 308):
+                          raise
+                      from urllib.parse import urlsplit
+                      location = error.headers.get('Location', '')
+                      destination = urlsplit(location)
+                      if destination.scheme != 'https' or destination.username or destination.password or not (
+                              (destination.hostname or '').endswith('.blob.core.windows.net')
+                              or (destination.hostname or '').endswith('.githubusercontent.com')):
+                          stop('Untrusted artifact redirect; no submission allowed.')
+                      # Never forward the GitHub bearer token to signed blob storage.
+                      response = urllib.request.urlopen(location, timeout=30)
+                  with response:
+                      archive = response.read(5_000_001)
+                  if len(archive) > 5_000_000:
+                      stop('Oversized receipt artifact; no submission allowed.')
+                  with zipfile.ZipFile(io.BytesIO(archive)) as bundle:
+                      receipts = [entry for entry in bundle.infolist()
+                                  if entry.filename == 'indexnow-receipt.json'
+                                  or entry.filename.endswith('/indexnow-receipt.json')]
+                      # always() upload can contain only the failed production proof.
+                      # No receipt is not an acknowledgement of any submission.
+                      if not receipts:
+                          continue
+                      if len(receipts) != 1 or receipts[0].file_size > 1_000_000:
+                          stop('Invalid prior receipt; no submission allowed.')
+                      receipt = json.loads(bundle.read(receipts[0]))
+              except Exception:
+                  stop('Prior receipt could not be verified; no submission allowed.')
+              if receipt.get('sourceCommit') == head and receipt.get('status') in (
+                      'submitted', 'received_key_validation_pending'):
+                  acknowledged = {'sourceCommit': head, 'status': receipt['status'],
+                                  'artifactId': artifact_id, 'runId': run_id}
+                  break
+          if acknowledged is None and listing['total_count'] > 100:
+              stop('Prior-receipt search exceeds 100 artifacts; reviewed recovery required.')
+          skip = acknowledged is not None
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+              output.write('skip=' + str(skip).lower() + '\n')
+          if skip:
+              directory = Path(os.environ['INDEXNOW_OUT_DIR'])
+              directory.mkdir(parents=True, exist_ok=True)
+              receipt = {'status': 'skipped_already_acknowledged', 'sourceCommit': head,
+                         'priorReceipt': acknowledged, 'indexingStatus': 'UNKNOWN'}
+              (directory / 'indexnow-receipt.json').write_text(json.dumps(receipt, indent=2) + '\n')
+              print('Already acknowledged source commit; POST skipped. Indexing remains UNKNOWN.')
+          else:
+              print('No acknowledged receipt for this source commit within the verified bounded history.')
+          PY
+      - name: Notify only recently and substantively changed canonical URLs
+        if: steps.prior_submission.outputs.skip != 'true'
+        run: node scripts/indexnow-submit.mjs --submit
+      - name: Publish receipt without claiming indexation
+        if: always()
+        run: |
+          if [ -f indexnow-report/indexnow-receipt.json ]; then
+            cat indexnow-report/indexnow-receipt.json >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: indexnow-discovery-receipt
+          path: |
+            indexnow-report/
+            indexnow-production-proof.json
+          retention-days: 30
+          if-no-files-found: warn
