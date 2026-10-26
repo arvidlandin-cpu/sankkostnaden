@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "policy": "Human-reviewed substantive content dates only. Never infer dates from builds, spot-price feeds, CSS, branding or generic components.",
+  "protectedPaths": [
+    "/elavtal/kvartspris/"
+  ],
+  "changes": [
+    {
+      "url": "https://sankkostnaden.se/elavtal/hur-mycket-el-drar-mitt-hus/",
+      "lastmod": "2026-10-15",
+      "reason": "Measured annual consumption is prioritized; the page now discloses its own example assumptions, calculation and limitations.",
+      "sourcePaths": [
+        "pages/elavtal/hur-mycket-el-drar-mitt-hus.tsx"
+      ],
+      "evidenceCommit": "f72556a29a05bda2371e8f42206930167d49d1ef"
+    },
+    {
+      "url": "https://sankkostnaden.se/app/",
+      "lastmod": "2026-10-09",
+      "reason": "Page-specific questions, answer options and result explanations were rewritten for truthful, clearer guidance.",
+      "sourcePaths": [
+        "pages/app.tsx"
+      ],
+      "evidenceCommit": "b66d3a4925d848d37bd22f03f9181ae75b7a6cf2"
+    },
+    {
+      "url": "https://sankkostnaden.se/verktyg/hushallskostnadskollen/",
+      "lastmod": "2026-10-08",
+      "reason": "The original household tool gained progressive category selection, known-cost subtotals and preservation of existing answers.",
+      "sourcePaths": [
+        "pages/verktyg/hushallskostnadskollen.tsx"
+      ],
+      "evidenceCommit": "eb61cf46897597891fe2c10721bafe0ace832425"
+    },
+    {
+      "url": "https://sankkostnaden.se/mobil/lonar-sig-familjeabonnemang/",
+      "lastmod": "2026-10-08",
+      "reason": "The page-specific family mobile tool gained a needs-first route and optional same-period total-cost comparison.",
+      "sourcePaths": [
+        "pages/mobil/lonar-sig-familjeabonnemang.tsx",
+        "components/tools/FamilyMobileCost.tsx"
+      ],
+      "evidenceCommit": "97fb39c20a34f4f969657b7db38eeee3abe3247a"
+    },
+    {
+      "url": "https://sankkostnaden.se/forsakring/hemforsakring-bostadsratt/",
+      "lastmod": "2026-10-26",
+      "reason": "Primary-source editorial guidance now explains the entire personal home-insurance premium and a same-period method for comparing two real offers, while retaining the collective-cover check.",
+      "sourcePaths": [
+        "pages/forsakring/hemforsakring-bostadsratt.tsx"
+      ],
+      "evidence": "current-reviewed-content"
+    },
+    {
+      "url": "https://sankkostnaden.se/forsakring/jamfor-forsakring/",
+      "lastmod": "2026-10-26",
+      "reason": "Reviewed editorial guidance adds a direct contextual path from insurance comparison to the actual housing cover check.",
+      "sourcePaths": [
+        "pages/forsakring/jamfor-forsakring.tsx"
+      ],
+      "evidence": "current-reviewed-content"
+    }
+  ]
+}
