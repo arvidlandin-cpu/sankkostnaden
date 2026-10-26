@@ -48,11 +48,32 @@ jobs:
         run: |
           node --test tests/indexnow.test.mjs tests/sitemap-lastmod.test.mjs
           node scripts/check-sitemap-lastmod.mjs
+      - name: Plan reviewed changes without network submission
+        id: plan
+        run: |
+          node scripts/indexnow-submit.mjs
+          python3 - <<'PY'
+          import json, os, subprocess
+          from pathlib import Path
+          receipt = json.loads((Path(os.environ['INDEXNOW_OUT_DIR']) / 'indexnow-receipt.json').read_text())
+          head = subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()
+          urls = receipt.get('urls')
+          status = receipt.get('status')
+          if (receipt.get('sourceCommit') != head or not isinstance(urls, list)
+                  or status not in ('no_changes', 'prepared_not_submitted')
+                  or (status == 'no_changes') != (len(urls) == 0)):
+              raise SystemExit('Invalid or failed dry-run receipt; no submission allowed.')
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+              output.write('has_changes=' + str(bool(urls)).lower() + '\n')
+          print('Reviewed changed URL count: ' + str(len(urls)))
+          PY
       - name: Verify this exact release is live before any notification
+        if: steps.plan.outputs.has_changes == 'true'
         run: |
           VERIFY_COMMIT="$(git rev-parse HEAD)" python3 scripts/verify-production-release.py --mode production
       - name: Avoid resubmitting an acknowledged source commit
         id: prior_submission
+        if: steps.plan.outputs.has_changes == 'true'
         env:
           RECOVERY_BASE_SHA: ${{ inputs.base_sha || '' }}
         run: |
@@ -86,14 +107,15 @@ jobs:
               except Exception:
                   stop('Prior-receipt GitHub API verification failed; no submission allowed.')
 
-          listing = get_json('/actions/artifacts?name=indexnow-discovery-receipt&per_page=100')
+          artifact_name = 'indexnow-discovery-receipt-' + head
+          listing = get_json('/actions/artifacts?name=' + artifact_name + '&per_page=100')
           artifacts = listing.get('artifacts')
           if not isinstance(artifacts, list) or len(artifacts) > 100 or not isinstance(listing.get('total_count'), int):
               stop('Invalid artifact listing; no submission allowed.')
           acknowledged = None
           checked_runs = {}
           for artifact in artifacts:
-              if artifact.get('name') != 'indexnow-discovery-receipt' or artifact.get('expired'):
+              if artifact.get('name') != artifact_name or artifact.get('expired'):
                   continue
               run_id = artifact.get('workflow_run', {}).get('id')
               artifact_id = artifact.get('id')
@@ -167,7 +189,7 @@ jobs:
               print('No acknowledged receipt for this source commit within the verified bounded history.')
           PY
       - name: Notify only recently and substantively changed canonical URLs
-        if: steps.prior_submission.outputs.skip != 'true'
+        if: steps.plan.outputs.has_changes == 'true' && steps.prior_submission.outputs.skip != 'true'
         run: node scripts/indexnow-submit.mjs --submit
       - name: Publish receipt without claiming indexation
         if: always()
@@ -178,7 +200,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: indexnow-discovery-receipt
+          name: indexnow-discovery-receipt-${{ github.event.workflow_run.head_sha || github.sha }}
           path: |
             indexnow-report/
             indexnow-production-proof.json
