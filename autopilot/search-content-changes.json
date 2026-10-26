@@ -52,42 +52,6 @@
       "evidence": "current-reviewed-content"
     },
     {
-      "url": "https://sankkostnaden.se/guide/arskoll-fasta-kostnader/",
-      "lastmod": "2026-10-11",
-      "reason": "The guide now starts with its actual six-point interactive annual checklist and clearer task instructions.",
-      "sourcePaths": [
-        "pages/guide/arskoll-fasta-kostnader.tsx"
-      ],
-      "evidenceCommit": "2cb2ef61de106e41475cb5bba86737c08c8c8597"
-    },
-    {
-      "url": "https://sankkostnaden.se/guide/hushallets-fasta-kostnader-2026/",
-      "lastmod": "2026-10-11",
-      "reason": "Page-specific interactive checklists cover seven household areas and the invoice-to-decision process.",
-      "sourcePaths": [
-        "pages/guide/hushallets-fasta-kostnader-2026.tsx"
-      ],
-      "evidenceCommit": "6da7a20690dc2ad0d05d22b99a4564552f2ed58a"
-    },
-    {
-      "url": "https://sankkostnaden.se/guide/sank-fasta-kostnader/",
-      "lastmod": "2026-10-11",
-      "reason": "The guide gained its own five-point interactive prioritization checklist rather than a generic design change.",
-      "sourcePaths": [
-        "pages/guide/sank-fasta-kostnader.tsx"
-      ],
-      "evidenceCommit": "6da7a20690dc2ad0d05d22b99a4564552f2ed58a"
-    },
-    {
-      "url": "https://sankkostnaden.se/guide/sank-kostnader-automatiskt/",
-      "lastmod": "2026-10-11",
-      "reason": "The page gained its own interactive recurring-contract review with actionable steps and an annual-checklist continuation.",
-      "sourcePaths": [
-        "pages/guide/sank-kostnader-automatiskt.tsx"
-      ],
-      "evidenceCommit": "6da7a20690dc2ad0d05d22b99a4564552f2ed58a"
-    },
-    {
       "url": "https://sankkostnaden.se/forsakring/jamfor-forsakring/",
       "lastmod": "2026-10-26",
       "reason": "Reviewed editorial guidance adds a direct contextual path from insurance comparison to the actual housing cover check.",
