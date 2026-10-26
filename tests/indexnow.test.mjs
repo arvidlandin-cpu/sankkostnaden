@@ -34,12 +34,13 @@ import path from 'node:path';
 import {execFileSync,spawnSync} from 'node:child_process';
 const gitIn=(cwd,...args)=>execFileSync('git',args,{cwd,encoding:'utf8',stdio:['pipe','pipe','pipe']}).trim();
 async function fixture(t,{existingKey=false}={}){
+ const reviewDate=new Date().toISOString().slice(0,10);
  const root=await fs.mkdtemp(path.join(os.tmpdir(),'sk-indexnow-cli-'));
  t.after(()=>fs.rm(root,{recursive:true,force:true}));
  for(const dir of ['scripts','public','autopilot','tests/fixtures'])await fs.mkdir(path.join(root,dir),{recursive:true});
  for(const file of ['indexnow-submit.mjs','check-sitemap-lastmod.mjs'])await fs.copyFile(new URL('../scripts/'+file,import.meta.url),path.join(root,'scripts',file));
  const allowed=[a,b,q,...Array.from({length:60},(_,i)=>ORIGIN+'/guide/fixture-'+i+'/')];
- const makeXml=changed=>'<urlset>'+allowed.map(url=>`<url><loc>${url}</loc><lastmod>${changed&&[a,b].includes(url)?'2026-10-26':'2026-09-20'}</lastmod></url>`).join('')+'</urlset>';
+ const makeXml=changed=>'<urlset>'+allowed.map(url=>`<url><loc>${url}</loc><lastmod>${changed&&[a,b].includes(url)?reviewDate:'2026-09-20'}</lastmod></url>`).join('')+'</urlset>';
  const write=(file,data)=>fs.writeFile(path.join(root,file),typeof data==='string'?data:JSON.stringify(data));
  await write('public/sitemap.xml',makeXml(false));
  await write('tests/fixtures/seo-continuity-baseline.json',{pages:allowed.map(canonical=>({canonical}))});
@@ -48,7 +49,7 @@ async function fixture(t,{existingKey=false}={}){
  gitIn(root,'add','.');gitIn(root,'commit','--quiet','-m','before reviewed content');const ancestor=gitIn(root,'rev-parse','HEAD');
  await write('marker.txt','unrelated prior change');gitIn(root,'add','.');gitIn(root,'commit','--quiet','-m','unrelated intermediate commit');const parent=gitIn(root,'rev-parse','HEAD');
  await write('public/sitemap.xml',makeXml(true));await write('public/'+key+'.txt',key+'\n');
- const manifest={schemaVersion:1,protectedPaths:['/elavtal/kvartspris/'],indexNowBootstrapBaseCommit:ancestor,changes:review([a,b]).map(x=>({...x,evidence:'current-reviewed-content'}))};
+ const manifest={schemaVersion:1,protectedPaths:['/elavtal/kvartspris/'],indexNowBootstrapBaseCommit:ancestor,changes:review([a,b]).map(x=>({...x,lastmod:reviewDate,evidence:'current-reviewed-content'}))};
  await write('autopilot/search-content-changes.json',manifest);
  gitIn(root,'add','.');gitIn(root,'commit','--quiet','-m','reviewed content and public key');
  await write('network-tripwire.mjs',"globalThis.fetch=async()=>{process.stderr.write('UNEXPECTED_NETWORK');throw new Error('No network permitted in offline CLI tests');};\n");

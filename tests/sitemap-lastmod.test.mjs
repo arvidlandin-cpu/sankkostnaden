@@ -11,7 +11,9 @@ const xmlFor = changes => '<urlset>' + baseline.pages.map(page => {
   return `<url><loc>${page.canonical}</loc><lastmod>${date}</lastmod></url>`;
 }).join('') + '</urlset>';
 const sitemap = xmlFor(manifest.changes);
-const check = changes => validateSitemapLastmod({ sitemap, manifest, baseline, today: '2026-10-26', ...changes });
+const today = new Date().toISOString().slice(0, 10);
+const tomorrow = new Date(Date.parse(today + 'T00:00:00Z') + 86400000).toISOString().slice(0, 10);
+const check = changes => validateSitemapLastmod({ sitemap, manifest, baseline, today, ...changes });
 
 test('reviewed content dates retain the real 63-canonical baseline and explicit protected page', () => {
   assert.equal(baseline.pages.length, 63);
@@ -27,7 +29,7 @@ test('rejects impossible dates rather than allowing Date.parse rollover', () => 
 });
 
 test('rejects a future content date and future sitemap date', () => {
-  const modified = clone(manifest); modified.changes[0].lastmod = '2026-10-27';
+  const modified = clone(manifest); modified.changes[0].lastmod = tomorrow;
   const errors = check({ manifest: modified, sitemap: xmlFor(modified.changes) });
   assert.ok(errors.some(error => error.includes('future manifest')));
   assert.ok(errors.some(error => error.includes('future sitemap')));
@@ -68,9 +70,20 @@ test('a missing canonical cannot be hidden by retaining a total of 63 entries', 
 });
 
 test('requires the reviewed date to match XML and carry evidence and source paths', () => {
-  assert.ok(check({ sitemap: sitemap.replace('<lastmod>2026-10-15</lastmod>', '<lastmod>2026-10-14</lastmod>') }).some(error => error.includes('lastmod mismatch')));
+  const changedDate = manifest.changes[0].lastmod === '2026-09-01' ? '2026-09-02' : '2026-09-01';
+  const mismatched = sitemap.replace(`<loc>${manifest.changes[0].url}</loc><lastmod>${manifest.changes[0].lastmod}</lastmod>`, `<loc>${manifest.changes[0].url}</loc><lastmod>${changedDate}</lastmod>`);
+  assert.ok(check({ sitemap: mismatched }).some(error => error.includes('lastmod mismatch')));
   for (const change of [{ evidenceCommit: '' }, { sourcePaths: ['styles/global.css'] }, { reason: '' }]) {
     const modified = clone(manifest); Object.assign(modified.changes[0], change);
     assert.ok(check({ manifest: modified }).length > 0);
   }
+});
+
+
+test('a newly reviewed current UTC date is not blocked by an old fixture cutoff', () => {
+  const modified = clone(manifest);
+  modified.changes[0].lastmod = today;
+  modified.changes[0].evidence = 'current-reviewed-content';
+  delete modified.changes[0].evidenceCommit;
+  assert.deepEqual(check({ manifest: modified, sitemap: xmlFor(modified.changes) }), []);
 });
