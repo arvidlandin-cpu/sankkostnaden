@@ -61,8 +61,8 @@ This is one distribution track, not a product experiment. It prepares two concre
 12. **Decision**  
     **PAUSED, NOT AUTHORIZED, DO NOT SEND.** The earlier preparation decision is superseded by the owner's 2026-10-26 no-outreach instruction. Two concrete messages are ready below. HSB has an explicitly verified tip route. Bo Bättre has a public editorial tip form but requires sender identity/contact fields that are not available here. Bostadsrätterna remains research-only because the checked magazine page does not explicitly invite external editorial tips.
 
-13. **Verifier after release**  
-    After explicit owner approval and a separately recorded send, update the contact log. Verify the exact published URL before marking `published`. Compare tagged referral outcomes to the pre-send zero baseline, then record unique affiliate-click users and approved network outcomes when mature. Update the learning ledger with keep/stop reasoning; never conclude from tiny samples.
+13. **Verifier while paused**  
+    No release, approval request, send or publication check is authorized. Keep `sent_at`, `published_url` and traffic outcomes empty/UNKNOWN. If the owner independently reopens outreach in a future decision, create a new reviewed execution record rather than treating this archive as active authority.
 
 ## Reusable member box
 
@@ -123,7 +123,7 @@ Archived only. Do not request sender details, submit the form or send unless the
 
 ## Research-only fallback — Din Bostadsrätt
 
-[Bostadsrätterna's Din Bostadsrätt](https://www.bostadsratterna.se/radgivning/din-bostadsratt) is audience-relevant and publishes member guidance, but the checked page does not explicitly invite external editorial tips. Keep status `researched`; do not use a generic address as implicit permission.
+[Bostadsrätterna's Din Bostadsrätt](https://www.bostadsratterna.se/radgivning/din-bostadsratt) is audience-relevant and publishes member guidance, but the checked page does not explicitly invite external editorial tips. Historical status was `researched`; the route is now paused and not authorized. Do not use a generic address as implicit permission.
 
 ## State transitions
 
