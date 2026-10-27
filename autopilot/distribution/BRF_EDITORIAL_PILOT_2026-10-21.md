@@ -1,7 +1,7 @@
 # BRF editorial pilot — 2026-10-21
 
-Status: **PREPARED — NOT APPROVED — NOT SENT**  
-Owner approval required before every external message.  
+Status: **PAUSED — NOT AUTHORIZED — NOT SENT**  
+Superseded by the owner's 2026-10-26 decision prohibiting outbound outreach. Keep this file as an unexecuted archive; do not request send approval or contact any listed party unless the owner independently reopens outreach.  
 Target page: `/forsakring/hemforsakring-bostadsratt/`  
 Independent from: `/elavtal/kvartspris/`
 
@@ -9,7 +9,7 @@ Independent from: `/elavtal/kvartspris/`
 
 This is one distribution track, not a product experiment. It prepares two concrete editorial approaches and one research-only fallback. It changes no production page, component, analytics event, affiliate URL, EPI/subID, disclosure, SEO field or quarter-price cohort.
 
-## Evidence-backed decision record
+## Historical evidence-backed decision record (superseded)
 
 1. **Audience / job**  
    A Swedish bostadsrätt member who knows that the association may have collective cover but does not know whether the personal bostadsrättstillägg should remain. The job is to verify cover, deductible and important conditions before changing insurance, while understanding that ordinary home insurance is still a separate need.
@@ -59,7 +59,7 @@ This is one distribution track, not a product experiment. It prepares two concre
     Editorial acceptance is uncertain and may be zero. A commercial site can reduce acceptance, so the pitch discloses affiliate funding and offers useful copy without requiring endorsement. No paid placement is allowed. The pilot is stopped by not sending further messages; no production rollback is needed.
 
 12. **Decision**  
-    **PREPARE, DO NOT SEND.** Two concrete messages are ready below. HSB has an explicitly verified tip route. Bo Bättre has a public editorial tip form but requires sender identity/contact fields that are not available here. Bostadsrätterna remains research-only because the checked magazine page does not explicitly invite external editorial tips.
+    **PAUSED, NOT AUTHORIZED, DO NOT SEND.** The earlier preparation decision is superseded by the owner's 2026-10-26 no-outreach instruction. Two concrete messages are ready below. HSB has an explicitly verified tip route. Bo Bättre has a public editorial tip form but requires sender identity/contact fields that are not available here. Bostadsrätterna remains research-only because the checked magazine page does not explicitly invite external editorial tips.
 
 13. **Verifier after release**  
     After explicit owner approval and a separately recorded send, update the contact log. Verify the exact published URL before marking `published`. Compare tagged referral outcomes to the pre-send zero baseline, then record unique affiliate-click users and approved network outcomes when mature. Update the learning ledger with keep/stop reasoning; never conclude from tiny samples.
@@ -74,7 +74,7 @@ Har föreningen ett kollektivt bostadsrättstillägg? Be styrelsen om försäkri
 
 Public context: [Hemma i HSB](https://www.hsb.se/stockholm/medlem/bostadsrattsforening/medlemstidning/) explicitly says that the editorial team welcomes tips.  
 Public route: `hemmaihsb@hsb.se`  
-Status: **PREPARED — NOT APPROVED — NOT SENT**
+Status: **PAUSED — NOT AUTHORIZED — NOT SENT**
 
 **Subject:** Redaktionstips: checklista innan medlemmen ändrar bostadsrättstillägget
 
@@ -94,12 +94,12 @@ Status: **PREPARED — NOT APPROVED — NOT SENT**
 > Vänliga hälsningar,  
 > Sänk Kostnaden-redaktionen
 
-Approval must cover this exact text, recipient and sender identity before sending.
+Archived only. Do not request approval or send unless the owner independently reopens outreach.
 
 ## Concrete message B — Bo Bättre
 
 Public context: [Bo Bättre's contact page](https://www.bobattre.se/index.php/contact-us) invites editorial tips and questions about bostadsrätt. The form requests name, address, email and phone.  
-Status: **PREPARED — BLOCKED ON OWNER-APPROVED SENDER DETAILS — NOT SENT**
+Status: **PAUSED — NOT AUTHORIZED — NOT SENT**
 
 **Subject:** Redaktionstips: fem villkor att kontrollera vid kollektivt bostadsrättstillägg
 
@@ -119,7 +119,7 @@ Status: **PREPARED — BLOCKED ON OWNER-APPROVED SENDER DETAILS — NOT SENT**
 > Vänliga hälsningar,  
 > Sänk Kostnaden-redaktionen
 
-Do not submit the form until the owner has approved this exact text and supplied/approved the required sender details.
+Archived only. Do not request sender details, submit the form or send unless the owner independently reopens outreach.
 
 ## Research-only fallback — Din Bostadsrätt
 
@@ -127,7 +127,7 @@ Do not submit the form until the owner has approved this exact text and supplied
 
 ## State transitions
 
-Only move forward, with evidence:
+No transition is authorized while this archive is paused. If the owner independently reopens outreach, only move forward with evidence:
 
 `researched → prepared → approved → sent → published → traffic_outcome`
 
