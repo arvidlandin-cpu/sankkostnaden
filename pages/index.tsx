@@ -19,6 +19,8 @@ const guideGroups=[
     ['/mobil/utan-bindningstid/','Mobil utan bindningstid'],
   ]},
   {title:'El & försäkring',links:[
+    ['/elavtal/jamfor-elavtal/','Jämför elavtal – pris, påslag och villkor'],
+    ['/forsakring/jamfor-hemforsakring/','Jämför hemförsäkring – pris och skydd'],
     ['/elavtal/byta-elavtal/','Byta elavtal'],
     ['/forsakring/vad-kostar-hemforsakring/','Vad kostar hemförsäkring?'],
     ['/forsakring/hemforsakring-bostadsratt/','Hemförsäkring bostadsrätt – pris & skydd'],
