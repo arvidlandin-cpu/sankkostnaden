@@ -95,6 +95,24 @@
         "pages/guide/sank-kostnader-automatiskt.tsx"
       ],
       "evidenceCommit": "6da7a20690dc2ad0d05d22b99a4564552f2ed58a"
+    },
+    {
+      "url": "https://sankkostnaden.se/elavtal/jamfor-elavtal/",
+      "lastmod": "2026-10-06",
+      "reason": "The comparison guide gained a page-specific, descriptive route to calculating two actual electricity offers on the same annual consumption; the current page exactly matches this substantive content revision.",
+      "sourcePaths": [
+        "pages/elavtal/jamfor-elavtal.tsx"
+      ],
+      "evidenceCommit": "9c82bd401e945d489bd5c31914c5558fe98a26c7"
+    },
+    {
+      "url": "https://sankkostnaden.se/forsakring/jamfor-hemforsakring/",
+      "lastmod": "2026-10-06",
+      "reason": "The guide gained a protection-first route with three household questions and a contextual explanation before comparing partner prices; the current page exactly matches this substantive content revision.",
+      "sourcePaths": [
+        "pages/forsakring/jamfor-hemforsakring.tsx"
+      ],
+      "evidenceCommit": "ec9e0921b294295a99fe5e44ea9fb7ba602330bc"
     }
   ],
   "indexNowBootstrapBaseCommit": "676034d193768696b50af071097c41fa9d77d60b"
