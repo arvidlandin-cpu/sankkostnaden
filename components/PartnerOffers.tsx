@@ -1,7 +1,8 @@
 import { ArrowUpRight, BadgeCheck, Heart, PawPrint } from 'lucide-react';
 import { getActivePartners, type PartnerCategory, type PartnerIntent } from '../lib/partners';
+import PartnerIdentity from './PartnerIdentity';
 
-type Props = { category: PartnerCategory; heading?: string; intent?: PartnerIntent; limit?: number; };
+type Props = { category: PartnerCategory; heading?: string; intent?: PartnerIntent; limit?: number; preserveIdentity?: boolean; };
 
 function PartnerLogo({ name }: { name: string }) {
   if (name === 'Lassie') return <div className='partnerLogo partnerLogoLassie' aria-label='Lassie'><span className='logoPaw'><PawPrint size={19}/></span><b>lassie</b></div>;
@@ -40,7 +41,7 @@ function sectionCopy(category: PartnerCategory, intent?: PartnerIntent) {
   };
 }
 
-export default function PartnerOffers({ category, heading = 'Jämför hos våra partners', intent, limit = 3 }: Props) {
+export default function PartnerOffers({ category, heading = 'Jämför hos våra partners', intent, limit = 3, preserveIdentity = false }: Props) {
   const items = getActivePartners(category, intent, limit);
   if (items.length === 0) return null;
   const copy = sectionCopy(category, intent);
@@ -56,7 +57,7 @@ export default function PartnerOffers({ category, heading = 'Jämför hos våra 
         {items.map((item,index) => (
           <article className={'partnerCard partnerCardStrong partnerCardBrand ' + (item.name === 'Lassie' ? 'isLassie' : item.name.startsWith('Sveland') ? 'isSveland' : '')} key={item.name}>
             <div>
-              <div className='partnerCardTop'><PartnerLogo name={item.name}/><span className='commercialTag'><BadgeCheck size={13}/> PARTNERLÄNK</span></div>
+              <div className='partnerCardTop'>{preserveIdentity ? <PartnerLogo name={item.name}/> : <div className='partnerLogo'><PartnerIdentity partner={item}/></div>}<span className='commercialTag'><BadgeCheck size={13}/> PARTNERLÄNK</span></div>
               <p>{item.note}</p>
             </div>
             <a className='partnerButton partnerButtonStrong' href={item.trackingUrl} data-partner={item.name} data-category={item.category} data-intent={intent || 'unspecified'} data-placement='partner_offers' data-partner-position={index+1} target='_blank' rel='sponsored nofollow noopener'>
