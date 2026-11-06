@@ -220,6 +220,7 @@
   line-height: 1.55;
 }
 
+:global(.article) .commercialAction,
 .commercialAction {
   display: inline-flex;
   align-items: center;

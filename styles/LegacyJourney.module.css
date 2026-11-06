@@ -30,7 +30,8 @@
 .content:global(.article) :global(.checkList){border:1px solid #dddcd5;background:#f8f5ef;border-radius:10px;color:#112b45}
 .content:global(.article) :global(.checkList svg){color:#2854e8;flex-shrink:0}
 .content:global(.article) :global(.checkList p){font-size:15px;line-height:1.65}
-.content:global(.article) :global(.partnerBox){background:#f8f5ef;border-color:#dddcd5;color:#112b45}
+.content:global(.article) :global(.partnerBox){--sk-result-muted:#53647a;background:#f8f5ef;border-color:#dddcd5;color:#112b45}
+.content:global(.article) :global(.partnerBox h3){color:#112b45}
 .tool:global(.article){margin-top:26px!important}
 .picker{margin:20px 0 28px;padding:clamp(20px,3vw,28px);background:#f8f5ef;border:1px solid #dddcd5;border-radius:12px}
 .picker h2{margin:0 0 10px!important;font-size:clamp(25px,3vw,32px)!important;color:#112b45}

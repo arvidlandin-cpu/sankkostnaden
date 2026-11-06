@@ -46,14 +46,14 @@
 .chartHeading{display:flex;justify-content:space-between;align-items:start;gap:12px}
 .chartHeading>div{display:grid;gap:5px}
 .chartHeading strong{font-size:17px;line-height:1.25;color:#1c3154}
-.chartHeading>div>span{font-size:12px;color:#677890}
+.chartHeading>div>span{font-size:12px;color:#53647a}
 .legend{display:flex;align-items:center;gap:6px;white-space:nowrap;color:#61738d;font-size:11px}
 .legend i{display:inline-block;width:10px;height:10px;border-radius:3px;background:#4ab9a3}
 .legend i:nth-of-type(2){margin-left:9px;background:#f0a376}
 .chart{display:block;width:100%;height:202px;margin:18px 0 6px;overflow:visible}
 .selection{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-top:6px}
 .selectionText{display:grid;gap:5px}
-.selectionText>span{font-size:12px;color:#6a7a93}
+.selectionText>span{font-size:12px;color:#53647a}
 .selectionText strong{font-size:18px;line-height:1.25;color:#173266;font-variant-numeric:tabular-nums}
 .selectionText strong b{color:#234bd1;font-weight:850}
 .quickButtons{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
@@ -61,7 +61,7 @@
 .quickButtons button:hover{background:#ebf1ff;border-color:#adc2ed}
 .sliderLabel{display:block;margin-top:16px;font-size:12px;color:#4d6080;font-weight:750}
 .chartPanel input[type=range],.shiftInputs input[type=range]{width:100%;height:30px;display:block;accent-color:#234bd1;cursor:pointer;margin:8px 0 0}
-.sliderFoot{display:flex;justify-content:space-between;gap:12px;color:#687993;font-size:11px}
+.sliderFoot{display:flex;justify-content:space-between;gap:12px;color:#53647a;font-size:11px}
 .shiftShell{margin-top:16px;border:1px solid #dce7f7;border-radius:18px;background:#fff;overflow:hidden}
 .shiftToggle{width:100%;padding:17px;min-height:86px;display:flex;align-items:center;gap:14px;border:0;background:linear-gradient(115deg,#f0f5ff,#fff);text-align:left;cursor:pointer;color:var(--ink)}
 .shiftIcon{display:grid;place-items:center;width:46px;height:46px;flex:0 0 46px;border-radius:13px;color:#2552ca;background:#dfeaff}
