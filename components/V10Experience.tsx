@@ -152,7 +152,7 @@ export function V10CategoryFastLane({category}:{category:JourneyCategory}){
    <div className={s.laneGrid}>{matches.length?matches.slice(0,3).map((p,i)=><PartnerLink key={p.name} p={p} category={category} intent={choice!.intent} index={i} placement='v10_category_lane' compact/>):
     <div className={s.laneEmpty}>Inga aktiva partneralternativ för valet. <Link href={track.guideHref}>Få hjälp i guiden <ArrowRight size={15}/></Link></div>}</div>
    <div className={s.laneTrust}><span><ShieldCheck size={17}/> Kontrollera aktuellt pris, villkor och tillgänglighet hos partnern.</span><button type='button' aria-expanded={reason} onClick={()=>setReason(v=>!v)}><Info size={17}/> Så väljs alternativen</button></div>
-   {reason&&<p className={s.laneWhy}>{choice?.why} Vi visar bara partners som är markerade som aktiva i vår partnerförteckning, inte en prisranking. En jämförelsetjänst skiljer sig från en enskild leverantör.</p>}
+   {reason&&<p className={s.laneWhy}>{choice?.why} Vi visar ett urval av samarbetspartners. Jämförelsetjänster visar flera bolag, medan leverantörslänkar går direkt till ett företag.</p>}
   </div>
   <div className={s.laneIntro}>
    <div className={s.laneHeader}>
@@ -161,7 +161,7 @@ export function V10CategoryFastLane({category}:{category:JourneyCategory}){
     <p>Här börjar du utan en enda uppgift. Se aktiva samarbetspartner, läs på i lugn och ro eller prova ett relevant verktyg.</p>
    </div>
    <div className={s.laneDecision}>
-    <span><Check size={17}/> Inga påhittade offerter</span>
+    <span><Check size={17}/> Se aktuella villkor hos partnern</span>
     <span><Check size={17}/> Egen beräkning är frivillig</span>
     <span><Check size={17}/> Annonslänkar är markerade</span>
    </div>
