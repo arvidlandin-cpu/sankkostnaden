@@ -36,7 +36,7 @@
 .directCard .routeIcon{color:#228578;background:#e6f7f2}
 .routeCopy{flex:1}
 .routeType{font-size:11px;color:#365dcc;font-weight:900;letter-spacing:.08em}
-.directCard .routeType{color:#297d73}
+.directCard .routeType{color:#2e5594}
 .routeCopy h3{
  font-size:clamp(22px,2.4vw,27px)!important;
  line-height:1.18!important;color:#162a51!important;letter-spacing:-.035em!important;margin:10px 0 9px!important;
@@ -58,7 +58,7 @@
 .secondary{background:#fff;border:1.5px solid #c6d7f8;color:#2149b2!important}
 .primary:hover,.secondary:hover{transform:translateY(-1px);box-shadow:0 7px 20px rgba(35,75,209,.13)}
 .primary svg,.secondary svg{flex:0 0 auto}
-.sponsored{font-size:12px;color:#62738d;display:block;margin:11px 0 0}
+.sponsored{font-size:12px;color:#53647a;display:block;margin:11px 0 0}
 .suppliers{padding-top:8px}
 .supplierGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .supplier{
@@ -69,7 +69,7 @@
 .supplierIdentity{display:flex;align-items:center;gap:10px;min-width:0}
 .supplierIdentity>div{min-width:0}
 .supplierIdentity strong{display:block;overflow-wrap:anywhere;color:#1d3056;font-size:17px;line-height:1.25}
-.supplierIdentity small{display:block;color:#677a92;margin-top:4px;font-size:12px}
+.supplierIdentity small{display:block;color:#53647a;margin-top:4px;font-size:12px}
 .supplier a{
  min-height:44px;padding:9px 11px;display:flex;align-items:center;justify-content:space-between;gap:9px;
  border-radius:10px;border:1px solid #dce7fa;background:#f6f9ff;
