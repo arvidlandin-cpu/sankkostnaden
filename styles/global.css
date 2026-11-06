@@ -510,12 +510,13 @@ footer .brand {
 .relatedGuides h2 { margin-bottom: 8px; }
 .relatedGuides a { background: white; border: 1px solid var(--sk-line); border-radius: 12px; padding: 14px 16px; color: var(--sk-ink); text-decoration: none; font-weight: 750; }
 .partnerBox { margin: 44px 0; padding: 28px; background: var(--sk-result); color: white; border-radius: 20px; }
-.partnerBox h2 { color: white; margin-top: 6px; }
+.article .partnerBox h2, .article .partnerBox h3 { color: #fff; margin-top: 6px; }
+.partnerBox a.primary { color: #fff; }
 .partnerBox p { color: var(--sk-result-muted); }
 .partnerLabel { color: var(--sk-result-muted) !important; font-size: 12px; letter-spacing: .12em; font-weight: 800; }
 .partnerPending { display: inline-flex; padding: 11px 15px; border-radius: 10px; background: #ffffff12; color: #d9dfdb; font-weight: 750; font-size: 14px; }
 .inlineCta { display: inline-flex; margin-top: 8px; text-decoration: none; }
-.trafficLinks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.trafficLinks { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 16px; }
 .trafficLinks a { padding: 24px; background: white; border: 1px solid var(--sk-line); border-radius: 18px; color: var(--sk-ink); text-decoration: none; display: grid; gap: 8px; }
 .trafficLinks strong { font-size: 19px; }
 .trafficLinks span { color: var(--sk-ink-muted); font-size: 14px; }
@@ -915,51 +916,7 @@ footer{
 }
 
 
-/* Image-card continuity on subpages */
-.trafficLinks a{
-  position:relative;
-  overflow:hidden;
-  padding:0 18px 18px;
-  min-height:205px;
-  align-content:start;
-  background:#fff;
-}
-.trafficLinks a::before{
-  content:'';
-  display:block;
-  height:104px;
-  margin:0 -18px 14px;
-  background:
-    linear-gradient(180deg,transparent 56%,rgba(255,255,255,.86) 100%),
-    var(--traffic-image,linear-gradient(135deg,var(--sk-surface-soft),var(--sk-canvas)));
-  background-size:cover;
-  background-position:center;
-}
-.trafficLinks a[href*='/bredband/']{
-  --traffic-image:url('https://images.pexels.com/photos/7019025/pexels-photo-7019025.jpeg?auto=compress&cs=tinysrgb&w=800');
-}
-.trafficLinks a[href*='/elavtal/']{
-  --traffic-image:url('https://images.pexels.com/photos/14408369/pexels-photo-14408369.jpeg?auto=compress&cs=tinysrgb&w=800');
-}
-.trafficLinks a[href*='/mobil/']{
-  --traffic-image:url('https://images.pexels.com/photos/36665172/pexels-photo-36665172.jpeg?auto=compress&cs=tinysrgb&w=800');
-}
-.trafficLinks a[href*='/forsakring/']{
-  --traffic-image:url('https://images.pexels.com/photos/20725528/pexels-photo-20725528.jpeg?auto=compress&cs=tinysrgb&w=800');
-}
-.trafficLinks a[href*='/ekonomi/']{
-  --traffic-image:url('https://images.pexels.com/photos/7887849/pexels-photo-7887849.jpeg?auto=compress&cs=tinysrgb&w=800');
-}
-.trafficLinks strong{
-  font-size:18px;
-  line-height:1.15;
-}
-.trafficLinks span{
-  line-height:1.45;
-}
-@media(max-width:800px){
-  .trafficLinks a{min-height:190px}
-}
+
 
 
 /* Category-specific guide hero images */
@@ -2401,7 +2358,9 @@ footer{
     grid-template-columns:1fr;
   }
   .claimsSpotlightBrand{
-    display:none;
+    display:flex;
+    min-height:0;
+    padding:12px;
   }
 }
 @media(max-width:520px){

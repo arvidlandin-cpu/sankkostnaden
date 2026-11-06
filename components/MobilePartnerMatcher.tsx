@@ -35,7 +35,7 @@ function PartnerCard({partner,household,priority,position}:{partner:ActivePartne
   const why=reasons(partner,household,priority);
   return <article className='matchPartnerCard'>
     <div className='matchPartnerTop'>
-      <div><small>FÖRSLAG {position}</small><div className='partnerBrand'><h3><PartnerIdentity partner={partner}/></h3></div></div>
+      <div><small>PARTNERALTERNATIV</small><div className='partnerBrand'><h3><PartnerIdentity partner={partner}/></h3></div></div>
       <span><BadgeCheck size={13}/> PARTNERLÄNK</span>
     </div>
     <ul>{why.map(item=><li key={item}><Check size={14}/>{item}</li>)}</ul>
@@ -137,7 +137,7 @@ export default function MobilePartnerMatcher(){
           data-partner-position={i+1}
           target='_blank'
           rel='sponsored nofollow noopener'
-        ><span><strong>{partner.name}</strong><small>Kontrollera aktuellt pris och villkor</small></span><ArrowUpRight size={16}/></a>)}
+        ><span><strong><PartnerIdentity partner={partner}/></strong><small>Se aktuellt pris och villkor</small></span><ArrowUpRight size={16}/></a>)}
       </div>
     </details>
     <p className='partnerFine'>Kommersiella länkar – vi kan få provision om du blir kund. Det påverkar inte priset för dig. Urvalet omfattar inte hela marknaden.</p>

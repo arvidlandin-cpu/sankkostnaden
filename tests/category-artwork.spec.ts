@@ -88,3 +88,59 @@ for (const guide of [
     await expect(image).toBeHidden();
   });
 }
+
+// Original partner artwork must stay legible, and a failed asset must leave a
+// readable identity rather than an empty or broken-image commercial card.
+test('partner originals render in the mobile directory without a favicon', async ({ page }) => {
+  await page.setViewportSize({width:390,height:844});
+  await page.goto('/mobil/?qa=1');
+  const identity=page.locator('[data-testid="mobile-market"] [data-brand-name="Telia"]');
+  const image=identity.locator('img');
+  await expect(image).toBeVisible();
+  await expect.poll(()=>image.evaluate((node:HTMLImageElement)=>node.complete&&node.naturalWidth>0)).toBe(true);
+  const box=await image.boundingBox();
+  expect(box!.width).toBeGreaterThan(50);
+  expect(box!.height).toBeGreaterThan(20);
+  expect(await page.locator('main img[src*="google.com/s2/favicons"]').count()).toBe(0);
+});
+
+test('failed partner artwork retains a visible accessible partner name', async ({ page }) => {
+  await page.route('**/partner-brands.svg*',route=>route.fulfill({status:404,body:''}));
+  await page.goto('/mobil/?qa=1');
+  const identity=page.locator('[data-testid="mobile-market"] [data-brand-name="Telia"]');
+  await expect(identity.locator('img')).toHaveCount(0);
+  await expect(identity).toContainText('Telia');
+  await expect(identity.locator('span').last()).not.toHaveCSS('position','absolute');
+});
+
+test('income-protection guide shows the original partner identity and consumer terms', async ({ page }) => {
+  await page.goto('/forsakring/trygghetsforsakring/?qa=1');
+  const panel=page.locator('#hedvig-trygghet');
+  await expect(panel.locator('[data-brand-name="Hedvig"] img')).toBeVisible();
+  await expect(panel).toContainText('premie, karens');
+  await expect(page.locator('main')).not.toContainText('provisionen 500 kr');
+  const sponsored=panel.locator('a[data-partner="Hedvig"]');
+  await expect(sponsored).toHaveAttribute('rel',/sponsored/);
+  await expect(sponsored).toHaveAttribute('data-intent','income-protection');
+});
+
+test('insurance comparison callout heading and action meet text contrast', async ({ page }) => {
+  await page.goto('/forsakring/jamfor-forsakring/?qa=1');
+  for(const selector of ['.partnerBox h3','.partnerBox a.primary']){
+    const ratio=await page.locator(selector).evaluate(node=>{
+      const luminance=(color:string)=>color.match(/[\d.]+/g)!.slice(0,3).map(Number).map(v=>{v/=255;return v<=.04045?v/12.92:((v+.055)/1.055)**2.4}).reduce((n,v,i)=>n+v*[.2126,.7152,.0722][i],0);
+      let ancestor:Element|null=node,background='rgba(0, 0, 0, 0)';
+      while(ancestor&&background==='rgba(0, 0, 0, 0)'){background=getComputedStyle(ancestor).backgroundColor;ancestor=ancestor.parentElement;}
+      const a=luminance(getComputedStyle(node).color),b=luminance(background);
+      return (Math.max(a,b)+.05)/(Math.min(a,b)+.05);
+    });
+    expect(ratio).toBeGreaterThanOrEqual(4.5);
+  }
+});
+
+test('shared footer exposes privacy and cookie information directly', async ({ page }) => {
+  await page.goto('/bredband/100-100/?qa=1');
+  const footer=page.locator('footer');
+  await expect(footer.getByRole('link',{name:'Integritet',exact:true})).toHaveAttribute('href','/integritet/');
+  await expect(footer.getByRole('link',{name:'Cookiepolicy',exact:true})).toHaveAttribute('href','/cookies/');
+});

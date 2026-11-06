@@ -18,7 +18,7 @@ function PartnerCard({
 }){
   return <article className='matchPartnerCard'>
     <div className='matchPartnerTop'>
-      <div><small>FÖRSLAG {position}</small><div className='partnerBrand'><h3><PartnerIdentity partner={partner}/></h3></div></div>
+      <div><small>PARTNERALTERNATIV</small><div className='partnerBrand'><h3><PartnerIdentity partner={partner}/></h3></div></div>
       <span><BadgeCheck size={13}/> PARTNERLÄNK</span>
     </div>
     <ul>{reasons.slice(0,2).map(item=><li key={item}><Check size={14}/>{item}</li>)}</ul>
@@ -37,7 +37,7 @@ function PartnerCard({
   </article>;
 }
 
-function DirectPartnerStrip({items,label='Gå direkt till partner',placement,intent,helperText='Vill du ha hjälp att välja? Svara på frågan nedan så kortlistar vi relevanta alternativ.'}:{items:ActivePartner[];label?:string;placement:string;intent:PartnerIntent;helperText?:string}){
+function DirectPartnerStrip({items,label='Gå direkt till partner',placement,intent,helperText='Välj vad som är viktigt för dig så får du relevanta alternativ.'}:{items:ActivePartner[];label?:string;placement:string;intent:PartnerIntent;helperText?:string}){
   const featured=items.slice(0,2);
   if(!featured.length) return null;
   return <div className='directPartnerBlock'>
@@ -85,7 +85,7 @@ function AllPartners({
         data-partner-position={i+1}
         target='_blank'
         rel='sponsored nofollow noopener'
-      ><span><strong>{partner.name}</strong><small>Kontrollera aktuellt pris och villkor</small></span><ArrowUpRight size={16}/></a>)}
+      ><span><strong><PartnerIdentity partner={partner}/></strong><small>Se aktuellt pris och villkor</small></span><ArrowUpRight size={16}/></a>)}
     </div>
   </details>;
 }
