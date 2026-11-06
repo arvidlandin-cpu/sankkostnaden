@@ -45,7 +45,7 @@ export default function Mobil(){
       <a className='primary' href='#v10-category-lane'>Se mobilalternativ <ArrowRight size={17}/></a>
 
      </div>
-     <p className='fine'><ShieldCheck size={13}/> Gratis vägledning · tydliga partnerlänkar · ingen påhittad prisranking</p>
+     <p className='fine'><ShieldCheck size={13}/> Gratis vägledning · tydligt markerade partnerlänkar</p>
     </div>
    </section>
    <div id='v10-category-lane'><V10CategoryFastLane category='mobil'/></div>
