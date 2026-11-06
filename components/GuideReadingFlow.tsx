@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { ArrowUpRight, Check, ChevronDown, Lightbulb, ListChecks } from 'lucide-react';
 import styles from '../styles/GuideReadingFlow.module.css';
 
@@ -10,6 +11,9 @@ type Props={bullets:string[];sections:Part[]};
  * with native accessible details for optional depth.
  */
 export default function GuideReadingFlow({bullets,sections}:Props){
+ const {pathname}=useRouter();
+ // Keep the protected observation exactly as rendered before this cleanup.
+ const showReminders=pathname==='/elavtal/kvartspris'||pathname==='/elavtal/kvartspris/';
  return <div className={styles.root} data-testid='guide-reading-flow'>
   <section className={styles.overview} aria-label='Det viktigaste i korthet'>
    <div className={styles.overviewHeading}>
@@ -36,7 +40,7 @@ export default function GuideReadingFlow({bullets,sections}:Props){
        <h2>{section.heading}</h2>
        <span className={styles.chevron}><ChevronDown size={19} aria-hidden='true'/></span>
       </summary>
-      <div className={styles.answer}><p>{section.body}</p><span><ArrowUpRight size={15}/> Kontrollera alltid de faktiska villkoren innan du bestämmer dig.</span></div>
+      <div className={styles.answer}><p>{section.body}</p>{showReminders&&<span><ArrowUpRight size={15}/> Kontrollera alltid de faktiska villkoren innan du bestämmer dig.</span>}</div>
     </details>)}
    </div>
   </section>
