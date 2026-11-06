@@ -29,8 +29,8 @@ export default function App({ Component, pageProps }: AppProps) {
         <link rel='manifest' href='/manifest.webmanifest' />
         <link rel='preconnect' href='https://images.pexels.com' crossOrigin='' />
         <link rel='dns-prefetch' href='https://images.pexels.com' />
-        <link rel='icon' href='/app-icon.svg?v=2' type='image/svg+xml' />
-        <link rel='shortcut icon' href='/app-icon.svg?v=2' />
+        <link rel='icon' href='/app-icon.svg?v=3' type='image/svg+xml' />
+        <link rel='shortcut icon' href='/app-icon.svg?v=3' />
         <meta name='theme-color' content='#101d42' />
         <meta property='og:site_name' content='Sänk Kostnaden' />
         <meta name='apple-mobile-web-app-capable' content='yes' />

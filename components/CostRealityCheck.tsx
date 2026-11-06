@@ -111,7 +111,7 @@ export default function CostRealityCheck(props:Props){
         </div>
       </div>
       <div className='costRealityResult' aria-live='polite'>
-        {electricity?<><CheckCircle2 size={18}/><div><strong>{electricity.cheaper==='Lika'?'Samma kostnad':`Avtal ${electricity.cheaper} är ${money(electricity.difference)} kr billigare per år`}</strong><span>A: {money(electricity.aTotal)} kr/år · B: {money(electricity.bTotal)} kr/år för de angivna elhandelskomponenterna.</span></div></>:<div><strong>Fyll i båda avtalen</strong><span>Identiska värden ger 0 kr skillnad. Byte av A och B vänder vilket avtal som visas som billigast.</span></div>}
+        {electricity?<><CheckCircle2 size={18}/><div><strong>{electricity.cheaper==='Lika'?'Samma kostnad':`Avtal ${electricity.cheaper} är ${money(electricity.difference)} kr billigare per år`}</strong><span>A: {money(electricity.aTotal)} kr/år · B: {money(electricity.bTotal)} kr/år för de angivna elhandelskomponenterna.</span></div></>:<div><strong>Fyll i båda avtalen</strong><span>Fyll i priset och den fasta avgiften för båda avtalen för att se skillnaden per år.</span></div>}
       </div>
     </>}
 

@@ -80,7 +80,7 @@ export default function Hushallskostnadskoll(){
     <header className='topbar'><Link className='brand' href='/'><span className='brandMark'><PiggyBank size={22}/></span><span>Sänk Kostnaden</span></Link></header>
 
     <main>
-      <section className={'guideHero '+legacyStyles.hero}><div className='guideWrap'><Link className='back' href='/'><ArrowLeft size={16}/> Startsidan</Link><div className='guideIcon'><Calculator size={25}/></div><p className='kicker'>GRATIS VERKTYG • 2026</p><h1>Hushålls<wbr/>kostnadskollen</h1><p className='lead'>Se vad dina återkommande kostnader faktiskt blir på ett år. Fyll i det du betalar i dag – verktyget jämför inte mot ett påhittat normalhushåll.</p></div></section>
+      <section className={'guideHero '+legacyStyles.hero}><div className='guideWrap'><Link className='back' href='/'><ArrowLeft size={16}/> Startsidan</Link><div className='guideIcon'><Calculator size={25}/></div><p className='kicker'>GRATIS VERKTYG • 2026</p><h1>Hushålls<wbr/>kostnadskollen</h1><p className='lead'>Se vad dina återkommande kostnader faktiskt blir på ett år. Fyll i det du betalar i dag för att få en överblick och välja vad du vill se över.</p></div></section>
 
       <article className={'article guideWrap '+legacyStyles.content+' '+legacyStyles.tool}>
 
