@@ -390,8 +390,13 @@ function evaluateSeoExperiment(experiment,google,policy){
 
 function evaluateContentUtilityExperiment(experiment,google){
   if(!experiment||experiment.type!=='CONTENT_UTILITY_UPGRADE') return null;
-  const observation=google?.gsc?.quarterPriceObservation;
+  const observations=google?.gsc?.contentUtilityObservations;
+  const additional=(Array.isArray(observations)?observations:[]).find(row=>row?.experimentId===experiment.id&&row.page==='https://sankkostnaden.se'+experiment.target);
+  // Legacy quarter-price cohorts remain readable. A different utility must
+  // match both its registered ID and its exact canonical, never just either.
+  const observation=additional||(experiment.target==='/elavtal/kvartspris/'?google?.gsc?.quarterPriceObservation:null);
   if(!observation) return {verdict:'INSUFFICIENT_DATA',source:'missing_page_observation'};
+  if(additional&&additional.status!=='ok')return {verdict:'INSUFFICIENT_DATA',source:'unverified_page_observation'};
   const sameExperiment=observation.experimentId&&observation.experimentId===experiment.id;
   let observationPath='';
   try{ observationPath=new URL(observation.page).pathname; }catch{}
@@ -404,7 +409,12 @@ function evaluateContentUtilityExperiment(experiment,google){
   const minImpressions=num(observation.minImpressions)||30;
   const verified=observation.status==='ok'
     && observation.dataState==='final'
-    && observation.scope==='page_post_observation';
+    && observation.scope==='page_post_observation'
+    && (!additional||(observation.period?.startDate===experiment.measurement?.gscPostStartDate
+      && observation.period?.days===completeDays
+      && completeDays===Math.round((Date.parse(observation.period?.endDate)-Date.parse(observation.period?.startDate))/86400000)+1
+      && minCompleteDays>=Math.max(7,experiment.measurement?.gscMinCompletePostDays||7)
+      && minImpressions>=Math.max(30,experiment.measurement?.minPostPageImpressions||30)));
   const eligible=verified
     && observation.eligibleForReview===true
     && completeDays>=minCompleteDays
@@ -417,8 +427,8 @@ function evaluateContentUtilityExperiment(experiment,google){
       completeDays,
       impressions,
       clicks:num(observation.clicks),
-      ctr:num(observation.ctr),
-      position:num(observation.position),
+      ctr:additional&&observation.ctr==null?null:num(observation.ctr),
+      position:additional&&observation.position==null?null:num(observation.position),
     },
     thresholds:{minCompleteDays,minImpressions},
   };
@@ -511,7 +521,7 @@ export function buildDecisionPacket({
         && evaluation?.verdict!=='READY_FOR_REVIEW';
       candidates.push(action(
         waitingForContentSample?'WAITING_FOR_EXPERIMENT':'REVIEW_ACTIVE_EXPERIMENT',
-        95,
+        evaluation?.verdict==='READY_FOR_REVIEW'?96:95,
         evaluation?.verdict==='INSUFFICIENT_DATA'
           ?'Observationstid har passerat men stickprovet är för litet för ett säkert beslut.'
           :'Aktivt experiment har passerat minsta observationstid och kan bedömas.',

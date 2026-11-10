@@ -217,6 +217,58 @@ test('content utility review unlocks only after the verified page cohort reaches
   assert.equal(packet.recommendedAction.details.evaluation.verdict,'READY_FOR_REVIEW');
 });
 
+const condoUtility={id:'bostadsratt-price-example-20261110',type:'CONTENT_UTILITY_UPGRADE',status:'running',target:'/forsakring/hemforsakring-bostadsratt/',startedAt:'2026-11-10T12:00:00+01:00',earliestReviewAt:'2026-11-19T09:00:00+01:00',measurement:{gscPostStartDate:'2026-11-11',gscMinCompletePostDays:7,minPostPageImpressions:30}};
+const condoObservation={status:'ok',experimentId:condoUtility.id,page:'https://sankkostnaden.se'+condoUtility.target,dataState:'final',scope:'page_post_observation',period:{startDate:'2026-11-11',endDate:'2026-11-17',days:7},completeDays:7,impressions:30,clicks:0,ctr:0,position:18,minCompleteDays:7,minImpressions:30,eligibleForReview:true};
+function condoDecision(observation,experiments=[condoUtility]){
+  const g=google('2026-11-19T12:00:00Z');
+  g.gsc.contentUtilityObservations=[observation];
+  g.gsc.quarterPriceObservation={...condoObservation,experimentId:'quarter-price',page:'https://sankkostnaden.se/elavtal/kvartspris/',impressions:26,eligibleForReview:false};
+  return buildDecisionPacket({google:g,policy:{...policy,limits:{...policy.limits,maxConcurrentExperiments:2}},state:{activeExperiments:experiments},now:new Date('2026-11-19T12:00:00Z')});
+}
+
+test('additional utility requires its exact experiment ID and exact canonical, never the quarter cohort',()=>{
+  for(const observation of [
+    {...condoObservation,experimentId:'other-change'},
+    {...condoObservation,page:'https://sankkostnaden.se/elavtal/kvartspris/'},
+    {...condoObservation,page:'https://other.example'+condoUtility.target},
+    {...condoObservation,page:'https://sankkostnaden.se'+condoUtility.target+'?test=1'},
+  ]){
+    const packet=condoDecision(observation);
+    assert.equal(packet.recommendedAction.type,'WAITING_FOR_EXPERIMENT');
+    assert.equal(packet.recommendedAction.details.evaluation.verdict,'INSUFFICIENT_DATA');
+    assert.equal(packet.recommendedAction.details.evaluation.post,undefined);
+  }
+});
+
+test('additional utility cannot review unverified, preliminary, wrong-period or insufficient cohorts',()=>{
+  for(const observation of [
+    {...condoObservation,status:'UNKNOWN',impressions:undefined,clicks:undefined},
+    {...condoObservation,dataState:'all'},
+    {...condoObservation,scope:'page_pre_observation'},
+    {...condoObservation,period:{...condoObservation.period,startDate:'2026-11-10'}},
+    {...condoObservation,period:{...condoObservation.period,days:99}},
+    {...condoObservation,impressions:29},
+    {...condoObservation,minImpressions:1},
+    {...condoObservation,completeDays:6},
+  ])assert.equal(condoDecision(observation).recommendedAction.details.evaluation.verdict,'INSUFFICIENT_DATA');
+  const zero=condoDecision({...condoObservation,impressions:0,ctr:null,position:null,eligibleForReview:false});
+  assert.equal(zero.recommendedAction.details.evaluation.post.ctr,null);
+  assert.equal(zero.recommendedAction.details.evaluation.post.position,null);
+});
+
+test('a ready independent utility is reviewed before a low-sample quarter wait without declaring a winner',()=>{
+  const quarter={id:'quarter-price',type:'CONTENT_UTILITY_UPGRADE',target:'/elavtal/kvartspris/',status:'running',startedAt:'2026-10-10T09:00:00Z',earliestReviewAt:'2026-10-18T09:00:00Z'};
+  const packet=condoDecision(condoObservation,[quarter,condoUtility]);
+  assert.equal(packet.recommendedAction.type,'REVIEW_ACTIVE_EXPERIMENT');
+  assert.equal(packet.recommendedAction.details.experiment.id,condoUtility.id);
+  assert.equal(packet.recommendedAction.details.evaluation.verdict,'READY_FOR_REVIEW');
+  const waiting=packet.candidateActions.find(row=>row.details?.experiment?.id==='quarter-price');
+  assert.equal(waiting.type,'WAITING_FOR_EXPERIMENT');
+  assert.equal(waiting.details.evaluation.post.impressions,26);
+  assert.equal(waiting.details.evaluation.verdict,'INSUFFICIENT_DATA');
+  assert.equal(packet.recommendedAction.details.evaluation.post.impressions,30);
+});
+
 
 test('early-stage repeated top-10 query can trigger a metadata experiment before 80 impressions',()=>{
   const g=google();

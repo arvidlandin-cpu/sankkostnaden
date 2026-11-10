@@ -21,6 +21,7 @@ import {
   summarizeGscCompleteWindows,
   gscObservationPeriod,
   summarizeGscObservation,
+  collectGscContentObservation,
   toMarkdown,
 } from './lib/googleOrganicPerformance.mjs';
 
@@ -147,6 +148,19 @@ async function inspectPriorityUrls(accessToken,siteUrl){
   }));
 }
 
+async function collectAdditionalContentObservations(accessToken,siteUrl,finalThroughDate){
+  try{
+    const state=JSON.parse(await fs.readFile('autopilot/state.json','utf8'));
+    // One reviewed additional target, not an unbounded arbitrary-URL collector.
+    const experiment=state.activeExperiments?.find(item=>item.id==='bostadsratt-price-example-20261110'&&item.target==='/forsakring/hemforsakring-bostadsratt/'&&item.type==='CONTENT_UTILITY_UPGRADE'&&item.status==='running');
+    if(!experiment)return [];
+    return [await collectGscContentObservation({experiment,finalThroughDate,origin:`https://${targetHostname}`,
+      query:(dimensions,filters,dataState,queryPeriod)=>runGsc(accessToken,siteUrl,dimensions,filters,dataState,queryPeriod)})];
+  }catch{
+    return [{status:'UNKNOWN',experimentId:'bostadsratt-price-example-20261110',page:'https://sankkostnaden.se/forsakring/hemforsakring-bostadsratt/',reason:'The reviewed observation configuration could not be read.'}];
+  }
+}
+
 let report;
 if(!rawServiceAccount){
   report={
@@ -267,9 +281,10 @@ if(!rawServiceAccount){
   const focusQueryDaily=normalizeGscDateQueryRows(gscDateQueriesRaw)
     .filter(row=>focusQueries.has(row.query.toLowerCase()));
   const finalDaily=normalizeGscRows(gscFinalDailyRaw,'date').sort((a,b)=>a.date.localeCompare(b.date));
-  const [urlInspection,quarterPriceObservation]=await Promise.all([
+  const [urlInspection,quarterPriceObservation,contentUtilityObservations]=await Promise.all([
     inspectPriorityUrls(accessToken,siteUrl),
     collectQuarterObservation(accessToken,siteUrl,finalDaily.at(-1)?.date),
+    collectAdditionalContentObservations(accessToken,siteUrl,finalDaily.at(-1)?.date),
   ]);
 
   report={
@@ -309,6 +324,7 @@ if(!rawServiceAccount){
       finalDaily,
       completeSevenDayComparison:summarizeGscCompleteWindows(finalDaily,7,period),
       quarterPriceObservation,
+      contentUtilityObservations,
       urlInspection,
       appDaily:normalizeGscRows(gscAppDailyRaw,'date').sort((a,b)=>a.date.localeCompare(b.date)),
       appQueries:normalizeGscRows(gscAppQueriesRaw,'query'),
