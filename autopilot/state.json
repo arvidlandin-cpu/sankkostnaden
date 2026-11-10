@@ -10,7 +10,8 @@
   "notes": [
     "Cancelled Oct 7 snippet test at owner's request; no 15 Oct review requirement. No evidence-backed winner/loser verdict.",
     "Keep source truth, click attribution, QA and owner approval for paid/compliance-sensitive actions.",
-    "One narrow kvartspris content-utility observation is active; unrelated scopes remain eligible up to policy limit. It is not a won SEO or commercial experiment."
+    "One narrow kvartspris content-utility observation is active; unrelated scopes remain eligible up to policy limit. It is not a won SEO or commercial experiment.",
+    "10 Nov: second independent content-utility observation is BRF price-example, supported by exact query→page. Preserve quarter-price observation; do not launch overlapping insurance or snippet tests. Source period is all-state; evaluate final filtered cohorts separately."
   ],
   "activeExperiments": [
     {
@@ -57,6 +58,69 @@
         "northStar": "approved affiliate commission SEK per qualified visitor"
       },
       "rollback": "Revert the scoped guide and component changes if accessibility, attribution, indexation or content accuracy regress; keep if truthful and useful while data matures"
+    },
+    {
+      "id": "bostadsratt-price-example-20261110",
+      "type": "CONTENT_UTILITY_UPGRADE",
+      "status": "running",
+      "target": "/forsakring/hemforsakring-bostadsratt/",
+      "query": "hemförsäkring bostadsrätt pris",
+      "category": "forsakring",
+      "scope": {
+        "urls": [
+          "/forsakring/hemforsakring-bostadsratt/"
+        ],
+        "queryCluster": [
+          "hemförsäkring bostadsrätt pris",
+          "vad kostar hemförsäkring bostadsrätt",
+          "försäkring bostadsrätt pris"
+        ],
+        "funnel": "Existing housing-insurance guide: direct editorial price answer and static worked first-year comparison; existing cover check and partner routing remain unchanged.",
+        "excludes": [
+          "/elavtal/kvartspris/",
+          "/forsakring/trygghetsforsakring/"
+        ],
+        "independentFrom": "kvartspris-one-click-utility-20261010 uses a different page, topic, cohort and partner intent."
+      },
+      "startedAt": "2026-11-10T09:00:00+01:00",
+      "earliestReviewAt": "2026-11-19T09:00:00+01:00",
+      "baseline": {
+        "sourceRun": "https://github.com/arvidlandin-cpu/sankkostnaden/actions/runs/42669680924",
+        "generatedAt": "2026-11-09T17:58:27.521Z",
+        "periodStart": "2026-10-10",
+        "latestGscDate": "2026-11-08",
+        "dataState": "all",
+        "pageImpressions": 816,
+        "pageClicks": 0,
+        "averagePosition": 24.731617647058822,
+        "exactQueryPage": {
+          "query": "hemförsäkring bostadsrätt pris",
+          "impressions": 135,
+          "clicks": 0,
+          "position": 17.8
+        },
+        "finalOnlyComparableBaseline": "UNKNOWN; obtain final page-filtered data for the same-length complete pre-release window. All-state reference is not a causal baseline.",
+        "organicLandings": "UNKNOWN",
+        "eligibleApprovedCommissionSEK": "UNKNOWN"
+      },
+      "measurement": {
+        "postStartDate": "2026-11-11",
+        "timeZone": "America/Los_Angeles",
+        "gscMinCompletePostDays": 7,
+        "minPostPageImpressions": 30,
+        "dataState": "final",
+        "organicOnly": true,
+        "excludeQaAndDirect": true,
+        "existingEvents": [
+          "condo_protection_answer",
+          "affiliate_click"
+        ],
+        "reviewDate": "2026-11-25",
+        "evaluation": "Page-filtered final GSC and exact query→page, with equivalent complete preperiod; separate real organic landings, unique partner-click users and network-approved commission. No causal winner from small observational counts.",
+        "northStar": "approved affiliate commission SEK per qualified visitor",
+        "gscPostStartDate": "2026-11-11"
+      },
+      "rollback": "Revert scoped intro/content, state and reviewed sitemap date if content accuracy, mobile access, canonical/indexation or attribution regresses; no automatic rollback based on a few impressions."
     }
   ],
   "lastStrategyDecision": {
@@ -71,8 +135,8 @@
     {
       "target": "/forsakring/hemforsakring-bostadsratt/",
       "status": "already_served",
-      "reviewedAt": "2026-10-11",
-      "evidence": "On-page components/CondoInsuranceCheck.tsx already provides two meaningful collective-bostadsratts-tillagg/hemforsakring answers plus checklist and contextual partner handoff; 302 GSC impressions/0 clicks/avg position 29 is weak discoverability, not evidence of missing second widget.",
+      "reviewedAt": "2026-11-10",
+      "evidence": "Existing CondoInsuranceCheck remains unchanged and already serves collective-cover questions. New query→page demand (135 impressions/0 clicks/17.8 for price) supports a static worked premium example and direct sourced answer, not another widget. Scoped observation registered separately.",
       "reviewRule": "Revisit only if real organic/user evidence reveals a NEW uncovered task; set status to needs_new_utility. No new calendar gate or blocking of unrelated insurance work."
     }
   ]

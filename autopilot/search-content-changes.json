@@ -44,8 +44,8 @@
     },
     {
       "url": "https://sankkostnaden.se/forsakring/hemforsakring-bostadsratt/",
-      "lastmod": "2026-10-26",
-      "reason": "Primary-source editorial guidance now explains the entire personal home-insurance premium and a same-period method for comparing two real offers, while retaining the collective-cover check.",
+      "lastmod": "2026-11-10",
+      "reason": "The existing guide now gives a direct sourced price answer and an original illustrative twelve-month premium comparison, separating post-discount price, contingent deductibles and collective housing cover. No supplier tariff or second calculator is introduced.",
       "sourcePaths": [
         "pages/forsakring/hemforsakring-bostadsratt.tsx"
       ],

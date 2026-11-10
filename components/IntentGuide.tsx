@@ -25,9 +25,10 @@ type Props = {
   elevatePartners?: boolean;
   utility?: Utility;
   extraUtility?: ReactNode;
+  intro?: ReactNode;
 };
 
-export default function IntentGuide({ title, description, kicker, canonical, category, intent, bullets, sections, related, elevatePartners = false, utility, extraUtility }: Props) {
+export default function IntentGuide({ title, description, kicker, canonical, category, intent, bullets, sections, related, elevatePartners = false, utility, extraUtility, intro }: Props) {
   const categoryLabels: Record<PartnerCategory, string> = { el: 'Elavtal', bredband: 'Bredband', mobil: 'Mobil', forsakring: 'Försäkring', ekonomi: 'Lån & ekonomi' };
   const categoryPaths: Record<PartnerCategory, string> = { el: '/elavtal/', bredband: '/bredband/', mobil: '/mobil/', forsakring: '/forsakring/', ekonomi: '/ekonomi/' };
   const categoryLabel = categoryLabels[category];
@@ -100,7 +101,7 @@ export default function IntentGuide({ title, description, kicker, canonical, cat
         )}
         <article className={observeQuarterPrice ? 'article guideWrap' : `article ${styles.editorialArticle}`}>
           {observeQuarterPrice && <DecisionGateway category={category} intent={intent} currentPath={new URL(canonical).pathname} onPagePartners={elevatePartnerBlock} compact />}
-          {observeQuarterPrice ? <GuideReadingFlow bullets={bullets} sections={sections} /> : <div id='guide-summary' className={styles.reading}><GuideReadingFlow bullets={bullets} sections={sections} /></div>}
+          {observeQuarterPrice ? <GuideReadingFlow bullets={bullets} sections={sections} /> : <div id='guide-summary' className={styles.reading}>{intro}<GuideReadingFlow bullets={bullets} sections={sections} /></div>}
           {utility && <aside className='utilityToolCard'><div><p>{utility.eyebrow}</p><h2>{utility.title}</h2><span>{utility.body}</span></div><Link href={utility.href}>{utility.cta}<ArrowRight size={17}/></Link></aside>}
           {extraUtility}
           {!observeQuarterPrice && <DecisionGateway category={category} intent={intent} currentPath={new URL(canonical).pathname} onPagePartners={elevatePartnerBlock} compact />}
