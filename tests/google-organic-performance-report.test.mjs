@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { buildDailyReport, dailyReportMarkdown } from '../scripts/lib/dailyReport.mjs';
 import {
   dateRange,
   normalizeGa4Channels,
@@ -18,12 +19,145 @@ import {
   summarizeGscCompleteWindows,
   gscObservationPeriod,
   summarizeGscObservation,
+  collectGscContentObservation,
   toMarkdown,
 } from '../scripts/lib/googleOrganicPerformance.mjs';
 
 test('date range is inclusive and ends one day before now',()=>{
   const range=dateRange(30,new Date('2026-10-07T12:00:00Z'),1);
   assert.deepEqual(range,{startDate:'2026-09-07',endDate:'2026-10-06',days:30});
+});
+
+const condoExperiment={id:'bostadsratt-price-example-20261110',type:'CONTENT_UTILITY_UPGRADE',status:'running',target:'/forsakring/hemforsakring-bostadsratt/',startedAt:'2026-11-10T12:00:00+01:00',measurement:{gscPostStartDate:'2026-11-11',gscMinCompletePostDays:7,minPostPageImpressions:30}};
+const condoCanonical='https://sankkostnaden.se'+condoExperiment.target;
+function observationQuery(calls,mutate=()=>{}){
+  return async(dimensions,filters,dataState,period)=>{
+    calls.push({dimensions,filters,dataState,period});
+    const raw={rows:dimensions[0]==='date'
+      ?[{keys:[period.startDate],clicks:1,impressions:10,ctr:.1,position:10},{keys:[period.endDate],clicks:2,impressions:20,ctr:.1,position:20}]
+      :[{keys:['hemförsäkring bostadsrätt pris',condoCanonical],clicks:1,impressions:12,ctr:1/12,position:17}]};
+    mutate(raw,dimensions,period);
+    return raw;
+  };
+}
+
+test('additional observation queries one exact canonical with final data in disjoint pre/post periods',async()=>{
+  const calls=[];
+  const result=await collectGscContentObservation({experiment:condoExperiment,finalThroughDate:'2026-11-17',query:observationQuery(calls)});
+  assert.equal(result.status,'ok');
+  assert.equal(result.experimentId,condoExperiment.id);
+  assert.equal(result.page,condoCanonical);
+  assert.deepEqual(result.period,{startDate:'2026-11-11',endDate:'2026-11-17',days:7});
+  assert.equal(result.dataState,'final');
+  assert.equal(result.reportTimezone,'America/Los_Angeles');
+  assert.equal(result.position,50/3);
+  assert.equal(result.impressions,30);
+  assert.equal(result.eligibleForReview,true);
+  assert.deepEqual(result.baseline.period,{startDate:'2026-10-13',endDate:'2026-11-09',days:28});
+  assert.equal(result.baseline.scope,'page_pre_observation');
+  assert.equal(calls.length,4);
+  for(const call of calls){
+    assert.deepEqual(call.filters,[{dimension:'page',operator:'equals',expression:condoCanonical}]);
+    assert.equal(call.dataState,'final');
+    assert.ok([['date'].join(),['query','page'].join()].includes(call.dimensions.join()));
+  }
+  assert.equal(result.queryPages[0].page,condoCanonical);
+  // Anonymous query omission means query impressions are not page totals.
+  assert.equal(result.queryPages[0].impressions,12);
+  assert.match(result.queryCoverage,/Do not sum/);
+});
+
+test('unavailable complete post/pre periods remain unknown without manufactured zero metrics',async()=>{
+  const calls=[];
+  const result=await collectGscContentObservation({experiment:condoExperiment,finalThroughDate:'2026-11-08',query:observationQuery(calls)});
+  assert.equal(calls.length,0);
+  assert.equal(result.status,'UNKNOWN');
+  assert.equal(result.baseline.status,'UNKNOWN');
+  assert.equal(result.impressions,undefined);
+  assert.equal(result.clicks,undefined);
+  const baselineOnly=await collectGscContentObservation({experiment:condoExperiment,finalThroughDate:'2026-11-09',query:observationQuery(calls)});
+  assert.equal(calls.length,2);
+  assert.equal(baselineOnly.status,'UNKNOWN');
+  assert.equal(baselineOnly.baseline.status,'ok');
+  assert.equal(baselineOnly.impressions,undefined);
+});
+
+test('additional observation rejects wrong canonicals, invalid dates, metrics, truncation and incomplete data',async()=>{
+  for(const mutate of [
+    (raw,dims)=>{if(dims[0]==='query')raw.rows[0].keys[1]='https://sankkostnaden.se/forsakring/trygghetsforsakring/';},
+    (raw,dims)=>{if(dims[0]==='date')raw.rows[0].keys[0]='2026-09-01';},
+    raw=>{raw.rows[0].impressions=NaN;},
+    raw=>{raw.rows[0].clicks=999;},
+    raw=>{raw.rows.push(raw.rows[0]);},
+    raw=>{raw.rows=Array(25000).fill(raw.rows[0]);},
+    (raw,dims,period)=>{raw.metadata={first_incomplete_date:period.endDate};},
+  ]){
+    const result=await collectGscContentObservation({experiment:condoExperiment,finalThroughDate:'2026-11-17',query:observationQuery([],mutate)});
+    assert.equal(result.status,'UNKNOWN');
+    assert.equal(result.impressions,undefined);
+  }
+});
+
+test('additional observation validates explicit Pacific start, canonical and bounded configuration before API calls',async()=>{
+  for(const experiment of [
+    {...condoExperiment,target:'https://other.example/forsakring/'},
+    {...condoExperiment,target:'/forsakring/hemforsakring-bostadsratt/?x=1'},
+    {...condoExperiment,measurement:{...condoExperiment.measurement,gscPostStartDate:'2026-11-10'}},
+    {...condoExperiment,measurement:{...condoExperiment.measurement,gscPostStartDate:'2026-11-12'}},
+    {...condoExperiment,measurement:{...condoExperiment.measurement,gscPostStartDate:'2026-02-30'}},
+    {...condoExperiment,measurement:{...condoExperiment.measurement,minPostPageImpressions:1}},
+  ]){
+    const calls=[];
+    const result=await collectGscContentObservation({experiment,finalThroughDate:'2026-11-17',query:observationQuery(calls)});
+    assert.equal(result.status,'UNKNOWN');
+    assert.equal(calls.length,0);
+  }
+});
+
+test('verified empty final response has zero reported impressions but unknown CTR/position and no review claim',async()=>{
+  const result=await collectGscContentObservation({experiment:condoExperiment,finalThroughDate:'2026-11-17',query:async()=>({})});
+  assert.equal(result.status,'ok');
+  assert.equal(result.impressions,0);
+  assert.equal(result.ctr,null);
+  assert.equal(result.position,null);
+  assert.equal(result.eligibleForReview,false);
+});
+
+test('additional observation API failure is unknown rather than a zero or quarter-price cohort',async()=>{
+  const result=await collectGscContentObservation({experiment:condoExperiment,finalThroughDate:'2026-11-17',query:async()=>{throw Error('source unavailable');}});
+  assert.equal(result.status,'UNKNOWN');
+  assert.equal(result.impressions,undefined);
+  assert.equal(result.page,condoCanonical);
+});
+
+test('report exposes exact additional observation periods and never calls sample eligibility a winner',async()=>{
+  const observation=await collectGscContentObservation({experiment:condoExperiment,finalThroughDate:'2026-11-17',query:observationQuery([])});
+  const period={startDate:'2026-10-19',endDate:'2026-11-17'};
+  const markdown=toMarkdown({configured:true,generatedAt:'2026-11-19',ga4:{period,totals:{},organic:{},channels:[],sources:[]},gsc:{period,totals:{},pages:[],queries:[],contentUtilityObservations:[observation]}});
+  assert.match(markdown,/2026-11-11 – 2026-11-17 \(7 dagar, America\/Los_Angeles\)/);
+  assert.match(markdown,/2026-10-13 – 2026-11-09/);
+  assert.match(markdown,/hemförsäkring bostadsrätt pris \| https:\/\/sankkostnaden.se\/forsakring\/hemforsakring-bostadsratt\//);
+  assert.match(markdown,/inte en vinnare, bevisad orsak eller godkänd provision/);
+});
+
+test('consolidated daily report shows the separate final BRF source periods and suppresses unverified counts',async()=>{
+  const now='2026-11-19T08:00:00Z';
+  const observation=await collectGscContentObservation({experiment:condoExperiment,finalThroughDate:'2026-11-17',query:observationQuery([])});
+  const google={configured:true,generatedAt:now,ga4:{},gsc:{contentUtilityObservations:[observation]}};
+  const report=buildDailyReport({google,now});
+  const markdown=dailyReportMarkdown(report);
+  assert.match(markdown,/Bostadsrätt: prisexemplets egen sidobservation/);
+  assert.match(markdown,/Första hela efterdagen: 2026-11-11/);
+  assert.match(markdown,/Efterperiod: 2026-11-11 – 2026-11-17 \(7 dagar\) · status: ok/);
+  assert.match(markdown,/Förperiod, samma exakta sida: 2026-10-13 – 2026-11-09 \(28 dagar\) · status: ok/);
+  assert.match(markdown,/Det bevisar inte en vinnare, en orsak eller godkänd provision/);
+  assert.deepEqual(report.revenue,buildDailyReport({google:{...google,gsc:{}},now}).revenue);
+  google.gsc.contentUtilityObservations=[{...observation,status:'UNKNOWN',reason:'secret=do-not-echo',impressions:999999,clicks:999999,baseline:{status:'UNKNOWN',impressions:999999}}];
+  const unknown=dailyReportMarkdown(buildDailyReport({google,now}));
+  assert.match(unknown,/Efterperiod: UNKNOWN · status: UNKNOWN/);
+  assert.match(unknown,/visningar: UNKNOWN · klick: UNKNOWN/);
+  assert.match(unknown,/Förperiod, samma exakta sida: UNKNOWN · status: UNKNOWN/);
+  assert.doesNotMatch(unknown,/999999|do-not-echo/);
 });
 
 test('normalizes GA4 totals and channels',()=>{

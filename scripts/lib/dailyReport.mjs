@@ -108,6 +108,20 @@ function releaseStatus(release){
   return {status:valid?'verified':'UNKNOWN',passed:typeof release.passed==='boolean'?release.passed:null,mode:safeText(release.mode),expectedCommit:/^[a-f\d]{7,40}$/i.test(release.expectedCommit||'')?release.expectedCommit:null,referenceUrl,verifiedAt:safeText(release.verifiedAt),checkCount:Array.isArray(release.checks)?release.checks.length:null,assetCount:Array.isArray(release.assets)?release.assets.length:null,errors:Array.isArray(release.errors)?release.errors.map((_,index)=>'Verifieringsfel '+(index+1)+'; se separat verifieringsartifact.'):[],physicalIphoneVerified:null,ownerDesignApproved:null};
 }
 
+function contentObservation(value,scope){
+  const period=periodOf(value);
+  const valid=value?.status==='ok'&&value.dataState==='final'&&value.scope===scope
+    && period&&period.days===number(value.completeDays)
+    && (scope!=='page_post_observation'||period.from===value.postStartDate)
+    && number(value.clicks)!==null&&value.clicks>=0
+    && number(value.impressions)!==null&&value.impressions>=value.clicks;
+  return {status:valid?'ok':'UNKNOWN',period:valid?period:null,
+    completeDays:valid?number(value.completeDays):null,clicks:valid?number(value.clicks):null,impressions:valid?number(value.impressions):null,
+    ctr:valid?ctr(value.ctr):null,position:valid?position(value.position):null,
+    minCompleteDays:valid?number(value.minCompleteDays):null,minImpressions:valid?number(value.minImpressions):null,
+    eligibleForReview:valid&&typeof value.eligibleForReview==='boolean'?value.eligibleForReview:null};
+}
+
 export function buildDailyReport({google,affiliate,addrevenue,adtraction,partnerHealth,decision,release,now=new Date()}={}){
   now=new Date(now);
   const sources=Object.entries({google,affiliate,addrevenue,adtraction,partnerHealth}).map(([name,source])=>sourceStatus(name,source,now));
@@ -131,6 +145,11 @@ export function buildDailyReport({google,affiliate,addrevenue,adtraction,partner
     ctr:ctr(quarter.ctr),position:position(quarter.position),eligibleForReview:typeof quarter.eligibleForReview==='boolean'?quarter.eligibleForReview:null,
     minCompleteDays:number(quarter.minCompleteDays),minImpressions:number(quarter.minImpressions),
   }:null;
+  traffic.contentUtilityObservations=Array.isArray(gsc?.contentUtilityObservations)?gsc.contentUtilityObservations
+    .filter(row=>row?.experimentId==='bostadsratt-price-example-20261110'&&row.page==='https://sankkostnaden.se/forsakring/hemforsakring-bostadsratt/')
+    .map(row=>({experimentId:row.experimentId,page:row.page,
+      postStartDate:periodOf({period:{startDate:row.postStartDate,endDate:row.postStartDate}})?.from||null,
+      ...contentObservation(row,'page_post_observation'),baseline:contentObservation(row.baseline,'page_pre_observation')})):null;
   traffic.urlInspection=Array.isArray(gsc?.urlInspection)?gsc.urlInspection.map(row=>({url:safeText(row.url),status:safeText(row.status),verdict:safeText(row.verdict),coverageState:safeText(row.coverageState),lastCrawlTime:safeText(row.lastCrawlTime),googleCanonical:safeText(row.googleCanonical)})):null;
   traffic.gscCtr=ctr(gsc?.totals?.ctr);
   traffic.gscPosition=position(gsc?.totals?.position);
@@ -215,6 +234,18 @@ export function dailyReportMarkdown(report){
   if(t.quarterPriceObservation){
     const q=t.quarterPriceObservation;
     searchLines.push('### Kvartspris: sidfiltrerad observation efter ändringen','',`- Status: ${display(q.status)} · period: ${periodText(q.period)} (Search Console, America/Los_Angeles)`,`- Färdigbehandlade dagar: ${display(q.completeDays)} · visningar: ${display(q.impressions)} · klick: ${display(q.clicks)}`,`- Minimikrav: ${display(q.minCompleteDays)} dagar och ${display(q.minImpressions)} visningar · uppfyllda: ${q.eligibleForReview===null?'UNKNOWN':q.eligibleForReview?'ja':'nej'}`,'- Detta är läsunderlag för granskning, inte en vinnare, en kausal effekt eller nätverksgodkänd intäkt. Experimentets sida och state ändras inte.','');
+  }
+  for(const observation of t.contentUtilityObservations||[]){
+    const baseline=observation.baseline;
+    searchLines.push('### Bostadsrätt: prisexemplets egen sidobservation','',
+      `- Sida: ${observation.page}`,
+      `- Första hela efterdagen: ${display(observation.postStartDate)} (Search Console, America/Los_Angeles)`,
+      `- Efterperiod: ${periodText(observation.period)} · status: ${observation.status}`,
+      `- Färdigbehandlade dagar: ${display(observation.completeDays)} · visningar: ${display(observation.impressions)} · klick: ${display(observation.clicks)} · CTR: ${percent(observation.ctr)} · position: ${display(observation.position)}`,
+      `- Minimikrav: ${display(observation.minCompleteDays)} dagar och ${display(observation.minImpressions)} visningar · uppfyllda: ${observation.eligibleForReview===null?'UNKNOWN':observation.eligibleForReview?'ja':'nej'}`,
+      `- Förperiod, samma exakta sida: ${periodText(baseline.period)} · status: ${baseline.status} · ${display(baseline.impressions)} visningar · ${display(baseline.clicks)} klick · position ${display(baseline.position)}`,
+      '- Saknade fullständiga eller verifierade data är UNKNOWN. Perioderna kan ha olika längd; jämför inte totalsiffrorna som ett bevis på effekt. Sökfråga → exakt sida finns i Google-rapportens separata underlag.',
+      '- Underlaget signalerar endast när en manuell granskning kan göras. Det bevisar inte en vinnare, en orsak eller godkänd provision. Kvartspris redovisas separat.','');
   }
   searchLines.push('GA4 landningssidor: '+t.ga4LandingPagesNotice,'');
   if(Array.isArray(t.organicContentLandings)){

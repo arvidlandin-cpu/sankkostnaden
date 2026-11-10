@@ -200,6 +200,62 @@ export function summarizeGscObservation(rows,period,{minCompleteDays=7,minImpres
   return {scope:'page_post_observation',period,completeDays,clicks,impressions,ctr:impressions?clicks/impressions:null,position:impressions?weightedPosition/impressions:null,minCompleteDays,minImpressions,eligibleForReview:completeDays>=minCompleteDays&&impressions>=minImpressions};
 }
 
+// Separate from the existing quarter-price collector: each additional utility
+// keeps an exact canonical, final-only cohort and its own immutable start day.
+export async function collectGscContentObservation({experiment,finalThroughDate,query,origin='https://sankkostnaden.se'}){
+  const validDate=value=>typeof value==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(value)&&Number.isFinite(Date.parse(value+'T00:00:00Z'))&&new Date(value+'T00:00:00Z').toISOString().slice(0,10)===value;
+  const unknown=reason=>({status:'UNKNOWN',experimentId:experiment?.id||null,page:page||null,postStartDate:experiment?.measurement?.gscPostStartDate||null,reason});
+  let page;
+  try{
+    const url=new URL(experiment.target,origin);
+    if(url.origin!==origin||url.pathname!==experiment.target||!url.pathname.endsWith('/')||url.search||url.hash||url.username||url.password||experiment.type!=='CONTENT_UTILITY_UPGRADE'||experiment.status!=='running'||!experiment.id)throw Error('Invalid experiment');
+    page=url.href;
+    const first=experiment.measurement?.gscPostStartDate;
+    const earliest=gscObservationPeriod(experiment.startedAt,first)?.startDate;
+    if(!validDate(first)||!validDate(finalThroughDate)||first!==earliest)return unknown('The explicit first full Pacific day or final data cutoff is invalid.');
+    const options={minCompleteDays:experiment.measurement?.gscMinCompletePostDays??7,minImpressions:experiment.measurement?.minPostPageImpressions??30};
+    if(!Number.isInteger(options.minCompleteDays)||options.minCompleteDays<7||!Number.isInteger(options.minImpressions)||options.minImpressions<30)return unknown('Invalid observation thresholds.');
+    const filters=[{dimension:'page',operator:'equals',expression:page}];
+    const periodBetween=(startDate,endDate)=>({startDate,endDate,days:Math.round((Date.parse(endDate)-Date.parse(startDate))/86400000)+1});
+    const validateRaw=(raw,dimensions,period)=>{
+      if(!raw||!Array.isArray(raw.rows??[])||(raw.rows?.length||0)>=25000||raw.metadata?.first_incomplete_date&&raw.metadata.first_incomplete_date<=period.endDate)throw Error('Unverified or truncated final rows');
+      for(const row of raw.rows||[]){
+        if(!Array.isArray(row.keys)||row.keys.length!==dimensions.length||!Number.isFinite(row.clicks)||row.clicks<0||!Number.isFinite(row.impressions)||row.impressions<row.clicks||row.impressions>0&&(!Number.isFinite(row.position)||row.position<0))throw Error('Invalid observation metrics');
+        if(dimensions[0]==='date'&&(!validDate(row.keys[0])||row.keys[0]<period.startDate||row.keys[0]>period.endDate))throw Error('Observation date outside requested cohort');
+        if(dimensions[0]==='query'&&(!row.keys[0]||row.keys[1]!==page))throw Error('Query belongs to a different canonical');
+      }
+      return raw;
+    };
+    const collect=async period=>{
+      if(period.days<1||period.days>365)throw Error('Observation period outside bounded collection');
+      const [dailyRaw,pairsRaw]=await Promise.all([
+        query(['date'],filters,'final',period),
+        query(['query','page'],filters,'final',period),
+      ]);
+      validateRaw(dailyRaw,['date'],period);validateRaw(pairsRaw,['query','page'],period);
+      const daily=normalizeGscRows(dailyRaw,'date').sort((a,b)=>a.date.localeCompare(b.date));
+      const summary=summarizeGscObservation(daily,period,options);
+      if(!summary)throw Error('Invalid daily cohort');
+      const queryPages=normalizeGscPairs(pairsRaw);
+      if(new Set(queryPages.map(row=>row.query)).size!==queryPages.length)throw Error('Duplicate query rows');
+      return {status:'ok',dataState:'final',reportTimezone:'America/Los_Angeles',...summary,daily,queryPages,queryCoverage:'Reported query rows only; anonymized queries may be omitted. Do not sum these rows as page totals.'};
+    };
+    // Exclude publication day; use the preceding 28 complete Pacific days.
+    const beforeEnd=new Date(Date.parse(first)-2*86400000).toISOString().slice(0,10);
+    const beforeStart=new Date(Date.parse(beforeEnd)-27*86400000).toISOString().slice(0,10);
+    let baseline={status:'UNKNOWN',reason:'Final data does not yet cover the complete pre-publication period.'};
+    if(finalThroughDate>=beforeEnd){
+      try{baseline={...await collect(periodBetween(beforeStart,beforeEnd)),scope:'page_pre_observation'};}
+      catch{baseline={status:'UNKNOWN',reason:'The page-filtered final pre-publication baseline could not be verified.'};}
+    }
+    if(finalThroughDate<first)return {...unknown('No complete post-change Search Console period available.'),baseline};
+    const observation=await collect(periodBetween(first,finalThroughDate));
+    return {experimentId:experiment.id,page,postStartDate:first,...observation,baseline};
+  }catch{
+    return unknown('The exact-page final observation could not be verified.');
+  }
+}
+
 export function summarizeGscCompleteWindows(rows,days=7,period){
   const width=Math.max(1,Math.round(Number(days)||7));
   const validDate=value=>typeof value==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(value)&&Number.isFinite(Date.parse(value+'T00:00:00Z'))&&new Date(value+'T00:00:00Z').toISOString().slice(0,10)===value;
@@ -296,6 +352,23 @@ export function toMarkdown(report){
       `| ${previous.startDate} – ${previous.endDate} | ${int(previous.clicks)} | ${int(previous.impressions)} | ${pct(previous.ctr)} | ${dec(previous.position)} |`,
       ''
     );
+  }
+
+  for(const observation of gsc.contentUtilityObservations||[]){
+    lines.push('### Innehållsförbättring – sidfiltrerad observation','',`- Experiment: ${observation.experimentId||'UNKNOWN'}`,`- Sida: ${observation.page||'UNKNOWN'}`,`- Status: ${observation.status}`);
+    if(observation.status==='ok'){
+      lines.push(`- Färdigbehandlad GSC-period: ${observation.period.startDate} – ${observation.period.endDate} (${observation.completeDays} dagar, America/Los_Angeles)`,
+        `- Visningar: ${int(observation.impressions)} · klick: ${int(observation.clicks)} · CTR: ${pct(observation.ctr)} · position: ${dec(observation.position)}`,
+        `- Granskningsunderlag: minst ${observation.minCompleteDays} dagar och ${observation.minImpressions} visningar; uppfyllt: ${observation.eligibleForReview?'ja':'nej'}`);
+    }else lines.push(`- Postdata: UNKNOWN – ${observation.reason}`);
+    const baseline=observation.baseline;
+    if(baseline?.status==='ok')lines.push(`- Förperiod, samma exakta sida: ${baseline.period.startDate} – ${baseline.period.endDate} · ${int(baseline.impressions)} visningar · ${int(baseline.clicks)} klick · position ${dec(baseline.position)}`);
+    else lines.push('- Förperiod: UNKNOWN – ännu inte fullständigt verifierad.');
+    if(observation.queryPages?.length){
+      lines.push('','| Sökfråga | Exakt landningssida | Klick | Visningar | Position |','| --- | --- | ---: | ---: | ---: |');
+      for(const row of observation.queryPages.slice(0,20))lines.push(`| ${row.query.replace(/\|/g,'/')} | ${row.page.replace(/\|/g,'/')} | ${int(row.clicks)} | ${int(row.impressions)} | ${dec(row.position)} |`);
+    }
+    lines.push('','Sökfrågerader kan utelämnas av integritetsskäl och får inte summeras till sidans total. För- och efterperioder kan ha olika längd. Tillräckligt underlag betyder en manuell granskning, inte en vinnare, bevisad orsak eller godkänd provision.','');
   }
 
   if(gsc.urlInspection?.length){
