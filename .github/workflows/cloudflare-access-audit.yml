@@ -1,0 +1,58 @@
+name: Cloudflare existing access audit (read-only)
+
+on:
+  push:
+    branches: ['ops/cloudflare-access-*']
+    paths:
+      - '.github/workflows/cloudflare-access-audit.yml'
+      - 'scripts/cloudflare-access-audit.py'
+      - 'tests/test_cloudflare_access_audit.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Verify fixed read-only scope and redaction
+        run: python3 -m unittest discover -s tests -p 'test_cloudflare_access_audit.py'
+      - name: Inspect existing credential access without configuration changes
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CLOUDFLARE_API_KEY: ${{ secrets.CLOUDFLARE_API_KEY }}
+          CF_API_KEY: ${{ secrets.CF_API_KEY }}
+          CLOUDFLARE_EMAIL: ${{ secrets.CLOUDFLARE_EMAIL }}
+          CF_API_EMAIL: ${{ secrets.CF_API_EMAIL }}
+        run: python3 scripts/cloudflare-access-audit.py
+      - name: Publish bounded diagnostic result
+        if: always()
+        run: |
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          path = Path('cloudflare-access-audit/report.json')
+          if path.is_file():
+              report = json.loads(path.read_text())
+              # Only fixed result codes enter the summary; no source payloads.
+              with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as output:
+                  output.write('## Read-only Cloudflare access audit\n\n')
+                  output.write('- Domain: sankkostnaden.se\n')
+                  output.write('- Result: ' + report['status'] + '\n')
+                  output.write('- Workflow success means the diagnostic ran; credential/API access depends on the result above.\n')
+                  output.write('- No DNS, ruleset, account or deployment writes were attempted.\n')
+                  output.write('- Inspect the bounded JSON artifact for credential binding names and public configuration.\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cloudflare-readonly-access-audit
+          path: cloudflare-access-audit/report.json
+          if-no-files-found: ignore
+          retention-days: 7
