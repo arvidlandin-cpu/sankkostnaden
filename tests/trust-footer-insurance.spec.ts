@@ -9,6 +9,27 @@ test('homepage keeps a single editorial footer while inner pages get the global 
 
 import { expect, test } from '@playwright/test';
 
+test('income protection separates insured ceiling from actual compensation and links original terms',async({page,request})=>{
+  const route='/forsakring/trygghetsforsakring/';
+  const response=await request.get(route+'?qa=1');
+  expect(response.status()).toBe(200);
+  expect(await response.text()).toContain('90 procent av den nettolön du förlorar');
+  await page.goto(route+'?qa=1');
+  const explanation=page.locator('article > p').filter({hasText:'Försäkringsbeloppet är ett tak'});
+  await expect(explanation).toBeVisible();
+  await expect(explanation).toContainText('faktiska fasta utgifter');
+  await expect(explanation).toContainText('sjukskrivningsgrad');
+  await expect(explanation).toContainText('motsvarande försäkringar hos andra bolag');
+  const terms=explanation.getByRole('link',{name:/Hedvigs fullständiga villkor/});
+  await expect(terms).toHaveAttribute('href',/^https:\/\/gateway\.hedvig\.com\/external-insurance-documents\/.*TERMS_AND_CONDITIONS.*\.pdf$/);
+  expect((await terms.getAttribute('rel'))||'').not.toContain('sponsored');
+  await expect(page.locator('link[rel=canonical]')).toHaveAttribute('href','https://sankkostnaden.se'+route);
+  const partner=page.locator('#hedvig-trygghet a[data-partner=Hedvig]');
+  await expect(partner).toHaveAttribute('rel',/sponsored/);
+  await expect(partner).toHaveAttribute('data-intent','income-protection');
+  // Inspect source and attribution only; never navigate to the real partner.
+});
+
 test('site-wide trust footer exposes method and commercial transparency',async({page})=>{
   await page.goto('/forsakring/hemforsakring-bostadsratt/');
   const footer=page.locator('footer.siteFooter');

@@ -89,6 +89,68 @@ for (const guide of [
   });
 }
 
+const legacyArtworkGuides = [
+  { category: 'bredband' as const, route: '/bredband/bredband-pa-min-adress/' },
+  { category: 'bredband' as const, route: '/bredband/billigaste-bredbandet/' },
+  { category: 'bredband' as const, route: '/bredband/basta-bredbandet/' },
+  { category: 'el' as const, route: '/elavtal/sa-laser-du-elfakturan/' },
+  { category: 'el' as const, route: '/elavtal/rorligt-fast-kvartspris/' },
+  { category: 'el' as const, route: '/elavtal/billigaste-elavtalet/' },
+];
+
+for (const guide of legacyArtworkGuides) {
+  for (const width of [390, 760, 761, 1440]) {
+    test(`${guide.route}: ${width}px requests only artwork the guide displays`, async ({ page }) => {
+      const artwork = getCategoryArtwork(guide.category);
+      const artworkRequests: string[] = [];
+      page.on('request', request => {
+        if (new URL(request.url()).pathname === artwork.src) artworkRequests.push(request.url());
+      });
+      await page.setViewportSize({ width, height: 1000 });
+      await page.goto(`${guide.route}?qa=1`, { waitUntil: 'load' });
+      const image = page.getByTestId(`legacy-photo-${guide.category}`);
+      await expect(image).toHaveAttribute('src', artwork.src);
+      await expect(image).toHaveAttribute('alt', '');
+      await expect.poll(() => image.evaluate((node: HTMLImageElement) => node.complete && node.naturalWidth > 0)).toBe(true);
+      if (width <= 760) {
+        await expect(image).toBeHidden();
+        expect(await image.evaluate((node: HTMLImageElement) => node.currentSrc)).toMatch(/^data:image\/gif;base64,/);
+        expect(artworkRequests).toEqual([]);
+      } else {
+        await expect(image).toBeVisible();
+        expect(await image.evaluate((node: HTMLImageElement) => new URL(node.currentSrc).pathname)).toBe(artwork.src);
+        expect(await image.evaluate((node: HTMLImageElement) => node.naturalWidth)).toBe(artwork.width);
+        expect(artworkRequests).toHaveLength(1);
+      }
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    });
+  }
+}
+
+for (const guide of [legacyArtworkGuides[0], legacyArtworkGuides[3]]) {
+  test(`${guide.category}: enlarging a mobile guide loads its desktop artwork`, async ({ page }) => {
+    const artwork = getCategoryArtwork(guide.category);
+    const artworkRequests: string[] = [];
+    page.on('request', request => {
+      if (new URL(request.url()).pathname === artwork.src) artworkRequests.push(request.url());
+    });
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto(`${guide.route}?qa=1`, { waitUntil: 'load' });
+    const image = page.getByTestId(`legacy-photo-${guide.category}`);
+    await expect.poll(() => image.evaluate((node: HTMLImageElement) => node.complete && node.currentSrc.startsWith('data:image/gif;'))).toBe(true);
+    expect(artworkRequests).toEqual([]);
+    await page.setViewportSize({ width: 1440, height: 1000 });
+    await expect(image).toBeVisible();
+    await expect.poll(() => image.evaluate((node: HTMLImageElement) => node.complete && node.naturalWidth === 1280)).toBe(true);
+    expect(await image.evaluate((node: HTMLImageElement) => new URL(node.currentSrc).pathname)).toBe(artwork.src);
+    expect(artworkRequests).toHaveLength(1);
+    await page.setViewportSize({ width: 390, height: 844 });
+    await expect(image).toBeHidden();
+    await expect.poll(() => image.evaluate((node: HTMLImageElement) => node.currentSrc.startsWith('data:image/gif;'))).toBe(true);
+    expect(artworkRequests).toHaveLength(1);
+  });
+}
+
 // Original partner artwork must stay legible, and a failed asset must leave a
 // readable identity rather than an empty or broken-image commercial card.
 test('partner originals render in the mobile directory without a favicon', async ({ page }) => {
