@@ -42,6 +42,8 @@ export default function Trygghetsforsakring(){
           ].map(item=><p key={item}><Check size={18}/>{item}</p>)}
         </div>
 
+        <p><strong>Försäkringsbeloppet är ett tak, inte en garanterad utbetalning.</strong> Ersättningen beror bland annat på dina faktiska fasta utgifter och eventuell sjukskrivningsgrad. Vid arbetslöshet eller arbetsoförmåga får den totala ersättningen högst motsvara 90 procent av den nettolön du förlorar, även när motsvarande försäkringar hos andra bolag räknas med. Kontrollera hur begränsningarna gäller i din situation i <a href='https://gateway.hedvig.com/external-insurance-documents/terms/SE_PAYMENT_PROTECTION-HEDVIG-null-1/13/docs/TERMS_AND_CONDITIONS/sv/SE_PAYMENT_PROTECTION_2026-09-15-HEDVIG-T&C.pdf' target='_blank' rel='noopener noreferrer'>Hedvigs fullständiga villkor för Trygghetsförsäkring (PDF)</a>.</p>
+
         <h2>Kontrollera detta före du tecknar</h2>
         <div className='checkList'>
           {[
@@ -74,7 +76,7 @@ export default function Trygghetsforsakring(){
         <h2>När kan den vara relevant?</h2>
         <p>Den här typen av skydd kan vara relevant om en stor del av hushållets budget går till fasta kostnader och ett längre inkomstbortfall skulle vara svårt att bära med sparande och befintliga trygghetssystem. Det betyder inte att försäkringen är rätt för alla – jämför kostnaden för premien mot den risk du faktiskt vill försäkra.</p>
 
-        <p className='disclosure'>Kommersiell information: Sänk Kostnaden kan få ersättning från Hedvig om du tecknar via partnerlänken. Produktinformationen bygger på uppgifter från Hedvig mottagna 24 september 2026. Kontrollera alltid aktuella fullständiga villkor hos Hedvig före köp.</p>
+        <p className='disclosure'>Kommersiell information: Sänk Kostnaden kan få ersättning från Hedvig om du tecknar via partnerlänken. Ersättningsbegränsningarna är kontrollerade mot Hedvigs fullständiga villkor den 11 november 2026. Kontrollera alltid aktuella fullständiga villkor hos Hedvig före köp.</p>
       </article>
     </main>
   </>;

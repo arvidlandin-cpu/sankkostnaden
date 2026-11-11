@@ -113,6 +113,33 @@
         "pages/forsakring/jamfor-hemforsakring.tsx"
       ],
       "evidenceCommit": "ec9e0921b294295a99fe5e44ea9fb7ba602330bc"
+    },
+    {
+      "url": "https://sankkostnaden.se/bredband/100-100/",
+      "lastmod": "2026-10-06",
+      "reason": "The guide gained its page-specific first-year broadband cost-calculator handoff; the current page is byte-identical to the substantive source commit.",
+      "sourcePaths": [
+        "pages/bredband/100-100.tsx"
+      ],
+      "evidenceCommit": "79cd0782101a917e0f0f8c49b736f9bc78c7293b"
+    },
+    {
+      "url": "https://sankkostnaden.se/mobil/familjeabonnemang/",
+      "lastmod": "2026-10-06",
+      "reason": "The guide gained its page-specific family subscription cost comparison handoff; the current page is byte-identical to the substantive source commit.",
+      "sourcePaths": [
+        "pages/mobil/familjeabonnemang.tsx"
+      ],
+      "evidenceCommit": "1e794bdcb5c2e6cee2a239f48c256a50b81767af"
+    },
+    {
+      "url": "https://sankkostnaden.se/forsakring/trygghetsforsakring/",
+      "lastmod": "2026-11-11",
+      "reason": "The product description now distinguishes the insured ceiling from actual compensation and explains documented fixed-expense, work-capacity and 90-percent lost-net-income limits, linking the original full conditions verified on 11 November.",
+      "sourcePaths": [
+        "pages/forsakring/trygghetsforsakring.tsx"
+      ],
+      "evidence": "current-reviewed-content"
     }
   ],
   "indexNowBootstrapBaseCommit": "676034d193768696b50af071097c41fa9d77d60b"
