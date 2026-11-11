@@ -1,4 +1,5 @@
 import {expect,test} from '@playwright/test';
+import { getSocialPreviewImage } from '../lib/socialPreview';
 
 /** Keep the protected quarter-price observation intact. Other guides deliver
  * their factual answer before offering another decision, with commercial exits intact. */
@@ -51,3 +52,57 @@ for(const width of [360,390,430,1024,1440]){
   await page.screenshot({path:'test-results/screenshots/experience-p0-guide-fast-entry-'+width+'.png',fullPage:true});
  });
 }
+
+test('share images use only owned fixed assets and exclude active or prototype routes',()=>{
+  expect(getSocialPreviewImage('/mobil/familjeabonnemang/?qa=1#guide-summary')?.url).toBe('https://sankkostnaden.se/design/category-mobil.webp');
+  expect(getSocialPreviewImage('/mobilitet/')?.url).toBe('https://sankkostnaden.se/design/cost-map-home.webp');
+  for(const path of ['/elavtal/kvartspris/','/forsakring/hemforsakring-bostadsratt/','/experiments/mobile-surf-pilot/','/experiments/','/404','/_error']){
+    expect(getSocialPreviewImage(path)).toBeNull();
+  }
+});
+
+test('share image metadata exists once in server HTML and references a real owned image',async({page,request})=>{
+  for(const path of ['/','/bredband/100-100/','/elavtal/rorligt-elpris/','/mobil/familjeabonnemang/','/forsakring/trygghetsforsakring/','/ekonomi/jamfor-privatlan/','/om/']){
+    const expected=getSocialPreviewImage(path)!;
+    const response=await request.get(path+'?qa=1');
+    expect(response.ok()).toBeTruthy();
+    const html=await response.text();
+    expect(html.match(/property="og:image"/g)||[]).toHaveLength(1);
+    expect(html.match(/name="twitter:image"/g)||[]).toHaveLength(1);
+    expect(html).toContain(`content="${expected.url}"`);
+    const asset=await request.get(new URL(expected.url).pathname);
+    expect(asset.status()).toBe(200);
+    expect(asset.headers()['content-type']).toContain('image/webp');
+    await page.goto(path+'?qa=1');
+    await expect(page.locator('meta[property="og:image"]')).toHaveCount(1);
+    await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content',expected.url);
+    await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute('content',expected.url);
+    await expect(page.locator('meta[property="og:image:width"]')).toHaveAttribute('content',String(expected.width));
+    await expect(page.locator('meta[property="og:image:height"]')).toHaveAttribute('content',String(expected.height));
+    const size=await page.evaluate(async src=>new Promise<{width:number;height:number}>((resolve,reject)=>{
+      const image=new Image();image.onload=()=>resolve({width:image.naturalWidth,height:image.naturalHeight});image.onerror=()=>reject(Error('Image did not load'));image.src=src;
+    }),new URL(expected.url).pathname);
+    expect(size).toEqual({width:expected.width,height:expected.height});
+  }
+});
+
+test('share metadata reconciles on real Next links into and out of protected guides',async({page})=>{
+  await page.goto('/forsakring/?qa=1');
+  await page.evaluate(()=>{(window as Window&{shareNavigationMarker?:string}).shareNavigationMarker='same-document';});
+  await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content','https://sankkostnaden.se/design/category-forsakring.webp');
+  await page.locator('a[href="/forsakring/hemforsakring-bostadsratt/"]').first().click();
+  await expect(page).toHaveURL(/\/forsakring\/hemforsakring-bostadsratt\//);
+  await expect(page.locator('meta[property="og:image"],meta[name="twitter:image"]')).toHaveCount(0);
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href','https://sankkostnaden.se/forsakring/hemforsakring-bostadsratt/');
+  await page.locator('.topbar a[href="/mobil/"]').click();
+  await expect(page).toHaveURL(/\/mobil\//);
+  await expect(page.locator('meta[property="og:image"]')).toHaveCount(1);
+  await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content','https://sankkostnaden.se/design/category-mobil.webp');
+  await page.locator('.topbar a[href="/elavtal/"]').click();
+  await page.locator('a[href="/elavtal/kvartspris/"]').first().click();
+  await expect(page).toHaveURL(/\/elavtal\/kvartspris\//);
+  await expect(page.locator('meta[property="og:image"],meta[name="twitter:image"]')).toHaveCount(0);
+  await page.locator('.topbar a[href="/bredband/"]').click();
+  await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content','https://sankkostnaden.se/design/category-bredband.webp');
+  expect(await page.evaluate(()=>(window as Window&{shareNavigationMarker?:string}).shareNavigationMarker)).toBe('same-document');
+});

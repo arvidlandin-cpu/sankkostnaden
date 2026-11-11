@@ -1,13 +1,17 @@
 import Head from 'next/head';
 import Script from 'next/script';
 import type { AppProps } from 'next/app';
+import { useRouter } from 'next/router';
 import '../styles/design-tokens.css';
 import '../styles/global.css';
 import MobileQuickBar from '../components/MobileQuickBar';
 import AffiliateTracking from '../components/AffiliateTracking';
 import SiteFooter from '../components/SiteFooter';
+import { getSocialPreviewImage } from '../lib/socialPreview';
 
 export default function App({ Component, pageProps }: AppProps) {
+  const {pathname}=useRouter();
+  const socialImage=getSocialPreviewImage(pathname);
 
   return (
     <>
@@ -33,6 +37,15 @@ export default function App({ Component, pageProps }: AppProps) {
         <link rel='shortcut icon' href='/app-icon.svg?v=3' />
         <meta name='theme-color' content='#101d42' />
         <meta property='og:site_name' content='Sänk Kostnaden' />
+        {socialImage&&<>
+          <meta key='social-og-image' property='og:image' content={socialImage.url}/>
+          <meta key='social-og-image-type' property='og:image:type' content='image/webp'/>
+          <meta key='social-og-image-width' property='og:image:width' content={String(socialImage.width)}/>
+          <meta key='social-og-image-height' property='og:image:height' content={String(socialImage.height)}/>
+          <meta key='social-og-image-alt' property='og:image:alt' content={socialImage.alt}/>
+          <meta key='social-twitter-image' name='twitter:image' content={socialImage.url}/>
+          <meta key='social-twitter-image-alt' name='twitter:image:alt' content={socialImage.alt}/>
+        </>}
         <meta name='apple-mobile-web-app-capable' content='yes' />
         <meta name='apple-mobile-web-app-status-bar-style' content='default' />
         <meta name='apple-mobile-web-app-title' content='Sänk Kostnaden' />
