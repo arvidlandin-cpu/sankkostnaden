@@ -10,55 +10,10 @@
   "notes": [
     "Cancelled Oct 7 snippet test at owner's request; no 15 Oct review requirement. No evidence-backed winner/loser verdict.",
     "Keep source truth, click attribution, QA and owner approval for paid/compliance-sensitive actions.",
-    "One narrow kvartspris content-utility observation is active; unrelated scopes remain eligible up to policy limit. It is not a won SEO or commercial experiment.",
-    "10 Nov: second independent content-utility observation is BRF price-example, supported by exact query→page. Preserve quarter-price observation; do not launch overlapping insurance or snippet tests. Source period is all-state; evaluate final filtered cohorts separately."
+    "16 Nov: kvartspris observation reached 34 final post days and 31 page impressions, with 0 clicks and average position 82.806 versus the non-equivalent historical baseline 156 impressions, 0 clicks and position 21.7. Outcome REASSESS_NOT_PROVEN: no causal regression claim and no automatic rollback. DOM, events, SEO and affiliate routing remain unchanged; observation closed administratively.",
+    "BRF price-example remains the only active experiment. It is supported by exact query→page evidence, stays separate from the completed kvartspris observation and is not reviewable before its stated final-data gates."
   ],
   "activeExperiments": [
-    {
-      "id": "kvartspris-one-click-utility-20261010",
-      "type": "CONTENT_UTILITY_UPGRADE",
-      "status": "running",
-      "target": "/elavtal/kvartspris/",
-      "query": "kvartspris el",
-      "category": "el",
-      "scope": {
-        "urls": [
-          "/elavtal/kvartspris/"
-        ],
-        "queryCluster": [
-          "kvartspris el",
-          "vad menas med kvartspris på el",
-          "kvartspris på el"
-        ],
-        "funnel": "guide-specific utility and contextual partner navigation",
-        "excludes": [
-          "/elavtal/",
-          "/app/",
-          "/forsakring/"
-        ],
-        "independentFrom": "No other active scoped growth initiative at commit"
-      },
-      "startedAt": "2026-10-10T11:00:00+02:00",
-      "earliestReviewAt": "2026-10-18T11:00:00+02:00",
-      "baseline": {
-        "periodStart": "2026-09-10",
-        "latestGscDate": "2026-10-06",
-        "pageImpressions": 156,
-        "pageClicks": 0,
-        "averagePosition": 21.7,
-        "organicLandings": "UNKNOWN",
-        "eligibleApprovedCommissionSEK": "UNKNOWN"
-      },
-      "measurement": {
-        "gscMinCompletePostDays": 7,
-        "minPostPageImpressions": 30,
-        "ga4Event": "quarter_price_decision_answer",
-        "organicOnly": true,
-        "excludeQaAndDirect": true,
-        "northStar": "approved affiliate commission SEK per qualified visitor"
-      },
-      "rollback": "Revert the scoped guide and component changes if accessibility, attribution, indexation or content accuracy regress; keep if truthful and useful while data matures"
-    },
     {
       "id": "bostadsratt-price-example-20261110",
       "type": "CONTENT_UTILITY_UPGRADE",
@@ -80,7 +35,7 @@
           "/elavtal/kvartspris/",
           "/forsakring/trygghetsforsakring/"
         ],
-        "independentFrom": "kvartspris-one-click-utility-20261010 uses a different page, topic, cohort and partner intent."
+        "independentFrom": "The kvartspris observation was closed 2026-11-16; this experiment uses a different page, topic, cohort and partner intent."
       },
       "startedAt": "2026-11-10T09:00:00+01:00",
       "earliestReviewAt": "2026-11-19T09:00:00+01:00",
@@ -124,12 +79,12 @@
     }
   ],
   "lastStrategyDecision": {
-    "type": "CONTENT_UTILITY_UPGRADE",
-    "at": "2026-10-10",
+    "type": "REVIEW_ACTIVE_EXPERIMENT",
+    "at": "2026-11-16",
     "target": "/elavtal/kvartspris/",
-    "reason": "GSC 156 impressions, 0 clicks, position around 21.7; original 1-click utility to serve informational intent before any affiliate comparison.",
-    "outcome": "IN_OBSERVATION_NOT_PROVEN",
-    "decisionDoc": "autopilot/decisions/kvartspris-utility-2026-10-10.md"
+    "reason": "Observation gate met: 34 final post days and 31 page impressions. The page had 0 clicks and average position 82.806 versus a non-equivalent historical baseline of 156 impressions, 0 clicks and position 21.7. This supports reassessment, not a causal winner/loser claim.",
+    "outcome": "REASSESS_NOT_PROVEN_NO_AUTOMATIC_ROLLBACK",
+    "decisionDoc": "autopilot/decisions/kvartspris-utility-review-2026-11-16.md"
   },
   "reviewedExistingUtilities": [
     {
