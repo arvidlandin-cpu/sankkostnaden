@@ -8,11 +8,11 @@ export default function Trygghetsforsakring(){
   const hedvig=getActivePartners('forsakring','income-protection',1)[0];
   return <>
     <Head>
-      <title>Trygghetsförsäkring 2026 – skydd för fasta kostnader | Sänk Kostnaden</title>
-      <meta name='description' content='Så fungerar Hedvigs Trygghetsförsäkring för fasta kostnader vid arbetslöshet eller sjukskrivning. Kontrollera ersättning, kvalificering, karens, premie och villkor innan du tecknar.'/>
+      <title>Vad är en trygghetsförsäkring? Skydd och villkor 2026 | Sänk Kostnaden</title>
+      <meta name='description' content='Vad betyder trygghetsförsäkring? Jämför skydd för fasta kostnader med inkomstförsäkring, låneskydd och TFA. Se ett tydligt märkt exempel från Hedvig.'/>
       <link rel='canonical' href='https://sankkostnaden.se/forsakring/trygghetsforsakring/'/>
       <meta name='robots' content='index,follow,max-image-preview:large,max-snippet:-1'/>
-      <script type='application/ld+json' dangerouslySetInnerHTML={{__html:JSON.stringify({'@context':'https://schema.org','@type':'WebPage',name:'Trygghetsförsäkring 2026 – skydd för fasta kostnader',description:'Guide till trygghetsförsäkring för fasta kostnader vid arbetslöshet eller sjukskrivning.',url:'https://sankkostnaden.se/forsakring/trygghetsforsakring/',isPartOf:{'@type':'WebSite',name:'Sänk Kostnaden',url:'https://sankkostnaden.se/'}})}}/>
+      <script type='application/ld+json' dangerouslySetInnerHTML={{__html:JSON.stringify({'@context':'https://schema.org','@type':'WebPage',name:'Vad är en trygghetsförsäkring? Skydd och villkor 2026',description:'Vad betyder trygghetsförsäkring? Jämför skydd för fasta kostnader med inkomstförsäkring, låneskydd och TFA. Se ett tydligt märkt exempel från Hedvig.',url:'https://sankkostnaden.se/forsakring/trygghetsforsakring/',isPartOf:{'@type':'WebSite',name:'Sänk Kostnaden',url:'https://sankkostnaden.se/'}})}}/>
     </Head>
     <header className='topbar'>
       <Link className='brand' href='/'><span className='brandMark'><PiggyBank size={22}/></span><span>Sänk Kostnaden</span></Link>
@@ -25,13 +25,43 @@ export default function Trygghetsforsakring(){
           <Link className='back' href='/forsakring/'><ArrowLeft size={16}/> Försäkring</Link>
           <div className='guideIcon'><ShieldCheck size={25}/></div>
           <p className='kicker'>TRYGGHETSFÖRSÄKRING</p>
-          <h1>Skydd för fasta kostnader om inkomsten försvinner</h1>
-          <p className='lead'>Hedvigs Trygghetsförsäkring är tänkt som ett komplement när arbetslöshet eller sjukskrivning påverkar hushållets ekonomi. Jämför inte bara ersättningsbeloppet – kontrollera också vem som kan teckna, karens, kvalificering, premie och viktiga undantag.</p>
+          <h1>Vad är en trygghetsförsäkring?</h1>
+          <p className='lead'>Trygghetsförsäkring är ett namn som används för olika försäkringar. En produkt kan skydda vissa fasta kostnader vid inkomstbortfall, medan Trygghetsförsäkring vid arbetsskada (TFA) handlar om arbetsskador. Börja med att kontrollera vilken typ av skydd du behöver.</p>
         </div>
       </section>
 
       <article className='article guideWrap'>
-        <h2>Vad kan försäkringen täcka?</h2>
+        <p className='fine' style={{fontSize:14,color:'var(--sk-ink-muted)'}} data-testid='trygghet-commercial-notice'>Vi visar ett partnerexempel från Hedvig och kan få ersättning via den markerade partnerlänken. Jämförelsen nedan gäller typer av försäkringsskydd.</p>
+
+        <section aria-labelledby='trygghet-types-title' data-testid='trygghet-cover-types'>
+          <h2 id='trygghet-types-title'>Skillnaden mot inkomstförsäkring, låneskydd och TFA</h2>
+          <p>Försäkringar kan ersätta olika saker och gälla vid olika händelser. Jämför därför innehållet, inte bara produktnamnet.</p>
+          <dl className='checkList'>
+            <div data-cover-type='fixed-costs' style={{padding:'16px 0',borderBottom:'1px solid var(--sk-line)'}}>
+              <dt style={{fontWeight:800,color:'var(--sk-ink)'}}>Skydd för fasta kostnader</dt>
+              <dd style={{margin:'6px 0 0',fontSize:15,lineHeight:1.6}}>Kan ersätta vissa godkända utgifter vid inkomstbortfall. Kontrollera vilka kostnader och händelser som ingår. <a href='#hedvig-product-example'>Se Hedvig-exemplet nedan</a>.</dd>
+            </div>
+            <div data-cover-type='income' style={{padding:'16px 0',borderBottom:'1px solid var(--sk-line)'}}>
+              <dt style={{fontWeight:800,color:'var(--sk-ink)'}}>Inkomstförsäkring</dt>
+              <dd style={{margin:'6px 0 0',fontSize:15,lineHeight:1.6}}>Kan komplettera ersättning vid arbetslöshet eller sjukskrivning, beroende på produkt. Kontrollera vilket skydd du redan har genom exempelvis a-kassa, fack eller arbetsgivare. <a href='https://www.konsumenternas.se/forsakringar/personforsakringar/inkomstforsakringar/'>Konsumenternas om inkomstförsäkring</a>.</dd>
+            </div>
+            <div data-cover-type='loan' style={{padding:'16px 0',borderBottom:'1px solid var(--sk-line)'}}>
+              <dt style={{fontWeight:800,color:'var(--sk-ink)'}}>Låneskydd och betalskydd</dt>
+              <dd style={{margin:'6px 0 0',fontSize:15,lineHeight:1.6}}>Kan täcka lånebetalningar vid exempelvis arbetslöshet eller sjukdom. Kontrollera att just ditt lån och den aktuella händelsen omfattas. <a href='https://konsumenternasbankochfinansbyra.se/lan--betalningar/lan/laneskydd'>Konsumenternas om låneskydd</a>.</dd>
+            </div>
+            <div data-cover-type='work-injury' style={{padding:'16px 0'}}>
+              <dt style={{fontWeight:800,color:'var(--sk-ink)'}}>Trygghetsförsäkring vid arbetsskada (TFA)</dt>
+              <dd style={{margin:'6px 0 0',fontSize:15,lineHeight:1.6}}>Gäller arbetsskador och kan finnas genom jobbet. Kontrollera med arbetsgivaren vilket avtal och vilken arbetsskadeförsäkring som gäller. <a href='https://www.afaforsakring.se/forsakring/arbetsskadeforsakring'>Afa om arbetsskadeförsäkring</a>.</dd>
+            </div>
+          </dl>
+          <p className='fine' style={{fontSize:13,color:'var(--sk-ink-muted)'}}>Begreppsjämförelsen är vår vägledning utifrån de länkade källorna, kontrollerade 17 november 2026. Respektive försäkrings villkor avgör ditt skydd.</p>
+          <p><strong>Börja med ditt befintliga skydd.</strong> Kontrollera a-kassa, fack, arbetsgivare och andra försäkringar. Jämför sedan samma behov, ersättningsperiod och viktiga undantag innan du köper ett tillägg.</p>
+        </section>
+
+        <section id='hedvig-product-example' aria-labelledby='hedvig-example-title' data-testid='hedvig-income-example' style={{marginTop:32,paddingTop:24,borderTop:'1px solid var(--sk-line)'}}>
+        <h2 id='hedvig-example-title'>Exempel: Hedvig Trygghetsförsäkring</h2>
+        <p>Detta är ett partnerexempel på skydd för fasta kostnader. Beloppen och begränsningarna i den här delen gäller Hedvigs produkt, inte alla försäkringar som kallas trygghetsförsäkring.</p>
+        <h3>Vad kan Hedvigs försäkring täcka?</h3>
         <p>Enligt Hedvigs produktinformation kan ersättningen användas för fasta kostnader som exempelvis hyra eller månadsavgift, bolåneränta, el, bredband, telefoni, försäkringar och streamingtjänster.</p>
         <div className='checkList'>
           {[
@@ -44,7 +74,7 @@ export default function Trygghetsforsakring(){
 
         <p><strong>Försäkringsbeloppet är ett tak, inte en garanterad utbetalning.</strong> Ersättningen beror bland annat på dina faktiska fasta utgifter och eventuell sjukskrivningsgrad. Vid arbetslöshet eller arbetsoförmåga får den totala ersättningen högst motsvara 90 procent av den nettolön du förlorar, även när motsvarande försäkringar hos andra bolag räknas med. Kontrollera hur begränsningarna gäller i din situation i <a href='https://gateway.hedvig.com/external-insurance-documents/terms/SE_PAYMENT_PROTECTION-HEDVIG-null-1/13/docs/TERMS_AND_CONDITIONS/sv/SE_PAYMENT_PROTECTION_2026-09-15-HEDVIG-T&C.pdf' target='_blank' rel='noopener noreferrer'>Hedvigs fullständiga villkor för Trygghetsförsäkring (PDF)</a>.</p>
 
-        <h2>Kontrollera detta före du tecknar</h2>
+        <h3>Kontrollera Hedvigs villkor innan du tecknar</h3>
         <div className='checkList'>
           {[
             'Vilka kvalificeringskrav som gäller för din anställningsform',
@@ -73,8 +103,10 @@ export default function Trygghetsforsakring(){
           </div>
         </section>}
 
-        <h2>När kan den vara relevant?</h2>
+        <h3>När kan Hedvigs försäkring vara relevant?</h3>
         <p>Den här typen av skydd kan vara relevant om en stor del av hushållets budget går till fasta kostnader och ett längre inkomstbortfall skulle vara svårt att bära med sparande och befintliga trygghetssystem. Det betyder inte att försäkringen är rätt för alla – jämför kostnaden för premien mot den risk du faktiskt vill försäkra.</p>
+
+        </section>
 
         <p className='disclosure'>Kommersiell information: Sänk Kostnaden kan få ersättning från Hedvig om du tecknar via partnerlänken. Ersättningsbegränsningarna är kontrollerade mot Hedvigs fullständiga villkor den 11 november 2026. Kontrollera alltid aktuella fullständiga villkor hos Hedvig före köp.</p>
       </article>
