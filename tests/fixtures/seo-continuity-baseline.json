@@ -2584,17 +2584,17 @@
     {
       "path": "/forsakring/trygghetsforsakring/",
       "canonical": "https://sankkostnaden.se/forsakring/trygghetsforsakring/",
-      "title": "Trygghetsförsäkring 2026 – skydd för fasta kostnader | Sänk Kostnaden",
+      "title": "Vad är en trygghetsförsäkring? Skydd och villkor 2026 | Sänk Kostnaden",
       "restoresEmptyBaselineTitle": false,
-      "description": "Så fungerar Hedvigs Trygghetsförsäkring för fasta kostnader vid arbetslöshet eller sjukskrivning. Kontrollera ersättning, kvalificering, karens, premie och villkor innan du tecknar.",
+      "description": "Vad betyder trygghetsförsäkring? Jämför skydd för fasta kostnader med inkomstförsäkring, låneskydd och TFA. Se ett tydligt märkt exempel från Hedvig.",
       "robots": "index,follow,max-image-preview:large,max-snippet:-1",
-      "h1": "Skydd för fasta kostnader om inkomsten försvinner",
+      "h1": "Vad är en trygghetsförsäkring?",
       "structuredData": [
         {
           "@context": "https://schema.org",
           "@type": "WebPage",
-          "name": "Trygghetsförsäkring 2026 – skydd för fasta kostnader",
-          "description": "Guide till trygghetsförsäkring för fasta kostnader vid arbetslöshet eller sjukskrivning.",
+          "name": "Vad är en trygghetsförsäkring? Skydd och villkor 2026",
+          "description": "Vad betyder trygghetsförsäkring? Jämför skydd för fasta kostnader med inkomstförsäkring, låneskydd och TFA. Se ett tydligt märkt exempel från Hedvig.",
           "url": "https://sankkostnaden.se/forsakring/trygghetsforsakring/",
           "isPartOf": {
             "@type": "WebSite",

@@ -134,8 +134,8 @@
     },
     {
       "url": "https://sankkostnaden.se/forsakring/trygghetsforsakring/",
-      "lastmod": "2026-11-11",
-      "reason": "The product description now distinguishes the insured ceiling from actual compensation and explains documented fixed-expense, work-capacity and 90-percent lost-net-income limits, linking the original full conditions verified on 11 November.",
+      "lastmod": "2026-11-17",
+      "reason": "The existing guide now answers the verified generic definition intent, distinguishes fixed-expense, income, loan and work-injury protection using primary sources, and clearly scopes the unchanged Hedvig offer and limits to a labelled partner example.",
       "sourcePaths": [
         "pages/forsakring/trygghetsforsakring.tsx"
       ],

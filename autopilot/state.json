@@ -11,7 +11,8 @@
     "Cancelled Oct 7 snippet test at owner's request; no 15 Oct review requirement. No evidence-backed winner/loser verdict.",
     "Keep source truth, click attribution, QA and owner approval for paid/compliance-sensitive actions.",
     "16 Nov: kvartspris observation reached 34 final post days and 31 page impressions, with 0 clicks and average position 82.806 versus the non-equivalent historical baseline 156 impressions, 0 clicks and position 21.7. Outcome REASSESS_NOT_PROVEN: no causal regression claim and no automatic rollback. DOM, events, SEO and affiliate routing remain unchanged; observation closed administratively.",
-    "BRF price-example remains the only active experiment. It is supported by exact query→page evidence, stays separate from the completed kvartspris observation and is not reviewable before its stated final-data gates."
+    "BRF price-example remains the only active experiment. It is supported by exact query→page evidence, stays separate from the completed kvartspris observation and is not reviewable before its stated final-data gates.",
+    "17 Nov: one reviewed income-protection content-utility observation added. BRF scope/content/cohort is preserved, quarter-price remains administratively closed without page rollback. Exact reviewed exclusions are honoured only when canonical scope is explicit and non-overlapping; unknown or same-path/ancestor scopes still fail closed."
   ],
   "activeExperiments": [
     {
@@ -76,15 +77,100 @@
         "gscPostStartDate": "2026-11-11"
       },
       "rollback": "Revert scoped intro/content, state and reviewed sitemap date if content accuracy, mobile access, canonical/indexation or attribution regresses; no automatic rollback based on a few impressions."
+    },
+    {
+      "id": "trygghetsforsakring-intent-20261117",
+      "type": "CONTENT_UTILITY_UPGRADE",
+      "status": "running",
+      "target": "/forsakring/trygghetsforsakring/",
+      "query": "trygghetsförsäkring",
+      "category": "forsakring",
+      "scope": {
+        "urls": [
+          "/forsakring/trygghetsforsakring/"
+        ],
+        "queryCluster": [
+          "trygghetsförsäkring",
+          "vad är en trygghetsförsäkring",
+          "ekonomisk trygghetsförsäkring"
+        ],
+        "funnel": "Income/fixed-expense protection definition and product-specific next step. Distinct from the active BRF home-insurance premium/collective-cover journey.",
+        "excludes": [
+          "/forsakring/hemforsakring-bostadsratt/",
+          "/elavtal/kvartspris/"
+        ],
+        "independentFrom": "bostadsratt-price-example-20261110 uses home-insurance and collective housing cover, different exact URL, search intent, protection type and partner intent. Its reviewed scope explicitly excludes this income-protection guide."
+      },
+      "startedAt": "2026-11-17T12:13:19+01:00",
+      "earliestReviewAt": "2026-11-26T09:00:00+01:00",
+      "baseline": {
+        "sourceRun": "https://github.com/arvidlandin-cpu/sankkostnaden/actions/runs/43920691000",
+        "generatedAt": "2026-11-16T17:40:16.507Z",
+        "period": {
+          "startDate": "2026-10-17",
+          "endDate": "2026-11-15",
+          "days": 30
+        },
+        "dataState": "all",
+        "pageImpressions": 526,
+        "pageClicks": 0,
+        "averagePosition": 30.23384030418251,
+        "queryPages": [
+          {
+            "query": "trygghetsförsäkring",
+            "page": "https://sankkostnaden.se/forsakring/trygghetsforsakring/",
+            "clicks": 0,
+            "impressions": 325,
+            "ctr": 0,
+            "position": 30.513846153846153
+          },
+          {
+            "query": "ekonomisk trygghetsförsäkring",
+            "page": "https://sankkostnaden.se/forsakring/trygghetsforsakring/",
+            "clicks": 0,
+            "impressions": 49,
+            "ctr": 0,
+            "position": 27.714285714285715
+          },
+          {
+            "query": "vad är en trygghetsförsäkring",
+            "page": "https://sankkostnaden.se/forsakring/trygghetsforsakring/",
+            "clicks": 0,
+            "impressions": 46,
+            "ctr": 0,
+            "position": 29.152173913043477
+          }
+        ],
+        "finalOnlyComparableBaseline": "UNKNOWN until complete final page-filtered pre-publication data has been collected; all-state reference is descriptive, not a causal comparator.",
+        "organicLandings": "UNKNOWN",
+        "eligibleApprovedCommissionSEK": "UNKNOWN"
+      },
+      "measurement": {
+        "gscPostStartDate": "2026-11-18",
+        "postStartDate": "2026-11-18",
+        "timeZone": "America/Los_Angeles",
+        "gscMinCompletePostDays": 7,
+        "minPostPageImpressions": 30,
+        "dataState": "final",
+        "organicOnly": true,
+        "excludeQaAndDirect": true,
+        "existingEvents": [
+          "affiliate_click"
+        ],
+        "reviewDate": "2026-12-02",
+        "evaluation": "Separate final-only exact-page daily and query-to-page cohorts; compare equivalent complete windows, real organic landings, unique organic partner-click users and network-approved transactions. Review readiness is not statistical proof or a winner.",
+        "northStar": "approved affiliate commission SEK per qualified visitor"
+      },
+      "rollback": "Revert this scoped editorial/metadata change if factual accuracy, canonical/indexing, accessibility or attribution regresses. Do not infer success or reverse the active BRF observation from small samples."
     }
   ],
   "lastStrategyDecision": {
-    "type": "REVIEW_ACTIVE_EXPERIMENT",
-    "at": "2026-11-16",
-    "target": "/elavtal/kvartspris/",
-    "reason": "Observation gate met: 34 final post days and 31 page impressions. The page had 0 clicks and average position 82.806 versus a non-equivalent historical baseline of 156 impressions, 0 clicks and position 21.7. This supports reassessment, not a causal winner/loser claim.",
-    "outcome": "REASSESS_NOT_PROVEN_NO_AUTOMATIC_ROLLBACK",
-    "decisionDoc": "autopilot/decisions/kvartspris-utility-review-2026-11-16.md"
+    "type": "CONTENT_UTILITY_UPGRADE",
+    "at": "2026-11-17",
+    "target": "/forsakring/trygghetsforsakring/",
+    "reason": "526 page impressions, zero clicks, average position around30.2; generic definition queries meet a single-product introduction. One independent slot is available after the administrative quarter-price closure; existing BRF exclusions explicitly distinguish the income-protection target.",
+    "outcome": "IN_OBSERVATION_NOT_PROVEN",
+    "decisionDoc": "Pull request decision record for trygghetsforsakring-intent-20261117"
   },
   "reviewedExistingUtilities": [
     {
