@@ -240,3 +240,35 @@ test('GSC diagnostics do not publish personal identifiers, missing metrics as ze
   assert.equal(failed.traffic.topGscQueries,null);
   assert.equal(failed.traffic.gscCtr,null);
 });
+
+
+const incomeId='trygghetsforsakring-intent-20261117';
+const incomePage='https://sankkostnaden.se/forsakring/trygghetsforsakring/';
+function incomeObservation(){return {status:'ok',experimentId:incomeId,page:incomePage,postStartDate:'2026-11-18',dataState:'final',scope:'page_post_observation',period:{startDate:'2026-11-18',endDate:'2026-11-24'},completeDays:7,clicks:0,impressions:40,ctr:0,position:25,minCompleteDays:7,minImpressions:30,eligibleForReview:true,baseline:{status:'ok',dataState:'final',scope:'page_pre_observation',period:{startDate:'2026-10-20',endDate:'2026-11-16'},completeDays:28,clicks:0,impressions:500,ctr:0,position:31,minCompleteDays:7,minImpressions:30,eligibleForReview:true}};}
+
+test('daily report labels the two registered source cohorts independently and leaves revenue unchanged',()=>{
+  const args=setup();
+  const income=incomeObservation();
+  const brf={...income,experimentId:'bostadsratt-price-example-20261110',page:'https://sankkostnaden.se/forsakring/hemforsakring-bostadsratt/',postStartDate:'2026-11-11',period:{startDate:'2026-11-11',endDate:'2026-11-24'},completeDays:14,impressions:180};
+  args.google.gsc.contentUtilityObservations=[brf,income];
+  const result=buildDailyReport(args),text=dailyReportMarkdown(result);
+  assert.equal(result.traffic.contentUtilityObservations.length,2);
+  assert.match(text,/Bostadsrätt: prisexemplets egen sidobservation/);
+  assert.match(text,/Trygghetsförsäkring: guidens egen sidobservation/);
+  assert.match(text,/2026-11-18 – 2026-11-24 \(7 dagar\)/);
+  assert.equal(result.traffic.contentUtilityObservations[0].impressions,180);
+  assert.equal(result.traffic.contentUtilityObservations[1].impressions,40);
+  assert.deepEqual(result.revenue,buildDailyReport(setup()).revenue);
+});
+
+test('daily report suppresses wrong ID-canonical pairs and unverified income data without private text',()=>{
+  const args=setup(),income=incomeObservation();
+  args.google.gsc.contentUtilityObservations=[{...income,experimentId:'other-id'},{...income,page:'https://other.example/forsakring/trygghetsforsakring/'},{...income,page:'https://sankkostnaden.se/forsakring/hemforsakring-bostadsratt/'},{...income,status:'UNKNOWN',label:'private-owner@example.com',reason:'secret=private',clicks:999999,impressions:999999,baseline:{status:'UNKNOWN',clicks:999999}}];
+  const result=buildDailyReport(args),text=dailyReportMarkdown(result);
+  assert.equal(result.traffic.contentUtilityObservations.length,1);
+  assert.equal(result.traffic.contentUtilityObservations[0].status,'UNKNOWN');
+  assert.equal(result.traffic.contentUtilityObservations[0].clicks,null);
+  assert.equal(result.traffic.contentUtilityObservations[0].impressions,null);
+  assert.match(text,/Trygghetsförsäkring: guidens egen sidobservation/);
+  for(const privateText of ['999999','secret=private','private-owner@example.com'])assert.ok(!text.includes(privateText));
+});

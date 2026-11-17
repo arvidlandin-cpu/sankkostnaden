@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { collectAdditionalContentObservations } from '../scripts/google-organic-performance-report.mjs';
 import { buildDailyReport, dailyReportMarkdown } from '../scripts/lib/dailyReport.mjs';
 import {
   dateRange,
@@ -330,4 +331,49 @@ test('exact-page final observation requires seven days and thirty impressions, n
   assert.equal(summarizeGscObservation([],null),null);
   assert.equal(summarizeGscObservation([],{...period,days:8}),null);
   assert.equal(summarizeGscObservation([{date:'2026-10-10',clicks:0,impressions:30,position:5}],period),null);
+});
+
+const incomeExperiment={...condoExperiment,id:'trygghetsforsakring-intent-20261117',target:'/forsakring/trygghetsforsakring/',startedAt:'2026-11-17T12:00:00+01:00',measurement:{gscPostStartDate:'2026-11-18',gscMinCompletePostDays:7,minPostPageImpressions:30}};
+
+test('registered additional collectors request separate exact final BRF and income cohorts',async()=>{
+  const calls=[];
+  const observations=await collectAdditionalContentObservations(null,'sc-domain:sankkostnaden.se','2026-11-24',{
+    readState:async()=>({activeExperiments:[condoExperiment,incomeExperiment]}),
+    query:async(dimensions,filters,dataState,period)=>{
+      calls.push({dimensions,filters,dataState,period});
+      const page=filters[0].expression;
+      return {rows:dimensions[0]==='date'
+        ?[{keys:[period.startDate],clicks:0,impressions:36,ctr:0,position:20}]
+        :[{keys:[page.includes('trygghets')?'vad är en trygghetsförsäkring':'hemförsäkring bostadsrätt pris',page],clicks:0,impressions:12,ctr:0,position:20}]};
+    },
+  });
+  assert.equal(calls.length,8);
+  assert.deepEqual(observations.map(row=>row.experimentId),[condoExperiment.id,incomeExperiment.id]);
+  assert.equal(observations[1].page,'https://sankkostnaden.se/forsakring/trygghetsforsakring/');
+  assert.deepEqual(observations[1].period,{startDate:'2026-11-18',endDate:'2026-11-24',days:7});
+  assert.equal(observations[1].eligibleForReview,true);
+  assert.deepEqual(observations[1].baseline.period,{startDate:'2026-10-20',endDate:'2026-11-16',days:28});
+  for(const call of calls){
+    assert.equal(call.dataState,'final');
+    assert.deepEqual(call.filters,[{dimension:'page',operator:'equals',expression:call.filters[0].expression}]);
+    assert.ok([condoCanonical,'https://sankkostnaden.se'+incomeExperiment.target].includes(call.filters[0].expression));
+  }
+  assert.notEqual(observations[0].queryPages[0].page,observations[1].queryPages[0].page);
+});
+
+test('additional collectors ignore closed or unregistered ID-target pairs without making calls',async()=>{
+  const invalid=[{...incomeExperiment,id:'other-id'},{...incomeExperiment,target:condoExperiment.target},{...incomeExperiment,target:'https://other.example/forsakring/trygghetsforsakring/'},{...incomeExperiment,status:'closed'},{...incomeExperiment,type:'SEO_SNIPPET_TEST'}];
+  const result=await collectAdditionalContentObservations(null,null,'2026-11-24',{readState:async()=>({activeExperiments:invalid}),query:async()=>assert.fail('Unexpected query')});
+  assert.deepEqual(result,[]);
+});
+
+test('new cohort stays UNKNOWN before its first complete day and configuration ambiguity cannot collect',async()=>{
+  const result=await collectAdditionalContentObservations(null,null,'2026-11-15',{readState:async()=>({activeExperiments:[incomeExperiment]}),query:async()=>assert.fail('No final pre/post period is available yet')});
+  assert.equal(result.length,1);assert.equal(result[0].status,'UNKNOWN');assert.equal(result[0].postStartDate,'2026-11-18');
+  assert.equal(result[0].impressions,undefined);assert.equal(result[0].clicks,undefined);
+  const ambiguous=await collectAdditionalContentObservations(null,null,'2026-11-24',{readState:async()=>({activeExperiments:[incomeExperiment,incomeExperiment]}),query:async()=>assert.fail('Ambiguous cohort')});
+  assert.equal(ambiguous[0].status,'UNKNOWN');assert.equal(ambiguous[0].impressions,undefined);
+  const unreadable=await collectAdditionalContentObservations(null,null,'2026-11-24',{readState:async()=>{throw Error('secret=private');}});
+  assert.equal(unreadable.length,2);assert.ok(unreadable.every(row=>row.status==='UNKNOWN'));
+  assert.ok(!JSON.stringify(unreadable).includes('secret=private'));
 });

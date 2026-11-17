@@ -1,5 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { getGoogleAccessToken, googleJson, parseServiceAccount } from './lib/googleServiceAccount.mjs';
 import {
   dateRange,
@@ -148,18 +149,31 @@ async function inspectPriorityUrls(accessToken,siteUrl){
   }));
 }
 
-async function collectAdditionalContentObservations(accessToken,siteUrl,finalThroughDate){
+const additionalContentTargets=[
+  {id:'bostadsratt-price-example-20261110',target:'/forsakring/hemforsakring-bostadsratt/'},
+  {id:'trygghetsforsakring-intent-20261117',target:'/forsakring/trygghetsforsakring/'},
+];
+
+export async function collectAdditionalContentObservations(accessToken,siteUrl,finalThroughDate,{readState=async()=>JSON.parse(await fs.readFile('autopilot/state.json','utf8')),query=(dimensions,filters,dataState,queryPeriod)=>runGsc(accessToken,siteUrl,dimensions,filters,dataState,queryPeriod)}={}){
+  const unknown=(entry,reason)=>({status:'UNKNOWN',experimentId:entry.id,page:'https://sankkostnaden.se'+entry.target,reason});
+  let state;
   try{
-    const state=JSON.parse(await fs.readFile('autopilot/state.json','utf8'));
-    // One reviewed additional target, not an unbounded arbitrary-URL collector.
-    const experiment=state.activeExperiments?.find(item=>item.id==='bostadsratt-price-example-20261110'&&item.target==='/forsakring/hemforsakring-bostadsratt/'&&item.type==='CONTENT_UTILITY_UPGRADE'&&item.status==='running');
-    if(!experiment)return [];
-    return [await collectGscContentObservation({experiment,finalThroughDate,origin:`https://${targetHostname}`,
-      query:(dimensions,filters,dataState,queryPeriod)=>runGsc(accessToken,siteUrl,dimensions,filters,dataState,queryPeriod)})];
+    state=await readState();
+    if(!Array.isArray(state?.activeExperiments))throw Error('Invalid observation configuration');
   }catch{
-    return [{status:'UNKNOWN',experimentId:'bostadsratt-price-example-20261110',page:'https://sankkostnaden.se/forsakring/hemforsakring-bostadsratt/',reason:'The reviewed observation configuration could not be read.'}];
+    return additionalContentTargets.map(entry=>unknown(entry,'The reviewed observation configuration could not be read.'));
   }
+  const observations=[];
+  for(const entry of additionalContentTargets){
+    const matches=state.activeExperiments.filter(item=>item?.id===entry.id&&item.target===entry.target&&item.type==='CONTENT_UTILITY_UPGRADE'&&item.status==='running');
+    if(matches.length>1){observations.push(unknown(entry,'The reviewed observation configuration is ambiguous.'));continue;}
+    if(!matches.length)continue;
+    observations.push(await collectGscContentObservation({experiment:matches[0],finalThroughDate,origin:'https://sankkostnaden.se',query}));
+  }
+  return observations;
 }
+
+async function main(){
 
 let report;
 if(!rawServiceAccount){
@@ -337,3 +351,8 @@ await fs.mkdir(outDir,{recursive:true});
 await fs.writeFile(path.join(outDir,'google-organic-performance.json'),JSON.stringify(report,null,2)+'\n','utf8');
 await fs.writeFile(path.join(outDir,'google-organic-performance.md'),toMarkdown(report),'utf8');
 console.log(toMarkdown(report));
+
+}
+
+// Importing the bounded collector in tests must not collect credentials or write reports.
+if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url))await main();
