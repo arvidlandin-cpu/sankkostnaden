@@ -28,20 +28,46 @@ function activeExperiments(state){
   return stored.filter(item=>item?.status==='running');
 }
 
-function pathScope(value){
-  if(!value) return null;
+const siteOrigin='https://sankkostnaden.se';
+
+// Scope exceptions are exact reviewed canonical paths, never URL patterns.
+function scopePath(value){
+  if(typeof value!=='string'||!value||value.trim()!==value||/[\\%*?#]/.test(value))return null;
+  if(!value.startsWith('/')&&!value.startsWith(siteOrigin+'/'))return null;
+  if(/(?:^|\/)\.{1,2}(?:\/|$)/.test(value))return null;
   try{
-    const pathname=new URL(String(value),'https://sankkostnaden.se').pathname;
-    return pathname.split('/').filter(Boolean)[0]||'sitewide';
+    const url=new URL(value,siteOrigin);
+    if(url.origin!==siteOrigin||url.username||url.password||url.search||url.hash||url.pathname.includes('//'))return null;
+    if(!/^\/(?:[A-Za-z0-9_~.-]+\/)*[A-Za-z0-9_~.-]*$/.test(url.pathname))return null;
+    return url.pathname==='/'?'/':url.pathname.replace(/\/$/,'')+'/';
   }catch{return null;}
 }
 
-function conflictsWithActive(page,experiments){
-  const scope=pathScope(page);
-  if(!scope) return true; // Unknown target may overlap: fail closed.
+const pathsOverlap=(a,b)=>a==='/'||b==='/'||a===b||a.startsWith(b)||b.startsWith(a);
+
+export function conflictsWithActive(page,experiments){
+  const candidate=scopePath(page);
+  if(!candidate||!Array.isArray(experiments))return true;
   return experiments.some(item=>{
-    const activeScope=pathScope(item.target);
-    return !activeScope || activeScope==='sitewide' || scope==='sitewide' || activeScope===scope;
+    const target=scopePath(item?.target);
+    if(!target||pathsOverlap(candidate,target))return true;
+    const declaration=item.scope;
+    let urls=[],excludes=[];
+    if(declaration!==undefined){
+      if(!declaration||typeof declaration!=='object'||Array.isArray(declaration))return true;
+      for(const key of ['urls','excludes']){
+        if(declaration[key]!==undefined&&(!Array.isArray(declaration[key])||declaration[key].some(value=>!scopePath(value))))return true;
+      }
+      urls=(declaration.urls||[]).map(scopePath);
+      excludes=(declaration.excludes||[]).map(scopePath);
+      // A contradictory exclusion cannot authorize an independent experiment.
+      if(excludes.some(path=>path==='/'||pathsOverlap(path,target)||urls.some(url=>pathsOverlap(path,url))))return true;
+    }
+    if(urls.some(path=>pathsOverlap(candidate,path)))return true;
+    const category=path=>path.split('/').filter(Boolean)[0];
+    if(category(candidate)!==category(target))return false; // Existing unrelated-category behaviour.
+    // Same category remains blocked except one exact, explicitly reviewed path.
+    return !urls.includes(target)||!excludes.includes(candidate);
   });
 }
 

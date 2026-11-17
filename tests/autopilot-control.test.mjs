@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { buildDecisionPacket, toMarkdown } from '../scripts/lib/autopilotDecision.mjs';
+import { buildDecisionPacket, toMarkdown, conflictsWithActive } from '../scripts/lib/autopilotDecision.mjs';
 
 const policy={
   version:1,
@@ -486,4 +486,51 @@ test('if every partner API is unavailable, even reported-network zero is UNKNOWN
  assert.equal(packet.northStar.approvedRevenue,null);
  assert.equal(packet.northStar.reportedNetworkApprovedCommission,null);
  assert.match(toMarkdown(packet),/Rapporterade godkända provisioner i avlästa nätverk: \*\*UNKNOWN\*\*/);
+});
+
+
+const brfScoped={...condoUtility,scope:{urls:[condoUtility.target],excludes:['/forsakring/trygghetsforsakring/','/elavtal/kvartspris/']}};
+const incomeTarget='/forsakring/trygghetsforsakring/';
+
+test('same-category scope exception is exact, reviewed and preserves active URL overlap protection',()=>{
+  assert.equal(conflictsWithActive(incomeTarget,[brfScoped]),false);
+  assert.equal(conflictsWithActive('https://sankkostnaden.se'+incomeTarget,[brfScoped]),false);
+  for(const candidate of [condoUtility.target,condoUtility.target+'barn/','/forsakring/','/','/forsakring/trygghetsforsakring/detaljer/','/forsakring/jamfor-hemforsakring/'])assert.equal(conflictsWithActive(candidate,[brfScoped]),true,candidate);
+  assert.equal(conflictsWithActive('/mobil/familjeabonnemang/',[condoUtility]),false);
+  assert.equal(conflictsWithActive('/elavtal/kvartspris/',[brfScoped]),false);
+});
+
+test('explicit exclusion cannot bypass missing own scope, sitewide coverage or contradictory paths',()=>{
+  for(const scope of [undefined,{}, {excludes:[incomeTarget]}, {urls:['/forsakring/annan/'],excludes:[incomeTarget]}, {urls:[condoUtility.target,'/'],excludes:[incomeTarget]}, {urls:[condoUtility.target,'/forsakring/'],excludes:[incomeTarget]}, {urls:[condoUtility.target,incomeTarget],excludes:[incomeTarget]}, {urls:[condoUtility.target],excludes:[incomeTarget,condoUtility.target]}, {urls:[condoUtility.target],excludes:[incomeTarget,'/']}])assert.equal(conflictsWithActive(incomeTarget,[{...condoUtility,scope}]),true,JSON.stringify(scope));
+  assert.equal(conflictsWithActive(incomeTarget,[{...brfScoped,target:'/forsakring/'}]),true);
+  assert.equal(conflictsWithActive(incomeTarget,[{...brfScoped,target:'/'}]),true);
+});
+
+test('malformed or foreign candidate and declared paths fail closed',()=>{
+  const invalid=['https://other.example/forsakring/trygghetsforsakring/','//other.example/forsakring/trygghetsforsakring/','/forsakring/*','/forsakring/trygghetsforsakring/?qa=1','/forsakring/trygghetsforsakring/#a','/forsakring/%2e%2e/mobil/','/forsakring/../mobil/','/forsakring//trygghetsforsakring/','forsakring/trygghetsforsakring/','/forsakring/\\trygghetsforsakring/',null,''];
+  for(const candidate of invalid)assert.equal(conflictsWithActive(candidate,[brfScoped]),true,String(candidate));
+  for(const path of invalid)for(const key of ['urls','excludes']){
+    const scope={urls:[condoUtility.target],excludes:[incomeTarget]};scope[key].push(path);
+    assert.equal(conflictsWithActive(incomeTarget,[{...condoUtility,scope}]),true,key+':'+String(path));
+  }
+  assert.equal(conflictsWithActive(incomeTarget,[{...condoUtility,scope:{urls:'wrong',excludes:[incomeTarget]}}]),true);
+});
+
+test('all active declared URLs guard overlap even outside their target category',()=>{
+  const cross={...condoUtility,scope:{urls:[condoUtility.target,'/mobil/familjeabonnemang/'],excludes:[incomeTarget]}};
+  assert.equal(conflictsWithActive('/mobil/familjeabonnemang/',[cross]),true);
+  assert.equal(conflictsWithActive('/mobil/familjeabonnemang/detaljer/',[cross]),true);
+  assert.equal(conflictsWithActive(incomeTarget,[brfScoped,{...condoUtility,target:incomeTarget}]),true);
+});
+
+test('explicit independent insurance scope allows one bounded content candidate but never a third slot',()=>{
+  const now='2026-11-17T09:00:00Z',g=google(now);
+  g.gsc.pages=[{page:'https://sankkostnaden.se'+incomeTarget,impressions:526,clicks:0,position:30.2}];
+  const config={...policy,limits:{maxConcurrentExperiments:2,maxConcurrentSeoExperiments:1}};
+  const args={google:g,policy:config,state:{activeExperiments:[brfScoped]},now:new Date(now)};
+  assert.equal(buildDecisionPacket(args).recommendedAction.type,'CONTENT_UTILITY_UPGRADE');
+  args.state.activeExperiments.push({...condoUtility,id:'trygghetsforsakring-intent-20261117',target:incomeTarget,earliestReviewAt:'2026-11-26T09:00:00+01:00',scope:{urls:[incomeTarget],excludes:[condoUtility.target]}});
+  const full=buildDecisionPacket(args);
+  assert.equal(full.guardrails.activeExperimentCount,2);
+  assert.equal(full.candidateActions.some(row=>row.type==='CONTENT_UTILITY_UPGRADE'),false);
 });

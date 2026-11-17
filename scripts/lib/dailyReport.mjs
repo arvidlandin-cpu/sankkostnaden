@@ -122,6 +122,12 @@ function contentObservation(value,scope){
     eligibleForReview:valid&&typeof value.eligibleForReview==='boolean'?value.eligibleForReview:null};
 }
 
+const contentObservationTargets=[
+  {id:'bostadsratt-price-example-20261110',page:'https://sankkostnaden.se/forsakring/hemforsakring-bostadsratt/',label:'Bostadsrätt: prisexemplets egen sidobservation'},
+  {id:'trygghetsforsakring-intent-20261117',page:'https://sankkostnaden.se/forsakring/trygghetsforsakring/',label:'Trygghetsförsäkring: guidens egen sidobservation'},
+];
+const observationTarget=row=>contentObservationTargets.find(target=>target.id===row?.experimentId&&target.page===row.page);
+
 export function buildDailyReport({google,affiliate,addrevenue,adtraction,partnerHealth,decision,release,now=new Date()}={}){
   now=new Date(now);
   const sources=Object.entries({google,affiliate,addrevenue,adtraction,partnerHealth}).map(([name,source])=>sourceStatus(name,source,now));
@@ -146,8 +152,8 @@ export function buildDailyReport({google,affiliate,addrevenue,adtraction,partner
     minCompleteDays:number(quarter.minCompleteDays),minImpressions:number(quarter.minImpressions),
   }:null;
   traffic.contentUtilityObservations=Array.isArray(gsc?.contentUtilityObservations)?gsc.contentUtilityObservations
-    .filter(row=>row?.experimentId==='bostadsratt-price-example-20261110'&&row.page==='https://sankkostnaden.se/forsakring/hemforsakring-bostadsratt/')
-    .map(row=>({experimentId:row.experimentId,page:row.page,
+    .filter(row=>observationTarget(row))
+    .map(row=>({experimentId:row.experimentId,page:row.page,label:observationTarget(row).label,
       postStartDate:periodOf({period:{startDate:row.postStartDate,endDate:row.postStartDate}})?.from||null,
       ...contentObservation(row,'page_post_observation'),baseline:contentObservation(row.baseline,'page_pre_observation')})):null;
   traffic.urlInspection=Array.isArray(gsc?.urlInspection)?gsc.urlInspection.map(row=>({url:safeText(row.url),status:safeText(row.status),verdict:safeText(row.verdict),coverageState:safeText(row.coverageState),lastCrawlTime:safeText(row.lastCrawlTime),googleCanonical:safeText(row.googleCanonical)})):null;
@@ -237,7 +243,7 @@ export function dailyReportMarkdown(report){
   }
   for(const observation of t.contentUtilityObservations||[]){
     const baseline=observation.baseline;
-    searchLines.push('### Bostadsrätt: prisexemplets egen sidobservation','',
+    searchLines.push('### '+(observationTarget(observation)?.label||'Innehållsförbättring: egen sidobservation'),'',
       `- Sida: ${observation.page}`,
       `- Första hela efterdagen: ${display(observation.postStartDate)} (Search Console, America/Los_Angeles)`,
       `- Efterperiod: ${periodText(observation.period)} · status: ${observation.status}`,
