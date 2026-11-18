@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { collectAdditionalContentObservations } from '../scripts/google-organic-performance-report.mjs';
+import { collectAdditionalContentObservations, priorityInspectionUrls } from '../scripts/google-organic-performance-report.mjs';
 import { buildDailyReport, dailyReportMarkdown } from '../scripts/lib/dailyReport.mjs';
 import {
   dateRange,
@@ -21,7 +21,6 @@ import {
   gscObservationPeriod,
   summarizeGscObservation,
   collectGscContentObservation,
-  priorityInspectionUrls,
   toMarkdown,
 } from '../scripts/lib/googleOrganicPerformance.mjs';
 
