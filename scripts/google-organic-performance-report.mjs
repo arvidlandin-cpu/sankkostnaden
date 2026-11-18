@@ -121,12 +121,29 @@ async function collectQuarterObservation(accessToken,siteUrl,finalThroughDate){
   }
 }
 
+const staticPriorityInspectionPaths=[
+  '/forsakring/hemforsakring-bostadsratt/',
+  '/elavtal/jamfor-elavtal/',
+  '/elavtal/kvartspris/',
+];
+
+export function priorityInspectionUrls(state,origin='https://sankkostnaden.se'){
+  const urls=new Set(staticPriorityInspectionPaths.map(target=>new URL(target,origin).href));
+  for(const experiment of state?.activeExperiments||[]){
+    const target=experiment?.target;
+    if(experiment?.status!=='running'||typeof target!=='string'||!target.startsWith('/')||target.includes('?')||target.includes('#'))continue;
+    try{
+      const url=new URL(target,origin);
+      if(url.origin===origin&&url.pathname===target)urls.add(url.href);
+    }catch{}
+  }
+  return [...urls];
+}
+
 async function inspectPriorityUrls(accessToken,siteUrl){
-  const urls=[
-    'https://sankkostnaden.se/forsakring/hemforsakring-bostadsratt/',
-    'https://sankkostnaden.se/elavtal/jamfor-elavtal/',
-    'https://sankkostnaden.se/elavtal/kvartspris/',
-  ];
+  let state={};
+  try{state=JSON.parse(await fs.readFile('autopilot/state.json','utf8'));}catch{}
+  const urls=priorityInspectionUrls(state);
   return Promise.all(urls.map(async url=>{
     try{
       const raw=await postJson('https://searchconsole.googleapis.com/v1/urlInspection/index:inspect',accessToken,{inspectionUrl:url,siteUrl,languageCode:'sv-SE'});
