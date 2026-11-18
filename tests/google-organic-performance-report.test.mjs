@@ -21,12 +21,29 @@ import {
   gscObservationPeriod,
   summarizeGscObservation,
   collectGscContentObservation,
+  priorityInspectionUrls,
   toMarkdown,
 } from '../scripts/lib/googleOrganicPerformance.mjs';
 
 test('date range is inclusive and ends one day before now',()=>{
   const range=dateRange(30,new Date('2026-10-07T12:00:00Z'),1);
   assert.deepEqual(range,{startDate:'2026-09-07',endDate:'2026-10-06',days:30});
+});
+
+test('URL Inspection includes exact active experiment targets without duplicating fixed priorities',()=>{
+  const urls=priorityInspectionUrls({activeExperiments:[
+    {status:'running',target:'/forsakring/trygghetsforsakring/'},
+    {status:'running',target:'/forsakring/hemforsakring-bostadsratt/'},
+    {status:'closed',target:'/closed/'},
+    {status:'running',target:'https://other.example/path/'},
+    {status:'running',target:'/invalid/?private=1'},
+  ]});
+  assert.deepEqual(urls,[
+    'https://sankkostnaden.se/forsakring/hemforsakring-bostadsratt/',
+    'https://sankkostnaden.se/elavtal/jamfor-elavtal/',
+    'https://sankkostnaden.se/elavtal/kvartspris/',
+    'https://sankkostnaden.se/forsakring/trygghetsforsakring/',
+  ]);
 });
 
 const condoExperiment={id:'bostadsratt-price-example-20261110',type:'CONTENT_UTILITY_UPGRADE',status:'running',target:'/forsakring/hemforsakring-bostadsratt/',startedAt:'2026-11-10T12:00:00+01:00',measurement:{gscPostStartDate:'2026-11-11',gscMinCompletePostDays:7,minPostPageImpressions:30}};
